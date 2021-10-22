@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Zola site
 
 [Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you'll create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
@@ -65,6 +67,8 @@ You can leave this one blank for now.
 2. Do you want to enable Sass compilation? [Y/n]: Y
 3. Do you want to enable syntax highlighting? [y/N]: y
 4. Do you want to build a search index of the content? [y/N]: y
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

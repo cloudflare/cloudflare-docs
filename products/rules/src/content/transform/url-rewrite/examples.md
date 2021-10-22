@@ -168,7 +168,7 @@ The function `regex_replace()` also allows you to extract parts of the URL using
 
 <Aside type="warning" header="Notes">
 
-Use only the fields under [`http.request.uri`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields) and [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) in rewrite expressions.
+Use only the fields [`http.request.uri.*`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields), [`http.request.headers.*`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields), and [`http.request.accepted_languages`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#field-http-request-accepted_languages) in rewrite expressions.
 
 The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, see [Transformation functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions).
 

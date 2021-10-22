@@ -15,7 +15,7 @@ import QueueSome from "../_partials/_queue-some.md"
 
 Before you start this tutorial, make sure you have:
 - Completed the [prerequisites](/about#prerequisites).
-- Reviewed your [rate limiting rules](https://developers.cloudflare.com/firewall/cf-rulesets/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
+- Reviewed your [rate limiting rules](https://developers.cloudflare.com/waf/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
 ---
 

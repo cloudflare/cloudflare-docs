@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # Probe construction
 
-A tunnel health check probe contains an ICMP (Internet Control Message Protocol) reply packet that originates from an IP address on the origin side of the GRE tunnel and whose destination address is a public Cloudflare IP.
+A tunnel health check probe contains an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp) reply packet that originates from an IP address on the origin side of the GRE tunnel and whose destination address is a public Cloudflare IP.
 
 Cloudflare encapsulates the ICMP reply packet and sends the probe across the GRE tunnel to the origin. When the probe reaches the origin router, the router decapsulates the ICMP reply and forwards it to the specified destination IP. The probe is successful when Cloudflare receives the reply.
 
@@ -55,7 +55,7 @@ When Magic Transit identifies a route that is not healthy, it applies the these 
 - Degraded: Add 500,000 to priority.
 - Down: Add 1,000,000 to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configuure-tunnels/assign-tunnel-route-priorities).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configure-tunnels/assign-tunnel-route-priorities).
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 

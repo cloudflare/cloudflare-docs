@@ -21,7 +21,7 @@ This example blocks requests to `www.example.com` that are not on ports 80 or 44
   </thead>
   <tbody>
     <tr>
-      <td><code>host eq "www.example.com" and not cf.edge.server_port in {'{80 443}'}</code></td>
+      <td><code>http.host eq "www.example.com" and not cf.edge.server_port in {'{80 443}'}</code></td>
       <td><em>Block</em></td>
     </tr>
   </tbody>

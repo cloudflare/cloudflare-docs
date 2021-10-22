@@ -17,7 +17,7 @@ It is highly recommended when using this template to not grant other permissions
 
 </Aside>
 
-Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](./restrictions) for more information.
+Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](/tokens/advanced/restrictions) for more information.
 
 ## Creating API tokens with the API
 
@@ -99,7 +99,7 @@ The last piece to defining a policy is what Permission Groups should be applied.
 
 ### Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](./restrictions).
+Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/tokens/advanced/restrictions).
 
 When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 

@@ -35,25 +35,25 @@ order: 1
     <tbody>
         <tr>
             <td>
-                2021-08-31
+                2021-10-19
             </td>
             <td>
-                2021-09-06
+                2021-10-25
             </td>
             <td>
                 Specials
             </td>
             <td>
-                 …cfd0fac1
+                …88d80772
             </td>
             <td>
-                100135A
+                100008E2
             </td>
             <td>
-                XSS - JavaScript Events - Improve Rule Coverage
+                SQLi - AND/OR Digit Operator Digit
             </td>
             <td>
-                Block
+                N/A
             </td>
             <td>
                 Block
@@ -61,25 +61,25 @@ order: 1
         </tr>
         <tr>
             <td>
-                2021-08-31
+                2021-10-19
             </td>
             <td>
-                2021-09-06
+                2021-10-25
             </td>
             <td>
                 Specials
             </td>
             <td>
-                 …de5e2367
+                …a72a6b3a
             </td>
             <td>
-                100135C
+                100009CB2
             </td>
             <td>
-                XSS - JavaScript Events - Improve Rule Coverage
+                SQLi - Equation
             </td>
             <td>
-                Block
+                N/A
             </td>
             <td>
                 Block
@@ -87,25 +87,51 @@ order: 1
         </tr>
         <tr>
             <td>
-                2021-08-31
+                2021-10-19
             </td>
             <td>
-                2021-09-06
+                2021-10-25
             </td>
             <td>
                 Specials
             </td>
             <td>
-                 …901dddd0
+                …2ebc44ad
             </td>
             <td>
-                100139D
+                100008D
             </td>
             <td>
-                XSS, HTML Injection - Data URI - Improve Rule Coverage
+                SQLi - Benchmark Function
+            </td>
+            <td>
+                N/A
             </td>
             <td>
                 Block
+            </td>
+        </tr>
+        <tr>
+            <td>
+                2021-10-19
+            </td>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …1c8e7f7f
+            </td>
+            <td>
+                100009B3
+            </td>
+            <td>
+                SQLi - ORDER/GROUP BY
+            </td>
+            <td>
+                N/A
             </td>
             <td>
                 Block

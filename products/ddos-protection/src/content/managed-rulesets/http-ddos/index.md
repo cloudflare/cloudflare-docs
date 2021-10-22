@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 4
+order: 2
 ---
 
 # HTTP DDoS Protection Managed Ruleset

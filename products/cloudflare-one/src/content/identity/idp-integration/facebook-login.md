@@ -14,13 +14,8 @@ Use these steps to set up Facebook as your identity provider.
 
    The **Create a New App ID** card displays.
 1. Enter the **Display Name** and **Contact Email**.
-1. Click **Create App ID**.
-
-    The Create a New App ID window displays.
-
-    ![Facebook Create New App ID](../../static/documentation/identity/facebook/fb2.png)
-
-1. Enter the Captcha code to proceed.
+1. Click **Create App ID**. The **Create a New App ID** window displays.
+1. Enter the CAPTCHA code to proceed.
 1. Click **Submit**.
 1. On the **Facebook Login** card, click **Set Up**.
 
@@ -28,33 +23,18 @@ Use these steps to set up Facebook as your identity provider.
 
     A Quickstart card displays offering platform choices.
 
-    ![Facebook Quickstart](../../static/documentation/identity/facebook/fb4.png)
-
-1. Click **Web**.
-
-    The *Web* tab displays.
-
+1. Click **Web**. The **Web** tab displays.
 1. Enter your **Site URL**.
 1. Click **Save**.
-1. Click **Continue**.
-
-    Ignore any JavaScript page that suggests that you install it on your site.
-
+1. Click **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
 1. Click **Settings > Basic** on the left-hand menu.
 
     ![Facebook Settings](../../static/documentation/identity/facebook/fb6.png)
 
 1. On the Teams dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
-
 1. Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
-
-    ![OAuth ID and OAuth Secret](../../static/documentation/identity/facebook/fb10.png)
-
 1. Click **Save**.
-
-    ![Facebook OAuth Settings](../../static/documentation/identity/facebook/fb8.png)
-
 1. On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
 1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/glossary#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 

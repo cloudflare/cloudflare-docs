@@ -24,7 +24,7 @@ JavaScript is fully supported on the Workers platform. We recommend using JavaSc
 
 ### See also
 
-- [Starters](/starters) – More example repos to use as a basis for your projects
+- [Quickstarts](/get-started/quickstarts) – More example repos to use as a basis for your projects
 - [TypeScript type definitions](https://github.com/cloudflare/workers-types)
 - [JavaScript and web standard APIs](/runtime-apis/web-standards)
 - [Tutorials](/tutorials)

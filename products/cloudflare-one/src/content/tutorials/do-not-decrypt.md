@@ -9,7 +9,7 @@ pcx-content-type: tutorial
 
 You can configure Cloudflare for Teams to skip inspection for certain groups of applications.
 
-By default, Cloudflare Gateway creates a rule that includes the hostnames used by certain client applications, like Zoom or Apple's services, that rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gatway will cause errors when users visit those applications.
+By default, Cloudflare Gateway creates a rule that includes the hostnames used by certain client applications, like Zoom or Apple's services, that rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gateway will cause errors when users visit those applications.
 
 This tutorial skips inspection for additional applications beyond those in the list curated by Cloudflare.
 

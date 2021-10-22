@@ -40,7 +40,7 @@ The SYN-ACK packet sent to the client during TCP handshake encodes the value for
 
 Cloudflare uses GRE tunnels to deliver packets from our edge to your data centers, while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
 
- You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data.
+ You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data. If you are using IPsec inside GRE, you will need to lower your MSS value to 1360 bytes or lower at your physical egress interfaces.
 
 <table>
   <thead>
@@ -111,6 +111,6 @@ Remote MSS: 1436
 
 <Aside type='warning' header='Important'>
 
-When you do not have a publicly available TCP endpoint for which Cloudflare can verify your MSS settings, you must provide a screenshot of the cURL command results, similar to the one above.
+If you do not have a publicly available TCP endpoint Cloudflare can use to verify your MSS settings, you must provide a screenshot of the cURL command results, similar to the one above.
 
 </Aside>

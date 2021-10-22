@@ -15,7 +15,7 @@ The descriptions below detail the fields available for `http_requests`.
 | BotScore | Cloudflare Bot Score. Scores below 30 are commonly associated with automated traffic. Available for Bot Management customers (please contact your account team to enable). | int |
 | BotScoreSrc | Detection engine responsible for generating the Bot Score. <br />Possible values are <em>Not Computed</em> \| <em>Heuristics</em> \| <em>Machine Learning</em> \| <em>Behavioral Analysis</em> \| <em>Verified Bot</em> \| <em>JS Fingerprinting</em> \| <em>Cloudflare Service</em> | string |
 | BotTags | Type of bot traffic (if available). See [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags) for the list of potential values. Available in Logpush v2 only. | array[string] |
-| CacheCacheStatus | <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> | string |
+| CacheCacheStatus | <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> | string |
 | CacheResponseBytes | Number of bytes returned by the cache | int |
 | CacheResponseStatus (deprecated) | HTTP status code returned by the cache to the edge. All requests (including non-cacheable ones) go through the cache. Also see CacheCacheStatus field. | int |
 | CacheTieredFill | Tiered Cache was used to serve this request | bool |
@@ -23,7 +23,7 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientCountry | Country of the client IP address | string |
 | ClientDeviceType | Client device type | string |
 | ClientIP | IP address of the client | string |
-| ClientIPClass | <em>unknown</em> \| <em>clean</em> \| <em>badHost</em> \| <em>searchEngine</em> \| <em>allowlist</em> \| <em>greylist</em> \| <em>monitoringService</em> \| <em>securityScanner</em> \| <em>noRecord</em> \| <em>scan</em> \| <em>backupService</em> \| <em>mobilePlatform</em> \| <em>tor</em> | string |
+| ClientIPClass | <em>unknown</em> \| <em>badHost</em> \| <em>searchEngine</em> \| <em>allowlist</em> \| <em>monitoringService</em> \| <em>noRecord</em> \| <em>scan</em> \| <em>tor</em> | string |
 | ClientMTLSAuthCertFingerprint | The SHA256 fingerprint of the certificate presented by the client during mTLS authentication. Only populated on the first request on an mTLS connection. Available in Logpush v2 only. | string |
 | ClientMTLSAuthStatus | The status of mTLS authentication. Only populated on the first request on an mTLS connection. Available in Logpush v2 only. <br />Possible values are <em>unknown</em> \| <em>ok</em> \| <em>absent</em> \| <em>untrusted</em> \| <em>notyetvalid</em> \| <em>expired</em> | string |
 | ClientRequestBytes | Number of bytes in the client request | int |

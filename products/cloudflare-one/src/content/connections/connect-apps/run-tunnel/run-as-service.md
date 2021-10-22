@@ -7,9 +7,7 @@ pcx-content-type: how-to
 
 | Before you start |
 |---|
-| 1. [Create a Tunnel](/connections/connect-apps/create-tunnel) |
-| 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
-| 3. [Configure routing to the Tunnel](/connections/connect-apps/routing-to-tunnel) |
+| Follow the [Tunnel guide](/connect-apps/install-and-setup/tunnel-guide) to create a tunnel, route traffic to a tunnel, and run it. |
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
@@ -97,136 +95,109 @@ Output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and 
 
 ## Windows
 
-To run as a service on Windows, you must specify four arguments in the configuration file.
+1. [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
 
-|Argument|Description|
-|---|---|
-|`url`|The destination for proxied traffic in your environment if your origin is not listening on localhost:8080|
-|`tunnel`|The UUID of your Tunnel
-|`credentials-file`|The location of the credentials file for your Tunnel|
-|`logfile`|The location to store `cloudflared` logs`
+1. Create a new directory:
+    
+    ```bash
+    C:\Cloudflared\bin
+    ```
 
-Before starting, download `cloudflared` and place the `cloudflared.exe` in a location accessible to the OS. This example assumes the executable is stored in the following location:
+1. Copy the `.exe` file you downloaded in step 1 to the new directory and rename it to `cloudflared.exe`.
 
-```bash
-C:\Cloudflared\bin\cloudflared.exe
+1. Open the CMD as an administrator and navigate to `C:\Cloudflared\bin`.
+
+1. Run this command to install `cloudflared`:
+
+    ```bash
+    cloudflared.exe service install
+    ```
+1. Next, run this command to create another directory:
+
+    ```bash
+    mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
+
+1. Now log in and authenticate `cloudflared`:
+
+    ```bash
+    cloudflared.exe login
+    ```
+
+1. The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command: 
+
+    ```bash
+    copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
+
+1. Next, create a tunnel:
+    
+    ```bash
+    cloudflared.exe tunnel create <Tunnel Name>
+    ```
+    
+    This will generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file) in `.json` format.
+
+1. [Create a configuration file](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file) with the following content:
+
+    ```text
+    tunnel: <Tunnel ID>
+    credentials-file: C:\Windows\System32\config\systemprofile\.cloudflared\<Tunnel-ID>.json
+    # Uncomment the following two lines if you are using self-signed certificates in your origin server
+    # originRequest:
+    #   noTLSVerify: true
+    ingress:
+    - hostname: app.mydomain.com
+        service: https://internal.mydomain.com
+    - service: http_status:404
+    logfile:  C:\Cloudflared\cloudflared.log
+    ```
+
+1. Copy the credentials file and the configuration file to the folder created in step 6: 
+
+    ```bash
+    C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
+
+    <Aside type='Note'>
+
+    If you haven't created a config.yml file, follow [these instructions](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file).
+
+    </Aside>
+
+1. Validate the ingress rule entries in your configuration file using the command:
+
+    ```bash
+    cloudflared.exe tunnel ingress validate
+    ```
+
+1. Edit the registry to run `cloudflared` as a service and point the `cloudflared.exe` file, the config.yml file and the command to run the tunnel as explained below:
+
+    Move the registry entry under `Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`.
+
+1. Locate `imagepath` and modify it as shown below. Make sure that there are no extra spaces or characters while you modify the registry entry, as this could cause problems with starting the service.
+
+    ```
+    C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml  tunnel run
+    ```
+
+1. If the service does not start, run the following command from `C:\Cloudflared\bin`:
+
+    ```bash
+    sc start cloudflared tunnel run
+    ```
+
+You will see the output below:
+
+```txt
+SERVICE_NAME: cloudflared
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 2  START_PENDING
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x7d0
+        PID                : 3548
+        FLAGS              :
 ```
-
-### Install `cloudflared`
-
-1. Open a Command Prompt with Administrator privileges.
-
-2. Run the following command to install `cloudflared` as a service.
-
-```bash
-C:\Cloudflared\bin\cloudflared.exe service install
-```
-
-Assuming Windows is installed to `C:\`, when running as a service, Cloudflare Tunnel expects the configuration to be available at the following path:
-
-`C:\Windows\system32\config\systemprofile\.cloudflared\config.yml` .
-
-You can copy your local configuration from:
-
-`%UserProfile%\.cloudflared\config.yml`.
-
-If that directory is not available, you can execute the following command to create the directory.
-
-```bash
-mkdir C:\Windows\System32\config\systemprofile\.cloudflared
-```
-
-### (Optional) Specify a custom location for the config file
-
-By default, the Windows service runs in “access” client mode. If you need to specify a custom config file location, you can do so in the Windows registry after the service has been installed ([MSDN reference](https://docs.microsoft.com/en-us/dotnet/api/system.serviceprocess.servicebase.onstart?view=netframework-4.7.2)):
-
-1. Open `regedit`.
-2. Go to the registry key `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`.
-3. Edit the `ImagePath` value to include `--config <path-to-config>`.
-
-Additionally, you will need to add `tunnel run` arguments and, in some cases, a pointer to the config file. For example: `.../cloudflared.exe tunnel [--config FILE] run`.
-
-### Authenticate `cloudflared`
-
-Run the following command to login to Cloudflare and authenticate `cloudflared`.
-
-```bash
-C:\Cloudflared\bin\cloudflared.exe login
-```
-
-Once authenticated, copy the certificate to the `systemprofile` directory.
-
-```bash
-copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
-```
-
-### Create, route, and configure the Tunnel
-
-You can now [create](/connections/connect-apps/create-tunnel) an Cloudflare Tunnel and edit the configuration file to [configure](/connections/connect-apps/configuration) `cloudflared`. We recommend setting the [routing](/connections/connect-apps/routing-to-tunnel) before running the service in the next step.
-
-<Aside>
-
-When running `cloudflared` as a service on Windows, the path to the credentials file in the configuration file needs to be explicitly specified.
-
-```yaml
----
-filename: config.yml
----
-credentials-file: C:\ABSOLUTE\PATH\TO\UUID.json
-```
-
-In some cases, forward slashes should be used to set the explicit path to the credentials file.
-
-* In "Raw" YAML scalars, the backslash should be used directly. For example, `C:\UUID.json`.
-* In single-quoted scalars, the backslash should be used directly. For example, `'C:\UUID.json'`.
-* In double-quoted scalars, a forward slash should be used or the backslash should be escaped. For example, `"C:\\UUID.json"`.
-
-```yaml
----
-filename: config.yml
----
-credentials-file: C:/UUID.json
-```
-
-</Aside>
-
-### Start the service
-
-To start the service, open the Service Manager, select `Cloudflare Tunnel agent` and open the `General` tab. In the `Start parameters` field, specify the location of the configuration file and place the `tunnel run` command after the path. For example:
-
-![DNS tab](../../../static/documentation/connections/start-param-1.png)
-
-Once applied, you can click `Start` to run the Tunnel.
-
-<Aside>
-
-The Services UI in Windows will allow you to set Start parameters, and Start the service, but in some cases it may not save. This appears to be a general issue within Windows Services configuration. To save the `Start parameters` value, we recommend [editing the values](https://stackoverflow.com/questions/1488851/how-to-pass-a-parameter-to-a-windows-service-once-and-for-all-at-install-instead) in the Services registry directly.
-
-</Aside>
-
-Alternatively, you can run the following commands to start Cloudflare Tunnel as a service:
-
-```
-C:\> sc start cloudflared tunnel run
-```
-
-If you are a Powershell user, run this command instead:
-
-```
-PS C:> $Service = Get-Service cloudflared ; $Service.start(@('tunnel','run'))
-```
-
-<Aside>
-
-`cloudflared` will set up Recovery Properties of the service so it restarts on failure, but **this feature is not fully supported on Windows Server 2003 and Windows XP.**
-
-</Aside>
-
-### Start on reboot
-
-You can configure the service in Windows to start if the machine reboots.
-
-1. Open the Registry Editor as an administrator.
-2. Navigate to `Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`
-3. Edit the entry `ImagePath` to contain the path to the `cloudflared` binary.
-4. Add the parameters that were configured above; for example the path to the configuration file and the `tunnel run` command.

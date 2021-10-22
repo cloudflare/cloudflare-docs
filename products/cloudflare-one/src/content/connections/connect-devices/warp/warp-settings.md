@@ -43,7 +43,8 @@ When the toggle is enabled, users will be able to make changes to the WARP clien
 
 Cloudflare for Teams allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Teams Dashboard:
 
-1. Click **Manage** in the **Device enrollment permissions** card.
+1. Navigate to **Settings** > **Devices**.
+1. In the **Device enrollment permissions** card, click **Manage**.
 1. In the rule builder, configure one or more rules to define who can enroll or revoke devices.
 1. Set a session duration. Once the session expires, users will be asked to log in when attempting to connect a device. 
 1. Click **Save**.

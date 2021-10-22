@@ -17,7 +17,7 @@ The descriptions below detail the fields available for `firewall_events`.
 | ClientASNDescription | The ASN of the visitor as string | string |
 | ClientCountry | Country from which request originated | string |
 | ClientIP | The visitor's IP address (IPv4 or IPv6) | string |
-| ClientIPClass | The classification of the visitor's IP address, possible values are: <em>unknown</em> \| <em>clean</em> \| <em>badHost</em> \| <em>searchEngine</em> \| <em>allowlist</em> \| <em>greylist</em> \| <em>monitoringService</em> \| <em>securityScanner</em> \| <em>noRecord</em> \| <em>scan</em> \| <em>backupService</em> \| <em>mobilePlatform</em> \| <em>tor</em> | string |
+| ClientIPClass | The classification of the visitor's IP address, possible values are: <em>unknown</em> \| <em>badHost</em> \| <em>searchEngine</em> \| <em>allowlist</em> \| <em>monitoringService</em> \| <em>noRecord</em> \| <em>scan</em> \| <em>tor</em> | string |
 | ClientRefererHost | The referer host | string |
 | ClientRefererPath | The referer path requested by visitor | string |
 | ClientRefererQuery | The referer query-string was requested by the visitor | string |

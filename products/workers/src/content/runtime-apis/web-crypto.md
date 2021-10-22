@@ -44,6 +44,11 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
   - Fills the passed ArrayBuffer with cryptographically sound random values.
 
+- <Code>crypto.randomUUID()</Code>
+  <Type>string</Type>
+
+  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt)
+
 </Definitions>
 
 ### SubtleCrypto Methods

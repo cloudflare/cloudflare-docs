@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 5
+order: 3
 ---
 
 # L3/4 DDoS Protection Managed Ruleset

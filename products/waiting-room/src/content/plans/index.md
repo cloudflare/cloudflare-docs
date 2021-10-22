@@ -7,7 +7,7 @@ type: overview
 
 # Features by plan type
 
-The features available for a waiting room depend on your plan type.
+The features available for a waiting room depend on your plan type. You can only have **one plan** per zone.
 
 <table style="width:100%">
    <thead>
@@ -45,6 +45,12 @@ The features available for a waiting room depend on your plan type.
         </tr>
         <tr>
             <td><a href='/additional-options/mobile-traffic'>Mobile app traffic</a></td>
+            <td>No</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td><a href='/additional-options/create-events'>Scheduled events</a></td>
             <td>No</td>
             <td>No</td>
             <td>Yes</td>

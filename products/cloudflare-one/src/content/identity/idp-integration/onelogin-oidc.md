@@ -18,12 +18,8 @@ To set up OneLogin as your identity provider:
 
     The _Custom Connectors_ card displays.
 
-    ![OneLogin Custom Connectors](../../static/documentation/identity/onelogin/onelogin-oidc-2.png)
-
 1. Click **New Connector**.
-1. Name the connector.
-
-     The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
+1. Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
 
     ![OneLogin OIDC Application Basic Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
@@ -40,9 +36,6 @@ To set up OneLogin as your identity provider:
     ![OneLogin OIDC Application Basic Configuration page More Actions menu](../../static/documentation/identity/onelogin/onelogin-oidc-4.png)
 
 1. In the **Portal** section, enter a name for your application in the **Display Name** field.
-
-    ![OneLogin OIDC Add Application Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-5.png)
-
 1. Click **Save**.
 1. Select the **Access** tab.
 

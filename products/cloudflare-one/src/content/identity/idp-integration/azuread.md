@@ -9,15 +9,11 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
 1. Sign in to [the Azure dashboard](https://portal.azure.com/).
 
- ![Azure AD Portal](../../static/documentation/identity/azure/azure-portal.png)
-
 1. Click **Azure Active Directory** in the Azure Services section.
 
  ![Azure AD Select AD](../../static/documentation/identity/azure/pick-azure-ad.png)
 
-1. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane.
-
- ![Azure AD App Registration](../../static/documentation/identity/azure/click-app-reg.png)
+1. In the left side menu, navigate to **Manage** > **App registrations**.
 
 1. Click **+ New registration**.
 
