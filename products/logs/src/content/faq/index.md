@@ -3,7 +3,7 @@ order: 130
 pcx-content-type: faq
 ---
 
-# FAQ
+# FAQS
 
 ## General FAQ
 
