@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-# Register a new domain with Cloudflare
+# Register a new domain
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Go to **Registrar** > **Register**.
 
