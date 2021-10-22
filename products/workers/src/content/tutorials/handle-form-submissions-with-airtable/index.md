@@ -25,6 +25,61 @@ In this tutorial, you will use Workers and [Airtable](https://airtable.com) to p
 
 ## Create a form
 
+For this tutorial, you will be building a contact form. You can customize the fields, but the form this tutorial references will collect a first name, last name, email address, phone number, subject, and a message. 
+
+If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [Deploy a form to Pages]() tutorial.
+
+The simplified HTML markup for this form:
+
+```html
+<form action="https://workers-airtable-form.signalnerve.workers.dev/submit" method="POST">
+  <div>
+    <label for="first_name">First name</label>
+    <input type="text" name="first_name" id="first_name" autocomplete="given-name" placeholder="Ellen" required />
+  </div>
+
+  <div>
+    <label for="last_name">Last name</label>
+    <input type="text" name="last_name" id="last_name" autocomplete="family-name" placeholder="Ripley" required />
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder="eripley@nostromo.com" required />
+    </div>
+  </div>
+
+  <div>
+    <label for="phone">
+      Phone 
+      <span>Optional</span>
+    </label>
+    <input type="text" name="phone" id="phone" autocomplete="tel" placeholder="+1 (123) 456-7890" />
+  </div>
+
+  <div>
+    <label for="subject">Subject</label>
+    <input type="text" name="subject" id="subject" placeholder="Your example subject" required />
+  </div>
+
+  <div>
+    <label for="message">
+      Message
+      <span>Max 500 characters</span>
+    </label>
+    <textarea id="message" name="message" rows="4" placeholder="Tenetur optio quaerat expedita vero et illo. Tenetur nam explicabo dolor voluptatem eveniet. Commodi est beatae id voluptatum porro laudantium. Quam placeat accusamus vel officiis vel. Et perferendis dicta ut perspiciatis quos iste. Tempore autem molestias voluptates in sapiente enim doloremque." required></textarea>
+  </div>
+
+  <div>
+    <button type="submit">
+      Submit
+    </button>
+  </div>
+</form>
+```
+
+
+
 To review the basics of HTML5 forms, a `form` element generally contains an `action` attribute, which indicates the URL that the form will submit to. For example, the below `form` will submit data to the path `/new_submission`:
 
 ```html
