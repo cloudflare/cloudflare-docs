@@ -40,7 +40,11 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
     </Example>
 
-1. Upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
+1. Enable **Custom Hostnames** for your zone:
+
+    - If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**. 
+    - If you are not an Enterprise customer, go to **SSL/TLS** > **Custom Hostnames** to enable **Cloudflare for SaaS**.
+    
 1. Set the **Fallback Origin** via either the dashboard or API.
     - **Dashboard**: 
 
