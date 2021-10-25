@@ -201,6 +201,10 @@ All plans have access to:
 
   - The organisation which owns the ASN of the incoming request, e.g. `Google Cloud`.
 
+- `botManagement` <Type>Object | null</Type>
+
+  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`. Refer to the [`Bot Management Variables`](/bots/reference/bot-management-variables) for more details.
+
 - `colo` <Type>string</Type>
 
   - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
