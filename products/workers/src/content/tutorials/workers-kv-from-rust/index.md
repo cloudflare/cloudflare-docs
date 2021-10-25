@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 <TutorialsBeforeYouStart/>
 
-## Basic Project Scaffolding
+## Basic project scaffolding
 
 To get started:
 1. Run the following `wrangler` command to generate a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/). 
