@@ -1,5 +1,5 @@
 ---
-title: Create custom cache keys
+title: Create custom cache keys (Enterprise only)
 pcx-content-type: how-to
 ---
 
