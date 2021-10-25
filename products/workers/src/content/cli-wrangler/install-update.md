@@ -15,7 +15,7 @@ $ npm i @cloudflare/wrangler -g
 
 <Aside type="note" header="EACCESS error">
 
-You may have already installed npm. It is possible that an `EACCES` error may be thrown while installing Wrangler. This is related to how many systems install the npm binary. It is recommended that you reinstall npm using a Node version manager like [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating) or [Volta](https://volta.sh/).
+You may have already installed npm. It is possible that an `EACCES` error may be thrown while installing Wrangler. This is related to how many systems install the npm binary. It is recommended that you reinstall npm using a Node version manager like [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) or [Volta](https://volta.sh/).
 
 </Aside>
 
