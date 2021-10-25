@@ -284,6 +284,8 @@ When compared to the `handle` function from the previous snippet, be aware of th
 
 </Aside>
 
+Here is the finalized `handle` function:
+
 ```rust
 ---
 filename: src/lib.rs
