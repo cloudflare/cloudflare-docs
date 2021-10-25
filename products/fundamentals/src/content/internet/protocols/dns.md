@@ -72,42 +72,6 @@ In 1993, the IETF started a public discussion around how DNS could be made more 
 
 There are several catalysts pushing DNSSEC adoption, one of which is Dan Kaminsky’s [cache poisoning attack from 2008](https://kb.isc.org/article/AA-00924/0/CVE-2008-1447%3A-DNS-Cache-Poisoning-Issue-Kaminsky-bug.html). This attack highlighted the significant trust issues in traditional DNS, and how DNSSEC is well positioned to solve them. However, even after a significant amount of work, adoption is lagging — there are several factors holding DNSSEC adoption back. Among them are network operators that prefer stability to complexity (for good reason). Another difficulty with DNSSEC adoption is that there is no universal consensus around whether DNSSEC is the right tool to secure the DNS.
 
-## Kaminsky’s Attack
-
-In 2008, Dan Kaminsky revealed [an attack](https://spectrum.ieee.org/images/oct08/images/phish03.pdf) on the DNS system which can trick a DNS recursive resolvers into storing incorrect DNS records. Once the nameserver has stored the incorrect response, it will happily return it to everyone who asks until the cache entry expires (usually dictated by the TTL). This is so-called “DNS poisoning” attack could allow arbitrary attacker to trick DNS, and redirect web browsers (and other applications) to incorrect servers allowing them to hijack traffic.
-
-DNS poisoning attacks are simple to describe, but difficult to pull off. Take the sequence of events:
-
-  * Client queries recursive resolver
-  * Recursive resolver queries authoritative server
-  * Authoritative server replies to recursive resolver
-  * Recursive resolver replies with an answer to the client
-
-Kaminsky’s attack relies on the fact that UDP is a stateless protocol and that source IP addresses are blindly trusted. Each of the requests and responses described here is a single UDP request containing to and from IP addresses. Any host can in theory forge the source address on UDP message making look like it came from the expected source. Any attacker sitting on a network that does not filter outbound packets can construct a UDP message that says it’s from the authoritative server and send to the recursive resolver.
-
-Of the requests above, message number 3 is a good target to attack. This is because the recursive resolver will accept the first answer to its question that matches its query. So, if you can answer it faster than the authoritative server, the recursive resolver will accept your answer as the truth. This is the core of the attack:
-
-  * Pick a domain whose DNS entries you want to hijack.
-  * Send a request to the recursive resolver for the record you want to poison.
-  * Send many fake UDP responses pretending to be the authoritative server with the answer of your choosing (i.e. point the A record to an IP you control).
-
-If one of your malicious—acceptable—responses arrives ahead of the real response, the recursive resolver will believe your record and cache it for as long as the TTL is set. Then any other clients asking for the poisoned record will be directed to your malicious servers.
-
-![dns-diagram](../static/kaminsky-1.jpg)
-
-There are some complications that make this harder than it sounds in practice. For example, you have to guess:
-
-  * The request ID—a 16-bit number
-  * The authoritative server address that the query was sent to
-  * The recursive resolver address used to send the query
-  * The UDP port used to send the query to the authoritative server
-
-When Kaminsky’s attack was originally proposed, many of these values were easily guessable or discoverable, thus making DNS poisoning a real threat. Since then, request ID, port randomization, and source address rotation have made this specific attack more difficult to pull off—but not impossible.
-
-The fundamental issue that allows this kind of attack to happen is that there is no way for the resolver to validate that the records are what they are supposed to be. Note: if the attacker is in position to see the query traffic from the recursive resolver, it has all the information it needs to forge answers (see [http://www.wired.com/2014/03/quantum/](http://www.wired.com/2014/03/quantum/)).
-
-## DNSSEC
-
 The security extensions to DNS add protection for DNS records, and allow the resolvers and applications to authenticate the data received. These powerful additions will mean that all answers from the DNS can be trusted. Earlier you learned how DNS resolution starts at the root nameserver, and works down (e.g., for `www.example.com` it starts at the root server, then “com”, then “example.com”). This is the same way that trust is conferred via DNSSEC. The DNS root is the definitive root of trust, and a chain of trust is built to the root from any DNS entry. This is a lot like the chain of trust used to validate TLS/SSL certificates, except that, rather than many trusted root certificates, there is one trusted root key managed by the DNS root maintainer IANA.
 
 The point of DNSSEC is to provide a way for DNS records to be trusted by whoever receives them. The key innovation of DNSSEC is the use of public key cryptography to ensure that DNS records are authentic. DNSSEC not only allows a DNS server to prove the authenticity of the records it returns. It also allows the assertion of “non-existence of records”.
@@ -168,3 +132,38 @@ trustee.ietf.org.        1683        IN        NSEC        www.ietf.org. A MX AA
 This means that there are no names the zone in between trustee.ietf.org and www.ietf.org, when sorted alphabetically, effectively proving that tustee.ietf.org does not exist.
 
 [RFC5155](http://www.ietf.org/rfc/rfc5155.txt) defines a obufscated way to deny existence via the NSEC3 record. NSEC3 uses similar logic, but for the names are hashed. Asking for examplf.com (e comes before f) would give you ‘there are no records with hashes between A and B’, where A is the next closest hash lexicographically before the hash of examplf.com, and B is the next closest after.
+
+## Kaminsky’s Attack
+
+In 2008, Dan Kaminsky revealed [an attack](https://spectrum.ieee.org/images/oct08/images/phish03.pdf) on the DNS system which can trick a DNS recursive resolvers into storing incorrect DNS records. Once the nameserver has stored the incorrect response, it will happily return it to everyone who asks until the cache entry expires (usually dictated by the TTL). This is so-called “DNS poisoning” attack could allow arbitrary attacker to trick DNS, and redirect web browsers (and other applications) to incorrect servers allowing them to hijack traffic.
+
+DNS poisoning attacks are simple to describe, but difficult to pull off. Take the sequence of events:
+
+  * Client queries recursive resolver
+  * Recursive resolver queries authoritative server
+  * Authoritative server replies to recursive resolver
+  * Recursive resolver replies with an answer to the client
+
+Kaminsky’s attack relies on the fact that UDP is a stateless protocol and that source IP addresses are blindly trusted. Each of the requests and responses described here is a single UDP request containing to and from IP addresses. Any host can in theory forge the source address on UDP message making look like it came from the expected source. Any attacker sitting on a network that does not filter outbound packets can construct a UDP message that says it’s from the authoritative server and send to the recursive resolver.
+
+Of the requests above, message number 3 is a good target to attack. This is because the recursive resolver will accept the first answer to its question that matches its query. So, if you can answer it faster than the authoritative server, the recursive resolver will accept your answer as the truth. This is the core of the attack:
+
+  * Pick a domain whose DNS entries you want to hijack.
+  * Send a request to the recursive resolver for the record you want to poison.
+  * Send many fake UDP responses pretending to be the authoritative server with the answer of your choosing (i.e. point the A record to an IP you control).
+
+If one of your malicious—acceptable—responses arrives ahead of the real response, the recursive resolver will believe your record and cache it for as long as the TTL is set. Then any other clients asking for the poisoned record will be directed to your malicious servers.
+
+![dns-diagram](../static/kaminsky-1.jpg)
+
+There are some complications that make this harder than it sounds in practice. For example, you have to guess:
+
+  * The request ID—a 16-bit number
+  * The authoritative server address that the query was sent to
+  * The recursive resolver address used to send the query
+  * The UDP port used to send the query to the authoritative server
+
+When Kaminsky’s attack was originally proposed, many of these values were easily guessable or discoverable, thus making DNS poisoning a real threat. Since then, request ID, port randomization, and source address rotation have made this specific attack more difficult to pull off—but not impossible.
+
+The fundamental issue that allows this kind of attack to happen is that there is no way for the resolver to validate that the records are what they are supposed to be. Note: if the attacker is in position to see the query traffic from the recursive resolver, it has all the information it needs to forge answers (see [http://www.wired.com/2014/03/quantum/](http://www.wired.com/2014/03/quantum/)).
+
