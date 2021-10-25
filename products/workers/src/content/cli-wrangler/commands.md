@@ -910,7 +910,7 @@ $ wrangler kv:bulk put --binding= [--env=] [--preview] [--namespace-id=] $FILENA
 ]
 ```
 
-In order to save a key/value pair in value, you need to escape it as a string. Example for a test value with key "name" would be:
+In order to save JSON data, you need to cast `value` to a string. For example:
 
 ```json
 [
