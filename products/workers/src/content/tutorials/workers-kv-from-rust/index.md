@@ -269,11 +269,20 @@ The above wrapper only exposes a subset of the options supported by the KV API, 
 
 ## Using the wrapper
 
-You are now ready to use the wrapper to get and put values from and to your KV namespace. 
+You are now ready to use the wrapper to read and write values to and from your KV namespace. 
 
-The following function is a simple example handler that writes the key `foo` with the value `bar` to KV, if a `PUT` request is made to `/foo?value=bar`, and reads and returns the value of key `foo` from KV, if a `GET` request is made to `/foo`. 
+The following function is an example handler that writes to KV on a `PUT` request, using the URL segments to determine the KV document's key name and value. For example, sending a `PUT` request to `/foo?value=bar` will write the `"bar"` value to the `foo` key. 
 
-Note that `handle` is now asynchronous, and that you will be using the `Url` and `UrlSearchParams` features that you declared earlier in `Cargo.toml`:
+Additionally, the example handler will read from KV when on `GET` requests, using the URL pathname as the key name. For example, a `GET /foo` request will return the `foo` key's value, if any.
+
+<Aside type="note" header="Important changes">
+
+When compared to the `handle` function from the previous snippet, be aware of these important changes:
+
+1. The `handle` function is asynchronous. 
+2. The `Url` and `UrlSearchParams` features are in use – they must be declared in the `Cargo.toml` feature set.
+
+</Aside>
 
 ```rust
 ---
