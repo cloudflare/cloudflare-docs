@@ -56,8 +56,8 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-* [Certificate Validation](../certificate-validation-methods): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-* [Hostname Verification](../hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+* [Certificate Validation](/ssl-for-saas/common-tasks/certificate-validation-methods): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+* [Hostname Verification](/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
@@ -105,7 +105,7 @@ For help tracking a certificate's status, refer to [Monitor certificates](/ssl-f
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge. 
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/certificate-validation-methods)).
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/common-tasks/certificate-validation-methods)).
 
 ```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
