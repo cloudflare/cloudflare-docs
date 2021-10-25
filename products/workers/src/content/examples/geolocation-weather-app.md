@@ -1,14 +1,14 @@
 ---
 order: 1000
 type: example
-summary: Fetch weather data from an API using the user's geolocation data.
+summary: Get all geolocation data fields and display them in HTML.
 tags:
   - Originless
   - Geolocation
 pcx-content-type: configuration
 ---
 
-# Geolocation: Weather App
+# Geolocation: Weather app
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>
