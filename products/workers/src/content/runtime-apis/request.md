@@ -203,7 +203,7 @@ All plans have access to:
 
 - `botManagement` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`. Refer to the [`Bot Management Variables`](/bots/reference/bot-management-variables) for more details.
+  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`. Refer to the [`Bot Management Variables`](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
 
 - `colo` <Type>string</Type>
 
