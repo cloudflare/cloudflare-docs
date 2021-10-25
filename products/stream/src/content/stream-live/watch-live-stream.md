@@ -10,7 +10,7 @@ When an input begins receiving the live stream, a new video with HLS and DASH UR
 One live input can have multiple video ids associated with it. In order to get the video id representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
 
 ```bash
-GET https://api.cloudflare.com/client/api/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/videos
+GET https://api.cloudflare.com/client/v4/accounts/{account}/stream/live_inputs/{live-input-uid}/videos
 ```
 
 The response will contain the HLS/DASH URL that can be used to play the current live video as well as any previously recorded live videos:

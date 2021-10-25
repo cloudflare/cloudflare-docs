@@ -23,7 +23,7 @@ Domain transfers sometimes fail. Your account team can help you address what fai
 
 If you cannot solve the issue, open a support ticket or contact your account team.
 
-### Why did my domain's expiration date changed after transferring it to Cloudflare?
+### Why did my domain's expiration date change after transferring it to Cloudflare?
 
 ICANN requires that any transfer also extends the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2021, but it expires on March 10, 2022, your new expiration date will be March 10, 2023.
 
