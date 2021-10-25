@@ -246,7 +246,7 @@ This command will build your project, run it locally, and return a URL for you t
 
 <Aside type="note">
 
-__Note:__ Before running `wrangler dev`, make sure you've created a subdomain. If not, follow the instructions in Step 1 to get a dev subdomain like `*.workers.dev`.
+Before running `wrangler dev`, make sure you have created a subdomain. If not, follow the instructions in Step 1 to get a dev subdomain like `*.workers.dev`.
   
 </Aside>
 
