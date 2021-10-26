@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # What do you see as the future of this project?
 
-As of spring 2020, the drand network is production-ready, and we believe that it can now be considered foundational Internet infrastructure, much like DNS or BGP.
+As of spring 2020, the drand network is production-ready and can now be considered foundational Internet infrastructure, much like DNS or BGP.
 
 While the project has reached a mature state, we believe there are several ways for drand to continue to evolve.
 
