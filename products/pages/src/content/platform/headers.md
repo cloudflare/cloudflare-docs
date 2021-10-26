@@ -110,7 +110,6 @@ Browser features can be disabled to varying degrees with the [`Permissions-Polic
 
 And if you need fine-grained control over the content in your application, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the X-Frame-Options header.
 
-**_headers**
 ```
 ---
 filename: _headers
