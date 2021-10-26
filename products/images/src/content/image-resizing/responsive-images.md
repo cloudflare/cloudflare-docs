@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: configuration
+pcx-content-type: reference
 ---
 
 # Responsive images
