@@ -41,29 +41,22 @@ https://myproject.pages.dev/*
 
 | Request URL                                   | Headers                           | 
 | --------------------------------------------  | --------------------------------- | 
-| https://custom.domain/secure/page             | X-Frame-Options: DENY             |
-                                                  X-Content-Type-Options: nosniff   
-                                                  Referrer-Policy: no-referrer      
-| https://custom.domain/static/image.jpg        | Access-Control-Allow-Origin: *    |
-                                                  X-Robots-Tag: nosnippet
-| https://myproject.pages.dev/home              | X-Robots-Tag: noindex             |
-| https://myproject.pages.dev/secure/page       | X-Frame-Options: DENY             |
-                                                  X-Content-Type-Options: nosniff
-                                                  Referrer-Policy: no-referrer
-                                                  X-Robots-Tag: noindex
-| https://myproject.pages.dev/static/styles.css | Access-Control-Allow-Origin: *    |
-                                                  X-Robots-Tag: nosnippet, noindex
+| https://custom.domain/secure/page             | ```X-Frame-Options: DENY``` <br> ```X-Content-Type-Options: nosniff ``` <br> ```Referrer-Policy: no-referrer``` | 
+| https://custom.domain/static/image.jpg        | ```Access-Control-Allow-Origin: *``` <br> ```X-Robots-Tag: nosnippet``` |
+| https://myproject.pages.dev/home              | ```X-Robots-Tag: noindex```             |
+| https://myproject.pages.dev/secure/page       | ```X-Frame-Options: DENY``` <br> ```X-Content-Type-Options: nosniff``` <br> ```Referrer-Policy: no-referrer``` <br> ```X-Robots-Tag: noindex``` |
+| https://myproject.pages.dev/static/styles.css | ```Access-Control-Allow-Origin: *``` <br> ```X-Robots-Tag: nosnippet, noindex``` |
 
 </TableWrap>
 
-## Matching
+### Matching
 The same matching rules apply to both `_redirects` and `_headers`. Note however, that redirects are applied before headers, so in the case of a request matching rules in both files, the redirect will win out.
 
-### Splats
+#### Splats
 On matching, a splat (asterisk, `*`) will greedily match all characters. You may only include a single splat in the URL.
 
 The matched value can be used in the header values with `:splat`.
-### Placeholders
+#### Placeholders
 A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
 
 Similarly, the matched value can be used in the header values with `:placeholder_name`.
