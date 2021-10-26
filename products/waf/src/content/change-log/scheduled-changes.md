@@ -31,6 +31,8 @@ order: 1
                 New Action
             </th>
         </tr>
+    </thead>
+    <tbody>
         <tr>
             <td>
                 2021-10-25
@@ -57,7 +59,5 @@ order: 1
                 Disabled
             </td>
         </tr>
-    </thead>
-    <tbody>
     </tbody>
 </table></TableWrap>
