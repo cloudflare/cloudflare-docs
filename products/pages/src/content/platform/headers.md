@@ -11,14 +11,14 @@ To attach headers to Cloudflare Pages responses, create a `_headers` plain text 
 
 Headers are defined in sections over multiple lines. To begin a section, you must define the matching rules for which requests these headers will be applied to. Second, you define the headers which are applied.
 
-```
+```txt
 [url]
   [name]: [value]
 ```
 
 You can define as many `[name]: [value]` pairs as you require on subsequent lines. For example:
 
-```
+```txt
 ---
 filename: _headers
 ---
@@ -40,26 +40,30 @@ Requests which match multiple sections will have their headers stacked. In this 
 
 <TableWrap>
 
-| Request URL                                   | Headers                           | 
-| --------------------------------------------  | --------------------------------- | 
-| https://custom.domain/secure/page             | ```X-Frame-Options: DENY``` <br> ```X-Content-Type-Options: nosniff ``` <br> ```Referrer-Policy: no-referrer``` | 
-| https://custom.domain/static/image.jpg        | ```Access-Control-Allow-Origin: *``` <br> ```X-Robots-Tag: nosnippet``` |
-| https://myproject.pages.dev/home              | ```X-Robots-Tag: noindex```             |
-| https://myproject.pages.dev/secure/page       | ```X-Frame-Options: DENY``` <br> ```X-Content-Type-Options: nosniff``` <br> ```Referrer-Policy: no-referrer``` <br> ```X-Robots-Tag: noindex``` |
-| https://myproject.pages.dev/static/styles.css | ```Access-Control-Allow-Origin: *``` <br> ```X-Robots-Tag: nosnippet, noindex``` |
-
-If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be particularly aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
+| Request URL                                   | Headers                                                                                                                               |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| https://custom.domain/secure/page             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
+| https://custom.domain/static/image.jpg        | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet`                                                                     |
+| https://myproject.pages.dev/home              | `X-Robots-Tag: noindex`                                                                                                               |
+| https://myproject.pages.dev/secure/page       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
+| https://myproject.pages.dev/static/styles.css | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
 
 </TableWrap>
 
+If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be particularly aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
+
 ### Matching
+
 The same matching rules apply to both `_redirects` and `_headers`. Note however, that redirects are applied before headers, so in the case of a request matching rules in both files, the redirect will win out.
 
 #### Splats
+
 On matching, a splat (asterisk, `*`) will greedily match all characters. You may only include a single splat in the URL.
 
 The matched value can be used in the header values with `:splat`.
+
 #### Placeholders
+
 A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
 
 Similarly, the matched value can be used in the header values with `:placeholder_name`.
@@ -67,9 +71,10 @@ Similarly, the matched value can be used in the header values with `:placeholder
 ## Examples
 
 ### Cross-Origin Resource Sharing (CORS)
+
 To enable other domains to fetch every asset from your Pages project, the following can be added to the `_headers` file:
 
-```
+```txt
 ---
 filename: _headers
 ---
@@ -79,7 +84,7 @@ filename: _headers
 
 To be more restrictive, you can use placeholder matching to, for example, allow access from a staging branch on a subdomain:
 
-```
+```txt
 ---
 filename: _headers
 ---
@@ -88,11 +93,12 @@ https://:project.pages.dev/*
 ```
 
 ### Prevent your pages.dev deployments showing in search results
+
 [Google](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) and other search engines often support the `X-Robots-Tag` header to hint at how you wish your website to be included in their search results.
 
 For example, to prevent your pages.dev deployment from being indexed, you can add the following to your `_headers` file:
 
-```
+```txt
 ---
 filename: _headers
 ---
@@ -101,8 +107,8 @@ https://:project.pages.dev/*
 ```
 
 ### Harden security for an application
-You can prevent click-jacking by informing browsers not to embed your application inside another (e.g. with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header.
 
+You can prevent click-jacking by informing browsers not to embed your application inside another (e.g. with an `<iframe>`) with a [`X-Frame-Options`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header.
 
 [`X-Content-Type-Options: nosniff`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) prevents browsers from interpreting a response as any other content-type than what is defined with the `Content-Type` header.
 
@@ -112,7 +118,7 @@ Browser features can be disabled to varying degrees with the [`Permissions-Polic
 
 And if you need fine-grained control over the content in your application, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the `X-Frame-Options` header.
 
-```
+```txt
 ---
 filename: _headers
 ---
@@ -123,6 +129,3 @@ filename: _headers
   Permissions-Policy: document-domain=()
   Content-Security-Policy: script-src 'self'; frame-ancestors 'none';
 ```
-
-
-
