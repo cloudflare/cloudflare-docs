@@ -112,7 +112,7 @@ You can prevent click-jacking by informing browsers not to embed your applicatio
 
 [`X-Content-Type-Options: nosniff`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options) prevents browsers from interpreting a response as any other content-type than what is defined with the `Content-Type` header.
 
-[`Referrer-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) allows you to customize how much information visitors give about where they're coming from when they navigate away from your page.
+[`Referrer-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) allows you to customize how much information visitors give about where they are coming from when they navigate away from your page.
 
 Browser features can be disabled to varying degrees with the [`Permissions-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) header (recently renamed from `Feature-Policy`).
 
