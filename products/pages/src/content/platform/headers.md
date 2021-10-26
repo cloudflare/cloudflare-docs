@@ -94,7 +94,7 @@ https://:project.pages.dev/*
 
 ### Prevent your pages.dev deployments showing in search results
 
-[Google](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) and other search engines often support the `X-Robots-Tag` header to hint at how you wish your website to be included in their search results.
+[Google](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) and other search engines often support the `X-Robots-Tag` header to instruct its crawlers how your website should be indexed.
 
 For example, to prevent your pages.dev deployment from being indexed, you can add the following to your `_headers` file:
 
