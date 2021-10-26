@@ -16,9 +16,9 @@ Only one redirect can be defined per line and must follow this format:
 ```
 
 <Aside heading="Status Code">
-  
+
   The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
-  
+
 </Aside>
 
 A complete example with multiple redirects may look like the following:
@@ -49,7 +49,7 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                                                                                   |
 | Splats                              | Yes     | `/blog/* /blog/:splat`                                          | See [Splats](#splats)                                                                             |
 | Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | See [Placeholders](#placeholders)                                                                 |
-| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                   |
+| Query Parameters                    | No      | `/shop?id=:id /blog/:id 301`                                    |                                                                                                   |
 | Force                               | Yes     | `/workers/ /workers/index.html`                                 | Redirects are always followed, regardless of whether or not an asset matches the incoming request |
 | Proxying                            | No      | `/blog/* https://blog.my.domain/:splat 200`                     |                                                                                                   |
 | Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                   |
