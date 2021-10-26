@@ -94,6 +94,9 @@ For example, to prevent your pages.dev deployment from being indexed, you can ad
 
 **_headers**
 ```
+---
+filename: _headers
+---
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
 ```
