@@ -33,11 +33,11 @@ Adjust the behavior of the rules in the Managed Ruleset by modifying the followi
 * The performed **action** when an attack is detected
 * The **sensitivity** of attack detection mechanisms
 
-To adjust rule behavior, [configure overrides via API](/managed-rulesets/l34-ddos/configure-api).
+To adjust rule behavior, [configure overrides via API](/managed-rulesets/network/configure-api).
 
-You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/managed-rulesets/l34-ddos/override-parameters) for more information.
+You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters) for more information.
 
-By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/l34-ddos/fields) for more information on the available fields for expressions of Network-level DDoS Attack Protection Managed Ruleset overrides.
+By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/network/fields) for more information on the available fields for expressions of Network-level DDoS Attack Protection Managed Ruleset overrides.
 
 ## Availability
 

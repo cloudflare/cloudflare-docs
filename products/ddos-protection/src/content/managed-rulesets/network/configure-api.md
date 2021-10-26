@@ -14,7 +14,7 @@ Each account has the Network-level DDoS Attack Protection Managed Ruleset enable
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-When configuring the Network-level DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity** from the default values. For more information on these rule parameters and the allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/l34-ddos/override-parameters).
+When configuring the Network-level DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity** from the default values. For more information on these rule parameters and the allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters).
 
 <Aside type='warning' header='Important'>
 
@@ -46,7 +46,7 @@ curl -X PUT \
       "action": "execute",
       "expression": "ip.dst in { 1.1.1.0/24 }",
       "action_parameters": {
-        "id": "{l34-managed-ruleset-id}",
+        "id": "{network-managed-ruleset-id}",
         "overrides": {
           "sensitivity_level": "medium",
           "categories": [
@@ -84,7 +84,7 @@ The response returns the created (or updated) phase entry point ruleset.
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{l34-managed-ruleset-id}",
+          "id": "{network-managed-ruleset-id}",
           "version": "latest",
           "overrides": {
             "categories": [

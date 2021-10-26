@@ -13,7 +13,7 @@ You can customize the **action** and **sensitivity** of the rules in the HTTP DD
 
 Tag and rule configurations have greater priority than ruleset configurations.
 
-For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/http-ddos/override-parameters).
+For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
 
 ## Configure all the rules in the ruleset
 

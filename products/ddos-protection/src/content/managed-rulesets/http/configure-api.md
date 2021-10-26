@@ -14,7 +14,7 @@ Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/managed-rulesets/http-ddos/override-parameters).
+When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/managed-rulesets/http/override-parameters).
 
 <Aside type='warning' header='Important'>
 

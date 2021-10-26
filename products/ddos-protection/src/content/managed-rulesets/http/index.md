@@ -31,10 +31,10 @@ You can adjust the behavior of the rules in the Managed Ruleset by modifying the
 
 To adjust rule behavior, do one of the following:
 
-* [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http-ddos/configure-dashboard).
-* [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/managed-rulesets/http-ddos/configure-api).
+* [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http/configure-dashboard).
+* [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/managed-rulesets/http/configure-api).
 
-For more information on the available configuration parameters, see [Managed Ruleset parameters](/managed-rulesets/http-ddos/override-parameters).
+For more information on the available configuration parameters, see [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
 
 <Aside type='note' header='Note'>
 
