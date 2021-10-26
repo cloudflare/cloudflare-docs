@@ -73,16 +73,20 @@ Similarly, the matched value can be used in the header values with `:placeholder
 ### Cross-Origin Resource Sharing (CORS)
 To enable other domains to fetch every asset from your Pages project, the following can be added to the `_headers` file:
 
-**_headers**
 ```
+---
+filename: _headers
+---
 /*
   Access-Control-Allow-Origin: *
 ```
 
 To be more restrictive, you can use placeholder matching to, for example, allow access from a staging branch on a subdomain:
 
-**_headers**
 ```
+---
+filename: _headers
+---
 https://:project.pages.dev/*
   Access-Control-Allow-Origin: https://staging.:project.pages.dev/
 ```
@@ -92,7 +96,6 @@ https://:project.pages.dev/*
 
 For example, to prevent your pages.dev deployment from being indexed, you can add the following to your `_headers` file:
 
-**_headers**
 ```
 ---
 filename: _headers
