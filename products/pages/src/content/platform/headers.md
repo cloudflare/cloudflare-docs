@@ -108,7 +108,7 @@ You can prevent click-jacking by informing browsers not to embed your applicatio
 
 Browser features can be disabled to varying degrees with the [`Permissions-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) header (recently renamed from `Feature-Policy`).
 
-And if you need fine-grained control over the content in your application, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the X-Frame-Options header.
+And if you need fine-grained control over the content in your application, the [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) header allows you to configure a number of security settings, including similar controls to the `X-Frame-Options` header.
 
 ```
 ---
