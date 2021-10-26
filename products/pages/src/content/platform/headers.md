@@ -59,7 +59,8 @@ The same URL matching features that [`_redirects`](/platform/redirects) offers i
 
 When matching, a splat pattern — signified by an asterisk (`*`) — will greedily match all characters. You may only include a single splat in the URL.
 
-The matched value can be used in the header values with `:splat`.
+The matched value can be referenced within the header value as the `:splat` placeholder.
+
 
 #### Placeholders
 
