@@ -36,7 +36,7 @@ https://myproject.pages.dev/*
 
 ```
 
-Requests which match multiple sections will have their headers stacked. In this example, the following requests will have the following headers applied:
+An incoming request which matches multiple rules' URL patterns will inherit all rules' headers. Using the previous `_headers` file, the following requests will have the following headers applied:
 
 <TableWrap>
 
