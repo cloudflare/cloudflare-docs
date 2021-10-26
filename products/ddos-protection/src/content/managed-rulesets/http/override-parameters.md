@@ -4,7 +4,7 @@ pcx-content-type: reference
 order: 3
 ---
 
-# HTTP DDoS Attack Protection Managed Ruleset parameters
+# HTTP DDoS Attack Protection parameters
 
 Configure the HTTP DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/managed-rulesets/http/configure-dashboard) or [define overrides via Rulesets API](/managed-rulesets/http/configure-api).
 
@@ -23,7 +23,7 @@ The action that the WAF will perform for requests that match specific rules of C
 
 - **Log**
     - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer 7 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 - **Block**
     - API value: `"block"`.

@@ -4,7 +4,7 @@ pcx-content-type: concept
 order: 2
 ---
 
-# Configure the HTTP DDoS Attack Protection Managed Ruleset via API
+# Configure HTTP DDoS Attack Protection via API
 
 Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 

@@ -4,7 +4,7 @@ pcx-content-type: concept
 order: 2
 ---
 
-# Configure the Network-level DDoS Attack Protection Managed Ruleset via API
+# Configure Network-level DDoS Attack Protection via API
 
 Configure the Cloudflare Network-level DDoS Attack Protection Managed Ruleset by defining overrides at the account level using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 
