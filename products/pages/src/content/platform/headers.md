@@ -53,7 +53,7 @@ If a header is applied twice in the `_headers` file, the values are joined with 
 
 ### Matching
 
-The same matching rules apply to both `_redirects` and `_headers`. Note however, that redirects are applied before headers, so in the case of a request matching rules in both files, the redirect will win out.
+The same URL matching features that [`_redirects`](/platform/redirects) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
 
 #### Splats
 
