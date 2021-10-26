@@ -58,7 +58,7 @@ The same matching rules apply to both `_redirects` and `_headers`. Note however,
 
 #### Splats
 
-On matching, a splat (asterisk, `*`) will greedily match all characters. You may only include a single splat in the URL.
+When matching, a splat pattern — signified by an asterisk (`*`) — will greedily match all characters. You may only include a single splat in the URL.
 
 The matched value can be used in the header values with `:splat`.
 
