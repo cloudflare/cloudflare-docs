@@ -1,5 +1,5 @@
 ---
-title: Drawing overlays
+title: Draw overlays
 order: 5
 pcx-content-type: reference
 ---
