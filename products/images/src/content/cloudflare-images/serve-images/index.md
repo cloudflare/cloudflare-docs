@@ -7,9 +7,9 @@ pcx-content-type: reference
 
 To serve images uploaded to Cloudflare Images, you need three pieces of information:
 
-1. Your Images account hash.
-1. Image ID.
-1. Variant name.
+* Your Images account hash.
+* Image ID.
+* Variant name.
 
 Assuming you have at least one image uploaded to Images, you will find the basic URL format on your Images Dashboard:
 
