@@ -1,5 +1,4 @@
 ---
-title: Resizing with Workers
 order: 4
 pcx-content-type: reference
 ---

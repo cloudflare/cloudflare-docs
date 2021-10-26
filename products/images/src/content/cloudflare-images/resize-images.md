@@ -5,13 +5,13 @@ pcx-content-type: reference
 
 # Resize images
 
-Cloudflare Images supports Variants that specify how you would like to resize images for different use cases. You can configure up to 20 variants.
+Cloudflare Images supports Variants that specify how images should be resized for different use cases. You can configure up to 20 variants.
 
 Each variant has properties including the width and height of resized images.
 
 ![Configure variants in Cloudflare Images](../static/variants.png)
 
-The fit property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
+The Fit property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
 
 <TableWrap>
 

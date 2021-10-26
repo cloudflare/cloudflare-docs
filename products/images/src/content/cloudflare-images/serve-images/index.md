@@ -21,7 +21,7 @@ A typical Image Delivery URL looks like this:
 https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_OWA/:image_id/:variant_name
 ```
 
-In this example, `ZWd9g1K7eljCn_KDTu_OWA` is your Images account hash. You simply need to replace `:image_id` and `:variant_name` to begin serving images. Here is an example of a fully formed Images URL look:
+In this example, `ZWd9g1K7eljCn_KDTu_OWA` is your Images account hash. You simply need to replace `:image_id` and `:variant_name` to begin serving images. To find this information, click the **Preview** button next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
 
 ```txt
 https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
@@ -33,4 +33,4 @@ In this example:
 - `083eb7b2-5392-4565-b69e-aff66acddd00` is the image id.
 - `public` is the variant name.
 
-When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format served to the eyeball is determined by client headers and the image type.
+When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
