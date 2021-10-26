@@ -19,6 +19,9 @@ Headers are defined in sections over multiple lines. To begin a section, you mus
 You can define as many `[name]: [value]` pairs as you require on subsequent lines. For example:
 
 ```
+---
+filename: _headers
+---
 /secure/page
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
