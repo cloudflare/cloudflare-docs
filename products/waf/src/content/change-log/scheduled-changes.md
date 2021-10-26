@@ -31,6 +31,32 @@ order: 1
                 New Action
             </th>
         </tr>
+        <tr>
+            <td>
+                2021-10-25
+            </td>
+            <td>
+                2021-11-01
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                …1c8e7f7f
+            </td>
+            <td>
+                100009B3
+            </td>
+            <td>
+                SQLi - ORDER/GROUP BY
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Disabled
+            </td>
+        </tr>
     </thead>
     <tbody>
     </tbody>
