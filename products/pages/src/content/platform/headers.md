@@ -112,6 +112,9 @@ And if you need fine-grained control over the content in your application, the [
 
 **_headers**
 ```
+---
+filename: _headers
+---
 /app/*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
