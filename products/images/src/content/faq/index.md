@@ -100,3 +100,7 @@ Soon! We will be introducing custom domain support in the near future.
 ### How much does Cloudflare Image Resizing cost?
 
 Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date information on pricing.
+
+### Resizing failed and I received an error response with a code. What does it mean?
+
+Visit our [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems) page were we have a troubleshoot guide for some of the more common situations, including error responses.
