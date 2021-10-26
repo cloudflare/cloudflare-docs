@@ -1,19 +1,20 @@
 ---
+title: Network-level DDoS Attack Protection
 pcx-content-type: concept
 order: 3
 ---
 
-# L3/4 DDoS Protection Managed Ruleset
+# Network-level DDoS Attack Protection Managed Ruleset
 
 <Aside type="warning">
 
-The L3/4 DDoS Protection Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
+The Network-level DDoS Attack Protection Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
 
 </Aside>
 
-The Cloudflare L3/4 DDoS Protection Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
+The Cloudflare Network-level DDoS Attack Protection Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-The L3/4 DDoS Protection Managed Ruleset is always enabled — you can only customize its behavior.
+The Network-level DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
 
 ---
 
@@ -21,7 +22,7 @@ The L3/4 DDoS Protection Managed Ruleset is always enabled — you can only cust
 
 <Aside type="warning">
 
-Currently, you can only configure the L3/4 DDoS Protection Managed Ruleset via API.
+Currently, you can only configure the Network-level DDoS Attack Protection Managed Ruleset via API.
 
 </Aside>
 
@@ -36,8 +37,8 @@ To adjust rule behavior, [configure overrides via API](/managed-rulesets/l34-ddo
 
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/managed-rulesets/l34-ddos/override-parameters) for more information.
 
-By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/l34-ddos/fields) for more information on the available fields for expressions of L3/4 DDoS Protection Managed Ruleset overrides.
+By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/l34-ddos/fields) for more information on the available fields for expressions of Network-level DDoS Attack Protection Managed Ruleset overrides.
 
 ## Availability
 
-The L3/4 DDoS Protection Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.
+The Network-level DDoS Attack Protection Managed Ruleset is available in early access to Magic Transit and Spectrum Enterprise customers.

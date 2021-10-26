@@ -4,9 +4,9 @@ pcx-content-type: how-to
 order: 1
 ---
 
-# Configure the HTTP DDoS Protection Managed Ruleset in the dashboard
+# Configure HTTP DDoS Attack Protection in the dashboard
 
-You can customize the **action** and **sensitivity** of the rules in the HTTP DDoS Protection Managed Ruleset in the following ways:
+You can customize the **action** and **sensitivity** of the rules in the HTTP DDoS Attack Protection Managed Ruleset in the following ways:
 
 * [Configure all the rules in the ruleset](#configure-all-the-rules-in-the-ruleset)
 * [Configure one or more rules](#configure-one-or-more-rules)
@@ -20,7 +20,7 @@ For more information on the available parameters and allowed values, refer to [M
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 1. Go to **Firewall** > **DDoS**.
 1. Next to **HTTP DDoS attack protection**, click **Configure**.
-1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Protection Managed Ruleset.
+1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
 
     ![Configure HTTP DDoS Managed Ruleset](../../images/ddos/ddos-configure-ruleset.png)
 
