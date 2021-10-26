@@ -96,7 +96,7 @@ https://:project.pages.dev/*
 
 [Google](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) and other search engines often support the `X-Robots-Tag` header to instruct its crawlers how your website should be indexed.
 
-For example, to prevent your pages.dev deployment from being indexed, you can add the following to your `_headers` file:
+For example, to prevent your `*.pages.dev` deployment from being indexed, add the following to your `_headers` file:
 
 ```txt
 ---
