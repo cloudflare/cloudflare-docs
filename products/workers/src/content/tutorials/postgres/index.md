@@ -9,7 +9,7 @@ pcx-content-type: tutorial
 
 ## Overview
 
-Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a backend server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and recent improvements to the PostgreSQL developer experience—namely, [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.
+Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a backend server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and a recent improvement to the PostgreSQL developer experience — [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
@@ -35,7 +35,7 @@ $ wrangler generate postgrest-example
 $ cd postgrest-example
 ```
 
-Inside of your Workers function, configure `wrangler.toml` with your account ID. Change the `type` value to "webpack" to use `webpack` for bundling the Workers function:
+Inside your Worker, configure your `wrangler.toml` file with your account ID. Change the `type` value to webpack to use `webpack` for bundling the Worker:
 
 ```toml
 ---
@@ -50,7 +50,7 @@ account_id = "yourAccountId"
 
 ## Build an API using postgrest-js
 
-PostgREST provides a consistent REST API structure for use in your applications. Each _table_ in your PostgreSQL database has a separate path as `/:table_name`. Query parameters are used to do lookups in your database—for instance, to find all users with an ID of `1`, you make a `GET` request to `/users?id=eq.1`.
+PostgREST provides a consistent REST API structure for use in your applications. Each table in your PostgreSQL database has a separate path as `/:table_name`. Query parameters are used to do lookups in your database. For example, to find all users with an ID of `1`, one sends a `GET` request to `/users?id=eq.1`.
 
 The URL structure makes it great for exploration, but in an application, it would be better to have something easier to use. [postgrest-js](https://github.com/supabase/postgrest-js/) is an open-source package that wraps PostgREST in an expressive JavaScript API. You will use it in your project to build a few endpoints to work with your PostgreSQL database in a Workers function.
 
@@ -63,7 +63,7 @@ header: Installing postgrest-js
 $ npm install @supabase/postgrest-js
 ```
 
-Before beginning to work with `postgrest-js` in your application, you need to quickly patch `cross-fetch`, the internal tool that `postgrest-js` uses for making HTTP requests, with Workers' built-in `fetch` API. Do this by creating a custom Webpack config, and updating `wrangler.toml` to use it. Create `webpack.config.js` with the below configuration:
+Before beginning to work with `postgrest-js` in your application, you must patch `cross-fetch`, the internal library that `postgrest-js` uses for making HTTP requests, with Workers' built-in `fetch` API. Do this by creating a custom Webpack configuration and updating the `wrangler.toml` file to use it. Create a `webpack.config.js` with the below configuration:
 
 ```js
 ---
@@ -106,7 +106,7 @@ addEventListener('fetch', event => {
 // ... Rest of code
 ```
 
-With a new client set up, you will make your first request from inside the Workers function to your PostgREST endpoint. To do this, you will _select_ data from a table inside of your database, using the `from` and `select` functions in `postgrest-js`. The below example uses the `users` table, and selects everything inside of it, though if you are bringing your own PostgreSQL setup to this tutorial, adjust the code accordingly. Replace the default code in `handleRequest` with the below code:
+With a new client set up, you will make your first request from inside the Workers function to your PostgREST endpoint. To do this, you will select data from a table inside of your database, using the `from` and `select` functions in `postgrest-js`. The below example uses the `users` table, and selects everything inside of it, though if you are bringing your own PostgreSQL setup to this tutorial, adjust the code accordingly. Replace the default code in `handleRequest` with the below code:
 
 ```js
 ---
@@ -143,7 +143,7 @@ $ wrangler publish
  https://postgrest-worker-example.signalnerve.workers.dev
 ```
 
-To correctly configure the function, set a `POSTGREST_ENDPOINT` "secret", which tells Workers where to actually route requests to. `wrangler secret` is a command that sets an encrypted value, or a "secret", that is only available inside of the Workers function:
+To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/cli-wrangler/commands#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/platform/environment-variables#adding-secrets-via-wrangler):
 
 ```sh
 $ wrangler secret put POSTGREST_ENDPOINT
@@ -164,7 +164,7 @@ header: JSON array returning from PostgREST in a Workers function
 
 ### Adding a router
 
-To increase the functionality of this project, you can add a router to handle multiple potential paths in the application. The application will have one path which returns _all_ users, a path that returns a single user _based on ID_, and a path that accepts data and creates a user. The URL structure will look like this:
+To increase the functionality of this project, you can add a router to handle multiple potential paths in the application. The application will have one path which returns all users, a path that returns a single user based on ID, and a path that accepts data and creates a user. The URL structure will look like this:
 
 | Route            | Action                    |
 | ---------------- | ------------------------- |
@@ -195,7 +195,7 @@ const client = new PostgrestClient(POSTGREST_ENDPOINT)
 const router = Router()
 ```
 
-As with most routers, `itty-router` works by adding routes to your `router`, based on the HTTP method clients will access them by. In this case, the router will have three routes—`GET /users`, `GET /users/:id`, and `POST /users`. To begin using the `router`, take the current code, which retrieves all the users in your database, and port it into a `GET /users` route. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
+As with most routers, `itty-router` works by adding routes to your `router`, based on the HTTP method clients will access them by. In this case, the router will have three routes: `GET /users`, `GET /users/:id`, and `POST /users`. To begin using the `router`, take the current code, which retrieves all the users in your database, and port it into a `GET /users` route. The updated code is below, but with a modified JSON response, which returns an object with a `users` array:
 
 ```js
 ---
@@ -243,7 +243,7 @@ header: Updated JSON object returning users in a Workers function
 {"users":[{"id":1,"name":"Kristian"}]}
 ```
 
-Notice that the original path at `/`, or _the root_, now has nothing configured. A client visiting this URL causes the function to throw an exception. To fix this, use `itty-router`'s `all` method, which acts as a catch-all for any routes not explicitly handled by other route handlers. Return a new `404 Not Found` response for any route not recognized:
+Notice that the original path at `/` – or the root – now has nothing configured. A client visiting this URL causes the function to throw an exception. To fix this, use `itty-router`'s `all` method, which acts as a catch-all for any routes not explicitly handled by other route handlers. Return a new `404 Not Found` response for any route not recognized:
 
 ```js
 ---
@@ -257,7 +257,7 @@ router.get('/users', async () => {
 router.all('*', () => new Response("Not Found", { status: 404 }))
 ```
 
-The second planned route is `GET /users/:id`, which returns a single user based on their ID. Configure another route, which uses _parameters_ to capture part of the URL, and make it available as part of the route handler as an object `params`:
+The second planned route is `GET /users/:id`, which returns a single user based on their ID. Configure another route, which will use parameters to capture part of the URL and make it available as part of the route handler as an object `params`:
 
 
 ```js
@@ -270,7 +270,7 @@ router.get('/users/:id', async ({ params } => {
 })
 ```
 
-With the ID captured as the variable `id`, `postgrest-js` can select from the `users` table again, but with an added _filter_ that requires any returned users have a matching ID. This limits the response to a single user, such as a user with an ID of 1. There are a number of filters available for use in `postgrest-js`, such as `gt` (greater than), `lt` (less than), and `eq` (equal), which can filter existing data:
+With the ID captured as the `id` variable, `postgrest-js` can select from the `users` table again, now with an added filter that requires any returned users have a matching ID. This limits the response to a single user, such as a user with an ID of 1. There are a number of filters available for use in `postgrest-js`: `gt` (greater than), `lt` (less than), and `eq` (equal to). These filters can be added to the query chain:
 
 ```js
 ---
@@ -329,9 +329,9 @@ header: Empty JSON object when no user is found
 
 ### Creating new users
 
-To complete the function, create a third endpoint, which creates users from your Workers + PostgREST API. The route will accept `POST` requests to `/users`, with a JSON payload containing the data to save in your database. For example, if the `users` table contains a `name` value, sending a JSON payload to the PostgREST API with the format `{"name":"Kristian"}` will create a new user with a name of "Kristian".
+To complete the function, create a third endpoint, which creates users from your Workers + PostgREST API. The route will accept `POST` requests to `/users`, with a JSON payload containing the data to save in your database. For example, if the `users` table contains a `name` value, sending a JSON payload to the PostgREST API with the format `{"name":"Kristian"}` will create a new user with a name of **Kristian**.
 
-In the Workers function, implement this by setting up a new `post` handler, and parsing the request _body_ (the data being sent as part of the request) as JSON inside of that handler:
+In the Workers function, implement this by setting up a new `post` handler, and parsing the request body (the data being sent as part of the request) as JSON inside of that handler:
 
 ```js
 ---
@@ -363,7 +363,7 @@ router.post('/users', async request => {
 })
 ```
 
-Deploy the updated function using `wrangler publish`. To test this new endpoint, use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique Workers.dev deployment. This command sends JSON data to your new endpoint as a `POST` request, which is parsed by the Workers function, and used to create a new user in your database. The response back should be the new user you have created:
+Deploy the updated function using the command `wrangler publish`. To test this new endpoint, use `cURL`, a command-line tool for making requests. Copy the below command, replacing the base part of the URL with your unique `*.workers.dev` deployment. This command sends JSON data to your new endpoint as a `POST` request, which is parsed by the Workers function and used to create a new user in your database. The response back should be the new user you have created:
 
 ```sh
 ---
@@ -377,7 +377,7 @@ $ curl https://postgrest-worker-example.signalnerve.workers.dev/users -X POST -H
 
 In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely-scaling and secure approach to interfacing between your databases and your front-end applications, while still retaining the control and flexibility of avoiding lock-in to Database-as-a-Service tools and other complicated SDKs for data management.
 
-If you found this tutorial useful, refer to some of our other Cloudflare Workers tutorials below. 
+If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below. 
 
 - [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
 - [Build a Slackbot](/tutorials/build-a-slackbot)
