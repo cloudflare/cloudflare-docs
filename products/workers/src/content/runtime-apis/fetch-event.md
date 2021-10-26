@@ -13,7 +13,7 @@ Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-mo
 
 ## Syntax: Service Worker
 
-In the Service Worker format, events are handled by using `addEventListener` to assign a handler to an event name. Additionally, the Service Worker specification assgins network requests to the `"fetch"` event, using the [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) interface.
+In the Service Worker format, events are handled by using `addEventListener` to assign a handler to an event name. Additionally, the Service Worker specification assigns network requests to the `"fetch"` event, using the [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) interface.
 
 Incoming HTTP requests can be handled by assigning a "fetch" event handler:
 
