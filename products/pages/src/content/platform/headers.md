@@ -68,6 +68,14 @@ A placeholder can be defined with `:placeholder_name`. A colon (`:`) indicates t
 
 Similarly, the matched value can be used in the header values with `:placeholder_name`.
 
+```txt
+---
+filename: _headers
+---
+/movies/:title
+  x-movie-name: You are watching ":title"
+```
+
 ## Examples
 
 ### Cross-Origin Resource Sharing (CORS)
