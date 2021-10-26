@@ -103,4 +103,4 @@ Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date info
 
 ### Resizing failed and I received an error response with a code. What does it mean?
 
-Please visit our [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems) page were we have a troubleshoot guide for some of the more common situations, including error responses.
+Visit our [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems) page were we have a troubleshoot guide for some of the more common situations, including error responses.
