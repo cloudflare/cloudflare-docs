@@ -82,7 +82,7 @@ filename: _headers
   Access-Control-Allow-Origin: *
 ```
 
-To be more restrictive, you can use placeholder matching to, for example, allow access from a staging branch on a subdomain:
+This applies the `Access-Control-Allow-Origin` header to any incoming URL. To be more restrictive, you can define a URL pattern that applies to a `*.pages.dev` subdomain, which then only allows access from its `staging` branch's subdomain:
 
 ```txt
 ---
