@@ -18,7 +18,7 @@ Use HTTPS when both strong encryption and authentication are required. HTTP Oppo
 ##  Enable Opportunistic Encryption
 
 To set up Opportunistic Encryption:
-1. Log into your Cloudflare account and go to a specific domain.
+1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2. Go to SSL/TLS.
 3. For Opportunistic Encryption, select On.
 
