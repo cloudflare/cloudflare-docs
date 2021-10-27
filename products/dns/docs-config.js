@@ -15,7 +15,7 @@ module.exports = {
     },
     siteMetadata: {
         title: "Cloudflare DNS docs",
-        description: "Cloudflare DNS is the fastest, most resilient, and simplest managed DNS platform that can support customer's and partner's needs.",
+        description: "Cloudflare DNS provides the fastest, most resilient, and simplest managed DNS platform to meet your needs.",
         author: "@cloudflare",
         url: "https://developers.cloudflare.com/dns",
         image: "https://www.cloudflare.com/img/cf-twitter-card.png",
