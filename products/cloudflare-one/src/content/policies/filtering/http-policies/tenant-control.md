@@ -107,6 +107,8 @@ This is achieved by implementing two HTTP Policies targettin the same domain or 
 | -- | -- | -- |
 | Domain | in | httpbin.org |
 
+  ![Isolate policy](../../../static/documentation/policies/httpbin-policy-1.png)
+
 
 #### 2. Create an Allow policy with a Custom Header
 
@@ -118,8 +120,10 @@ This is achieved by implementing two HTTP Policies targettin the same domain or 
 | -- | -- | -- |
 | Domain | in | httpbin.org |
 
+  ![Allow policy](../../../static/documentation/policies/httpbin-policy.png)
+
 #### 3. Navigate to `https://httpbin.org/anything`
 
 HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
-
+  ![httpbin](../../../static/documentation/policies/httpbin.png)
