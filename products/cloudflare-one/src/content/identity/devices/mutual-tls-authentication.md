@@ -35,7 +35,9 @@ Currently, mTLS does not work with HTTP3 traffic.
 
 <Aside type='warning' header='Important'>
 
-The mTLS certificate is used **only** to verify the client certificate. It does **not** control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
+The mTLS certificate is used only to verify the client certificate. It does not control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). 
+ 
+mTLS is checked on a per host basis. Access sets a flag for when a client certificate was presented and successfully completed mTLS authentication. However, to actually enforce mTLS, you need an Access policy in place, and Access policies are both host and path specific. If you want to enforce mTLS on a specific path, you need to make sure your Access policies are configured accordingly.
 
 </Aside>
 
