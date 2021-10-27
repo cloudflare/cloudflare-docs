@@ -88,3 +88,38 @@ This section covers policy configurations for common SaaS applications.
 | Application | In | YouTube | Allow | `YouTube-Restrict` |
 
 </TableWrap>
+
+## Using Tenant Control with Browser Isolation
+
+Browser Isolation may be configured to send custom request headers. This is useful for implementing SaaS application Tenant Control or sending arbitrary custom request headers to Isolated websites.
+
+This is achieved by implementing two HTTP Policies targettin the same domain or application group in the Cloudflare for Teams dashboard.
+
+### Example: Implementing a custom request header for a domain
+
+#### 1. Create an Isolate policy
+
+* **Name**: Isolate HTTPBIN
+* **Description**: Isolates the h`ttpbin.org` website.
+* **Action**: Isolate
+
+| Selector | Operator | Value |
+| -- | -- | -- |
+| Domain | in | httpbin.org |
+
+
+#### 2. Create an Allow policy with a Custom Header
+
+* **Name**: Inject custom request header for HTTPBIN
+* **Description**: Adds a custom request header for all traffic to the httpbin.org website.
+* **Action**: Allow
+
+| Selector | Operator | Value |
+| -- | -- | -- |
+| Domain | in | httpbin.org |
+
+#### 3. Navigate to `https://httpbin.org/anything`
+
+HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
+
+
