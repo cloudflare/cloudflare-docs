@@ -15,11 +15,13 @@ For more details on the mechanics of CNAME flattening, refer to the [blog post](
 
 ## Set up CNAME flattening
 
+### For your root domain
+
 CNAME flattening occurs by default for all plans when your domain uses a CNAME record for its root domain (`example.com`).
 
-Paid plans can also choose to flatten all CNAME records on their domain. This option is useful for DNS-only (unproxied) CNAME records since proxied records are flattened by default.
+### For all CNAME records
 
-To enable CNAME flattening for all CNAME records:
+Accounts on paid plans can also choose to flatten all CNAME records on their domain. This option is useful for DNS-only (unproxied) CNAME records since proxied records are flattened by default.
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 1. Navigate to **DNS**.
