@@ -93,14 +93,14 @@ This section covers policy configurations for common SaaS applications.
 
 Browser Isolation may be configured to send custom request headers. This is useful for implementing SaaS application Tenant Control or sending arbitrary custom request headers to Isolated websites.
 
-This is achieved by implementing two HTTP Policies targettin the same domain or application group in the Cloudflare for Teams dashboard.
+This is achieved by implementing two HTTP Policies targeting the same domain or application group in the Cloudflare for Teams dashboard.
 
 ### Example: Implementing a custom request header for a domain
 
 #### 1. Create an Isolate policy
 
 * **Name**: Isolate HTTPBIN
-* **Description**: Isolates the h`ttpbin.org` website.
+* **Description**: Isolates the `httpbin.org` website.
 * **Action**: Isolate
 
 | Selector | Operator | Value |
@@ -113,7 +113,7 @@ This is achieved by implementing two HTTP Policies targettin the same domain or 
 #### 2. Create an Allow policy with a Custom Header
 
 * **Name**: Inject custom request header for HTTPBIN
-* **Description**: Adds a custom request header for all traffic to the httpbin.org website.
+* **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
 * **Action**: Allow
 
 | Selector | Operator | Value |
