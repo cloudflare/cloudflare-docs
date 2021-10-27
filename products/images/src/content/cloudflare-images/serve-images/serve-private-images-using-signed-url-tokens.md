@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 If an image is marked to require a signed URL, it cannot be accessed without a token _unless_ it is being requested for a Variant that is set to always allow public access.
 
-1. To get started, get the default Key from your Images Dashboard:
+1. To get started, get the default Key from your **Images** dashboard:
 
   ![Screenshot of the keys page on the Cloudflare Images dashboard](../../static/keys.png)
 
