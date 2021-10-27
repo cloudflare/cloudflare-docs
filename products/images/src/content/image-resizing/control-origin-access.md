@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Control origin access
