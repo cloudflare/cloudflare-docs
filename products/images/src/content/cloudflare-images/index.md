@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Cloudflare Images
@@ -18,7 +18,7 @@ Once you have an Images subscription, to make your first request to the Images A
 - Your Cloudflare Account ID.
 - Your Global API Key or API Token.
 
-Once you have this information, we are ready to upload our first image to Cloudflare Images using the API:
+Once you have this information, you are ready to upload your first image to Cloudflare Images using the API:
 
 ```bash
 curl --request POST \

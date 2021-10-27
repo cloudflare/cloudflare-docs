@@ -19,9 +19,4 @@ Image Resizing is currently available for Pro, Business, and Enterprise customer
 
 ## Two ways to use
 
-You can use Cloudflare Image Resizing with either a pre-defined URL format or, for advanced use cases, with Cloudflare Workers. 
-
-<ButtonGroup>
-  <Button type="primary" href="/image-resizing/url-format">Learn the URL format</Button>
-  <Button type="secondary" href="/image-resizing/resize-with-workers">View the Workers docs</Button>
-</ButtonGroup>
+You can use Cloudflare Image Resizing with either a pre-defined URL format or, for advanced use cases, with Cloudflare Workers.

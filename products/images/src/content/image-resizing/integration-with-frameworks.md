@@ -1,7 +1,7 @@
 ---
 title: Integration with frameworks
 order: 9
-pcx-content-type: configuration
+pcx-content-type: reference
 ---
 
 # Integration with frameworks
