@@ -1,12 +1,12 @@
 ---
 title: Overview
-pcx-content-type: landing-page
+pcx-content-type: overview
 order: 0
 ---
 
 # Cloudflare DDoS Protection
 
-Cloudflare automatically detects and mitigates [Distributed Denial of Service](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) (DDoS) attacks using its [Autonomous Edge](https://blog.cloudflare.com/deep-dive-cloudflare-autonomous-edge-ddos-protection/).
+Cloudflare automatically detects and mitigates [Distributed Denial of Service](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) (DDoS) attacks using its Autonomous Edge.
 
 The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Protection Managed Rulesets](/managed-rulesets), and are enabled by default. You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
 
@@ -20,9 +20,9 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 
 ## Availability
 
-Network-level (L3/4) DDoS attack protection is included in all Cloudflare plans. However, only Magic Transit and Spectrum Enterprise customers can customize the Network-level DDoS Attack Protection Managed Ruleset.
+* **Network-level (L3/4) DDoS attack protection**: Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network), IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/), or IP Prefixes onboarded to [Magic Transit](https://developers.cloudflare.com/magic-transit/). Only Magic Transit and Spectrum Enterprise customers can customize the Network-level DDoS Attack Protection Managed Ruleset.
 
-HTTP (L7) DDoS attack protection is included as part of the WAF/CDN services and Workers.
+* **HTTP (L7) DDoS attack protection**: Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network).
 
 ## Related resources
 
