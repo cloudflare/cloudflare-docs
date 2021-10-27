@@ -50,7 +50,7 @@ Your backend endpoint should return the `uploadURL` property to the client enabl
 
 By default, the uploadURL will expire after 30 minutes if unused.
 
-If you want to override this option, just add the following argument to the cURL command:
+If you want to override this option, add the following argument to the cURL command:
 
 ```bash
   --data '{"expiry":"2021-09-14T16:00:00Z"}'
