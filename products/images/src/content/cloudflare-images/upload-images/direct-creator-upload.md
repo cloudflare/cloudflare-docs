@@ -1,11 +1,11 @@
 ---
 order: 2
-pcx-content-type: how-to
+pcx-content-type: reference
 ---
 
 # Direct Creator Upload
 
-The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing your API Key or token to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
+The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing your API key or token to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
 
 To request a one-time upload URL, simply have your backend (or Worker script) call the `direct_upload` endpoint:
 
@@ -48,9 +48,9 @@ Your backend endpoint should return the `uploadURL` property to the client enabl
 </html>
 ```
 
-By default the uploadURL will expire after 30 minutes if unused.
+By default, the uploadURL will expire after 30 minutes if unused.
 
-If you want to override this option just add to the cURL the following argument:
+If you want to override this option, add the following argument to the cURL command:
 
 ```bash
   --data '{"expiry":"2021-09-14T16:00:00Z"}'

@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: how-to
+pcx-content-type: reference
 ---
 
 # Making an image private

@@ -19,139 +19,17 @@ For a list of directives and behaviors when Origin Cache-Control is enabled or d
 
 Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache HTML by default. Additionally, Cloudflare caches a website’s robot.txt.
 
-<table>
-  <tbody>
-    <tr>
-      <td colspan="5" rowspan="1">
-        AVIF
-      </td>
-      <td colspan="5" rowspan="1">
-        BMP
-      </td>
-      <td colspan="5" rowspan="1">
-        EJS
-      </td>
-      <td colspan="5" rowspan="1">
-        JPEG
-      </td>
-      <td colspan="5" rowspan="1">
-        PDF
-      </td>
-      <td colspan="5" rowspan="1">
-        PS
-      </td>
-      <td colspan="5" rowspan="1">
-        TTF
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        CLASS
-      </td>
-      <td colspan="5" rowspan="1">
-        EOT
-      </td>
-      <td colspan="5" rowspan="1">
-        JPG
-      </td>
-      <td colspan="5" rowspan="1">
-        PICT
-      </td>
-      <td colspan="5" rowspan="1">
-        SVG
-      </td>
-      <td colspan="5" rowspan="1">
-        WEBP
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        CSS
-      </td>
-      <td colspan="5" rowspan="1">
-        EPS
-      </td>
-      <td colspan="5" rowspan="1">
-        JS
-      </td>
-      <td colspan="5" rowspan="1">
-        PLS
-      </td>
-      <td colspan="5" rowspan="1">
-        SVGZ
-      </td>
-      <td colspan="5" rowspan="1">
-        WOFF
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        CSV
-      </td>
-      <td colspan="5" rowspan="1">
-        GIF
-      </td>
-      <td colspan="5" rowspan="1">
-        MID
-      </td>
-      <td colspan="5" rowspan="1">
-        PNG
-      </td>
-      <td colspan="5" rowspan="1">
-        SWF
-      </td>
-      <td colspan="5" rowspan="1">
-        WOFF2
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        DOC
-      </td>
-      <td colspan="5" rowspan="1">
-        ICO
-      </td>
-      <td colspan="5" rowspan="1">
-        MIDI
-      </td>
-      <td colspan="5" rowspan="1">
-        PPT
-      </td>
-      <td colspan="5" rowspan="1">
-        TIF
-      </td>
-      <td colspan="5" rowspan="1">
-        XLS
-      </td>
-    </tr>
-    <tr>
-      <td colspan="5" rowspan="1">
-        DOCX
-      </td>
-      <td colspan="5" rowspan="1">
-        JAR
-      </td>
-      <td colspan="5" rowspan="1">
-        OTF
-      </td>
-      <td colspan="5" rowspan="1">
-        PPTX
-      </td>
-      <td colspan="5" rowspan="1">
-        TIFF
-      </td>
-      <td colspan="5" rowspan="1">
-        XLSX
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<Aside type="note" header="Note">
-
-The Free, Pro, and Business plans additionally support APK, EXE, DMG, BIN, ISO, ZIP, RAR, ZST, TAR, BZ2, 7z, GZ, MP4, MKV, AVI, WEBM, MP3, OGG, and FLAC file extensions. 
-
-</Aside>
+|   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|
+| 7Z    | CSV   | GIF  | MIDI | PNG  | TIF  | ZIP |
+| AVI   | DOC   | GZ   | MKV  | PPT  | TIFF | ZST |
+| AVIF  | DOCX  | ICO  | MP3  | PPTX | TTF  |
+| APK   | DMG   | ISO  | MP4  | PS   | WEBM | 
+| BIN   | EJS   | JAR  | OGG  | RAR  | WEBP |
+| BMP   | EOT   | JPG  | OTF  | SVG  | WOFF | 
+| BZ2   | EPS   | JPEG | PDF  | SVGZ | WOFF2| 
+| CLASS | EXE   | JS   | PICT | SWF  | XLS  |
+| CSS   | FLAC  | MID  | PLS  | TAR  | XLSX |
 
 To cache additional content, see [Page Rules](/how-to/create-page-rules) to create a rule to cache everything.
 

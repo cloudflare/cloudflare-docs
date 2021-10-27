@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content-type: how-to
+pcx-content-type: reference
 ---
 
 # Delete variants
