@@ -60,7 +60,7 @@ Refer to [NAv1 to NAv2 schema map](/graphql-api/migration-guides/network-analyti
 
 ## Example
 
-The following example queries the top 20 logs of traffic dropped by Magic Firewall within a given time range, ordered by destination IP address.
+The following example queries the top 20 logs of traffic dropped by mitigation systems different from Magic Firewall within a given time range, ordered by destination IP address.
 
 ```graphql
 {
