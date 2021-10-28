@@ -91,9 +91,9 @@ This section covers policy configurations for common SaaS applications.
 
 ## Using Tenant Control with Browser Isolation
 
-Browser Isolation may be configured to send custom request headers. This is useful for implementing SaaS application Tenant Control or sending arbitrary custom request headers to Isolated websites.
+Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
 
-This is achieved by implementing two HTTP Policies targeting the same domain or application group in the Cloudflare for Teams dashboard.
+You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Cloudflare for Teams dashboard.
 
 ### Example: Implementing a custom request header for a domain
 
