@@ -19,7 +19,7 @@ Lossless attempts to strip most metadata, like EXIF data, but does not change th
 
 ### Lossy
 
-Lossy attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48%. Lossy has the same effect as Lossless when applied to PNG.
+Lossy attempts to strip most metadata and compresses images by approximately 15 percent. When uncompressed, some of the redundant information from the original image is lost. On average, using Lossy mode reduces file size by 48 percent. Lossy has the same effect as Lossless when applied to PNG.
 
 <Aside type="note">
 
