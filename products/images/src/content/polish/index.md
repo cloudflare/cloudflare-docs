@@ -15,7 +15,7 @@ When an image is fetched from your origin, our systems automatically optimize it
 
 ### Lossless 
 
-Lossless attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, Lossless compression reduces file size by 21%.
+Lossless attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, Lossless compression reduces file size by 21 percent.
 
 ### Lossy
 
