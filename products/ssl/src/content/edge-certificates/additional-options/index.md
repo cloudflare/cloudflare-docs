@@ -20,7 +20,7 @@ Once you set up SSL/TLS on your application, you can adjust the following settin
 - [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156): <AlwaysUseHTTPSDefinition/>
 - [HTTP Strict Transport Security (HSTS)](http-strict-transport-security): <HSTSDefinition/>
 - [Minimum TLS Version](https://support.cloudflare.com/hc/articles/360003205452): <MinimumTLSDefinition/>
-- [Opportunistic Encryption](https://support.cloudflare.com/hc/articles/227253688): <OpportunisticEncryptionDefinition/>
+- [Opportunistic Encryption](opportunistic-encryption): <OpportunisticEncryptionDefinition/>
 - [TLS 1.3](https://support.cloudflare.com/hc/articles/227172348): <TLS13Definition/>
 - [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647): <AutomaticHTTPSRewritesDefinition/>
 - [Certificate Transparency Monitoring](certificate-transparency-monitoring): <CertTransparencyDefinition/>
