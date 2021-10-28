@@ -35,7 +35,7 @@ To do so, run the following command:
 $ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load balancer pool>
 ```
 
-**Note**: this command requires the `cert.pem` file.
+**Note**: this command requires the `cert.pem` file, and `<load balancer name>` is a hostname with the suffix of this zone (even though this suffix is not shown in the dashboard UI). 
 
 ## Optional: Configure additional Cloudflare settings
 
