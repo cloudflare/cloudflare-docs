@@ -12,6 +12,6 @@ With Cloudflare Images you can build a scalable image pipeline on Cloudflare ser
 
 With Image Resizing you can use Cloudflare’s edge platform to resize, adjust quality, and convert images to WebP or AVIF format on demand, independently of where they are stored.
 
-Cloudflare Polish is a one-click image optimization product, that automatically optimizes images in your site.
+Cloudflare Polish is a one-click image optimization product that automatically optimizes images in your site.
 
 For more information about the differences between each product, refer to the [Frequently Asked Questions section](/faq).
