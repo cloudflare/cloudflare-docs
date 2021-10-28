@@ -20,7 +20,13 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 
 ## Availability
 
-* **Network-level (L3/4) DDoS attack protection**: Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network), IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/), or IP Prefixes onboarded to [Magic Transit](https://developers.cloudflare.com/magic-transit/). Only Magic Transit and Spectrum Enterprise customers can customize the Network-level DDoS Attack Protection Managed Ruleset.
+* **Network-level (L3/4) DDoS attack protection**: Included in all Cloudflare plans for:
+  
+  * Zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network)
+  * IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/)
+  * IP Prefixes onboarded to [Magic Transit](https://developers.cloudflare.com/magic-transit/)
+  
+  Only Enterprise customers of Magic Transit and Spectrum can customize the Network-level DDoS Attack Protection Managed Ruleset.
 
 * **HTTP (L7) DDoS attack protection**: Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network).
 
