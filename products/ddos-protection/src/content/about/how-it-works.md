@@ -1,6 +1,6 @@
 # How it works
 
-To detect and mitigate DDoS attacks, Cloudflare’s Autonomous Edge and centralized DDoS systems analyze traffic samples such as HTTP request metadata, HTTP response metrics, and IP packet samples. The analysis is done “out-of-path”, which allows Cloudflare to asynchronously detect DDoS attacks without causing latency or impacting performance.
+To detect and mitigate DDoS attacks, Cloudflare’s Autonomous Edge and centralized DDoS systems analyze traffic samples “out-of-path”, which allows Cloudflare to asynchronously detect DDoS attacks without causing latency or impacting performance.
 
 The analyzed samples include:
 
