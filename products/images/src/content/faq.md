@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 4
 pcx-content-type: faq
 ---
 
@@ -9,6 +9,7 @@ Below you will find answers to our most commonly asked questions regarding Cloud
 
 * [Cloudflare Images](#cloudflare-images-faq)
 * [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
+* [Polish](#polish-faq)
 
 ## Cloudflare Images FAQ
 
@@ -105,4 +106,12 @@ Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date info
 
 ### Resizing failed and I received an error response with a code. What does it mean?
 
-Visit our [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems) page were we have a troubleshoot guide for some of the more common situations, including error responses.
+Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
+
+---
+
+## Polish FAQ
+
+### How can I troubleshoot common `Cf-Polished` statuses?
+
+Refer to the [Troubleshoot common Cf-Polished statuses](https://support.cloudflare.com/hc/articles/4412219637389) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.
