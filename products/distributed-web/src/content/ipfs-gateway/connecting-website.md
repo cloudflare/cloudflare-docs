@@ -133,9 +133,11 @@ recommended course.
 
 ## Make It All Secure
 
-> To improve our service, the IPFS gateway has moved to a Private Beta.
-> During this period, we are not offering self-provisioning of SSL cerificates.
-> You [can register](https://forms.gle/3c2xAzawnDcqWzgN7) to get notified once this service opens up.
+<Aside type="warning">
+
+During the Private Beta, self-provisioning of SSL certificates is not available.
+
+</Aside>
 
 Now your content is on IPFS and your website is connected to Cloudflare's
 gateway. There's just one more step to make this secure. If you've followed all
