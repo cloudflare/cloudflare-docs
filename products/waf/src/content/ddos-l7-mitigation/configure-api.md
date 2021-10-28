@@ -24,19 +24,19 @@ The Cloudflare HTTP DDoS Managed Ruleset is always enabled — you cannot disabl
 
 ## Example
 
-The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the account level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Managed Ruleset. These overrides are the following:
+The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Managed Ruleset. These overrides are the following:
 
 * All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
 * All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
-* The rule with ID `{mr-rule-id}` will use the `block` action.
+* The rule with ID `{managed-ruleset-rule-id}` will use the `block` action.
 
 ```json
 curl -X PUT \
 -H "X-Auth-Email: user@cloudflare.com" \
 -H "X-Auth-Key: REDACTED"
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/ddos_l7/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/ddos_l7/entrypoint" \
 -d '{
-  "description": "Execute Cloudflare HTTP DDoS Managed Ruleset on my account-level phase ruleset",
+  "description": "Execute Cloudflare HTTP DDoS Managed Ruleset in the zone-level phase entry point ruleset",
   "rules": [
     {
       "action": "execute",
@@ -53,7 +53,7 @@ curl -X PUT \
           ],
           "rules": [
             {
-              "id": "{mr-rule-id}",
+              "id": "{managed-ruleset-rule-id}",
               "action": "block"
             }
           ]
@@ -65,15 +65,15 @@ curl -X PUT \
 }'
 ```
 
-The response returns the created (or updated) phase ruleset.
+The response returns the created (or updated) phase entry point ruleset.
 
 ```json
 {
   "result": {
-    "id": "{root-ruleset-id}",
+    "id": "{phase-entry-point-ruleset-id}",
     "name": "default",
-    "description": "Execute Cloudflare HTTP DDoS Managed Ruleset on my account-level phase ruleset",
-    "kind": "root",
+    "description": "Execute Cloudflare HTTP DDoS Managed Ruleset in the zone-level phase entry point ruleset",
+    "kind": "zone",
     "version": "1",
     "rules": [
       {
@@ -93,7 +93,7 @@ The response returns the created (or updated) phase ruleset.
             ],
             "rules": [
               {
-                "id": "{mr-rule-id}",
+                "id": "{managed-ruleset-rule-id}",
                 "action": "block"
               }
             ],
