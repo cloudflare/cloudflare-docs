@@ -14,7 +14,8 @@ When a new certificate is created, Cloudflare first deploys the certificate and 
 For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
 
 1. **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
-1. **Certificate priority**: If the hostname is the same, certain types of certificates take precedence over others.
+2. **Zone specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a custom hostname certificate if the domain is active as a zone on Cloudflare.
+3. **Certificate priority**: If the hostname is the same, certain types of certificates take precedence over others.
 
     | Priority | Certificate Type|
     | --- | --- |
@@ -24,7 +25,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 4 | [Advanced](/edge-certificates/advanced-certificate-manager) or [Dedicated](https://support.cloudflare.com/hc/articles/228009108)|
     | 5 | [Universal](/edge-certificates/universal-ssl/)|
 
-1. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
+4. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
 
 ---
 
