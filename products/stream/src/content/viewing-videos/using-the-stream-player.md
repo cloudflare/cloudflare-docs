@@ -118,3 +118,6 @@ Player options are configured with querystring parameters in the iframe's `src` 
   - The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
 </Definitions>
+
+## Debug Info
+  The Stream player Debug menu can be shown and hidden using the key combination `Shift-D` while the video is playing.
