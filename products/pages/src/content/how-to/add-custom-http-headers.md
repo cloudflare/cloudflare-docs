@@ -10,7 +10,7 @@ Cloudflare provides HTTP header customization for Pages projects by adding a `_h
 
 </Aside>
 
-More advanced customisation of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). 
+More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). 
 
 If you have not deployed a Worker before, get started with our [tutorial](https://developers.cloudflare.com/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page. 
 
