@@ -39,7 +39,7 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 For Firefox:
 
 1. In the address bar, enter _about:config_ and click to accept the warranty warning.
-1. Search for security.tls.version.max and set it from the default value of 3 to 4.
+1. Search for `security.tls.version.max` and change the value from `3` (the default) to `4`.
 
 After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
