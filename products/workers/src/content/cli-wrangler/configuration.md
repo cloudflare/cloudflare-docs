@@ -184,7 +184,7 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 <Aside type="note">
 
-Using secrets should be handled using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
+Secrets should be handled using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
 
 </Aside>
 
