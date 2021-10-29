@@ -1,7 +1,7 @@
 name = "images"
 type = "webpack"
-account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 workers_dev = true
+account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 # Opt into backwards-incompatible changes through September 17, 2021.
 compatibility_date = "2021-09-17"
 
