@@ -10,7 +10,7 @@ Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides 
 
 Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
-## Configure an override for HTTP DDoS Attack Protection
+## Configure an override for the HTTP DDoS Attack Protection Managed Ruleset
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 

@@ -6,19 +6,11 @@ order: 2
 
 # HTTP DDoS Attack Protection Managed Ruleset
 
-The Cloudflare HTTP DDoS Attack Protection Managed Ruleset is a set of pre-configured rules used to match known DDoS attack vectors at layer 7 (application layer) on the edge, like the following:
+The Cloudflare HTTP DDoS Attack Protection Managed Ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/about/attack-coverage) at layer 7 (application layer) on the edge. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
 
-* Requests causing large amounts of origin errors
-* Excessive traffic hitting origin
-* Excessive traffic hitting cache
-* Abuse of search features and authentication endpoints
-* Other attack vectors
+The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
 
-Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
-
-The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The Firewall dashboard, available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
-
----
+The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Firewall Analytics dashboard](https://developers.cloudflare.com/waf/analytics), available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
 
 ## Ruleset configuration
 
@@ -36,12 +28,15 @@ To adjust rule behavior, do one of the following:
 
 For more information on the available configuration parameters, see [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
 
-<Aside type='note' header='Note'>
-
-The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
-
-</Aside>
-
 ## Availability
 
-The HTTP DDoS Attack Protection Managed Ruleset is available to all customers.
+The HTTP DDoS Attack Protection Managed Ruleset protects Cloudflare customers on all plans, and all customers can customize the ruleset.
+
+## Related Cloudflare products
+
+To block additional L7 attacks you can use the following Cloudflare products:
+
+* [Custom Firewall rules](https://developers.cloudflare.com/waf/custom-rules/custom-firewall) or its previous version, [Firewall Rules](https://developers.cloudflare.com/firewall/)
+* [Rate Limiting rules](https://developers.cloudflare.com/waf/custom-rules/rate-limiting) or its previous version, [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
+* [Bot Management](https://developers.cloudflare.com/bots/)
+* [WAF](https://developers.cloudflare.com/waf/)

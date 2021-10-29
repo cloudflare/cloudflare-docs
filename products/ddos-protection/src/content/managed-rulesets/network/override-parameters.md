@@ -4,9 +4,9 @@ pcx-content-type: reference
 order: 3
 ---
 
-# Network-level DDoS Attack Protection parameters
+# Network-layer DDoS Attack Protection parameters
 
-Configure the Network-level DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. To customize these parameters, [define overrides via Rulesets API](/managed-rulesets/network/configure-api).
+Configure the Network-layer DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. To customize these parameters, [define overrides via Rulesets API](/managed-rulesets/network/configure-api).
 
 The available parameters are the following:
 
