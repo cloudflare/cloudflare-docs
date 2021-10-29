@@ -1,3 +1,8 @@
+---
+pcx-content-type: concept
+order: 1
+---
+
 # Main components
 
 ![Diagram with the main components of DDoS attack protection at Cloudflare](../images/ddos-diagram.png)
