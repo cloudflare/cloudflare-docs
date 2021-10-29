@@ -1,7 +1,7 @@
 name = "workers"
 type = "webpack"
-account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 workers_dev = true
+account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 kv-namespaces = [{ binding = "REDIRECTS", id = "1f759966503240aeb7acab72ae4e70c0", preview_id = "1f759966503240aeb7acab72ae4e70c0" }] # `workers-docs-REDIRECTS_DEV` in dash
 
 [env.production]
