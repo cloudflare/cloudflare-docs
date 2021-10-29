@@ -16,7 +16,11 @@ By turning on the TLS 1.3 feature, traffic to and from your website will be serv
 
 ## Enable TLS 1.3
 
-Enable TLS 1.3 in the **TLS 1.3** section of the **Edge Certificates** tab of the Cloudflare **SSL/TLS** section.
+Enable TLS 1.3 in the Cloudflare dashboard:
+
+1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+1. Navigate to **SSL/TLS** > **Edge Certificates**.
+1. For **TLS 1.3**, switch the toggle to **On**.
 
 To enable TLS 1.3 in the Chrome browser:
 
