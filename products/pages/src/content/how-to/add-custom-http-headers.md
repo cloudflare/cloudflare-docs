@@ -4,7 +4,11 @@ pcx-content-type: how-to
 
 # Add custom HTTP headers
 
-Cloudflare provides HTTP header customization for Pages projects by ading a `_headers` file to your project. Check out the [documentation](https://developers.cloudflare.com/pages/platform/headers). You may want to add, remove, or alter HTTP headers for security or performance reasons. 
+<Aside type="note">
+
+Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Check out the [documentation](https://developers.cloudflare.com/pages/platform/headers). You may want to add, remove, or alter HTTP headers for security or performance reasons.
+
+</Aside>
 
 More advanced customisation of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). 
 
