@@ -24,7 +24,7 @@ Enable TLS 1.3 in the Cloudflare dashboard:
 
 To enable TLS 1.3 in the Chrome browser:
 
-1. In the address bar, enter _chrome://flags_ and press **Enter**.
+1. In the address bar, enter `chrome://flags` and press **Enter**.
 2. Scroll to locate the TLS 1.3 Early Data entry, and set it to _Enabled_. A message saying that the change will take effect the next time you relaunch Chrome will appear.
 3. Click **RELAUNCH NOW** to restart Chrome.
 
