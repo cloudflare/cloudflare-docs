@@ -94,9 +94,9 @@ There are three types of keys in a `wrangler.toml` file:
 
   - Specifies how `wrangler build` will build your project. There are three options: `javascript`, `webpack`, and `rust`. `javascript` checks for a build command specified in the `[build]` section, `webpack` builds your project using webpack v4, and `rust` compiles the Rust in your project to WebAssembly.
 
-<Aside>
+<Aside type="note">
 
-  **Note:** Cloudflare will continue to support `rust` and `webpack` project types, but recommends using the `javascript` project type and specifying a custom [`build`](#build) section.
+  Cloudflare will continue to support `rust` and `webpack` project types, but recommends using the `javascript` project type and specifying a custom [`build`](#build) section.
 
 </Aside>
 
@@ -110,11 +110,11 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `workers_dev` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is a boolean flag that specifies if your Worker will be deployed to your [workers.dev](https://workers.dev) subdomain. If omitted, it defaults to false.
+  - This is a boolean flag that specifies if your Worker will be deployed to your [`*.workers.dev`](https://workers.dev) subdomain. If omitted, it defaults to false.
 
 - `route` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
-  - A route, specified by URL pattern, on your zone that you would like to run your Worker on. <br />`route = "http://example.com/*"`. A `route` OR `routes` key is only required if you are not using a [workers.dev](https://workers.dev) subdomain.
+  - A route, specified by URL pattern, on your zone that you would like to run your Worker on. <br />`route = "http://example.com/*"`. A `route` OR `routes` key is only required if you are not using a [`*.workers.dev`](https://workers.dev) subdomain.
 
 - `routes` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -122,7 +122,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `webpack_config` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
-  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Visit the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/cli-wrangler/webpack) for more information.
 
 - `vars` <Type>not inherited</Type> <PropMeta>optional</PropMeta>
 
@@ -182,9 +182,9 @@ Alternatively, you can define `vars` using an inline table format. This style sh
 vars = { FOO = "some value", BAR = "some other string" }
 ```
 
-<Aside>
+<Aside type="note">
 
-**Note:** Using secrets should be handled using [wrangler secret](/cli-wrangler/commands#secret).
+Secrets should be handled using the [`wrangler secret`](/cli-wrangler/commands#secret) command.
 
 </Aside>
 
@@ -240,11 +240,11 @@ let value = await FOO.get("keyname");
 
 </Definitions>
 
-<Aside>
+<Aside type="note">
 
-**Note:** Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
+Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/cli-wrangler/commands#kv).
 
-You can also define your `kv_namespaces` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
+You can also define your `kv_namespaces` using an [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
 </Aside>
 
@@ -280,7 +280,7 @@ entry-point = "workers-site"
 
 </Definitions>
 
-You can also define your `site` using [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
+You can also define your `site` using an [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-inline-table).
 
 #### Storage Limits
 
@@ -289,7 +289,7 @@ For exceptionally large pages, Workers Sites may not be ideal. There is a 25MB l
 #### Exclusively including files/directories
 
 If you want to include only a certain set of files or directories in your `bucket`, add an `include` field to your
-`[site]` section of `wrangler.toml`:
+`[site]` section of your `wrangler.toml` file:
 
 ```toml
 [site]
@@ -302,8 +302,7 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 #### Excluding files/directories
 
-If you want to exclude files or directories in your `bucket`, add an `exclude` field to your
-`[site]` section of `wrangler.toml`:
+If you want to exclude files or directories in your `bucket`, add an `exclude` field to your `[site]` section of your `wrangler.toml` file:
 
 ```toml
 [site]
@@ -328,13 +327,13 @@ Wrangler will always ignore:
 
 #### More about include/exclude patterns
 
-You can learn more about the standard patterns used for include and exclude in the [gitignore documentation](https://git-scm.com/docs/gitignore).
+Refer to the [gitignore documentation](https://git-scm.com/docs/gitignore) to learn more about the standard matching patterns.
 
 #### Customizing your Sites Build
 
-Workers Sites projects use webpack by default. Though you can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), be aware of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. Though you can [bring your own webpack configuration](/cli-wrangler/webpack#using-with-workers-sites), be aware of your `entry` and `context` settings.
 
-You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. See the [custom builds](#build) section for more information.
+You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. Refer to the [custom builds](#build) section for more information.
 
 ### triggers
 
@@ -350,7 +349,7 @@ crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 <Definitions>
 
 - `crons` <PropMeta>optional</PropMeta>
-  - A set of cron expressions, where each expression is a separate schedule to run the Worker on.
+  - A set of [cron expressions](https://crontab.guru/), where each expression is a separate schedule to run the Worker on.
 
 </Definitions>
 
@@ -370,7 +369,7 @@ local_protocol = "https"
 
 - `ip` <PropMeta>optional</PropMeta>
 
-  - The IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
+  - IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
 
 - `port` <PropMeta>optional</PropMeta>
 
@@ -388,7 +387,7 @@ local_protocol = "https"
 
 ### build
 
-Customize the command used to build your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` _(in beta)_.
+A custom build command for your project. There are two configurations based on the format of your Worker: `service-worker` and `modules` (beta).
 
 #### Service Workers
 
@@ -438,19 +437,25 @@ format = "service-worker"
 
 </Definitions>
 
-<Aside>
+<Aside type="note">
 
-  **Note:** Make sure the `main` field in your `package.json` references the Worker script you want to publish.
+Ensure the `main` field in your `package.json` references the Worker script you want to publish.
 
 </Aside>
 
 #### Modules
 
-Workers now supports the ES Modules syntax. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which required a single file to be uploaded.
+Workers now supports the ES Modules syntax. Modules support in Cloudflare Workers is currently in beta. This format allows you to export a collection of files and/or modules, unlike the Service Worker format which requires a single file to be uploaded.
 
 Module Workers `export` their event handlers instead of using `addEventListener` calls.
 
-Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets) as arguments to the exported handlers. Previously, with the Service Worker format, these bindings were available as global variables.
+Modules receive all bindings (KV Namespaces, Environment Variables, and Secrets) as arguments to the exported handlers. With the Service Worker format, these bindings are available as global variables.
+
+<Aside type="note">
+
+Refer to the [`FetchEvent` documentation](https://developers.cloudflare.com/workers/runtime-apis/fetch-event) to learn more about the differences between the Service Worker and Module worker formats.
+
+</Aside>
 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
@@ -468,8 +473,6 @@ export default {
   }
 }
 ```
-
-Modules support in Cloudflare Workers is currently in beta.
 
 To create a Workers project using Wrangler and Modules, add a `[build]` section:
 
@@ -516,9 +519,9 @@ main = "./worker.mjs"
 
   - The relative path of the main module from `dir`, including the `./` prefix. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler.
 
-<Aside>
+<Aside type="note">
 
-  **Note:** If your project is written using CommonJS modules, you will need to re-export your handlers and Durable Object classes using an ES module shim. See the [modules-webpack-commonjs](https://github.com/cloudflare/modules-webpack-commonjs) template as an example.
+  If your project is written using CommonJS modules, you will need to re-export your handlers and Durable Object classes using an ES module shim. Refer to the [modules-webpack-commonjs](https://github.com/cloudflare/modules-webpack-commonjs) template as an example.
 
 </Aside>
 
