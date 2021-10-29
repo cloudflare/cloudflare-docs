@@ -102,7 +102,7 @@ There are three types of keys in a `wrangler.toml` file:
 
 - `account_id` <Type>inherited</Type> <PropMeta>required</PropMeta>
 
-  - This is the ID of the account associated with your zone. You might have more than one account, ensure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
+  - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
 
 - `zone_id` <Type>inherited</Type> <PropMeta>optional</PropMeta>
 
