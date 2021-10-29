@@ -33,6 +33,7 @@ These are the action types you can choose from:
 * **[Isolate](#isolate)**
 * **[Do Not Isolate](#do-not-isolate)**
 * **[Do Not Inspect](#do-not-inspect)**
+* **[Do Not Scan](#do-not-scan)**
 
 ### Allow
 
@@ -41,7 +42,6 @@ Rules with Allow actions allow outbound traffic to reach destinations you specif
 | Selector | Operator | Value | Action |
 | - | - | - | - |
 | Content Categories | in | `Education` | Allow |
-
 
 ### Block
 
@@ -73,6 +73,14 @@ When a *Do Not Inspect* rule is created for a given hostname, application, or ap
 The *Do Not Inspect* action is only available when matching against the host criteria.
 
 The L7 firewall will evaluate *Do Not Inspect* rules before any subsequent Allow or Block rules. For encrypted traffic, Gateway uses the Server Name Indicator (SNI) in the TLS header to determine whether to decrypt the traffic for further HTTP inspection against Allow or Block rules. All *Do Not Inspect* rules are evaluated first to determine if decryption should occur. This means regardless of precedence in a customer's list of rules, all *Do Not Inspect* rules will take precedence over Allow or Block rules.
+
+## Do Not Scan
+
+When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
+
+| Selector | Operator | Value | Acton |
+| - | - | - | - | - |
+| Hostname | Matches Regex | `.*example.com` | Do Not Scan |
 
 ## Selectors
 

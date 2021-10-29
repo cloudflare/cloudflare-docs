@@ -66,17 +66,12 @@ Build expressions to determine the set of elements you want to impact with your 
 
 Gateway matches network traffic against the following selectors, or criteria:
 
-* Destination IP
-* Destination Port
-* Source IP
-* Source Port
-
-| Selector | Description |
-| - | - |
-| Destination IP | The IP address of the request’s target |
-| Destination Port | The port number of the request’s target |
-| Source IP | The IP address of the user making the request |
-| Source Port | The port number of the user’s request |
+* **Destination IP**. The IP address of the request’s target.
+* **Destination Port**. The port number of the request’s target.
+* **Source IP**. The IP address of the user making the request.
+* **Source Port**. The port number of the user’s request.
+* **SNI**. The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
+* **SNI Domain**. The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for a subdomain-insensitive match.
 
 ### Operators
 
