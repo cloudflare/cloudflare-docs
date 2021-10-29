@@ -34,7 +34,7 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 2. Click the **Security** tab.
 3. Reload the page (Command-R in Mac OS, Ctrl-R in Windows).
 4. Click on the site under **Main origin**.
-5. Look on the right-hand tab under Connection to confirm that TLS 1.3 is listed as the _protocol_.
+5. Under **Connection**, confirm that the protocol is **TLS 1.3**.
 
 For Firefox:
 
