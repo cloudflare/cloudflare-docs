@@ -12,7 +12,7 @@ import TLS13Definition from "../../_partials/_tls-13-definition.md"
 TLS 1.3 is the newest, fastest, and most secure version of the TLS protocol.
 SSL/TLS is the protocol that encrypts communication between users and your website. When web traffic is encrypted with TLS, users will see the green padlock in their browser window.
 
-By turning on the TLS 1.3 feature, traffic to and from your website will be served over the TLS 1.3 protocol when supported by clients. TLS 1.3 protocol has improved latency over older versions, has several new features and is currently supported in both Chrome (starting with release 66), Firefox (starting with release 60) and in development for Safari and Edge browsers.
+By turning on the TLS 1.3 feature, traffic to and from your website will be served over the TLS 1.3 protocol when supported by clients. TLS 1.3 protocol has improved latency over older versions, has several new features, and is currently supported in both Chrome (starting with release 66), Firefox (starting with release 60), and in development for Safari and Edge browsers.
 
 ## Enable TLS 1.3
 
