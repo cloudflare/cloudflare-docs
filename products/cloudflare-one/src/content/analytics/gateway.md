@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Gateway 
 
-Use the Gateway analytics page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
+Use the Analytics - Gateway page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
 
 ![Overview of Gateway Analytics](../static/documentation/logs/gateway-analytics-overview.png)
 
