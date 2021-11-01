@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Manage DNS records
 
-DNS records help communication information about your domain to visitors and other web services.
+DNS records help communicate information about your domain to visitors and other web services.
 
 <Aside type="note" header="Note:">
 
