@@ -23,7 +23,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id
 
 In most cases the user-role to use is that of the `Administrator` role which is id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles` in the case of ENT customers whom have access to our full set of user roles.
 
-Once the invite is sent, the user will receive an invite to gain access to the account. If they don't already have a Cloudflare user then we will take them through the process to create one. Once created, they will be given access to the acecount and any zones already created.
+Once the invite is sent, the user will receive an invite to gain access to the account. If they don't already have a Cloudflare user then we will take them through the process to create one. Once created, they will be given access to the account and any zones already created.
 
 ## 2. Build an interface for customers to use
 
