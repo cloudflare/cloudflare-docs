@@ -107,6 +107,16 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
+- `primaryColor`
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to certain elements of the player's UI.
+
+    <Aside type="note">
+
+    **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+
+    </Aside>
+
 - `src`
 
   - The video id from the video you've uploaded to Cloudflare Stream should be included here.
