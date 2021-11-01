@@ -53,6 +53,8 @@ Once you have added an application to Cloudflare, that application will receive 
     <details>
     <summary>Provider-specific instructions</summary>
     <div>
+
+    This is not an exhaustive list, but the following links may be helpful:
     
      - [1and1](https://help.1and1.com/domains-c36931/manage-domains-c79822/dns-c37586/use-your-own-name-server-for-a-1and1-domain-a594904.html)
      - [101Domain](https://help.101domain.com/domain-management/nameservers-dns)
