@@ -9,6 +9,8 @@ With a partial (CNAME) setup, you can use Cloudflare DNS while maintaining autho
 
 Use this option to migrate individual subdomains onto Cloudflare or when you cannot update your authoritative DNS.
 
+---
+
 ## Set up a partial domain
 
 ---

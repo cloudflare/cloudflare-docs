@@ -9,7 +9,7 @@ CNAME flattening speeds up CNAME resolution and allows you to use a CNAME record
 
 ## How it works
 
-With CNAME flattening, Cloudflare finds the IP address that a CNAME points to. This process could involve a single lookup or multiple (if your CNAME points to another CNAME). Cloudflare then returns the final IP address instead of a CNAME record, allowing for DNS queries to resolve up to 30% faster.
+With CNAME flattening, Cloudflare finds the IP address that a CNAME points to. This process could involve a single lookup or multiple (if your CNAME points to another CNAME). Cloudflare then returns the final IP address instead of a CNAME record, helping DNS queries resolve up to 30% faster.
 
 For more details on the mechanics of CNAME flattening, refer to the [blog post](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/).
 

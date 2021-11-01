@@ -5,13 +5,15 @@ pcx-content-type: tutorial
 
 # Full setup
 
-To make Cloudflare your primary DNS provider and use our authoritative nameservers, you need to use information from Cloudflare to update admin settings at your current registrar.
+To use Cloudflare for your authoritative DNS, update the administration settings at your current registrar. 
 
 <Aside type="note" header="Note:">
 
 If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar), you do not need to update your authoritative nameservers. Registrar uses Cloudflare for authoritative DNS by default.
 
 </Aside>
+
+---
 
 ## Change your domain nameservers
 
@@ -104,4 +106,6 @@ If you see unexpected results, refer to [Nameserver FAQs](/zone-setups/troublesh
 
 ### Re-enable DNSSEC
 
-For help setting up DNSSEC in Cloudflare, refer to [Configuring DNSSEC](https://support.cloudflare.com/hc/articles/360006660072).
+When you updated your nameservers, you should have also disabled DNSSEC at your registrar. 
+
+You should now enable DNSSEC within Cloudflare to protect from domain spoofing. For additional help, refer to [Configuring DNSSEC](https://support.cloudflare.com/hc/articles/360006660072).
