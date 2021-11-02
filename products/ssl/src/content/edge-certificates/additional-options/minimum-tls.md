@@ -18,7 +18,7 @@ You can use the API to [configure cipher suites](https://developers.cloudflare.c
 
 Transport Layer Security (TLS) guarantees encrypted communications between a client and a web server via HTTPS. It replaces the now deprecated Secured Sockets Layer (SSL) protocol. When web traffic is encrypted with TLS, users see a green padlock in their browser window, near the URL box.
 
-You can manage the TLS version that your domain uses when proxied through Cloudflare by setting the **Minimum TLS Version** in the **SSL/TLS** tab of the Cloudflare dashboard. 
+You can manage the TLS version your domain uses when proxied through Cloudflare by setting the **Minimum TLS Version** in the **SSL/TLS** tab of the Cloudflare dashboard. 
 
 Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported.  TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
 
