@@ -52,7 +52,7 @@ async function handlePostRequest(request, ctx) {
   return response;
 }
 export default {
-  fetch(request, ctx) {
+  fetch(request, env, ctx) {
     try {
       if (request.method.toUpperCase() === "POST") {
         return handlePostRequest(request, ctx);

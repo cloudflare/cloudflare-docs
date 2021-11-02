@@ -19,8 +19,8 @@ async function triggerEvent(event) {
   console.log("cron processed", event.scheduledTime);
 }
 export default {
-  async scheduled(event) {
-    event.waitUntil(triggerEvent(event));
+  async scheduled(controller, env, ctx) {
+    ctx.waitUntil(triggerEvent(event));
   },
 };
 ```

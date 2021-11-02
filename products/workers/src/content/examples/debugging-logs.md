@@ -49,7 +49,7 @@ async function handleRequest(request, ctx) {
   return response;
 }
 export default {
-  fetch(request, ctx) {
+  fetch(request, env, ctx) {
     ctx.passThroughOnException();
     return handleRequest(request, ctx);
   },
