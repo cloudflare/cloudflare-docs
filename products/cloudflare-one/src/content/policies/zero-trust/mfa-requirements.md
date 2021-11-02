@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Enforce MFA
 
-With zero-trust policies, you can require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
+With Zero Trust policies, you can require that users log in to certain applications with specific types of multifactor authentication (MFA) methods. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key.
 
 This feature is only available if you are using the following identity providers:
 

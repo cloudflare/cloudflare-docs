@@ -22,9 +22,15 @@ pcx-content-type: concept
 
 </TableWrap>
 
-## Upload size limits
+## Request limits
 
-Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PATCH requests) which depend on your Cloudflare plan (this is separate from your Workers plan). All uploads larger than your plan limit will be rejected with an HTTP 413 error code ("Request entity too large"). Cloudflare Enterprise customers can [contact Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476) to request a larger upload limit. Learn more about [Cloudflare plans](https://www.cloudflare.com/plans/).
+URLs have a limit of 16KB.
+
+Request headers observe a total limit of 32KB, but each header is limited to 16KB. 
+
+Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
+
+Cloudflare Enterprise customers may contact [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500MB.
 
 <TableWrap>
 
@@ -36,6 +42,10 @@ Cloudflare has network-wide limits on the body size of uploads (HTTP POST/PUT/PA
 | Enterprise      | 500MB             |
 
 </TableWrap>
+
+## Response limits
+
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512MB for Free, Pro, and Business customers and 5GB for Enterprise customers.
 
 ## Worker limits
 
@@ -96,11 +106,11 @@ The following limits apply regardless of the plan used.
 
 <TableWrap>
 
-| Feature                       | Free   | Bundled |
-| ----------------------------- | ------ | ------- |
-| [Max object size](#cache-api) | 512 MB | 512 MB  |
-| [Calls/request](#cache-api)   | 50     | 50      |
-| [Storage limit](#cache-api)   | 5 GB   | 5 GB    |
+| Feature                               | Free   | Bundled |
+| ------------------------------------- | ------ | ------- |
+| [Max object size](#cache-api)         | 512 MB | 512 MB  |
+| [Calls/request](#cache-api)           | 50     | 50      |
+| [Storage/request](#cache-api)         | 5 GB   | 5 GB    |
 
 </TableWrap>
 
@@ -235,9 +245,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Script size
 
-<!-- TODO(soon): Broken link to Bindings API documentation. -->
-
-A Workers script plus any [Asset Bindings](/platform/scripts#resource-bindings) can be up to 1MB in size after compression.
+A Workers script can be up to 1MB in size after compression.
 
 ### Number of scripts
 

@@ -28,7 +28,7 @@ Visit the Cloudflare for Teams dashboard. Open the `Policies` page in the Gatewa
 
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
-Choose `DNS Domain` in the Selector, `matches regex`, in the Operator, and input the following value:
+Choose `Domain` in the Selector, `matches regex` in the Operator, and input the following value:
 
 ```
 [.]fail
@@ -45,6 +45,12 @@ Finish the policy by clicking **Create policy**.
 ![Block Action](../static/secure-web-gateway/block-tld/block-action.png)
 
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
+
+<Aside type="note">
+
+For more information on how policies work with regular expressions, refer to [Can I use regular expressions to build policies?](/faq/teams-policies-faq#can-i-use-regular-expressions-to-build-policies)
+
+</Aside>
 
 ## Review logs
 

@@ -7,7 +7,7 @@ pcx-content-type: common-configurations
 
 Teams allows you to create unique rules for parts of an application that share a root path. Imagine an example application is deployed at `dashboard.com/eng` that anyone on the engineering team should be able to access. However, a tool deployed at `dashboard.com/eng/exec` should only be accessed by the executive team. 
 
-When multiple rules are set for a common root path, its subdomains do not inherit rules. For example, when setting rules for `dashboard.com/eng` and `dashboard.com/eng/exec` separately, `dashboard.com/eng/exec` does not inherit the rule set for `dashboard.com/eng`. Instead, the more specific rule takes precedence.
+When multiple rules are set for a common root path, the more specific rule takes precedence. For example, when setting rules for `dashboard.com/eng` and `dashboard.com/eng/exec` separately, the more specific rule for `dashboard.com/eng/exec` takes precedence, and no rule is inherited from `dashboard.com/eng`. If no separate, specific rule is set for `dashboard.com/eng/exec`, it will inherit any rules set for `dashboard.com/eng`.
 
 In the Teams dashboard, when adding a [self-hosted web application](/applications/configure-apps/self-hosted-apps), you can choose to protect the entire website by entering its apex domain, or alternatively, you can specify any subdomains and paths in the dedicated fields.
 

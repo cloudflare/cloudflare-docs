@@ -91,7 +91,7 @@ Users connect to GitLab over SSH (port 22 here) and HTTP for the web app (port 8
 
 You can use Cloudflare Access to build Zero Trust rules to determine who can connect to both the web application of GitLab (HTTP) and who can connect over SSH.
 
-When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Cloudflare Tunnel, the zero-trust architecture looks like this:
+When a user makes a request to a site protected by Access, that request hits Cloudflare's network first. Access can then check if the user is allowed to reach the application. When integrated with Cloudflare Tunnel, the Zero Trust architecture looks like this:
 
 ![GitLab Services](../static/zero-trust-security/gitlab/teams-diagram.png)
 
@@ -101,7 +101,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard. Click `Add an application`.
+Once enabled, navigate to the `Applications` page in the Cloudflare for Teams Dashboard. Click `Add an application`.
 
 ![Applications Page](../static/secure-origin-connections/share-new-site/applications.png)
 
@@ -123,8 +123,6 @@ You can then add rules to determine who can reach the site.
 
 Click `Next` and `Next` again on the `Setup` page - this example does not require advanced CORS configuration. Repeat these steps for the second application, `gitlab-ssh.widgetcorp.tech`.
 
-![App List](../static/secure-origin-connections/gitlab/app-list.png)
-
 ## Cloudflare Tunnel
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
@@ -132,8 +130,8 @@ Cloudflare Tunnel creates a secure, outbound-only, connection between this machi
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
 
 ```bash
-sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 Once installed, authenticate the instance of `cloudflared` with the following command.
@@ -292,6 +290,6 @@ Cloudflare Tunnel will continue to run outbound-only connections and I can avoid
 
 ## View logs
 
-You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Cloudflare for Teams dashboard.
+You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Cloudflare for Teams Dashboard.
 
 ![View Logs](../static/zero-trust-security/gitlab/view-logs.png)

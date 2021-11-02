@@ -1,5 +1,56 @@
 # Changelog
 
+## 10/14/2021
+
+- `request.signal` will always return an `AbortSignal`.
+- Cloudflare Workers’ integration with Chrome DevTools profiling now more accurately reports the line numbers and time elapsed. Previously, the line numbers were shown as one line later then the actual code, and the time shown would be proportional but much longer than the actual time used.
+- Upgrade to v8 9.5. Refer to [V8 release v9.5 · V8](https://v8.dev/blog/v8-release-95) for more details.
+
+## 9/24/2021
+
+- The `AbortController` and `AbortSignal` objects are now available.
+- The Web Platform `queueMicrotask` API is now available.
+- It is now possible to use new `EventTarget()` and to create custom `EventTarget` subclasses.
+- The `once` option is now supported on `addEventTarget` to register event handlers that will be invoked only once.
+- Per the HTML specification, a listener passed in to the `addEventListener` function is allowed to either be a function or an object with a `handleEvent` member function. Previously, Workers only supported the function option, now it supports both.
+- The `Event` object now supports most standard methods and properties.
+- V8 updated from 9.3 to 9.4.
+
+## 9/3/2021
+
+- The `crypto.randomUUID()` method can be used to generate a new random version 4 UUID.
+- Durable Objects are now scheduled more evenly around a colocation (colo).
+
+## 8/5/2021
+
+- No user-facing changes. Just bug fixes & internal maintenance.
+
+## 7/30/2021
+
+- Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+
+## 7/23/2021
+
+- Performance and stability improvements.
+
+## 7/16/2021
+
+- Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
+- Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusal or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
+- Durable Object constructors may now initiate I/O, such as `fetch()` calls.
+- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
+- In Durable Objects, the callback passed to `storage.transaction()` can now return a value, which will be propagated as the return value of the `transaction()` call.
+
+## 7/13/2021
+
+- The preview service now prints a warning in the devtools console when a script uses `Response/Request.clone()` but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
+
+## 7/1/2021
+
+- Fixed bug where registering the same exact event listener method twice on the same event type threw an internal error.
+- Add support for the `.forEach()` method for `Headers`, `URLSearchParameters`, and `FormData`.
+
 ## 6/27/2021
 
 - WebCrypto: Implemented non-standard Ed25519 operation (algorithm NODE-ED25519, curve name NODE-ED25519). The Ed25519 implementation differs from NodeJS’s in that raw import/export of private keys is disallowed, per parity with ECDSA/ECDH.

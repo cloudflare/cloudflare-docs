@@ -78,9 +78,11 @@ To set up JumpCloud SAML as your identity provider:
 
     ![JumpCloud Application dialog](../../static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select SAML.
+1. Under **Login methods**, click **Add new**.
+
+1. Select **SAML**.
 
 1. Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
 

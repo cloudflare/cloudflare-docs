@@ -13,6 +13,12 @@ Cloudflare's gateway is hosted at https://cloudflare-ipfs.com/. You can find the
 basics on IPFS and [how to serve your website](/ipfs-gateway/connecting-website) through our gateway there. These
 docs are going to get further into the weeds.
 
+<Aside type="warning">
+
+To improve our service, the IPFS Gateway is now available in Private Beta. You can [register](https://forms.gle/3c2xAzawnDcqWzgN7) to get notified when the service opens to a wider audience.
+
+</Aside>
+
 ## Refresher on IPFS
 
 ### You’re a Client. And a Server.

@@ -22,7 +22,7 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that take arrays as an argument type require the `[*]` index operator, which returns an array of values for each field.
+Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/cf-firewall-language/values#arrays) for more information.
 
 The Cloudflare Firewall Rules language supports these transformation functions:
 
@@ -63,7 +63,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `ends_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** You can only use the `ends_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
 
@@ -130,7 +130,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `starts_with()` function in [rulesets](/cf-rulesets) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** You can only use the `starts_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
     </Aside>
 

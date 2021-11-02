@@ -9,19 +9,13 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. In your Okta dashboard, click **Admin**.
 
- ![Okta Applications](../../static/documentation/identity/okta/click-admin.png)
-
 1. Select the **Applications** tab in the Admin dashboard.
 
  ![Admin Dash](../../static/documentation/identity/okta/select-admin.png)
 
 1. Click **Add Application** on the next page.
 
- ![Add App](../../static/documentation/identity/okta/add-app.png)
-
 1. Click **Create New App** in the top right corner.
-
- ![Create New App](../../static/documentation/identity/okta/create-new-app.png)
 
 1. Choose `Web` as the Platform and toggle **OpenID Connect**. Click **Create**.
 
@@ -41,8 +35,6 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1. Scroll down to the `OpenID ConnectID Token`.
 
- ![Scroll Down](../../static/documentation/identity/okta/scroll-down.png)
-
 1. Click **Edit** and edit the Groups claim filter to Matches regex and the value `.*`.
 
  ![Scroll Down](../../static/documentation/identity/okta/okta-edit.png)
@@ -59,19 +51,19 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
  ![Credentials](../../static/documentation/identity/okta/credentials.png)
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select **Okta** as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select **Okta** as your IdP.
 
 1. Input the ID, secret, and the Okta account URL.
 
-1. If you have more than 100 Okta groups. [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. (optional)
+1. (optional) [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. This will prevent your Okta groups from failing if you have more than 100 groups.
 
 1. Click **Save**.
 
-   ![Input](../../static/documentation/identity/okta/Add_Okta_Cred_API_Token.png)
-
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Okta.
+To test that your connection is working, navigate to **Settings > Authentication > Login methods** and click **Test** next to Okta.
 
 ## Example API Configuration
 

@@ -17,9 +17,6 @@ These steps help you set up Centrify as your identity provider:
     ![Centrify Security Overview](../../static/documentation/identity/centrify/centrify-1.png)
 
 1. Click **Add Web Apps**.
-
-    ![Add Web Apps](../../static/documentation/identity/centrify/centrify-2.png)
-
 1. Select the **Custom** tab and click **Add OpenID Connect**.
 1. On the **Add Web App** screen click **Yes** to create an OpenID Connect application.
 
@@ -59,8 +56,8 @@ These steps help you set up Centrify as your identity provider:
 
     ![Centrify User Access](../../static/documentation/identity/centrify/centrify-7.png)
 
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. Under **Login methods**, click **Add new**.
 1. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 1. Click **Save**.
 

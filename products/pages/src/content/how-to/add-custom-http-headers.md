@@ -4,7 +4,13 @@ pcx-content-type: how-to
 
 # Add custom HTTP headers
 
-Cloudflare provides HTTP header customization for Pages projects through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). You may want to add, remove, or alter HTTP headers for security or performance reasons. 
+<Aside type="note">
+
+Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](https://developers.cloudflare.com/pages/platform/headers) for more information.
+
+</Aside>
+
+More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/). 
 
 If you have not deployed a Worker before, get started with our [tutorial](https://developers.cloudflare.com/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page. 
 
@@ -23,9 +29,10 @@ addEventListener('fetch', event => {
 })
 
 async function handleRequest(request) {
+  // This proxies your Pages application under the condition that your Worker script is deployed on the same custom domain as your Pages project
   const response = await fetch(request)
   
-  // Clone the response so that it's no longer immutable
+  // Clone the response so that it is no longer immutable
   const newResponse = new Response(response.body, response)
 
   // Add a custom header with a value
@@ -42,7 +49,15 @@ async function handleRequest(request) {
 }
 ```
 
-<Aside>
+## Deploying a Workers function in the dashboard
+
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](https://developers.cloudflare.com/workers/examples).
+
+Click **Save and Deploy** when your script is ready and set a [route](https://developers.cloudflare.com/workers/platform/routes/) in your domain's zone settings.
+
+For example, [here is a Workers script](https://developers.cloudflare.com/workers/examples/security-headers) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
+
+## Deploying a Workers function using the CLI
 
 If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the Workers CLI tool. 
 
@@ -52,11 +67,6 @@ header: Generating a serverless function with wrangler
 ---
 $ wrangler generate projectname https://github.com/cloudflare/custom-headers-example
 ```
-
-</Aside>
-
-## Deploying a Workers function
-
 To operate your Workers function alongside your Pages application, deploy it to the same custom domain as your Pages application. To do this, update the `wrangler.toml` file in your project with your account and zone details: 
 
 ```toml
@@ -81,4 +91,4 @@ Once you have configured your `wrangler.toml`, run `wrangler publish` in your te
 $ wrangler publish
 ``` 
 
-After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal. 
+After you have deployed your Worker, your desired HTTP header adjustments will take effect. While the Worker is deployed, you should continue to see the content from your Pages application as normal.

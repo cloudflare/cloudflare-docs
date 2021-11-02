@@ -4,7 +4,7 @@ pcx-content-type: interim
 
 # Querying Magic Transit Tunnel Health Check Results with GraphQL
 
-In this example, we're going to use the GraphQL Analytics API to query Magic Transit Health check results which are aggregated from individual health checks carried out by Cloudflare servers to GRE tunnels you've set up to work with Magic Transit during the [onboarding process](https://developers.cloudflare.com/magic-transit/set-up/onboarding). We can query up to one week of data for dates up to three months ago.
+In this example, you are going to use the GraphQL Analytics API to query Magic Transit Health check results which are aggregated from individual health checks carried out by Cloudflare servers to GRE tunnels you have set up to work with Magic Transit during the [onboarding process](https://developers.cloudflare.com/magic-transit/get-started). You can query up to one week of data for dates up to three months ago.
 
 The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare colo, and outputs the requested fields. Be sure to replace `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetimeStart`, `datetimeEnd` and `accountTag` variables as needed.
 

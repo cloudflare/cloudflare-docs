@@ -1,6 +1,7 @@
 ---
 order: 0
 pcx-content-type: how-to
+hidden: true
 ---
 
 # Private networks
@@ -16,12 +17,12 @@ In order to connect private networks, you'll first need to:
 1. [Download and install `cloudflared`](/connections/connect-apps/install-and-setup/installation) in your private network
 2. [Authenticate `cloudflared`](/connections/connect-apps/install-and-setup/setup)
 
-Once `cloudflared` has been installed and authenticated, you will need 3 high-level steps to connect your network to users enrolled in your organization's Cloudflare for Teams account.
+Once `cloudflared` has been installed and authenticated, you will need 4 high-level steps to connect your network to users enrolled in your organization's Cloudflare for Teams account.
 
 1. [Create a Tunnel](/connections/connect-networks/private-net/create-tunnel)
 2. [Configure IPs in WARP](/connections/connect-devices/warp/exclude-traffic)
 3. [Run your Tunnel](/connections/connect-apps/run-tunnel)
-4. [Enroll clients to connect](/connections/connect-devices/warp/device-enrollment)
+4. [Enroll clients to connect](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions)
 
 Be sure to check out our [Tutorials](/tutorials), where you can also find
 best practices for managing Tunnels as an administrator.

@@ -7,7 +7,16 @@ pcx-content-type: how-to
 
 ## Browser
 
+Browsers can be configured to use any DoH endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway location as your DoH endpoint, otherwise Gateway DNS filtering will not occur in that browser. 
+
 ### Firefox
+
+<Aside type='note'>
+
+If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
+
+</Aside>
+
 
 <TableWrap>
 

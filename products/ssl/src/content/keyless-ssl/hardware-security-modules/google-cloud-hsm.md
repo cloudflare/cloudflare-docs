@@ -20,7 +20,11 @@ Make sure that you have:
 
 To set up the Google Cloud HSM, [create a key ring](https://cloud.google.com/kms/docs/hsm#kms-create-key-hsm-web) and indicate its location.
 
-<Aside type="note" header="Note:">Only certain <a href="https://cloud.google.com/kms/docs/locations#hsm-regions">locations</a> support Google Cloud HSM.</Aside>
+<Aside type="note" header="Note:">
+
+Only [certain locations](https://cloud.google.com/kms/docs/locations#hsm-regions) support Google Cloud HSM.
+
+</Aside>
 
 ---
 
@@ -57,7 +61,11 @@ Create a key, including the following information:
 
 After creating a key ring and key, [import the private key](https://cloud.google.com/kms/docs/importing-a-key).
 
-<Aside type="note" header="Note:">You need to <a href="https://cloud.google.com/kms/docs/formatting-keys-for-import#formatting_asymmetric_keys">convert</a> your key from a PEM to DER format.</Aside>
+<Aside type="note" header="Note:">
+
+You need to [convert your key](https://cloud.google.com/kms/docs/formatting-keys-for-import#formatting_asymmetric_keys) from a PEM to DER format.
+
+</Aside>
 
 ---
 
@@ -66,6 +74,7 @@ After creating a key ring and key, [import the private key](https://cloud.google
 Once you’ve imported the key, copy the **Resource name** from the UI. Then, add this value to the `gokeyless` YAML file under `private_key_stores`.
 
 With the config file saved, restart `gokeyless` and verify it started successfully.
+
 ```
 $ sudo systemctl restart gokeyless.service
 $ sudo systemctl status gokeyless.service -l

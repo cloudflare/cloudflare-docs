@@ -1,0 +1,288 @@
+---
+type: overview
+pcx-content-type: reference
+order: 4
+---
+
+# NAv1 to NAv2 schema map
+
+The following table lists direct mappings between NAv1 and NAv2 fields, when available, and provides related fields when there is no direct mapping available.
+
+<TableWrap>
+
+<table style='width:100%; font-size: 85%'>
+  <thead>
+   <tr>
+      <th>ipFlows1mGroups</th>
+      <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
+      <th>dosdNetworkAnalytics-AdaptiveGroups</th>
+      <th>dosdAttackAnalytics-AdaptiveGroups</th>
+      <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>
+      <th>magicFirewallNetworkAnalytics-AdaptiveGroups</th>
+   </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>date</code></td>
+      <td><em>Related fields:</em><br/><code>datetime</code><br/><code>datetimeTenSeconds</code></td>
+      <td><em>Related fields:</em><br/><code>datetime</code><br/><code>datetimeTenSeconds</code></td>
+      <td><em>Related fields:</em><br/><code>datetime</code><br/><code>datetimeTenSeconds</code></td>
+      <td><em>Related fields:</em><br/><code>datetime</code><br/><code>datetimeTenSeconds</code></td>
+      <td><em>Related fields:</em><br/><code>datetime</code><br/><code>datetimeTenSeconds</code></td>
+    </tr>
+    <tr>
+      <td><code>datetimeMinute</code></td>
+      <td><code>datetimeMinute</code></td>
+      <td><code>datetimeMinute</code></td>
+      <td><code>datetimeMinute</code></td>
+      <td><code>datetimeMinute</code></td>
+      <td><code>datetimeMinute</code></td>
+    </tr>
+    <tr>
+      <td><code>datetimeFiveMinutes</code></td>
+      <td><code>datetimeFiveMinutes</code></td>
+      <td><code>datetimeFiveMinutes</code></td>
+      <td><code>datetimeFiveMinutes</code></td>
+      <td><code>datetimeFiveMinutes</code></td>
+      <td><code>datetimeFiveMinutes</code></td>
+    </tr>
+    <tr>
+      <td><code>datetimeFifteenMinutes</code></td>
+      <td><code>datetimeFifteenMinutes</code></td>
+      <td><code>datetimeFifteenMinutes</code></td>
+      <td><code>datetimeFifteenMinutes</code></td>
+      <td><code>datetimeFifteenMinutes</code></td>
+      <td><code>datetimeFifteenMinutes</code></td>
+    </tr>
+    <tr>
+      <td><code>datetimeHour</code></td>
+      <td><code>datetimeHour</code></td>
+      <td><code>datetimeHour</code></td>
+      <td><code>datetimeHour</code></td>
+      <td><code>datetimeHour</code></td>
+      <td><code>datetimeHour</code></td>
+    </tr>
+    <tr>
+      <td><code>attackId</code>*</td>
+      <td></td>
+      <td><code>attackId</code>*</td>
+      <td><code>attackId</code>*</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackType</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackType</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackMitigationType</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackMitigationType</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackProtocol</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackIpProtocol</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackDestinationIP</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackDestinationIp</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackSourcePort</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackSourcePort</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackDestinationPort</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackDestinationPort</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>attackTcpFlags</code></td>
+      <td></td>
+      <td></td>
+      <td><code>attackTcpFlags</code></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>sourceIPCountry</code></td>
+      <td><code>sourceCountry</code></td>
+      <td><code>sourceCountry</code></td>
+      <td><code>sourceCountry</code></td>
+      <td><code>sourceCountry</code></td>
+      <td><code>sourceCountry</code></td>
+    </tr>
+    <tr>
+      <td><code>sourceIPAsn</code></td>
+      <td><code>sourceAsn</code></td>
+      <td><code>sourceAsn</code></td>
+      <td><code>sourceAsn</code></td>
+      <td><code>sourceAsn</code></td>
+      <td><code>sourceAsn</code></td>
+    </tr>
+    <tr>
+      <td><code>sourceIPASNDescription</code></td>
+      <td><em>Related field:</em><br/><code>sourceGeohash</code></td>
+      <td><em>Related field:</em><br/><code>sourceGeohash</code></td>
+      <td><em>Related field:</em><br/><code>sourceGeohash</code></td>
+      <td><em>Related field:</em><br/><code>sourceGeohash</code></td>
+      <td><em>Related field:</em><br/><code>sourceGeohash</code></td>
+    </tr>
+    <tr>
+      <td><code>coloCode</code></td>
+      <td><code>coloCode</code></td>
+      <td><code>coloCode</code></td>
+      <td><code>coloCode</code></td>
+      <td><code>coloCode</code></td>
+      <td><code>coloCode</code></td>
+    </tr>
+    <tr>
+      <td><code>coloCity</code></td>
+      <td><code>coloCity</code></td>
+      <td><code>coloCity</code></td>
+      <td><code>coloCity</code></td>
+      <td><code>coloCity</code></td>
+      <td><code>coloCity</code></td>
+    </tr>
+    <tr>
+      <td><code>coloCountry</code></td>
+      <td><code>coloCountry</code></td>
+      <td><code>coloCountry</code></td>
+      <td><code>coloCountry</code></td>
+      <td><code>coloCountry</code></td>
+      <td><code>coloCountry</code></td>
+    </tr>
+    <tr>
+      <td><code>coloRegion</code></td>
+      <td><em>Related field:</em><br/><code>coloGeohash</code></td>
+      <td><em>Related field:</em><br/><code>coloGeohash</code></td>
+      <td><em>Related field:</em><br/><code>coloGeohash</code></td>
+      <td><em>Related field:</em><br/><code>coloGeohash</code></td>
+      <td><em>Related field:</em><br/><code>coloGeohash</code></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <th>ipFlows1mGroups</th>
+      <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
+      <th>dosdNetworkAnalytics-AdaptiveGroups</th>
+      <th>dosdAttackAnalytics-AdaptiveGroups</th>
+      <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>
+      <th>magicFirewallNetworkAnalytics-AdaptiveGroups</th>
+    </tr>
+    <tr>
+      <td><code>ipVersion</code></td>
+      <td><code>ethertype</code></td>
+      <td><code>ethertype</code></td>
+      <td></td>
+      <td><code>ethertype</code></td>
+      <td><code>ethertype</code></td>
+    </tr>
+    <tr>
+      <td><code>bits</code><br/>(divided by 8)</td>
+      <td><code>ipTotalLength</code></td>
+      <td><code>ipTotalLength</code></td>
+      <td></td>
+      <td><code>ipTotalLength</code></td>
+      <td><code>ipTotalLength</code></td>
+    </tr>
+    <tr>
+      <td><code>packets</code></td>
+      <td><em>n/a</em></td>
+      <td><em>n/a</em></td>
+      <td></td>
+      <td><em>n/a</em></td>
+      <td><em>n/a</em></td>
+    </tr>
+    <tr>
+      <td><code>ipProtocol</code></td>
+      <td><code>ipProtocol</code></td>
+      <td><code>ipProtocol</code></td>
+      <td></td>
+      <td><code>ipProtocol</code></td>
+      <td><code>ipProtocol</code></td>
+    </tr>
+    <tr>
+      <td><code>sourceIP</code></td>
+      <td><code>ipSourceAddress</code></td>
+      <td><code>ipSourceAddress</code></td>
+      <td></td>
+      <td><code>ipSourceAddress</code></td>
+      <td><code>ipSourceAddress</code></td>
+    </tr>
+    <tr>
+      <td><code>destinationIP</code></td>
+      <td><code>ipDestinationAddress</code></td>
+      <td><code>ipDestinationAddress</code></td>
+      <td></td>
+      <td><code>ipDestinationAddress</code></td>
+      <td><code>ipDestinationAddress</code></td>
+    </tr>
+    <tr>
+      <td><code>destinationIPv4Range24</code></td>
+      <td><code>ipDestinationSubnet</code></td>
+      <td><code>ipDestinationSubnet</code></td>
+      <td></td>
+      <td><code>ipDestinationSubnet</code></td>
+      <td><code>ipDestinationSubnet</code></td>
+    </tr>
+    <tr>
+      <td><code>destinationIPv4Range23</code></td>
+      <td><em>n/a</em></td>
+      <td><em>n/a</em></td>
+      <td></td>
+      <td><em>n/a</em></td>
+      <td><em>n/a</em></td>
+    </tr>
+    <tr>
+      <td><code>sourcePort</code></td>
+      <td><code>sourcePort</code></td>
+      <td><code>sourcePort</code></td>
+      <td></td>
+      <td><code>sourcePort</code></td>
+      <td><code>sourcePort</code></td>
+    </tr>
+    <tr>
+      <td><code>destinationPort</code></td>
+      <td><code>destinationPort</code></td>
+      <td><code>destinationPort</code></td>
+      <td></td>
+      <td><code>destinationPort</code></td>
+      <td><code>destinationPort</code></td>
+    </tr>
+    <tr>
+      <td><code>tcpFlags</code></td>
+      <td><code>tcpFlags</code></td>
+      <td><code>tcpFlags</code></td>
+      <td></td>
+      <td><code>tcpFlags</code></td>
+      <td><code>tcpFlags</code></td>
+    </tr>
+  </tbody>
+</table>
+
+</TableWrap>
+
+_* The `attackId` field value may be different between NAv1 and NAv2 for the same attack._

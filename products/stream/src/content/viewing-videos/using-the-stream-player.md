@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Using the Stream player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed URL](/viewing-videos/securing-your-stream)) replacing `$VIDEOID` in the example below.
+The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/viewing-videos/securing-your-stream)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe
@@ -107,14 +107,20 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
+    <Aside type="note">
+
+      **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
+
+    </Aside>
+    
 - `primaryColor`
 
   - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to certain elements of the player's UI.
 
     <Aside type="note">
 
-    **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
-
+      **Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+      
     </Aside>
 
 - `src`
@@ -122,3 +128,6 @@ Player options are configured with querystring parameters in the iframe's `src` 
   - The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
 </Definitions>
+
+## Debug Info
+  The Stream player Debug menu can be shown and hidden using the key combination `Shift-D` while the video is playing.

@@ -26,7 +26,6 @@ const SitePage = ({ pageContext: page, children, location }) => {
   const htmlProps = {}
   htmlProps["is-site-page"] = ""
   htmlProps["is-docs-page"] = ""
-  htmlProps["search-disabled"] = ""
 
   return (
     <>

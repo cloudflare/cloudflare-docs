@@ -5,6 +5,7 @@ import { Link } from "gatsby"
 import CloudflareLogo from "cloudflare-docs-engine/src/components/cloudflare-logo"
 import DocsNavLogoLockup from "cloudflare-docs-engine/src/components/docs-nav-logo-lockup"
 import ThemeToggle from "cloudflare-docs-engine/src/components/theme-toggle"
+import SiteSearch from "./site-search"
 
 import "../css/components/site-header.css"
 
@@ -24,6 +25,10 @@ const SiteHeader = () => (
             )}
           />
         </Link>
+      </div>
+
+      <div className="SiteHeader--search">
+        <SiteSearch/>
       </div>
 
       <div className="SiteHeader--nav">

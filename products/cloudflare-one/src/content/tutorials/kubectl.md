@@ -26,7 +26,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ## Create a Zero Trust policy
 
-First, navigate to the [Cloudflare for Teams dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
+First, navigate to the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
 
 ![App List](../static/zero-trust-security/ssh/app-list.png)
 
@@ -34,7 +34,7 @@ Choose **Self-hosted** on the next page.
 
 ![Add App](../static/zero-trust-security/ssh/add-app.png)
 
-Input a subdomain where your application will be availble to users.
+Input a subdomain where your application will be available to users.
 
 ![Configure](../static/zero-trust-security/ssh/configure-app.png)
 
@@ -48,13 +48,13 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 ## Install `cloudflared`
 
-Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
 
 ```sh
-sudo wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
-sudo dpkg -i ./cloudflared-stable-linux-amd64.deb
+sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i ./cloudflared-linux-amd64.deb
 ```
 
 ## Authenticate `cloudflared`

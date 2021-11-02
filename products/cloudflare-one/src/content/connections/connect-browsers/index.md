@@ -15,7 +15,7 @@ Cloudflare Browser Isolation works by intercepting normal browsing traffic and s
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
 
-![Diagram of how Browser Isolation integrates with WARP and Gateway](../../static/documentation/rbi/cloudflare-one-browser-diagram.png)
+![Diagram of how Browser Isolation integrates with WARP and Gateway](../../static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
 
 Browser Isolation is integrated into Cloudflare for Teams [HTTP Policies](/policies/filtering/http-policies).
 

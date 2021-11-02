@@ -15,11 +15,9 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Product                 | `pathPrefix`         | Test                                                                                  | Prod                                                           |
 | :---------------------- | :------------------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------- |
 | 1.1.1.1                 | 1.1.1.1              | [Test](https://1-1-1-1.cloudflare-docs.workers.dev/1.1.1.1)                           | [Prod](https://developers.cloudflare.com/1.1.1.1)              |
-| Access                  | access               | [Test](https://access.cloudflare-docs.workers.dev/access)                             | [Prod](https://developers.cloudflare.com/access)               |
 | Analytics               | analytics            | [Test](https://analytics.cloudflare-docs.workers.dev/analytics)                       | [Prod](https://developers.cloudflare.com/analytics)            |
 | API                     | api                  | [Test](https://api.cloudflare-docs.workers.dev/api)                                   | [Prod](https://developers.cloudflare.com/api)                  |
 | Automatic Platform Optimization | automatic-platform-optimization | [Test](https://automatic-platform-optimization.cloudflare-docs.workers.dev/automatic-platform-optimization) | [Prod](https://developers.cloudflare.com/automatic-platform-optimization) |
-| Argo Tunnel             | argo-tunnel          | [Test](https://argo-tunnel.cloudflare-docs.workers.dev/argo-tunnel)                   | [Prod](https://developers.cloudflare.com/argo-tunnel)          |
 | Bots                    | bots                 | [Test](https://bots.cloudflare-docs.workers.dev/bots)                                 | [Prod](https://developers.cloudflare.com/bots)     
 | BYOIP                   | byoip                | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               | [Prod](https://developers.cloudflare.com/byoip)                |
 | Cloudflare One          | cloudflare-one       | [Test](https://cloudflare-one.cloudflare-docs.workers.dev/cloudflare-one)             | [Prod](https://developers.cloudflare.com/cloudflare-one)       |
@@ -28,11 +26,11 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Events                  | events               | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
 | Firewall                | firewall             | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         | [Prod](https://developers.cloudflare.com/firewall)             |
 | Fundamentals            | fundamentals         | [Test](https://fundamentals.cloudflare-docs.workers.dev/fundamentals)                 | [Prod](https://developers.cloudflare.com/fundamentals)         |
-| Gateway                 | gateway              | [Test](https://gateway.cloudflare-docs.workers.dev/gateway)                           | [Prod](https://developers.cloudflare.com/gateway)              |
 | HTTP/3                  | http3                | [Test](https://http3.cloudflare-docs.workers.dev/http3)                               | [Prod](https://developers.cloudflare.com/http3)                |
-| Image Resizing          | images               | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
+| Image Optimization      | images               | [Test](https://images.cloudflare-docs.workers.dev/images)                             | [Prod](https://developers.cloudflare.com/images)               |
 | Load Balancing          | load-balancing       | [Test](https://load-balancing.cloudflare-docs.workers.dev/load-balancing)             | [Prod](https://developers.cloudflare.com/load-balancing)       |
 | Logs                    | logs                 | [Test](https://logs.cloudflare-docs.workers.dev/logs)                                 | [Prod](https://developers.cloudflare.com/logs)                 |
+| Magic Firewall          | magic-firewall        | [Test](https://magic-firewall.cloudflare-docs.workers.dev/magic-firewall)            | [Prod](https://developers.cloudflare.com/magic-firewall)        |
 | Magic Transit           | magic-transit        | [Test](https://magic-transit.cloudflare-docs.workers.dev/magic-transit)               | [Prod](https://developers.cloudflare.com/magic-transit)        |
 | Network Interconnect    | network-interconnect | [Test](https://network-interconnect.cloudflare-docs.workers.dev/network-interconnect) | [Prod](https://developers.cloudflare.com/network-interconnect) |
 | Pages                   | pages                | [Test](https://pages.cloudflare-docs.workers.dev/pages)                               | [Prod](https://developers.cloudflare.com/pages)                |
@@ -40,6 +38,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Randomness Beacon       | randomness-beacon    | [Test](https://randomness-beacon.cloudflare-docs.workers.dev/randomness-beacon)       | [Prod](https://developers.cloudflare.com/randomness-beacon)    |
 | Registrar               | registrar            | [Test](https://registrar.cloudflare-docs.workers.dev/registrar)                       | [Prod](https://developers.cloudflare.com/registrar)            |
 | Rules                   | rules                | [Test](https://rules.cloudflare-docs.workers.dev/rules)                               | [Prod](https://developers.cloudflare.com/rules)                |
+| Ruleset Engine          | ruleset-engine       | [Test](https://ruleset-engine.cloudflare-docs.workers.dev/ruleset-engine)             | [Prod](https://developers.cloudflare.com/ruleset-engine)       |
 | Spectrum                | spectrum             | [Test](https://spectrum.cloudflare-docs.workers.dev/spectrum)                         | [Prod](https://developers.cloudflare.com/spectrum)             |
 | SSL                     | ssl                  | [Test](https://ssl.cloudflare-docs.workers.dev/ssl)                                   | [Prod](https://developers.cloudflare.com/ssl)                  |
 | Stream                  | stream               | [Test](https://stream.cloudflare-docs.workers.dev/stream)                             | [Prod](https://developers.cloudflare.com/stream)               |

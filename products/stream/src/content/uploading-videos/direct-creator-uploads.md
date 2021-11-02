@@ -38,7 +38,7 @@ Additionally, you can control security features through these fields:
   - `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
     - Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
 
-  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>  
+  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>
     - Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
 
   - `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
@@ -193,7 +193,7 @@ The response will contain a `Location` header which provides the one-time URL th
 
 Here is a demo Cloudflare Worker script which returns the one-time upload URL:
 
-```
+```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -203,7 +203,7 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const init = {
+  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", {
     method: 'POST',
     headers: {
       'Authorization': 'bearer $TOKEN',
@@ -211,23 +211,30 @@ async function handleRequest(request) {
       'Upload-Length': request.headers.get('Upload-Length'),
       'Upload-Metadata': request.headers.get('Upload-Metadata')
     },
-  }
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", init)
-  const results = await gatherResponse(response)
-  return new Response(null, {headers: {'Access-Control-Expose-Headers':'Location','Access-Control-Allow-Headers':'*','Access-Control-Allow-Origin':'*','location':results}})
+  })
 
-}
+  const destination = response.headers.get('Location')
 
-async function gatherResponse(response) {
-  const { headers } = response
-  return await headers.get('location')
-
+  return new Response(null, {
+    headers: {
+      'Access-Control-Expose-Headers': 'Location',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin':'*',
+      'Location': destination
+    }
+  })
 }
 ```
 
-Once you have the tokenized URL, you can pass it to the tus client to begin the upload. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
-To test your end point which returns the tokenized URL, visit the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe) and paste your end point URL in the "Upload endpoint" field.
+### Testing your Direct Creator Upload Endpoint
+
+Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the `Upload endpoint` field and then try to upload a video. 
+
+When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL. 
+
+Please note that if you are developing on localhost, your test using the codepen may fail. Before testing, it is best to push your endpoint to a server with an IP and/or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
 ### Upload-Metadata header syntax
 

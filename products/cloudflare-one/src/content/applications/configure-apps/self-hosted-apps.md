@@ -43,7 +43,7 @@ Make sure you create [Zero Trust policies](/policies/zero-trust) before connecti
 1. From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
   <Aside>
-  When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the <a href="/applications/configure-apps/app-paths#using-wildcards-in-subdomains-and-paths">Application paths</a> page.
+  When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the <a href="/policies/zero-trust/app-paths">Application paths</a> page.
   </Aside>
 
 1. Scroll down to the **Application logo** card to configure your application logo.

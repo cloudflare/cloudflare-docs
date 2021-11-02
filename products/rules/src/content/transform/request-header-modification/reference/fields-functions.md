@@ -14,14 +14,18 @@ The available fields when setting an HTTP request header value using an expressi
 * `cf.client_trust_score`
 * `cf.threat_score`
 * `cf.colo.id`
+* `cf.edge.server_ip`
 * `cf.edge.server_port`
+* `cf.edge.client_port`
 * `cf.zone.name`
 * `cf.metal.id`
+* `cf.ray_id`
 * `cf.tls_client_auth.*`
 * `http.cookie`
 * `http.host`
 * `http.referer`
 * `http.request.headers`
+* `http.request.accepted_languages`
 * `http.request.method`
 * `http.request.timestamp.sec`
 * `http.request.timestamp.msec`
@@ -34,6 +38,9 @@ The available fields when setting an HTTP request header value using an expressi
 * `http.user_agent`
 * `http.x_forwarded_for`
 * `ip.src`
+* `ip.src.lat`
+* `ip.src.lon`
+* `ip.src.city`
 * `ip.geoip.*`
 * `ssl`
 

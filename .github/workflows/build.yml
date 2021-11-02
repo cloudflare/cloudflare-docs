@@ -10,35 +10,38 @@ jobs:
     outputs:
       developers-site: ${{ steps.filter.outputs.developers-site }}
       onedot: ${{ steps.filter.outputs.onedot }}
-      access: ${{ steps.filter.outputs.access }}
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
       api-security: ${{ steps.filter.outputs.api-security }}
-      argo-tunnel: ${{ steps.filter.outputs.argo-tunnel }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
+      cache: ${{ steps.filter.outputs.cache }}
+      client-ip-geolocation: ${{ steps.filter.outputs.client-ip-geolocation }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
-      gateway: ${{ steps.filter.outputs.gateway }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
-      http3: ${{ steps.filter.outputs.http3 }}
+      http3: ${{ steps.filter.outputs.http3 }}      
       images: ${{ steps.filter.outputs.images }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
+      magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
       magic-wan: ${{ steps.filter.outputs.magic-wan }}
+      network-error-logging: ${{ steps.filter.outputs.network-error-logging }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       railgun: ${{ steps.filter.outputs.railgun }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
+      partners: ${{ steps.filter.outputs.partners }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
+      ruleset-engine: ${{ steps.filter.outputs.ruleset-engine }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -59,22 +62,22 @@ jobs:
               - 'developers.cloudflare.com/**'
             onedot:
               - 'products/1.1.1.1/**'
-            access:
-              - 'products/access/**'
             analytics:
               - 'products/analytics/**'
             api:
               - 'products/api/**'
             api-security:
               - 'products/api-security/**'
-            argo-tunnel:
-              - 'products/argo-tunnel/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
               - 'products/bots/**'
             byoip:
               - 'products/byoip/**'
+            cache:
+              - 'products/cache/**'
+            client-ip-geolocation:
+              - 'products/client-ip-geolocation/**'
             cloudflare-one:
               - 'products/cloudflare-one/**'
             distributed-web:
@@ -87,28 +90,32 @@ jobs:
               - 'products/firewall/**'
             fundamentals:
               - 'products/fundamentals/**'
-            gateway:
-              - 'products/gateway/**'
             browser-isolation:
               - 'products/browser-isolation/**'
             http3:
-              - 'products/http3/**'
+              - 'products/http3/**'            
             images:
               - 'products/images/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
               - 'products/logs/**'
+            magic-firewall:
+              - 'products/magic-firewall/**'
             magic-transit:
               - 'products/magic-transit/**'
             magic-wan:
               - 'products/magic-wan/**'
+            network-error-logging:
+              - 'products/network-error-logging/**'
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
               - 'products/pages/**'
             page-shield:
               - 'products/page-shield/**'
+            partners:
+              - 'products/partners/**'  
             railgun:
               - 'products/railgun/**'
             randomness-beacon:
@@ -117,6 +124,8 @@ jobs:
               - 'products/registrar/**'
             rules:
               - 'products/rules/**'
+            ruleset-engine:
+              - 'products/ruleset-engine/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -163,25 +172,6 @@ jobs:
       run:
         shell: bash
         working-directory: products/1.1.1.1
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
-  build-access:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.access == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/access
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -250,26 +240,6 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
-  build-argo-tunnel:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.argo-tunnel == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/argo-tunnel
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
-
   build-automatic-platform-optimization:
     runs-on: ubuntu-latest
     needs: changes
@@ -316,6 +286,44 @@ jobs:
       run:
         shell: bash
         working-directory: products/byoip
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-client-ip-geolocation:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.client-ip-geolocation == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/client-ip-geolocation
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-cache:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.cache == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/cache
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -440,25 +448,6 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
-  build-gateway:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.gateway == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/gateway
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
   build-browser-isolation:
     runs-on: ubuntu-latest
     needs: changes
@@ -496,7 +485,7 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-
+  
   build-images:
     runs-on: ubuntu-latest
     needs: changes
@@ -554,6 +543,25 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
+  build-magic-firewall:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.magic-firewall == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/magic-firewall
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
   build-magic-transit:
     runs-on: ubuntu-latest
     needs: changes
@@ -581,6 +589,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/magic-wan
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-network-error-logging:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.network-error-logging == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/network-error-logging
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -638,6 +665,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/page-shield
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-partners:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.partners == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/partners
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -714,6 +760,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/rules
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-ruleset-engine:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ruleset-engine == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/ruleset-engine
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

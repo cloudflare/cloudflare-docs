@@ -69,7 +69,7 @@ Valid options for the `options` object include:
 
 <!-- What type is this? WebSocket? -->
 - `webSocket`
-  - This is present in successful WebSocket handshake responses. For example, if a client sends a WebSocket upgrade request to an origin and a worker intercepts the request and then forwards it to the origin and the origin replies with a successful WebSocket upgrade response, the worker sees `response.webSocket`. This establishes a WebSocket connection proxied through a worker. Note that you cannot intercept data flowing over a WebSocket connection.
+  - This is present in successful WebSocket handshake responses. For example, if a client sends a WebSocket upgrade request to an origin and a worker intercepts the request and then forwards it to the origin and the origin replies with a successful WebSocket upgrade response, the Worker sees `response.webSocket`. This establishes a WebSocket connection proxied through a Worker. Note that you cannot intercept data flowing over a WebSocket connection.
 
 </Definitions>
 
@@ -89,13 +89,13 @@ Valid options for the `options` object include:
 
 ### Additional instance methods
 
-`Response` implements the [`Body`](https://developer.mozilla.org/en-US/docs/Web/API/Body) mixin of the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), and therefore `Response` instances additionally have the following methods available:
+`Response` implements the [`Body`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) mixin of the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), and therefore `Response` instances additionally have the following methods available:
 
 <Definitions>
 
-- <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
+- <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer).
+  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
 
 - <Code>formData()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">Promise{`<FormData>`}</TypeLink>
 
@@ -113,7 +113,7 @@ Valid options for the `options` object include:
 
 --------------------------------
 
-## See also
+## Additional information
 
 - [Examples: Modify response](/examples/modify-response)
 - [Examples: Conditional response](/examples/conditional-response)

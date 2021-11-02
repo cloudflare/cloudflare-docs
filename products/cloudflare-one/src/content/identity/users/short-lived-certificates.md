@@ -16,7 +16,7 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 ## 2. **Generate a short-lived certificate public key**.
 
-1. On the Teams dashboard, navigate to **Configuration > Service Auth**.
+1. On the Teams dashboard, navigate to **Access > Service Auth**.
 
 2. In the drop-down, choose the application that represents the resource you secured in Step 1.
 
@@ -34,6 +34,8 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure. Access matches based on the identity that precedes an email domain. **Unix usernames must match the identity preceding the email domain**.
 
 For example, if the user's identity in your Okta or GSuite provider is `jdoe@example.com` then Access will look to match that identity to the Unix user `jdoe`.
+
+You can create a user entry with duplicate `uid`, `gid`, and home directory to link an identity to an existing user with a different username. You will need to create a password for it separately and add it to the same groups to replicate permissions.
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 

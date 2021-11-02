@@ -1,4 +1,4 @@
-# Cloudflare Image Resizing docs
+# Cloudflare Image Optimization docs 
 
 [View docs →](https://developers.cloudflare.com/images)
 

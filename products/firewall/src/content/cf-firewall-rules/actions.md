@@ -9,13 +9,13 @@ order: 220
 
 Actions tell Cloudflare how to handle HTTP requests that have matched a firewall rule expression.
 
-## Supported Actions
+## Supported actions
 
 The table below lists the actions available in Firewall Rules. These actions are listed in order of precedence. If the same request matches two different rules which have the same priority, precedence determines the action to take.
 
 For example, the _Allow_ action takes precedence over the _Block_ action. In a case where a request matches a rule with the _Allow_ action and another with the _Block_ action, precedence resolves the tie, and Cloudflare allows the request.
 
-The only exception to this behavior involves the _Log_ action. Unlike the other actions, _Log_ does not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ action, the second action will be triggered instead, even though _Log_ has precedence. Although Firewall Rules would not trigger the _Log_ action in this case, Firewall Analytics would still record the hit as an “additional match.”
+There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence.
 
 <TableWrap>
   <table style="width: 100%">
@@ -145,7 +145,7 @@ The only exception to this behavior involves the _Log_ action. Unlike the other 
   </table>
 </TableWrap>
 
-## Choosing Actions in the Rule Builder
+## Choosing actions in the Rule Builder
 
 Choosing an action in the Cloudflare Expression Builder is simple. After naming a rule and building your expression, pick the appropriate option from the **Choose an action** drop-down list. In this example, the chosen action is _Block_:
 

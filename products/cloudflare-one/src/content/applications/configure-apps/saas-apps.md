@@ -21,16 +21,17 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 1. In the **Configure app** section, select an application from the Application drop-down menu. If your application is not listed, type its name in the textbox and select it.
 
- ![Unlisted SaaS app](../../static/documentation/applications/new-saas-app.png)
-
 1. In the **Entity ID** field, provide the unique identifier of your SaaS application.
 SaaS applications store this information in different ways.
 
 1. In the **Assertion Consumer Service URL** field, input the service provider’s endpoint for receiving and parsing SAML assertions.
 
-1. Scroll down to the **Application logo** card to choose a logo that will represent the application in the App Launcher and in the Applications page.
+1. If your SaaS application requires additional SAML statements, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-  ![SaaS logo](../../static/documentation/applications/saas-logo.png)
+  ![Custom SaaS statements](../../static/documentation/applications/custom-saas-statements.png)
+
+
+1. Scroll down to the **Application logo** card to choose a logo that will represent the application in the App Launcher and in the Applications page.
 
   <Aside>
   

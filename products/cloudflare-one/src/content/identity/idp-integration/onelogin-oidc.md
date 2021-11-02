@@ -18,12 +18,8 @@ To set up OneLogin as your identity provider:
 
     The _Custom Connectors_ card displays.
 
-    ![OneLogin Custom Connectors](../../static/documentation/identity/onelogin/onelogin-oidc-2.png)
-
 1. Click **New Connector**.
-1. Name the connector.
-
-     The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
+1. Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
 
     ![OneLogin OIDC Application Basic Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
@@ -40,9 +36,6 @@ To set up OneLogin as your identity provider:
     ![OneLogin OIDC Application Basic Configuration page More Actions menu](../../static/documentation/identity/onelogin/onelogin-oidc-4.png)
 
 1. In the **Portal** section, enter a name for your application in the **Display Name** field.
-
-    ![OneLogin OIDC Add Application Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-5.png)
-
 1. Click **Save**.
 1. Select the **Access** tab.
 
@@ -54,12 +47,17 @@ To set up OneLogin as your identity provider:
     ![OneLogin OIDC Add Application SSO page](../../static/documentation/identity/onelogin/onelogin-oidc-7.png)
 
 1. Click **Show client secret**.
+
 1. Copy both the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Configuration > Authentication**.
+1. On the Teams dashboard, navigate to **Settings > Authentication**.
 
-1. Click *+ Add* under **Login Methods**, and select Centrify as your IdP.
+1. Under **Login methods**, click **Add new**.
+
+1. Select Centrify as your IdP.
+
 1. Paste in your copied **Client ID** and **Client secret**.
+
 1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.

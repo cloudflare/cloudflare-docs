@@ -2,6 +2,7 @@
 updated: 2021-06-17
 difficulty: Beginner
 content_type: "📝 Tutorial"
+pcx-content-type: tutorial
 ---
 
 import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
@@ -209,7 +210,7 @@ async function handleRequest(request) {
     return submitHandler(request)
   }
 
-  return new Response.redirect(FORM_URL)
+  return Response.redirect(FORM_URL)
 }
 ```
 

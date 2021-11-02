@@ -4,6 +4,7 @@ type: example
 summary: Given the cookie name, get the value of a cookie. You can also use cookies for A/B testing.
 tags:
   - Headers
+pcx-content-type: configuration
 ---
 
 # Cookie parsing
@@ -13,40 +14,25 @@ tags:
 </ContentColumn>
 
 ```js
-const COOKIE_NAME = "__uid"
-
-/**
- * Gets the cookie with the name from the request headers
- * @param {Request} request incoming Request
- * @param {string} name of the cookie to get
- */
-function getCookie(request, name) {
-  let result = ""
-  const cookieString = request.headers.get("Cookie")
-  if (cookieString) {
-    const cookies = cookieString.split(";")
-    cookies.forEach(cookie => {
-      const cookiePair = cookie.split("=", 2)
-      const cookieName = cookiePair[0].trim()
-      if (cookieName === name) {
-        const cookieVal = cookiePair[1]
-        result = cookieVal
-      }
-    })
-  }
-  return result
-}
-
-function handleRequest(request) {
-  const cookie = getCookie(request, COOKIE_NAME)
-  if (cookie) {
-    // Respond with the cookie value
-    return new Response(cookie)
-  }
-  return new Response("No cookie with name: " + COOKIE_NAME)
-}
-
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+import { parse } from "worktop/cookie";
+// OR
+// import { parse } from "cookie"
+// The name of the cookie
+const COOKIE_NAME = "__uid";
+export default {
+  fetch(req) {
+    const cookie = parse(req.headers.get("Cookie") || "");
+    if (cookie[COOKIE_NAME] != null) {
+      // Respond with the cookie value
+      return new Response(cookie[COOKIE_NAME]);
+    }
+    return new Response("No cookie with name: " + COOKIE_NAME);
+  },
+};
 ```
+
+<Aside type="note" header="External Dependencies">
+
+This example is set up to depend on [`cookie@0.4.1`](https://www.npmjs.com/package/cookie/v/0.4.1) or [`worktop@0.7.1`](https://www.npmjs.com/package/worktop/v/0.7.1). You may pick either package, as they both work the same way.
+
+</Aside>

@@ -6,6 +6,7 @@ demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
   - Originless
+pcx-content-type: configuration
 ---
 
 # Return JSON
@@ -15,21 +16,19 @@ tags:
 </ContentColumn>
 
 ```js
-addEventListener("fetch", event => {
-  const data = {
-    hello: "world"
-  }
-
-  const json = JSON.stringify(data, null, 2)
-
-  return event.respondWith(
-    new Response(json, {
+export default {
+  fetch() {
+    const data = {
+      hello: "world",
+    };
+    const json = JSON.stringify(data, null, 2);
+    return new Response(json, {
       headers: {
-        "content-type": "application/json;charset=UTF-8"
-      }
-    })
-  )
-})
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  },
+};
 ```
 
 ## Demo

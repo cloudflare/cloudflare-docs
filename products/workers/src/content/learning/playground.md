@@ -63,7 +63,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ### Sources
 
-The sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler preview` with your account credentials.
+The sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
 
 <!--
 

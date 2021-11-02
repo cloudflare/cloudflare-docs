@@ -47,7 +47,7 @@ This Expression Builder screenshot shows an expression for matching requests tha
 Notice how the **Expression Preview** displays the expression in text:
 
 ```sql
-ip.geoip.country ne "GB"
+(ip.geoip.country ne "GB")
 ```
 
 In this example, `ip.geoip.country` represents the country associated with the requesting client’s IP address, and the value `"GB"` represents the country code to match. The `ne` notation between them represents the _not equal_ comparison operator. Together, the expression specifies a match for any request with a country field value other than `GB`.
@@ -80,7 +80,7 @@ To match only external requests for content, use the `and` operator, as in this 
 http.referer ne ".example.com" and http.request.uri.path eq "/content/"
 ```
 
-Compound expressions only matches requests that satisfy each of the simple expressions within. That is because the logical `and` operator requires that both operands be true for the compound expression to return `true`.
+Compound expressions only match requests that satisfy each of the simple expressions within. That is because the logical `and` operator requires that both operands be true for the compound expression to return `true`.
 
 In general, compound expressions use this pattern:
 

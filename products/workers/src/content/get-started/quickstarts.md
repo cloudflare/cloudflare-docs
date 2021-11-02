@@ -56,6 +56,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="cloudflare/worker-template-router"
 />
 
+<WorkerStarter
+  title="Sunder Starter (Typescript)"
+  description="A complete starter template using Sunder, TypeScript, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
+  repo="gzuidhof/sunder-worker-template"
+/>
+
 --------------------------------
 
 ## Frameworks
@@ -110,6 +116,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   title="AWS DynamoDB SQS"
   description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker"
   repo="cloudflare/workers-aws-template"
+/>
+
+<WorkerStarter
+  title="Edge-side rendering - Vitedge"
+  description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more."
+  repo="frandiox/vitessedge-template"
 />
 
 --------------------------------

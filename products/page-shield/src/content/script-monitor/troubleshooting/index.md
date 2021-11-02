@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-order: 0
+order: 5
 pcx-content-type: faq
 ---
 

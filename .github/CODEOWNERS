@@ -1,17 +1,11 @@
 # 1.1.1.1
-products/1.1.1.1/ @cloudflare/PCX
-
-# Access
-products/access/ @cloudflare/access-docs @cloudflare/PCX
+products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Analytics
 products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 
 # API
 products/api/ @cloudflare/sdk @cloudflare/PCX
-
-# Argo Tunnel
-products/argo-tunnel/ @cloudflare/PCX
 
 # APO
 products/automatic-platform-optimization/ @cloudflare/PCX
@@ -24,6 +18,9 @@ products/browser-isolation/ @cloudflare/PCX
 
 # BYOIP
 products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
+
+# Cache
+products/cache/ @cloudflare/PCX
 
 # Cloudflare One
 products/cloudflare-one/ @cloudflare/PCX
@@ -46,14 +43,11 @@ products/firewall/ @cloudflare/firewall @cloudflare/PCX
 # Fundamentals
 products/fundamentals/ @cloudflare/PCX
 
-# Gateway
-products/gateway/ @cloudflare/PCX
-
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
-# Image Resizing
-products/images/ @kornel @cloudflare/PCX
+# Cloudflare Images
+products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
 # Load Balancing
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
@@ -63,6 +57,9 @@ products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
+
+# Magic Firewall
+products/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
 # Network Interconnect
 products/network-interconnect @ConzorKingKong @cloudflare/PCX
@@ -84,6 +81,9 @@ products/registrar/ @cloudflare/PCX
 
 # Rules
 products/rules/ @cloudflare/PCX
+
+# Ruleset Engine
+products/ruleset-engine/ @cloudflare/PCX
 
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX

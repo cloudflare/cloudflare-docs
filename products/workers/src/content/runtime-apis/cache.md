@@ -10,8 +10,7 @@ The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows f
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created. 
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor and [Playground](/workers/learning/playground) preview will have no impact. Only deployed, live Workers have access to live cache operations. 
-
+However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/learning/playground) previews, and any `*.workers.dev` deployments will have no impact. Only Workers deployed to custom domains have access to functional `Cache` operations. 
 
 <Aside>
 
@@ -47,7 +46,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 <Definitions>
 
 - `Cache-Control`
-    - Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](https://support.cloudflare.com/hc/en-us/articles/115003206852-Origin-Cache-Control#h_4250342181031546894839080).
+    - Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](https://developers.cloudflare.com/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](https://developers.cloudflare.com/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
 - `Cache-Tag`
     -  Allows resource purging by tag(s) later (Enterprise only).
 - `ETag`
@@ -87,6 +86,12 @@ cache.put(request, response)
 
 </Definitions>
 
+<Aside type="note">
+
+The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
+
+</Aside>
+
 #### Parameters
 
 <Definitions>
@@ -119,6 +124,12 @@ cache.match(request, options)
     - Returns a promise wrapping the response object keyed to that request.
 
 </Definitions>
+
+<Aside type="note">
+
+The `stale-while-revalidate` and `stale-if-error` directives are not supported when using the `cache.put` or `cache.match` methods.
+
+</Aside>
 
 #### Parameters
 

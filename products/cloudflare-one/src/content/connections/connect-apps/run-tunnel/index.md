@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Run a Tunnel
+# Run a tunnel
 
 | Before you start |
 |---|
@@ -23,7 +23,7 @@ You can also specify the Tunnel name or UUID inside of the configuration file, i
 
 `cloudflared tunnel --config path/config.yaml run`
 
-If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yml`.
+If you do not specify a configuration file location, `cloudflared` will attempt to read a configuration file in `~/.cloudflared/config.yaml`.
 
 When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [ingress rules](/connections/connect-apps/configuration/ingress).
 

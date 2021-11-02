@@ -28,8 +28,8 @@ APO serves cached content as long as the query parameters in the URL are one of 
 - `gclid`
 - `dclid`
 - `_ga`
-- `campaigni`
-- `adgroupi`
+- `campaignid`
+- `adgroupid`
 - `_ke`
 - `cn-reloaded`
 - `age-verified`

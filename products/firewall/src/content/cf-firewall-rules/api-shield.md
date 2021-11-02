@@ -20,7 +20,7 @@ Cloudflare API Shield follows a positive security model.
 
 <Aside type='note'>
 
-Mutual TLS is available to all Cloudflare plans.
+Mutual TLS using a Cloudflare-managed certificate authority (CA) is available to all Cloudflare plans.
 
 </Aside>
 
@@ -58,7 +58,7 @@ When using Yubikeys, the browser may prompt for unlocking the key due to a probl
 
 <Aside type='note'>
 
-This feature is only available for customers on an Enterprise plan.
+This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
 </Aside>
 
@@ -70,10 +70,12 @@ API Shield supports API Schemas using OpenAPI Specification v3. The accepted fil
 
 To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](/cf-dashboard/configure-schema-validation).
 
-<Aside type='warning'>
-
-**Important**
+<Aside type='warning' header='Important'>
 
 Currently, API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
 
 </Aside>
+
+### Operation IDs
+
+Cloudflare Schema Validation requires unique Operation IDs for each endpoint and method pair defined in the schema. If there are Operation IDs missing, the schema will be rejected. Operation ID is used to keep track of changes to the same endpoints when updating schemas, and also to label logs in Firewall Events with the right endpoint and method. Cloudflare supports Operation IDs with a maximum size of 32 characters.

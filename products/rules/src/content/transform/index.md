@@ -6,7 +6,7 @@ order: 2
 
 # About Transform Rules
 
-Transform Rules allow you to make adjustments to incoming requests at the edge before they go through any other Cloudflare products.
+Transform Rules allow you to adjust the URI path, query string, and HTTP headers of incoming requests at the edge.
 
 There are two types of Transform Rules:
 
@@ -23,11 +23,17 @@ There are two types of Transform Rules:
 To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
 
 <ButtonGroup>
-  <Button type="primary" href="/transform/url-rewrite/create-dashboard">Create a URL Rewrite Rule</Button>
-  <Button type="primary" href="/transform/request-header-modification/create-dashboard">Create a Request Header Modification Rule</Button>
+  <Button type="secondary" href="/transform/url-rewrite/create-dashboard">Create a URL Rewrite Rule</Button>
+  <Button type="secondary" href="/transform/request-header-modification/create-dashboard">Create a Request Header Modification Rule</Button>
 </ButtonGroup>
 
 ---
+
+## Transform Rules evaluation
+
+Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
+
+All request fields are immutable while evaluating Transform Rules for a request. For example, if a URL Rewrite Rule #1 updates the URI path or the query string, URL Rewrite Rule #2 will not take these previous changes into consideration.
 
 ## Availability
 
