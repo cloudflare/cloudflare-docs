@@ -121,6 +121,10 @@ The SDK provides an API for programmatically controlling the player and listenin
 
     </Aside>
 
+- `primaryColor` <Type>string</Type>
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to certain elements of the player's UI.
+
 - `volume` <Type>float</Type>
 
   - Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
