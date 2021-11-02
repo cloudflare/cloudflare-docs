@@ -16,7 +16,7 @@ If you have a smaller domain and have identified a bot problem, we recommend Bot
 
 If you have a large domain with a lot of traffic, we recommend Bot Management for Enterprise, especially for customers in ecommerce, banking, and security. To enable Bot Management for Enterprise and write rules to customize your bot protection, contact your account team.
 
-To see the differences in features and functionality, visit [Plans](/about/plans/).
+To see the differences in features and functionality, visit [Plans](/plans/).
 
 ## Next steps
 
