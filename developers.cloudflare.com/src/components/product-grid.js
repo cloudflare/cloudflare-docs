@@ -14,6 +14,7 @@ $["cache"]                = require("@cloudflare/cloudflare-brand-assets/resourc
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
+$["email-routing"]        = require("../../../products/email-routing/src/content/icons/email").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
@@ -120,6 +121,11 @@ const products = [
     icon: "distributed-web",
     wrap: true,
   },
+{
+  title: "Email Routing",
+  path: "email.routing",
+  icon: "email",
+},
   {
     title: "Firewall Rules",
     path: "firewall",
