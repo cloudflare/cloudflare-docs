@@ -28,7 +28,7 @@ Results on supported TLS versions from tools like SSL Labs are not accurate beca
 
 </Aside>
 
-To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version.  For example, use the curl command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
+To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version.  For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
 
 ```sh
 $ curl https://www.example.com -svo /dev/null --tls-max 1.1
