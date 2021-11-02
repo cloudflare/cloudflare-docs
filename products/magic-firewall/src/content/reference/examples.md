@@ -89,7 +89,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
 
 ## Use account-level Rules Lists
 
-[Rules Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields.
+[Rules Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
 In order to use this feature first [create a new list](https://api.cloudflare.com/#rules-lists-create-list)..
 ```
