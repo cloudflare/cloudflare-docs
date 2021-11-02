@@ -15,7 +15,6 @@ Not all SaaS applications support tenant control. Examples of common application
 * Slack
 * GSuite
 * Dropbox
-* YouTube
 
 ## Add custom headers for a SaaS application (Microsoft 365 example)
 
@@ -76,15 +75,5 @@ This section covers policy configurations for common SaaS applications.
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Dropbox | Allow | `X-Dropbox-allowed-Team-Ids` |
-
-</TableWrap>
-
-### YouTube
-
-<TableWrap>
-
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | YouTube | Allow | `YouTube-Restrict` |
 
 </TableWrap>
