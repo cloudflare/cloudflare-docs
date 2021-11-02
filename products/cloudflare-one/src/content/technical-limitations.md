@@ -13,21 +13,12 @@ All values are per organization.
 
 | Feature | Limit |
 | ------- | ----- |
-| Applications count | 500 |
-| Email addresses per rule | 1000 |
-| IP addresses per rule | 1000 |
 | Application name length (characters) | 350 |
-| Group count | 300 |
 | Group name length (characters) | 350 |
-| Group size | 1000 |
 | mTLS root certificates count | 50 |
 | mTLS certificates name length (characters) | 350 |
-| Service Tokens count | 500 |
 | Service Token name length | 350 |
-| IdP count | 50 |
 | IdP name length (characters) | 350 |
-| Rules count per application | 1000 |
-| Rules count per group | 1000 |
 | Application URL length (characters) | <= 63 |
 | Team Domain max length (characters) | <= 63 |
 
@@ -47,15 +38,24 @@ All values are per account.
 
 </TableWrap>
 
-## Enterprise defaults
+## Account defaults
 
 | Feature | Limit |
 | ------- | ----- |
-| HTTP Logpush jobs | 5 |
-| DNS Logpush jobs | 5 |
+| Applications count | 500 |
 | Audit Logpush jobs | 5 |
+| DNS Logpush jobs | 5 |
+| Email addresses per rule | 1000 |
+| Group count | 300 |
+| Group size | 1000 |
+| HTTP Logpush jobs | 5 |
+| IP addresses per rule | 1000 |
+| Lists: total number of lists | 100 |
+| Locations | 250 |
 | Number of HTTP policies per account | 500 |
 | Number of DNS policies per account | 500 |
 | Number of network policies per account | 500 |
-| Lists: total number of lists | 100 |
-| Locations | 250 |
+| Service Tokens count | 500 |
+| IdP count | 50 |
+| Rules count per application | 1000 |
+| Rules count per group | 1000 |
