@@ -30,13 +30,6 @@ All values are per organization.
 | Rules count per group | 1000 |
 | Application URL length (characters) | <= 63 |
 | Team Domain max length (characters) | <= 63 |
-| Lists: total number of lists | 100 |
-| Locations | 250 |
-| Number of HTTP policies per account | 500 |
-| Number of DNS policies per account | 500 |
-| Number of network policies per account | 500 |
-| HTTP Logpush jobs | 5 |
-| DNS Logpush jobs | 5 |
 
 </TableWrap>
 
@@ -53,3 +46,16 @@ All values are per account.
 | Active Connections per Tunnel | 100 |
 
 </TableWrap>
+
+## Enterprise defaults
+
+| Feature | Limit |
+| ------- | ----- |
+| HTTP Logpush jobs | 5 |
+| DNS Logpush jobs | 5 |
+| Audit Logpush jobs | 5 |
+| Number of HTTP policies per account | 500 |
+| Number of DNS policies per account | 500 |
+| Number of network policies per account | 500 |
+| Lists: total number of lists | 100 |
+| Locations | 250 |

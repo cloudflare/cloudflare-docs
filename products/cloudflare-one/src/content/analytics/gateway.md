@@ -5,27 +5,12 @@ pcx-content-type: concept
 
 # Gateway 
 
-Use the Gateway Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
+Use the Analytics - Gateway page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
 
-![Overview analytics](../static/documentation/logs/gateway-dash-overview-page.png)
+![Overview of Gateway Analytics](../static/documentation/logs/gateway-analytics-overview.png)
 
-## Filter analytics by time
+## Selective Logging
 
-You can filter the overview page by time. You can view analytics for the last 24 hours using Gateway's Free tier.
+By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can customize what type of events are logged by navigating to **Settings** > **Network** and indicating your preferences under **Gateway Selective Logging**.
 
-![Overview filter by time](../static/documentation/logs/gateway-dash-filter-by-time.png)
-
-## Filter analytics by location
-
-You can filter by the location name.
-![Overview filter by location](../static/documentation/logs/gateway-dash-filter-by-location.png)
-
-## View top allowed and blocked domains
-
-You can view most seen allowed and blocked requests across your locations.
-![Overview filter by time](../static/documentation/logs/gateway-dash-top-allowed-and-blocked-requests.png)
-
-## View top allowed and blocked categories
-
-You can view the top allowed and blocked categories across your locations.
-![Overview filter by time](../static/documentation/logs/gateway-dash-top-categories.png)
+![Selective Logging](../static/documentation/logs/selective-logging.png)
