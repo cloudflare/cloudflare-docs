@@ -7,9 +7,9 @@ pcx-content-type: concept
 
 In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
 
-## Note
+## Environmental variables with module workers
 
-When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env`.
+When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/runtime-apis/fetch-event#bindings-1).
 
 ## Environment variables via wrangler
 
