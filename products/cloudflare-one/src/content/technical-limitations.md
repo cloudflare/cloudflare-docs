@@ -38,7 +38,7 @@ All values are per account.
 
 </TableWrap>
 
-## Account Defaults
+## Account defaults
 
 | Feature | Limit |
 | ------- | ----- |
