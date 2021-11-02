@@ -15,7 +15,6 @@ Not all SaaS applications support tenant control. Examples of common application
 * Slack
 * GSuite
 * Dropbox
-* YouTube
 
 ## Add custom headers for a SaaS application (Microsoft 365 example)
 
@@ -79,16 +78,6 @@ This section covers policy configurations for common SaaS applications.
 
 </TableWrap>
 
-### YouTube
-
-<TableWrap>
-
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | YouTube | Allow | `YouTube-Restrict` |
-
-</TableWrap>
-
 ## Using Tenant Control with Browser Isolation
 
 Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
@@ -108,7 +97,6 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 | Domain | in | httpbin.org |
 
   ![Isolate policy](../../../static/documentation/policies/httpbin-policy-1.png)
-
 
 #### 2. Create an Allow policy with a Custom Header
 
