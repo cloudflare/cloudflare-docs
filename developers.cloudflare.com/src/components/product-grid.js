@@ -124,7 +124,7 @@ const products = [
 {
   title: "Email Routing",
   path: "email-routing",
-  icon: "email",
+  icon: "email-routing",
 },
   {
     title: "Firewall Rules",
