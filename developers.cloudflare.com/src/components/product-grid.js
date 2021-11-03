@@ -123,7 +123,7 @@ const products = [
   },
 {
   title: "Email Routing",
-  path: "email.routing",
+  path: "email-routing",
   icon: "email",
 },
   {

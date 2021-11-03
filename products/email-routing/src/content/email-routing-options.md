@@ -38,7 +38,7 @@ You must also specify an **Action** to Catch-all:
 
 ## Email DNS records
 
-All DNS records needed for Email Routing are shown and can be added automatically here, if not yet fully compliant. This is also where you can confirm if there are any conflicts that may result in unexpected behaviors.
+All DNS records needed for Email Routing to work are shown here. You can check which records you need to add or remove, and this step can be done automatically by clicking **Add records automatically**. Cloudflare also shows you the correct DNS records in case you want to add or remove them manually. This is also where you can confirm if there are any conflicts that may result in unexpected behaviors.
 
 ## Verified emails
 
