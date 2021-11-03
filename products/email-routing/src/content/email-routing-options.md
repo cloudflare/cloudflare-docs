@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Email Routing options
 
-Email Routing is under Email in the Cloudflare dashboard. It is divided into four sections:
+Email Routing is divided into four main sections:
 
 * Custom address rules
 * Catch-all
