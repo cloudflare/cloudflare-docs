@@ -34,7 +34,7 @@ For more information on these features, refer to [hostname specific behavior](ho
 
 ## Availability
 
-SSL for SaaS is available as an add-on purchase for customers on an Enterprise plan. Contact your account team for access or to purchase additional custom hostnames.
+SSL for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl-for-saas/plans).
 
 ## Next steps
 
