@@ -9,7 +9,7 @@ import TLS13Definition from "../../_partials/_tls-13-definition.md"
 
 <TLS13Definition/>
 
-## Overview
+## What is TLS 1.3?
 
 TLS 1.3 is the newest, fastest, and most secure version of the TLS protocol.
 SSL/TLS is the protocol that encrypts communication between users and your website. When web traffic is encrypted with TLS, users will see the green padlock in their browser window.
