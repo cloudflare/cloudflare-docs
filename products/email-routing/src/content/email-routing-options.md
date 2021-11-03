@@ -48,6 +48,6 @@ Email Routing rules do not become active until after the destination address has
 
 <Aside type="note">
 
-Deleting a Destination address automatically disables all routing rules that use that email address as destination.
+Deleting a Destination address automatically disables all routing rules that use that email address as destination. 
 
 </Aside>
