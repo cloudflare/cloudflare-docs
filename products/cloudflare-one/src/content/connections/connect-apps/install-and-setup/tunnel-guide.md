@@ -143,6 +143,15 @@ tunnel: <Tunnel-UUID>
 credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```
 
+**If you are connecting a private network**
+
+```txt
+tunnel: <Tunnel-UUID>
+credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+warp-routing:
+  enabled: true
+```
+
 Confirm that the configuration file has been successfully created by running:
 
 ```bash
