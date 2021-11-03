@@ -1,7 +1,6 @@
 ---
 order: 12
 pcx-content-type: concept
-type: overview
 ---
 
 import MinimumTLSDefinition from "../../_partials/_minimum-tls-definition.md"
