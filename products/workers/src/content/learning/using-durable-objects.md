@@ -298,13 +298,13 @@ new_classes = ["DurableObjectExample"] # Array of new classes
 
 [[migrations]]
 tag = "v2"
-renamed_classes = [{from: "DurableObjectExample", to: "UpdatedName" }] # Array of rename directives
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
 <Aside type="note">
 
-Note that `.toml` files do not allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
+Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks
 in the surrounding inline array are acceptable.
 
 </Aside>
