@@ -1,6 +1,6 @@
 ---
 order: 10
-pcx-content-type: task
+pcx-content-type: how-to
 ---
 
 # Arbitrary TCP
