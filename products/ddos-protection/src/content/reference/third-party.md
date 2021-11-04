@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-order: 6
+order: 7
 ---
 
 # Using third-party services with Cloudflare
@@ -11,7 +11,7 @@ Some Cloudflare customers choose to use a Content Delivery Network (CDN) in fron
 
 Cloudflare recommends that you do not use a third-party CDN in front of Cloudflare because some CDN providers may introduce subtleties into HTTP requests that deviate from protocol standards and/or protocol best practices. Additionally, because traffic to Cloudflare will originate from a limited set of IP addresses of the third-party CDN, in rare occasions — such as when using the Akamai CDN in front of Cloudflare — it may appear as if the CDN is launching a DDoS attack against Cloudflare due to the amount of traffic from these limited IP addresses.
 
-Therefore, it is recommended that you use the Cloudflare CDN. By using Cloudflare CDN you have the following benefits:
+Therefore, it is recommended that you use the [Cloudflare CDN](https://developers.cloudflare.com/cache/). By using Cloudflare CDN you have the following benefits:
 
 * You remove an additional hop between vendor data centers, thus reducing latency for your users.
 * You perform DDoS filtering in the first point of contact from the Internet, which is a recommended best practice.
@@ -23,7 +23,7 @@ Note that, if you are using a third-party CDN in front of Cloudflare and Cloudfl
 If you are using the Akamai CDN in front of Cloudflare, it is recommended that you change the action and/or sensitivity level of the DDoS rule named **HTTP requests with unusual HTTP headers or URI path (signature #1)** with rule ID `0b1e17bd25c74e38834f19043486aee1`:
 
 * Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/reference/analytics).
-* In alternative, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
+* Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
 
 For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset > Ruleset configuration](/managed-rulesets/http#ruleset-configuration).
 
