@@ -22,6 +22,6 @@ Once you set up SSL/TLS on your application, you can adjust the following settin
 - [Minimum TLS Version](minimum-tls): <MinimumTLSDefinition/>
 - [Opportunistic Encryption](opportunistic-encryption): <OpportunisticEncryptionDefinition/>
 - [TLS 1.3](tls-13): <TLS13Definition/>
-- [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647): <AutomaticHTTPSRewritesDefinition/>
+- [Automatic HTTPS Rewrites](automatic-https-rewrites): <AutomaticHTTPSRewritesDefinition/>
 - [Certificate Transparency Monitoring](certificate-transparency-monitoring): <CertTransparencyDefinition/>
 - [Certificate Signing Requests (CSR)](certificate-signing-requests): <CSRDefinition/>
