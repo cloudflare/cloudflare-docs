@@ -101,7 +101,7 @@ async function handleRequest(request) {
 }
 ```
 
-## `origin-auth` option
+## authenticated origin
 
 In order to ensure good performance Cloudflare Image Resizing has to cache resized images. It would be unsafe to share images that are personalised for individual visitors. That's why it's generally not recommended to resize images stored with a restricted access. However in cases when customer is fine to store such images in the public cache Cloudflare supports resizing images through Workers on authenticated origins, such as AWS S3:
 
@@ -127,7 +127,7 @@ When this option is enabled, the following headers are passed through to the ori
 * x-amz-content-sha256
 * x-amz-date
 
-For more information related to AWS S3 cookies and settings, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
+For more information refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
 
 ## Origin cache is shared
 
