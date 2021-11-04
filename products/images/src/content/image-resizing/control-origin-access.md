@@ -120,7 +120,7 @@ fetch(private_url, {
 })
 ```
 
-When this option is enabled, the following headers are passed through to the origin:
+When this option is enabled, the following headers are passed through to the origin, and allow your request to be successful:
 
 * Authorization
 * Cookie
