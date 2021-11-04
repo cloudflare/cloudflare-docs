@@ -1,9 +1,9 @@
 ---
 pcx-content-type: reference
-order: 5
+order: 1
 ---
 
-# DDoS Analytics
+# DDoS analytics
 
 You can view DDoS analytics in different dashboards, depending on your service and plan:
 
