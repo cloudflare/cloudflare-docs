@@ -11,7 +11,7 @@ Configure the HTTP DDoS Attack Protection Managed Ruleset to change the action a
 The available parameters are the following:
 
 * [Action](#action)
-* [Sensitivity](#sensitivity)
+* [Sensitivity Level](#sensitivity-level)
 
 ## Action
 
@@ -55,7 +55,7 @@ However, you can use the _Log_ action in the global ruleset configuration. In th
 
 </Aside>
 
-## Sensitivity
+## Sensitivity Level
 
 API property name: `"sensitivity_level"`.
 

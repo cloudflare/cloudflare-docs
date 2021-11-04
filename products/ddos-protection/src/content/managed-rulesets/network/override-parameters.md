@@ -11,7 +11,7 @@ Configure the Network-layer DDoS Attack Protection Managed Ruleset to change the
 The available parameters are the following:
 
 * Action
-* Sensitivity
+* Sensitivity Level
 
 ## Action
 
@@ -35,7 +35,7 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
 
 </Definitions>
 
-## Sensitivity
+## Sensitivity Level
 
 API property name: `"sensitivity_level"`.
 
@@ -43,9 +43,9 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 
 The available sensitivity levels are:
 
-Sensitivity     | API value
-----------------|----------
-High            | `"default"`
-Medium          | `"medium"`
-Low             | `"low"`
-Essentially Off | `"eoff"`
+Sensitivity Level | API value
+------------------|----------
+High              | `"default"`
+Medium            | `"medium"`
+Low               | `"low"`
+Essentially Off   | `"eoff"`
