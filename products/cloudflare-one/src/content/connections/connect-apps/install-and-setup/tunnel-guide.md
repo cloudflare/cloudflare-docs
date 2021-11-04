@@ -141,13 +141,6 @@ credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```txt
 tunnel: <Tunnel-UUID>
 credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
-```
-
-**If you are connecting a private network**
-
-```txt
-tunnel: <Tunnel-UUID>
-credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 warp-routing:
   enabled: true
 ```
