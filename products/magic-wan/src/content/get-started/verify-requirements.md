@@ -16,14 +16,6 @@ Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit pack
 - Allow configuration of at least one tunnel per Internet service provider (ISP)
 - Support maximum segment size (MSS) clamping
 
-## Draft Letter of Authorization
-
-Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa). The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. For an example, see the [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template).
-
-## Verify Internet Routing Registry entries
-
-To ensure that Magic WAN routes traffic to the correct autonomous systems (AS), verify that your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs). For guidance, see [_Verify IRR entries_](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
-
 ## Set maximum segment size
 
 ![Packet flow diagram](../images/mss-values-and-packet.png)
