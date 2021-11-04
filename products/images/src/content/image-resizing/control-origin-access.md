@@ -103,9 +103,12 @@ async function handleRequest(request) {
 
 ## `origin-auth` option
 
-Clouflare supports resizing images through Workers on an authenticated origin, such as ASW S3:
+Clouflare supports resizing images through Workers on an authenticated ASW S3 origin:
 
 ```js
+// generate signed headers (application specific)
+const signedHeaders = generatedSignedHeaders();
+ 
 fetch(private_url, {
   headers: signedHeaders
   cf: {
@@ -123,6 +126,8 @@ When this option is enabled, the following headers are passed through to the ori
 * Cookie
 * x-amz-content-sha256
 * x-amz-date
+
+For more information related to AWS S3 specific cookies and settings, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
 
 ## Origin cache is shared
 
