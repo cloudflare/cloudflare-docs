@@ -1,5 +1,4 @@
 ---
-title: Handle a false negative
 pcx-content-type: how-to
 order: 2
 ---
@@ -34,7 +33,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
     <summary>For WAF/CDN customers</summary>
     <div>
 
-    1\. Select the zone that is experiencing DDoS attack false negatives.
+    1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
     2\. Navigate to **Firewall** > **Overview**.
 
@@ -49,7 +48,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     1\. In the account home page, open **Network Analytics**.
 
-    2\. Identify the DDoS attack that is causing the false negatives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+    2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
     </div>
     </details>
