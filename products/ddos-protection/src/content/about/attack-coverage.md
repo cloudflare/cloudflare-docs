@@ -1,7 +1,7 @@
 ---
 title: Attack coverage
 pcx-content-type: reference
-order: 5
+order: 3
 type: overview
 ---
 
