@@ -41,6 +41,6 @@ If your organization uses VPNs, NATs, or third-party services at high rates of o
 
 * Change the **Sensitivity Level** of the relevant rules to a lower level. Changing the level to _Essentially Off_ will prevent the rules from being triggered. Refer to [HTTP DDoS Attack Protection Managed Ruleset](/managed-rulesets/http) and [Network-layer DDoS Attack Protection Managed Ruleset](/managed-rulesets/network) for more information on the available adjustments per ruleset and how to perform them.
 
-* Exclude the desired traffic from the Managed DDoS rule using expression filters — you can use expression filters to exclude a combination of source ports, source IP addresses, destination ports, destination IP addresses, and protocol. For more information, refer to [Configure Network-layer DDoS Attack Protection via API](/managed-rulesets/network/configure-api).
+* Exclude the desired traffic from the Managed DDoS rule using expression filters. You can exclude a combination of source ports, source IP addresses, destination ports, destination IP addresses, and protocol. For more information, refer to [Configure Network-layer DDoS Attack Protection via API](/managed-rulesets/network/configure-api).
 
 If you are on an Enterprise plan, you can change a rule’s action to _Log_ to view the flagged traffic in the [analytics dashboard](/reference/analytics). After gathering this information, you can later define rule adjustments as previously described.

@@ -19,10 +19,10 @@ Cloudflare’s DDoS protection systems may flag incoming traffic from legacy app
 
 To prevent this situation, Cloudflare recommends that you perform these steps to get started:
 
-1. Set the ruleset actions for all the DDoS Attack Protection Managed Rulesets to _Log_
-1. Analyze the flagged traffic
-1. Adjust the sensitivity or action of individual Managed Ruleset rules, if required
-1. Switch ruleset actions from _Log_ back to the default
+1. Set the ruleset actions for all the DDoS Attack Protection Managed Rulesets to _Log_.
+1. Analyze the flagged traffic.
+1. Adjust the sensitivity or action of individual Managed Ruleset rules, if required.
+1. Switch ruleset actions from _Log_ back to the default.
 
 ### Prerequisites
 
