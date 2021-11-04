@@ -7,7 +7,8 @@ pcx-content-type: task
 
 Cloudflare Access provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to resources over arbitrary TCP without being on a virtual private network (VPN).
 
-### Requirements
+## Requirements
+
 * A Cloudflare account
 * A site active on Cloudflare
 * The `cloudflared` daemon installed on the host and client machines
@@ -16,15 +17,15 @@ Cloudflare Access provides a mechanism for end users to authenticate with their 
 >
 > Adding the site to Cloudflare requires changing your domain's authoritative DNS to point to Cloudflare's nameservers. Once configured, all requests to that hostname will be sent to Cloudflare's network first, where Access policies can be applied.
 
-# **Connect the host to Cloudflare**
+## **Connect the host to Cloudflare**
 
-## 1. Install the Cloudflare daemon on the host machine
+### 1. Install the Cloudflare daemon on the host machine
 
 The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://www.cloudflare.com/products/argo-tunnel/).
 
 Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downloads/) to download and install `cloudflared` on the machine hosting the resource.
 
-## 2. Authenticate the Cloudflare daemon
+### 2. Authenticate the Cloudflare daemon
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
@@ -38,13 +39,13 @@ Once you login, Cloudflare will display the sites that you added to your account
 
 Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow `cloudflared` to create a DNS record for a subdomain of the site.
 
-## 3. Secure the subdomain with Cloudflare Access
+### 3. Secure the subdomain with Cloudflare Access
 
 Next, protect the subdomain you plan to register with a Cloudflare Access policy. Follow [these instructions](/setting-up-access/configuring-access-policies/) to build a new policy to control who can connect to the resource.
 
 For example, if you share the resource at `tcp.site.com`, build a policy to only allow your team members to connect to that subdomain.
 
-## 4. Connect the resource to Cloudflare
+### 4. Connect the resource to Cloudflare
 
 `cloudflared` can proxy connections to nonstandard ports.
 
@@ -56,13 +57,13 @@ $ cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
-# **Connect from a client machine**
+## **Connect from a client machine**
 
-## 1. Install the Cloudflare daemon on the client machine
+### 1. Install the Cloudflare daemon on the client machine
 
 Follow the same steps above to download and install `cloudflared` on the client desktop that will connect to the resource. `cloudflared` will need to be installed on each user device that will connect.
 
-## 2. Connect to the resource
+### 2. Connect to the resource
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
