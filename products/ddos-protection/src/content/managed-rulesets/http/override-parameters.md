@@ -17,7 +17,7 @@ The available parameters are the following:
 
 API property name: `"action"`.
 
-The action that the WAF will perform for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
+The action that will be performed for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
 
 <Definitions>
 
