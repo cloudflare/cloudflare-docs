@@ -30,7 +30,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
  msiexec /x Cloudflare_WARP_Release-x64.msi /quiet
  ```
 
-### Example configuration with Microsoft Intune
+### Example deployment configuration with Microsoft Intune
 
 Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 
@@ -52,3 +52,17 @@ Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 1. Click **Create**.
 
 Intune is now configured to deploy the Cloudflare WARP Client
+
+### Updating the configuration
+
+The on-disk configuration of the Windows client can be changed at any time by modifying or replacing the contents of `C:\ProgramData\Cloudflare\mdm.xml`. Changes to this file are processed immediately by the WARP client.
+
+The format of this file is as follows:
+```xml
+<dict>
+  <key>organization</key>
+  <string>yourorganization</string>
+  <key>service_mode</key>
+  <string>warp</string>
+</dict>
+```
