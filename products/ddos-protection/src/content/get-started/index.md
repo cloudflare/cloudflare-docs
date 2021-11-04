@@ -64,7 +64,7 @@ Currently, some DDoS Attack Protection Managed Rulesets can only be configured v
 
 ### Step 2 — Review flagged traffic
 
-1. Navigate to your [analytics dashboard](/analytics) (depends on our Cloudflare services).
+1. Navigate to your [analytics dashboard](/reference/analytics) (depends on our Cloudflare services).
 1. Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if _Log_ mode were disabled. Take note of the rule IDs.
 
 ### Step 3 — Customize Managed Ruleset rules
