@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-order: 5
+order: 6
 ---
 
 # Using third-party services with Cloudflare
