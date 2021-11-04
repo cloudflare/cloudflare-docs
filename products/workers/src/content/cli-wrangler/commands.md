@@ -39,7 +39,7 @@ Default values indicated by <Type>=value</Type>.
 
 ## init
 
-Create a skeleton `wrangler.toml` in an existing directory. This can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
+Create a skeleton `wrangler.toml` in an existing directory. This command can be used as an alternative to `generate` if you prefer to clone a template repository yourself or you already have a JavaScript project and would like to use Wrangler.
 
 ```sh
 $ wrangler init [$NAME] [--type=$TYPE] [--site]
@@ -943,7 +943,7 @@ The schema below is the full schema for key-value entries uploaded via the bulk 
 - `expiration` <Type>int</Type> <PropMeta>optional</PropMeta>
   - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
 
-- `expiration_ttl` <Type>int</Type> <PropMetwa>optional</PropMeta>
+- `expiration_ttl` <Type>int</Type> <PropMeta>optional</PropMeta>
   - The number of seconds the document should exist before expiring. Must be at least `60` seconds. 
 
 - `base64` <Type>bool</Type> <PropMeta>optional</PropMeta>
