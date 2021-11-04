@@ -111,6 +111,10 @@ Resolution  |  Recommended bitrate
 
 </TableWrap>
 
+### If I cancel my stream subscription, are the videos deleted?
+
+Videos are removed If the subscription is not renewed within 30 days.
+
 ## Stream Live
 
 ### Do I need a separate Stream Live subscription to use Stream Live?
