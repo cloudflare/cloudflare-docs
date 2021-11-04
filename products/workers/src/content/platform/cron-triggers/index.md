@@ -11,11 +11,11 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 ## Adding Cron Triggers
 
-Cron Triggers can be added to scripts with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select your Worker > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/limits#number-of-schedules) to track the maximum number of Cron Triggers per Worker. If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the `wrangler.toml` file.
+You can add Cron Triggers to scripts with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select your Worker > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/limits#number-of-schedules) to track the maximum number of Cron Triggers per Worker. If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the `wrangler.toml` file.
 
 <Aside type="note" header="Requires a ScheduledEvent Listener">
 
-To respond to a Cron Trigger, a [`"scheduled"` event](/runtime-apis/scheduled-event) listener must be added to the Workers script.
+To respond to a Cron Trigger, you must add a [`"scheduled"` event](/runtime-apis/scheduled-event) listener to the Workers script.
 
 </Aside>
 
@@ -23,7 +23,7 @@ To respond to a Cron Trigger, a [`"scheduled"` event](/runtime-apis/scheduled-ev
 
 ## Supported cron expressions
 
-Cloudflare support cron expressions with 5 fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
+Cloudflare supports cron expressions with five fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
 
 <TableWrap>
 
