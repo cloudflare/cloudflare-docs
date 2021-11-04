@@ -22,7 +22,7 @@ First, reserve an IP for the GRE tunnel and then create a VM instance. The examp
 
 **Reserve an IP for the GRE tunnel**
 
-`gcloud compute addresses create $ADDRESS_NAME   --region=$REGION`
+`gcloud compute addresses create $ADDRESS_NAME  --region=$REGION`
 
 **Create a new GCP VM instance**
 
