@@ -101,6 +101,29 @@ async function handleRequest(request) {
 }
 ```
 
+## `origin-auth` option
+
+Clouflare supports resizing images through Workers on an authenticated origin, such as ASW S3:
+
+```js
+fetch(private_url, {
+  headers: signedHeaders
+  cf: {
+    image: {
+      format: "auto",
+      "origin-auth": "share-publicly"
+     }
+  }
+})
+```
+
+When this option is enabled, the following headers are passed through to the origin:
+
+* Authorization
+* Cookie
+* x-amz-content-sha256
+* x-amz-date
+
 ## Origin cache is shared
 
 We do not support cookies or HTTP authorization in requests to the origin server (cookies and unsupported headers will be stripped). This is because private/personalized requests cannot be cached, but we have to cache resized images to ensure good performance.
