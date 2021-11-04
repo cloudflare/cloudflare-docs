@@ -127,7 +127,7 @@ When this option is enabled, the following headers are passed through to the ori
 * x-amz-content-sha256
 * x-amz-date
 
-For more information related to AWS S3 specific cookies and settings, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
+For more information related to AWS S3 cookies and settings, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
 
 ## Origin cache is shared
 
