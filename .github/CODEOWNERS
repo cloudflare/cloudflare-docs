@@ -28,6 +28,9 @@ products/cloudflare-one/ @cloudflare/PCX
 # Developers homepage
 developers.cloudflare.com/ @cloudflare/PCX
 
+# DDoS Protection
+products/ddos-protection/ @cloudflare/PCX
+
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
