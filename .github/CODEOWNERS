@@ -34,6 +34,9 @@ products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/
 # Documentation Engine
 products/docs-engine/ @cloudflare/PCX
 
+# Email Routing
+products/email-routing/ @cloudflare/PCX
+
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
 
