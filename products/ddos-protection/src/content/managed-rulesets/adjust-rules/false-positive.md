@@ -11,8 +11,8 @@ In these cases, Cloudflare’s DDoS Protection systems may flag that traffic as 
 
 To remedy a false positive:
 
-1. Log in to the Cloudflare dashboard and select your account.
-1. Navigate to the [analytics dashboard](/reference/analytics) and apply filters to the displayed data.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Navigate to the analytics dashboard and apply filters to the displayed data.
 
     <details>
     <summary>For WAF/CDN customers</summary>

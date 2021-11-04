@@ -10,7 +10,7 @@ order: 2
 
 A false negative is a lack of identification. In the case of DDoS protection, there is a false negative when attack traffic is mistakenly classified as legitimate traffic and is not mitigated. This can occur when the attack traffic is not sufficiently high to trigger mitigation actions or if there are no rules matching the attack.
 
-In such cases:
+To address a false negative:
 
 * If you are a WAF/CDN customer, follow the steps in the [Responding to DoS attacks](https://support.cloudflare.com/hc/en-us/articles/200170196-Responding-to-DDoS-attacks) page, which guides you on enabling the _Under Attack_ mode and creating Rate Limiting and Firewall rules as needed.
 
@@ -25,16 +25,16 @@ The system chooses the mitigation action based on the logic and the DDoS protect
 * For high-confidence rules, the system will apply a strict mitigation action such as the _Block_ action.
 * For low-confidence rules, the system will apply a less strict mitigation rule such as _Challenge_ or _Force Connection Close_.
 
-If you are experiencing a DDoS attack detected by Cloudflare and the applied mitigation action is not sufficiently strict, change the rule action to _Block_.
+If you are experiencing a DDoS attack detected by Cloudflare and the applied mitigation action is not sufficiently strict, change the rule action to _Block_:
 
-1. Log in to the Cloudflare dashboard and select your account.
-1. Navigate to the [analytics dashboard](/reference/analytics) and apply filters to the displayed data.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Navigate to the analytics dashboard and apply filters to the displayed data.
 
     <details>
     <summary>For WAF/CDN customers</summary>
     <div>
 
-    1\. Select the zone that is experiencing DDoS attack false positives.
+    1\. Select the zone that is experiencing DDoS attack false negatives.
 
     2\. Navigate to **Firewall** > **Overview**.
 
