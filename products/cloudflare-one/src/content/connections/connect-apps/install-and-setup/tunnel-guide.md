@@ -141,6 +141,8 @@ credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
 ```txt
 tunnel: <Tunnel-UUID>
 credentials-file: /root/.cloudflared/<Tunnel-UUID>.json
+warp-routing:
+  enabled: true
 ```
 
 Confirm that the configuration file has been successfully created by running:
