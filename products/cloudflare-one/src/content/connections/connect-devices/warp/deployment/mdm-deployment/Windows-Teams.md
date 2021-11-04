@@ -53,9 +53,9 @@ Below are the minimum required steps to deploy Cloudflare WARP with Intune:
 
 Intune is now configured to deploy the Cloudflare WARP Client
 
-### Updating configuration
+### Updating the configuration
 
-The on disk configuration of the Windows client can be changed at any time by modifying or replacing the contents of `C:\ProgramData\Cloudflare\mdm.xml`. Changes to this file are processed immediately by the client.
+The on-disk configuration of the Windows client can be changed at any time by modifying or replacing the contents of `C:\ProgramData\Cloudflare\mdm.xml`. Changes to this file are processed immediately by the WARP client.
 
 The format of this file is as follows:
 ```xml
