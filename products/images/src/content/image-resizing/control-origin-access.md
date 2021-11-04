@@ -103,7 +103,7 @@ async function handleRequest(request) {
 
 ## `origin-auth` option
 
-Clouflare supports resizing images through Workers on an authenticated ASW S3 origin:
+In order to ensure good performance Cloudflare Image Resizing has to cache resized images. It would be unsafe to share images that are personalised for individual visitors. That's why it's generally not recommended to resize images stored with a restricted access. However in cases when customer is fine to store such images in the public cache Cloudflare supports resizing images through Workers on authenticated origins, such as AWS S3:
 
 ```js
 // generate signed headers (application specific)
