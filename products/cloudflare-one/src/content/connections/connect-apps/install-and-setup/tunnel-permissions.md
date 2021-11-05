@@ -1,11 +1,5 @@
 ---
 order: 4
-title: Tunnel guide
-pcx-content-type: reference
----
-
----
-order: 3
 pcx-content-type: reference
 ---
 
