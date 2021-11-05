@@ -1,17 +1,18 @@
 ---
+title: Third-party services and DDoS protection
 pcx-content-type: reference
-order: 7
+order: 1
 ---
 
-# Using third-party services with Cloudflare
+# Third-party services and Cloudflare DDoS protection
 
-## Third-party CDN in front of Cloudflare
+## Using a third-party CDN in front of Cloudflare
 
 Some Cloudflare customers choose to use a Content Delivery Network (CDN) in front of Cloudflare to cache and serve their resources.
 
-Cloudflare recommends that you do not use a third-party CDN in front of Cloudflare because some CDN providers may introduce subtleties into HTTP requests that deviate from protocol standards and/or protocol best practices. Additionally, because traffic to Cloudflare will originate from a limited set of IP addresses of the third-party CDN, in rare occasions — such as when using the Akamai CDN in front of Cloudflare — it may appear as if the CDN is launching a DDoS attack against Cloudflare due to the amount of traffic from these limited IP addresses.
+Cloudflare recommends that you **do not use a third-party CDN in front of Cloudflare**. Some CDN providers may introduce subtleties into HTTP requests that deviate from protocol standards and/or protocol best practices. Additionally, because traffic to Cloudflare will originate from a limited set of IP addresses of the third-party CDN, in rare occasions — such as when using the Akamai CDN in front of Cloudflare — it may appear as if the CDN is launching a DDoS attack against Cloudflare due to the amount of traffic from these limited IP addresses.
 
-Therefore, it is recommended that you use the [Cloudflare CDN](https://developers.cloudflare.com/cache/). By using Cloudflare CDN you have the following benefits:
+Therefore, it is recommended that you **use the [Cloudflare CDN](https://developers.cloudflare.com/cache/)**, which provides the following benefits:
 
 * You remove an additional hop between vendor data centers, thus reducing latency for your users.
 * You perform DDoS filtering in the first point of contact from the Internet, which is a recommended best practice.
@@ -27,7 +28,7 @@ If you are using the Akamai CDN in front of Cloudflare, it is recommended that y
 
 For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset > Ruleset configuration](/managed-rulesets/http#ruleset-configuration).
 
-## VPNs, NATs, and other third-party services
+## Using VPNs, NATs, and other third-party services
 
 Some Cloudflare Magic Transit customers operate Virtual Private Networks (VPN) so that their remote employees can connect securely to the organization’s services. Additionally, larger organizations have Network Addressing Translation (NAT) systems that manage connections in and out of their network.
 
