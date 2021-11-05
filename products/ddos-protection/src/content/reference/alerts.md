@@ -1,4 +1,5 @@
 ---
+title: Alerts
 pcx-content-type: reference
 order: 3
 ---

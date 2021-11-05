@@ -1,4 +1,5 @@
 ---
+title: Analytics
 pcx-content-type: reference
 order: 1
 ---

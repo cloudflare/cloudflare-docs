@@ -1,4 +1,5 @@
 ---
+title: Reports
 pcx-content-type: reference
 order: 2
 ---

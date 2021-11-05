@@ -1,4 +1,5 @@
 ---
+title: Logs
 pcx-content-type: reference
 order: 3
 ---
