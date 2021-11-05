@@ -9,13 +9,19 @@ pcx-content-type: interim
 
 The DDoS Attack Protection Managed Rulesets provided by Cloudflare are enabled by default on zones onboarded to Cloudflare, IP applications onboarded to Spectrum, and IP Prefixes onboarded to Magic Transit.
 
-Unlike customers on an Enterprise plan, you cannot customize the action or sensitivity of Managed Ruleset rules in Free, Pro, or Business plans.
+In some situations, the default protection offered by DDoS rules may need to be fine-tuned to your specific situation. You may also want to configure additional protection using other Cloudflare products.
+
+### Adjust the provided DDoS rules
+
+If one or more DDoS rules provided by Cloudflare affects legitimate traffic, you can adjust them so that they do not perform any mitigation action against this kind of traffic. Follow the steps in [Handle a false positive](/managed-rulesets/adjust-rules/false-positive) to reduce the sensitivity level of one or more DDoS rules and allow incoming legitimate traffic.
+
+### Configure additional protection
 
 To configure additional protection against DDoS attacks, refer to the related Cloudflare products listed in [Network-layer DDoS Attack Protection](/managed-rulesets/network#related-cloudflare-products) and [HTTP DDoS Attack Protection](/managed-rulesets/http#related-cloudflare-products).
 
 ## Enterprise plan
 
-Cloudflare’s DDoS protection systems may flag incoming traffic from legacy applications, Internet services, or faulty client applications as malicious and apply mitigation actions. If the traffic is in fact legitimate, the mitigation actions can cause service disruptions and outages in your Internet properties.
+Cloudflare’s DDoS protection systems automatically detect and mitigate DDoS attacks. Additionally, the systems may flag suspiciously-looking incoming traffic from legacy applications, Internet services, or faulty client applications as malicious and apply mitigation actions. If the traffic is in fact legitimate, the mitigation actions can cause service disruptions and outages in your Internet properties.
 
 To prevent this situation, Cloudflare recommends that you perform these steps to get started:
 
@@ -28,7 +34,7 @@ To prevent this situation, Cloudflare recommends that you perform these steps to
 
 You must have one of the following:
 
-* [A zone onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708)
+* [A zone onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) but without updated DNS records
 * [An IP application onboarded to Spectrum](https://developers.cloudflare.com/spectrum/get-started)
 * [An IP Prefix onboarded to Magic Transit](https://developers.cloudflare.com/magic-transit/get-started)
 
@@ -56,9 +62,11 @@ Alternatively, if you are using the API, define an override at the ruleset level
 * [Configure an override for the HTTP DDoS Attack Protection Managed Ruleset](/managed-rulesets/http/configure-api#configure-an-override-for-http-ddos-attack-protection)
 * [Configure an override for the Network-layer DDoS Attack Protection Managed Ruleset](/managed-rulesets/network/configure-api#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset)
 
-<Aside type="warning">
+<Aside type="warning" header="Notes">
 
-Currently, some DDoS Attack Protection Managed Rulesets can only be configured via API.
+* Currently, Spectrum and Magic transit customers do not have access to **Firewall** > **DDoS** tab and have to configure the DDoS Attack Protection Managed Rulesets using the API].
+
+* At the moment, some DDoS Attack Protection Managed Rulesets can only be configured via API.
 
 </Aside>
 
