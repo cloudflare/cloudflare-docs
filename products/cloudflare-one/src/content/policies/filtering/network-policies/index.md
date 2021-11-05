@@ -68,6 +68,7 @@ Gateway matches network traffic against the following selectors, or criteria:
 
 * **Destination IP**. The IP address of the request’s target.
 * **Destination Port**. The port number of the request’s target.
+* **SAML Attributes**. Specify a value from the SAML Attribute Assertion.
 * **Source IP**. The IP address of the user making the request.
 * **Source Port**. The port number of the user’s request.
 * **SNI**. The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
