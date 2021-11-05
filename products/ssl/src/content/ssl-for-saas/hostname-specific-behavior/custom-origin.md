@@ -33,7 +33,7 @@ To solve this problem, you can contact your account team to request an entitleme
 
 ### SNI rewrite options
 
-SNI rewrites allow you to choose how your custom hostname populates the SNI value:
+Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 - **Origin server name** (default): Sets SNI to the custom origin  
     - If custom origin is `custom-origin.com`, then the SNI is `custom-origin.com`.
@@ -45,6 +45,12 @@ SNI rewrites allow you to choose how your custom hostname populates the SNI valu
 - **Subdomain of zone**: Choose what to set as the SNI value (custom hostname or any subdomain)
     - If wildcards are not enabled and a request comes to `example.com`, choose whether to set the SNI as `example.com` or `www.example.com`.
     - If wildcards are enabled, you set the SNI to `example.com`, and a request comes to `www.example.com`, then the SNI is `example.com`.
+
+<Aside type="note">
+
+Currently, SNI Rewrite is not supported for **wildcard** custom hostnames. Subdomains covered by a wildcard Custom Hostname send the custom origin server name as the SNI value. 
+
+</Aside>
 
 ### Set an SNI rewrite
 

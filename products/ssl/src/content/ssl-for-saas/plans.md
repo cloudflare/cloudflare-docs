@@ -18,7 +18,7 @@ pcx-content-type: reference
     <tbody>
         <tr>
             <td><strong>Price</strong></td>
-            <td style="text-align:center">$2/month per custom hostname</td>
+            <td style="text-align:center">For details, refer to our <a href="https://www.cloudflare.com/plans/#overview">Plans page</a></td>
             <td>Price set by account team</td>
         </tr>
         <tr>
