@@ -101,8 +101,33 @@ async function handleRequest(request) {
 }
 ```
 
-## Origin cache is shared
+## Authenticated origin
 
-We do not support cookies or HTTP authorization in requests to the origin server (cookies and unsupported headers will be stripped). This is because private/personalized requests cannot be cached, but we have to cache resized images to ensure good performance.
+To ensure good performance, Cloudflare Image Resizing caches resized images. Since it would not be safe to share images customized for individual visitors, it is generally not recommended to resize images stored with a restricted access. However, in cases where customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers on authenticated origins, such as AWS S3:
 
-You can perform per-request access control in the Worker. If the images are personalized at the origin server, include the personalization options in the image URL.
+```js
+---
+highlight: [9]
+---
+// generate signed headers (application specific)
+const signedHeaders = generatedSignedHeaders();
+ 
+fetch(private_url, {
+  headers: signedHeaders
+  cf: {
+    image: {
+      format: "auto",
+      "origin-auth": "share-publicly"
+     }
+  }
+})
+```
+
+When using this code, the following headers are passed through to the origin, and allow your request to be successful:
+
+* `Authorization`
+* `Cookie`
+* `x-amz-content-sha256`
+* `x-amz-date`
+
+For more information, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
