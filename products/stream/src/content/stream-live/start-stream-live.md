@@ -86,8 +86,6 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 
 ### Known limitations (will be solved in coming weeks without any changes required from you): 
 
-* MP4 download from videos created from live streaming is not yet available.
 * Watermarks cannot yet be used with live videos.
 * The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
-* GOP duration (keyframe interval) should be constant during a broadcast.
 * Hardware video encoding on Apple devices is not yet supported. When using encoder software such as OBS, x264 software encoding is required.
