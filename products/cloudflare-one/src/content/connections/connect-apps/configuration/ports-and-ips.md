@@ -54,4 +54,11 @@ api.cloudflare.com.     41      IN      A       104.19.192.29
 ...
 ```
 
+<Aside type="note">
+
+To connect to <code>update.argotunnel.com</code>, port 443 is required to be open.
+
+</Aside>
+
+
 \* *These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here.*
