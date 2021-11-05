@@ -106,6 +106,9 @@ async function handleRequest(request) {
 To ensure good performance, Cloudflare Image Resizing caches resized images. Since it would not be safe to share images customized for individual visitors, it is generally not recommended to resize images stored with a restricted access. However, in cases where customer agrees to store such images in public cache, Cloudflare supports resizing images through Workers on authenticated origins, such as AWS S3:
 
 ```js
+---
+highlight: [9]
+---
 // generate signed headers (application specific)
 const signedHeaders = generatedSignedHeaders();
  
@@ -120,7 +123,7 @@ fetch(private_url, {
 })
 ```
 
-When this option is enabled, the following headers are passed through to the origin, and allow your request to be successful:
+When using this code, the following headers are passed through to the origin, and allow your request to be successful:
 
 * `Authorization`
 * `Cookie`
