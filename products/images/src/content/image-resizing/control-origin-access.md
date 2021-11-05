@@ -122,9 +122,9 @@ fetch(private_url, {
 
 When this option is enabled, the following headers are passed through to the origin, and allow your request to be successful:
 
-* Authorization
-* Cookie
-* x-amz-content-sha256
-* x-amz-date
+* `Authorization`
+* `Cookie`
+* `x-amz-content-sha256`
+* `x-amz-date`
 
 For more information, refer to [Authenticating Requests (AWS Signature Version 4)](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html).
