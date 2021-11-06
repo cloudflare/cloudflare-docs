@@ -113,7 +113,7 @@ Resolution  |  Recommended bitrate
 
 ### If I cancel my stream subscription, are the videos deleted?
 
-Videos are removed If the subscription is not renewed within 30 days.
+Videos are removed if the subscription is not renewed within 30 days.
 
 ## Stream Live
 
