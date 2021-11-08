@@ -23,18 +23,18 @@ For instructions on how to set up a notification for a WAF alert, refer to [Crea
 
 ## Alert logic
 
-WAF alerts use a [z-score](https://en.wikipedia.org/wiki/Standard_score) calculation over the last 6 hours and 5-minute buckets of events. An alert is triggered whenever the z-score is above 3.5 (the threshold). You will not receive duplicate alerts within the same 2-hour time frame.
+WAF alerts use a [z-score](https://en.wikipedia.org/wiki/Standard_score) calculation over the last six hours and five-minute buckets of events. An alert is triggered whenever the z-score is above 3.5 (the threshold). You will not receive duplicate alerts within the same two-hour time frame.
 
 ## Alert types
 
 ### Security Events Alert
 
-Available for zones on Business and Enterprise plans. The mean time to detection is 2 hours.
+Available for zones on Business and Enterprise plans. The mean time to detection is two hours.
 
 This alert will look for spikes across all services that generate log entries in [firewall events](https://developers.cloudflare.com/logs/reference/log-fields/zone/firewall_events).
 
 ### Advanced Security Events Alert
 
-Only available for zones on Enterprise plans. The mean time to detection is 5 minutes.
+Only available for zones on Enterprise plans. The mean time to detection is five minutes.
 
 When setting up this alert, you can select the services that will be monitored. Each selected service is monitored separately.
