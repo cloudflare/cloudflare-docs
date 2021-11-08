@@ -21,11 +21,8 @@ To log into Cloudflare for Teams directly, go to the [Teams dashboard](https://d
 
 To log in through the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-1. Select an account and an application.
-1. Navigate to **Access**.
-1. Select **Launch Teams**.
-1. Select your account.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log into the [Teams dashboard](/setup#start-from-the-cloudflare-dashboard).
 
 ### Step 2 — Set up an IdP
 
