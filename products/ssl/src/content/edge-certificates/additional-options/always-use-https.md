@@ -29,7 +29,7 @@ While protecting your site via Cloudflare, it is not recommended to perform redi
 * Page Rule redirects are processed at the Cloudflare edge resulting in quicker response and reduced requests to your server.
 * Origin web server redirects can cause [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
 
-When configuring Page Rules, the _Always use HTTPS_ action is the simplest method to redirect HTTP requests to HTTPS.  You can also use the _Forwarding URL_ action with a _301_ redirect if you need to redirect to another subdomain in addition to forcing HTTPS. For example, a Page Rule match for
+Use the _Forwarding URL_ action with a _301_ redirect if you need to redirect to another subdomain in addition to forcing HTTPS. For example, a Page Rule match for
 
 ``http://example.com/*``
 
