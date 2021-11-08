@@ -19,7 +19,7 @@ In this section you can create as many custom email addresses as you want for yo
 To create your rule, you also have to specify an **Action** between the email alias and the destination address:
 
 * **Send to**: emails will be routed to your Destination address. This is the default action.
-* **Drop**: Accepts emails but deletes them without routing to the specified Destination address.This can be useful if you want to make an email address appear valid for privacy reasons.
+* **Drop**: Accepts emails but deletes them without routing to the specified Destination address. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 <Aside type="note">
 
