@@ -96,7 +96,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`. 
 
-For example, `ZOLA_VERSION`: `0.13.0`.
+For example, `ZOLA_VERSION`: `0.14.0`.
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `zola`, your project dependencies, and building your site, before deploying it.
 
