@@ -20,7 +20,7 @@ Prior to setting up DNS Firewall, you need:
 
 #### Using the dashboard
 
-1. Log into the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
+1. Log in to the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
 1. On the account homepage, click **Configurations**.
 1. Click **DNS Firewall**.
 1. Click **Add Firewall Cluster**.
@@ -47,7 +47,7 @@ After waiting **an hour**, update the domain NS glue records at your registrar w
 
 ### Update DNS servers
 
-At your DNS servers, update ns A records in your DNS zone file with your DNS Firewall IP Addresses.
+At your DNS servers, update your nameserver A records in your DNS zone file with your DNS Firewall IP Addresses.
 
 ### Test DNS resolution
 

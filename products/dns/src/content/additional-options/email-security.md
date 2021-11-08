@@ -21,7 +21,7 @@ For additional background on email security records, refer to the [introductory 
 
 To set up email security records:
 
-1. Log into [your account](https://dash.cloudflare.com) and select your domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 1. Go to **DNS**.
 1. For **Email Security**, click **Configure**.
 1. If your domain sends email, use the available options to set up SPF, DKIM, and DMARC records.

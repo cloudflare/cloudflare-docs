@@ -57,11 +57,10 @@ To make this custom nameserver the default for all new zones, use a [PUT command
 
 To add custom nameservers to a specific zone:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. Go to **DNS**.
-1. On **Custom Nameservers**, click **Add Custom Nameservers** and enter nameserver hostnames (e.g. ns1, ns2, ns3).
+1. On **Custom Nameservers**, click **Add Custom Nameservers** and enter nameserver hostnames (like ns1, ns2, ns3).
 1. Cloudflare will assign IPv4 and IPv6 to your nameservers.
 1. The next steps depends on whether Cloudflare manages the DNS for your domain:
-    
     - If Cloudflare does manage the DNS for your domain, no further action is required.
     - If Cloudflare does not manage the DNS for your domain, add the **Custom Nameservers** and IP addresses to your domain registrar’s DNS as [glue (A or AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.

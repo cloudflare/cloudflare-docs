@@ -17,7 +17,7 @@ You can then [re-enable DNSSEC](/zone-setups/full-setup#re-enable-dnssec) in Clo
 
 ### Do the nameservers at your registrar exactly match the values provided by Cloudflare?
 
-If the nameservers in your registrar do you exactly match those provided by Cloudflare, your domain will not resolve correctly.
+If the nameservers in your registrar do not exactly match those provided by Cloudflare, your domain will not resolve correctly.
 
 ### Are additional nameservers listed at your registrar?
 

@@ -29,7 +29,7 @@ Make sure to remove all comments from your import file that start with a semicol
 
 To import records using the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. Go to **DNS**.
 1. Click **Advanced**.
 1. For **Import DNS records**, select your [formatted file](#format-your-file).
@@ -47,7 +47,7 @@ You can also bulk export records from Cloudflare.
 
 To export records using the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. Go to **DNS**.
 1. Click **Advanced**.
 1. Update the options in **Include records from:**.

@@ -17,7 +17,6 @@ If you are using [Cloudflare Registrar](https://developers.cloudflare.com/regist
 
 ## Change your domain nameservers
 
----
 
 ### Prerequisites
 
@@ -30,7 +29,6 @@ If you are using [Cloudflare Registrar](https://developers.cloudflare.com/regist
     - [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/)
     - [DNS Security (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/)
 
----
 
 ### Update your nameservers
 
@@ -38,7 +36,7 @@ Once you have added an application to Cloudflare, that application will receive 
 
 #### Get nameserver names
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. On **Overview**, copy the information from **Replace with Cloudflare's nameservers**.
 
     ![get nameserver names from the Overview page of your domain](../static/nameserver-names.png)
@@ -100,7 +98,7 @@ Once you have added an application to Cloudflare, that application will receive 
 
 #### Verify changes
 
-To check whether you correctly changed your nameservers, you can log into the [Cloudflare dashboard](https://dash.cloudflare.com) or use a [third-party tool](https://www.whatsmydns.net/).
+To check whether you correctly changed your nameservers, you can log in to the [Cloudflare dashboard](https://dash.cloudflare.com) or use a [third-party tool](https://www.whatsmydns.net/).
 
 If you see unexpected results, refer to [Nameserver FAQs](/zone-setups/troubleshooting#nameservers).
 

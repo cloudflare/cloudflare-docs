@@ -29,7 +29,7 @@ If your domain is added to Cloudflare by a hosting partners, manage your DNS rec
 
 To create a DNS record in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
 1. Navigate to **DNS**.
 1. Click **Add record**.
 1. Choose a record **Type**.
@@ -54,7 +54,7 @@ To create records with the API, use a [POST request](https://api.cloudflare.com/
 
 To edit DNS records in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
 1. Navigate to **DNS**.
 1. On a specific record, click **Edit**.
 1. Make any necessary changes.
@@ -72,7 +72,7 @@ To update part of a record with the API, use a [PATCH request](https://api.cloud
 
 To delete DNS records in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
 1. Navigate to **DNS**.
 1. On a specific record, click **Edit**.
 1. Click **Delete**.
@@ -81,6 +81,3 @@ To delete DNS records in the dashboard:
 ### Using the API
 
 To delete records with the API, use a [DELETE request](https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-record).
-
-
-
