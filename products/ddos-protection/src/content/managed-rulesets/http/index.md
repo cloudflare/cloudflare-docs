@@ -34,9 +34,4 @@ The HTTP DDoS Attack Protection Managed Ruleset protects Cloudflare customers on
 
 ## Related Cloudflare products
 
-To block additional L7 attacks you can use the following Cloudflare products:
-
-* [Custom Firewall rules](https://developers.cloudflare.com/waf/custom-rules/custom-firewall) or its previous version, [Firewall Rules](https://developers.cloudflare.com/firewall/)
-* [Rate Limiting rules](https://developers.cloudflare.com/waf/custom-rules/rate-limiting) or its previous version, [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128)
-* [Bot Management](https://developers.cloudflare.com/bots/)
-* [WAF](https://developers.cloudflare.com/waf/)
+To block additional L7 attacks you can use other Cloudflare products like the [Cloudflare WAF](https://developers.cloudflare.com/waf/).
