@@ -7,15 +7,19 @@ pcx-content-type: reference
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
-**Edge connections**
-- TCP port 7844 (HTTPS)
-- IPs are those behind **region1.argotunnel.com** and **region2.argotunnel.com** \*
+* TCP port 7844 (HTTPS)
+* IPs are those behind **region1.argotunnel.com** and **region2.argotunnel.com** \*
+* TCP port 443 (HTTPS)
+* IPs are those behind **api.cloudflare.com** and **update.cloudflare.com** \*
 
-**API requests**
-- TCP port 443 (HTTPS)
-- IPs are those behind **api.cloudflare.com** \*
+<Aside>
+
+Opening port 443 for connections to **update.cloudflare.com** is optional. Failure to do so will prompt a log error, but `cloudflared` will still run correctly.
+
+</Aside>
 
 Below the output of `dig` commands towards the above hostnames:
+
 
 ```bash
 $ dig region1.argotunnel.com
@@ -53,12 +57,5 @@ api.cloudflare.com.     41      IN      A       104.19.192.29
 
 ...
 ```
-
-<Aside type="note">
-
-To connect to <code>update.argotunnel.com</code>, port 443 is required to be open.
-
-</Aside>
-
 
 \* *These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here.*
