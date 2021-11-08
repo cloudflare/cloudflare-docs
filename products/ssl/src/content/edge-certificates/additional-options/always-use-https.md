@@ -22,7 +22,7 @@ To redirect traffic for all subdomains and hosts in your domain:
 
 ### Page Rules 
 
-If you do not want your whole site redirected to HTTPS, redirect on a URL basis using Cloudflare [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
+If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
 While protecting your site via Cloudflare, it is not recommended to perform redirects at your origin web server:
 
