@@ -11,7 +11,7 @@ import AlwaysUseHTTPSDefinition from "../../_partials/_always-use-https-definiti
 
 ## How to redirect all visitors to HTTPS/SSL
 
-You can redirect your domain visitors to HTTP/SSL through SSL/TLS or Page Rules, depending on if you want to redirect traffic for all subdomains or if you do not want your whole site to be redirected to HTTPS.
+You can redirect your domain visitors to HTTPS through SSL/TLS or Page Rules, depending on if you want to redirect traffic for all subdomains or only specific subdomains.
 
 ### SSL/TLS 
 
