@@ -14,13 +14,13 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-addEventListener('scheduled', event => {
-  event.waitUntil(triggerEvent(event.cron))
-})
+addEventListener("scheduled", (event) => {
+  event.waitUntil(triggerEvent(event));
+});
 
-async function triggerEvent(event.cron) {
-  // Write code for updating your API 
-  switch (event.cron) {
+async function triggerEvent({ cron }) {
+  // Write code for updating your API
+  switch (cron) {
     // You can set up to three schedules maximum.
     case "*/3 * * * *":
       // Every three minutes
@@ -35,6 +35,6 @@ async function triggerEvent(event.cron) {
       await updateAPI3();
       break;
   }
-  console.log("cron processed")
+  console.log("cron processed");
 }
 ```
