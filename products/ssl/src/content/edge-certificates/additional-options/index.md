@@ -17,7 +17,7 @@ import CSRDefinition from "../../_partials/_csr-definition.md"
 
 Once you set up SSL/TLS on your application, you can adjust the following settings in **SSL/TLS** > **Edge Certificates**:
 
-- [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156): <AlwaysUseHTTPSDefinition/>
+- [Always Use HTTPS](always-use-https): <AlwaysUseHTTPSDefinition/>
 - [HTTP Strict Transport Security (HSTS)](http-strict-transport-security): <HSTSDefinition/>
 - [Minimum TLS Version](minimum-tls): <MinimumTLSDefinition/>
 - [Opportunistic Encryption](opportunistic-encryption): <OpportunisticEncryptionDefinition/>
