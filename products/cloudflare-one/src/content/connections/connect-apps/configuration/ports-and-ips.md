@@ -8,9 +8,9 @@ pcx-content-type: reference
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
 * TCP port 7844 (HTTPS)
-* IPs are those behind `region1.argotunnel.com` and `region2.argotunnel.com` \*
+    * IPs are those behind `region1.argotunnel.com` and `region2.argotunnel.com` \*
 * TCP port 443 (HTTPS)
-* IPs are those behind `api.cloudflare.com` and `update.cloudflare.com` \*
+    * IPs are those behind `api.cloudflare.com` and `update.cloudflare.com` \*
 
 <Aside>
 
