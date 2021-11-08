@@ -126,7 +126,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 <WorkerStarter
   title="REST API with Fauna"
-  description="Build a a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
+  description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
   repo="fauna-labs/fauna-workers"
 />
 
