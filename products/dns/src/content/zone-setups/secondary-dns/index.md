@@ -5,8 +5,4 @@ pcx-content-type: concept
 
 # Secondary DNS
 
-
-
-## Availability
-
-DNS Firewall is only available to customers on Enterprise plans.
+To learn more about Secondary DNS, refer to our [Knowledgebase](https://support.cloudflare.com/hc/articles/360001356152).
