@@ -32,7 +32,7 @@ When the build is finished, curl binary will be installed on `/usr/local/opt/cur
 ### Verify curl with H3 support built properly
 
 ```sh
-$ curl --help | egrep 'alt-svc|http3'
+$ curl --help all | egrep 'alt-svc|http3'
     --alt-svc <file name> Enable alt-svc with this cache file
     --http3         Use HTTP v3
 ```

@@ -6,12 +6,9 @@ pcx-content-type: how-to
 
 # Enable Image Resizing
 
-To use Image Resizing you first need to enable it via the Speed app of your Cloudflare dashboard:
+To use Image Resizing you first need to enable it via the Speed app on your Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-1. Click the **account** for the domain you want to use with Image Resizing.
-1. Select the **domain** where you will be using Image Resizing.
-1. Click the **Speed** app.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Speed**.
 
   <div class="full-img">
 
@@ -20,7 +17,7 @@ To use Image Resizing you first need to enable it via the Speed app of your Clou
   </div>
 
 1. Click the **Optimization** tab.
-1. Under **File Size Optimization**, enable **Image Resizing**
+1. Under **File Size Optimization**, enable **Image Resizing**.
 1. If you do not want to resize images from any origin, uncheck **Resize images from any origin**.
 
 <Aside type="note" header="Note">

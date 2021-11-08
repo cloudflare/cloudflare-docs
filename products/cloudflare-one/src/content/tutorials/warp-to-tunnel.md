@@ -20,16 +20,7 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 * Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 * Connect using any TCP-based protocol
 
-<Aside>
-
-* You must have a Cloudflare for Teams Gateway or Standard plan to use this feature.
-* This flow does not currently work on mobile versions of the WARP software.
-
-</Aside>
-
-**⏲️ Time to complete:**
-
-45 minutes
+**⏲️ Time to complete:** 45 minutes
 
 ## Install `cloudflared`
 

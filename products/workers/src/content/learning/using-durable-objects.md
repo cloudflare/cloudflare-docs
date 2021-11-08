@@ -298,13 +298,13 @@ new_classes = ["DurableObjectExample"] # Array of new classes
 
 [[migrations]]
 tag = "v2"
-renamed_classes = [{from: "DurableObjectExample", to: "UpdatedName" }] # Array of rename directives
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
 <Aside type="note">
 
-Note that `.toml` files do not allow line breaks in inline tables (the `{key: "value"}` syntax), but line breaks
+Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks
 in the surrounding inline array are acceptable.
 
 </Aside>
@@ -473,4 +473,4 @@ To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tai
 In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and that the file extension is `.mjs` instead of `.js` if using ES Modules Syntax.
 
 #### Error when deleting migration
-When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+When deleting a migration using `wrangler publish --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.

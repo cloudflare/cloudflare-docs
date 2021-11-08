@@ -66,6 +66,7 @@ Magic Firewall supports [using lists in expressions](https://developers.cloudfla
  * `$cf.anonymizer` - Anonymizer proxies
  * `$cf.botnetcc` - Botnet command and control channel
  * `$cf.malware` - Sources of malware
+ * `${rules list name}` - The name of an account level Rules List
 
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \

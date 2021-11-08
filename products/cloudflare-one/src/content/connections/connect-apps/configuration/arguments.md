@@ -34,12 +34,12 @@ Specifies the path to a config file in YAML format.
 
 ## `ingress`
 
-This property configures which local services `cloudflared` will proxy incoming requests to.
+Configures which local services `cloudflared` will proxy incoming requests to.
 Refer to the [Ingress Rules docs](/connections/connect-apps/configuration/ingress) for details.
 
 ## `originRequest`
 
-This property configures how `cloudflared` will send requests to your local services.
+Configures how `cloudflared` will send requests to your local services.
 Refer to the [Origin Configuration docs](/connections/connect-apps/configuration/ingress#origin-configurations) for details.
 
 ## `autoupdate-freq`
@@ -48,7 +48,7 @@ Refer to the [Origin Configuration docs](/connections/connect-apps/configuration
 |--|--|
 | `autoupdate-freq` | `24h` |
 
-Autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
+Configures autoupdate frequency. See also: [`no-autoupdate`](#no-autoupdate).
 
 ## `no-autoupdate`
 
@@ -81,7 +81,7 @@ The connection from your machine to Cloudflare's Edge is still encrypted and ver
 |--|--|
 | `grace-period` | `30s` |
 
-When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
+When `cloudflared` receives SIGINT/SIGTERM it will stop accepting new requests, wait for in-progress requests to terminate, then shut down. Waiting for in-progress requests will timeout after this grace period, or when a second SIGTERM/SIGINT is received.
 
 ## `metrics`
 
@@ -89,7 +89,7 @@ When cloudflared receives SIGINT/SIGTERM it will stop accepting new requests, wa
 |--|--|--|
 | `metrics value` | `localhost:` | `TUNNEL_METRICS` |
 
-Address to query for usage metrics.
+Specifies address to query for usage metrics.
 
 ## `metrics-update-freq`
 
@@ -97,7 +97,7 @@ Address to query for usage metrics.
 |--|--|--|
 | `metrics-update-freq duration` | `5s` | `TUNNEL_METRICS_UPDATE_FREQ` |
 
-Frequency to update tunnel metrics.
+Specifies frequency to update tunnel metrics.
 
 ## `tag`
 
@@ -105,7 +105,7 @@ Frequency to update tunnel metrics.
 |--|--|
 | `tag: {KEY=VALUE,...}` | `TUNNEL_TAG` |
 
-Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1, KEY2=VALUE2`.
+Specifies custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags may be specified by delimiting them with commas e.g. `KEY1=VALUE1, KEY2=VALUE2`.
 
 ## `retries`
 
@@ -113,7 +113,7 @@ Custom tags used to identify this tunnel, in format `KEY=VALUE`. Multiple tags m
 |--|--|--|
 | `retries value` | `5` | `TUNNEL_RETRIES` |
 
-Maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default), so it is not recommended that you increase this value significantly.
+Specifies the maximum number of retries for connection/protocol errors. Retries use exponential backoff (retrying at 1, 2, 4, 8, 16 seconds by default), so it is not recommended that you increase this value significantly.
 
 ## `pidfile`
 
@@ -121,7 +121,7 @@ Maximum number of retries for connection/protocol errors. Retries use exponentia
 |--|--|
 | `pidfile value` | `TUNNEL_PIDFILE` |
 
-Write the application's process identifier (PID) to this file after the first successful connection. Mainly useful for scripting and service integration.
+Writes the application's process identifier (PID) to this file after the first successful connection. Mainly useful for scripting and service integration.
 
 ## `protocol`
 
@@ -129,7 +129,7 @@ Write the application's process identifier (PID) to this file after the first su
 |--|--|--|
 | `protocol` | `auto` | `TUNNEL_TRANSPORT_PROTOCOL` |
 
-Specify the protocol used to establish a connection between `cloudflared` and the edge. The `auto` value will automatically configure the `http2` protocol.
+Specifies the protocol used to establish a connection between `cloudflared` and the edge. Available values are `auto`, `http2`, `h2mux`, and `quic`. The `auto` value will automatically configure the `http2` protocol.
 
 ## `region`
 
@@ -141,7 +141,7 @@ Allows you to choose the regions to which connections are established. Omit or l
 |--|--|
 | `logfile value` | `TUNNEL_LOGFILE` |
 
-Save application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/faq/cloudflare-tunnels-faq).
+Saves application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/faq/cloudflare-tunnels-faq).
 
 ## `loglevel`
 

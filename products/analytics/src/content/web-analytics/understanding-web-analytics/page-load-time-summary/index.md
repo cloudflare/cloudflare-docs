@@ -17,7 +17,7 @@ pcx-content-type: reference
 
 ## Data collected for Paint Timings
 
-To make Web Analytics work, Cloudflare collects additional data points for Paint Timings:
+To make Web Analytics work, Cloudflare collects several types of data points. These are the additional data points collected for Paint Timings:
 
 * **First Paint**. The time between navigation and when the browser renders the first pixels to the screen.
 * **First Contentful Paint**. Time when the browser renders the first bit of content from the DOM.

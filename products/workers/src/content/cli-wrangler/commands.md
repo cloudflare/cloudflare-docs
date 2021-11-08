@@ -910,6 +910,18 @@ $ wrangler kv:bulk put --binding= [--env=] [--preview] [--namespace-id=] $FILENA
 ]
 ```
 
+In order to save JSON data, you need to cast `value` to a string. For example:
+
+```json
+[
+  {
+    "key": "test_key",
+    "value": "{\"name\": \"test_value\"}",
+    "expiration_ttl": 3600
+  }
+]
+```
+
 The schema below is the full schema for key-value entries uploaded via the bulk API:
 
 <Definitions>

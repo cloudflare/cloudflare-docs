@@ -18,12 +18,14 @@ Cloudflare recommends two GRE tunnels for each ISP and data center router combin
 
 To configure the GRE tunnel(s) between Cloudflare and your data centers, you must provide the following data for each tunnel:
 
-- **Customer edge IP address**—A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/), you do not need to provide edge addresses because Cloudflare will provide them.
-- **Private subnet**—A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
+- **GRE tunnel name** — A valid Linux interface name with 15 or less characters. The tunnel name cannot contain spaces or special characters, and the name cannot be shared with other GRE tunnels.
+- **Customer GRE endpoint** — A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/), you do not need to provide GRE endpoints because Cloudflare will provide them.
+- **Interface address** — A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   - 10.0.0.0–10.255.255.255
   - 172.16.0.0–172.31.255.255
   - 192.168.0.0–192.168.255.255
-* **Private IP addresses**—The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
+- **TTL** — Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
+- **MTU** — Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 
 </ContentColumn>
 

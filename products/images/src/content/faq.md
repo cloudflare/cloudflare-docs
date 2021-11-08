@@ -1,12 +1,15 @@
 ---
-order: 3
+order: 4
 pcx-content-type: faq
 ---
 
 # FAQ
 
+Below you will find answers to our most commonly asked questions regarding Cloudflare Image Optimization, namely the differences between Cloudflare Images. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) for possible solutions to your query.
+
 * [Cloudflare Images](#cloudflare-images-faq)
 * [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
+* [Polish](#polish-faq)
 
 ## Cloudflare Images FAQ
 
@@ -51,9 +54,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Available optimizations</summary>
 <div>
 
-**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](../../cloudflare-images/resize-images).
+**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](/cloudflare-images/resize-images).
 
-**IR** - For more information on Image Resizing optimizations refer to [URL format options](../../image-resizing/url-format#options).
+**IR** - For more information on Image Resizing optimizations refer to [URL format options](/image-resizing/url-format#options).
 
 </div>
 </details>
@@ -100,3 +103,15 @@ Soon! We will be introducing custom domain support in the near future.
 ### How much does Cloudflare Image Resizing cost?
 
 Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date information on pricing.
+
+### Resizing failed and I received an error response with a code. What does it mean?
+
+Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
+
+---
+
+## Polish FAQ
+
+### How can I troubleshoot common `Cf-Polished` statuses?
+
+Refer to the [Troubleshoot common Cf-Polished statuses](https://support.cloudflare.com/hc/articles/4412244347917) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.
