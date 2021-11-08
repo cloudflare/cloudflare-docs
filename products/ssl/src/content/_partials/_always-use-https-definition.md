@@ -1,1 +1,1 @@
-**Always Use HTTPS** redirects all `http` requests to `https` for all subdomain and hosts in your application.
+Always Use HTTPS redirects all `http` requests to `https` for all subdomain and hosts in your application.
