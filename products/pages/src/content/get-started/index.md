@@ -73,7 +73,7 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 ## Managing your site
 
-After your first deploy, select **Continue to project** to see see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
+After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
 ![Site dashboard](./images/site-dashboard.png)
 
