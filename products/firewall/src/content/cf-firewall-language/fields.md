@@ -25,9 +25,11 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - The Cloudflare Firewall Rules language does not support the `slice` operator.
 
-<Aside type='note'>
+<Aside type='note' header="Availability notes">
 
-Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+* Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+
+* Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
 </Aside>
 
