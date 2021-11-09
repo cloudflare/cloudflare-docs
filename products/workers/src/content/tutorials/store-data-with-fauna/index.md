@@ -446,7 +446,7 @@ header: Create product response
 }
 ```
 
-<Aside type="note"
+<Aside type="note">
 
 Copy the `productId` value for use in the remaining test queries.
 
