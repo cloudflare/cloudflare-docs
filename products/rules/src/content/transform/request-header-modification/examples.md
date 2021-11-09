@@ -23,7 +23,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify header**: _Set static_
+Selected operation under **Modify request header**: _Set static_
 
 **Header name**: `X-Source`
 
@@ -43,7 +43,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify header**: _Set dynamic_
+Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `X-Bot-Score`
 
@@ -63,7 +63,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/private/")
 ```
 
-Selected operation under **Modify header**: _Remove_
+Selected operation under **Modify request header**: _Remove_
 
 **Header name**: `cf-connecting-ip`
 

@@ -18,7 +18,7 @@ Do the following:
 
     ![Transform Rules tab](../../static/transform/overview.png)
 
-1. Click **Create transform rule** > **Modify Header**.
+1. Click **Create transform rule** > **Modify Request Header**.
 
     ![Create HTTP Header Modification rule page](../../static/transform/create-header-modification-rule.png)
 
@@ -32,7 +32,7 @@ Do the following:
 
     </Aside>
 
-1. For **Modify header**, select one of the following options:
+1. For **Modify request header**, select one of the following options:
 
     * _Set static_ — Sets the value of an HTTP request header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
     * _Set dynamic_ — Sets the value of an HTTP request header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
