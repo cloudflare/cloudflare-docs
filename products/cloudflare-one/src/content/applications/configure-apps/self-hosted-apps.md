@@ -49,7 +49,7 @@ Make sure you create [Zero Trust policies](/policies/zero-trust) before connecti
 1. Scroll down to the **Application visibility** card.
 
     * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link. 
-    * [Optional] Addd a custom logo for your application by clicking **Custom** and entering a link to your desired image.
+    * [Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
     <Aside>
     If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
