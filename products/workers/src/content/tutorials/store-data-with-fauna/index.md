@@ -19,22 +19,22 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 
 * How to store and retrieve data from Fauna in your Workers.
 * How to use Wrangler to store secrets securely.
-* How to use [Worktop][worktop]] to add routing to your Workers.
+* How to use [Worktop][worktop] to add routing to your Workers.
 
-Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop and reason about your application as if it were a single, synchronous monolith, while gaining the resilience and reduced latency of a distributed application running at the edge.
+Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop and reason about your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
 ![fauna-cf-workers-diagram](./media/fauna-cf-workers-diagram.jpg)
 
-Fauna is a document-based database with a flexible schema. Your product documents include the following data:
+Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you build a product inventory, where each `product` document must contain the following properties:
 
 *   **title** - A human-friendly string that represents the title or name of a product.
 *   **serialNumber** - A machine-friendly string that uniquely identifies the product.
 *   **weightLbs** - A floating point number that represents the weight in pounds of the product.
 *   **quantity** A non-negative integer that represents how many items of a particular product there are in the inventory.
 
-Documents are stored in the **Products** [collection][fauna-collections]. Collections in Fauna are simply buckets of documents.
+Documents are stored in the **Products** [collection][fauna-collections]. Collections in document databases are groups of related documents.
 
-For simplicity's sake, the endpoints of your API will be public. For more information on authenticating users to your applications with Fauna, see [Choosing an authentication strategy with Fauna][fauna-choosing-authentication-strategy].
+For this tutorial all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna][fauna-choosing-authentication-strategy] for more information on authenticating users to your applications with Fauna.
 
 ## Setting up Fauna
 
@@ -42,7 +42,11 @@ For simplicity's sake, the endpoints of your API will be public. For more inform
 
 Open the [Fauna dashboard][fauna-dashboard] in your browser and login to your Fauna account. 
 
-> **Note**: If you do not have a Fauna account, you can [sign up for one][fauna-signup] and deploy this template using the free tier!
+<Aside type="note" header="Fauna Account">
+
+If you do not have a Fauna account, you can [sign up for one][fauna-signup] and deploy this template using the free tier!
+
+</Aside>
 
 Choose *Create database*, provide a valid name, select the *Classic* [Region Group][fauna-region-groups], and choose *Create*.
 
@@ -140,7 +144,6 @@ export function customFetch(url, params) {
 }
 
 export function getFaunaError(error) {
-
   const { code, description } = error.requestResult.responseContent.errors[0];
   let status;
 
@@ -167,13 +170,13 @@ export function getFaunaError(error) {
 }
 ```
 
-The **customFetch()** function is necessary for the Fauna client because the Workers runtime uses a custom version of **fetch**. You can learn more about this in the [Fauna JavaScript driver documentation][fauna-js-docs].
+The `customFetch()` function is necessary for the Fauna client because the Workers runtime uses a custom `fetch` implementation. You can learn more about this in the [Fauna JavaScript driver documentation][fauna-js-docs].
 
-The **getFaunaError()** function extracts the [HTTP response status codes][http-status-codes] and description for the most common errors returned by Fauna.
+The `getFaunaError()` function extracts the [HTTP response status codes][http-status-codes] and description for the most common errors returned by Fauna.
 
 ### Base inventory logic
 
-Replace the contents of your **index.js** file with the skeleton of your API:
+Replace the contents of your `index.js` file with the skeleton of your API:
 
 ```js
 ---
@@ -215,7 +218,7 @@ The **FAUNA_SECRET** environment variable is injected into your application auto
 
 ### Creating product documents
 
-Add your first Worktop route to the **index.js** file. This route accepts POST requests to the **/products** endpoint:
+Add your first Worktop route to the `index.js` file. This route accepts `POST` requests to the `/products` endpoint:
 
 ```js
 ---
@@ -310,18 +313,18 @@ header: Newly created document
 *   **ts** - The timestamp of the new document creation in microseconds.
 *   **data** - The  actual content of the document.
 
-Examining the route you create, when the query is successful, the **id** of the newly created document is returned in the response body:
+Examining the route you create, when the query is successful, the ID of the newly created document is returned in the response body:
 
 ```js
 ---
-header: Returning the new document id
+header: Returning the new document ID
 ---
 response.send(200, {
   productId: result.ref.id
 });
 ```
 
-Finally, if Fauna returns any error, an exception will be raised by the client. We'll catch that exception and respond with the result from the **getFaunaError()** utility function:
+Finally, if Fauna returns any error, an exception is raised by the client. You catch that exception and respond with the result from the `getFaunaError()` utility function:
 
 ```js
 ---
@@ -335,7 +338,7 @@ response.send(faunaError.status, faunaError);
 
 Next, create a route that reads a single document from the **Products** collection.
 
-Add the following route to your **index.js** file. This route accepts **GET** requests at the **/products/:productId** endpoint:
+Add the following route to your `index.js` file. This route accepts `GET` requests at the `/products/:productId` endpoint:
 
 ```js
 ---
@@ -380,14 +383,13 @@ If not, an error is returned.
 
 ### Deleting product documents
 
-The logic to delete product documents is similar to the logic for retrieving products. Add the following route to your **index.js** file:
+The logic to delete product documents is similar to the logic for retrieving products. Add the following route to your `index.js` file:
 
 ```js
 ---
 header: Deleting product documents
 ---
 router.add('DELETE', '/products/:productId', async (request, response) => {
-
   try {
     const productId = request.params.productId;
 
@@ -396,7 +398,6 @@ router.add('DELETE', '/products/:productId', async (request, response) => {
     );
 
     response.send(200, result);
-
   } catch (error) {
     const faunaError = getFaunaError(error);
     response.send(faunaError.status, faunaError);
@@ -423,7 +424,7 @@ Once the development server is up and running, we can start making HTTP requests
 
 First, create a new product:
 
-```console
+```sh
 ---
 header: Create a new product
 ---
@@ -434,7 +435,7 @@ $ curl \
     http://127.0.0.1:8787/products
 ```
 
-You should receive a **200** response similar to the following:
+You should receive a `200` response similar to the following:
 
 ```json
 ---
@@ -445,11 +446,15 @@ header: Create product response
 }
 ```
 
-> **Note**: Copy and save the *productId* for use in the remaining test queries.
+<Aside type="note"
+
+Copy the `productId` value for use in the remaining test queries.
+
+</Aside>
 
 Next, read the document you just created:
 
-```console
+```sh
 ---
 header: Read a document
 ---
@@ -476,33 +481,32 @@ header: Read product response
 }
 ```
 
-Finally, deploy your Worker using the wrangler [publish][wrangler-publish] command:
+Finally, deploy your Worker using the [`wrangler publish`][wrangler-publish] command:
 
-```console
+```sh
 ---
 header: Deploying your Worker
 ---
 $ wrangler publish
 ```
 
-This publishes your Worker to Cloudflare and makes it available on your **workers.dev** subdomain.
+This publishes the Worker to your `*.workers.dev` subdomain.
 
 ## Updating inventory quantity
 
-As a last step, you implement a route to update the quantity of a product in your inventory, which by default is **0**.
+As a last step, you implement a route to update the quantity of a product in your inventory, which is `0` by default.
 
 This presents a problem though. To calculate the total quantity of a product, you first need to determine how many items there currently are in your inventory. If you solve this in two queries, first reading the quantity and then updating it, the original data might change.
 
-Instead, you can read and update the quantity of a product in a single FQL transaction. It's important to mention that all FQL queries are in fact transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
+Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It's important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
 
-Add the following route to your **index.js** file. This route responds to HTTP **PATCH** requests on the **/products/:productId/add-quantity** endpoint:
+Add the following route to your `index.js` file. This route responds to HTTP `PATCH` requests on the `/products/:productId/add-quantity` URL endpoint:
 
 ```js
 ---
 header: Updating inventory quantity
 ---
 router.add('PATCH', '/products/:productId/add-quantity', async (request, response) => {
-
   try {
     const productId = request.params.productId;
     const {quantity} = await request.body();
@@ -529,7 +533,6 @@ router.add('PATCH', '/products/:productId/add-quantity', async (request, respons
     );
 
     response.send(200, result);
-
   } catch (error) {
     const faunaError = getFaunaError(error);
     response.send(faunaError.status, faunaError);
@@ -569,9 +572,9 @@ This query uses the FQL [Let][fql-let] function to set some variables for use la
 *   **productDocument** - The full product document that will be updated.
 *   **currentQuantity** - The currently available quantity of the product. You extract the property by using the FQL [Select][fql-select] function.
 
-You can access the values of variables created by **Let** in any subsequent FQL expressions by using the FQL [Var][fql-var] function.
+You can access the values of variables created by `Let` in any subsequent FQL expressions by using the FQL [Var][fql-var] function.
 
-After declaring the variables, **Let** accepts an FQL expression as a second parameter. This expression is where you update your document:
+After declaring the variables, `Let` accepts an FQL expression as a second parameter. This expression is where you update your document:
 
 ```js
 ---
@@ -590,15 +593,19 @@ Update(
 )
 ```
 
-The FQL [Update][fql-update] function *only* updates the provided properties of a document. In this example, only the **quantity** property is updated.
+The FQL [Update][fql-update] function *only* updates the provided properties of a document. In this example, only the `quantity` property is updated.
 
-Finally, this query calculates the new total quantity by adding the value of **quantity** to **currentQuantity** using the FQL [Add][fql-add] function.
+Finally, this query calculates the new total quantity by adding the value of `quantity` to `currentQuantity` using the FQL [Add][fql-add] function.
 
-> **Note**: Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions! [This article][fauna-blog-consistency-without-clocks] explains how Fauna's distributed protocol works without the need for atomic clocks.
+<Aside type="note" header="Consistency guarantees in Fauna">
+
+Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions! [This article][fauna-blog-consistency-without-clocks] explains how Fauna's distributed protocol works without the need for atomic clocks.
+
+</Aside>
 
 Test your update route:
 
-```console
+```sh
 ---
 header: Update product inventory
 ---
@@ -629,7 +636,7 @@ header: Update product response
 
 Update your Worker by publishing it to Cloudflare, and you're done!
 
-```console
+```sh
 ---
 header: Updating your Worker in Cloudflare
 ---
