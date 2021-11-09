@@ -13,6 +13,7 @@ Firstly, create a DNS record for your `www` subdomain. It's recommended that thi
 ![www record](./media/www_subdomain.png)
 
 Now we can make the Page Rule which will handle the redirect. For this, we will make it so all paths get redirected and it's done with a 301 (Permanent Redirect). Matching all paths allows for someone visiting `www.example.com/blog/category/example` to be redirected to `example.com/blog/category/example`.
+
 To do this we will make a rule with the target of `www.example.com/*`, the `/*` is what matches all paths. Then for the Forwarding URL location, we want to set it to `example.com/$1`, the `$1` will be replaced by our wildcard match in target (the `*`).
 
 ![Page Rule redirect](./media/www_redirect_pagerule.png)
