@@ -18,9 +18,9 @@ addEventListener("scheduled", (event) => {
   event.waitUntil(triggerEvent(event));
 });
 
-async function triggerEvent({ cron }) {
+async function triggerEvent(event) {
   // Write code for updating your API
-  switch (cron) {
+  switch (event.cron) {
     // You can set up to three schedules maximum.
     case "*/3 * * * *":
       // Every three minutes
