@@ -19,7 +19,7 @@ Links to applications not protected by Access can be added as **bookmarks**. To 
 
 1. In the **Application visibility** card:
 
-    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link. 
+    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
     * [Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
     <Aside>
