@@ -125,7 +125,7 @@ Your origin needs to be able to support an SSL certificate that is:
 
 Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
 
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https).
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 ### Limitations
 
