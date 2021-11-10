@@ -93,7 +93,7 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/origin-configuration/origin-ca), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
 
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https).
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 <SSLModeErrors/>
 
