@@ -13,6 +13,7 @@ $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resourc
 $["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
+$["ddos-protection"]      = require("../../../products/ddos-protection/src/content/icons/ddos-protection").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
@@ -113,6 +114,11 @@ const products = [
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
+  },
+  {
+    title: "DDoS Protection",
+    path: "ddos-protection",
+    icon: "ddos-protection",
   },
   {
     title: "Distributed Web Gateway",

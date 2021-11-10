@@ -5,7 +5,7 @@ order: 4
 
 # Available expression fields
 
-You can use the following fields in override expressions for the L3/4 DDoS Managed Ruleset:
+You can use the following fields in override expressions for the Network-layer DDoS Attack Protection Managed Ruleset:
 
 * `ip.src`
 * `ip.dst`
