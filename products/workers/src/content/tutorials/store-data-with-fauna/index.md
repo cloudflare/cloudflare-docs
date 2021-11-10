@@ -117,10 +117,27 @@ Next, install the [Worktop][worktop] framework for Cloudflare Workers.
 ---
 header: Installing Worktop
 ---
-$ npm install worktop@0.6.3
+$ npm install worktop@0.7
 ```
 
 Worktop solves common needs such as routing, path parameters, HTTP methods, and more.
+
+Edit the `wrangler.toml` file that wrangler generates. Make sure the type is set to `"javascript"` (**not** `"webpack"`) and add the `[build]` and `[build.upload]` sections as shown in the following snippet:
+
+```toml
+---
+header: wrangler.toml
+---
+type = "javascript"
+
+...
+
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "service-worker"
+```
 
 ### JavaScript utility functions
 
@@ -130,19 +147,6 @@ Create the **utils.js** file in the project folder and paste the following code:
 ---
 header: utils.js
 ---
-export function customFetch(url, params) {
-  const signal = params.signal;
-  delete params.signal;
-
-  const abortPromise = new Promise((resolve) => {
-    if (signal) {
-      signal.onabort = resolve
-    }
-  });
-
-  return Promise.race([abortPromise, fetch(url, params)])
-}
-
 export function getFaunaError(error) {
   const { code, description } = error.requestResult.responseContent.errors[0];
   let status;
@@ -170,8 +174,6 @@ export function getFaunaError(error) {
 }
 ```
 
-The `customFetch()` function is necessary for the Fauna client because the Workers runtime uses a custom `fetch` implementation. You can learn more about this in the [Fauna JavaScript driver documentation][fauna-js-docs].
-
 The `getFaunaError()` function extracts the [HTTP response status codes][http-status-codes] and description for the most common errors returned by Fauna.
 
 ### Base inventory logic
@@ -184,13 +186,12 @@ header: index.js (skeleton)
 ---
 import {Router, listen} from 'worktop';
 import faunadb from 'faunadb';
-import {customFetch, getFaunaError} from './utils.js';
+import {getFaunaError} from './utils.js';
 
 const router = new Router();
 
 const faunaClient = new faunadb.Client({
   secret: FAUNA_SECRET,
-  fetch: customFetch
 });
 
 const {Create, Collection, Match, Index, Get, Ref, Paginate, Sum, Delete, Add, Select, Let, Var, Update} = faunadb.query;
@@ -210,7 +211,6 @@ header: Instantiating the Fauna client
 ---
 const faunaClient = new faunadb.Client({
   secret: FAUNA_SECRET,
-  fetch: customFetch
 });
 ```
 
