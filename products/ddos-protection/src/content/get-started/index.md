@@ -38,7 +38,7 @@ You must have one of the following:
 * [An IP application onboarded to Spectrum](https://developers.cloudflare.com/spectrum/get-started)
 * [An IP Prefix onboarded to Magic Transit](https://developers.cloudflare.com/magic-transit/get-started)
 
-### Step 1 — Configure ruleset actions to Log
+### 1. Configure ruleset actions to Log
 
 <Aside type="note">
 
@@ -70,12 +70,12 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 </Aside>
 
-### Step 2 — Review flagged traffic
+### 2. Review flagged traffic
 
 1. Navigate to your [analytics dashboard](/reference/analytics) (the exact dashboard depends on your Cloudflare services).
 1. Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if _Log_ mode were disabled. Take note of the rule IDs.
 
-### Step 3 — Customize Managed Ruleset rules
+### 3. Customize Managed Ruleset rules
 
 Customize the Managed Ruleset rules you identified, changing their sensitivity or their action, using the Cloudflare dashboard or using the API.
 
@@ -86,7 +86,7 @@ If you are using the API, refer to:
 * [Configure HTTP DDoS Attack Protection via API](/managed-rulesets/http/configure-api)
 * [Configure Network-layer DDoS Attack Protection via API](/managed-rulesets/network/configure-api)
 
-When using the API, ensure that you add any required rule overrides without removing the ruleset override you configured in [Step 1](#step-1--configure-ruleset-actions-to-log).
+When using the API, ensure that you add any required rule overrides without removing the ruleset override you configured in [Step 1](#1-configure-ruleset-actions-to-log).
 
 <Aside type="warning">
 
@@ -94,9 +94,9 @@ Currently, some DDoS Attack Protection Managed Rulesets can only be configured v
 
 </Aside>
 
-### Step 4 — Switch ruleset actions back to the default
+### 4. Switch ruleset actions back to the default
 
-Revert the change you did in [Step 1](#step-1--configure-ruleset-actions-to-log), changing the action of each Managed Ruleset rule back to its default value.
+Revert the change you did in [Step 1](#1-configure-ruleset-actions-to-log), changing the action of each Managed Ruleset rule back to its default value.
 
 Do the following in the Cloudflare dashboard:
 
@@ -105,6 +105,6 @@ Do the following in the Cloudflare dashboard:
 1. In **Ruleset configuration** > **Ruleset action**, select _Default_.
 1. Click **Save**.
 
-Alternatively, if you are using the API, [remove the override](/managed-rulesets/http/configure-api#configure-an-override-for-http-ddos-attack-protection) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#step-3--customize-managed-ruleset-rules).
+Alternatively, if you are using the API, [remove the override](/managed-rulesets/http/configure-api#configure-an-override-for-http-ddos-attack-protection) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#3-customize-managed-ruleset-rules).
 
 Repeat the procedure (via dashboard or API) for all DDoS Attack Protection Managed Rulesets.
