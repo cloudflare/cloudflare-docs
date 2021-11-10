@@ -13,7 +13,6 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 <ButtonGroup>
   <Button type="primary" href="/about">Learn more</Button>
   <Button type="secondary" href="/managed-rulesets">Managed Rulesets</Button>
-{/*  <Button type="secondary" href="/managed-rulesets/changelog">Managed Rulesets change log</Button> */}
 </ButtonGroup>
 
 ---
@@ -28,7 +27,7 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
   
   Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
 
-* **HTTP DDoS attack protection**: Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network).
+* **HTTP DDoS attack protection**. Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network).
 
 ## Related resources
 
