@@ -15,11 +15,11 @@ If you **do not** use Cloudflare for your authoritative nameservers (a CNAME set
 
 <ButtonGroup>
     <Button type='primary' href='enable-universal-ssl'>Get started</Button>
-    <Button type='secondary' href="https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/">Learn more</Button>
+    <Button type='secondary' href="https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/" target="_blank">Learn more</Button>
 </ButtonGroup>
 
 <Aside type="note">
 
-For sites that require an SSL certificate prior to migrating traffic to Cloudflare, purchase <a href="../advanced-certificate-manager">Advanced Certificate Manager</a> or upload a <a href="../custom-certificates">Custom SSL certificate</a> before proxying traffic to Cloudflare.
+For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an <a href="../advanced-certificate-manager">advanced certificate</a> or upload a <a href="../custom-certificates">Custom SSL certificate</a> before proxying traffic to Cloudflare.
 
 </Aside>

@@ -38,12 +38,11 @@ $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resourc
 $["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
+$["ddos-protection"]      = require("../../../products/ddos-protection/src/content/icons/ddos-protection").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
 $["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
-$["images"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
-$["image-resizing"]       = require("../../../products/image-resizing/src/content/icons/image-resizing").pathD
 $["images"]               = require("../../../products/images/src/content/icons/images").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
@@ -131,9 +130,20 @@ const products = [
     wrap: true
   },
   {
+    title: "Cloudflare Image Optimization",
+    path: "images",
+    icon: "images",
+    wrap: true,
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
+  },
+  {
+    title: "DDoS Protection",
+    path: "ddos-protection",
+    icon: "ddos-protection",
   },
   {
     title: "Distributed Web Gateway",
@@ -150,16 +160,6 @@ const products = [
     title: "HTTP/3",
     path: "http3",
     icon: "http3",
-  },
-  {
-    title: "Image Resizing",
-    path: "image-resizing",
-    icon: "image-resizing",
-  },
-  {
-    title: "Cloudflare Images",
-    path: "images",
-    icon: "images",
   },
   {
     title: "Load Balancing",

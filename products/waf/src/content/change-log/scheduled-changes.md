@@ -33,31 +33,5 @@ order: 1
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                2021-10-04
-            </td>
-            <td>
-                2021-10-11
-            </td>
-            <td>
-                Wordpress
-            </td>
-            <td>
-                 …521e1eff
-            </td>
-            <td>
-                WP0036
-            </td>
-            <td>
-                Wordpress - Broken Access Control
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
     </tbody>
 </table></TableWrap>

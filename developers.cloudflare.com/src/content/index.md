@@ -52,11 +52,7 @@ Use Cloudflare’s API and edge network — which spans 200 cities in more than 
       <h2>Meetup Groups</h2>
       <p>Join our Real World Serverless meetup groups across the world.</p>
       <ul>
-        <li><a href="https://www.meetup.com/Real-World-Serverless-San-Francisco/">San Francisco</a></li>
-        <li><a href="https://www.meetup.com/Real-World-Serverless-Austin/">Austin</a></li>
         <li><a href="https://www.meetup.com/Real-World-Serverless-London/">London</a></li>
-        <li><a href="https://www.meetup.com/Real-World-Serverless-Singapore/">Singapore</a></li>
-        <li><a href="https://www.meetup.com/Cloudflare-ANZ-Meetup/">Australia</a></li>
         <li><a href="https://developers.cloudflare.com/events/">See our past events</a></li>
       </ul>
     </HeroBlock>

@@ -100,7 +100,7 @@ Once saved, you can share the subdomain created and visitors can reach your loca
 
 Alternatively, you can create a DNS record from `cloudflared` directly. To do so, run the following command, replacing the `UUID` value and DNS record with your own equivalents.
 
-`$ cloudflared tunnel route 5157d321-5933-4b30-938b-d889ca87e11b new-website.mopacthedog.com`
+`$ cloudflared tunnel route dns 5157d321-5933-4b30-938b-d889ca87e11b new-website.mopacthedog.com`
 
 ## Optional: Add a Zero Trust policy
 

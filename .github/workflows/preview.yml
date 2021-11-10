@@ -71,6 +71,10 @@ jobs:
               npm run build
               popd
             else
+              if [ ! -d "products/$tile" ]; then
+                echo "Warning: Skipping build because the 'products/$tile' directory no longer exists"
+                continue
+              fi
               pushd products/$tile
               npm link cloudflare-docs-engine
               mkdir .docs
@@ -110,6 +114,10 @@ jobs:
               wrangler publish -e $ENVIRONMENT
               popd
             else
+              if [ ! -d "products/$tile" ]; then
+                echo "Warning: Skipping publish because the 'products/$tile' directory no longer exists"
+                continue
+              fi
               pushd products/$tile
               if [ $COPIED == "false" ]; then
                 cp wrangler.toml ${GITHUB_WORKSPACE}/
@@ -147,6 +155,9 @@ jobs:
               CURR_URL=${BASE_URL}
               MESSAGE="${MESSAGE}- ${CURR_URL}%0A"
             else
+              if [ ! -d "products/$tile" ]; then
+                continue
+              fi
               CURR_URL="https://pr-${PR}-${tile}.${SUBDOMAIN}"
               MESSAGE="${MESSAGE}- ${CURR_URL}/${tile}%0A"
             fi

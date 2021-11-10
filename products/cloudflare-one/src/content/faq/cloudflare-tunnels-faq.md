@@ -139,10 +139,6 @@ $ cloudflared tunnel run
 Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
 ```
 
-## How does tunnel ownership work?
-
-Tunnel ownership is bound to the Cloudflare account for which the `cert.pem` file was issued upon tunnel creation. If a user in a Cloudflare account creates a tunnel, any other user in the same account who has access to the `cert.pem` file for the tunnel can delete, list, or otherwise manage that tunnel.
-
 ## I need help. How do I contact support?
 
 If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:

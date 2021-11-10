@@ -36,27 +36,26 @@ The WARP client can be configured in three modes.
 
 ### Gateway with WARP (default)
 
+This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.  
+
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
 | Yes | Yes | DNS policies, HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP, device posture |
 
 ### Gateway with DoH
 
-This mode is best suited for organizations that want to use advanced firewall/proxy functionalities and enforce device posture rules.  
+This mode is best suited for organizations that only want to apply DNS filtering to outbound traffic from their company devices.  
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
 | Yes | No | DNS policies |
 
-This mode is best suited for organizations that only want to apply DNS filtering to outbound traffic from their company devices.  
-
 ### Proxy mode
+
+This mode is best suited for organizations that want to filter traffic directed to specific applications. 
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
 | No | Yes | HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP for traffic sent through localhost proxy|
-
-This mode is best suited for organizations that want to filter traffic directed to specific applications. 
-
 
 Cloudflare WARP is [available](/connections/connect-devices/warp/download-warp) for iOS, Android, ChromeOS, Mac, Linux, and Windows.

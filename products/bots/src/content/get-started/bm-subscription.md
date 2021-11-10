@@ -13,7 +13,7 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 This Enterprise product provides the most flexibility to customers by:
 
 - Generating a [bot score](/concepts/bot-score) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with Firewall Rules or Workers.
+- Allowing customers to take action on this score with Firewall Rules or [`Workers`](/workers/runtime-apis/request#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
 
 ---
@@ -100,7 +100,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 ### Step 5 — Continue monitoring domain traffic
 
-You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
+You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to see if your rules need additional tuning.
 
 ---
 

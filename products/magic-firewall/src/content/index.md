@@ -20,11 +20,3 @@ When you or your end users are using other Cloudflare services (for example, CDN
 - When using Magic Firewall, fragmented packets are reassembled into complete packets before they are inspected. As a result, you cannot create firewall rules for fragments.
 
 </Aside>
-
-<Aside type="warning" header="Beta">
-
-The Magic Firewall API is currently in beta; contact your account team if you're interested in early access. 
-Access to the API is controlled by the `#waf:read` and `#waf:write` permissions.
-  
-</Aside>
-

@@ -25,6 +25,7 @@ The available fields when setting an HTTP request header value using an expressi
 * `http.host`
 * `http.referer`
 * `http.request.headers`
+* `http.request.accepted_languages`
 * `http.request.method`
 * `http.request.timestamp.sec`
 * `http.request.timestamp.msec`
@@ -37,6 +38,9 @@ The available fields when setting an HTTP request header value using an expressi
 * `http.user_agent`
 * `http.x_forwarded_for`
 * `ip.src`
+* `ip.src.lat`
+* `ip.src.lon`
+* `ip.src.city`
 * `ip.geoip.*`
 * `ssl`
 

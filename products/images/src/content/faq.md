@@ -1,37 +1,117 @@
 ---
-title: FAQ
-order: 6
+order: 4
 pcx-content-type: faq
 ---
 
 # FAQ
 
-## How much does Cloudflare Images cost?
+Below you will find answers to our most commonly asked questions regarding Cloudflare Image Optimization, namely the differences between Cloudflare Images. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) for possible solutions to your query.
 
-Cloudflare Images costs $5 per month per 100,000 stored images and $1 per 100,000 delivered images. Storage must be purchased in advance in blocks of 100,000 images.
+* [Cloudflare Images](#cloudflare-images-faq)
+* [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
+* [Polish](#polish-faq)
 
-You only pay for original images; not variants. If you have one million original images and define five variants, you would only pay $50 per month for storing your one million original images.
+## Cloudflare Images FAQ
 
-## How much do I pay for bandwidth?
+### What is the difference between Cloudflare Images and Image Resizing products?
 
-Images does not bill on the basis of gigabytes or terabytes. Instead, you simply pay a low cost of $1 per 100,000 served images.
+Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, optimization, and delivery; Image Resizing (IR) only offers resizing and optimization:
 
-## Do I get charged for creating and storing variants?
+<details>
+<summary>Storage</summary>
+<div>
 
-No, you only get billed for the number of original images. There is no extra cost for generating variants. You can configure upto 20 variants.
+**CI** - Images are stored at Cloudflare.
 
-## Is there a limit on the file size for uploaded images?
+**IR** - Images can be stored anywhere on the Internet as long as they have public access.
+
+</div>
+</details>
+
+<details>
+<summary>Billing</summary>
+<div>
+
+**CI** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
+
+**IR** - Cloudflare charges when there are cache misses.
+
+</div>
+</details>
+
+<details>
+<summary>Delivery</summary>
+<div>
+
+**CI** - Images are served from `imagedelivery.net`.
+
+**IR** - Images are served from one of your domains on Cloudflare.
+
+</div>
+</details>
+
+<details>
+<summary>Available optimizations</summary>
+<div>
+
+**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](/cloudflare-images/resize-images).
+
+**IR** - For more information on Image Resizing optimizations refer to [URL format options](/image-resizing/url-format#options).
+
+</div>
+</details>
+
+<details>
+<summary>Plan availability</summary>
+<div>
+
+**CI** - Available to any plan.
+
+**IR** - Available with Pro, Business, and Enterprise plans.
+
+</div>
+</details>
+
+### How much does Cloudflare Images cost?
+
+Refer to [Cloudflare Images](https://www.cloudflare.com/products/cloudflare-images/) for up-to-date information on pricing.
+
+### Do I get charged for creating and storing variants?
+
+No, you only get billed for the number of original images. There is no extra cost for generating variants. You can configure up to 20 variants.
+
+### Is there a limit on the file size for uploaded images?
 
 Yes, the uploaded image file must be less than or equal to 10 MB.
 
-## Which file formats does Cloudflare Images support?
+### Which file formats does Cloudflare Images support?
 
-Cloudflare Images supports most common file formats as input files. These include JPGs, GIFs, PNGs and WebP.
+Cloudflare Images supports common web-compatible file formats as input files: JPEG, PNG, GIF (including animations), and WebP.
 
-## Can Cloudflare Images convert my images to AVIF?
+### Can Cloudflare Images convert my images to AVIF?
 
 Soon! We will be introducing AVIF support in the near future.
 
-## What is the difference between Cloudflare Images and Image Resizing products?
+### Can Cloudflare Images be served from custom domain?
 
-Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery. Image Resizing only offers resizing and optimization.
+Soon! We will be introducing custom domain support in the near future.
+
+---
+
+## Cloudflare Image Resizing FAQ
+
+### How much does Cloudflare Image Resizing cost?
+
+Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date information on pricing.
+
+### Resizing failed and I received an error response with a code. What does it mean?
+
+Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
+
+---
+
+## Polish FAQ
+
+### How can I troubleshoot common `Cf-Polished` statuses?
+
+Refer to the [Troubleshoot common Cf-Polished statuses](https://support.cloudflare.com/hc/articles/4412244347917) page were you can find a list of common `Cf-Polished` statuses and how to troubleshoot them.

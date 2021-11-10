@@ -23,8 +23,8 @@ There are two types of Transform Rules:
 To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
 
 <ButtonGroup>
-  <Button type="primary" href="/transform/url-rewrite/create-dashboard">Create a URL Rewrite Rule</Button>
-  <Button type="primary" href="/transform/request-header-modification/create-dashboard">Create a Request Header Modification Rule</Button>
+  <Button type="secondary" href="/transform/url-rewrite/create-dashboard">Create a URL Rewrite Rule</Button>
+  <Button type="secondary" href="/transform/request-header-modification/create-dashboard">Create a Request Header Modification Rule</Button>
 </ButtonGroup>
 
 ---

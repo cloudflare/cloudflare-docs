@@ -153,3 +153,36 @@ Response:
 ```
 
 Refer to the [Logpush FAQ](../../../faq#logpush-faq) for troubleshooting information.
+
+### 3. Create WAF rule for Splunk HEC endpoint (optional)
+
+If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see a CAPTCHA challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF rule that allows Cloudflare to bypass the HEC endpoint.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to the **Firewall**.
+1. Click **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
+1. Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
+
+  <TableWrap>
+
+  Field | Operator | Value
+  ------|----------|------
+  Request Method | `equals` | `POST`
+  Hostname | `equals` | Your Splunk endpoint hostname. Example: `splunk.cf-analytics.com`
+  URI Path | `equals` | `/services/collector/raw`
+  URI Query String | `contains` | `channel`
+  AS Num | `equals` | `132892`
+  User Agent | `equals` | `Go-http-client/2.0`
+
+  </TableWrap>
+
+1. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
+
+  ```txt
+  (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.geoip.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+  ```
+
+1. Under the **Then...** > **Choose an action** dropdown, select _Bypass_.
+1. In the **Choose a feature** dropdown, select _WAF Managed Rules_.
+1. Click **Deploy**.
+
+The WAF should now ignore requests made to Splunk HEC by Cloudflare.

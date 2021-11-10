@@ -66,7 +66,7 @@ pcx-content-type: tutorial
 Configure as follows:
   * **Name:** (this is what you want your users to see on sign in)
   * **API name:** (this will pre-populate)
-  * **Issuer:** `<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/glossary#team-name).
+  * **Issuer:** `https://<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/glossary#team-name).
   * **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step. 
   * **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
