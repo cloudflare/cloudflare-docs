@@ -36,3 +36,11 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 ```txt
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
+
+<Aside type="warning">
+
+Polish will not work if the origin responds with `status=vary_header_present`. Origin servers should not send a `vary` header. If they do, the only supported value is `Vary: Accept-Encoding`.
+
+To test response headers from origin servers, enable [Development mode](https://developers.cloudflare.com/cache/reference/development-mode)
+
+</Aside>
