@@ -19,7 +19,7 @@ module.exports = {
     title: "Cloudflare Zaraz docs",
     description: "Run third-party tools and services on the cloud, and improve the loading speed of your website.",
     author: "@cloudflare",
-    url: "https://developers.cloudflare.com/firewall",
+    url: "https://developers.cloudflare.com/zaraz",
     image: "data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII="
   }
 }
