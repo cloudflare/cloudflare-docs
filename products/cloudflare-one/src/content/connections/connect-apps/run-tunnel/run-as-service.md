@@ -11,7 +11,7 @@ pcx-content-type: how-to
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `.cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/), but at a minimum you must specify the following arguments to run as a service:
 
 |Argument|Description|
 |---|---|
