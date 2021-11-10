@@ -71,4 +71,4 @@ Magic Transit and Spectrum customers can only adjust the sensitivity level or ac
 
 </Aside>
 
-Once saved, the rule takes effect within 1 or 2 minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/reference/analytics).
+Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/reference/analytics).

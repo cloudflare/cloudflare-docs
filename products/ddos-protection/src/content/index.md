@@ -19,7 +19,7 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
 
 ## Availability
 
-* **Network-layer (L3/4) DDoS attack protection**: Included in all Cloudflare plans for:
+* **Network-layer (L3/4) DDoS attack protection**. Included in all Cloudflare plans for:
   
   * Zones [onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) (zones with their traffic routed through the Cloudflare network)
   * IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/)

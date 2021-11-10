@@ -64,7 +64,7 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 <Aside type="warning" header="Notes">
 
-* Currently, Spectrum and Magic transit customers do not have access to **Firewall** > **DDoS** tab and have to configure the DDoS Attack Protection Managed Rulesets using the API].
+* Currently, Spectrum and Magic transit customers do not have access to **Firewall** > **DDoS** tab and have to configure the DDoS Attack Protection Managed Rulesets using the API.
 
 * At the moment, some DDoS Attack Protection Managed Rulesets can only be configured via API.
 

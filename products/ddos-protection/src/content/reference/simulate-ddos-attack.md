@@ -9,12 +9,12 @@ After onboarding to Cloudflare, you may want to simulate DDoS attacks against yo
 
 You can only launch DDoS attacks against your own Internet properties — your zone, Spectrum application, or IP range (depending on your Cloudflare services) — and provided that:
 
-* The Internet properties are not shared with other organizations or individuals
-* The Internet properties have been onboarded to Cloudflare in an account under your name or ownership
+* The Internet properties are not shared with other organizations or individuals.
+* The Internet properties have been onboarded to Cloudflare in an account under your name or ownership.
 
 ## Before you start
 
-You don't have to obtain permission from Cloudflare to launch a DDoS attack simulation against your own Internet properties. However, before launching the simulated attack, you must [open a Support ticket](https://support.cloudflare.com/hc/articles/200172476) and provide the information below. All fields are mandatory unless marked as optional.
+You do not have to obtain permission from Cloudflare to launch a DDoS attack simulation against your own Internet properties. However, before launching the simulated attack, you must [open a Support ticket](https://support.cloudflare.com/hc/articles/200172476) and provide the information below. All fields are mandatory unless marked as optional.
 
 ### For WAF/CDN customers
 
