@@ -25,7 +25,7 @@ Session Affinity automatically directs requests from the same client to the same
 
 All sessions default to 23 hours unless you set a custom session *Time to live* (TTL).
 
-The session cookie is secure when [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+The session cookie is secure when [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ---
 

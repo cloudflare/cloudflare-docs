@@ -55,7 +55,7 @@ When you set your encryption mode to **Off**, your application:
 
 <Aside type="note">
 
-When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
+When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/edge-certificates/additional-options/always-use-https) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
 
 </Aside>
 
@@ -93,7 +93,7 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/origin-configuration/origin-ca), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
 
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 <SSLModeErrors/>
 
@@ -125,7 +125,7 @@ Your origin needs to be able to support an SSL certificate that is:
 
 Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
 
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](https://support.cloudflare.com/hc/articles/204144518#h_a61bfdef-08dd-40f8-8888-7edd8e40d156).
+To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 ### Limitations
 
