@@ -1,0 +1,17 @@
+---
+pcx-content-type: reference
+---
+
+# Events API
+
+Zaraz allows you to track the actions your users are taking on your website and other events that might happen in real-time. 
+
+Common user actions you will probably be interested in tracking are Successful Signups, CTA clicks, and Purchases, among others. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
+
+To start tracking events, use the Events API:
+
+```js
+zaraz.track('Signup completed', { value: '200', currency: 'USD' })
+```
+
+Only the first parameter is required. This parameter should be a string specifying the name of the event you want to track. The second parameter is an optional free-form object that can be used to send an additional set of key-value properties. For example, if the `event` you are tracking is "Purchase", this object can include `price`, `currency`, `transaction_id`, or `tax`, for example.
