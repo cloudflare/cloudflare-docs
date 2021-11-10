@@ -19,6 +19,7 @@ jobs:
       cache: ${{ steps.filter.outputs.cache }}
       client-ip-geolocation: ${{ steps.filter.outputs.client-ip-geolocation }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
+      ddos-protection: ${{ steps.filter.outputs.ddos-protection }}
       dns: ${{ steps.filter.outputs.dns }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
@@ -81,6 +82,8 @@ jobs:
               - 'products/client-ip-geolocation/**'
             cloudflare-one:
               - 'products/cloudflare-one/**'
+            ddos-protection:
+              - 'products/ddos-protection/**'
             dns:
               - 'products/dns/**'
             distributed-web:
@@ -376,6 +379,25 @@ jobs:
           npm run ghactionsbootstrap
           npm run build
 
+
+  build-ddos-protection:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ddos-protection == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/ddos-protection
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
 
   build-distributed-web:
     runs-on: ubuntu-latest

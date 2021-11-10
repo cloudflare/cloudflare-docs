@@ -13,6 +13,7 @@ Sitemap: https://developers.cloudflare.com/automatic-platform-optimization/sitem
 Sitemap: https://developers.cloudflare.com/bots/sitemap.xml
 Sitemap: https://developers.cloudflare.com/byoip/sitemap.xml
 Sitemap: https://developers.cloudflare.com/cloudflare-one/sitemap.xml
+Sitemap: https://developers.cloudflare.com/ddos-protection/sitemap.xml
 Sitemap: https://developers.cloudflare.com/distributed-web/sitemap.xml
 Sitemap: https://developers.cloudflare.com/docs-engine/sitemap.xml
 Sitemap: https://developers.cloudflare.com/events/sitemap.xml

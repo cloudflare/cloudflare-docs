@@ -4,26 +4,26 @@ pcx-content-type: reference
 order: 3
 ---
 
-# HTTP DDoS Managed Ruleset parameters
+# HTTP DDoS Attack Protection parameters
 
-Configure the Cloudflare HTTP DDoS Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/ddos-l7-mitigation/configure-dashboard) or [define overrides via Rulesets API](/ddos-l7-mitigation/configure-api).
+Configure the HTTP DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [configure the Managed Ruleset in the Cloudflare dashboard](/managed-rulesets/http/configure-dashboard) or [define overrides via Rulesets API](/managed-rulesets/http/configure-api).
 
 The available parameters are the following:
 
 * [Action](#action)
-* [Sensitivity](#sensitivity)
+* [Sensitivity Level](#sensitivity-level)
 
 ## Action
 
 API property name: `"action"`.
 
-The action that the WAF will perform for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
+The action that will be performed for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
 
 <Definitions>
 
 - **Log**
     - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting layer 7 DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 - **Block**
     - API value: `"block"`.
@@ -55,7 +55,7 @@ However, you can use the _Log_ action in the global ruleset configuration. In th
 
 </Aside>
 
-## Sensitivity
+## Sensitivity Level
 
 API property name: `"sensitivity_level"`.
 
