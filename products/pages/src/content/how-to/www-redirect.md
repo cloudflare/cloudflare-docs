@@ -14,7 +14,7 @@ Firstly, create a DNS record for your `www` subdomain. It's recommended that thi
 
 Now we can make the Page Rule which will handle the redirect. For this, we will make it so all paths get redirected and it's done with a 301 (Permanent Redirect). Matching all paths allows for someone visiting `www.example.com/blog/category/example` to be redirected to `example.com/blog/category/example`.
 
-To do this we will make a rule with the target of `www.example.com/*`, the `/*` is what matches all paths. Then for the Forwarding URL location, we want to set it to `example.com/$1`, the `$1` will be replaced by our wildcard match in target (the `*`).
+To do this, navigate to [Page Rules in the dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) and click "Create Page Rule". Then set the target to `www.example.com/*`, the `/*` is what matches all paths. Pick "Forwarding URL" from the dropdown and select the "301 - Permanent Redirect" option from the status code dropdown. Finally, for the Forwarding URL location, we want to set it to `example.com/$1`, the `$1` will be replaced by our wildcard match in target (the `*`).
 
 ![Page Rule redirect](./media/www_redirect_pagerule.png)
 
