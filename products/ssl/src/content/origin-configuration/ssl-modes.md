@@ -55,7 +55,7 @@ When you set your encryption mode to **Off**, your application:
 
 <Aside type="note">
 
-When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
+When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/edge-certificates/additional-options/always-use-https) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
 
 </Aside>
 
