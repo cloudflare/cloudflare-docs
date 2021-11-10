@@ -16,38 +16,47 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-async function handleRequest(request, ctx) {
-  const cacheUrl = new URL(request.url);
+
+async function handleRequest(event) {
+  const request = event.request
+  const cacheUrl = new URL(request.url)
+
   // Construct the cache key from the cache URL
-  const cacheKey = new Request(cacheUrl.toString(), request);
-  const cache = caches.default;
+  const cacheKey = new Request(cacheUrl.toString(), request)
+  const cache = caches.default
+
   // Check whether the value is already available in the cache
   // if not, you will need to fetch it from origin, and store it in the cache
   // for future access
-  let response = await cache.match(cacheKey);
+  let response = await cache.match(cacheKey)
+
   if (!response) {
     // If not in cache, get it from origin
-    response = await fetch(request);
+    response = await fetch(request)
+
     // Must use Response constructor to inherit all of response's fields
-    response = new Response(response.body, response);
-    // Cache API respects Cache-Control headers.
-    // Setting `s-maxage=10` will limit cache lifetime to 10 seconds
+    response = new Response(response.body, response)
+
+    // Cache API respects Cache-Control headers. Setting s-max-age to 10
+    // will limit the response to be in cache for 10 seconds max
+
     // Any changes made to the response here will be reflected in the cached value
-    response.headers.append("Cache-Control", "s-maxage=10");
+    response.headers.append("Cache-Control", "s-maxage=10")
+
     // Store the fetched response as cacheKey
     // Use waitUntil so you can return the response without blocking on
     // writing to cache
-    ctx.waitUntil(cache.put(cacheKey, response.clone()));
+    event.waitUntil(cache.put(cacheKey, response.clone()))
   }
-  return response;
+  return response
 }
-export default {
-  fetch(request, ctx) {
-    try {
-      return handleRequest(request, ctx);
-    } catch (e) {
-      return new Response("Error thrown " + e.message);
-    }
-  },
-};
+
+addEventListener("fetch", event => {
+  try {
+    const request = event.request
+    return event.respondWith(handleRequest(event))
+  } catch (e) {
+    return event.respondWith(new Response("Error thrown " + e.message))
+  }
+})
 ```
