@@ -116,12 +116,6 @@ The following limits apply regardless of the plan used.
 
 ## Durable Objects limits
 
-<Aside type="warning" header="Beta">
-
-Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
-
-</Aside>
-
 <TableWrap>
 
 | Feature                                 | Limit
@@ -132,7 +126,7 @@ Durable Objects are currently in beta. See [their docs](/learning/using-durable-
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
 | [Value size](#durable-objects)          | 32 KiB
-| [CPU per request](#durable-objects)     | 500ms
+| [CPU per request](#durable-objects)     | 30s
 
 </TableWrap>
 
@@ -294,15 +288,9 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 ## Durable Objects
 
-<Aside type="warning" header="Beta">
-
-Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
-
-</Aside>
-
 - Unlimited Durable Objects within an account or of a given class
 
-- 10 GB total storage per account (this will be raised after the beta period)
+- 10 GB total storage per account
 
 - No storage limit per Durable Object separate from the account limit
 
@@ -312,6 +300,6 @@ Durable Objects are currently in beta. See [their docs](/learning/using-durable-
 
 - Storage values of up to 32 KiB (32768 bytes)
 
-- 500ms of CPU time per request, including websocket messages (this will be raised to match the Unbound limit after the beta period)
+- 30s of CPU time per request, including websocket messages
 
-Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account, which we expect to raise after the beta period ends. If you need more storage in the meantime, please contact us.
+Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, please contact us.
