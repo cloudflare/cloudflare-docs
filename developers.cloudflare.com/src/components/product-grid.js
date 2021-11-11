@@ -34,6 +34,7 @@ $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resourc
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
 $["rules"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/rules.js").pathD
 $["ruleset-engine"]       = require("../../../products/ruleset-engine/src/content/icons/ruleset-engine").pathD
+$["security-center"]      = require("../../../products/security-center/src/content/icons/security-center").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
@@ -213,6 +214,11 @@ const products = [
     title: "Ruleset Engine",
     path: "ruleset-engine",
     icon: "ruleset-engine",
+  },
+  {
+    title: "Security Center",
+    path: "security-center",
+    icon: "security-center",
   },
   {
     title: "Spectrum",
