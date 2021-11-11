@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Browser Isolation
 
-<Aside>
+<Aside type="note">
 
 Browser Isolation is available as an add-on to Teams Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
 
