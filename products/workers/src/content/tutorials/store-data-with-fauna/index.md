@@ -40,21 +40,25 @@ For this tutorial all API endpoints are public. However, Fauna also offers multi
 
 ### Creating your database
 
-Open the [Fauna dashboard][fauna-dashboard] in your browser and login to your Fauna account. 
+Open the [Fauna dashboard][fauna-dashboard] in your browser and log into your Fauna account. 
 
 <Aside type="note" header="Fauna Account">
 
-If you do not have a Fauna account, you can [sign up for one][fauna-signup] and deploy this template using the free tier!
+If you do not have a Fauna account, you can [sign up][fauna-signup] and deploy this template using the free tier.
 
 </Aside>
 
-Choose *Create database*, provide a valid name, select the *Classic* [Region Group][fauna-region-groups], and choose *Create*.
+In the Fauna dashboard:
+1. Select **Create database**.
+2. Provide a valid name.
+3. Select the **Classic** [Region Group][fauna-region-groups].
+4. Select **Create**.
 
 ![Creating your database in Fauna](./media/create-database.png)
 
 ### Creating the products catalog
 
-Next, choose *New Collection* to create the **Products** collection that stores your inventory documents.
+Next, select **New Collection** to create the **Products** collection that stores your inventory documents.
 
 ![Creating your "Products" collection](./media/create-collection.png)
 
@@ -62,15 +66,15 @@ Next, choose *New Collection* to create the **Products** collection that stores 
 
 You must create a key to connect to the database from your Worker.
 
-Navigate to the *Security* tab in the dashboard and create a new key with the *Server* role:
+Navigate to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
 
 ![New Key](./media/new-server-key.jpg)
 
-The dashboard displays the key's secret. Copy and save this server key to use in a later step.
+The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 
-<Aside type="warning" header="Protect your keys!">
+<Aside type="warning" header="Protect your keys">
 
-Server keys can read and write all documents in all collections and can call all [user-defined functions][fauna-udfs] (UDFs). Protect server keys and do not commit them to source control repositories!
+Server keys can read and write all documents in all collections and can call all [user-defined functions][fauna-udfs] (UDFs). Protect server keys and do not commit them to source control repositories.
 
 </Aside>
 
@@ -127,9 +131,9 @@ header: Installing Worktop
 $ npm install worktop@0.7
 ```
 
-Worktop solves common needs such as routing, path parameters, HTTP methods, and more.
+Worktop solves common needs such as routing, path parameters, and  HTTP methods.
 
-Edit the `wrangler.toml` file that wrangler generates. Make sure the type is set to `"javascript"` (**not** `"webpack"`) and add the `[build]` and `[build.upload]` sections as shown in the following snippet:
+Edit your `wrangler.toml` file found in your Worker's project directory. Set the type to `"javascript"` (not `"webpack"`) and add the `[build]` and `[build.upload]` sections as shown in the following snippet:
 
 ```toml
 ---
@@ -148,7 +152,7 @@ format = "service-worker"
 
 ### JavaScript utility functions
 
-Create the **utils.js** file in the project folder and paste the following code:
+Create a `utils.js` file in the project folder and paste the following code:
 
 ```js
 ---
@@ -278,7 +282,7 @@ Create(
 )
 ```
 
-To see what a document looks like, navigate to the *Shell* tab in the Fauna dashboard and run the following query:
+To see what a document looks like, navigate to the **Shell** tab in the Fauna dashboard and run the following query:
 
 ```js
 ---
@@ -501,9 +505,9 @@ This publishes the Worker to your `*.workers.dev` subdomain.
 
 ## Updating inventory quantity
 
-As a last step, you implement a route to update the quantity of a product in your inventory, which is `0` by default.
+As the last step, implement a route to update the quantity of a product in your inventory, which is `0` by default.
 
-This presents a problem though. To calculate the total quantity of a product, you first need to determine how many items there currently are in your inventory. If you solve this in two queries, first reading the quantity and then updating it, the original data might change.
+This will present a problem. To calculate the total quantity of a product, you first need to determine how many items there currently are in your inventory. If you solve this in two queries, first reading the quantity and then updating it, the original data might change.
 
 Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It's important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
 
@@ -600,13 +604,13 @@ Update(
 )
 ```
 
-The FQL [Update][fql-update] function *only* updates the provided properties of a document. In this example, only the `quantity` property is updated.
+The FQL [Update][fql-update] function only updates the provided properties of a document. In this example, only the `quantity` property is updated.
 
 Finally, this query calculates the new total quantity by adding the value of `quantity` to `currentQuantity` using the FQL [Add][fql-add] function.
 
 <Aside type="note" header="Consistency guarantees in Fauna">
 
-Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions! [This article][fauna-blog-consistency-without-clocks] explains how Fauna's distributed protocol works without the need for atomic clocks.
+Even if multiple Workers update this quantity from different parts of the world, Fauna guarantees the consistency of the data across all Fauna regions. [This article][fauna-blog-consistency-without-clocks] explains how Fauna's distributed protocol works without the need for atomic clocks.
 
 </Aside>
 
@@ -641,7 +645,7 @@ header: Update product response
 }
 ```
 
-Update your Worker by publishing it to Cloudflare, and you're done!
+Update your Worker by publishing it to Cloudflare.
 
 ```sh
 ---
@@ -839,7 +843,7 @@ export function getFaunaError(error) {
 
 ## Cleaning up
 
-To remove the resources you create in this tutorial, first delete your Worker from its *Settings* tab in the Cloudflare dashboard:
+To remove the resources you create in this tutorial, delete your Worker in the Cloudflare dashboard > **Workers** > **Manage Workers** > **your Worker** > **Settings** > **Delete**:
 
 ![Delete Worker](./media/delete-worker.png)
 
@@ -851,7 +855,7 @@ Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
 In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
 
-To build your own production-ready applications, check out the [Fauna Workers quickstart](https://github.com/fauna-labs/fauna-workers). The quickstart implements suggested practices like a least-privilege security model and business logic encapsulation in user-defined functions.
+To build your own production-ready applications, refer to the [Fauna Workers quickstart](https://github.com/fauna-labs/fauna-workers). The quickstart implements suggested practices like a least-privilege security model and business logic encapsulation in user-defined functions.
 
 If you'd like to speak directly with a Fauna expert about building your applications on Cloudflare Workers with Fauna, please [contact][fauna-contact] us.
 
