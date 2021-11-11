@@ -115,7 +115,7 @@ $ wrangler logout
 
 This command only invalidates OAuth tokens acquired through the `wrangler login` command. However, it will try to delete the configuration file regardless of your authorization method.
 
-Log in to the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
+If you wish to delete your API token, log into the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
 
 --------------------------------
 
@@ -174,7 +174,7 @@ When you publish changes to an existing Worker script, all new requests will aut
 
 ### Publishing to workers.dev
 
-If you want to publish to [`*.workers.dev`](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [`wrangler subdomain`](#subdomain) command.
+To publish to [`*.workers.dev`](https://workers.dev), you will first need to have a subdomain registered. You can register a subdomain by executing the [`wrangler subdomain`](#subdomain) command.
 
 After you have registered a subdomain, add `workers_dev` to your `wrangler.toml` file.
 
@@ -187,7 +187,7 @@ After you have registered a subdomain, add `workers_dev` to your `wrangler.toml`
 
 ### Publishing to your own domain
 
-If you would like to publish to your own domain, you will need to specify these three fields in your `wrangler.toml` file.
+To publish to your own domain, specify these three fields in your `wrangler.toml` file.
 
 <Definitions>
 
@@ -248,7 +248,7 @@ These arguments can also be set in your `wrangler.toml` file. Refer to the [`wra
 
 ### Usage
 
-You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to use another host other than your zone or `tutorials.cloudflare.com` you can specify with `--host example.com`.
+You should run `wrangler dev` from your Worker directory. Wrangler will run a local server accepting requests, executing your Worker, and forwarding them to a host. If you want to use another host other than your zone or `tutorials.cloudflare.com`, you can specify with `--host example.com`.
 
 ```sh
 $ wrangler dev
