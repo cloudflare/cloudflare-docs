@@ -18,9 +18,8 @@ const products = [
   },
   {
     title: "Apps",
-    path: "apps",
     href: "https://www.cloudflare.com/apps/docs",
-    icon: "apps",
+    icon: "apps", // TODO: add `apps` icon to https://github.com/cloudflare/cloudflare-brand-assets
   },
   {
     title: "Automatic Platform Optimization",
@@ -50,9 +49,15 @@ const products = [
     wrap: true,
   },
   {
-    title: "Distributed Web Gateway",
-    path: "distributed-web",
-    icon: "distributed-web",
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
+  },
+  {
+    title: "Cloudflare Image Optimization",
+    path: "images",
+    icon: "images",
     wrap: true,
   },
   {
@@ -61,30 +66,25 @@ const products = [
     icon: "1.1.1.1",
   },
   {
+    title: "DDoS Protection",
+    path: "ddos-protection",
+    icon: "ddos-protection",
+  },
+  {
+    title: "Distributed Web Gateway",
+    path: "distributed-web",
+    icon: "distributed-web",
+    wrap: true,
+  },
+  {
     title: "Firewall Rules",
     path: "firewall",
     icon: "firewall",
   },
   {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true,
-  },
-  {
     title: "HTTP/3",
     path: "http3",
     icon: "http3",
-  },
-  {
-    title: "Images",
-    path: "images",
-    icon: "images",
-  },
-  {
-    title: "Image Resizing",
-    path: "image-resizing",
-    icon: "image-resizing",
   },
   {
     title: "Load Balancing",
@@ -97,14 +97,14 @@ const products = [
     icon: "logs",
   },
   {
-    title: "Magic Firewall",
-    path: "magic-firewall",
-    icon: "magic-firewall",
-  },
-  {
     title: "Magic Transit",
     path: "magic-transit",
     icon: "magic-transit",
+  },
+  {
+    title: "Magic Firewall",
+    path: "magic-firewall",
+    icon: "magic-firewall",
   },
   {
     title: "Magic WAN",
@@ -115,7 +115,8 @@ const products = [
     title: "Network Error Logging",
     path: "network-error-logging",
     icon: "network-error-logging",
-  },
+    wrap: true,
+  }, 
   {
     title: "Network Interconnect",
     path: "network-interconnect",
