@@ -7,15 +7,15 @@ pcx-content-type: concept
 
 ## Background
 
-Cron Triggers allow users to map a cron expression to a Worker script using a [ScheduledEvent](/runtime-apis/scheduled-event) listener that enables Workers to be executed on a schedule. Cron Triggers are ideal for running periodic jobs for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of our capacity and route traffic efficiently.
+Cron Triggers allow users to map a cron expression to a Worker script using a [ScheduledEvent](/runtime-apis/scheduled-event) listener that enables Workers to be executed on a schedule. Cron Triggers are ideal for running periodic jobs for maintenance or calling third-party APIs to collect up-to-date data. Workers scheduled by Cron Triggers will run on underutilized machines to make the best use of Cloudflare's capacity and route traffic efficiently.
 
 ## Adding Cron Triggers
 
-Cron Triggers can be added to scripts with the Cloudflare API, or in the dashboard on a [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) up to the [per-script limit](/platform/limits). If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the **`wrangler.toml`** file.
+You can add Cron Triggers to scripts with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select your Worker > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/limits#number-of-schedules) to track the maximum number of Cron Triggers per Worker. If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the `wrangler.toml` file.
 
-<Aside header="Requires a ScheduledEvent Listener">
+<Aside type="note" header="Requires a ScheduledEvent Listener">
 
-In order to respond to a Cron Trigger, a [ScheduledEvent](/runtime-apis/scheduled-event) listener must be added to the Workers script. Similar to the Fetch listener, add your code within the Scheduled listener to specify what the Worker should do under the condition that it was triggered by a Cron Trigger.
+To respond to a Cron Trigger, you must add a [`"scheduled"` event](/runtime-apis/scheduled-event) listener to the Workers script.
 
 </Aside>
 
@@ -23,7 +23,7 @@ In order to respond to a Cron Trigger, a [ScheduledEvent](/runtime-apis/schedule
 
 ## Supported cron expressions
 
-We support cron expressions with 5 fields, along with most "Quartz scheduler"-like cron syntax extensions:
+Cloudflare supports cron expressions with five fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
 
 <TableWrap>
 
@@ -39,7 +39,7 @@ Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.
 
 ### Examples
 
-Here are some common time intervals that may be useful for setting up your Cron Trigger.
+Some common time intervals that may be useful for setting up your Cron Trigger:
 
 <Definitions>
 
@@ -68,16 +68,16 @@ Here are some common time intervals that may be useful for setting up your Cron 
 
 <Aside type="note" header="Testing Cron Triggers and potential delays">
 
-A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the edge.
+A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the Cloudflare network edge.
 
 </Aside>
 
 ## Viewing past events
 
-Users can review the execution history of their Cron Triggers on the Past Events section of the [Workers Triggers tab](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
+Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
 
 ![workers-past-events](./media/workers-past-events.png)
 
-Note: it can take up to 30 minutes before events are displayed in Past Events when creating a new Worker or changing a Worker's name.
+It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 
-See [Metrics and Analytics](/learning/metrics-and-analytics) for more information.
+Refer to [Metrics and Analytics](/learning/metrics-and-analytics) for more information.
