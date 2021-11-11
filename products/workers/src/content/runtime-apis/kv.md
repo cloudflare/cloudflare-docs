@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 ## Background
 
-Workers KV is a global, low-latency, key-value data store. It supports exceptionally high read volumes with low-latency, making it possible to build highly dynamic APIs and websites which respond as quickly as a cached static file would.
+Workers KV is a global, low-latency, key-value data store. It stores data in a small number of centralized points of presence, then caches that data in Cloudflare's points-of-presence after access. It supports exceptionally high read volumes with low-latency, making it possible to build highly dynamic APIs and websites which respond as quickly as a cached static file would. While reads are periodically revalidated in the background, requests which are not in cache and need to hit the centralized backend can see high latencies.
 
 Learn more about [How KV works](/learning/how-kv-works).
 
