@@ -6,32 +6,32 @@ module.exports = {
   productIconKey,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/magic-firewall",
-  logoSVGContent: '<svg width="48" height="49" viewBox="0 0 48 49"  xmlns="http://www.w3.org/2000/svg"><path d="M43.5 25.995L45 24.495V15.495L43.5 13.995H37.2V6.54004L35.7 5.04004H4.5L3 6.54004V15.54L4.5 17.04H10.7925V23.04H4.5L3 24.54V33.54L4.5 35.04H10.7925V42.54L12.2925 44.04H43.5L45 42.54V33.54L43.5 32.04H37.2V26.04L43.5 25.995ZM42 22.995H29.3925V17.04H35.7H42V22.995ZM34.2 8.04004V14.04H21.6V8.04004H34.2ZM6 8.04004H18.6V14.04H12.2925H6V8.04004ZM13.7925 17.04H26.3925V23.04H13.7925V17.04ZM6 25.995H18.6V31.995H12.2925H6V25.995ZM13.7925 41.04V35.04H26.3925V41.04H13.7925ZM42 41.04H29.3925V35.04H35.7H42V41.04ZM34.2075 32.04H21.6V26.04H34.2L34.2075 32.04Z" /></svg>',
+  logoSVGContent: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.591 3.476l1.417.767-.394.691-1.375-.84.038 1.607h-.797l.038-1.607-1.374.84-.394-.691 1.416-.767-1.416-.767.394-.692 1.374.84-.038-1.607h.797l-.037 1.607 1.374-.84.393.691-.108.06-1.308.708z"/><path fill-rule="evenodd" d="M2 2.5l-.5.5v10.5l.5.5h12l.5-.5V10l-.5-.5h-2.25v-3l-.5-.5H8.5V3L8 2.5H2zm6.5 8h5V13h-5v-2.5zm-1 0V13h-5v-2.5h5zm-1.75-1V7h5v2.5h-5zm-1 0V7H2.5v2.5h2.25zM7.5 6h-5V3.5h5V6z"/></svg>',
   externalLinks: [
-    {
-      title: "Magic Transit home",
-      url: "https://www.cloudflare.com/magic-transit/",
+      {
+        title: "Magic Transit home",
+        url: "https://www.cloudflare.com/magic-transit/",
+      },
+      {
+        title: "Blog: Magic WAN & Magic Firewall",
+        url: "https://blog.cloudflare.com/introducing-magic-firewall/",
+      },
+      {
+        title: "Cloudflare homepage",
+        url: "https://cloudflare.com",
+      },
+    ],
+    search: {
+      indexName: "developers-cloudflare",
+      apiKey: "b23088ab4d346409f9d3ece6606344c3",
+      algoliaOptions: { facetFilters: '["project:magic-firewall"]' },
     },
-    {
-      title: "Blog: Magic WAN & Magic Firewall",
-      url: "https://blog.cloudflare.com/introducing-magic-firewall/",
+    siteMetadata: {
+      title: "Cloudflare Magic Firewall docs",
+      description:
+        "Magic Firewall a network-level firewall delivered through Cloudflare to secure your enterprise.",
+      author: "@cloudflare",
+      url: "https://developers.cloudflare.com/magic-firewall",
+      image: "https://www.cloudflare.com/img/cf-twitter-card.png",
     },
-    {
-      title: "Cloudflare homepage",
-      url: "https://cloudflare.com",
-    },
-  ],
-  search: {
-    indexName: "developers-cloudflare",
-    apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { facetFilters: '["project:magic-firewall"]' },
-  },
-  siteMetadata: {
-    title: "Cloudflare Magic Firewall docs",
-    description:
-      "Magic Firewall a network-level firewall delivered through Cloudflare to secure your enterprise.",
-    author: "@cloudflare",
-    url: "https://developers.cloudflare.com/magic-firewall",
-    image: "https://www.cloudflare.com/img/cf-twitter-card.png",
-  },
 };

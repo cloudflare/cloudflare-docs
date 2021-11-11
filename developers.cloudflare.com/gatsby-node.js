@@ -68,6 +68,7 @@ exports.sourceNodes = ({ actions, createContentDigest, createNodeId }) => {
         title: product.title,
         path: product.path,
         logoSVGContent,
+        productLogoPathD: product.productLogoPathD ?  product.productLogoPathD : '',
         wrap: product.wrap ? product.wrap : false,
         internal: {
           type: "Product",

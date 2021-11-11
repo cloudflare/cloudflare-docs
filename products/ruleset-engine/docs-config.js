@@ -1,4 +1,4 @@
-const path = require("path");
+const productIconKey = "ruleset-engine"
 
 module.exports = {
   product: "Ruleset Engine",
