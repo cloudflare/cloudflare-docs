@@ -83,7 +83,7 @@ Since the request is generated in an isolated browser, the result is rendered in
 
 | Field | Description |
 | ----- | ----------- |
-| **Source IP** | The IP address of the user making the request. | 
+| **Source IP** | The IP address of the user making the packet. | 
 | **Destination IP** | The IP address of the request’s target. |
 | **Source port** | The port number of the user’s request. |
 | **Destination port** | The port number of the request’s target. |
