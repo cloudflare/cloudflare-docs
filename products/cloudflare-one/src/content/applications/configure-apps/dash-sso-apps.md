@@ -34,15 +34,7 @@ Once you configure your IdP, make sure you also [test your IdP](/identity/idp-in
 
 Ask your account team to approve your SSO domain.
 
-### Step 4 (optional) — Customize your SSO application
-
-Once your account team has approved your SSO domain, you will see an **SSO App** in the [Teams dashboard](https://dash.teams.cloudflare.com/) (under **Access** > **Applications**). This application automatically has a rule to `allow email domain` and uses your IdP as the authentication provider.
-
-If you have multiple IdPs, manage your allowed providers in the **Authentication** tab of the **SSO App**.
-
-You likely will not have to make additional policies (IP access lists, etc.), but if you do refer to [Zero Trust policies](/policies/zero-trust).
-
-### Step 5 — Test and enable your application
+### Step 4 — Test and enable your application
 
 To test and enable your SSO application:
 
@@ -52,8 +44,8 @@ To test and enable your SSO application:
 1. Set the toggle value to **Enabled**.
 1. **Do not** log out or close your browser window. Instead, open a different browser or an incognito window.
 1. Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com) and log in with your email address from your SSO domain.
-1. If you can login successfully, you have successfully set up your SSO application.
-1. If you cannot login successfully:
+1. If you can log in successfully, you have successfully set up your SSO application.
+1. If you cannot log in successfully:
 
     1. Return to the the [Teams dashboard](https://dash.teams.cloudflare.com/).
     1. For **Cloudflare dashboard SSO**, set your email domain to **Disabled**.
