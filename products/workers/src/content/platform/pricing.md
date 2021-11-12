@@ -43,7 +43,7 @@ Script size, number of scripts, subrequests, and available memory are not affect
 
 If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s, the estimated cost in a month would be:
 
-Total = ~$0.8 USD + Minimum $5/mo usage = **$5.12**
+Total = ~$0.8 USD + Minimum $5/mo usage = **$5.08**
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
 - (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
@@ -78,14 +78,55 @@ Total = ~$5.60 + Minimum $5/mo usage = **$10.60**
 Durable Objects are currently only available on the Workers Paid plan.
 
 <TableWrap>
-|               | Paid plan                                        |
-| ------------- | ------------------------------------------------ |
-| Requests      | 1 million, + $0.15/million                       | 
-| Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1</sup>  |
+|               | Paid plan                                                    |
+| ------------- | ------------------------------------------------------------ |
+| Requests      | 1 million, + $0.15/million                                   | 
+| Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1</sup><sup>2</sup>  |
 
     
 </TableWrap>
-1. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in same isolate on the same physical machine and share the 128MB of memory. These Durable Objects are still billed as if they are allocated a full 128MB of memory.
+1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once.  Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
+2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in same isolate on the same physical machine and share the 128MB of memory. These Durable Objects are still billed as if they are allocated a full 128MB of memory.
+
+### Durable Objects billing examples
+
+These examples exclude the costs for the Workers calling the Durable Objects.
+
+#### Example 1
+
+If a single Durable Object was called by a Worker 1.5 million times, and was active for 1,000,000 seconds in the month, the estimated cost in a month would be:
+
+Total = ~$0.8 USD + Minimum $5/mo usage = **$5.08**
+
+- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
+- 1,000,000 seconds * 128 MB / 1 GB = 128,000 GB-s
+- (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
+
+#### Example 2
+
+If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately 1 message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
+
+Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = **$272.01**
+
+- 100 requests to establish the WebSockets.
+- 100 messages per minute * 100 Durable Objects * 60 minutes * 24 hours * 30 days = 432,000,000 requests
+- (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$64.65**
+- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days / 2 = 259,200,000 seconds
+- 259,200,000 seconds * 128 MB / 1 GB = 33,177,600 GB-s
+- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$202.36**
+
+#### Example 3
+
+If 100 Durable Objects each had a single WebSocket connection established to each of them which sent 1 message a second for a month and the messages overlapped so that the Objects were actually active for the entire month: the estimated cost in a month would be:
+
+Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = **$453.45**
+
+- 100 requests to establish the WebSockets.
+- 1 message per second * 100 connections * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 requests
+- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$38.73**
+- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 seconds
+- 259,200,000 seconds * 128 MB / 1 GB = 33,177,600 GB-s
+- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$409.72**
 
 ## Durable Objects Storage API
 
@@ -98,13 +139,14 @@ The Durable Objects storage API is only accessible from within Durable Objects.
 | Read request units<sup>1</sup>,<sup>2</sup>   | 10 million, + $0.20/million |
 | Write request units<sup>1</sup>               | 1 million, + $1.00/million  |
 | Delete requests<sup>3</sup>                   | 1 million, + $1.00/million  |
-| Stored data                                   | 1 GB, + $0.20/ GB-month     |
+| Stored data<sup>4</sup>                       | 1 GB, + $0.20/ GB-month     |
     
 </TableWrap>
 
 1. A request unit is defined as 4KB of data read or written. A request that writes or reads more than 4KB will consume multiple units, e.g. a 9KB write will consume 3 write request units.
 2. List operations are billed by read request units, based on the amount of data examined, e.g. a list request that returns 80KB of keys will be billed 20 request units.
 3. Delete requests are unmetered, e.g. deleting a 100KB value will be charged one delete request.
+4. Objects will be billed for stored data until the data is removed.  Once the data is removed, the object will be cleaned up automatically by the system.
 
 ## Fine Print
 
