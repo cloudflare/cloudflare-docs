@@ -116,7 +116,7 @@ export class Example {
 ```
 ### In-memory state
 
-Durable Objects can be taken out of memory at any time.  To store state your Durable Object might need in the future to continue processing, use the Transactional Storage API.
+A Durable Object may be evicted from memory any time, causing a loss of all transient (in-memory) state.  To persistently store state your Durable Object might need in the future, use the Transactional Storage API.
 
 A Durable Object is given 30 seconds of additional CPU time for every request it processes.  In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
 
