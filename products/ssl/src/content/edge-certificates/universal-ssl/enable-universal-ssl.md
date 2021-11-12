@@ -12,7 +12,15 @@ pcx-content-type: how-to
 For an authoritative or full domain — domains that changed their [domain nameservers](https://support.cloudflare.com/hc/articles/205195708) – Universal SSL requires two steps:
 
 1. Once you change your domain nameservers, your domain should receive its Universal SSL certificate within **24 hours**.
-1. Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
+2. Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
+
+<Aside type="note" header="Note:">
+
+Universal SSL certificates only support SSL for the root or first-level subdomains such as example.com and www.example.com. To enable SSL support on the second, third, and fourth level subdomains such as dev.www.example.com or app3.dev.www.example.com, you can:
+1. Purchase an [Advanced Certificate Manager](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) feature
+2. Upgrade to a Business or Enterprise plan to upload a [Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates)
+
+</Aside>
 
 ### Non-authoritative (Partial) domains
 
