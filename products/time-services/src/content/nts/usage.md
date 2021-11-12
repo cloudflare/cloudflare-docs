@@ -12,5 +12,5 @@ order: 0
 
 If you would like to hear about the development of additional clients,
 updates on our service, or would like to announce that your client
-supports NTS, please email `time-services@cloudflare.com` to be added
-to our distribution list.
+supports NTS, please <a href="https://groups.google.com/a/cloudflare.com/forum/#!forum/time-services/join">sign up</a>
+for our time services Google group.
