@@ -110,7 +110,7 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 
 1. Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard.
 
-1. Click `Add an application`.
+1. Click **Add an application**.
 
 1. Choose **self-hosted** from the options presented.
 
