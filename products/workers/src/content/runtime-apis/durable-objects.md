@@ -4,11 +4,11 @@ pcx-content-type: configuration
 
 # Durable Objects
 
-Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and opting-in to pricing.
+Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and opting in to pricing.
 
 ## Background
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform.  A given namespace can support essentially unlimited Durable Objects, with each Object having access to a transactionally-consistent, key-value storage API.
+Durable Objects provide low-latency coordination and consistent storage for the Workers platform.  A given namespace can support essentially unlimited Durable Objects, with each Object having access to a transactionally consistent key-value storage API.
 
 Durable Objects consist of two components: a class that defines a template for creating Durable Objects and a Workers script that instantiates and uses those Durable Objects.  The class and the Workers script are linked together with a binding.
 
@@ -118,7 +118,7 @@ export class Example {
 
 A Durable Object may be evicted from memory any time, causing a loss of all transient (in-memory) state.  To persistently store state your Durable Object might need in the future, use the Transactional Storage API.
 
-A Durable Object is given 30 seconds of additional CPU time for every request it processes.  In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
+A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
 
 
 ### Transactional Storage API

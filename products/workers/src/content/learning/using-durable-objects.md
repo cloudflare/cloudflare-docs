@@ -275,7 +275,7 @@ Running a delete migration will delete all Durable Object instances associated w
 
 Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. Migrations require a migration tag, which is defined by the **tag** property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
 
-The migration list is an array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
 
 All migrations are applied at deployment. Each migration can only be applied once per [environment](/platform/environments). 
 
@@ -363,7 +363,7 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 ### Development tools
 
-[Wrangler tail](/cli-wrangler/commands#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a Durable Object that you expect will receive heavy volumes of traffic.
+[Wrangler tail](/cli-wrangler/commands#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
 
 The Workers dashboard does not yet support editing Workers that use modules syntax.
 
