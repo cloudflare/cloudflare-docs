@@ -121,7 +121,7 @@ The following limits apply regardless of the plan used.
 | Feature                                 | Limit
 | --------------------------------------- | ------
 | [Number of objects](#durable-objects)   | unlimited
-| [Storage per account](#durable-objects) | 10 GB
+| [Storage per account](#durable-objects) | 10 GB (can be raised by contacting Cloudflare)
 | [Storage per class](#durable-objects)   | unlimited
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
@@ -182,19 +182,7 @@ Duration is the measurement of wall-clock time. This is measured in Gigabyte-sec
 
 For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
-
----
-
-## Egress data transfer
-
-Egress data transfer is the measurement of data sent **out** of an executing Worker. The diagram below illustrates the flow of data going from a requesting device, to a Worker which calls a 3rd party, like a storage provider, and returns the data. In this example, the egress data measured is the request going from a Worker to a 3rd party and the Workers response to the original requester.
-
-![Diagram of traffic going in and out of a Worker.](./media/worker-egress-diagram.png)
-
-Cloudflare encourages using providers on the [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/) for reduced costs on egress data transfer. We will not bill for egress within the Cloudflare ecosystem.
-
-Egress data transfer is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
+Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan) and [Durable Objects](/learning/using-durable-objects).
 
 ---
 
