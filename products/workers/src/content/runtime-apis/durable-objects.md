@@ -416,3 +416,10 @@ let response = await stub.fetch(url, options)
 The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/runtime-apis/fetch). However, instead of sending an HTTP request to the internet, the request is always sent to the Durable Object to which the stub points.
 
 Any uncaught exceptions thrown by the Durable Object's `fetch()` handler are propagated to the caller's `fetch()` promise.
+
+## Listing Durable Objects
+
+The Cloudflare API supports retrieving a list of Durable Objects within a namespace and a list of namespaces associated with an account.
+
+The API for listing namespaces is available at https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces
+The API for listing objects in a namespace is available at https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces/$NAMESPACE_ID/objects
