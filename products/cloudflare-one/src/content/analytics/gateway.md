@@ -9,7 +9,7 @@ Use the Analytics - Gateway page to see the top allowed and blocked requests acr
 
 * **Requests.** This chart shows an overview of the number of requests made by end users within the time period you specify. It shows a breakdown of requests based on the decision Gateway took — `Allowed` or `Blocked`.
 
-* **Allowed requests.** This chart shows a breakdown of the 5 domains which received the highest number of `Allowed` requests. It also shows the 5 domains which received the lowest amount of `Allowed` requests. By clicking **View all** to the right of either section of the chart, you'll see a list of highest 100 and lowest 100 domains ranked by number of `Allowed` requests.
+* **Allowed requests.** This chart shows a breakdown of the five domains which received the highest number of `Allowed` requests. It also shows the five domains which received the lowest amount of `Allowed` requests. By clicking **View all** to the right of either section of the chart, you will see a list of highest 100 and lowest 100 domains ranked by number of `Allowed` requests.
 
 * **Top blocked requests.** This chart shows a breakdown of the 5 domains which received the highest number `Blocked` requests. It also shows the 5 domains which received the lowest number of `Blocked` requests. By clicking **View all** to the right of either section of the chart, you'll see a list of highest 100 and lowest 100 domains ranked by number of `Blocked` requests.
 
