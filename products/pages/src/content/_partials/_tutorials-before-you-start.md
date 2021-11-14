@@ -6,4 +6,4 @@ If you clone with SSH, you must [generate SSH keys](https://docs.github.com/en/g
 
 Additional resources:
  - https://guides.github.com/introduction/git-handbook/
- - https://git-scm.com/book/en/v2 
+ - https://git-scm.com/book/en/v2
