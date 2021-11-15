@@ -115,7 +115,29 @@ const pagilaTable = url.searchParams.get("pagila-table")
 
 let result
 // if pagilaTable is defined, run a query on the Pagila dataset
-if (pagilaTable) {
+if ([
+  "actor",
+  "address",
+  "category",
+  "city",
+  "country",
+  "customer",
+  "film",
+  "film_actor",
+  "film_category",
+  "inventory",
+  "language",
+  "payment",
+  "payment_p2020_01",
+  "payment_p2020_02",
+  "payment_p2020_03",
+  "payment_p2020_04",
+  "payment_p2020_05",
+  "payment_p2020_06",
+  "rental",
+  "staff",
+  "store",
+].includes(pagilaTable)) {
   result = await client.queryObject(`SELECT * FROM ${pagilaTable};`)
 } else {
   const param = 42
