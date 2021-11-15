@@ -15,7 +15,7 @@ In this tutorial you learn how to retrieve data in your Cloudflare Workers appli
 
 <Aside type="note">
 
-For MySQL database driver, you can refer to the [MySQL database connector](https://github.com/cloudflare/worker-template-mysql) template.
+If you are using a MySQL database, refer to the [MySQL database connector](https://github.com/cloudflare/worker-template-mysql) template.
 
 </Aside>
 
