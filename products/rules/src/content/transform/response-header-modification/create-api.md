@@ -7,7 +7,7 @@ order: 2
 
 # Create an HTTP Response Header Modification Rule via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create HTTP Response Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. See [Response header modification examples](/transform/response-header-modification/examples) for examples of rule definitions.
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create HTTP Response Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. Refer to [Response header modification examples](/transform/response-header-modification/examples) for examples of rule definitions.
 
 When creating an HTTP Response Header Modification Rule via API, make sure you:
 

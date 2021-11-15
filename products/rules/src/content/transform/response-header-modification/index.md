@@ -12,6 +12,8 @@ You can manipulate the headers included in the HTTP response through HTTP Respon
 * Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response.
 * Remove an HTTP header from the response (remove all headers with the provided name).
 
+To modify HTTP headers in the **request**, refer to [HTTP Request Header Modification Rules](/transform/request-header-modification).
+
 <Aside type='warning' header='Important'>
 
 * The response header values are calculated using the field values from the corresponding HTTP request. For example, the value of `ip.src.country` will be the country of the website visitor, not the origin where the response was sent from.

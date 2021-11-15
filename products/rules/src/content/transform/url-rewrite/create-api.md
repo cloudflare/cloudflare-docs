@@ -7,7 +7,7 @@ order: 2
 
 # Create a URL Rewrite Rule via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create URL Rewrite Rules via API. Define the rewrite configuration in the `action_parameters` field. See [URL rewrite examples](/transform/url-rewrite/examples) for examples of rule definitions.
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create URL Rewrite Rules via API. Define the rewrite configuration in the `action_parameters` field. Refer to [URL rewrite examples](/transform/url-rewrite/examples) for examples of rule definitions.
 
 When creating a URL Rewrite Rule via API, make sure you:
 
