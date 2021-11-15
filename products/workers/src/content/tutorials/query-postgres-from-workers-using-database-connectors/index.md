@@ -53,8 +53,8 @@ Cloudflare Tunnel will be accessible from the Internet once you run the followin
 
 You can find a prepared `docker-compose` file that does not require any changes in `scripts/postgres` with the following services: 
 1. **postgres**
-2. **pgbouncer** - Placed in front of Postgres to provide connection pooling.
-3. **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
+1. **pgbouncer** - Placed in front of Postgres to provide connection pooling.
+1. **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
 
 Run the following commands to start all services. Replace `postgres-tunnel.example.com` with a hostname on your Cloudflare zone to route traffic through this tunnel.
 
