@@ -43,7 +43,7 @@ Script size, number of scripts, subrequests, and available memory are not affect
 
 If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s, the estimated cost in a month would be:
 
-Total = ~$0.8 USD + Minimum $5/mo usage = **$5.08**
+Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
 - (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
