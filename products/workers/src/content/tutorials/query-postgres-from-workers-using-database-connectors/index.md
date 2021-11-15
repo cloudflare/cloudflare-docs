@@ -52,8 +52,8 @@ Cloudflare Tunnel will be accessible from the Internet once you run the followin
 
 You can find a prepared `docker-compose` file that does not require any changes in `scripts/postgres` with the following services: 
 1. **postgres**
-2. **pgbouncer** - Placed in front of Postgres to provide connection pooling.
-3. **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
+1. **pgbouncer** - Placed in front of Postgres to provide connection pooling.
+1. **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
 
 Run the following commands to start all services. Replace `postgres-tunnel.example.com` with a hostname on your Cloudflare zone to route traffic through this tunnel.
 
@@ -99,7 +99,7 @@ const client = new Client({
 })
 ```
 
-At this point, you can deploy your Worker and make a request to it to verify if your database connection is working.
+At this point, you can deploy your Worker and make a request to it to verify that your database connection is working.
 
 ### Query Pagila dataset
 
@@ -151,7 +151,7 @@ return new Response(JSON.stringify(result))
 
 In `wrangler.toml`, enter your Cloudflare account ID in the line containing `account_id`:
 
-<Aside>
+<Aside type="note">
 
 [Refer to our Quick Start guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you do not know where to find your Cloudflare Account ID.
 
