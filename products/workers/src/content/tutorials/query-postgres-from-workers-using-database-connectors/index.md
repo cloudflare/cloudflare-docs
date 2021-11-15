@@ -100,7 +100,7 @@ const client = new Client({
 })
 ```
 
-At this point, you can deploy your Worker and make a request to it to verify if your database connection is working.
+At this point, you can deploy your Worker and make a request to it to verify that your database connection is working.
 
 ### Query Pagila dataset
 
@@ -152,7 +152,7 @@ return new Response(JSON.stringify(result))
 
 In `wrangler.toml`, enter your Cloudflare account ID in the line containing `account_id`:
 
-<Aside>
+<Aside type="note">
 
 [Refer to our Quick Start guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you do not know where to find your Cloudflare Account ID.
 
