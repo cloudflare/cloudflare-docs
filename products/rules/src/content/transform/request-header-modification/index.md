@@ -22,6 +22,7 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 </Aside>
 
-To create an HTTP Request Header Modification Rule in the dashboard, see [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard).
+To create an HTTP Request Header Modification Rule, refer to the following pages:
 
-To create an HTTP Request Header Modification Rule via API, see [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api).
+* [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard)
+* [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api)

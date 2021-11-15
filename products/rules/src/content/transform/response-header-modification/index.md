@@ -24,6 +24,7 @@ You can manipulate the headers included in the HTTP response through HTTP Respon
 
 </Aside>
 
-To create an HTTP Response Header Modification Rule in the dashboard, see [Create an HTTP Response Header Modification Rule in the dashboard](/transform/response-header-modification/create-dashboard).
+To create an HTTP Response Header Modification Rule, refer to the following pages:
 
-To create an HTTP Response Header Modification Rule via API, see [Create an HTTP Response Header Modification Rule via API](/transform/response-header-modification/create-api).
+* [Create an HTTP Response Header Modification Rule in the dashboard](/transform/response-header-modification/create-dashboard)
+* [Create an HTTP Response Header Modification Rule via API](/transform/response-header-modification/create-api)

@@ -20,7 +20,7 @@ Do the following:
 
 1. Click **Create transform rule** > **Modify Response Header**.
 
-    ![Create HTTP Header Modification rule page](../../static/transform/create-header-modification-rule.png)
+    ![Create HTTP Response Header Modification rule page](../../static/transform/create-response-header-modification-rule.png)
 
 1. Enter a descriptive name for the URL Rewrite Rule in **Rule name**.
 
@@ -44,7 +44,7 @@ Do the following:
 
     The following example includes the modification of three response headers using the available actions:
 
-    ![HTTP response header modification examples](../../static/transform/header-modification-example.png)
+    ![HTTP response header modification examples](../../static/transform/response-header-modification-example.png)
 
     <Aside type='note'>
 
