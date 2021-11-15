@@ -28,7 +28,7 @@ Currently Cloudflare only supports Session Affinity in "orange-cloud" (proxied) 
 
 ### \*__cf_bm* cookie for Cloudflare bot products
 
-Cloudflare's [bot products](https://developers.cloudflare.com/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the \__cf_bm cookie on end user devices that access customer sites that are protected by Bot Management or Bot Fight Mode. The \__cf_bm cookie is necessary for the proper functioning of these bot solutions.
+Cloudflare's [bot products](https://developers.cloudflare.com/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the \__cf_bm cookie on end-user devices that access customer sites protected by Bot Management or Bot Fight Mode. The \__cf_bm cookie is necessary for these bot solutions to function properly.
 
 This cookie expires after 30 minutes of continuous inactivity by the end user. The cookie contains information related to the calculation of Cloudflare’s proprietary bot score and, when Anomaly Detection is enabled on Bot Management, a session identifier. The information in the cookie (other than time-related information) is encrypted and can only be decrypted by Cloudflare.
 
