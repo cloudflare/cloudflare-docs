@@ -5,15 +5,15 @@ order: 4
 
 # Response header modification examples
 
-The following examples illustrate how to perform header modifications with Transform Rules:
+The following examples illustrate how to perform response header modifications with Transform Rules:
 
-* [Add an HTTP response header with a static value](#add-an-http-request-header-with-a-static-value)
-* [Add an HTTP response header with the current bot score](#add-an-http-request-header-with-the-current-bot-score)
-* [Remove an HTTP response header](#remove-an-http-request-header)
+* [Add an HTTP response header with a static value](#add-an-http-response-header-with-a-static-value)
+* [Add an HTTP response header with the current bot score](#add-an-http-response-header-with-the-current-bot-score)
+* [Remove an HTTP response header](#remove-an-http-response-header)
 
 ## Add an HTTP response header with a static value
 
-The following HTTP Response Header Modification Rule adds a header named `X-Source` with a static value (`Cloudflare`) to the request:
+The following HTTP Response Header Modification Rule adds a header named `X-Source` with a static value (`Cloudflare`) to the response:
 
 <Example>
 
@@ -33,7 +33,7 @@ Selected operation under **Modify response header**: _Set static_
 
 ## Add an HTTP response header with the current bot score
 
-The following HTTP Response Header Modification Rule adds a header named `X-Bot-Score` with the current bot score to the request:
+The following HTTP Response Header Modification Rule adds a header named `X-Bot-Score` with the current bot score to the response:
 
 <Example>
 
@@ -53,7 +53,7 @@ Selected operation under **Modify response header**: _Set dynamic_
 
 ## Remove an HTTP response header
 
-The following HTTP Response Header Modification Rule removes the `cf-connecting-ip` header from the request:
+The following HTTP Response Header Modification Rule removes the `cf-connecting-ip` header from the response:
 
 <Example>
 
