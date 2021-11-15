@@ -69,8 +69,8 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 | List requests      | 1,000 / day           | 1 million, + $5.00/million  |
 | Stored data        | 1 GB                  | 1 GB, + $0.50/ GB-month     |
   
-    
 </TableWrap>
+
 1. The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed one of these limits, further operations of that type will fail with an error.
 
 ## Durable Objects
@@ -78,14 +78,14 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 Durable Objects are currently only available on the Workers Paid plan.
 
 <TableWrap>
-  
+
 |               | Paid plan                                                    |
 | ------------- | ------------------------------------------------------------ |
 | Requests      | 1 million, + $0.15/million                                   | 
 | Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1</sup><sup>2</sup>  |
-
-    
+  
 </TableWrap>
+
 1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once.  Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 
