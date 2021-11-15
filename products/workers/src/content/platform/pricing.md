@@ -78,6 +78,7 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 Durable Objects are currently only available on the Workers Paid plan.
 
 <TableWrap>
+  
 |               | Paid plan                                                    |
 | ------------- | ------------------------------------------------------------ |
 | Requests      | 1 million, + $0.15/million                                   | 
