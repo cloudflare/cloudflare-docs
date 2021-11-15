@@ -96,7 +96,7 @@ CDN allows Cloudflare to specify how many times a request can enter Cloudflare's
 
 The CF-Worker request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. This is useful when you want to protect yourself against cross-zone worker subrequests. For example: ``CF-Worker: example.com``.
 
-You can add CF-Worker header on server logs similar to the way you add the [CF-RAY](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. Just add ``$http_cf_worker`` in the log format file: ``log_format cf_custom "CF-Worker:$http_cf_worker"'``
+You can add CF-Worker header on server logs similar to the way you add the [CF-RAY](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add ``$http_cf_worker`` in the log format file: ``log_format cf_custom "CF-Worker:$http_cf_worker"'``
 
 </div>
 </details>
