@@ -18,7 +18,7 @@ Cookie data is processed in Cloudflare's data center in the United States and is
 
 When enabling session affinity with [Cloudflare Load Balancer](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity), Cloudflare sets a \__cflb cookie with a unique value on the first response to the requesting client. Cloudflare routes future requests to the same origin, optimizing network resource usage. In the event of a failover, Cloudflare sets a new \__cflb cookie to direct future requests to the failover pool.
 
-The \__cflb cookie allows us to return an end user to the same customer origin for a specific period of time (customer-configured), which in turn allows the customer origin to maintain an end user’s experience seamlessly (for example, keeping an end user’s items in a shopping cart while they continue to navigate around the website). This cookie is a session cookie that lasts from several seconds up to 24 hours.
+The \__cflb cookie allows Cloudflare to return an end user to the same customer origin for a specific period of time (customer-configured). This allows the end user to have a seamless experience (for example, this cookie is used for keeping an end user’s items in a shopping cart while they continue to navigate around the website). This cookie is a session cookie that lasts from several seconds up to 24 hours.
 
 <Aside type="note">
 
