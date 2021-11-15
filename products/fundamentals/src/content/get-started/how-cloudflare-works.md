@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # How Cloudflare works
 
-More than just [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
+More than just using Cloudflare's [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
 
 Cloudflare is designed for easy setup. Anyone with a website and their own domain can use Cloudflare regardless of their platform choice. Cloudflare doesn’t require additional hardware, software, or changes to your code.
 
@@ -46,8 +46,8 @@ Also, our flat-rate pricing structure provides predictability and reliability in
 
 Note that additional terms may apply to:
 
-- Self-serve domains with add-on features (contact  for additional details)
-- Domains in the Enterprise plan (contact your Cloudflare Account Team for further information)
+- Self-serve domains with add-on features
+- Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
 
 Learn how to [get started with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360027989951).
 
