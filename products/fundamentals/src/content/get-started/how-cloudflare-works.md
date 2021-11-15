@@ -18,7 +18,7 @@ Cloudflare stops malicious traffic before it reaches your origin web server. Clo
 - Request payload and frequency
 - Customer-defined firewall rules
 
-A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Proxied traffic comes to our edge and then we forward the request to your server. Cloudflare masks your origin IP address for proxied DNS records so attackers cannot bypass Cloudflare and directly attack your origin web server.
+A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Proxied traffic comes to Cloudflare's edge and then Cloudflare forwards the request to your server. Cloudflare masks your origin IP address for proxied DNS records so attackers cannot bypass Cloudflare and directly attack your origin web server.
 
 Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
 
