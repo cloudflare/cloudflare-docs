@@ -4,7 +4,7 @@ pcx-content-type: configuration
 
 # Durable Objects
 
-Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and opting in to pricing.
+Durable Objects are available to anyone with a Workers paid subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to **Workers** > **Durable Objects** and opting into pricing.
 
 ## Background
 
@@ -421,5 +421,5 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler are pro
 
 The Cloudflare API supports retrieving a list of Durable Objects within a namespace and a list of namespaces associated with an account.
 
-The API for listing namespaces is available at https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces
-The API for listing objects in a namespace is available at https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces/$NAMESPACE_ID/objects
+The API for listing namespaces is available [here](https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces).
+The API for listing objects in a namespace is available [here](https://api.cloudflare.com/client/v4/accounts/$YOUR_ACCOUNT_ID/workers/durable_objects/namespaces/$NAMESPACE_ID/objects).

@@ -121,7 +121,7 @@ The following limits apply regardless of the plan used.
 | Feature                                 | Limit
 | --------------------------------------- | ------
 | [Number of objects](#durable-objects)   | unlimited
-| [Storage per account](#durable-objects) | 10 GB (can be raised by contacting Cloudflare)
+| [Storage per account](#durable-objects) | 10 GB (can be raised by contacting your account team)
 | [Storage per class](#durable-objects)   | unlimited
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
@@ -278,7 +278,7 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 - Unlimited Durable Objects within an account or of a given class
 
-- 10 GB total storage per account (can be raised by contacting Cloudflare)
+- 10 GB total storage per account (can be raised by contacting your account team)
 
 - No storage limit per Durable Object separate from the account limit
 
@@ -288,8 +288,8 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 - Storage values of up to 32 KiB (32768 bytes)
 
-- 30s of CPU time per request, including websocket messages
+- 30s of CPU time per request, including WebSocket messages
 
-Durable Objects scale well across Objects, but each object is inherently single-threaded.  A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload. 
+Durable Objects scale well across Objects, but each Object is inherently single-threaded.  A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload. 
 
-Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, please contact us.
+Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your Cloudflare account team.

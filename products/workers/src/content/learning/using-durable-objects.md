@@ -7,9 +7,9 @@ pcx-content-type: concept
 
 Durable Objects provide low-latency coordination and consistent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
-* Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given id running at once, across the whole world.  Requests for a Durable Object id are routed by the Workers runtime to the Cloudflare point-of-presence that owns the Durable Object.
+* Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world.  Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
 
-* The transactional storage API provides strongly-consistent key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
+* The transactional storage API provides strongly consistent key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 For a high-level introduction to Durable Objects, [see the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
 
@@ -17,7 +17,7 @@ For a high-level introduction to Durable Objects, [see the announcement blog pos
 
 Durable Objects are named instances of a class you define.  Just like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
-To start, enable Durable Objects for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”. 
+To start, enable Durable Objects for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to **Workers** > **Durable Objects**. 
 
 There are three steps to creating and using a Durable Object:
 
@@ -273,9 +273,9 @@ Running a delete migration will delete all Durable Object instances associated w
 
 ### Durable Object migrations in `wrangler.toml`
 
-Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. Migrations require a migration tag, which is defined by the **tag** property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. Migrations require a migration tag, which is defined by the `tag` property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
 
-The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml` file. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
 
 All migrations are applied at deployment. Each migration can only be applied once per [environment](/platform/environments). 
 
@@ -353,11 +353,11 @@ See the [Durable Objects section of the Limits page](/platform/limits#durable-ob
 
 ## Limitations
 
-Durable Objects is now generally available, however there are some known limitations.
+Durable Objects is now generally available, however, there are some known limitations.
 
 ### Global Uniqueness
 
-Uniqueness is currently enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception, but if the event completes without ever accessing storage, it may not ever realize that the object was no longer current.
+Uniqueness is currently enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception, but if the event completes without ever accessing storage, it may not ever realize that the Object was no longer current.
 
 In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself).
 
@@ -367,19 +367,19 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 While the Workers dashboard does support editing Workers that use modules syntax:
 * If you edit a script in the editor that is bound to Durable Objects and save it, the Durable Objects bindings will be lost.
-* Previewing scripts that bind Durable Objects does not work in the editor.
+* Previewing scripts that bind Durable Objects do not work in the editor.
 
-These are both bugs that will be fixed soon.
+These are known bugs that are being corrected.
 
-### Object Location
+### Object location
 
-Not all Cloudflare locations host Durable Objects, so objects may not be created in the same point-of-presence where they are first requested.
+Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
 
-Currently, Durable Objects do not migrate between locations after initial creation. We will be exploring automatic migration in the future.
+Currently, Durable Objects do not migrate between locations after initial creation. Durable Objects will be exploring automatic migration compatibility in the future.
 
 ### Performance
 
-Using Durable Objects will often add response latency, as the request must be forwarded to the point-of-presence where the object is located.
+Using Durable Objects will often add response latency, as the request must be forwarded to the data center where the Object is located.
 
 ## Example - Counter
 
@@ -453,7 +453,7 @@ export class Counter {
 
 - [`wrangler dev`](/cli-wrangler/commands#dev) now supports Durable Objects.
 
-Wrangler dev opens up a tunnel from your local development environment to Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's network edge, letting you test your Durable Objects code in the Workers environment as you write it.
 
 
 To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
