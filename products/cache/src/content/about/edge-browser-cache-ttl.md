@@ -11,7 +11,7 @@ Edge Cache TTL (Time to Live) specifies how long to cache a resource in the Clou
 
 - Free - 2 hours
 - Pro - 1 hour
-- Business - 30 minutes
+- Business - 1 second
 - Enterprise - 1 second
 
 For more information on creating page rules, see [Create page rules](/how-to/create-page-rules).
