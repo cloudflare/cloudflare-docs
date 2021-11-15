@@ -96,7 +96,7 @@ These examples exclude the costs for the Workers calling the Durable Objects.
 
 If a single Durable Object was called by a Worker 1.5 million times, and was active for 1,000,000 seconds in the month, the estimated cost in a month would be:
 
-Total = ~$0.8 USD + Minimum $5/mo usage = **$5.08**
+Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
 - 1,000,000 seconds * 128 MB / 1 GB = 128,000 GB-s
@@ -106,14 +106,14 @@ Total = ~$0.8 USD + Minimum $5/mo usage = **$5.08**
 
 If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately 1 message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
 
-Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = **$272.01**
+Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
 - 100 requests to establish the WebSockets.
 - 100 messages per minute * 100 Durable Objects * 60 minutes * 24 hours * 30 days = 432,000,000 requests
 - (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$64.65**
-- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days / 2 = 259,200,000 seconds
-- 259,200,000 seconds * 128 MB / 1 GB = 33,177,600 GB-s
-- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$202.36**
+- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days / 2 = 129,600,000 seconds
+- 129,600,000 seconds * 128 MB / 1 GB = 16,588,800 GB-s
+- (16,588,800 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $202.36
 
 #### Example 3
 
