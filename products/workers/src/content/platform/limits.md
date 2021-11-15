@@ -70,22 +70,6 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 ## KV limits
 
-The Workers Free plan includes limited KV Usage. If you exceed one of these limits, further operations of that type will fail with an error. All limits reset daily at 00:00 UTC.
-
-<TableWrap>
-
-| Feature              | Free limit |
-| -------------------- | ---------- |
-| [Reads/day](#kv)     | 100,000    |
-| [Writes/day](#kv)    | 1,000      |
-| [Lists/day](#kv)     | 1,000      |
-| [Deletes/day](#kv)   | 1,000      |
-| [Storage limit](#kv) | 1 GB       |
-
-</TableWrap>
-
-The following limits apply regardless of the plan used.
-
 <TableWrap>
 
 | Feature                               | Limit      |
