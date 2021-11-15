@@ -9,7 +9,7 @@ order: 3
 
 The **Transform Rules** dashboard interface lets you:
 
-* Create new URL Rewrite Rules and HTTP Request Header Modification Rules.
+* Create new URL Rewrite Rules, HTTP Request Header Modification Rules, and HTTP Response Header Modification Rules.
 * View a list of existing rules (both active and paused).
 * Activate or pause rules (turn on or off).
 * Edit rules.
