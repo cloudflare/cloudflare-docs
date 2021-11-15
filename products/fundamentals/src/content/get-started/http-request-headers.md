@@ -2,7 +2,7 @@
 pcx-content-type: concept
 ---
 
-# HTTP Request headers
+# HTTP request headers
 
 Cloudflare passes all HTTP request headers to your origin web server and adds additional headers as specified below.
 
