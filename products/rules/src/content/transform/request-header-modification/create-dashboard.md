@@ -6,15 +6,11 @@ order: 1
 
 # Create an HTTP Request Header Modification Rule in the dashboard
 
-Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. See [Request header modification examples](/transform/request-header-modification/examples) for examples of rule definitions.
+Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. Refer to [Request header modification examples](/transform/request-header-modification/examples) for examples of rule definitions.
 
-Do the following:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Log in to the Cloudflare dashboard.
-
-1. Select the **Websites** tab and choose the site for which you want to create a new HTTP Request Header Modification Rule.
-
-1. Select **Rules** > **Transform Rules**.
+1. Go to **Rules** > **Transform Rules**.
 
     ![Transform Rules tab](../../static/transform/overview.png)
 
