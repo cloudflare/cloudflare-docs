@@ -8,7 +8,7 @@ Learn which network ports Cloudflare proxies by default and how to enable Cloudf
 
 ## Network ports compatible with Cloudflare's proxy
 
-Cloudflare, by default, proxies traffic destined for the HTTP/HTTPS ports listed below.
+By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed below.
 
 
 <details>
