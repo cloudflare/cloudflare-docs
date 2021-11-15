@@ -13,6 +13,12 @@ pcx-content-type: tutorial
 
 In this tutorial you learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
 
+<Aside type="note">
+
+If you are using a MySQL database, refer to the [MySQL database connector](https://github.com/cloudflare/worker-template-mysql) template.
+
+</Aside>
+
 For a quick start, you will use Docker to run a local instance of Postgres and PgBouncer, and to securely expose the stack to the Internet using Cloudflare Tunnel.
 
 ## Basic project scaffolding
