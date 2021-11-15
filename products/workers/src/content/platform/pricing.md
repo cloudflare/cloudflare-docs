@@ -25,7 +25,7 @@ All included usage is on a monthly basis.
 1. Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. We will not bill for wall time Duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
 2. Duration billing charges for the 128 MB of memory your Worker is allocated, regardless of actual usage.  If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
-### Usage Models
+### Usage models
 
 Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [pricing](/platform/pricing#pricing).
 
