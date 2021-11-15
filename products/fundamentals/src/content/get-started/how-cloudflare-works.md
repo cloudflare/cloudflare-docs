@@ -34,7 +34,7 @@ Cloudflare optimizes the delivery of website resources for your visitors. Cloudf
 
 ## Reliability
 
-Cloudflare’s globally distributed [any cast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center.  Cloudflare distributed DNS responds to website visitors with Cloudflare IP addresses for traffic you proxy to Cloudflare.  This also provides security by hiding the specific IP address of your origin web server.
+Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center. Cloudflare distributed DNS responds to website visitors with Cloudflare IP addresses for traffic you proxy to Cloudflare. This also provides security by hiding the specific IP address of your origin web server.
 
 <Aside type="note">
 
