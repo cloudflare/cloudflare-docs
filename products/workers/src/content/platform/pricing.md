@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 By default, users have access to the Workers free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/platform/limits#worker-limits).
 
-The Workers paid plan includes Workers, Workers KV and Durable Objects usage for a minimum charge of **$5 USD per month for an account**.  The plan includes generous initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers paid plan includes Workers, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account.  The plan includes generous initial usage allotments, with clear charges for usage that exceeds the base plan.
 
 All included usage is on a monthly basis.
 
@@ -23,13 +23,13 @@ All included usage is on a monthly basis.
 </TableWrap>
 
 1. Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. We will not bill for wall time Duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
-2. Duration billing charges for the 128 MB of memory your Worker is allocated, regardless of actual usage.  If your account has significant traffic to a single Worker, multiple instance of that Worker may run in same isolate on the same physical machine and share the 128MB of memory. These Workers are still billed as if they are allocated a full 128MB of memory.
+2. Duration billing charges for the 128 MB of memory your Worker is allocated, regardless of actual usage.  If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
 ### Usage Models
 
-Workers are available under two Usage Models: Bundled and Unbound. Usage Models are **settings on your Workers** that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [pricing](/platform/pricing#pricing).
+Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [pricing](/platform/pricing#pricing).
 
-#### Default Usage Model
+#### Default usage model
 
 The default Usage Model is used when new Workers are created, and no Usage Model is provided via configuration during creation. When an account is first upgraded to the Paid plan, the default Usage Model is set to Unbound. The default can be changed at any time by using the Default Usage Model setting on the Workers overview page. We recommend setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
@@ -45,17 +45,17 @@ If an Unbound Worker executed 1.5 million times and used a total of 200,000 GB-s
 
 Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
-- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
-- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
+- (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = $0.075
+- (200,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
 If an Unbound Worker executed 5 million times and used a total of 800,000 GB-s the estimated cost in a month would be:
 
-Total = ~$5.60 + Minimum $5/mo usage = **$10.60**
+Total = ~$5.60 + Minimum $5/mo usage = $10.60
 
-- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = **$0.60**
-- (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = **$5.00**
+- (5 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $0.60
+- (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
 ## Workers KV
 
@@ -86,7 +86,7 @@ Durable Objects are currently only available on the Workers Paid plan.
     
 </TableWrap>
 1. Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once.  Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
-2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in same isolate on the same physical machine and share the 128MB of memory. These Durable Objects are still billed as if they are allocated a full 128MB of memory.
+2. Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 
 ### Durable Objects billing examples
 
@@ -100,35 +100,35 @@ Total = ~$0.08 USD + Minimum $5/mo usage = $5.08
 
 - (1.5 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$0.075**
 - 1,000,000 seconds * 128 MB / 1 GB = 128,000 GB-s
-- (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$0.00**
+- (128,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $0.00
 
 #### Example 2
 
-If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately 1 message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
+If 100 Durable Objects each had 100 WebSocket connections established to each of them which sent approximately one message a minute for a month, the estimated cost in a month would be, if the messages overlapped so that the Objects were actually active for half the month:
 
 Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
 - 100 requests to establish the WebSockets.
 - 100 messages per minute * 100 Durable Objects * 60 minutes * 24 hours * 30 days = 432,000,000 requests
-- (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$64.65**
+- (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = $64.65
 - 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days / 2 = 129,600,000 seconds
 - 129,600,000 seconds * 128 MB / 1 GB = 16,588,800 GB-s
 - (16,588,800 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $202.36
 
 #### Example 3
 
-If 100 Durable Objects each had a single WebSocket connection established to each of them which sent 1 message a second for a month and the messages overlapped so that the Objects were actually active for the entire month: the estimated cost in a month would be:
+If 100 Durable Objects each had a single WebSocket connection established to each of them, which sent one message a second for a month, and the messages overlapped so that the Objects were actually active for the entire month, the estimated cost in a month would be:
 
-Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = **$453.45**
+Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 - 100 requests to establish the WebSockets.
 - 1 message per second * 100 connections * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 requests
-- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = **$38.73**
+- (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
 - 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 seconds
 - 259,200,000 seconds * 128 MB / 1 GB = 33,177,600 GB-s
-- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = **$409.72**
+- (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
-## Durable Objects Storage API
+## Durable Objects storage API
 
 The Durable Objects storage API is only accessible from within Durable Objects.
 
@@ -143,9 +143,9 @@ The Durable Objects storage API is only accessible from within Durable Objects.
     
 </TableWrap>
 
-1. A request unit is defined as 4KB of data read or written. A request that writes or reads more than 4KB will consume multiple units, e.g. a 9KB write will consume 3 write request units.
-2. List operations are billed by read request units, based on the amount of data examined, e.g. a list request that returns 80KB of keys will be billed 20 request units.
-3. Delete requests are unmetered, e.g. deleting a 100KB value will be charged one delete request.
+1. A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
+2. List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns 80 KB of keys will be billed 20 request units.
+3. Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4. Objects will be billed for stored data until the data is removed.  Once the data is removed, the object will be cleaned up automatically by the system.
 
 ## Fine Print
