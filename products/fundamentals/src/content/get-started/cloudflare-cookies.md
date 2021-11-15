@@ -10,7 +10,7 @@ Cloudflare uses various cookies to maximize network resources, manage traffic, a
 
 As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the \__cflb, \__cf_bm, \__cf_ob_info and \__cf_use_ob, and \__cfwaitingroom cookies are strictly necessary to provide the services requested by our customers.
 
-A mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required to do it by law.
+As mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required to do it by law.
 
 Cookie data is processed in Cloudflare's data center in the United States and is subject to the cross-border data transfer section 7 of the Cloudflare [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
