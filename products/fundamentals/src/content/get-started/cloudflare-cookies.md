@@ -2,7 +2,7 @@
 pcx-content-type: concept
 ---
 
-# Cloudflare's Cookies
+# Cloudflare Cookies
 
 Cloudflare uses various cookies to maximize network resources, manage traffic, and protect our customers’ sites from malicious traffic.
 
