@@ -60,3 +60,12 @@ In your Sanity project's Settings page, find the **Webhooks** section, and add t
 You can configure WordPress to trigger a Pages Deploy Hook by installing the free **WP Webhooks** plugin. The plugin includes a number of triggers, such as **Send Data on New Post, Send Data on Post Update** and **Send Data on Post Deletion**, all of which allow you to trigger new Pages deployments as your WordPress data changes. Select a trigger on the sidebar of the plugin settings and then [**Add Webhook URL**](https://wordpress.org/plugins/wp-webhooks/), pasting in your unique Deploy Hook URL.
 
 ![Configuring Deploy Hooks with WordPress](./wordpress.png)
+
+### Strapi 
+In your Strapi Admin panel you can set up and configure webhooks to enhance your experience with Cloudflare pages. In the left menu, navigate to *Settings*, select *Webhooks* and create a new webhook. Give your new webhook a unique name so it's easily identifiable and paste your unique Deploy Hook URL in the URL form feild.
+
+With Strapi you can configure your webhook to be triggered based on events that happen in the Strapi Admin Panel. You can adjust these settings to create a new deploy of your Cloudflare Pages site automatically when a Strapi entry or media assets is created, updated or deleted. 
+
+> Be sure to add the webhook settings to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi App that powers your Cloudflare site. 
+
+![Configuring Deploy Hooks with Strapi](./strapi.png)
