@@ -100,23 +100,17 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 ## Durable Objects limits
 
-<Aside type="warning" header="Beta">
-
-Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
-
-</Aside>
-
 <TableWrap>
 
 | Feature                                 | Limit
 | --------------------------------------- | ------
 | [Number of objects](#durable-objects)   | unlimited
-| [Storage per account](#durable-objects) | 10 GB
+| [Storage per account](#durable-objects) | 10 GB (can be raised by contacting Cloudflare)
 | [Storage per class](#durable-objects)   | unlimited
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
 | [Value size](#durable-objects)          | 32 KiB
-| [CPU per request](#durable-objects)     | 500ms
+| [CPU per request](#durable-objects)     | 30s
 
 </TableWrap>
 
@@ -172,19 +166,7 @@ Duration is the measurement of wall-clock time. This is measured in Gigabyte-sec
 
 For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
-
----
-
-## Egress data transfer
-
-Egress data transfer is the measurement of data sent **out** of an executing Worker. The diagram below illustrates the flow of data going from a requesting device, to a Worker which calls a 3rd party, like a storage provider, and returns the data. In this example, the egress data measured is the request going from a Worker to a 3rd party and the Workers response to the original requester.
-
-![Diagram of traffic going in and out of a Worker.](./media/worker-egress-diagram.png)
-
-Cloudflare encourages using providers on the [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/) for reduced costs on egress data transfer. We will not bill for egress within the Cloudflare ecosystem.
-
-Egress data transfer is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan).
+Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan) and [Durable Objects](/learning/using-durable-objects).
 
 ---
 
@@ -278,15 +260,9 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 ## Durable Objects
 
-<Aside type="warning" header="Beta">
-
-Durable Objects are currently in beta. See [their docs](/learning/using-durable-objects) for more information about the beta and any current limitations.
-
-</Aside>
-
 - Unlimited Durable Objects within an account or of a given class
 
-- 10 GB total storage per account (this will be raised after the beta period)
+- 10 GB total storage per account (can be raised by contacting Cloudflare)
 
 - No storage limit per Durable Object separate from the account limit
 
@@ -296,6 +272,8 @@ Durable Objects are currently in beta. See [their docs](/learning/using-durable-
 
 - Storage values of up to 32 KiB (32768 bytes)
 
-- 500ms of CPU time per request, including websocket messages (this will be raised to match the Unbound limit after the beta period)
+- 30s of CPU time per request, including websocket messages
 
-Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account, which we expect to raise after the beta period ends. If you need more storage in the meantime, please contact us.
+Durable Objects scale well across Objects, but each object is inherently single-threaded.  A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload. 
+
+Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, please contact us.
