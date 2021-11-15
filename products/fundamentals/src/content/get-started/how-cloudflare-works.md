@@ -22,7 +22,7 @@ A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudfl
 
 Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
 
-A DNS lookup of an unproxied (grey-clouded) Cloudflare subdomain returns the IP address that you've entered for the record. Unproxied traffic goes directly to your origin server and does not receive any of the benefits of using Cloudflare.
+A DNS lookup of an unproxied (grey-clouded) Cloudflare subdomain returns the IP address that you have entered for the record. Unproxied traffic goes directly to your origin server and does not receive any of the benefits of using Cloudflare.
 
 Visitor <--[Connection]--> Origin Server
 
