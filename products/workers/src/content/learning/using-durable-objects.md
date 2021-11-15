@@ -453,6 +453,9 @@ export class Counter {
 
 - [`wrangler dev`](/cli-wrangler/commands#dev) now supports Durable Objects.
 
+Wrangler dev opens up a tunnel from your local development environment to Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+
+
 To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
 ### Common errors
