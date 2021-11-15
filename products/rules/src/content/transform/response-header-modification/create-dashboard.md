@@ -18,7 +18,7 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
     ![Create HTTP Response Header Modification rule page](../../static/transform/create-response-header-modification-rule.png)
 
-1. Enter a descriptive name for the URL Rewrite Rule in **Rule name**.
+1. Enter a descriptive name for the HTTP Response Header Modification Rule in **Rule name**.
 
 1. Under **When incoming requests match**, define the [rule expression](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
