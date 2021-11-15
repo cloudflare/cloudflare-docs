@@ -19,13 +19,12 @@ For a quick start, you will use Docker to run a local instance of Postgres and P
 
 To get started:
 
-1. Run the following `wrangler` command to generate a basic Postgres database connector project using the [worker-template-postgres](https://github.com/cloudflare/worker-template-postgres) template.
-1. After running the `wrangler generate` command, `cd` into the new project.
-1. Use the current state of the Git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
+1. Run the following `git` command to clone a basic [Postgres database connector](https://github.com/cloudflare/worker-template-postgres) project.
+1. After running the `git clone` command, `cd` into the new project.
 
 ```sh
-$ wrangler generate workers-postgres-from-workers https://github.com/cloudflare/worker-template-postgres/
-$ cd workers-postgres-from-workers
+$ git clone https://github.com/cloudflare/worker-template-postgres/
+$ cd worker-template-postgres
 ```
 
 ## Cloudflare Tunnel authentication
