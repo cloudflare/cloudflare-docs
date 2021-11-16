@@ -74,6 +74,6 @@ A placeholder can be defined with `:placeholder_name`. A colon indicates the sta
 
 Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
 
-## Additional information
+## Related resources
 
 - [Transform Rules](https://developers.cloudflare.com/rules/transform)
