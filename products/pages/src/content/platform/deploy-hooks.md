@@ -72,6 +72,6 @@ In your Strapi Admin Panel, you can set up and configure webhooks to enhance you
 
 In the Strapi Admin Panel, you can configure your webhook to be triggered based on events. You can adjust these settings to create a new deployment of your Cloudflare Pages site automatically when a Strapi entry or media asset is created, updated, or deleted. 
 
-Be sure to add the webhook settings to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site. 
+Be sure to add the webhook configuration to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site. 
 
 ![Configuring Deploy Hooks with Strapi](./strapi.png)
