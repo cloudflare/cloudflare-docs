@@ -106,7 +106,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 #### Invalid parameters
 
-`cache.put` throws an error if:
+`cache.put` will throw an error if:
   - the `request` passed is a method other than `GET`.
   - the `response` passed is a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
   - the `response` passed contains the header `Vary: *` (required by the Cache API specification).
@@ -140,7 +140,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
     - The string or [`Request`](/runtime-apis/request) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 - `options`
-    -  Can contain one possible property: `ignoreMethod` (Boolean). Consider the request method a GET regardless of its actual value.
+    -  Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
 
 </Definitions>
 
@@ -197,7 +197,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 --------------------------------
 
-## More information
+## Related resources
 
 - [How the Cache works](/learning/how-the-cache-works)
 - [Configure your CDN](/tutorials/configure-your-cdn)
