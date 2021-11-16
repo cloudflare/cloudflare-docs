@@ -62,10 +62,16 @@ You can configure WordPress to trigger a Pages Deploy Hook by installing the fre
 ![Configuring Deploy Hooks with WordPress](./wordpress.png)
 
 ### Strapi 
-In your Strapi Admin panel you can set up and configure webhooks to enhance your experience with Cloudflare pages. In the left menu, navigate to *Settings*, select *Webhooks* and create a new webhook. Give your new webhook a unique name so it's easily identifiable and paste your unique Deploy Hook URL in the URL form feild.
 
-With Strapi you can configure your webhook to be triggered based on events that happen in the Strapi Admin Panel. You can adjust these settings to create a new deploy of your Cloudflare Pages site automatically when a Strapi entry or media assets is created, updated or deleted. 
+In your Strapi Admin panel, you can set up and configure webhooks to enhance your experience with Cloudflare Pages. In the Strapi menu:
+1. Navigate to **Settings**.
+2. Select **Webhooks**.
+3. Select **Add New Webhook**. 
+4. In the **Name** form field, give your new webhook a unique name.
+5. In the **URL** form field, paste your unique Cloudflare Deploy Hook URL.
 
-> Be sure to add the webhook settings to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi App that powers your Cloudflare site. 
+In the Strapi Admin Panel, you can configure your webhook to be triggered based on events. You can adjust these settings to create a new deployment of your Cloudflare Pages site automatically when a Strapi entry or media asset is created, updated, or deleted. 
+
+Be sure to add the webhook settings to the [production](https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/installation.html) Strapi application that powers your Cloudflare site. 
 
 ![Configuring Deploy Hooks with Strapi](./strapi.png)
