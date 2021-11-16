@@ -18,7 +18,7 @@ All included usage is on a monthly basis.
 |                      | Free plan                    | Paid Plan - Unbound                                          | Paid plan - Bundled          |
 | -------------------- | ---------------------------- | ------------------------------------------------------------ | ---------------------------- |
 | Requests             | 100,000 / day                | 1 million, + $0.15/million                                   | 10 million, +$0.50/million   |
-| Duration             | 10ms CPU time / invocation   | 400,000 GB-s, + $12.50/million GB-s<sup>1</sup>,<sup>2</sup> | 50 ms CPU time / invocation  |
+| Duration             | 10ms CPU time / invocation   | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>            | 50 ms CPU time / invocation  |
   
 </TableWrap>
 
@@ -82,7 +82,7 @@ Durable Objects are currently only available on the Workers Paid plan.
 |               | Paid plan                                                    |
 | ------------- | ------------------------------------------------------------ |
 | Requests      | 1 million, + $0.15/million                                   | 
-| Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1</sup><sup>2</sup>  |
+| Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>            |
   
 </TableWrap>
 
@@ -137,7 +137,7 @@ The Durable Objects storage API is only accessible from within Durable Objects.
 
 |                                               | Paid plan                   |
 | --------------------------------------------- | --------------------------- |
-| Read request units<sup>1</sup>,<sup>2</sup>   | 10 million, + $0.20/million |
+| Read request units<sup>1,2</sup>              | 10 million, + $0.20/million |
 | Write request units<sup>1</sup>               | 1 million, + $1.00/million  |
 | Delete requests<sup>3</sup>                   | 1 million, + $1.00/million  |
 | Stored data<sup>4</sup>                       | 1 GB, + $0.20/ GB-month     |
