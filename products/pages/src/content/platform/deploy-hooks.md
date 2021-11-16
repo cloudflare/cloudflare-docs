@@ -63,7 +63,7 @@ You can configure WordPress to trigger a Pages Deploy Hook by installing the fre
 
 ### Strapi 
 
-In your Strapi Admin panel, you can set up and configure webhooks to enhance your experience with Cloudflare Pages. In the Strapi menu:
+In your Strapi Admin Panel, you can set up and configure webhooks to enhance your experience with Cloudflare Pages. In the Strapi Admin Panel:
 1. Navigate to **Settings**.
 2. Select **Webhooks**.
 3. Select **Add New Webhook**. 
