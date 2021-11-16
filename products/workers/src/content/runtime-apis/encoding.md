@@ -43,7 +43,7 @@ let encoder = new TextEncoder()
 
 ### Background
 
-The **TextDecoder** interface represents a UTF-8 decoder. Decoders take a stream of bytes as input and emit a stream of code points.
+The TextDecoder interface represents a UTF-8 decoder. Decoders take a stream of bytes as input and emit a stream of code points.
 
 [`TextDecoder()`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/TextDecoder) returns a newly constructed `TextDecoder` that generates a code-point stream.
 
@@ -72,6 +72,6 @@ let decoder = new TextDecoder()
 <Definitions>
 
 - `decode()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</TypeLink>
-  - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s TextDecoder docs](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
+  - Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s TextDecoder documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
 
 </Definitions>
