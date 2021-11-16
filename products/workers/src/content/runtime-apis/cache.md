@@ -108,7 +108,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 `cache.put` will throw an error if:
   - the `request` passed is a method other than `GET`.
-  - the `response` passed is a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
+  - the `response` passed has a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
   - the `response` passed contains the header `Vary: *` (required by the Cache API specification).
 
 ### `Match`
