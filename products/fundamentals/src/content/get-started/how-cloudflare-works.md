@@ -7,6 +7,12 @@ pcx-content-type: how-to
 
 More than just using Cloudflare's [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
 
+<Aside type="note">
+
+Cloudflare is not generally a hosting provider. Cloudflare generally cannot remove content from the Internet that it does not host.
+
+</Aside>
+
 Cloudflare is designed for easy setup. Anyone with a website and their own domain can use Cloudflare regardless of their platform choice. Cloudflare doesn’t require additional hardware, software, or changes to your code.
 
 ## Security
