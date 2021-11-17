@@ -7,12 +7,12 @@ order: 1
 import HeaderValidNames from "../../../_partials/transform/_header-valid-names.md"
 import HeaderValidValues from "../../../_partials/transform/_header-valid-values.md"
 
-# Format of HTTP request header names and values
+# Format of HTTP response header names and values
 
-The **name** of the HTTP request header you want to set or remove can only contain:
+The **name** of the HTTP response header you want to set or remove can only contain:
 
 <HeaderValidNames/>
 
-The **value** of the HTTP request header you want to set can only contain:
+The **value** of the HTTP response header you want to set can only contain:
 
 <HeaderValidValues/>
