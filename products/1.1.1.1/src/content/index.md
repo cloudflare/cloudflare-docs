@@ -1,7 +1,7 @@
 ---
 title: Overview
+pcx-content-type: overview
 order: 0
-pcx-content-type: landing-page
 ---
 
 # Cloudflare 1.1.1.1

@@ -5,30 +5,19 @@ pcx-content-type: configuration
 
 # Webpack
 
-Out of the box, Wrangler allows you to develop modern ES6 applications with support for modules. This is because of the 🧙‍♂️ magic of [webpack](https://webpack.js.org/). This document describes how Wrangler uses webpack to build your Workers, and how you can bring your own configuration.
+Wrangler allows you to develop modern ES6 applications with support for modules. This support is possible because of Wrangler's [webpack](https://webpack.js.org/) integration. This document describes how Wrangler uses webpack to build your Workers and how you can bring your own configuration.
 
+<Aside type="note" header="Configuration and webpack version">
 
-<Aside>
+Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/cli-wrangler/configuration#build) in your `wrangler.toml` file.
 
-Wrangler's built-in webpack build only supports webpack 4. If you want to use webpack 5, or another bundler like ESBuild or Rollup, you'll want to setup [custom builds](/cli-wrangler/configuration#build) in your `wrangler.toml`.
-
-</Aside>
-
-<Aside>
-
-__Note:__ You must set `type = "webpack"` in your `wrangler.toml` in order for Wrangler to use webpack to bundle your worker scripts. No other types will build your script with webpack.
-
-</Aside>
-
-<Aside>
-
-If you’re seeing warnings about specifying `webpack_config`, see [backwards compatibility](#backwards-compatibility).
+You must set `type = "webpack"` in your `wrangler.toml` file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
 
 </Aside>
 
 ## Sensible defaults
 
-This is the default webpack configuration that Wrangler uses to build your worker:
+This is the default webpack configuration that Wrangler uses to build your Worker:
 
 ```js
 module.exports = {
@@ -37,17 +26,13 @@ module.exports = {
 }
 ```
 
-Our default configuration sets `target` to `webworker`. From the [webpack docs](https://webpack.js.org/concepts/targets/):
+The `"main"` field in the `package.json` file determines the `entry` configuration value. When undefined or missing, `"main"` defaults to `index.js`, meaning that `entry` also defaults to `index.js`.
 
-> Because JavaScript can be written for both server and browser, webpack offers multiple deployment targets that you can set in your webpack configuration.
-
-Cloudflare Workers are built to match the [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API), so we set our `target` to `webworker`.
-
-The `entry` field is taken directly from the `main` field in your `package.json`. Learn [more about the `entry` property](https://webpack.js.org/concepts/entry-points/) on the webpack site.
+The default configuration sets `target` to `webworker`. This is the correct value because Cloudflare Workers are built to match the [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). Refer to the [webpack documentation](https://webpack.js.org/concepts/targets/) for an explanation of this `target` value.
 
 ## Bring your own configuration
 
-You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your `wrangler.toml`. You’ll want to make sure that `target` is always `webworker`.
+You can tell Wrangler to use a custom webpack configuration file by setting `webpack_config` in your `wrangler.toml` file. Always set `target` to `webworker`.
 
 ### Example
 
@@ -74,6 +59,9 @@ webpack_config = "webpack.config.js"
 ```
 
 ### Example with multiple environments
+
+It is possible to use different webpack configuration files within different [Wrangler environments](/workers/platform/environments). For example, the `"webpack.development.js"` configuration file is used during `wrangler dev` for development, but other, more production-ready configurations are used when building for the staging or production environments:
+
 
 ```toml
 ---
@@ -119,7 +107,7 @@ module.exports = {
 
 ### Using with Workers Sites
 
-Wrangler commands are run from the project root, so ensure your `entry` and `context` are set appropriately. For a project with structure:
+Wrangler commands are run from the project root. Ensure your `entry` and `context` are set appropriately. For a project with structure:
 
 ```txt
 .
@@ -134,7 +122,7 @@ Wrangler commands are run from the project root, so ensure your `entry` and `con
 └── wrangler.toml
 ```
 
-`webpack.config.js` should look like this:
+The corresponding `webpack.config.js` file should look like this:
 
 ```js
 ---
@@ -150,9 +138,9 @@ module.exports = {
 
 ## Shimming globals
 
-Sometimes you want to bring your own implementation of an existing global API. You can do this by [shimming](https://webpack.js.org/guides/shimming/#shimming-globals) a third party module in its place as a webpack plugin.
+When you want to bring your own implementation of an existing global API, you may [shim](https://webpack.js.org/guides/shimming/#shimming-globals) a third-party module in its place as a webpack plugin.
 
-For example, to replace the runtime global `URL` class with the npm package `url-polyfill` — or your choice of third party package — `npm i` the package to install it locally and add it to your worker’s package.json, then add a plugin entry to your webpack config.
+For example, you may want to replace the `URL` global class with the `url-polyfill` npm package. After defining the package as a dependency in your `package.json` file and installing it, add a plugin entry to your webpack configuration.
 
 ### Example with webpack plugin
 
@@ -177,6 +165,6 @@ module.exports = {
 
 ## Backwards compatibility
 
-If you are using a version of Wrangler before 1.6.0, worker projects will simply use any `webpack.config.js` that is in the root of your project. This is not always obvious, so we plan to require that you specify `webpack_config` in your `wrangler.toml` if you would like to use it. If you’re seeing this warning and would like to use your `webpack.config.js`, simply add `webpack_config = "webpack.config.js"` to your wrangler.toml.
+If you are using `wrangler@1.6.0` or earlier, a `webpack.config.js` file at the root of your project is loaded automatically. This is not always obvious, which is why versions of Wrangler after `wrangler@1.6.0` require you to specify a `webpack_config` value in your `wrangler.toml` file. 
 
-If you are using Workers Sites and want to specify your own webpack configuration, you will always need to specify this. By default, Wrangler will not assume the `webpack.config.js` at the root of your project is meant to be used for building your Worker.
+When [upgrading from `wrangler@1.6.0`](/cli-wrangler/install-update#update), you may encounter webpack configuration warnings. To resolve this, add `webpack_config = "webpack.config.js"` to your `wrangler.toml` file.

@@ -13,9 +13,12 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 <TutorialsBeforeYouStart/>
 
-## Basic Project Scaffolding
+## Basic project scaffolding
 
-To get started, run the following `wrangler` command to generate a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/). After running the `wrangler generate` command, `cd` into the new project, and use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal:
+To get started:
+1. Run the following `wrangler` command to generate a basic project using the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/). 
+2. After running the `wrangler generate` command, `cd` into the new project.
+3. Use the current state of the git repository as the initial commit by running the `git add` and `git commit` commands in your terminal.
 
 ```sh
 $ wrangler generate workers-kv-from-rust https://github.com/cloudflare/rustwasm-worker-template/
@@ -93,7 +96,9 @@ async function handleRequest(request) {
 }
 ```
 
-Note that the signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. This tutorial will try to do as much as possible in Rust and pass the request directly to the wasm handler, which will then construct and return a response. To do this, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
+Note that the signature of your Rust handler differs from the template, which merely returns a `String` from Rust and keeps the request and response handling purely on the JavaScript side. This tutorial will try to do as much as possible in Rust and pass the request directly to the wasm handler, which will then construct and return a response. 
+
+To do this, declare `web-sys` as one of your Rust dependencies and explicitly enable the `Request`, `Response` and `ResponseInit` features (the `Url` and `UrlSearchParams` features will be used later in this tutorial):
 
 ```toml
 ---
@@ -264,7 +269,22 @@ The above wrapper only exposes a subset of the options supported by the KV API, 
 
 ## Using the wrapper
 
-You are now ready to use the wrapper to get and put values from and to our KV namespace. The following function is a simple example handler that writes the key `foo` with the value `bar` to KV, if a `PUT` request is made to `/foo?value=bar`, and reads and returns the value of key `foo` from KV, if a `GET` request is made to `/foo`. Note that `handle` is now asynchronous, and that you will be using the `Url` and `UrlSearchParams` features that you declared earlier in `Cargo.toml`:
+You are now ready to use the wrapper to read and write values to and from your KV namespace. 
+
+The following function is an example handler that writes to KV on a `PUT` request, using the URL segments to determine the KV document's key name and value. For example, sending a `PUT` request to `/foo?value=bar` will write the `"bar"` value to the `foo` key. 
+
+Additionally, the example handler will read from KV when on `GET` requests, using the URL pathname as the key name. For example, a `GET /foo` request will return the `foo` key's value, if any.
+
+<Aside type="note" header="Important changes">
+
+When compared to the `handle` function from the previous snippet, be aware of these important changes:
+
+1. The `handle` function is asynchronous. 
+2. The `Url` and `UrlSearchParams` features are in use – they must be declared in the `Cargo.toml` feature set.
+
+</Aside>
+
+The finalized `handle` function:
 
 ```rust
 ---

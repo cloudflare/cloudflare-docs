@@ -55,7 +55,7 @@ We review these submissions to improve Cloudflare’s categorization.
 
 If you have a DoH-compliant client, such as a compatible router, you can set up 1.1.1.1 for Families to encrypt your DNS queries over HTTPS. This prevents spoofing and tracking by malicious actors, advertisers, ISPs, and others. For more information on DoH, refer to the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 
-To configure an encrypted connection to 1.1.1.1 for Families, type one of the following URLs into the appropriate field of your DoH-compliant client:
+To configure an encrypted DoH connection to 1.1.1.1 for Families, type one of the following URLs into the appropriate field of your DoH-compliant client:
 
 **If you want to block malware:**
 
@@ -67,4 +67,23 @@ https://security.cloudflare-dns.com/dns-query
 
 ```txt
 https://family.cloudflare-dns.com/dns-query
+```
+
+## DNS over TLS (DoT)
+1.1.1.1 for Families also supports DoT if you have a compliant client, such as a compatible DoT router. DoT allows you to encrypt your DNS queries, protecting you from spoofing, malicious actors, and others. You can learn more about DoT in the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
+1.1.1.1 for Families also supports DoT if you have a compliant client, such as a compatible DoT router. DoT allows you to encrypt your DNS queries, protecting you from spoofing, malicious actors, and others. You can learn more about DoT in he [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
+
+To configure an encrypted DoT connection to 1.1.1.1 for Families, type one of the following URLs into the appropriate field of your DoT-compliant client:
+
+
+**If you want to block malware:**
+
+```txt
+security.cloudflare-dns.com
+```
+
+**If you want to block malware and adult content:**
+
+```txt
+family.cloudflare-dns.com
 ```

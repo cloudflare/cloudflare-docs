@@ -10,7 +10,7 @@ order: 2
 
 In Network Analytics v1 (NAv1), the data is rolled up into one minute roll-up tables, then one hour roll-ups, and finally one day roll-ups. Users can then query either the `ipFlows1mGroups` node for high-resolution data on traffic and attacks in the past 30 days, or query the `ipFlows1hGroups` or `ipFlows1dGroups` nodes for historical data. However, the data available through these nodes is aggregate data, and that means that the accuracy and cardinality of the results are limited. For example, short traffic spikes will not be visible in the data obtained from these nodes due to the aggregation of samples in the roll-ups.
 
-On the other hand, Network Analytics v2 (NAv2) uses **Adaptive Bitrate (ABR)** sampling. This means that users do not need to choose a node based on their query timeframe. Furthermore, the cardinality and accuracy is preserved even for historical data. Depending on the size of the query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the five tables encapsulated behind each node. The five tables vary based on the packet sampling rate: 1/1, 1/4, 1/16, 1/64, and 1/256.
+On the other hand, Network Analytics v2 (NAv2) uses **Adaptive Bitrate (ABR)** sampling. This means that users do not need to choose a node based on their query timeframe. Furthermore, the cardinality and accuracy is preserved even for historical data. Depending on the size of the query, the ABR mechanism will choose the best sampling rate and fetch a response from one of the sample tables encapsulated behind each node.
 
 ## Edge Sample Enrichment
 

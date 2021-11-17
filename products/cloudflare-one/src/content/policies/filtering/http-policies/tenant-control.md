@@ -15,7 +15,6 @@ Not all SaaS applications support tenant control. Examples of common application
 * Slack
 * GSuite
 * Dropbox
-* YouTube
 
 ## Add custom headers for a SaaS application (Microsoft 365 example)
 
@@ -79,12 +78,40 @@ This section covers policy configurations for common SaaS applications.
 
 </TableWrap>
 
-### YouTube
+## Using Tenant Control with Browser Isolation
 
-<TableWrap>
+Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | YouTube | Allow | `YouTube-Restrict` |
+You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Cloudflare for Teams dashboard.
 
-</TableWrap>
+### Example: Implementing a custom request header for a domain
+
+#### 1. Create an Isolate policy
+
+* **Name**: Isolate HTTPBIN
+* **Description**: Isolates the `httpbin.org` website.
+* **Action**: Isolate
+
+| Selector | Operator | Value |
+| -- | -- | -- |
+| Domain | in | httpbin.org |
+
+  ![Isolate policy](../../../static/documentation/policies/httpbin-policy-1.png)
+
+#### 2. Create an Allow policy with a Custom Header
+
+* **Name**: Inject custom request header for HTTPBIN
+* **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
+* **Action**: Allow
+
+| Selector | Operator | Value |
+| -- | -- | -- |
+| Domain | in | httpbin.org |
+
+  ![Allow policy](../../../static/documentation/policies/httpbin-policy.png)
+
+#### 3. Navigate to `https://httpbin.org/anything`
+
+HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
+
+  ![httpbin](../../../static/documentation/policies/httpbin.png)

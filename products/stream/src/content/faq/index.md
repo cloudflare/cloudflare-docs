@@ -111,6 +111,10 @@ Resolution  |  Recommended bitrate
 
 </TableWrap>
 
+### If I cancel my stream subscription, are the videos deleted?
+
+Videos are removed if the subscription is not renewed within 30 days.
+
 ## Stream Live
 
 ### Do I need a separate Stream Live subscription to use Stream Live?
@@ -138,4 +142,4 @@ If your use case requires the limits to be increased, please contact support.
 
 ### How does Stream Live handle RTMP reconnections?
 
-As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you are using to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically. Other apps like FFmpeg require custom configuration.
+As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you use to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically while other apps like FFmpeg require custom configuration.

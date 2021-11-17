@@ -7,7 +7,7 @@ type: overview
 
 # Features by plan type
 
-The features available for a waiting room depend on your plan type.
+The features available for a waiting room depend on your plan type. You can only have **one plan** per zone.
 
 <table style="width:100%">
    <thead>

@@ -109,7 +109,7 @@ If you do not want to point your nameservers to Cloudflare, you can still use a 
 
 <Aside type="note">
 
-To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/getting-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [522 error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/get-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [522 error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
 </Aside>
 
@@ -141,7 +141,6 @@ To delete your Pages project:
 1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
 2. Select **Pages**.
 3. Remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
-
 
 ## Advanced project settings
 
