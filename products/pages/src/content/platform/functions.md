@@ -61,7 +61,7 @@ When naming your files:
 
 When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
 
-<Aside type=”note” header=”Route Specificity”> 
+<Aside type="note" header="Route Specificity"> 
 
 More specific routes (that is, those with fewer wildcards) take precedence over less specific routes.
 
@@ -98,7 +98,7 @@ In the previous example, an `onRequest` function was exported. This is a generic
 * `onRequestHead`
 * `onRequestOptions`
  
-These are the requests you export to write your first function. For example, you can write a function to output “Hello world” when it hits a `/functions/hello-world.js` file:
+These are the requests you export to write your first function. For example, you can write a function to output "Hello World" when it hits a `/functions/hello-world.js` file:
  
 ```js
 ---
@@ -113,7 +113,7 @@ export async function onRequestPost(request) {
  
 ### Handling multiple requests in a single function
  
-You can define multiple HTTP handlers  in a single file by exporting the multiple Functions. For example, this file will handle `POST` and `PUT` requests with the same code: 
+You can define multiple HTTP handlers in a single file by exporting the multiple Functions. For example, this file will handle `POST` and `PUT` requests with the same code: 
  
 ```js
 export async function onRequestPost(context) {
@@ -323,7 +323,7 @@ export default {
   }
 }
 ```
-<Aside type=”warning”>
+<Aside type="warning">
 
 Your custom Module Worker is required to forward requests to static assets. Failure to do so will result in broken and/or unwanted behavior because your website’s contents will not be served if you do not serve it. 
 
