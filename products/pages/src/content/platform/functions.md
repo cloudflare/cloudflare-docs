@@ -59,13 +59,13 @@ When naming your files:
 * `[name]` is a placeholder for a single path segment
 * `[[name]]` matches any depth of route below this point
 
-When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
-
 <Aside type="note" header="Route Specificity"> 
 
 More specific routes (that is, those with fewer wildcards) take precedence over less specific routes.
 
 </Aside>
+
+When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
  
 ## Writing your first function
  
