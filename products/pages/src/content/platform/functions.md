@@ -52,7 +52,7 @@ The following routes will be generated based on the file structure, mapping the 
 
 Note that in the example above:
 * A `*` denotes a placeholder for a single path segment (e.g. /todos/123)
-* A `**` matches one or more path segments (e.g. /todos/123/dates/confirm). 
+* A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`). 
 
 When naming your files:
 * `[name]` is a placeholder for a single path segment
