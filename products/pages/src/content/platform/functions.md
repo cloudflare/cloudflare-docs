@@ -273,7 +273,7 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 ### KV namespace
 
-Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from **Account Home** > **Workers** > **KV**. Refer to the [Workers KV documentation for further instructions on adding KV namespace bindings](https://developers.cloudflare.com/workers/platform/environment-variables#adding-kv-namespace-bindings-via-the-dashboard). 
+Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![KV-Binding](KV-functions.png)
 
@@ -281,7 +281,7 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](https://developers.cloudflare.com/workers/learning/using-durable-objects#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project. 
 
-Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** to select the namespace and set a name. 
+Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![DO-Binding](DO-functions.png)
 
