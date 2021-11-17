@@ -113,7 +113,7 @@ export async function onRequestPost(request) {
 
 ### Handling multiple requests in a single function
 
-You can define multiple HTTP handlers in a single file by exporting the multiple Functions. For example, this file will handle `POST` and `PUT` requests with the same code: 
+You can define multiple HTTP handlers in a single file by defining multiple exports within the same file. For example, this file will handle `POST` and `PUT` requests with the same handler code: 
 
 ```js
 export async function onRequestPost(context) {
@@ -137,7 +137,7 @@ export const onRequest = [
 
 ## Adding middleware
 
-Middleware are reusable chunks of logic that can be before and/or after route handlers. These are typically utility Functions that should be applied for chunks of an application’s routes. For example, error handling, user authentication, and logging are typical candidates for middleware within an application.
+Middleware are reusable chunks of logic that can be executed before and/or after route handlers. These are typically utility Functions that should be applied for chunks of an application’s routes. For example, error handling, user authentication, and logging are typical candidates for middleware within an application.
 
 ### Exporting middleware
 
@@ -240,9 +240,9 @@ export const onRequest = errorHandler;
 
 ### Middleware data
 
-Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all functions throughout a request’s execution. 
+Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all handlers throughout a request’s execution. 
 
-More often than not, `context.data` only applies from a middleware’s perspective, but it is available to all functions regardless.
+More often than not, `context.data` is only relevant from a middleware’s perspective, but it is available to all functions regardless.
 
 ```js
 ---
@@ -357,7 +357,7 @@ While still in open beta, there is no additional cost to deploy Functions within
 
 If you reach this limit or need it increased in order to migrate your existing Workers applications into a Pages project, [complete this form](https://forms.gle/fK65trEL67cTvGQG6) to request an increase. You may track this limit by going to **Account Home** > **Pages** > and reviewing **Functions requests today**.
 
-In the future, you can expect billing to reflect that of the Workers Bundled plan, as Functions are Workers under the hood. 
+In the future, you can expect billing to reflect that of the Workers Bundled plan. 
 
 ## Demo
 
