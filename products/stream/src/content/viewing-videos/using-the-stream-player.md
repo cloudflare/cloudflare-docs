@@ -127,6 +127,10 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
+- `startTime`
+
+  - A timestamp that specifies the time when playback begins. If a plain number is used such as `?startTime=123`, it will be interepreted as `123` seconds. More human readable timestamps can also be used, such as `?startTime=1h12m27s` for `1 hour, 12 minutes, and 27 seconds`.
+
 </Definitions>
 
 ## Debug Info

@@ -37,15 +37,15 @@ addEventListener("fetch", event => {
 
 -  <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
 
-    - See [`respondWith`](#respondWith).
+    - See [`respondWith`](#respondwith).
 
 - <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - See [`waitUntil`](#waitUntil).
+    - See [`waitUntil`](#waituntil).
 
 - <Code>event.passThroughOnException()</Code> <Type>void</Type>
 
-    - See [`passThroughOnException`](#passThroughOnException).
+    - See [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 
@@ -80,11 +80,11 @@ export default {
 
 - <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - See [`waitUntil`](#waitUntil).
+    - See [`waitUntil`](#waituntil).
 
 - <Code>context.passThroughOnException()</Code> <Type>void</Type>
 
-    - See [`passThroughOnException`](#passThroughOnException).
+    - See [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 

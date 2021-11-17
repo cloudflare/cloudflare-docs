@@ -14,21 +14,27 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-import { parse } from "worktop/cookie";
+import { parse } from "cookie"
 // OR
-// import { parse } from "cookie"
+import { parse } from "worktop/cookie"
+
 // The name of the cookie
-const COOKIE_NAME = "__uid";
-export default {
-  fetch(req) {
-    const cookie = parse(req.headers.get("Cookie") || "");
-    if (cookie[COOKIE_NAME] != null) {
-      // Respond with the cookie value
-      return new Response(cookie[COOKIE_NAME]);
-    }
-    return new Response("No cookie with name: " + COOKIE_NAME);
-  },
-};
+const COOKIE_NAME = "__uid"
+
+function handleRequest(request) {
+  const cookie = parse(request.headers.get("Cookie") || "")
+
+  if (cookie[COOKIE_NAME] != null) {
+    // Respond with the cookie value
+    return new Response(cookie[COOKIE_NAME])
+  }
+
+  return new Response("No cookie with name: " + COOKIE_NAME)
+}
+
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request))
+})
 ```
 
 <Aside type="note" header="External Dependencies">

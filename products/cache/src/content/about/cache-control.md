@@ -369,7 +369,7 @@ Edge Cache TTL Page Rules override `s-maxage` and disable revalidation directive
 ### [Browser Cache TTL](/about/edge-browser-cache-ttl#browser-cache-ttl)
 Browser Cache TTL Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
-### [Polish](/best-practices/activate-polish)
+### [Polish](https://developers.cloudflare.com/images/polish)
 Polish is disabled when the `no-transform` directive is present.
 
 ### Gzip and Other Compression

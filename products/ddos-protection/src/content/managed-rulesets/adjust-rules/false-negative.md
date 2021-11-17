@@ -11,7 +11,7 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 
 To address a false negative:
 
-* If you are a WAF/CDN customer, follow the steps in the [Responding to DoS attacks](https://support.cloudflare.com/hc/en-us/articles/200170196-Responding-to-DDoS-attacks) page, which guides you on enabling the _Under Attack_ mode and creating Rate Limiting and Firewall rules as needed.
+* If you are a WAF/CDN customer, follow the steps in the [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196) page, which guides you on enabling the _Under Attack_ mode and creating Rate Limiting and Firewall rules as needed.
 
 * If you are a Magic Transit customer, [use Magic Firewall rules](https://developers.cloudflare.com/magic-firewall/how-to/add-rules) to help mitigate the attack.
 

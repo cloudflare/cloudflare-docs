@@ -101,7 +101,7 @@ $ cloudflared tunnel login
 Running this command will:
 
 * Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname. 
-* Generate a [cert.pem file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem) in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). Selecting your hostname will automatically generate the `cert.pem` file, which contains account-wide credentials.
+* Generate an account certificate, the [cert.pem file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem), in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory).
 
 ## 3. Create a tunnel and give it a name
 
@@ -111,7 +111,7 @@ $ cloudflared tunnel create <NAME>
 
 Running this command will:
 * Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
-* Generate a [credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). 
+* Generate a [tunnel credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). 
 * Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.

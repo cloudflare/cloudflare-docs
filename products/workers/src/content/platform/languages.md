@@ -7,11 +7,11 @@ pcx-content-type: concept
 
 ## Background
 
-Workers is a polyglot platform. You can likely write code on Workers with a language you already know. We originally built Workers to execute JavaScript and WebAssembly, and over time we’ve added support for new languages. We are excited to support and deepen integrations with popular languages like Python for Workers.
+Workers is a polyglot platform. You can write Workers with a language you likely already know. Cloudflare built Workers to execute JavaScript and WebAssembly and has continuously added support for new languages.
 
 ## JavaScript / TypeScript
 
-JavaScript is fully supported on the Workers platform. We recommend using JavaScript. You can also use TypeScript on the platform and can find relevant [type definitions on GitHub](https://github.com/cloudflare/workers-types).
+The Workers platform fully supports JavaScript. Cloudflare recommends using JavaScript and TypeScript. Find up-to-date [type definitions on GitHub](https://github.com/cloudflare/workers-types) and npm.
 
 <TableWrap>
 
@@ -22,7 +22,7 @@ JavaScript is fully supported on the Workers platform. We recommend using JavaSc
 
 </TableWrap>
 
-### See also
+### Resources on JavaScript / Typescript
 
 - [Quickstarts](/get-started/quickstarts) – More example repos to use as a basis for your projects
 - [TypeScript type definitions](https://github.com/cloudflare/workers-types)
@@ -31,7 +31,7 @@ JavaScript is fully supported on the Workers platform. We recommend using JavaSc
 
 ## Wasm-supported
 
-[WebAssembly](https://webassembly.org/) — abbreviated “Wasm” — is a technology that extends the web platform to support compiled languages like C, C++, Rust, and more. Since these languages can be compiled to a special Wasm binary format and then loaded in a browser, you can use them on the Workers platform.  Learn more by checking out the example projects.
+[WebAssembly](https://webassembly.org/) — abbreviated Wasm — is a binary format that many languages target during their compilation. This allows developers to write Workers using languages like C, C++, Rust, and more.
 
 <TableWrap>
 
@@ -43,14 +43,14 @@ JavaScript is fully supported on the Workers platform. We recommend using JavaSc
 
 </TableWrap>
 
-### See also
+### Resources on WebAssembly
 
 - [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
 - [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
 
 ## Compiled to JavaScript
 
-You can also implement Workers with any language that can compile to JavaScript, including the languages below. Learn more by checking out the example projects.
+You can write Workers with any language that can compile to JavaScript, including the languages below.
 
 <TableWrap>
 
@@ -67,6 +67,4 @@ You can also implement Workers with any language that can compile to JavaScript,
 
 </TableWrap>
 
-### See also
-
-- [Cloudflare Workers announces broad language support](https://blog.cloudflare.com/cloudflare-workers-announces-broad-language-support/)
+Refer to the [Cloudflare Workers announces broad language support](https://blog.cloudflare.com/cloudflare-workers-announces-broad-language-support/) blog post for more information. 

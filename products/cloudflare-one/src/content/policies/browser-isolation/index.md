@@ -5,13 +5,30 @@ pcx-content-type: concept
 
 # Browser Isolation
 
+<Aside type="note">
+
+Browser Isolation is available as an add-on to Teams Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
+
+</Aside>
+
 Cloudflare Browser Isolation complements the Teams Secure Web Gateway and Zero Trust Network Access solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications.
+
+Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
+
+![Diagram of how Browser Isolation integrates with WARP and Gateway](../../static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
 
 Just like Gateway allows you to define policies to filter traffic based on content categories or security threats, with Browser Isolation you can define policies to dynamically isolate websites based on identity, security threats, or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Teams Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
 
 ![Browser isolation policy](../../static/documentation/policies/bi-policy.png)
 
-## Isolate
+## Prerequisites
+
+To start protecting your users through remote browsing, you need:
+
+* A Cloudflare for Teams Standard or Enterprise plan, and a Browser Isolation add-on subscription
+* The [WARP client](/connections/connect-devices/warp) installed on your devices
+
+## Isolate policies
 
 When an HTTP policy applies the Isolate action, the user's web browser is transparently served an HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
@@ -35,7 +52,7 @@ For example, if `example.com` authenticates using Google Workspace, you will als
 
 </Aside>
 
-## Do Not Isolate
+## Do Not Isolate policies
 
 You can choose to disable isolation for certain destinations or categories. The following configuration disables isolation for traffic directed to `example.com`:
 
@@ -85,3 +102,7 @@ This option does not prevent files from being downloaded into the remote browser
 
 * **Behavior**. Prohibits users from exporting files from the remote browser to their local machine.
 * **Use Cases**. Protect users from downloading files from unknown/untrusted sources, and protect sensitive content in self-hosted or SaaS applications from data loss.
+
+## Privacy
+
+Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare Root CA](/connections/connect-devices/warp/install-cloudflare-cert). Traffic logs are retained as per the [Gateway Logs](/analytics/gateway) documentation.

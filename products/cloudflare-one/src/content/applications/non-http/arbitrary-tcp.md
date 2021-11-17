@@ -55,7 +55,7 @@ Run the following command to connect the resource to Cloudflare, replacing the `
 $ cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
 ```
 
-`cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
+`cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is terminated, end users will not be able to connect.
 
 ## **Connect from a client machine**
 
