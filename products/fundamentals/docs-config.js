@@ -6,7 +6,7 @@ module.exports = {
   contentRepoFolder: "products/fundamentals",
   externalLinks: [
     {
-      title: "How does Cloudflare work?",
+      title: "How Cloudflare works",
       url: "https://developers.cloudflare.com/fundamentals/get-started/how-cloudflare-works"
     },
     {
