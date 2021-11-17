@@ -18,7 +18,8 @@ Previously, you could only add dynamic functionality to your Pages site by manua
 To get started, create a `/functions` directory at the root of your project. Writing your functions files in this directory will automatically generate a Worker with custom functionality at the predesignated routes.
  
 ## Functions routing
-Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. We declare a `PagesFunction` type in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. 
+
+Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. A `PagesFunction` type is declared in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions. 
  
 For example, assume this directory structure:
  
