@@ -13,6 +13,12 @@ When an image is fetched from your origin, our systems automatically optimize it
 
 ## Polish compression options
 
+<Aside type="warning" header="Warning">
+
+Polish will not be applied to origin responses that contain a `Vary` header. The only accepted `Vary` header is `Vary: Accept-Encoding`.
+
+</Aside>
+
 ### Lossless 
 
 Lossless attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, Lossless compression reduces file size by 21 percent.
@@ -36,11 +42,3 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 ```txt
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
-
-<Aside type="warning">
-
-Polish will not work if the origin responds with `status=vary_header_present` and will not create WebP versions of your images. If your origin server returns the optional `vary` header, the only value supported by Polish is `Vary: Accept-Encoding`.
-
-To test response headers from origin servers, enable [Development mode](https://developers.cloudflare.com/cache/reference/development-mode).
-
-</Aside>
