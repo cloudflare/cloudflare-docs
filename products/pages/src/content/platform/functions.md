@@ -287,7 +287,7 @@ Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **F
 
 ### Environment variable
 
-An environment variable is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time. 
+An [environment variable](https://developers.cloudflare.com/workers/platform/environment-variables) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time. 
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
