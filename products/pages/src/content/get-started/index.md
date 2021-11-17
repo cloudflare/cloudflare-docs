@@ -23,7 +23,7 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**. You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/platform/preview-deployments). 
 
-<Aside type=”note”>
+<Aside type="note">
 
 Signing in with GitLab will grant Pages access to all repositories on your account. Additionally, if you are a part of a multi-user Cloudflare account, and you sign in with GitLab, other members will also have the ability to deploy your repositories to Pages. 
 
@@ -39,7 +39,7 @@ You can select a GitHub project from your personal account or an organization yo
 
 If using GitLab, you can select a project from your personal account or from a GitLab group you belong to. This allows you to choose a GitLab repository to deploy using Pages. Both private and public repositories are supported. 
 
-<Aside type=”note”>
+<Aside type="note">
 
 If you do not have a project repository to choose from yet, [refer to our extensive How to section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
