@@ -62,7 +62,8 @@ When a filename includes a placeholder, the `name` must be alphanumeric and cann
 
 <Aside type=”note” header=”Route Specificity”> 
 
-More specific routes (i.e. those with fewer wildcards) take precedence over less specific routes.
+More specific routes (that is, those with fewer wildcards) take precedence over less specific routes.
+
 </Aside>
  
 ## Writing your first function
