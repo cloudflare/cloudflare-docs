@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 In this guide, you will get started with Cloudflare Pages, and deploy your first website to the Pages platform.
 
-<Aside>
+<Aside type="note">
 
 You will be signing up for a Cloudflare account. You may also want to create a custom domain, but this is not required.
 
@@ -41,7 +41,7 @@ If using GitLab, you can select a project from your personal account or from a G
 
 <Aside type="note">
 
-If you do not have a project repository to choose from yet, [refer to our extensive How to section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
+If you do not have a project repository to choose from yet, refer to our extensive [How to section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
 </Aside>
 
@@ -93,7 +93,7 @@ While every Cloudflare Pages site receives a custom subdomain during deployment,
 
 ![Domains](./images/domains.png)
 
- Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**. Depending on the domain, you will need to configure nameservers or add a custom CNAME record to point the domain to your Cloudflare Pages site.
+Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**. Depending on the domain, you will need to configure nameservers or add a custom CNAME record to point the domain to your Cloudflare Pages site.
 
 #### Configure nameservers
 
@@ -109,7 +109,7 @@ If you do not want to point your nameservers to Cloudflare, you can still use a 
 
 <Aside type="note">
 
-To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/get-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [522 error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/get-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
 </Aside>
 
