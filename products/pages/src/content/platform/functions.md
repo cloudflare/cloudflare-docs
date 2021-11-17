@@ -11,7 +11,7 @@ With Pages, you can now build full-stack applications by executing code on the C
  
 Cloudflare Workers provides a serverless [execution environment](https://www.cloudflare.com/en-gb/learning/serverless/what-is-serverless/) that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure. 
  
-Previously, you could only add dynamic functionality to your Pages site by manually deploying a Worker using Wrangler, which meant that your application is written across both Pages and Workers. Functions allow you to leverage the Workers platform directly from within a Pages project by utilizing a project’s filesystem convention. This enables you to deploy your entire site – both its static and dynamic content – when you `git push`. 
+Previously, you could only add dynamic functionality to your Pages site by manually deploying a Worker using Wrangler, which meant that your application is written across both Pages and Workers. Functions allow you to leverage the Workers platform directly from within a Pages project by utilizing a project's filesystem convention. This enables you to deploy your entire site – both its static and dynamic content – when you `git push`. 
  
 ## Setup
  
@@ -59,13 +59,13 @@ When naming your files:
 * `[name]` is a placeholder for a single path segment
 * `[[name]]` matches any depth of route below this point
 
-When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
-
 <Aside type="note" header="Route Specificity"> 
 
 More specific routes (that is, those with fewer wildcards) take precedence over less specific routes.
 
 </Aside>
+
+When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
  
 ## Writing your first function
  
@@ -87,7 +87,7 @@ export async function onRequest(context) {
 }
 ```
  
-When migrating from a [Module Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker), this signature combines the traditional `fetch` handler’s arguments into a single object along with additional, Pages-specific keys.
+When migrating from a [Module Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
  
 In the previous example, an `onRequest` function was exported. This is a generic name because it generically handles all HTTP requests. However, to react to specific HTTP request methods, you may use the method name as a suffix to the exported function. For example, a handler that should only receive `GET` requests should be named `onRequestGet`. The following other handlers are supported:
  
@@ -106,8 +106,8 @@ filename: functions/hello-world.js
 ---
 // Reacts to POST /hello-world
 export async function onRequestPost(request) {
- // ...
- return new Response(`Hello world`);
+  // ...
+  return new Response(`Hello world`);
 }
 ```
  
@@ -117,8 +117,9 @@ You can define multiple HTTP handlers in a single file by exporting the multiple
  
 ```js
 export async function onRequestPost(context) {
- // ...
+  // ...
 }
+
 export const onRequestPut = onRequestPost;
 ```
  
@@ -129,16 +130,17 @@ Additionally, an exported handler may be an array of function handlers. This all
 import { extraLogging } from 'middlewares.ts'
  
 export const onRequest = [
- extraLogging,
- async ({ request }) => {
-   // ...
- }
+  extraLogging,
+ 
+  async ({ request }) => {
+    // ...
+  }
 ]
 ```
  
 ## Adding middleware
  
-Middleware are reusable chunks of logic that can be before and/or after route handlers. These are typically utility Functions that should be applied for chunks of an application’s routes. For example, error handling, user authentication, and logging are typical candidates for middleware within an application.
+Middleware are reusable chunks of logic that can be before and/or after route handlers. These are typically utility Functions that should be applied for chunks of an application's routes. For example, error handling, user authentication, and logging are typical candidates for middleware within an application.
  
 ### Exporting middleware 
  
@@ -151,26 +153,26 @@ In your `_middleware.{js|ts}` files, you can define a middleware function that h
 filename: functions/_middleware.js
 ---
 const errorHandler = async ({ next }) => {
- try {
-   return await next()
- } catch (err) {
-   return new Response(`${err.message}\n${err.stack}`, { status: 500 })
- }
+  try {
+    return await next()
+  } catch (err) {
+    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+  }
 }
  
 const hello = async ({ next }) => {
- const response = await next()
- response.headers.set('X-Hello', 'Hello from functions Middleware!')
- return response
+  const response = await next()
+  response.headers.set('X-Hello', 'Hello from functions Middleware!')
+  return response
 }
  
 export const onRequest = [
- errorHandler,
- hello
+  errorHandler,
+  hello
 ]
 ```
  
-In the function above, you can see that the `errorHandler` and `hello` Functions are exported to all requests so that if this middleware is on the base of the ‘/functions’ directory it will run on all Functions defined in that directory. And if the middleware is defined in a subdirectory such as `/functions/todos/_middleware.ts` it will only run on all requests in that directory.  
+In the function above, you can see that the `errorHandler` and `hello` Functions are exported to all requests so that if this middleware is on the base of the ‘/functions' directory it will run on all Functions defined in that directory. And if the middleware is defined in a subdirectory such as `/functions/todos/_middleware.ts` it will only run on all requests in that directory.  
  
 ### Method-specific middleware
  
@@ -180,16 +182,16 @@ Much like Function handlers, you may export a method-specific handler instead of
 ---
 filename: functions/hello/_middleware.js
 ---
-import { errorHandler } from ‘../shared’;
-import { hello } from ‘../custom’;
+import { errorHandler } from ‘../shared';
+import { hello } from ‘../custom';
  
 export const onRequest = [
- errorHandler
+  errorHandler
 ]
  
 export const onRequestGet = [
- errorHandler,
- hello
+  errorHandler,
+  hello
 ]
 ```
  
@@ -223,7 +225,7 @@ This directory structure has two types of middleware: one that acts on every fil
  
 ### Middleware chaining
  
-Within Pages, middleware functions have access to a `context.next` function which, when invoked, will await the next function’s execution before the current middleware resumes. The ability to wait for other middleware and/or the final route handler(s) to finish is what allows for use cases like error handling, for example.
+Within Pages, middleware functions have access to a `context.next` function which, when invoked, will await the next function's execution before the current middleware resumes. The ability to wait for other middleware and/or the final route handler(s) to finish is what allows for use cases like error handling, for example.
  
 
 ```js
@@ -239,15 +241,14 @@ async function errorHandler(context) {
  
 // Attach `errorHandler` to all HTTP requests
 export const onRequest = errorHandler;
-
 ```
  
 
 ### Middleware data
  
-Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all functions throughout a request’s execution. 
+Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all functions throughout a request's execution. 
  
-More often than not, `context.data` only makes sense from a middleware’s perspective, but it’s available to all functions regardless.
+More often than not, `context.data` only makes sense from a middleware's perspective, but it's available to all functions regardless.
  
 ```js
 ---
@@ -269,23 +270,19 @@ export async function onRequest(context) {
 }
 ```
  
- 
 ## Adding bindings 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. 
 
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. 
 
 ### KV namespace
 
-Workers KV is Cloudflare’s globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from within the Workers dashboard. You can find [instructions to do this here](https://developers.cloudflare.com/workers/platform/environment-variables#adding-kv-namespace-bindings-via-the-dashboard). Once your binding is created in the Workers dashboard, navigate to your project’s Settings > Functions within Pages, and select the namespace from the dropdown. Then set a name for your binding. 
+Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from within the Workers dashboard. You can find [instructions to do this here](https://developers.cloudflare.com/workers/platform/environment-variables#adding-kv-namespace-bindings-via-the-dashboard). Once your binding is created in the Workers dashboard, navigate to your project's Settings > Functions within Pages, and select the namespace from the dropdown. Then set a name for your binding. 
 
 ![KV-Binding](KV-functions.png)
 
-
-
-
 ### Durable Object namespace
 
-Durable Objects are Cloudflare’s strongly consistent coordination primitive that makes connecting WebSockets, handling state, and building entire applications a breeze. As with Workers KV, you first have to [create the Durable Object](https://developers.cloudflare.com/workers/learning/using-durable-objects#uploading-a-durable-object-worker) and then you can configure it as a binding to your Pages project. Navigate to the Pages interface in **Settings** > **Functions** to select the namespace and set a name. 
+Durable Objects are Cloudflare's strongly consistent coordination primitive that makes connecting WebSockets, handling state, and building entire applications a breeze. As with Workers KV, you first have to [create the Durable Object](https://developers.cloudflare.com/workers/learning/using-durable-objects#uploading-a-durable-object-worker) and then you can configure it as a binding to your Pages project. Navigate to the Pages interface in **Settings** > **Functions** to select the namespace and set a name. 
 
 ![DO-Binding](DO-functions.png)
 
@@ -297,14 +294,14 @@ An environment variable is an injected value that can be accessed by your Functi
  
 ## Advanced mode
 
-In some cases, the built-in routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages’ file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
+In some cases, the built-in routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project. 
 
 When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker).
 
 If you have never used module syntax, you can learn more about [JavaScript modules](https://blog.cloudflare.com/workers-javascript-modules/). 
 Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
-Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project’s static assets. 
+Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project's static assets. 
 
 ```js
 ---
@@ -323,37 +320,38 @@ export default {
   }
 }
 ```
+
 <Aside type="warning">
 
-Your custom Module Worker is required to forward requests to static assets. Failure to do so will result in broken and/or unwanted behavior because your website’s contents will not be served if you do not serve it. 
+Your custom Module Worker is required to forward requests to static assets. Failure to do so will result in broken and/or unwanted behavior because your website's contents will not be served if you do not serve it. 
 
 </Aside>
 
 Then after placing your `_worker.js` file in your output directory, simply deploy your project normally through your git integration. 
 
 ## Migrating from Workers 
+
 When migrating a Worker into the Pages platform, the simplest path is to target the [advanced mode](#advanced-mode) of Functions. To do this you must first ensure your Worker is in the [Module Worker format](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker). Then you must ensure to call `env.ASSETS` when you want to serve static assets. Failure to do so will result in broken and/or unwanted behavior. 
 
 ## Develop and preview locally
 
 You can run your entire application locally with [wrangler](https://github.com/cloudflare/wrangler2), which supports secrets, environment variables, KV and Durable Objects. Point wrangler at a directory of static assets, or seamlessly connect to your existing tools:
 
-```
+```sh
 # Install wrangler v2 beta
-npm install wrangler@beta
+$ npm install wrangler@beta
 
 # Show help message
-npx wrangler pages dev --help
+$ npx wrangler pages dev --help
 
 # Serve a folder of static assets
-npx wrangler pages dev ./dist
+$ npx wrangler pages dev ./dist
 
 # Or automatically proxy your existing tools
-npx wrangler pages dev -- npx react-scripts start
+$ npx wrangler pages dev -- npx react-scripts start
 ```
 
 Please note that developing locally does not deploy your changes. It is only a means to preview and test. To deploy your changes to your Pages site, you will need to `git commit` and `git push` as normal.
-
 
 ## Pricing and limits 
 
@@ -362,9 +360,7 @@ While still in open beta, there is no additional cost to deploy Functions within
 If you reach this limit or need it increased in order to migrate your existing Workers applications into a Pages project, [contact us here](https://forms.gle/fK65trEL67cTvGQG6) to request an increase. You may track this limit in the Project Overview section of your Pages dashboard.
 
 In the coming months, you can expect our billing to reflect that of the Workers Bundled plan, as these are just Workers under the hood. 
-
- 
  
 ## Demo
-To get started with your first Pages project with Functions, check out our [demo on how to build an image sharing application](http://blog.cloudflare.com/building-full-stack-with-pages). In this demo, you will build a JSON API with Functions (storing data on KV and Durable Objects), integrate with [Cloudflare Images](https://developers.cloudflare.com/images/) and [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/), and use React for our front end.
 
+To get started with your first Pages project with Functions, check out our [demo on how to build an image sharing application](http://blog.cloudflare.com/building-full-stack-with-pages). In this demo, you will build a JSON API with Functions (storing data on KV and Durable Objects), integrate with [Cloudflare Images](https://developers.cloudflare.com/images/) and [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/), and use React for our front end.
