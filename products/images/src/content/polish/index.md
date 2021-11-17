@@ -15,7 +15,7 @@ When an image is fetched from your origin, our systems automatically optimize it
 
 <Aside type="warning" header="Warning">
 
-Polish will not be applied to origin responses that contain a `Vary` header. The only accepted `Vary` header is `Vary: Accept-Encoding`.
+Polish may not be applied to origin responses that contain a `Vary` header. The only accepted `Vary` header is `Vary: Accept-Encoding`.
 
 </Aside>
 
