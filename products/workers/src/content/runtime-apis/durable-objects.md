@@ -185,7 +185,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     </Aside>
 
-- <Code>put(entries<ParamType>Object</ParamType>)</Code> <Type>Promise</Type>
+- <Code>put(entries<ParamType>Object</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
 
   - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a max size of 2048 bytes and each value is limited to 32 KiB (32768 bytes).
 
@@ -197,7 +197,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
     __Supported options:__ Same as `put()`, above.
 
-- <Code>delete(keys<ParamType>Array&lt;string></ParamType>)</Code> <Type>Promise&lt;number></Type>
+- <Code>delete(keys<ParamType>Array&lt;string></ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise&lt;number></Type>
 
   - Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
