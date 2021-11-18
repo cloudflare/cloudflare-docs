@@ -90,7 +90,7 @@ Cloudflare Images supports common web-compatible file formats as input files: JP
 
 ### Can Cloudflare Images convert my images to AVIF or WebP?
 
-Yes. Based on the Accept HTTP request header Cloudflare Images will be served in AVIF or WebP format. The transformation of an image to AVIF is compute-intensive but leads to a significant benefit in file-size. We are always weighing the cost and benefits in the decision which format to serve.
+Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served in AVIF or WebP format. The transformation of an image to AVIF is compute-intensive but leads to a significant benefit in file-size. We are always weighing cost and benefit when deciding on which format to serve.
 
 
 ### Can Cloudflare Images be served from custom domain?
