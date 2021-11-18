@@ -88,9 +88,10 @@ Yes, the uploaded image file must be less than or equal to 10 MB.
 
 Cloudflare Images supports common web-compatible file formats as input files: JPEG, PNG, GIF (including animations), and WebP.
 
-### Can Cloudflare Images convert my images to AVIF?
+### Can Cloudflare Images convert my images to AVIF or WebP?
 
-Soon! We will be introducing AVIF support in the near future.
+Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served in AVIF or WebP format. The transformation of an image to AVIF is compute-intensive but leads to a significant benefit in file-size. We are always weighing cost and benefit when deciding on which format to serve.
+
 
 ### Can Cloudflare Images be served from custom domain?
 
