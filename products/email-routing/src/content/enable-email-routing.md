@@ -13,11 +13,11 @@ pcx-content-type: how-to
 1. In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 1. Click **Save**.
 
-Cloudflare will send a verification email to the address provided in the Destination address field. You must click **Verify email address** in the verification email to activate Email Routing.
+Cloudflare will send a verification email to the address provided in the **Destination address** field. You must click **Verify email address** in the verification email to activate Email Routing.
 
 ## Confirm DNS records
 
-After creating your email alias and verifying your destination address, Cloudflare needs to add the relevant MX and TXT records to DNS records for Email Routing to work. This step is automatic and is only needed the first time you configure Email Routing. It is meant to ensure you have the proper records configured in your zone.
+After creating your custom email and verifying your destination address, Cloudflare needs to add the relevant MX and TXT records to DNS records for Email Routing to work. This step is automatic and is only needed the first time you configure Email Routing. It is meant to ensure you have the proper records configured in your zone.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 1. Go to **Email**.

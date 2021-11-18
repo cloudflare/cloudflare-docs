@@ -18,8 +18,8 @@ In this section you can create as many custom email addresses as you want for yo
 
 When creating a rule, you must specify an **Action**:
 
-* **Send to**: Emails will be routed to your Destination address. This is the default action.
-* **Drop**: Accepts emails but deletes them without routing to the specified Destination address. This can be useful if you want to make an email address appear valid for privacy reasons.
+* *Send to*: Emails will be routed to your **Destination address**. This is the default action.
+* *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 <Aside type="note">
 
@@ -29,12 +29,12 @@ All rules are automatically disabled until the destination address is validated 
 
 ## Catch-all address
 
-This feature enables Cloudflare to “catch” every variation of email addresses to make them valid for the specified domain. For example, if you created a rule for `john@yourdomain.com` and a sender accidentally types `jonh@yourdomain.com`, the email will still be correctly handled if you have Catch-all addresses enabled.
+This feature enables Cloudflare to “catch” every variation of email addresses to make them valid for the specified domain. For example, if you created a rule for `john@yourdomain.com` and a sender accidentally types `jonh@yourdomain.com`, the email will still be correctly handled if you have **Catch-all** addresses enabled.
 
 You must also specify an **Action** for Catch-all:
 
-* **Send to**: Emails will be routed to your Destination address. This is the default action.
-* **Drop**: Accepts emails but deletes them without routing to the specified Destination address. This can be useful if you want to make an email address appear valid for privacy reasons.
+* *Send to*: Emails will be routed to your **Destination address**. This is the default action.
+* *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 ## Email DNS records
 
@@ -42,12 +42,12 @@ This section will display all the DNS records needed for Email Routing to work. 
 
 ## Verified emails
 
-In this section there is a list of Destination addresses that have already been verified. You can resend verification emails or delete Destination addresses.
+In this section there is a list of destination addresses that have already been verified. You can resend verification emails or delete destination addresses.
 
-To prevent spam, Email Routing rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to Destination addresses specified in Custom addresses, where you need to click **Verify email address**.
+To prevent spam, Email Routing rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to destination addresses specified in Custom addresses, where you need to click **Verify email address**.
 
 <Aside type="note">
 
-Deleting a Destination address automatically disables all routing rules that use that email address as destination. 
+Deleting a destination address automatically disables all routing rules that use that email address as destination. 
 
 </Aside>

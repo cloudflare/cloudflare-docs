@@ -1,7 +1,7 @@
 module.exports = {
   product: "Email Routing",
   pathPrefix: "/email-routing",
-  productLogoPathD: require('./src/content/icons/email').pathD,
+  productLogoPathD: require('./src/content/icons/email-routing').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/email-routing",
   externalLinks: [
@@ -11,9 +11,9 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "developers-cloudflare",
-    apiKey: "b23088ab4d346409f9d3ece6606344c3",
-    algoliaOptions: { 'facetFilters': '["project:email-routing"]'}
+    indexName: "",
+    apiKey: "",
+    algoliaOptions: { facetFilters: '' },
   },
   siteMetadata: {
     title: "Cloudflare Email Routing docs",
