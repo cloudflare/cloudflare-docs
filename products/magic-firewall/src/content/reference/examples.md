@@ -38,7 +38,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/ruleset
 
 ## Block a country
 
-The example below allows all packets with a source or destion IP coming from Brazil by using its 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format. 
+The example below blocks all packets with a source or destination IP address coming from Brazil by using its 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format. 
 
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets \
