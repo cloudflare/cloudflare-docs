@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Email Routing options
 
-Email Routing is divided into four main sections:
+Email Routing main page is divided into four sections:
 
 * Custom address rules
 * Catch-all
@@ -44,7 +44,7 @@ All DNS records needed for Email Routing to work are shown here. You can check w
 
 In this section there is a list of Destination addresses that have already been verified. This is also where you can resend a verification email, or delete Destination addresses.
 
-Email Routing rules do not become active until after the destination address has been verified. Cloudflare sends an email to every Destination address you specify in Custom addresses. You have to click **Verify email address** in those emails before a Destination address can be used.
+To prevent spam, Email Routing rules do not become active until after the destination address has been verified. Cloudflare sends a verification email to Destination addresses specified in Custom addresses, where you need to click **Verify email address**.
 
 <Aside type="note">
 

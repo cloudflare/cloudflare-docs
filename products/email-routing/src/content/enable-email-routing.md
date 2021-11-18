@@ -1,4 +1,5 @@
 ---
+title: Getting Started
 order: 1
 pcx-content-type: how-to
 ---
@@ -7,11 +8,11 @@ pcx-content-type: how-to
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. Go to **Email**.
 1. If this is your first time opening the Email app, you will be presented with an explanation of what Email Routing is. Click **Configure Email Routing** to start.
-1. In **Custom addresses**, click **Create address**. Enter the email alias you want to use in the **Custom address** field (for example, `my-new-email`).
+1. In **Custom addresses**, click **Create address**. Enter the email address you want to use in the **Custom address** field (for example, `my-new-email`).
 1. In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 1. Click **Save**.
 
-Cloudflare will send you a verification email to the address provided in the Destination address field. You must click **Verify email address** in the verification email address to activate Email Routing.
+Cloudflare will send you a verification email to the address provided in the Destination address field. You must click **Verify email address** in the verification email to activate Email Routing.
 
 ## Confirm DNS records
 
