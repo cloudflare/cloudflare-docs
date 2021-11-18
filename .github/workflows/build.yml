@@ -21,7 +21,7 @@ jobs:
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
-      email-routing: ${{ steps.filter.outputs.events }}
+      email-routing: ${{ steps.filter.outputs.email-routing }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
@@ -86,7 +86,7 @@ jobs:
             docs-engine:
               - 'products/docs-engine/**'
             email-routing:
-              - 'products/events/**'
+              - 'products/email-routing/**'
             events:
               - 'products/events/**'
             firewall:

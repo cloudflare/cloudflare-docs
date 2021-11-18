@@ -1,4 +1,4 @@
-# Cloudflare Email Routing Rules docs
+# Cloudflare Email Routing docs
  
 [View docs →](https://developers.cloudflare.com/email-routing)
  
