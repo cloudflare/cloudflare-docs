@@ -365,12 +365,6 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 [Wrangler tail](/cli-wrangler/commands#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
 
-While the Workers dashboard does support editing Workers that use modules syntax:
-* If you edit a script in the editor that is bound to Durable Objects and save it, the Durable Objects bindings will be lost.
-* Previewing scripts that bind Durable Objects does not work in the editor.
-
-These are both bugs that will be fixed soon.
-
 ### Object Location
 
 Not all Cloudflare locations host Durable Objects, so objects may not be created in the same point-of-presence where they are first requested.
