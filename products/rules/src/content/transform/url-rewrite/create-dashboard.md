@@ -12,27 +12,27 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 1. Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](../../static/transform/overview.png)
+    ![Transform Rules tab](../../images/transform/overview.png)
 
 1. Click **Create transform rule** > **Rewrite URL**.
 
-    ![Create Transform Rule page](../../static/transform/create-url-rewrite-rule.png)
+    ![Create Transform Rule page](../../images/transform/create-url-rewrite-rule.png)
 
 1. In the page that displays, enter a descriptive name for the rule in **Rule name**. The rule name in this example is _Welcome GB Users_.
 
 1. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
-    ![Selecting a field in the Expression Builder](../../static/transform/expression-field.png)
+    ![Selecting a field in the Expression Builder](../../images/transform/expression-field.png)
 
 1. Select a comparison operator in the **Operator** drop-down list.
 
-    ![Selecting an operator in the Expression Builder](../../static/transform/expression-operator.png)
+    ![Selecting an operator in the Expression Builder](../../images/transform/expression-operator.png)
 
     The **Expression Editor** area displays a text-only version of your expression. For more information on the Expression Editor, refer to [Edit rule expressions](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor) in the Firewall documentation.
 
 1. Specify the value to match. If the value is an enumeration, the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
-    ![Entering a field value in the Expression Builder](../../static/transform/expression-value.png)
+    ![Entering a field value in the Expression Builder](../../images/transform/expression-value.png)
 
 1. Add any other filters to the rule expression. The example defines an additional filter for the _URI Path_, which must be equal to `/welcome.html`.
 
@@ -40,7 +40,7 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
     In this example, the _Static_ action tells Cloudflare to rewrite the original path to the provided path, `/welcome-gb.html`.
 
-    ![Static path rewrite for GB users](../../static/transform/rewrite-path-static-gb.png)
+    ![Static path rewrite for GB users](../../images/transform/rewrite-path-static-gb.png)
 
     If you do not want to change the value of a component of the original request (for example, the URL query string), choose _Preserve_ as the action for that component.
 
@@ -48,6 +48,6 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 After you choose an option, you return to the **Transform Rules** dashboard interface, which displays your new rule:
 
-![Rules List displaying the new GB rule](../../static/transform/created-gb-rule.png)
+![Rules List displaying the new GB rule](../../images/transform/created-gb-rule.png)
 
 If you choose to deploy your URL Rewrite Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.

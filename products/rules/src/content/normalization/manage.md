@@ -8,7 +8,7 @@ order: 31
 
 Use the **Rules** app in the Cloudflare dashboard to control [URL Normalization](/normalization) settings.
 
-![Configure Normalization](../static/normalization/url-normalization-settings.png)
+![Configure Normalization](../images/normalization/url-normalization-settings.png)
 
 Do the following:
 
