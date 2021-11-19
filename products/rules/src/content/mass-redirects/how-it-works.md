@@ -13,6 +13,8 @@ If there is a match for a URL redirect according to the URL matching algorithm, 
 
 The URL matching algorithm is different depending on the value of the _Subpath matching_ option of a URL redirect.
 
+### Exact path matching
+
 The matching algorithm for URL Redirects with _Subpath matching_ disabled is the following:
 
 1. For each Mass Redirect Rule, check if the request URL matches the source URL of any URL Redirect in the Mass Redirect List associated with the rule.
@@ -34,9 +36,11 @@ The first match wins over other possible matches. The precedence will be determi
 
 Regarding criterion 2 (redirects that include a subdomain), if there are two URL Redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request addressed at `mumble.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
 
+### Subpath matching
+
 The matching algorithm for URL Redirects that have _Subpath matching_ enabled is the following:
 
-1. Use the previous algorithm to find an exact match.
+1. Use the previous algorithm (exact path matching) to find an exact match.
 
 1. If there is no exact match, use the same algorithm by try all subpaths, up to a limit of 32, considering only the URL redirects with _Subpath matching_ enabled.
 

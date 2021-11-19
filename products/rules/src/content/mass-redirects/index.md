@@ -7,7 +7,7 @@ order: 4
 
 Mass Redirects allow you to define a large number of redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code.
 
-These redirects are essentially static — they do not support any string replacement operations. However, you can configure the exact behavior of each URL Redirect by setting its options.
+Mass Redirects are essentially static — they do not support any string replacement operations. However, you can configure URL Redirect options that affect their URL matching behavior and their runtime behavior.
 
 ## Availability
 

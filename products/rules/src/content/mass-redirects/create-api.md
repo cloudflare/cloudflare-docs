@@ -111,16 +111,15 @@ If the operation already completed successfully, the response will be similar to
 }
 ```
 
-
-3. Create a Mass Redirect Rule via API
+## 3. Create a Mass Redirect Rule via API
 
 Since Mass Redirect Lists are just containers of URL redirects, you have to enable the URL redirects in the list by creating a Mass Redirect Rule.
 
 Add Mass Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
 
-A Mass Redirect Rule must have:
-* `action` set to `redirect`
-* An `action_parameters` object with additional configuration settings — refer to [JSON objects: Mass Redirect Rule](#) for details.
+In a Mass Redirect Rule you must:
+* Set `action` to `redirect`
+* Define an `action_parameters` object with additional configuration settings — refer to [JSON objects: Mass Redirect Rule](#) for details.
 
 The following request creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule:
 

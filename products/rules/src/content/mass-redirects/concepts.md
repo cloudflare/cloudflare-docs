@@ -1,9 +1,10 @@
 ---
+title: Concepts
 order: 2
 pcx-content-type: concept
 ---
 
-# Concepts
+# Mass Redirect concepts
 
 Mass Redirects involve the following elements:
 
