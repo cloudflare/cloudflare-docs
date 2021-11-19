@@ -23,6 +23,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Cloudflare One          | cloudflare-one       | [Test](https://cloudflare-one.cloudflare-docs.workers.dev/cloudflare-one)             | [Prod](https://developers.cloudflare.com/cloudflare-one)       |
 | Distributed Web Gateway | distributed-web      | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           | [Prod](https://developers.cloudflare.com/distributed-web)      |
 | Docs Engine             | docs-engine          | [Test](https://docs-engine.cloudflare-docs.workers.dev/docs-engine)                   | [Prod](https://developers.cloudflare.com/docs-engine)          |
+| Email Routing           | email-routing        | [Test](https://email-routing.cloudflare-docs.workers.dev/email-routing)               | [Prod](https://developers.cloudflare.com/email-routing)        |
 | Events                  | events               | [Test](https://events.cloudflare-docs.workers.dev/events)                             | [Prod](https://developers.cloudflare.com/events)               |
 | Firewall                | firewall             | [Test](https://firewall.cloudflare-docs.workers.dev/firewall)                         | [Prod](https://developers.cloudflare.com/firewall)             |
 | Fundamentals            | fundamentals         | [Test](https://fundamentals.cloudflare-docs.workers.dev/fundamentals)                 | [Prod](https://developers.cloudflare.com/fundamentals)         |
