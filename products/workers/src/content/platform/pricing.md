@@ -31,7 +31,9 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 #### Default usage model
 
-The default Usage Model is used when new Workers are created, and no Usage Model is provided via configuration during creation. When an account is first upgraded to the Paid plan, the default Usage Model is set to Unbound. The default can be changed at any time by using the Default Usage Model setting on the Workers overview page. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
+When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
+
+You may change the Usage Model for individual Workers without affecting your account-wide default. This may be done through the [`usage_model` key](https://developers.cloudflare.com/workers/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
