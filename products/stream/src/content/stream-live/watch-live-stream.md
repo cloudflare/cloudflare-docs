@@ -133,7 +133,7 @@ Or if the input ID does not have an active live stream:
 
 ### Live input level viewing options
 
-When viewing a livestream via the live input id, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings take are independent of the video-level settings.
+When viewing a livestream via the live input id, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
 
 ## Replaying recordings
 
