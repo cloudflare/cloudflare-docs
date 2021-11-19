@@ -1,9 +1,9 @@
 ---
-order: 2
+order: 4
 pcx-content-type: reference
 ---
 
-# JSON objects
+# API JSON objects
 
 ## Mass Redirect Rule
 
@@ -29,8 +29,8 @@ The JSON object properties must comply with the following:
 * `action` must be `redirect`
 * `action_parameters` must contain a `from_list` object with additional settings.
 * `from_list` must contain the following properties:
-* `name`: The name of an existing Mass Redirect List to associate with the current Mass Redirect Rule.
-* `expression` must reference the request field used in the `key` property. Refer to [About: Mass Redirect Rules](#) for more information.
+    * `name`: The name of an existing Mass Redirect List to associate with the current Mass Redirect Rule.
+    * `expression` must reference the request field used in the `key` property. Refer to [About: Mass Redirect Rules](#) for more information.
 
 ## URL Redirect List item
 
