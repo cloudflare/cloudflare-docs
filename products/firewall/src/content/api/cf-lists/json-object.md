@@ -162,7 +162,7 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>redirect</code><br /><Type>Object</Type></td>
-            <td>An object that contains the definition of a URL redirect. Refer to the <a href="/rules/mass-redirects/reference/url-redirects">URL redirects property reference</a> for details.</td>
+            <td>An object that contains the definition of a URL redirect. Refer to the <a href="https://developers.cloudflare.com/rules/mass-redirects/reference/parameters">URL Redirect parameters</a> for details.</td>
             <td><p>Applies only to Mass Redirect Lists.</p></td>
         </tr>
         <tr>
