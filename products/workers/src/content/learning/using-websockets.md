@@ -34,13 +34,13 @@ WebSocket servers in Cloudflare Workers allow you to receive messages from a cli
 A client can make a WebSocket request in the browser by instantiating a new instance of `WebSocket`, passing in the URL for your Workers function:
 
 ```js
-// In client-side JavaScript, connect to your Workers function using WebSockets
+// In client-side JavaScript, connect to your Workers function using WebSockets:
 const websocket = new WebSocket("wss://example-websocket.signalnerve.workers.dev")
 ```
 
 <Aside type="note">
 
-For more details about creating and working with WebSockets in the client, refer to <a href="#writing-a-websocket-client">"Writing a WebSocket client"</a>.
+For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#writing-a-websocket-client).
 
 </Aside>
 
