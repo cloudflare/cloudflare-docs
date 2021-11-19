@@ -16,7 +16,7 @@ Minimizing buffering is especially important for processing or transforming resp
 
 <Aside type="note">
 
-By default, the Cloudflare Workers service streams. Only use these APIs for modifying the response body while maintaining streaming behavior. If your Workers script only passes subrequest responses back to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
+By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). Only use these APIs for modifying the response body while maintaining streaming behavior. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
 
 </Aside>
 
