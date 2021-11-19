@@ -1,5 +1,4 @@
 ---
-title: Get started
 order: 1
 pcx-content-type: tutorial
 ---
@@ -7,7 +6,7 @@ pcx-content-type: tutorial
 import QueueAll from "../_partials/_queue-all.md"
 import QueueSome from "../_partials/_queue-some.md"
 
-# Get started with Cloudflare Waiting Room
+# Get started
 
 ---
 

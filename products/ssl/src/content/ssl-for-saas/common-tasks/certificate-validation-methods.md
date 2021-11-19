@@ -1,4 +1,5 @@
 ---
+title: Validate certificates
 order: 3
 pcx-content-type: configuration
 ---
@@ -11,7 +12,7 @@ import TXTValidationDefinition from "../../_partials/_txt-validation-definition.
 import EmailValidationProcess from "../../_partials/_email-validation-process.md"
 import ValidatePatch from "../../_partials/_ssl-for-saas-validate-patch.md"
 
-# Validate certificates
+# Validate certificates — SSL for SaaS
 
 <DCVDefinition/>
 

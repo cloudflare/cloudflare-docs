@@ -1,4 +1,5 @@
 ---
+title: Domain Control Validation (DCV)
 order: 3
 pcx-content-type: how-to
 ---
@@ -10,7 +11,7 @@ import EmailValidationDefinition from "../_partials/_email-validation-definition
 import TXTValidationDefinition from "../_partials/_txt-validation-definition.md"
 import EmailValidationProcess from "../_partials/_email-validation-process.md"
 
-# Domain Control Validation (DCV)
+# Domain Control Validation (DCV) — SSL/TLS
 
 <DCVDefinition/>
 
