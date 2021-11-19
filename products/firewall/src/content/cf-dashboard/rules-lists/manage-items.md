@@ -3,7 +3,7 @@ pcx-content-type: how-to
 order: 360
 ---
 
-# Manage list items (IP addresses)
+# Manage IP List items
 
 ## View items in an IP List
 
@@ -46,7 +46,7 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1. [Access the Lists interface](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/) available at **Configurations > Lists**.
+1. [Access the Lists interface](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
 1. Click the **Edit** button associated with the list that you want to edit.
 

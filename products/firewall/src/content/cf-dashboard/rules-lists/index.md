@@ -5,7 +5,7 @@ order: 340
 
 # Use IP Lists
 
-IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [_IP Lists_](/cf-firewall-rules/rules-lists).
+IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [IP Lists](/cf-firewall-rules/rules-lists).
 
 ## Access the Lists interface
 
@@ -26,4 +26,4 @@ Creating an IP List involves two steps:
 
 ## Use IP Lists in expressions
 
-To use IP Lists in the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use IP Lists in the Cloudflare dashboard, see [Use lists in expressions](/cf-dashboard/rules-lists/use-lists-in-expressions).
