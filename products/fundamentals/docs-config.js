@@ -20,7 +20,7 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:fundamentals"]'}
   },
   siteMetadata: {
-    title: "Cloudflare Fundamentals",
+    title: "Cloudflare Fundamentals docs",
     description: "Cloudflare Fundamentals provides information about features that span Cloudflare products.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/fundamentals",

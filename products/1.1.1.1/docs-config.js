@@ -20,7 +20,7 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:1.1.1.1"]'}
   },
   siteMetadata: {
-    title: "1.1.1.1 docs",
+    title: "Cloudflare 1.1.1.1 docs",
     description: "A blazing fast DNS resolver built for private browsing.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/1.1.1.1",

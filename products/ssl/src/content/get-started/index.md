@@ -1,4 +1,5 @@
 ---
+title: Get started
 order: 1
 pcx-content-type: tutorial
 ---
@@ -9,7 +10,7 @@ import CustomCertificateDefinition from "../_partials/_custom-certificates-defin
 import KeylessSSLDefinition from "../_partials/_keyless-ssl-definition.md"
 import SSLforSaaSDefinition from "../_partials/_ssl-for-saas-definition.md"
 
-# Get started
+# Get started with SSL/TLS
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
