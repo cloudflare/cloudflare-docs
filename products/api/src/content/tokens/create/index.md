@@ -125,5 +125,5 @@ If the secret is lost or believed to be compromised, you can either create a new
 
 To roll your API token:
 1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to **User Profile** > **API Tokens**.
-1. Click **Roll**.
+1. Next to the API token you wish to roll, click the **three dot icon** > **Roll**.
 1. Then, click **Confirm** to continue and you will see a new API token secret key.
