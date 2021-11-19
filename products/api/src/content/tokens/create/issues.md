@@ -21,7 +21,7 @@ Send us a screenshot of the permissions you have set up so that we can verify th
 
 - **Incorrect syntax**
 
-On occasion, customers will attempt to use an API Token with an API Key syntax. Ensure you are using the _Bearer_ option, rather than the Email and API key pair.
+On occasion, customers will attempt to use an API Token using the API Key syntax. Ensure you are using the _Bearer_ option, rather than the Email and API key pair.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/user/tokens?page=1&per_page=20&direction=desc" \
