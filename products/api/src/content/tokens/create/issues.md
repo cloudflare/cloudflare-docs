@@ -30,4 +30,4 @@ curl -X GET "https://api.cloudflare.com/client/v4/user/tokens?page=1&per_page=20
 
 - **Incorrect user permissions when attempting to create a token**
 
-A customer cannot create a token for themselves that exceeds the permission granted to them on their account. For example, if a customer has been granted an _Admin (Read only)_ role, they would need their Super Administrator to update their role so that they could create a token for themselves.
+You cannot create a token for yourself exceeding the permission granted to you on your account. For example, if you have been granted an _Admin (Read only)_ role, you would need your Super Administrator to update your role so that you could create a token for yourself.
