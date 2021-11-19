@@ -1,12 +1,11 @@
 ---
-title: Best practices
 order: 
 pcx-content-type: best-practices
 ---
 
 import ChangeQueueMethod from "../_partials/_change-queueing-method.md"
 
-# Best practices for waiting rooms
+# Best practices
 
 Follow these best practices to avoid potential issues and improve the visitor experience.
 

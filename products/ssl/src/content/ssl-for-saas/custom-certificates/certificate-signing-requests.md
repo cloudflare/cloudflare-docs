@@ -1,4 +1,5 @@
 ---
+title: Certificate signing requests (CSRs)
 order: 6
 pcx-content-type: tutorial
 ---
@@ -6,7 +7,7 @@ pcx-content-type: tutorial
 import CSRDefinition from "../../_partials/_csr-definition.md"
 import PlanLimitation from "../../_partials/_ssl-for-saas-plan-limitation.md"
 
-# Certificate signing requests (CSRs)
+# Certificate signing requests (CSRs) — SSL for SaaS
 
 <CSRDefinition/>
 
