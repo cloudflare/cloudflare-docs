@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Create Mass Redirects via API
 
-To create a Mass Redirect Rule via API, you must:
+To create Mass Redirects via API, you must:
 
 1. Create a Mass Redirect List via API.
 1. Add items (URL redirects) to the list created in step 1.
