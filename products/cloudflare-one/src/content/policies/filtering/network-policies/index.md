@@ -66,6 +66,10 @@ Build expressions to determine the set of elements you want to impact with your 
 
 Gateway matches network traffic against the following selectors, or criteria.
 
+#### Identity-based selectors
+
+You can build Network policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+
 #### Destination IP
 
 The IP address of the request’s target.
@@ -81,6 +85,14 @@ The port number of the request’s target.
 | UI name | API example |
 | -- | -- |
 | Destination Port | `net.dst.port == "2222"` |
+
+#### Protocol
+
+The protocol used to send the packet.
+
+| UI name | API example |
+| -- | -- |
+| Protocol | `net.protocol == "tcp"` |
 
 #### Source IP
 
@@ -114,10 +126,6 @@ The domain whose Server Name Indication (SNI) header Gateway will filter traffic
 | -- | -- |
 | SNI Domain | `net.sni.host == "a.example.com"` |
 
-#### Identity-based selectors
-
-You can build Network policies using [identity-based selectors](/policies/filtering/identity-selectors). These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client.
-
 ### Operators
 
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
@@ -137,12 +145,14 @@ The <code>in</code> operator allows you to specify IP addresses or networks usin
 
 </Aside>
 
-## Change protocol
+## Changing network protocol
 
 You can set your protocol preferences in the **Protocol** card under **Settings** > **Network**. 
 
 ![Protocol settings](../../../static/documentation/policies/protocol-settings.png)
 
 <Aside>
-Any option you select in the card will automatically apply to all of your network policies unless you specify a [protocol](/pathtoselectors) within a policy itself.
+
+Any option you select in the card will automatically apply to all of your network policies unless you specify a protocol within a policy itself.
+
 </Aside>
