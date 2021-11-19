@@ -64,15 +64,59 @@ Build expressions to determine the set of elements you want to impact with your 
 
 ### Selectors
 
-Gateway matches network traffic against the following selectors, or criteria:
+Gateway matches network traffic against the following selectors, or criteria.
 
-* **Destination IP**. The IP address of the request’s target.
-* **Destination Port**. The port number of the request’s target.
-* **SAML Attributes**. Specify a value from the SAML Attribute Assertion.
-* **Source IP**. The IP address of the user making the request.
-* **Source Port**. The port number of the user’s request.
-* **SNI**. The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
-* **SNI Domain**. The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for a subdomain-insensitive match.
+#### Destination IP
+
+The IP address of the request’s target.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| Destination IP | `net.dst.ip` | `1.1.1.0/31` |
+
+#### Destination Port
+
+The port number of the request’s target.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| Destination Port | `net.dst.port` | `2222` |
+
+#### Source IP
+
+The IP address of the user making the request.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| Source IP | `net.src.ip` | `1.1.1.0/31` |
+
+#### Source Port
+
+The IP address of the user making the request.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| Source Port | `net.src.port` | `2222` |
+
+#### SNI
+
+The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| SNI | `net.sni.host` | `www.example.com` |
+
+#### SNI Domain
+
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for a subdomain-insensitive match.
+
+| UI name | API FieldName | API example value |
+| -- | -- | -- |
+| SNI Domain | `net.sni.host` | `a.example.com`, `b.example.com` |
+
+#### Identity-based selectors
+
+You can build Network policies using [identity-based selectors](/policies/filtering/identity-selectors). These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client.
 
 ### Operators
 
@@ -93,4 +137,12 @@ The <code>in</code> operator allows you to specify IP addresses or networks usin
 
 </Aside>
 
+## Change protocol
 
+You can set your protocol preferences in the **Protocol** card under **Settings** > **Network**. 
+
+![Protocol settings](../../../static/documentation/policies/protocol-settings.png)
+
+<Aside>
+Any option you select in the card will automatically apply to all of your network policies unless you specify a [protocol](/pathtoselectors) within a policy itself.
+</Aside>
