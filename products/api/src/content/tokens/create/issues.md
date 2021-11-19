@@ -3,7 +3,7 @@ order: 11
 type: how to
 ---
 
-# Main IPA token issues
+# Main API token issues
 
 - **The token itself is not verified**
 
