@@ -17,7 +17,7 @@ You can ensure the token has been verified by running the following curl example
 
 - **The token has incorrect permissions**
 
-Send us a screenshot of the permissions you have set up to, so that we can verify that the permission has been correctly set.
+Send us a screenshot of the permissions you have set up so that we can verify that the permission has been correctly set.
 
 - **Incorrect syntax**
 
