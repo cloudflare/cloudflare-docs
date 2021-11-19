@@ -65,19 +65,19 @@ historical_days = 7
 
 ## Calculate the date _n_ days ago
 
-The `get_date()` function takes a number of days (`num_days`), subtracts
+The `get_past_date()` function takes a number of days (`num_days`), subtracts
 that value from today's date, and returns the date `num_days` ago.
 
 ```python
 ---
 header: Calculates the datetime num_days ago and returns it in ISO format
 ---
-def get_date(num_days):
+def get_past_date(num_days):
     today = datetime.utcnow().date()
     return today - timedelta(days=num_days)
 ```
 
-The script uses `get_date()` with the `offset_days` and `historical_days`
+The script uses `get_past_date()` with the `offset_days` and `historical_days`
 variables to calculate the appropriate date range (`min_date` and `max_date`)
 when it queries the GraphQL API.
 
@@ -109,6 +109,7 @@ all newline symbols before sending it.
 header: Query the Network Analytics GraphQL API
 ---
 def get_cf_graphql(start_date, end_date):
+    assert(start_date <= end_date)
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {api_token}'
@@ -246,11 +247,12 @@ offset_days = 1
 # How many days worth of data do we want? By default, 7.
 historical_days = 7
 
-def get_date(num_days):
+def get_past_date(num_days):
     today = datetime.utcnow().date()
     return today - timedelta(days=num_days)
 
 def get_cf_graphql(start_date, end_date):
+    assert(start_date <= end_date)
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {api_token}'
@@ -345,14 +347,14 @@ def convert_to_csv(raw_data, start_date, end_date):
     network_analytics_abridged.to_csv(file)
     print("Successfully exported to {}".format(file))
  
-start_date = get_date(offset_days)
-end_date = get_date(historical_days)
+start_date = get_past_date(offset_days + historical_days)
+end_date = get_past_date(offset_days)
  
 req = get_cf_graphql(start_date, end_date)
 if req.status_code == 200:
-  convert_to_csv(req.text, start_date, end_date)
+    convert_to_csv(req.text, start_date, end_date)
 else:
-  print("Failed to retrieve data: GraphQL API responded with {} status code".format(req.status_code))
+    print("Failed to retrieve data: GraphQL API responded with {} status code".format(req.status_code))
 ```
 
 [1]: /graphql-api/features/data-sets
