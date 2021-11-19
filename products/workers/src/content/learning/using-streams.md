@@ -16,7 +16,7 @@ Minimizing buffering is especially important for processing or transforming resp
 
 <Aside type="note">
 
-By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). Only use these APIs for modifying the response body while maintaining streaming behavior. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
+By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). To maintain the streaming behavior, you should only modify the response body using the methods in the Streams APIs. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
 
 </Aside>
 
@@ -64,5 +64,5 @@ The Streams API is only available inside of the [Request context](/runtime-apis/
 ## Related resources
 
 - [Streams API Reference](/runtime-apis/streams)
-- [MDN’s Streams API documentation.](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+- [MDN’s Streams API documentation](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
 - [Streams API Specification](https://streams.spec.whatwg.org/)
