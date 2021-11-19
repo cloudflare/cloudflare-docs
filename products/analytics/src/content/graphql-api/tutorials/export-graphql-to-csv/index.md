@@ -347,14 +347,14 @@ def convert_to_csv(raw_data, start_date, end_date):
     network_analytics_abridged.to_csv(file)
     print("Successfully exported to {}".format(file))
  
-start_date = get_past_date(offset_days+historical_days)
+start_date = get_past_date(offset_days + historical_days)
 end_date = get_past_date(offset_days)
  
 req = get_cf_graphql(start_date, end_date)
 if req.status_code == 200:
-  convert_to_csv(req.text, start_date, end_date)
+    convert_to_csv(req.text, start_date, end_date)
 else:
-  print("Failed to retrieve data: GraphQL API responded with {} status code".format(req.status_code))
+    print("Failed to retrieve data: GraphQL API responded with {} status code".format(req.status_code))
 ```
 
 [1]: /graphql-api/features/data-sets
