@@ -98,6 +98,22 @@ Use this selector to apply DNS policies to a specific location or set of locatio
 | -- | -- |
 | Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` |
 
+#### Content Categories
+
+Use this selector to apply DNS policies to traffic directed to specific content categories.
+
+| UI name | API example |
+| -- | -- |
+| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+
+#### Security Categories
+
+Use this selector to block traffic directed to specific security categories.
+
+| UI name | API example |
+| -- | -- |
+| Security Categories | `any(http.request.uri.category[*] in {1})` |
+
 ### Operators
 
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
