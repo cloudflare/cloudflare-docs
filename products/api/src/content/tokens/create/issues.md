@@ -25,7 +25,7 @@ On occasion, customers will attempt to use an API Token using the API Key syntax
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/user/tokens?page=1&per_page=20&direction=desc" \
--H "Authorization: Bearer 8M7wS6hCpXVc-DoRnPPY_UCWPgy8aea4Wy6kCe5T"
+    -H "Authorization: Bearer 8M7wS6hCpXVc-DoRnPPY_UCWPgy8aea4Wy6kCe5T"
 ```
 
 - **Incorrect user permissions when attempting to create a token**
