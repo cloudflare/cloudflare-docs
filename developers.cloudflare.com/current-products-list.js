@@ -77,6 +77,11 @@ const products = [
     wrap: true,
   },
   {
+    title: "Email Routing",
+    path: "email-routing",
+    icon: "email-routing",
+  },
+  {
     title: "Firewall Rules",
     path: "firewall",
     icon: "firewall",

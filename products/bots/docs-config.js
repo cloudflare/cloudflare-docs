@@ -19,11 +19,10 @@ module.exports = {
     algoliaOptions: { facetFilters: '["project:bots"]' },
   },
   siteMetadata: {
-    title: "Cloudflare Bot Management docs",
-    description:
-      "Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.",
-    author: "@cloudflare",
-    url: "https://developers.cloudflare.com/bots",
-    image: "https://www.cloudflare.com/img/cf-twitter-card.png",
+      title: "Cloudflare bot solutions docs",
+      description: "Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.",
+      author: "@cloudflare",
+      url: "https://developers.cloudflare.com/bots",
+      image: "https://www.cloudflare.com/img/cf-twitter-card.png",
   },
 };

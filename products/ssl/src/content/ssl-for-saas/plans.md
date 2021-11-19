@@ -1,9 +1,10 @@
 ---
+title: Plans
 order: 1
 pcx-content-type: reference
 ---
 
-# Plans
+# Plans — SSL for SaaS
 
 <TableWrap>
 

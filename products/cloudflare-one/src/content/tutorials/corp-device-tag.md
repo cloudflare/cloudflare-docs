@@ -48,11 +48,7 @@ You can now add this corporate device requirement to existing or new application
 
 1. To add to an existing application, choose the specific resource from the **Applications** page in the Access section of the sidebar. Click **Edit**.
 
-    ![App List](../static/zero-trust-security/corp-device/app-list.png)
-
 1. Select the **Rules** tab and edit the existing rule in place.
-
-    ![Edit App](../static/zero-trust-security/corp-device/edit-app.png)
 
 1. Add a `Require` rule and choose `Device Posture - Serial Number List` from the drop down menu. Choose the list of devices to require and click **Save rule**.
 

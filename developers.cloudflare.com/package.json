@@ -69,6 +69,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "publish": "npm run build && wrangler publish",
     "serve": "gatsby serve",
-    "start": "npm run develop"
+    "start": "npm run develop",
+    "generate:icons": "cd ../ && node create-svg-files.js"
   }
 }

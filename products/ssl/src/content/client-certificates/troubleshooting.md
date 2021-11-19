@@ -1,9 +1,10 @@
 ---
+title: Troubleshooting
 order: 6
 pcx-content-type: faq
 ---
 
-# Troubleshooting
+# Troubleshooting client certificates
 
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 

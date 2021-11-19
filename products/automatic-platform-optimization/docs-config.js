@@ -30,9 +30,8 @@ module.exports = {
     },
   },
   siteMetadata: {
-    title: "Cloudflare Automatic Platform Optimization",
-    description:
-      "With Automatic Platform Optimization, Cloudflare serves your entire site from our edge network, ensuring customers see improved performance when visiting your site.",
+    title: "Cloudflare Automatic Platform Optimization docs",
+    description: "With Automatic Platform Optimization, Cloudflare serves your entire site from our edge network, ensuring customers see improved performance when visiting your site.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/automatic-platform-optimization",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",

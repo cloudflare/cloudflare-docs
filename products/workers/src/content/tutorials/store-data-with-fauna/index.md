@@ -68,7 +68,7 @@ You must create a key to connect to the database from your Worker.
 
 Navigate to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
 
-![New Key](./media/new-server-key.jpg)
+![New Key](./media/new-server-key.png)
 
 The Fauna dashboard displays the key's secret. Copy and save this server key to use in a later step.
 

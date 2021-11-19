@@ -1,11 +1,12 @@
 ---
+title: Custom certificates
 order: 4
 pcx-content-type: concept
 ---
 
 import PlanLimitation from "../../_partials/_ssl-for-saas-plan-limitation.md"
 
-# Custom certificates
+# Custom certificates — SSL for SaaS
 
 If your customers need to provide their own key material, you may want to [upload a custom certificate](uploading-certificates). Cloudflare will automatically bundle the certificate with a certificate chain [optimized for maximum browser compatibility](/edge-certificates/custom-certificates/bundling-methodologies#compatible).
 

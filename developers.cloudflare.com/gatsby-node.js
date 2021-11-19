@@ -54,13 +54,8 @@ exports.sourceNodes = ({ actions, createContentDigest, createNodeId }) => {
   products.forEach(product => {
     if (product.icon !== undefined) {
       // Go into each product folder to find the svg for that product
-
-      const data = fs.readFileSync(
-        path.join(__dirname, '..', `products/${product.icon}/src/content/icons`, `${product.icon}.svg`),
-        "utf8"
-      )
-
-      const logoSVGContent = data.toString()
+      const data = require(`../products/${product.icon}/docs-config.js`)
+      const logoSVGContent = data.logoSVGContent
 
       createNode({
         id: createNodeId(product.icon),
