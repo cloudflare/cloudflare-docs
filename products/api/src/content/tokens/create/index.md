@@ -121,7 +121,7 @@ With this you have successfully created an API Token and can now start working w
 
 ## Roll API token
 
-If the secret is lost or believed to be compromised, you can either create a new token or your token can be rolled to regenerate a new secret. Rolling your secret key into a new one will invalidate the previous secret, but the access and permissions will be the same as the previous key.
+If the secret is lost or believed to be compromised, you can either create a new token or your token can be rolled to generate a new secret. Rolling your secret key into a new one will invalidate the previous secret, but the access and permissions will be the same as the previous key.
 
 To roll your API token:
 1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to the **API Tokens** section.
