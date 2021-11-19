@@ -6,7 +6,7 @@ pcx-content-type: concept
 # Known issues
 
 Here are some known bugs and issues that we're aware of with Cloudflare Pages:
-- Source code hosting tools besides GitHub—for instance, BitBucket or Gitlab—are not currently supported.
+- Source code hosting tools besides GitHub or GitLab—for instance, BitBucket—are not currently supported.
 - Pages currently only supports a single project per repository. Monorepos or repositories with multiple codebases/applications currently cannot deploy more than one project to Pages at a time.
 - Once you have selected a GitHub repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
