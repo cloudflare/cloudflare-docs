@@ -12,7 +12,7 @@ You can ensure the token has been verified by running the following curl example
 ```bash
  curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
      -H "Authorization: Bearer <token secret>" \
-     -H "Content-Type:application/json"
+     -H "Content-Type: application/json"
 ```
 
 - **The token has incorrect permissions**
