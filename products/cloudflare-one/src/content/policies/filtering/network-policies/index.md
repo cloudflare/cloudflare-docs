@@ -70,49 +70,49 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 The IP address of the request’s target.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| Destination IP | `net.dst.ip` | `1.1.1.0/31` |
+| UI name | API example |
+| -- | -- |
+| Destination IP | `net.dst.ip == "1.1.1.0/31"` |
 
 #### Destination Port
 
 The port number of the request’s target.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| Destination Port | `net.dst.port` | `2222` |
+| UI name | API example |
+| -- | -- |
+| Destination Port | `net.dst.port == "2222"` |
 
 #### Source IP
 
 The IP address of the user making the request.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| Source IP | `net.src.ip` | `1.1.1.0/31` |
+| UI name | API example |
+| -- | -- |
+| Source IP | `net.src.ip == "1.1.1.0/31"` |
 
 #### Source Port
 
 The IP address of the user making the request.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| Source Port | `net.src.port` | `2222` |
+| UI name | API example |
+| -- | -- |
+| Source Port | `net.src.port == "2222"` |
 
 #### SNI
 
 The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| SNI | `net.sni.host` | `www.example.com` |
+| UI name | API example |
+| -- | -- |
+| SNI | `net.sni.host == "www.example.com"` |
 
 #### SNI Domain
 
 The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for a subdomain-insensitive match.
 
-| UI name | API FieldName | API example value |
-| -- | -- | -- |
-| SNI Domain | `net.sni.host` | `a.example.com`, `b.example.com` |
+| UI name | API example |
+| -- | -- |
+| SNI Domain | `net.sni.host == "a.example.com"` |
 
 #### Identity-based selectors
 
