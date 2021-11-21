@@ -309,7 +309,7 @@ filename: _worker.js
 ---
 export default {
   async fetch(request, env) {
-    if (req.url.startsWith('/api/')) {
+    if (request.url.startsWith('/api/')) {
       // TODO: Custom /api/* Worker logic
       return new Response('TODO: add logic')
     }
