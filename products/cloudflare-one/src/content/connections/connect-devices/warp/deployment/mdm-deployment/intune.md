@@ -70,7 +70,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 
 Refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each value.
 
-## MacOS
+## macOS
 
 The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this `plist` can be wrapped in a `.mobileconfig`.
 

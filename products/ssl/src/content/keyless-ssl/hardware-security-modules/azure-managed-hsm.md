@@ -33,7 +33,7 @@ Follow [these instructions](/keyless-ssl/configuration##step-3--set-up-and-activ
 
 Set up the Azure CLI (used to access the private key).
 
-For example, if you were using MacOS:
+For example, if you were using macOS:
 
 ```
 brew install azure-cli

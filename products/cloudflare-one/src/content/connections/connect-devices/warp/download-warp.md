@@ -14,14 +14,14 @@ Alternatively, download the client from one of the following links after checkin
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Windows 8, Windows 10</td>
+      <td>Windows 8, Windows 10+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>64-bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Disk Space</strong></td>
       <td>184MB</td>
     </tr>
     <tr>
@@ -30,7 +30,7 @@ Alternatively, download the client from one of the following links after checkin
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -44,14 +44,14 @@ __[Windows Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Big Sur, High Sierra, Catalina</td>
+      <td>High Sierra+ (10.13+)</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>Intel & M1</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Disk Space</strong></td>
       <td>75MB</td>
     </tr>
     <tr>
@@ -60,7 +60,7 @@ __[Windows Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -73,16 +73,16 @@ __[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
-      <td>CentOS 8, RHEL, Ubuntu, Debian</td>
+      <td><strong>Distributions</strong></td>
+      <td>CentOS 8, RHEL, Ubuntu (Focal and Xenial), Debian 9+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>64-bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
-      <td>75MB</td>
+      <td><strong>Disk Space</strong></td>
+      <td>200MB</td>
     </tr>
     <tr>
       <td><strong>Memory</strong></td>
@@ -90,7 +90,7 @@ __[macOS Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>

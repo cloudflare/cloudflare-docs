@@ -21,22 +21,20 @@ Alternatively, you can look into using the [WARP client](/connections/connect-de
 ### Ubuntu
 
 #### IPv4
-1. Click **System** > **Preferences** > **Network Connections**.
-2. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
-3. Click **Edit**.
-4. Click **IPv4**.  
-Remove any IP addresses that may already be listed.
-6. Add the following IP addresses:
-    * **172.64.36.1**
-    * **172.64.36.2**
-7. Click **Apply**.
+1. Open **Settings**
+2. Click **Wi-Fi** (or **Network** for wired connections), then click the gear icon next to the network you are currently connected to.
+3. Click the **IPv4** tab.
+4. Under **DNS** settings, disable *Automatic*.
+5. Under **DNS** settings, enter the following custom IP addresses: `172.64.36.1,172.64.36.2`
+6. Click **Apply**.
 
 #### IPv6
-1. Click **System** > **Preferences** > **Network Connections**.
-2. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
-3. Click **IPv6**.
-4. Add the IPv6 address from that we listed based on your location configuration
-5. Click **Apply**.
+1. Open **Settings**
+2. Click **Wi-Fi** (or **Network** for wired connections), then click the gear icon next to the network you are currently connected to.
+3. Click the **IPv4** tab.
+4. Under **DNS** settings, disable *Automatic*.
+5. Add the IPv6 address from that we listed based on your location configuration
+6. Click **Apply**.
 
 ### Debian
 

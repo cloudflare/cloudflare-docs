@@ -10,14 +10,14 @@ order: 3
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Windows 8+</td>
+      <td>Windows 8, Windows 10+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td>64-bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Disk Space</strong></td>
       <td>184MB</td>
     </tr>
     <tr>
@@ -26,7 +26,7 @@ order: 3
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -45,7 +45,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
       <td>Intel & M1</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Disk Space</strong></td>
       <td>75MB</td>
     </tr>
     <tr>
@@ -54,7 +54,7 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -66,14 +66,14 @@ __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.
   <tbody>
     <tr>
       <td><strong>Distributions</strong></td>
-      <td>Ubuntu, Redhat Enterprise Linux, Centos</td>
+      <td>CentOS 8, RHEL, Ubuntu (Focal and Xenial), Debian 9+</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
-      <td>x64</td>
+      <td>64-bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Disk Space</strong></td>
       <td>200MB</td>
     </tr>
     <tr>
@@ -82,7 +82,7 @@ __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>Wi-Fi or LAN</td>
     </tr>
   </tbody>
 </table>

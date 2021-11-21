@@ -48,7 +48,7 @@ sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:5
 
 ## Add the certificate to your system
 
-### MacOS
+### macOS
 
 You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
@@ -257,6 +257,45 @@ The root certificate is now installed and ready to be used.
 7. Enter anything you want for the certificate name and click **OK**.
 
 ![Name the certificate with anything](../../../static/documentation/connections/chromeOS8_cert.png)
+
+### Linux
+
+Depending on your Linux distribution, the commands for trusting new certificates can vary.
+
+#### Ubuntu, Debian
+
+1. Go to `/usr/local/share/ca-certificates/`:
+ ```bash
+ cd /usr/local/share/ca-certificates/
+ ```
+
+1. Download the Cloudflare Certificate, pasting the **.crt** from [here](#download-the-cloudflare-root-certificate) into the following command:
+ ```bash
+ curl <Cloudflare_CA.crt link> -O 
+ ```
+
+1. Update the certificate store.
+ ```bash
+ sudo update-ca-certificates
+ ```
+
+Refer to the [update-ca-certficates man page](https://manpages.debian.org/jessie/ca-certificates/update-ca-certificates.8.en.html) for information on Ubuntu/Debian installations.
+
+#### CentOS, RHEL
+
+1. Download the Cloudflare Certificate, pasting the **.pem** from [here](#download-the-cloudflare-root-certificate) into the following command:
+ ```bash
+ curl <Cloudflare_CA.pem link> -O 
+ ```
+
+1. Copy the certificate into `/etc/pki/ca-trust/source/anchors/`
+ ```bash
+ cp Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors/Cloudflare_CA.pem
+ ```
+
+1. Run `update-ca-trust` to update the certificate store.
+
+Refer to the [update-ca-trust man page](https://www.unix.com/man-page/centos/8/update-ca-trust/) for information on CentOS/RHEL installations.
 
 ## Adding to Applications
 
