@@ -360,7 +360,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.verified_bot</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.client.bot</code>.
           </p>
         </td>
     </tr>
@@ -377,7 +377,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
     <tr>
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.bot_management.verified_bot</code>.</p>
         </td>
     </tr>
     <tr>
