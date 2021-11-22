@@ -42,7 +42,7 @@ The matching algorithm for URL Redirects that have _Subpath matching_ enabled is
 
 1. Use the previous algorithm (exact path matching) to find an exact match.
 
-1. If there is no exact match, use the same algorithm by try all subpaths, up to a limit of 32, considering only the URL redirects with _Subpath matching_ enabled.
+1. If there is no exact match, use the same algorithm but try all subpaths, up to a limit of 32, considering only the URL redirects with _Subpath matching_ enabled.
 
     For example, if the path is `/my-folder/item/`, the following subpaths will be checked for a match (in this order):
 
