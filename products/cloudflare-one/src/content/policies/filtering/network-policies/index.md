@@ -120,7 +120,7 @@ The host whose Server Name Indication (SNI) header Gateway will filter traffic a
 
 #### SNI Domain
 
-The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for a subdomain-insensitive match.
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. This will match against the hostname and sub-domains.
 
 | UI name | API example |
 | -- | -- |

@@ -27,7 +27,7 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 
 ### Selectors
 
-<Aside>
+<Aside type="note">
 
 Policies created using the URL selector are case-sensitive.
 
