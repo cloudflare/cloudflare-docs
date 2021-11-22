@@ -52,7 +52,7 @@ Use this selector to match against a domain and all subdomains — for example,
 
 #### Host
 
-Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com.
+Use this selector to match against only the hostname specified—for example, if you want to block only `example.com` but not `subdomain.example.com`.
 
 | UI name | API example |
 | -- | -- |
@@ -60,7 +60,7 @@ Use this selector to match against only the hostname specified—for example, if
 
 #### Query Rtype
 
-Use this selector to choose the DNS resource record type that you’d like to apply policies against — for example, you can choose to block A records for a domain but not MX records.
+Use this selector to choose the DNS resource record type that you would like to apply policies against — for example, you can choose to block A records for a domain but not MX records.
 
 | UI name | API example |
 | -- | -- |
@@ -68,7 +68,7 @@ Use this selector to choose the DNS resource record type that you’d like to ap
 
 #### DNS Resolver IP
 
-Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations.
+Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered locations.
 
 | UI name | API example |
 | -- | -- |
