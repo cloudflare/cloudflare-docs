@@ -309,14 +309,14 @@ filename: _worker.js
 ---
 export default {
   async fetch(request, env) {
-    if (req.url.startsWith('/api/')) {
-      // TODO: Custom /api/* Worker logic
-      return new Response('TODO: add logic')
+    const url = new URL(request.url);
+    if (url.pathname.startsWith('/api/')) {
+      // TODO: Add your custom /api/* logic here.
+      return new Response('Ok');
     }
-
-    // Otherwise, serve static asset(s).
-    // Without this, Worker will error and no assets will be served.
-    return env.ASSETS.fetch(request)
+    // Otherwise, serve the static assets.
+    // Without this, the Worker will error and no assets will be served.
+    return env.ASSETS.fetch(request);
   }
 }
 ```
