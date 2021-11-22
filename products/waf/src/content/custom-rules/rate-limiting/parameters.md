@@ -44,7 +44,7 @@ The available Rate Limiting rule parameters are the following:
 
     - <Aside type="note">
 
-      Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Understanding Cloudflare Cookies](https://support.cloudflare.com/hc/articles/200170156) for details.
+      Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](https://developers.cloudflare.com/fundamentals/get-started/cloudflare-cookies) for details.
 
       </Aside>
 
