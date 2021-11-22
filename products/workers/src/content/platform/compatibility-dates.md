@@ -52,7 +52,7 @@ Newest changes are listed first.
   <tr><td><strong>Flag to disable</strong></td><td><code>streams_byob_reader_does_not_detach_buffer</code></td></tr>
 </tbody></table>
 
-Originally, the Workers runtime did not detach the ArrayBuffers from user-provided TypedArrays when using the [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods), as required by the Streams spec, meaning it was possible to inadvertently re-use the same buffer for multiple `read()` calls. This change brings us in line with the spec.
+Originally, the Workers runtime did not detach the ArrayBuffers from user-provided TypedArrays when using the [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change brings us in line with the spec.
 
 User code should never try to re-use an ArrayBuffer that has been passed in to a [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods). The more recently added extension method `readAtLeast()` will always detach the ArrayBuffer and is unaffected by this feature flag setting.
 
