@@ -192,7 +192,7 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 For more information on disabling QUIC on a managed device, see [these instructions](https://support.google.com/chrome/a/answer/7649838?hl=en). You can manually disable QUIC in Google Chrome using the Experimental QUIC protocol (`#enable-quic`) flag:
 
 1. In the address bar, type:  `chrome://flags#enable-quic`.
-1. Set the Experimental QUIC protocol flag to `Disabled`.
+1. Set the **Experimental QUIC protocol** flag to `Disabled`.
 1. Relaunch Chrome for the setting to take effect.
 
 The following Windows registry key (or Mac/Linux preference) can be used to disable QUIC in Chrome, and can be enforced via GPO or equivalent:
