@@ -99,11 +99,11 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1. Route the private IP addresses of your server’s network to Cloudflare, where:
 
-  * `10.0.0.0/10` is the IP or CIDR range of your server
+  * `10.0.0.0/8` is the IP or CIDR range of your server
   * `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
  
  ```sh
- $ cloudflared tunnel route ip add 10.0.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
+ $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
  ```
 
 1. Open your Teams dashboard to the **Gateway > Policies** tab.
