@@ -5,13 +5,13 @@ pcx-content-type: concept
 
 # How it works
 
-For each incoming request, Cloudflare evaluates all URL redirects of each Mass Redirect List that is enabled by a Mass Redirect Rule.
+For each incoming request, Cloudflare evaluates all URL Redirects of each Mass Redirect List that is enabled by a Mass Redirect Rule.
 
-If there is a match for a URL redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
+If there is a match for a URL Redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL Redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
 
 ## URL matching algorithm
 
-The URL matching algorithm is different depending on the value of the _Subpath matching_ option of a URL redirect.
+The URL matching algorithm is different depending on the value of the _Subpath matching_ option of a URL Redirect.
 
 ### Exact path matching
 
@@ -42,7 +42,7 @@ The matching algorithm for URL Redirects that have _Subpath matching_ enabled is
 
 1. Use the previous algorithm (exact path matching) to find an exact match.
 
-1. If there is no exact match, use the same algorithm but try all subpaths, up to a limit of 32, considering only the URL redirects with _Subpath matching_ enabled.
+1. If there is no exact match, use the same algorithm but try all subpaths, up to a limit of 32, considering only the URL Redirects with _Subpath matching_ enabled.
 
     For example, if the path is `/my-folder/item/`, the following subpaths will be checked for a match (in this order):
 

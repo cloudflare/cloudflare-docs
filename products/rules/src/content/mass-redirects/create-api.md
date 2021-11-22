@@ -8,7 +8,7 @@ pcx-content-type: how-to
 To create Mass Redirects via API, you must:
 
 1. Create a Mass Redirect List via API.
-1. Add items (URL redirects) to the list created in step 1.
+1. Add items (URL Redirects) to the list created in step 1.
 1. Create a Mass Redirect Rule via API, which enables the list created in step 1.
 
 ## 1. Create a Mass Redirect List via API
@@ -51,7 +51,7 @@ For more information on list operations, refer to the [Rules Lists API](https://
 
 ## 2. Add items to the list
 
-Use the [Create list items](https://api.cloudflare.com/#rules-lists-create-list-items) operation to add URL redirect items to the list:
+Use the [Create list items](https://api.cloudflare.com/#rules-lists-create-list-items) operation to add URL Redirect items to the list:
 
 ```json
 curl -X POST \
@@ -77,7 +77,7 @@ curl -X POST \
 
 The response will be similar to the following:
 
-```json 
+```json
 {
   "result": {
     "operation_id": "92558f8b296d4dbe9d0419e0e53f6622"
@@ -98,7 +98,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/bul
 
 If the operation already completed successfully, the response will be similar to the following:
 
-```json 
+```json
 {
   "result": {
     "id": "92558f8b296d4dbe9d0419e0e53f6622",
@@ -113,7 +113,7 @@ If the operation already completed successfully, the response will be similar to
 
 ## 3. Create a Mass Redirect Rule via API
 
-Since Mass Redirect Lists are just containers of URL redirects, you have to enable the URL redirects in the list by creating a Mass Redirect Rule.
+Since Mass Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Mass Redirect Rule.
 
 Add Mass Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
 

@@ -15,6 +15,6 @@ Mass Redirects are essentially static — they do not support any string replace
 |----------------------------------------------|-----:|----:|---------:|-----------:|
 | Number of Edge Rules<br/>(includes Mass Redirect Rules) | 15 |  15 |  15 |     50 |
 | Number of URL Redirect Lists                            |  5 |   5 |   5 |     25 |
-| Number of URL redirects across lists                    | 20 | 500 | 500 | 10,000 |
+| Number of URL Redirects across lists                    | 20 | 500 | 500 | 10,000 |
 
 When determining the available Mass Redirect features and their limits, Cloudflare takes into account the highest plan on your account.

@@ -28,11 +28,11 @@ A Mass Redirect Rule, like all rules powered by the Ruleset Engine, has an actio
 
 ### Expression
 
-The rule expression specifies the conditions that must be met for the rule to run. By default, all URL redirects of the specified list will apply.
+The rule expression specifies the conditions that must be met for the rule to run. By default, all URL Redirects of the specified list will apply.
 
-The default expression of a Mass Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the full request URL (after some basic normalization) should match the source URL of a URL redirect in the list `<LIST_NAME>` for the redirect to be applied.
+The default expression of a Mass Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the full request URL (after some basic normalization) should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
-You can use an expression different from the default one to increase the specificity of URL redirect matches. For example, if you set the expression of a Mass Redirect Rule to `ip.src.country == "GB" and http.request.full_uri in $redirect_list`, there will only be a match for clients from the United Kingdom.
+You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Mass Redirect Rule to `ip.src.country == "GB" and http.request.full_uri in $redirect_list`, there will only be a match for clients from the United Kingdom.
 
 <Aside type="note" header="Note">
 
@@ -47,13 +47,13 @@ Refer to [Fields](https://developers.cloudflare.com/firewall/cf-firewall-languag
 
 ### Key
 
-The rule key is used in combination with the rule list to select the URL redirect to apply. The field used for the key should always be the same as the field used in the expression.
+The rule key is used in combination with the rule list to select the URL Redirect to apply. The field used for the key should always be the same as the field used in the expression.
 
 For example, if the request field used in the rule expression is `http.request.full_uri`, you should set the key to `http.request.full_uri`. Conversely, if the field used in the expression is `raw.http.request.full_uri`, you should set the key to `raw.http.request.full_uri`.
 
 ## Mass Redirect Lists
 
-URL Redirect Lists allow you to create distinct groups of URL redirects for different purposes. You can use a URL Redirect List in one or more Mass Redirect Rules.
+URL Redirect Lists allow you to create distinct groups of URL Redirects for different purposes. You can use a URL Redirect List in one or more Mass Redirect Rules.
 
 A Mass Redirect List does not perform any redirects on its own — you must reference the list in a Mass Redirect Rule to enable the redirects in the list.
 
