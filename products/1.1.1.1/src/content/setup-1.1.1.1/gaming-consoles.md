@@ -1,9 +1,10 @@
 ---
 order:
+title: Gaming consoles
 pcx-content-type: how-to
 ---
 
-# Gaming consoles
+# Setup 1.1.1.1 - Gaming consoles
 
 Follow these steps to configure 1.1.1.1:
 
