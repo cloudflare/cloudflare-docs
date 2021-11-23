@@ -72,7 +72,7 @@ Use this selector to apply policies to DNS queries that arrived to your Gateway 
 
 | UI name | API example |
 | -- | -- |
-| DNS Resolver IP | `any(dns.resolved_ip[*] == 1.2.3.4)` |
+| DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` |
 
 #### Resolved IP
 
@@ -80,7 +80,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 | UI name | API example |
 | -- | -- |
-| Resolved IP | `any(dns.resolved_ips[*] == 1.2.3.4)` |
+| Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` |
 
 #### Source IP
 
@@ -88,7 +88,7 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 | UI name | API example  |
 | -- | -- |
-| Source IP | `dns.src_ip == 1.1.1.1` |
+| Source IP | `dns.src_ip == 198.51.100.0` |
 
 #### Location
 
@@ -113,6 +113,15 @@ Use this selector to block traffic directed to specific security categories.
 | UI name | API example |
 | -- | -- |
 | Security Categories | `any(http.request.uri.category[*] in {1})` |
+
+#### Authoritative Nameserver IP
+
+Use this selector to match against the IP address of the authoritative name server IP address.
+
+| UI name | API example |
+| -- | -- |
+| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` |
+
 
 ### Operators
 

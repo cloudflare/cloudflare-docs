@@ -1,6 +1,5 @@
 ---
 order: 1
-hidden: true
 ---
 
 # JumpCloud
@@ -11,7 +10,7 @@ hidden: true
 1. Navigate to **Device Management** > **Software Management**.
 1. Select the *Windows* tab, then click (+).
 
-    ![JumpCloud Software Management for Windows](../../../../../static/documentation/connections/jumpcloud.png)
+    ![JumpCloud Software Management for Windows](../../../../../../static/documentation/connections/jumpcloud.png)
 
 1. Enter a unique display name in the *Software Name* field.
 1. Enter `warp` into the *Package ID* field.
@@ -40,13 +39,13 @@ hidden: true
 1. Click **save**.
 1. Click **save** again.
 
-## Mac
+## macOS
 
 1. Log in to the [JumpCloud Admin Portal](https://console.jumpcloud.com).
 1. Navigate to **Device Management** > **Software Management**.
 1. Select the *Apple* tab, then click (+).
 
-    ![JumpCloud Software Management for Mac](../../../../../static/documentation/connections/jumpcloud.png)
+    ![JumpCloud Software Management for Mac](../../../../../../static/documentation/connections/jumpcloud.png)
 
 1. On the *Details* tab, enter a unique display name in **Software Description**.
 1. Add the app's URL location to **Software Package URL**.
