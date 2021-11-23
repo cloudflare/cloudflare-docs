@@ -1,6 +1,6 @@
 ---
 title: Linux
-order: 6
+order:
 ---
 
 # Linux desktop client

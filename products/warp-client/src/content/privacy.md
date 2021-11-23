@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 3
 ---
 
 # Privacy
