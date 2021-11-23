@@ -23,18 +23,19 @@ Below the output of `dig` commands towards the above hostnames:
 
 ```bash
 $ dig region1.argotunnel.com
-
+...
 ;; ANSWER SECTION:
 region1.argotunnel.com.	86400	IN	A	198.41.192.7
 region1.argotunnel.com.	86400	IN	A	198.41.192.47
 region1.argotunnel.com.	86400	IN	A	198.41.192.107
 region1.argotunnel.com.	86400	IN	A	198.41.192.167
 region1.argotunnel.com.	86400	IN	A	198.41.192.227
+...
 ```
 
 ```bash
 $ dig region2.argotunnel.com
-
+...
 ;; ANSWER SECTION:
 region2.argotunnel.com.	300	IN	A	198.41.200.193
 region2.argotunnel.com.	300	IN	A	198.41.200.233
@@ -46,7 +47,7 @@ region2.argotunnel.com.	300	IN	A	198.41.200.113
 
 ```bash
 $ dig api.cloudflare.com
-
+...
 ;; ANSWER SECTION:
 api.cloudflare.com.     41      IN      A       104.19.193.29
 api.cloudflare.com.     41      IN      A       104.19.192.29
