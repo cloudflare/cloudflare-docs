@@ -1,19 +1,12 @@
 ---
 title: FAQ
 order: 4
+pcx-content-type: faq
 ---
 
 # FAQ
 
-## Known issues
-
-Applications or sites that rely on location information to enforce content licensing agreements (certain games, video streaming, music streaming, radio streaming, etc.) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
-
----------------------
-
-## Frequently asked questions
-
-### Why am I not connecting to a closer Cloudflare point of presence?
+## Why am I not connecting to a closer Cloudflare point of presence?
 
 As our [Network Map](https://www.cloudflare.com/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the point of presence (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 * We work hard to prevent it, but sometimes your nearest colo might be having problems; [check here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
@@ -33,3 +26,9 @@ Cloudflare WARP is in part powered by 1.1.1.1, the world's fastest DNS resolver.
 ### WARP Performance FAQ
 
 Cloudflare WARP and the 1.1.1.1 w/ WARP Application go through performance testing that includes battery, network and CPU on a regular basis. In addition, both applications are used by millions of users worldwide that help us stay on top of issues across a wide variety of devices, networks, sites and applications.
+
+---
+
+## Known issues
+
+Applications or sites that rely on location information to enforce content licensing agreements (certain games, video streaming, music streaming, radio streaming, etc.) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
