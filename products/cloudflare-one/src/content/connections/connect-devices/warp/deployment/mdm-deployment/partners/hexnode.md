@@ -14,9 +14,9 @@ order: 1
 
 </Aside>
 
-To setup Cloudflare for Teams on Windows using Hexnode, 
-1. Create a script file with `.bat`, `.cmd`, and `.ps1` file formats to download, install and configure the Cloudflare WARP client Windows application on the device.
-1. Listed below is a sample script with all the configurable parameters. 
+To setup Cloudflare for Teams on Windows using Hexnode:
+
+1. Create a script file with `.bat`, `.cmd`, and `.ps1` file formats to download, install and configure the Cloudflare WARP client Windows application on the device. Listed below is a sample script with all the configurable parameters:
 
     ```python
     <# Choose file name for downloading application #>
@@ -56,6 +56,8 @@ To setup Cloudflare for Teams on Windows using Hexnode,
 * macOS Catalina, High Sierra or Big Sur with a 64-bit CPU
 * Minimum hard disk space 75 MB and memory 35 MB.
 * Wi-Fi or LAN connection
+
+To setup Cloudflare for Teams on macOS using Hexnode:
 
 </Aside>
 
@@ -152,7 +154,7 @@ To remotely set up the Cloudflare WARP iOS client on the device:
 
 </Aside>
 
-To deploy and configure the WARP client via Hexnode UEM:
+To setup Cloudflare for Teams on Android using Hexnode:
 
 1. Approve the app [1.1.1.1: Faster & Safer Internet](https://play.google.com/work/apps/details?id=com.cloudflare.onedotonedotonedotone) as a Managed Google Play app.
     1. On your Hexnode console, navigate to the Apps tab. 
