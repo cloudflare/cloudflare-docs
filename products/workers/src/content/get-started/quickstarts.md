@@ -33,6 +33,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
 ## Templates
 
 <WorkerStarter
+  title="Ideal Development Starter"
+  description="Typescript starter that takes care to ensure minimal recompilation times with esbuild and bundle upload time with miniflare."
+  repo="mrbbot/miniflare-typescript-esbuild-jest"
+/>
+  
+<WorkerStarter
   title="JavaScript Starter"
   description="A bare-bones Workers starter project, in JavaScript."
   repo="cloudflare/worker-template"
