@@ -34,7 +34,6 @@ jobs:
             products:
               - 'products/**'
       - run: echo ${{ steps.filter.outputs.products_files }}
-
       - name: Setup NodeJS
         uses: actions/setup-node@v1
         with:
@@ -52,14 +51,14 @@ jobs:
         if: ${{ env.pr_number != '0' }}
         uses: actions/checkout@v2
         with:
-          repository: 'cloudflare/cloudflare-docs-engine'
-          path: 'engine'
+          repository: "cloudflare/cloudflare-docs-engine"
+          path: "engine"
 
       - name: Install docs engine
         if: ${{ env.pr_number != '0' }}
         run: |
           cd $GITHUB_WORKSPACE/engine
-          npm link
+          yarn link
       - name: Build updated docs
         if: ${{ env.pr_number != '0' }}
         run: |
@@ -67,8 +66,8 @@ jobs:
             echo "Building $tile..."
             if [ $tile == "developers.cloudflare.com" ]; then
               pushd developers.cloudflare.com
-              npm install
-              npm run build
+              yarn install
+              yarn build
               popd
             else
               if [ ! -d "products/$tile" ]; then
@@ -76,16 +75,16 @@ jobs:
                 continue
               fi
               pushd products/$tile
-              npm link cloudflare-docs-engine
+              yarn link cloudflare-docs-engine
               mkdir .docs
-              npm run ghactionsbootstrap
-              npm run build
+              yarn ghactionsbootstrap
+              yarn build
               popd
             fi
           done < <(echo ${{ steps.filter.outputs.products_files }} | node ./get-products-from-file-paths.js)
         env:
           WORKERS_ENV: development
-      
+
       - name: Publish preview
         if: ${{ env.pr_number != '0' }}
         run: |
@@ -93,7 +92,7 @@ jobs:
           mkdir -p "$HOME/.wrangler"
           chmod -R 770 "$HOME/.wrangler"
           export CF_API_TOKEN=${{ secrets.CF_API_TOKEN }}
-          npm install "@cloudflare/wrangler" -g
+          yarn global add "@cloudflare/wrangler"
           COPIED="false"
           while read tile; do 
             if [ $tile == "developers.cloudflare.com" ]; then

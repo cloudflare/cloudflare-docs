@@ -178,8 +178,8 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
-          npm run build
+          yarn install
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -210,10 +210,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -244,10 +244,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -278,10 +278,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -312,10 +312,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -346,10 +346,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -380,10 +380,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -414,10 +414,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -446,10 +446,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -478,10 +478,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -510,10 +510,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -529,7 +529,7 @@ jobs:
           workingDirectory: "products/cloudflare-one"
           environment: "production"
           wranglerVersion: "1.13.0"
-          
+
   deploy-dns:
     runs-on: ubuntu-latest
     needs: changes
@@ -544,10 +544,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -563,7 +563,6 @@ jobs:
           workingDirectory: "products/dns"
           environment: "production"
           wranglerVersion: "1.13.0"
-
 
   deploy-ddos-protection:
     runs-on: ubuntu-latest
@@ -579,10 +578,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -590,14 +589,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ddos-protection"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ddos-protection"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -613,10 +612,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -647,10 +646,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -681,10 +680,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -700,7 +699,7 @@ jobs:
           workingDirectory: "products/email-routing"
           environment: "production"
           wranglerVersion: "1.13.0"
-  
+
   deploy-events:
     runs-on: ubuntu-latest
     needs: changes
@@ -715,10 +714,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -749,10 +748,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -783,10 +782,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -817,10 +816,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -851,10 +850,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -885,10 +884,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -919,10 +918,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -953,10 +952,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -987,10 +986,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1021,10 +1020,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1055,10 +1054,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1089,10 +1088,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1100,14 +1099,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-error-logging"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-error-logging"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -1123,10 +1122,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1157,10 +1156,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1198,10 +1197,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1232,10 +1231,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1266,10 +1265,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1298,10 +1297,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1332,10 +1331,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1366,10 +1365,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1398,10 +1397,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1464,10 +1463,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1498,10 +1497,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1532,10 +1531,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1566,10 +1565,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1600,10 +1599,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1634,10 +1633,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1668,10 +1667,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1702,10 +1701,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1736,10 +1735,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1770,10 +1769,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
