@@ -19,7 +19,7 @@ Here is an example of how to configure your Mac to synchronize time from time.cl
 4. Enter your password
 5. Next to Set date and time automatically, enter `time.cloudflare.com`
 
-![MacOS](../static/mactime.png)
+![macOS](../static/mactime.png)
 
 ... and you're all set!
 

@@ -214,9 +214,9 @@ $ curl -v --cert client.pem --key client-key.pem https://iot.widgetcorp.tech
 
 ### Testing in the browser
 
-The instructions here cover usage with a computer running MacOS.
+The instructions here cover usage with a computer running macOS.
 
-1. In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
+1. In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
 <Aside type='warning' header='Important'>
 
