@@ -1,17 +1,12 @@
 ---
 title: Overview
 order: 0
+pcx-content-type: overview
 ---
 
 # Cloudflare WARP client
 
-<Aside>
-
-For more information on how to use WARP to enhance your Teams experience, please check out the <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp">Cloudflare for Teams documentation</a>.
-
-</Aside>
-
-The Cloudflare WARP client allows individuals and organizations to have a faster, more secure and more private experience online. Choose the mode that best fits your needs, and make your Internet safer today:
+The Cloudflare WARP client allows individuals and organizations to have a faster, more secure and more private experience online. The WARP client has several modes, to better suit different connection needs:
 
 * **1.1.1.1**
 * **1.1.1.1 with WARP**
@@ -19,7 +14,11 @@ The Cloudflare WARP client allows individuals and organizations to have a faster
 * **WARP+**
 * **WARP Unlimited**
 
-Scroll down for a description of each mode.
+<Aside>
+
+For more information on how to use WARP to enhance your Teams experience, refer to the <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp">Cloudflare for Teams documentation</a>.
+
+</Aside>
 
 ## 1.1.1.1
 
