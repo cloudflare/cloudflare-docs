@@ -55,7 +55,7 @@ async function handleRequest(request) {
 }
 ```
 
-After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function, and the other should be returned as part of a `Response` with status `101`, indicating the Switching Protocols response:
+After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101), indicating the request is switching protocols:
 
 ```js
 async function handleRequest(request) {
