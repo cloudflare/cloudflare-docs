@@ -5,27 +5,12 @@ pcx-content-type: concept
 
 # Gateway 
 
-Use the Gateway Overview page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
+Use the Analytics - Gateway page to see the top allowed and blocked requests across all of your locations. You can filter the data by selecting a specific location and/or time.
 
-![Overview analytics](../static/documentation/logs/gateway-dash-overview-page.png)
+* **Requests.** This chart shows an overview of the number of requests made by end users within the time period you specify. It shows a breakdown of requests based on the decision Gateway took — `Allowed` or `Blocked`.
 
-## Filter analytics by time
+* **Allowed requests.** This chart shows a breakdown of the five domains which received the highest number of `Allowed` requests. It also shows the five domains which received the lowest amount of `Allowed` requests. By clicking **View all** to the right of either section of the chart, you will see a list of highest 100 and lowest 100 domains ranked by number of `Allowed` requests.
 
-You can filter the overview page by time. You can view analytics for the last 24 hours using Gateway's Free tier.
+* **Top blocked requests.** This chart shows a breakdown of the five domains which received the highest number of `Blocked` requests. It also shows the five domains which received the lowest number of `Blocked` requests. By clicking **View all** to the right of either section of the chart, you'll see a list of highest 100 and lowest 100 domains ranked by number of `Blocked` requests.
 
-![Overview filter by time](../static/documentation/logs/gateway-dash-filter-by-time.png)
-
-## Filter analytics by location
-
-You can filter by the location name.
-![Overview filter by location](../static/documentation/logs/gateway-dash-filter-by-location.png)
-
-## View top allowed and blocked domains
-
-You can view most seen allowed and blocked requests across your locations.
-![Overview filter by time](../static/documentation/logs/gateway-dash-top-allowed-and-blocked-requests.png)
-
-## View top allowed and blocked categories
-
-You can view the top allowed and blocked categories across your locations.
-![Overview filter by time](../static/documentation/logs/gateway-dash-top-categories.png)
+* **Requests by category.** The charts in this card show a breakdown of the **Top allowed categories** and the **Top blocked categories** based on the number of requests that Gateway classified as belonging to a content category.

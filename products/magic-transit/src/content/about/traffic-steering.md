@@ -13,7 +13,7 @@ The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top pr
 
 ![Example route priorities](../static/mt-traffic-steering-ecmp-baseline.png)
 
-When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routin. An example of multiple routes with equality priority would  beTunnel 1 versus Tunnel 2.
+When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
 The use of ECMP routing provides load balancing across tunnels with the same priority.
 
@@ -82,7 +82,7 @@ Magic Transit supports a "weight" field that you can apply to a tunnel so that a
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
-Keep in mind that ECMP balances flows probabilistically, the use of weights is only approximate.
+Keep in mind that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
 For more on Magic Transit tunnel weights, contact your Cloudflare customer service manager.
 

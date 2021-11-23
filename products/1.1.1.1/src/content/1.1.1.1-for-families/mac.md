@@ -1,11 +1,12 @@
 ---
 order:
+title: macOS
 pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
-# macOS
+# Set up 1.1.1.1 for Families - macOS
 
 Follow these steps to configure 1.1.1.1 for Families:
 

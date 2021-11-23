@@ -28,11 +28,17 @@ products/cloudflare-one/ @cloudflare/PCX
 # Developers homepage
 developers.cloudflare.com/ @cloudflare/PCX
 
+# DDoS Protection
+products/ddos-protection/ @cloudflare/PCX
+
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
 products/docs-engine/ @cloudflare/PCX
+
+# Email Routing
+products/email-routing/ @cloudflare/PCX
 
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
@@ -45,9 +51,6 @@ products/fundamentals/ @cloudflare/PCX
 
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
-
-# Image Resizing
-products/image-resizing/ @kornelski @cloudflare/PCX
 
 # Cloudflare Images
 products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX

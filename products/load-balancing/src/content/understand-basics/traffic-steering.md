@@ -1,7 +1,7 @@
 ---
 title: Traffic steering
 order: 12
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
 import RegionMapping from "../_partials/_region-mapping.md"

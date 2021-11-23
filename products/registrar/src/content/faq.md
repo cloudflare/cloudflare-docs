@@ -23,7 +23,7 @@ Domain transfers sometimes fail. Your account team can help you address what fai
 
 If you cannot solve the issue, open a support ticket or contact your account team.
 
-### Why did my domain's expiration date changed after transferring it to Cloudflare?
+### Why did my domain's expiration date change after transferring it to Cloudflare?
 
 ICANN requires that any transfer also extends the expiration date of your domain by at least one year — that is one year from your current expiration date, not one year from the date of transfer. For example, if you transfer a domain on October 10, 2021, but it expires on March 10, 2022, your new expiration date will be March 10, 2023.
 
@@ -94,3 +94,7 @@ In summary, here is what will happen after a domain expires:
 ### When will I be billed?
 
 You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
+
+### Is there a fee to transfer a .UK domain?
+
+No, there is no fee to transfer a `.uk` domain. Also, an additional year is NOT added during the transfer process. However, if the domain is nearing the expiration date and is set to auto-renew, it may be automatically renewed shortly after the completion of the transfer.

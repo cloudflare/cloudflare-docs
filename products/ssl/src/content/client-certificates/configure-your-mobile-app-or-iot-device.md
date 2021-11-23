@@ -5,13 +5,9 @@ pcx-content-type: tutorial
 
 # Configure your mobile app or IoT device
 
-To configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield), follow this workflow:
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield).
 
-* [Create Cloudflare-issued certificates](#create-cloudflare-issued-certificates).
-* [Embed the certificate in your mobile app](#embed-the-client-certificate-in-your-mobile-app).
-* [Embed the certificate on your IoT device](#embed-the-client-certificate-on-your-iot-device).
-* [Enable mutual Transport Layer Security (mTLS)](#enable-mtls).
-* [Configure API Shield](#configure-api-shield-to-require-client-certificates) to require the use of Cloudflare-issued certificates.
+## Scenario details
 
 This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.
 
@@ -19,7 +15,7 @@ To keep this example simple, the API is implemented as a Cloudflare Worker (borr
 
 Temperatures are stored in [Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works) using the source IP address as a key, but you can easily use a [value from the client certificate](https://developers.cloudflare.com/access/service-auth/mtls-headers/), such as the fingerprint.
 
-The example API code below saves a temperature and timestamp into KV when a POST is made, and returns the most recent 5 temperatures when a GET request is made.
+The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
 ```js
 const defaultData = { temperatures: [] }
@@ -94,7 +90,7 @@ addEventListener('fetch', event => {
 
 --------
 
-## Validate API
+## Step 1 — Validate API
 
 ### POST sample data to API
 
@@ -137,7 +133,7 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 
 --------
 
-## Create Cloudflare-issued certificates
+## Step 2 — Create Cloudflare-issued certificates
 
 Before you can use API Shield to protect your API or web application, you must create Cloudflare-issued client certificates.
 
@@ -257,7 +253,7 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 --------
 
-## Embed the client certificate in your mobile app
+## Step 3 — Embed the client certificate in your mobile app
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
 
@@ -274,12 +270,15 @@ In a real-world deployment, a bootstrap certificate should only be used in conju
 ### Embed the client certificate in an Android app
 
 The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in ``AndroidManifest.xml`` to allow an Internet connection.
+
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
 For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may also store these files in other secure manners. 
 
 The following example uses an ``OkHttpClient``, but you may also use other clients such as ``HttpURLConnection`` in similar ways. The key is to use the ``SSLSocketFactory``.
+
 ```java
 private OkHttpClient setUpClient() {
     try {
@@ -343,7 +342,7 @@ The above function returns an ``OkHttpClient`` embedded with the client certific
 
 --------
 
-## Embed the client certificate on your IoT device
+## Step 4 — Embed the client certificate on your IoT device
 
 To prepare the IoT device for secure communication with the API endpoint, embed the certificate on the device and configure the device to use the certificate when making POST requests.
 
@@ -383,7 +382,7 @@ def main():
     print("Response status code: %d" % r.status_code)
 ```
 
-When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent, and the script sends the contents of `/etc/ssl/certs/sensor.pem` and then, as required to complete the SSL/TLS handshake, demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
+When the script attempts to connect to `https://shield.upinatoms.com/temps`, Cloudflare requests that a client certificate is sent and the script sends the contents of `/etc/ssl/certs/sensor.pem`. Then, as required to complete the SSL/TLS handshake, the script demonstrates it has possession of `/etc/ssl/private/sensor-key.pem`.
 
 Without the client certificate, the Cloudflare rejects the request:
 
@@ -403,14 +402,12 @@ Response status code: 201
 
 --------
 
-## Enable mTLS
+## Step 5 — Enable mTLS
 
-After creating Cloudflare-issued certificates, the next step is to enable mTLS for the hosts you want to protect with API Shield.
-
-For instructions, see [_Enable mutual Transport Layer Security_](/client-certificates/enable-mtls).
+After creating Cloudflare-issued certificates, the next step is to [enable mTLS](../enable-mtls) for the hosts you want to protect with API Shield.
 
 --------
 
-## Configure API Shield to require client certificates
+## Step 6 — Configure API Shield to require client certificates
 
 To configure API Shield to require client certificates, [create a mTLS rule](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).

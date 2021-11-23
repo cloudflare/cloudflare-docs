@@ -17,10 +17,6 @@ To set up SAML with Centrify as your identity provider:
 
 1. Select **Add Web Apps**.
 
-    The **Add Web Apps** card displays.
-
-    ![Centrify Add Web Apps card](../../static/documentation/identity/saml-centrify/saml-centrify-2.png)
-
 1. Click the **Custom** tab.
 
 1. Next to the **SAML** icon click **Add**.
@@ -35,8 +31,6 @@ To set up SAML with Centrify as your identity provider:
 
 1. In the middle menu pane, select **Trust**.
 
-    ![Centrify Setting Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-4.png)
-
 1. Choose the **Manual Configuration** option.
 
 1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
@@ -49,23 +43,15 @@ To set up SAML with Centrify as your identity provider:
 
 1. In the middle menu pane, select **User Access**.
 
-    ![Centrify Settings User Access](../../static/documentation/identity/saml-centrify/saml-centrify-5.png)
-
-1. Click **Add**.
-
-    The **Select Role** dialog displays.
+1. Click **Add**. The **Select Role** dialog displays.
 
     ![Centrify Settings Select Role dialog](../../static/documentation/identity/saml-centrify/saml-centrify-6.png)
 
-1. Complete your roles access assignments.
-
-    The Role rules display on the **User Access** card.
+1. Complete your roles access assignments. The Role rules display on the **User Access** card.
 
     ![Centrify Added Roles list](../../static/documentation/identity/saml-centrify/saml-centrify-7.png)
 
 1. In the middle menu pane, select **SAML Response**.
-
-    ![Centrify Settings  SAML Response page](../../static/documentation/identity/saml-centrify/saml-centrify-8.png)
 
 1. Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
@@ -76,8 +62,6 @@ To set up SAML with Centrify as your identity provider:
 1. Click **Save**.
 
 1. Select **Settings** again from the left menu pane, and **Trust**.
-
-    ![Centrify Settings Trust page](../../static/documentation/identity/saml-centrify/saml-centrify-10.png)
 
 1. Select the **Manual Configuration** option.
 

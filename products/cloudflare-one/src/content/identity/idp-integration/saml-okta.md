@@ -16,26 +16,16 @@ To set up SAML with Okta as your identity provider:
 
     ![Okta Applications page](../../static/documentation/identity/saml-okta/saml-okta-1.png)
 
-1. Click **Create New App**.
-
-    ![Okta Create New App](../../static/documentation/identity/saml-okta/saml-okta-2.png)
-
-    The Create a New Application Integration card displays.
+1. Click **Create New App**. The Create a New Application Integration card displays.
 
 1. Select **SAML 2.0**.
 
-    ![Okta Create a New Application Integration card](../../static/documentation/identity/saml-okta/saml-okta-3.png)
-
-1. Click **Create**.
-
-    The **Create SAML Integration** card displays.
+1. Click **Create**. The **Create SAML Integration** card displays.
 
     ![Okta Create SAML Integration card](../../static/documentation/identity/saml-okta/saml-okta-4.png)
 
 1. Enter an **App name**.
-1. Click **Next**.
-
-    The SAML Settings card displays.
+1. Click **Next**. The SAML Settings card displays.
 
     ![Okta SAML Settings card](../../static/documentation/identity/saml-okta/saml-okta-5.png)
 
@@ -49,31 +39,21 @@ To set up SAML with Okta as your identity provider:
 1. In **Attribute Statements** **Name** field, enter “email” to create a new attribute.
 1. In the **Value** field, enter a user email.
 1. Click **Next**.
-1. Click **Finish**.
+1. Click **Finish**. The _Applications_ page displays.
 
     ![Okta Create SAML Application page](../../static/documentation/identity/saml-okta/saml-okta-6.png)
 
-    The _Applications_ page displays.
+1. Click **Assign Applications**. The _application name_ page displays, where you assign groups or users who can access this application. Our example application name is _samlapp_.
 
-1. Click **Assign Applications**.
+1. Click **People** or **Groups**. The _Assign application name to Groups_ card displays, where you grant users or groups permission to access your application.
 
-    The _application name_ page displays where you assign groups or users who can access this application. Our example application name is _samlapp_.
+    ![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
 
-1. Click **People** or **Groups**.
-
-    The _Assign application name to Groups_ card displays, where you grant users or groups permission to access your application.
-
- ![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
-
-1. Click **Done**.
-
-    The assignments display on the Application page.
+1. Click **Done**. The assignments display on the Application page.
 
     ![Okta Role Assignments](../../static/documentation/identity/saml-okta/saml-okta-8.png)
 
 1. Choose the **Sign On** tab to retrieve the identity provider information.
-
-    ![Okta SAML Settings Sign On page](../../static/documentation/identity/saml-okta/saml-okta-9.png)
 
 1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
 

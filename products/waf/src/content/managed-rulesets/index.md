@@ -1,17 +1,17 @@
 ---
 pcx-content-type: concept
-order: 3
+order: 4
 ---
 
-# Available Managed Rulesets
+# Managed Rulesets
 
 Cloudflare provides the following Managed Rulesets in the WAF:
 
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -26,10 +26,6 @@ Cloudflare provides the following Managed Rulesets in the WAF:
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='https://support.cloudflare.com/hc/articles/200172016#sJbboLurEVhipzWYJQnyz'>Cloudflare OWASP Core Ruleset</a></td>
       <td>Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.</td>
-    </tr>
-    <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/ddos-l7-mitigation#the-cloudflare-http-ddos-managed-ruleset'>Cloudflare HTTP DDoS Managed Ruleset (Beta)</a></td>
-      <td>Created by Cloudflare to give users more control over how and when Cloudflare's automated mitigation systems will handle layer 7 DDoS attacks. The rules in this Managed Ruleset are always enabled. However, you can define overrides to modify the rule actions and the sensitivity of the various rules.</td>
     </tr>
   </tbody>
 </table></TableWrap>
@@ -48,8 +44,8 @@ The following rulesets run in the response phase:
 <TableWrap><table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
-      <td style='width:30%; white-space:normal'><strong>Ruleset</strong></td>
-      <td style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></td>
+      <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
+      <th style='width:70%; word-wrap:break-word; white-space:normal'><strong>Description</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -59,3 +55,11 @@ The following rulesets run in the response phase:
     </tr>
   </tbody>
 </table></TableWrap>
+
+## Phases of deployed Managed Rulesets
+
+When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+
+Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
+
+For more information on phases, see [Phases](https://developers.cloudflare.com/ruleset-engine/#phases).

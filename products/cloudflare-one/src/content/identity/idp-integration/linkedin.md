@@ -19,11 +19,7 @@ To configure LinkedIn as an IdP:
 
     ![LinkedIn Create App button](../../static/documentation/identity/linkedin/lin1.png)
 
-1. Sign in to your LinkedIn account.
-
-    ![LinkedIn Login](../../static/documentation/identity/linkedin/lin2.png)
-
-    The **Create an app** screen displays.
+1. Sign in to your LinkedIn account. The **Create an app** screen displays.
 
     ![LinkedIn Create an app page](../../static/documentation/identity/linkedin/lin3.png)
 

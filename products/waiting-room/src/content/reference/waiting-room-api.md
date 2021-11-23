@@ -1,9 +1,8 @@
 ---
-title: Common API calls
 pcx-content-type: reference
 ---
 
-# Use the Cloudflare Waiting Room API
+# API commands
 
 Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 

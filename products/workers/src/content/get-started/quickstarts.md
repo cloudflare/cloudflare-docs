@@ -124,6 +124,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="frandiox/vitessedge-template"
 />
 
+<WorkerStarter
+  title="REST API with Fauna"
+  description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
+  repo="fauna-labs/fauna-workers"
+/>
+
 --------------------------------
 
 ## Other languages

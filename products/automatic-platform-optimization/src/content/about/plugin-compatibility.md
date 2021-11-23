@@ -16,6 +16,8 @@ For questions about a specific plugin not shown in the list, create a thread in 
 - [BigCommerce](https://wordpress.org/plugins/bigcommerce/)
 - [Easy Digital Downloads](https://wordpress.org/plugins/easy-digital-downloads/)
 - [WooCommerce](https://wordpress.org/plugins/woocommerce/)
+- [Redis Object Cache](https://wordpress.org/plugins/redis-cache/)
+- [Object Cache Pro](https://objectcache.pro)
 - [YITH WooCommerce Wishlist](https://wordpress.org/plugins/yith-woocommerce-wishlist/)
 - [WP EasyCart](https://wordpress.org/plugins/wp-easycart/)
 - [Ecwid Ecommerce Shopping Cart](https://wordpress.org/plugins/ecwid-shopping-cart/)

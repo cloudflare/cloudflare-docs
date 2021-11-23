@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content-type: reference
+pcx-content-type: tutorial
 ---
 
 # Connect to 1.1.1.1 using DoH clients

@@ -4,7 +4,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-# Overview
+# Cloudflare Web Analytics
 
 Cloudflare Web Analytics provides free, privacy-first analytics for your website without changing your DNS or using Cloudflare’s proxy. All you need to enable Cloudflare Web Analytics is a Cloudflare account and a JS snippet on your page to start seeing page views and visitors.
 

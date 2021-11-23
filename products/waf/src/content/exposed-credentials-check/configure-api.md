@@ -87,7 +87,7 @@ curl -X POST \
     }
   ],
   "phase": "http_request_firewall_custom"
-}
+}'
 ```
 
 The response returns the created ruleset. Note the presence of the `exposed_credential_check` field on the rule definition.

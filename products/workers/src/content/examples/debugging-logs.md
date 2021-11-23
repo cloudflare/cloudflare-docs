@@ -30,7 +30,7 @@ async function handleRequest(event) {
 
   try {
     response = await fetch(event.request)
-    if (!response.ok) {
+    if (!response.ok && !response.redirected) {
       const body = await response.text()
       throw new Error(
         "Bad response at origin. Status: " +
