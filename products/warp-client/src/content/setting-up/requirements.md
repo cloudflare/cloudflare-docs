@@ -1,6 +1,7 @@
 ---
 title: Requirements
 order: 3
+pcx-content-type: reference
 ---
 
 # Installation requirements
@@ -9,24 +10,24 @@ order: 3
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td><strong>OS version</strong></td>
       <td>Windows 8+</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
-      <td>64bit only</td>
+      <td><strong>OS type</strong></td>
+      <td>64-bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td><strong>Hard drive space</strong></td>
       <td>184MB</td>
     </tr>
     <tr>
       <td><strong>Memory</strong></td>
-      <td>3MB</td>
+      <td>3 MB</td>
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>WiFi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -37,24 +38,24 @@ __[Download Cloudflare_WARP_Release-x64.msi](https://www.cloudflarewarp.com/Clou
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td><strong>OS version</strong></td>
       <td>High Sierra+ (10.13+)</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
+      <td><strong>OS type</strong></td>
       <td>Intel & M1</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
-      <td>75MB</td>
+      <td><strong>Hard drive space</strong></td>
+      <td>75 MB</td>
     </tr>
     <tr>
       <td><strong>Memory</strong></td>
-      <td>35MB</td>
+      <td>35 MB</td>
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>WiFi or LAN</td>
     </tr>
   </tbody>
 </table>
@@ -69,20 +70,20 @@ __[Download Cloudflare_WARP.zip](https://www.cloudflarewarp.com/Cloudflare_WARP.
       <td>Ubuntu, Redhat Enterprise Linux, Centos</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
+      <td><strong>OS type</strong></td>
       <td>x64</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
-      <td>200MB</td>
+      <td><strong>Hard drive space</strong></td>
+      <td>200 MB</td>
     </tr>
     <tr>
       <td><strong>Memory</strong></td>
-      <td>35MB</td>
+      <td>35 MB</td>
     </tr>
     <tr>
       <td><strong>Network Types</strong></td>
-      <td>WIFI or LAN</td>
+      <td>WiFi or LAN</td>
     </tr>
   </tbody>
 </table>
