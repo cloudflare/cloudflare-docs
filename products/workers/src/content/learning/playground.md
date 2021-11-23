@@ -53,7 +53,7 @@ To test a raw HTTP request — not in an HTML previewer, for example, to test a 
 
 ## Devtools
 
-For debugging Workers inside the playground, use the the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
+For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
 
 ### Network tab
 
@@ -65,7 +65,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ### Sources
 
-**Sources** is the sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
+**Sources** displays the sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
 
 <!--
 
