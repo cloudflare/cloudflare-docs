@@ -4,7 +4,7 @@ title: Router
 pcx-content-type: how-to
 ---
 
-# Setup 1.1.1.1 - Router
+# Set up 1.1.1.1 - Router
 
 Follow these steps to configure 1.1.1.1:
 

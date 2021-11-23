@@ -4,7 +4,7 @@ title: Azure
 pcx-content-type: how-to
 ---
 
-# Setup 1.1.1.1 - Azure
+# Set up 1.1.1.1 - Azure
 
 Follow these steps to configure 1.1.1.1:
 

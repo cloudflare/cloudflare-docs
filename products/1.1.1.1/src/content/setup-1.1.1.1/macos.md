@@ -7,7 +7,7 @@ pcx-content-type: how-to
 import CaptivePortals from "../_partials/_captive-portals.md"
 import Encrypted from "../_partials/_encrypted.md"
 
-# Setup 1.1.1.1 - macOS
+# Set up 1.1.1.1 - macOS
 
 Follow these steps to configure 1.1.1.1:
 
