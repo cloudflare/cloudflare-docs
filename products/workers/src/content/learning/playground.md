@@ -39,13 +39,15 @@ To get familiar with Workers, experiment with the Playground by borrowing [Examp
 
 ## Using the Playground
 
-When you have code you are ready to test, select **Update** to preview at the bottom of the script panel.
+To access the dashboard Playground, log into your Cloudflare account and go to **Account Home** > **Workers** > **your Worker script** > **Quick edit**.
+
+When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
 
 Now you should be able to see a preview on the right side of that exact code running just as it would in a browser. Enter your website’s address in the right section to preview the Workers script running on that site.
 
 You can modify the script and click the preview button to view the effect on the request.
 
-To test a raw HTTP request — not in an HTML previewer, for example to test a `POST` request — go to the **Test** tab in the previewer. To run the HTTP preview, select **Update**.
+To test a raw HTTP request — not in an HTML previewer, for example, to test a `POST` request — go to **HTTP**. To run the HTTP preview, select **Run Test**.
 
 --------------------------------
 
