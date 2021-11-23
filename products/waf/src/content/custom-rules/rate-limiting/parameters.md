@@ -15,7 +15,7 @@ The available Rate Limiting rule parameters are the following:
 
 <Definitions>
 
--  `expression` <Type>String</Type>
+- `expression` <Type>String</Type>
      - Field name in the dashboard: **If incoming requests match** (use the Rule Builder or the Expression Editor).
      - Expression you are matching traffic on.
 
