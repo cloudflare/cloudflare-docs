@@ -11,7 +11,7 @@ WebSocket pricing and limits details are currently not available. Developers are
 
 </Aside>
 
-WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
@@ -29,7 +29,7 @@ The `wrangler dev` tool currently does not support connecting to Workers via the
 
 </Aside>
 
-WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real-time. This guide will show you how to set up a WebSocket server in Workers.
+WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 
 A client can make a WebSocket request in the browser by instantiating a new instance of `WebSocket`, passing in the URL for your Workers function:
 
@@ -74,7 +74,7 @@ async function handleRequest(request) {
 }
 ```
 
-An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It is common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
+The `WebSocketPair` constructor returns an Object, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It is common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
 In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
@@ -151,7 +151,7 @@ For an example of this in practice, refer to the [`websocket-template`](https://
 
 A Worker can also establish a WebSocket connection to a remote server. 
 
-Cloudflare does not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the upgrade header set.
+Cloudflare does not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the `Upgrade` header set.
 
 ```js
 async function websocket(url) {
