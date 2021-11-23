@@ -54,7 +54,7 @@ api.cloudflare.com.     41      IN      A       104.19.192.29
 ...
 ```
 
-On Windows, you can use PowerShell commands if dig is not available:
+On Windows, you can use PowerShell commands if dig is not available.
 
 To test DNS:
 
