@@ -5,7 +5,9 @@ pcx-content-type: how-to
 
 # Managed deployment
 
-Bigger organizations using [MDM tools](/connections/connect-devices/warp/deployment/mdm-deployment/partners) like Intune or JAMF can deploy WARP to their entire fleet of devices from a single operation.
+Bigger organizations can deploy WARP automatically to their fleet of devices in a single operation. This can be done using [mobility management solutions](/connections/connect-devices/warp/deployment/mdm-deployment/partners) like Intune or JAMF, or by executing `.msi` file on desktop machines. 
+
+Here is a list of generic instructions to deploy WARP on your organization's devices.
 
 ---
 
