@@ -76,7 +76,7 @@ The IP address of the request’s target.
 
 | UI name | API example |
 | -- | -- |
-| Destination IP | `net.dst.ip == "1.1.1.0/31"` |
+| Destination IP | `net.dst.ip == "10.0.0.0/8"` |
 
 #### Destination Port
 
@@ -100,7 +100,7 @@ The IP address of the user making the request.
 
 | UI name | API example |
 | -- | -- |
-| Source IP | `net.src.ip == "1.1.1.0/31"` |
+| Source IP | `net.src.ip == "10.0.0.0/8"` |
 
 #### Source Port
 
