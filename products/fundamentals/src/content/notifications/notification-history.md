@@ -9,7 +9,7 @@ Notification History is a log of notifications that have been sent to your accou
 
 ## How to access Notification History
 
-Currently, customers can access Notification History [via the Cloudflare API](https://api.cloudflare.com/#notification-history-properties). Using `GET`, customers can retrieve a list of history records for notifications sent to an account. The records are displayed for last 30 or 90 days, based on type of plan.
+Currently, customers can access Notification History [via the Cloudflare API](https://api.cloudflare.com/#notification-history-properties). Using `GET`, customers can retrieve a list of history records for notifications sent to an account. The records are displayed for the last 30 or 90 days, based on type of plan.
 
 The syntax is as follows:
 
