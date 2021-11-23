@@ -5,7 +5,7 @@ order: 17
 
 # Rate limiting parameters
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
 This feature is only available for selected customers on an Enterprise plan.
 

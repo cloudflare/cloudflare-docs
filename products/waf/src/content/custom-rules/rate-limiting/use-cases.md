@@ -6,7 +6,7 @@ order: 19
 
 # Common rate limiting use cases
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
 This feature is only available for selected customers on an Enterprise plan.
 
