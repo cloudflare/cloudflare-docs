@@ -4,7 +4,7 @@
 
 - Durable Object stubs that receive an overload exception will be permanently broken to match the behavior of other exception types.
 - Fixed issue where preview service claimed Let’s Encrypt certificates were expired.
-- [structuredClone()](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) is now supported.
+- [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) is now supported.
 
 ## 11/12/2021
 
@@ -13,8 +13,8 @@
 
 ## 11/5/2021
 
-- Upgrade to V8 9.6. This adds support for WebAssembly reference types. See [V8 release v9.6 · V8](https://v8.dev/blog/v8-release-96) for more details.
-- Streams: When using the BYOB reader, the ArrayBuffer of the provided TypedArray should be detached, per the Streams spec. Because Workers was not previously enforcing that rule, and changing to comply with the spec could breaking existing code, a new compatibility flag, [streams_byob_reader_detaches_buffer](https://github.com/cloudflare/cloudflare-docs/pull/2644), has been introduced that will be enabled by default on 2021-11-10. User code should never try to re-use an ArrayBuffer that has been passed in to a BYOB readers read() method. The more recently added extension method readAtLeast() will always detach the ArrayBuffer and is unaffected by the compatibility flag setting.
+- Upgrade to V8 9.6. This adds support for WebAssembly reference types. Refer to the [V8 release v9.6 · V8](https://v8.dev/blog/v8-release-96) for more details.
+- Streams: When using the BYOB reader, the `ArrayBuffer` of the provided TypedArray should be detached, per the Streams spec. Because Workers was not previously enforcing that rule, and changing to comply with the spec could breaking existing code, a new compatibility flag, [streams_byob_reader_detaches_buffer](https://github.com/cloudflare/cloudflare-docs/pull/2644), has been introduced that will be enabled by default on 2021-11-10. User code should never try to reuse an `ArrayBuffer` that has been passed in to a BYOB readers `read()` method. The more recently added extension method `readAtLeast()` will always detach the `ArrayBuffer` and is unaffected by the compatibility flag setting.
 
 ## 10/21/2021
 
@@ -22,7 +22,7 @@
 - The `unhandledrejection` and `rejectionhandled` events are now supported.
 - The `ReadableStreamDefaultReader` and `ReadableStreamBYOBReader` constructors are now supported.
 - Added non-standard `ReadableStreamBYOBReader` method `.readAtLeast(size, buffer)` that can be used to return a buffer with at least `size` bytes. The `buffer` parameter must be an `ArrayBufferView`. Behavior is identical to `.read()` except that at least `size` bytes are read, only returning fewer if EOF is encountered. One final call to `.readAtLeast()` is still needed to get back a `done = true` value.
-- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, see: https://developers.cloudflare.com/workers/platform/compatibility-dates
+- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to: https://developers.cloudflare.com/workers/platform/compatibility-dates
 
 ## 10/14/2021
 
