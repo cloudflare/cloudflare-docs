@@ -1,6 +1,5 @@
 ---
 order: 1
-hidden: true
 ---
 
 # Intune
@@ -26,51 +25,7 @@ hidden: true
 
 Intune is now configured to deploy the WARP client.
 
-## iOS
-
-The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via Intune.
-
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments: 
-
-```xml
-<dict>
-    <key>organization</key>
-    <string>yourorganization</string>
-    <key>auto_connect</key> 
-    <integer>1</integer>
-    <key>switch_locked</key> 
-    <false />
-    <key>service_mode</key>
-    <string>warp</string>
-    <key>support_url</key>
-    <string>https://support.example.com</string>
-</dict>
-```
-
-For a description of each argument and what it means, refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
-
-## Android
-
-The WARP client, known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US), allows for an automated install via Intune.
-
-To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
-
-```xml
-<key>organization</key>
-<string>yourorganization</string>
-<key>enable</key>
-<true />
-<key>gateway_unique_id</key>
-<string>your_gateway_doh_subdomain</string>
-<key>service_mode</key>
-<string>warp</string>
-<key>support_url</key>
-<string>https://support.example.com</string>
-```
-
-Refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each value.
-
-## MacOS
+## macOS
 
 The Cloudflare WARP client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally, this `plist` can be wrapped in a `.mobileconfig`.
 
@@ -176,3 +131,47 @@ For a description of each argument and what it means, see [deployment parameters
  ```
 
 [Click here to download](../../../../../static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+
+## iOS
+
+The WARP client, known in the App Store as [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via Intune.
+
+To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments: 
+
+```xml
+<dict>
+    <key>organization</key>
+    <string>yourorganization</string>
+    <key>auto_connect</key> 
+    <integer>1</integer>
+    <key>switch_locked</key> 
+    <false />
+    <key>service_mode</key>
+    <string>warp</string>
+    <key>support_url</key>
+    <string>https://support.example.com</string>
+</dict>
+```
+
+For a description of each argument and what it means, refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
+
+## Android
+
+The WARP client, known in the Google Play store as [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en&gl=US), allows for an automated install via Intune.
+
+To proceed with the installation, here is an example of the XML code you will need, with the accepted arguments:
+
+```xml
+<key>organization</key>
+<string>yourorganization</string>
+<key>enable</key>
+<true />
+<key>gateway_unique_id</key>
+<string>your_gateway_doh_subdomain</string>
+<key>service_mode</key>
+<string>warp</string>
+<key>support_url</key>
+<string>https://support.example.com</string>
+```
+
+Refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each value.
