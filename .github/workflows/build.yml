@@ -28,7 +28,7 @@ jobs:
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
-      http3: ${{ steps.filter.outputs.http3 }}      
+      http3: ${{ steps.filter.outputs.http3 }}
       images: ${{ steps.filter.outputs.images }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
@@ -176,8 +176,8 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
-          npm run build
+          yarn install
+          yarn build
 
   build-1-1-1-1:
     runs-on: ubuntu-latest
@@ -368,7 +368,7 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-          
+
   build-dns:
     runs-on: ubuntu-latest
     needs: changes
@@ -383,11 +383,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-
+          yarn ghactionsbootstrap
+          yarn build
 
   build-ddos-protection:
     runs-on: ubuntu-latest
@@ -403,10 +402,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
 
   build-distributed-web:
     runs-on: ubuntu-latest
@@ -460,11 +459,11 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-  
+          yarn ghactionsbootstrap
+          yarn build
+
   build-events:
     runs-on: ubuntu-latest
     needs: changes
@@ -558,7 +557,7 @@ jobs:
           mkdir .docs
           npm run ghactionsbootstrap
           npm run build
-  
+
   build-images:
     runs-on: ubuntu-latest
     needs: changes
