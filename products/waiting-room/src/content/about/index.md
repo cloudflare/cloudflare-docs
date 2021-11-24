@@ -1,10 +1,9 @@
 ---
-title: About
 order: 2
 pcx-content-type: concept
 ---
 
-# About Cloudflare Waiting Room
+# About
 
 Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down.
 

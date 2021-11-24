@@ -7,35 +7,41 @@ pcx-content-type: concept
 
 <Aside type="warning">
 
-Details such as pricing and limits on Websockets are not yet available. We're looking for developers to experiment with WebSocket support in Cloudflare Workers, but WebSocket support generally remains in early access.
+WebSocket pricing and limits details are currently not available. Developers are encouraged to experiment with WebSocket support in Cloudflare Workers, but WebSocket support generally remains in early access.
 
 </Aside>
 
-WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions. In this guide, you'll learn the basics of WebSockets on Cloudflare Workers, both from the perspective of _writing_ WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a _client_.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
-<Aside>WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.</Aside>
+<Aside type="note">
 
-## Writing a WebSocket Server
-
-<Aside>
-
-__Note:__ The `wrangler dev` tool currently does not support connecting to Workers via the WebSocket protocol. Support for WebSockets in `wrangler dev` is tracked in [this GitHub issue](https://github.com/cloudflare/wrangler/issues/1910).
+WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.
 
 </Aside>
 
-WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real-time. This brief guide will show you how to set up a WebSocket server in Workers.
+## Writing a WebSocket Server
+
+<Aside type="note">
+
+The `wrangler dev` tool currently does not support connecting to Workers via the WebSocket protocol. Support for WebSockets in `wrangler dev` is tracked in [this GitHub issue](https://github.com/cloudflare/wrangler/issues/1910).
+
+</Aside>
+
+WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 
 A client can make a WebSocket request in the browser by instantiating a new instance of `WebSocket`, passing in the URL for your Workers function:
 
 ```js
-// In client-side JavaScript, connect to your Workers function using WebSockets
+// In client-side JavaScript, connect to your Workers function using WebSockets:
 const websocket = new WebSocket("wss://example-websocket.signalnerve.workers.dev")
 ```
 
-<Aside>
-For more details about creating and working with WebSockets in the client, see <a href="#writing-a-websocket-client">"Writing a WebSocket client"</a>.
+<Aside type="note">
+
+For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#writing-a-websocket-client).
+
 </Aside>
 
 When an incoming WebSocket request reaches the Workers function, it will contain an `Upgrade` header, set to the string value `websocket`. Check for this header before continuing to instantiate a WebSocket:
@@ -49,7 +55,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you've appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains _server_ and _client_ WebSockets. One of these WebSockets should be handled by the Workers function (which we'll do shortly), and the other should be returned as part of a `Response` with status 101, indicating the "Switching protocols" response:
+After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101), indicating the request is switching protocols:
 
 ```js
 async function handleRequest(request) {
@@ -68,7 +74,7 @@ async function handleRequest(request) {
 }
 ```
 
-An Object is returned from the `WebSocketPair` constructor, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It's common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
+The `WebSocketPair` constructor returns an Object, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It is common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
 
 In order to begin communicating with the `client` WebSocket in your Worker, call `accept` on the `server` WebSocket. This will tell the Workers runtime that it should listen for WebSocket data and keep the connection open with your `client` WebSocket:
 
@@ -91,7 +97,7 @@ async function handleRequest(request) {
 }
 ```
 
-WebSockets emit a number of [Events](/runtime-apis/websockets#events) that can be connected to using `addEventListener`. In the below example, we hook into the `message` event and emit a `console.log` with the data from it:
+WebSockets emit a number of [Events](/runtime-apis/websockets#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
 ```js
 async function handleRequest(request) {
@@ -117,7 +123,7 @@ async function handleRequest(request) {
 
 ### Connecting to the WebSocket server from a client
 
-Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it, just like we did on the server:
+Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it:
 
 ```js
 const websocket = new WebSocket("wss://websocket-example.signalnerve.workers.dev")
@@ -139,13 +145,13 @@ When the WebSocket interaction is complete, the client can close the connection 
 websocket.close()
 ```
 
-For an example of this in practice, see the [`websocket-template`](https://github.com/cloudflare/websocket-template) that we provide to get started with WebSockets.
+For an example of this in practice, refer to the [`websocket-template`](https://github.com/cloudflare/websocket-template) to get started with WebSockets.
 
 ## Writing a WebSocket client
 
 A Worker can also establish a WebSocket connection to a remote server. 
 
-We do not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the upgrade header set.
+Cloudflare does not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the `Upgrade` header set.
 
 ```js
 async function websocket(url) {
@@ -179,4 +185,4 @@ async function websocket(url) {
 
 ## Durable Objects and WebSocket state
 
-If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you'll need to create a _Durable Object_ so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Check out our [Durable Objects](/learning/using-durable-objects) learning page to get started.
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need to create a Durable Object so clients send messages to a single-point-of-coordination. Durable Objects are a coordinated state tool for Cloudflare Workers, which are often used in parallel with WebSockets to persist state over multiple clients and connections. Refer to the [Durable Objects](/learning/using-durable-objects) learning page to get started.

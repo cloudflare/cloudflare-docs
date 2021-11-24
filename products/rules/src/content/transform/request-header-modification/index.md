@@ -12,6 +12,8 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 * Set the value of an HTTP request header according to an expression, overwriting its previous value or adding a new header to the request.
 * Remove an HTTP request header from the request (remove all headers with the provided name).
 
+To modify HTTP headers in the **response**, refer to [HTTP Response Header Modification Rules](/transform/response-header-modification).
+
 <Aside type='warning' header='Important'>
 
 * You cannot modify or remove HTTP request headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP request header, which you can remove.
@@ -22,6 +24,7 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 
 </Aside>
 
-To create an HTTP Request Header Modification Rule in the dashboard, see [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard).
+To create an HTTP Request Header Modification Rule, refer to the following pages:
 
-To create an HTTP Request Header Modification Rule via API, see [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api).
+* [Create an HTTP Request Header Modification Rule in the dashboard](/transform/request-header-modification/create-dashboard)
+* [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api)

@@ -1,9 +1,10 @@
 ---
 order:
+title: Google Cloud
 pcx-content-type: how-to
 ---
 
-# Google Cloud
+# Set up 1.1.1.1 - Google Cloud
 
 Google Cloud supports configuring [outbound server policy](https://cloud.google.com/dns/docs/server-policies-overview#dns-server-policy-out) within Cloud DNS. Policies are applied per Virtual Private Cloud (VPC) network, and will affect all resources within that VPC network, including any existing virtual machines.
 

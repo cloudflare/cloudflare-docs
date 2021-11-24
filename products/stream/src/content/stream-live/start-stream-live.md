@@ -34,11 +34,13 @@ Within seconds of you pushing your live stream to Cloudflare Stream, you should 
 To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
 
 ```bash
-curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
+curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10, "requireSignedURLs": false, "allowedOrigins": ["*.example.com"] }}'
 ```
 
 * When the mode property is set to `automatic`, it means the live stream will be automatically available for viewing using HLS/DASH. In addition, the live stream will be automatically recorded for later replays.
 * The `timeoutSeconds` property specifies how long a live feed can be disconnected before it results in a new video being created.
+* The `requireSignedURLs` property indicates if signed URLs are required to view the video. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
+* The `allowedOrigins` property can optionally be invoked to provide a list of allowed origins. This setting is applied by default to all videos recorded from the input. In addition, if viewing a video via the live input ID, this field takes effect over any video-level settings.
 
 A successful response will return information about the live input:
 
@@ -57,7 +59,8 @@ A successful response will return information about the live input:
   "status": null,
   "live": {
     "mode": "automatic",
-    "requireSignedURLs": false
+    "requireSignedURLs": false,
+    "allowedOrigins": ["*.example.com"]
   }
 }
 ```

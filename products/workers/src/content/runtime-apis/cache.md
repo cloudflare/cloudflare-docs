@@ -12,9 +12,9 @@ The Cache API is available globally but the contents of the cache do not replica
 
 However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/learning/playground) previews, and any `*.workers.dev` deployments will have no impact. Only Workers deployed to custom domains have access to functional `Cache` operations. 
 
-<Aside>
+<Aside type="note">
 
-__Note:__ This individualized zone cache object differs from Cloudflare’s Global CDN, for details see: [How the Cache Works](/learning/how-the-cache-works).
+This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the Cache Works](/learning/how-the-cache-works).
 
 </Aside>
 
@@ -60,9 +60,9 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 This differs from the web browser Cache API as they do not honor any headers on the request or response.
 
-<Aside>
+<Aside type="note">
 
-__Note:__ Responses with `Set-Cookie` headers are never cached, because this sometimes indicates that the response contains unique data. To store a response with a `Set-Cookie` header, either delete that header or set `Cache-Control: private=Set-Cookie` on the response before calling `cache.put()`.
+Responses with `Set-Cookie` headers are never cached, because this sometimes indicates that the response contains unique data. To store a response with a `Set-Cookie` header, either delete that header or set `Cache-Control: private=Set-Cookie` on the response before calling `cache.put()`.
 
 Use the `Cache-Control` method to store the response without the `Set-Cookie` header.
 
@@ -106,10 +106,10 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 #### Invalid parameters
 
-`cache.put` throws an error if:
-  - the `request` passed is a method other than `GET`
-  - the `response` passed is a `status` of [`206 Partial Content`](https://httpstatuses.com/206)
-  - the `response` passed contains the header `Vary: *` (required by the Cache API specification)
+`cache.put` will throw an error if:
+  - the `request` passed is a method other than `GET`.
+  - the `response` passed has a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
+  - the `response` passed contains the header `Vary: *` (required by the Cache API specification).
 
 ### `Match`
 
@@ -140,7 +140,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
     - The string or [`Request`](/runtime-apis/request) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 - `options`
-    -  Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
+    -  Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
 
 </Definitions>
 
@@ -197,7 +197,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 --------------------------------
 
-## See also
+## Related resources
 
 - [How the Cache works](/learning/how-the-cache-works)
 - [Configure your CDN](/tutorials/configure-your-cdn)

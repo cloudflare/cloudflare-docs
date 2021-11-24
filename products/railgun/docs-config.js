@@ -16,7 +16,7 @@ module.exports = {
       algoliaOptions: { 'facetFilters': '["project:railgun"]'}
     },
     siteMetadata: {
-      title: "Railgun Documentation",
+      title: "Cloudflare Railgun docs",
       description: "Improve loading times by caching dynamically generated or personalized web pages, dramatically reducing bandwidth usage and improving download times.",
       author: "@cloudflare",
       url: "https://developers.cloudflare.com/railgun",

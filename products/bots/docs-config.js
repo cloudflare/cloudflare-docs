@@ -14,7 +14,7 @@ module.exports = {
       algoliaOptions: { 'facetFilters': '["project:bots"]'}
   },
   siteMetadata: {
-      title: "Cloudflare Bot Management docs",
+      title: "Cloudflare bot solutions docs",
       description: "Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.",
       author: "@cloudflare",
       url: "https://developers.cloudflare.com/bots",

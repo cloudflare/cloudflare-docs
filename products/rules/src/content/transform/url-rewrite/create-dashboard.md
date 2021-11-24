@@ -6,15 +6,11 @@ order: 1
 
 # Create a URL Rewrite Rule in the dashboard
 
-Create URL Rewrite Rules in the **Transform Rules** tab under Rules. See [URL rewrite examples](/transform/url-rewrite/examples) for examples of rule definitions.
+Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [URL rewrite examples](/transform/url-rewrite/examples) for examples of rule definitions.
 
-Do the following:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Log in to the Cloudflare dashboard.
-
-1. Select the **Websites** tab and choose the site for which you want to create a new URL Rewrite Rule.
-
-1. Select **Rules** > **Transform Rules**.
+1. Go to **Rules** > **Transform Rules**.
 
     ![Transform Rules tab](../../static/transform/overview.png)
 
@@ -32,7 +28,7 @@ Do the following:
 
     ![Selecting an operator in the Expression Builder](../../static/transform/expression-operator.png)
 
-    The **Expression Editor** area displays a text-only version of your expression. For more information on the Expression Editor, see [Edit rule expressions](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor) in the Firewall documentation.
+    The **Expression Editor** area displays a text-only version of your expression. For more information on the Expression Editor, refer to [Edit rule expressions](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor) in the Firewall documentation.
 
 1. Specify the value to match. If the value is an enumeration, the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 

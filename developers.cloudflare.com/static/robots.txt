@@ -16,6 +16,7 @@ Sitemap: https://developers.cloudflare.com/cloudflare-one/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ddos-protection/sitemap.xml
 Sitemap: https://developers.cloudflare.com/distributed-web/sitemap.xml
 Sitemap: https://developers.cloudflare.com/docs-engine/sitemap.xml
+Sitemap: https://developers.cloudflare.com/email-routing/sitemap.xml
 Sitemap: https://developers.cloudflare.com/events/sitemap.xml
 Sitemap: https://developers.cloudflare.com/firewall/sitemap.xml
 Sitemap: https://developers.cloudflare.com/fundamentals/sitemap.xml

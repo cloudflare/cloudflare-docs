@@ -1,11 +1,12 @@
 ---
+title: Cipher suites
 order: 1
 pcx-content-type: reference
 ---
 
 import CipherSuitesDefinition from "../_partials/_cipher-suites-definition.md"
 
-# Cipher suites
+# Cipher suites — Edge certificates
 
 <CipherSuitesDefinition/>
 
