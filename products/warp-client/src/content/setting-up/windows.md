@@ -6,8 +6,6 @@ pcx-content-type: how-to
 
 # Windows desktop client
 
-## Steps to download
-
 1. [Download __Cloudflare_WARP_Release-x64.msi__](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi).
 1. Navigate to the **Downloads** folder.
 1. Double-click on `Cloudflare_WARP_Release-x64.msi`.
