@@ -53,7 +53,7 @@ https://somecustomdomain.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7
 In this example, `:images_account_hash`, `:image_id` and `:variant_name` are the same, but the hostname and prefix path is different: 
 
 - `somecustomdomain.com` custom domain.
-- `/cdn-cgi/imagedelivery` path to trigger cdn-cgi image proxy.
-- `ZWd9g1K7eljCn_KDTu_MWA` is the Images account hash.
-- `083eb7b2-5392-4565-b69e-aff66acddd00` is the image id.
-- `public` is the variant name.
+- `/cdn-cgi/imagedelivery`: Path to trigger cdn-cgi image proxy.
+- `ZWd9g1K7eljCn_KDTu_MWA:` The Images account hash.
+- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image id.
+- `public`: The variant name.
