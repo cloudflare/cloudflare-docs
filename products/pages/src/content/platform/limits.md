@@ -19,7 +19,7 @@ A Cloudflare Pages project can be attached to a maximum of ten (10) custom domai
 
 ## Files
 
-Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency exprience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
+Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
 
 ## File size
 
