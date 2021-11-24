@@ -133,7 +133,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets
   "phase": "http_request_redirect",
   "rules": [
     {
-      "expression": "http.request.full_uri in $redirect_list",
+      "expression": "http.request.full_uri in $my_redirect_list",
       "description": "Mass Redirect rule.",
       "action": "redirect",
       "action_parameters": {
@@ -160,7 +160,7 @@ The response will be similar to the following:
       {
         "id": "8da312df846b4258a05bcd454ea943be",
         "version": "1",
-        "expression": "http.request.full_uri in $redirect_list",
+        "expression": "http.request.full_uri in $my_redirect_list",
         "description": "Mass Redirect rule.",
         "action": "redirect",
         "action_parameters": {
