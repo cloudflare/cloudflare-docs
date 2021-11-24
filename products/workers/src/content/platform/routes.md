@@ -25,8 +25,6 @@ Cloudflare Site routes are comprised of:
 
 The Routes REST API documentation can be found [in the Workers API documentation](https://api.cloudflare.com/#worker-routes-properties).
 
-\* A zone that you have registered with some registrar (not a `*.workers.dev` subdomain) and set up Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/).
-
 ## Routes with *.workers.dev
 
 Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
