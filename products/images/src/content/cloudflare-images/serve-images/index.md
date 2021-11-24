@@ -37,8 +37,7 @@ When a client requests an image, Cloudflare Images will pick the optimal format 
 
 ## Serving images from custom domains
 
-Image delivery is supported from all customer domains under the same Cloudflare account.
-To serve images through custom domains, an image url should be adjusted to the following format:
+Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
 
 ```txt
 https://<customerdomain.net>/cdn-cgi/imagedelivery/:images_account_hash/:image_id/:variant_name
