@@ -13,25 +13,19 @@ Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, priva
 
 ## 1.1.1.1 with WARP
 
-<Aside type='warning'>
- 
- WARP does not provide anonymity. It is not designed to prevent servers you communicate with from identifying you, or to allow you to pretend to be accessing the Internet in a different country than you are currently in.
-
-</Aside>
-
 The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt the traffic from your device and send it directly to Cloudflare’s edge. This ensures your connection is secure and private, and prevents third-parties from accessing your traffic. If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses our global network of data centers to devise the shortest path to the site.
 
 Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 
-## WARP via Local Proxy
-
-<Aside type="note">
+<Aside type='warning' header="Warning">
  
-Currently available on desktop clients only.
+ WARP does not provide anonymity and is not designed to prevent servers you communicate with from identifying you. WARP also does not allow you to pretend to be accessing the Internet from a different country than the one you are currently in.
 
 </Aside>
 
-When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for instance, your web browser or a specific app. Everything else will not be encrypted and will be sent over a regular Internet connection.
+## WARP via Local Proxy
+
+Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for instance, your web browser or a specific app. Everything else will not be encrypted and will be sent over a regular Internet connection.
 
 Because this feature restricts WARP to just applications configured to use the local proxy, leaving all other traffic unencrypted over the Internet by default, we have hidden it in the **Advanced** menu. To turn it on:
 

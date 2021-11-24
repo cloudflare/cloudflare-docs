@@ -1,6 +1,7 @@
 ---
 title: Windows
 order:
+pcx-content-type: how-to
 ---
 
 # Windows desktop client
