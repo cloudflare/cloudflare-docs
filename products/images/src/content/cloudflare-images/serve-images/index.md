@@ -40,10 +40,10 @@ When a client requests an image, Cloudflare Images will pick the optimal format 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
 
 ```txt
-https://<customerdomain.net>/cdn-cgi/imagedelivery/:images_account_hash/:image_id/:variant_name
+https://somecustomdomain.com/cdn-cgi/imagedelivery/:images_account_hash/:image_id/:variant_name
 ```
 
-Example which a custom domain:
+Example with a custom domain:
 
 ```txt
 https://somecustomdomain.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
@@ -51,8 +51,8 @@ https://somecustomdomain.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7
 
 In this example, `:images_account_hash`, `:image_id` and `:variant_name` are the same, but the hostname and prefix path is different: 
 
-- `somecustomdomain.com` custom domain.
+- `somecustomdomain.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
 - `/cdn-cgi/imagedelivery`: Path to trigger cdn-cgi image proxy.
-- `ZWd9g1K7eljCn_KDTu_MWA:` The Images account hash.
+- `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
 - `083eb7b2-5392-4565-b69e-aff66acddd00`: The image id.
 - `public`: The variant name.
