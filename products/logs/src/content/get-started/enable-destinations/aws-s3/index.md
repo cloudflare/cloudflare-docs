@@ -8,7 +8,7 @@ import EnableReadPermissions from "../../../_partials/_enable-read-permissions.m
 
 # Enable Amazon S3
 
-Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API.
+Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API. Customers that use AWS GovCloud locations should use our **S3-compatible endpoint** and not the **Amazon S3 endpoint**.
 
 ## Manage via the Cloudflare dashboard
 
@@ -86,13 +86,7 @@ To enable Logpush to Amazon S3:
 }
 ```
 
-<Aside type="warning" header="Warning">
-
-Logpush uses multipart upload for S3. Aborted uploads will result in incomplete files remaining in your bucket. To minimize your storage costs, Amazon recommends configuring a lifecycle rule using the `AbortIncompleteMultipartUpload` action. *See [Uploading and copying objects using multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config)*.
-</Aside>
-
 <Aside type="note" header="Note">
 
-Customers that use AWS GovCloud locations should use our **S3-compatible endpoint** and not the **Amazon S3 endpoint**.
-
+Logpush uses multipart upload for S3. Aborted uploads will result in incomplete files remaining in your bucket. To minimize your storage costs, Amazon recommends configuring a lifecycle rule using the `AbortIncompleteMultipartUpload` action. *See [Uploading and copying objects using multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config)*.
 </Aside>
