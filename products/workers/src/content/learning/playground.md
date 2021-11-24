@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Playground
 
-The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It doesn’t require _any_ setup. It’s just a simple sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site.
+The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It does not require any setup. The Playground is a sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site.
 
 <p><Button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Launch playground</Button></p>
 
@@ -13,7 +13,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## Hello world
 
-When you arrive in the playground, you’ll see this default code:
+When you arrive in the playground, you will see this default code:
 
 ```javascript
 addEventListener("fetch", event => {
@@ -25,37 +25,41 @@ async function handleRequest(request) {
 }
 ```
 
-This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/learning/fetch-event-lifecycle#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/runtime-apis/response) of `"Hello world"` which bubbles up and is delivered back to the client.
+This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/learning/fetch-event-lifecycle#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/runtime-apis/response) of `"Hello world"` which is delivered back to the client.
 
-Check out the reference for [addEventListener](/runtime-apis/add-event-listener), [FetchEvent](/runtime-apis/fetch-event) and [FetchEvent lifecycle](/learning/fetch-event-lifecycle) to learn more.
+Refer to the reference for [addEventListener](/runtime-apis/add-event-listener), [FetchEvent](/runtime-apis/fetch-event), and [FetchEvent lifecycle](/learning/fetch-event-lifecycle) to learn more.
 
 --------------------------------
 
 ## Beyond hello world
 
-To get familiar with Workers, we recommend playing around in the Playground, borrowing bits from [Examples](/examples) section of the documentation. This will give you a taste of what Workers can do. It’s pretty [amazing](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
+To get familiar with Workers, experiment with the Playground by borrowing [Examples](/examples) from the documentation. This will allow you to experience firsthand [what Workers can do](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
 
 --------------------------------
 
-## Using the playground
+## Using the Playground
 
-When you have code you are ready to test, click the button to preview at the bottom of the script panel.
+There are two versions of the Playground available. The [browser Playground](cloudflareworkers.com) and the dashboard Playground, also known as the previewer. 
 
-Now you should be able to see a preview on the right side of _that exact code_ running just as it would in a browser. Enter your website’s address in the right section to preview the Workers script running _on that site_.
+To access the dashboard Playground, log into your Cloudflare account and go to **Account Home** > **Workers** > **your Worker script** > **Quick edit**.
+
+When you have code you are ready to test, select **Save and Deploy** to preview at the bottom of the script panel.
+
+Now you should be able to see a preview on the right side of that exact code running just as it would in a browser. Enter your website’s address in the right section to preview the Workers script running on that site.
 
 You can modify the script and click the preview button to view the effect on the request.
 
-To test a raw HTTP request — not in an HTML previewer, for example to test a `POST` request — go to the **Test** tab in the previewer. To run the HTTP preview, we will need to click update preview and run test.
+To test a raw HTTP request — not in an HTML previewer, for example, to test a `POST` request — go to **HTTP**. To run the HTTP preview, select **Run Test**.
 
 --------------------------------
 
 ## Devtools
 
-For debugging Workers inside the playground, use out the developer tools at the bottom of the preview panel. The developer tools for Workers previewer works similar to the developer tools in Chrome or Firefox.
+For debugging Workers inside the Playground, use the developer tools at the bottom of the Playground's preview panel. The developer tools for the Workers Playground works similar to the developer tools in Chrome or Firefox.
 
 ### Network tab
 
-The Network tab shows the outgoing requests from your Workers script—in other words, any calls to `fetch` inside your script.
+**Network** shows the outgoing requests from your Workers script — that is, any calls to `fetch` inside your script.
 
 ### Console Logs
 
@@ -63,7 +67,7 @@ The console displays the output of any calls to `console.log` that were called f
 
 ### Sources
 
-The sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
+**Sources** displays the sources that make up your Workers script. Note that access KV, text, and secret bindings are only accessible when authenticated with an account. This means you must be logged in to the dashboard, or use `wrangler dev` with your account credentials.
 
 <!--
 
