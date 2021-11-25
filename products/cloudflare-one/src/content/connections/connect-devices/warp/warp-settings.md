@@ -26,12 +26,6 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 </div>
 </details>
 
-<Aside type='note'>
-
-This setting only applies when the WARP client has been deployed via [MDM or scripted deployment](/connections/connect-devices/warp/deployment/mdm-deployment).
-
-</Aside>
-
 When the toggle is **enabled**, end users will be able to make changes to the WARP client configuration. If the WARP client has been deployed via [MDM or scripted deployment](/connections/connect-devices/warp/deployment/mdm-deployment), admins will need to provide end users with a one-time password to enter on their devices to apply any changes to WARP. When the toggle is **disabled**, one-time passwords will not be generated, and end users will not be able to change the client's configuration. 
 
 You can also set a timeout to define how long the WARP client should be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect.
