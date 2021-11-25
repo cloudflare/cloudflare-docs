@@ -11,7 +11,7 @@ Browser Isolation has a built-in screen reader which enables people with visual 
 
 ### Keyboard shortcut
 
-You can turn on or off the built-in screen reader by pressing **Ctrl** + **Alt** + **Z**.
+You can turn on or off the built-in screen reader by pressing <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Z</kbd>.
 
 ### Drop-down menu
 
