@@ -32,17 +32,17 @@ This setting only applies when the WARP client has been deployed via [MDM or scr
 
 </Aside>
 
-When the toggle is enabled, end users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, one-time passwords will not be generated, and end users will not be able to change the client's configuration. 
+When the toggle is **enabled**, end users will be able to make changes to the WARP client configuration. If the WARP client has been deployed via [MDM or scripted deployment](/connections/connect-devices/warp/deployment/mdm-deployment), admins will need to provide end users with a one-time password to enter on their devices to apply any changes to WARP. When the toggle is **disabled**, one-time passwords will not be generated, and end users will not be able to change the client's configuration. 
 
 You can also set a timeout to define how long the WARP client should be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect.
 
-To apply Admin override:
+If you have deployed WARP via MDM or scripted deployment, this is the procedure you need to follow to enable users to make changes to the WARP client:
 
 1. Log in to the Teams Dashboard and ensure the **Admin override** toggle is enabled. 
 1. Next, retrieve the 7-digit override code for one or more of your connected devices by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired devices, and scrolling down to **User details**.
 1. Copy the code and share it with the end users for them to enter on their devices.
 
-The users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and paste the override code in the popup window. The WARP client will now show as `Disconnected` and mentions the time when it will automatically reconnect.
+Users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and enter the override code in the pop-up window. The WARP client will now show as `Disconnected` and mentions the time when it will automatically reconnect.
 
 ## Device enrollment permissions
 
