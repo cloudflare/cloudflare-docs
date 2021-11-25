@@ -26,7 +26,17 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 </div>
 </details>
 
-When the toggle is enabled, users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, no one-time passwords are generated, and the users will not be able to change the client's configuration.
+When the toggle is enabled, end users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, one-time passwords will not be generated, and end users will not be able to change the client's configuration. 
+
+You can also set a timeout to define how long the WARP client should be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect.
+
+To apply Admin override:
+
+1. Log in to the Teams Dashboard and ensure the **Admin override** toggle is enabled. 
+1. Next, retrieve the 7-digit override code for one or more of your connected devices by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired devices, and scrolling down to **User details**.
+1. Copy the code and share it with the end users for them to enter on their devices.
+
+The users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and paste the override code in the popup window. The WARP client will now show as `Disconnected` and mentions the time when it will automatically reconnect.
 
 ## Device enrollment permissions
 
