@@ -12,7 +12,7 @@ As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), t
 
 As mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required by law to disclose these cookies to their end users.
 
-Cookie data is processed in Cloudflare's data centers in the United States and is subject to the cross-border data transfer section 7 of the Cloudflare [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
+Cookie data is processed in Cloudflare's data center in the United States and is subject to the cross-border data transfer section 7 of the Cloudflare [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
 ### __cflb cookie for Cloudflare Load Balancer session affinity
 
