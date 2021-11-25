@@ -13,7 +13,7 @@ You can customize the **action** and **sensitivity** of the rules in the Network
 
 You define overrides for the Network-layer DDoS Attack Protection Managed Ruleset at the account level. Tag and rule overrides have greater priority than ruleset overrides.
 
-For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
+For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters).
 
 ## Override all the rules in the ruleset
 
