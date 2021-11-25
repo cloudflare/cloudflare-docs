@@ -66,8 +66,6 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 * Currently, Spectrum and Magic transit customers do not have access to **Firewall** > **DDoS** tab and have to configure the DDoS Attack Protection Managed Rulesets using the API.
 
-* At the moment, some DDoS Attack Protection Managed Rulesets can only be configured via API.
-
 </Aside>
 
 ### 2. Review flagged traffic
@@ -79,7 +77,10 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 Customize the Managed Ruleset rules you identified, changing their sensitivity or their action, using the Cloudflare dashboard or using the API.
 
-If you are using the Cloudflare dashboard, refer to the [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http/configure-dashboard) page.
+If you are using the Cloudflare dashboard, refer to:
+
+* [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http/configure-dashboard)
+* [Configure Network-layer DDoS Attack Protection in the dashboard](/managed-rulesets/network/configure-dashboard)
 
 If you are using the API, refer to:
 
@@ -87,12 +88,6 @@ If you are using the API, refer to:
 * [Configure Network-layer DDoS Attack Protection via API](/managed-rulesets/network/configure-api)
 
 When using the API, ensure that you add any required rule overrides without removing the ruleset override you configured in [Step 1](#1-configure-ruleset-actions-to-log).
-
-<Aside type="warning">
-
-Currently, some DDoS Attack Protection Managed Rulesets can only be configured via API.
-
-</Aside>
 
 ### 4. Switch ruleset actions back to the default
 
