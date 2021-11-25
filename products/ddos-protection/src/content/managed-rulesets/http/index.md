@@ -17,7 +17,7 @@ The HTTP DDoS Attack Protection Managed Ruleset provides users with increased ob
 You can adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
 * The performed **action** when an attack is detected
-* The **sensitivity** of attack detection mechanisms
+* The **sensitivity level** of attack detection mechanisms
 
 <Aside type="note" header="Note">
 
