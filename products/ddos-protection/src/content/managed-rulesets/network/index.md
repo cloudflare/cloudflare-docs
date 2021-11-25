@@ -26,7 +26,7 @@ To adjust rule behavior, do one of the following:
 
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters) for more information.
 
-By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/network/fields) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
+Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Available expression fields](/managed-rulesets/network/fields) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
 
 ## Availability
 
