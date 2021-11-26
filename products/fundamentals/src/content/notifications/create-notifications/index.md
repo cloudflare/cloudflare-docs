@@ -18,8 +18,8 @@ The browser will navigate back to the list of Notifications, where the new Notif
 
 ## PagerDuty
 
-Professional plans or higher can configure PagerDuty to receive notifications about their Cloudflare account. If you do not have a PagerDuty account, learn [how to link your Cloudflare account to PagerDuty](/notifications/create-pagerduty).
+Professional plans or higher can configure PagerDuty to receive notifications about their Cloudflare account. If you do not have a PagerDuty account, learn [how to link your Cloudflare account to PagerDuty](/notifications/create-notifications/create-pagerduty).
 
 ## Webhooks to external services
 
-There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/notifications/configure-webhooks) to your Cloudflare account.
+There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/notifications/create-notifications/configure-webhooks) to your Cloudflare account.
