@@ -7,6 +7,8 @@ pcx-content-type: tutorial
 
 When an input begins receiving the live stream, a new video with HLS and DASH URLs is automatically created as long as the mode property for the input is set to `automatic`.
 
+## View by video id
+
 One live input can have multiple video ids associated with it. In order to get the video id representing the current live stream for a given input, make a `GET` request to the `/stream` endpoint:
 
 ```bash
@@ -95,6 +97,43 @@ The response will contain the HLS/DASH URL that can be used to play the current 
   "messages": []
 }
 ```
+
+## View by live input uid
+
+By using the live input uid in place of a video id in the hls/dash manifest URL, you get a static URL that will return a 200 with the manifest of the active livestream, or a 204 status code with no content if there is no active live stream.
+
+Using the input ID in this manner is fully integrated in the Stream player, but may require some additional support for third party players. You can make a `GET` request to the `/lifecycle` endpoint to get additional data about a video id or live input uid for more information to make additional decisions.
+
+```bash
+GET https://videodelivery.net/34036a0695ab5237ce757ac53fd158a2/lifecycle
+```
+
+This is a response for an input ID with an active live stream:
+
+```json
+{
+      // indicates if the ID provided is for an input or a video
+    "isInput": true,
+    // returns the active video ID or null for an input ID, otherwise returns the provided video ID
+    "videoUID": "55b9b5ce48c3968c6b514c458959d6a",
+    // if isInput is true, indicates if the input is actively streaming or not
+    "live": true
+}
+```
+
+Or if the input ID does not have an active live stream:
+
+```json
+{
+    "isInput": true,
+    "videoUID": null,
+    "live": false
+}
+```
+
+### Live input level viewing options
+
+When viewing a livestream via the live input id, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
 
 ## Replaying recordings
 

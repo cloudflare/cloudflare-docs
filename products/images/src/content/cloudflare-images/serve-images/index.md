@@ -34,3 +34,25 @@ In this example:
 - `public` is the variant name.
 
 When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
+
+## Serving images from custom domains
+
+Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
+
+```txt
+https://somecustomdomain.com/cdn-cgi/imagedelivery/:images_account_hash/:image_id/:variant_name
+```
+
+Example with a custom domain:
+
+```txt
+https://somecustomdomain.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
+```
+
+In this example, `:images_account_hash`, `:image_id` and `:variant_name` are the same, but the hostname and prefix path is different: 
+
+- `somecustomdomain.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
+- `/cdn-cgi/imagedelivery`: Path to trigger cdn-cgi image proxy.
+- `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
+- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image id.
+- `public`: The variant name.

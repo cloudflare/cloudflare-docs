@@ -16,7 +16,7 @@ import Considerations from "../_partials/_about-plan-considerations.md"
 import GetStarted from "../_partials/_plan-get-started.md"
 
 
-# Cloudflare bot plans
+# Plans — Pro
 
 <PlanIntro/>
 

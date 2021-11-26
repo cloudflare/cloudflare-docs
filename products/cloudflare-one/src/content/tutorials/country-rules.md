@@ -28,8 +28,6 @@ Groups contain criteria that you can reuse in [Zero Trust policies](/policies/ze
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators. Since you cannot connect from multiple countries at the same time, you must use a group to define a list of options that can be used inside of a `Require` rule in the policy.
 
-![Initial Groups](../static/zero-trust-security/country-rules/starter-groups.png)
-
 Click `Add a Group`. In the next page, select `Country` from the `Include` dropdown and add two or more countries.
 
 ![Add Countries](../static/zero-trust-security/country-rules/country-list.png)
@@ -40,19 +38,13 @@ Click `Save`.
 
 ## Build or edit a policy
 
-You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. You can build these policies for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
 
-![Apps](../static/zero-trust-security/country-rules/app-list.png)
-
-You can build this rule for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
-
-Choose an application and click `Edit`.
-
-![Edit](../static/zero-trust-security/country-rules/before-rules.png)
-
-Select the existing rule and click `Edit`.
-
-Click `+ Add require`. In the dropdown, select `Access groups`. The existing groups will display and choose the name of the group with the approved countries list.
+1. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+1. Choose an application and click `Edit`.
+1. Select the existing rule and click `Edit`.
+1. Click `+ Add require`.
+1. In the dropdown, select `Access groups`. The existing groups will display and choose the name of the group with the approved countries list.
 
 ![Edit](../static/zero-trust-security/country-rules/add-rule.png)
 

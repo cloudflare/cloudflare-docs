@@ -13,7 +13,7 @@ In order to perform a rollback, go to **Deployments** in your Pages project. Bro
 
 ![rollbacks preview](rollbacks.png)
 
-## Additional information
+## Related resources
 
 - [Preview Deployments](/platform/preview-deployments)
 - [Pausing Automatic Builds](/platform/github-integration#pausing-automatic-builds)

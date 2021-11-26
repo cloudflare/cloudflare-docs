@@ -1,11 +1,12 @@
 ---
+title: Manage custom certificates
 order: 5
 pcx-content-type: how-to
 ---
 
 import CustomCertExample from "../../_partials/_custom-cert-file-example.md"
 
-# Manage custom certificates
+# Manage custom certificates — SSL for SaaS
 
 For use cases and limitations, refer to [custom certificates](/ssl-for-saas/custom-certificates).
 

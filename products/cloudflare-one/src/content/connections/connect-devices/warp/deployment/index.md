@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 pcx-content-type: how-to
 title: Deploy WARP
 ---

@@ -15,24 +15,28 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-// The custom header name for the key
-const PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK";
-// The hard-coded key value that the application expects
-const PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey";
-function handleRequest(request) {
-  const psk = request.headers.get(PRESHARED_AUTH_HEADER_KEY);
-  // Correct header key supplied; fetch from origin
+/**
+ * @param {string} PRESHARED_AUTH_HEADER_KEY Custom header to check for key
+ * @param {string} PRESHARED_AUTH_HEADER_VALUE Hard coded key value
+ */
+const PRESHARED_AUTH_HEADER_KEY = "X-Custom-PSK"
+const PRESHARED_AUTH_HEADER_VALUE = "mypresharedkey"
+
+async function handleRequest(request) {
+  const psk = request.headers.get(PRESHARED_AUTH_HEADER_KEY)
+
   if (psk === PRESHARED_AUTH_HEADER_VALUE) {
-    return fetch(request);
+    // Correct preshared header key supplied. Fetch request from origin.
+    return fetch(request)
   }
-  // Incorrect key supplied; reject the request
+
+  // Incorrect key supplied. Reject the request.
   return new Response("Sorry, you have supplied an invalid key.", {
     status: 403,
-  });
+  })
 }
-export default {
-  fetch(request) {
-    return handleRequest(request);
-  },
-};
+
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request))
+})
 ```

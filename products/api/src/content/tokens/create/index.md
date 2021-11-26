@@ -87,8 +87,6 @@ Once successfully generated, the token secret is only shown once. Make sure to c
 
 *Warning:* Do not store the secret in plaintext where others may be able to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
 
-If the secret is lost or believed to be compromised, the token can be rolled to regenerate the secret which is covered in [Token Management](/tokens/manage). Doing so will invalidate the previous secret.
-
 ![Token Create Completion Screen](./media/token-complete.png)
 
 This screen also includes an example command to test the token (reproduced below). The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
@@ -120,3 +118,12 @@ The result:
 ```
 
 With this you have successfully created an API Token and can now start working with the Cloudflare API!
+
+## Roll API token
+
+If the secret is lost or believed to be compromised, you can either create a new token or your token can be rolled to generate a new secret. Rolling your secret key into a new one will invalidate the previous secret, but the access and permissions will be the same as the previous key.
+
+To roll your API token:
+1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to **User Profile** > **API Tokens**.
+1. Next to the API token you wish to roll, click the **three dot icon** > **Roll**.
+1. Then, click **Confirm** to continue and you will see a new API token secret key.

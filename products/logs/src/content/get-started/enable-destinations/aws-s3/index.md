@@ -8,7 +8,7 @@ import EnableReadPermissions from "../../../_partials/_enable-read-permissions.m
 
 # Enable Amazon S3
 
-Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API.
+Cloudflare Logpush supports pushing logs directly to Amazon S3 via the Cloudflare dashboard or via API. Customers that use AWS GovCloud locations should use our **S3-compatible endpoint** and not the **Amazon S3 endpoint**.
 
 ## Manage via the Cloudflare dashboard
 

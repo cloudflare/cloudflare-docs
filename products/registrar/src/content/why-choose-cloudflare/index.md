@@ -4,7 +4,7 @@ order: 1
 pcx-content-type: concept
 ---
 
-# Domain registration
+# How domain registration works
 
 ![Domain Registration Overview](../static/domain-registry-process.png)
 

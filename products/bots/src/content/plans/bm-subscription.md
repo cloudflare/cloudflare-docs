@@ -12,7 +12,7 @@ import PlanInfoBMSub from "../_partials/_about-plan-bm-subscription.md"
 import BMBotDetectionEngines from "../_partials/_bm-bot-detection-engines.md"
 import GetStarted from "../_partials/_plan-get-started.md"
 
-# Cloudflare bot plans
+# Plans — Bot Management for Enterprise
 
 <PlanIntro/>
 
