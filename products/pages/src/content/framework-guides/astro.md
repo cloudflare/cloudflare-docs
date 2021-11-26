@@ -18,11 +18,11 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ## Setting up a new project
 
-Create a new project directory (e.g., `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
+Create a new project directory (e.g., `astro-site`) and then initiate Astro's official setup tool by running [`yarn init`](https://classic.yarnpkg.com/en/docs/cli/init) in your terminal inside that new `astro-site` directory:
 
 ```sh
 $ mkdir astro-site && cd astro-site
-$ npm init astro
+$ yarn init astro
 ```
 
 During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
@@ -60,7 +60,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Configuration option  | Value              |
 | --------------------- | ------------------ |
 | Production branch     | `main`             |
-| Build command         | `npm run build`    |
+| Build command         | `yarn build`    |
 | Build directory       | `dist`             |
 | Environment Variables | `NODE_VERSION: 14` |
 
