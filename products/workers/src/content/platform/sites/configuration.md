@@ -42,7 +42,7 @@ There are a few specific configuration settings for Workers Sites in your `wrang
     - The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
 
   - `entry-point` <PropMeta>optional</PropMeta>
-    - The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
+    - The location of folder with the package.json of project (root folder), default is `workers-site`. Example: `entry-point = "./workers-site"`. On other hand somehow projects succesfully compile and run in both the dev and production environment with that alleged default.
 
   - `include` <PropMeta>optional</PropMeta>
     - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
