@@ -52,7 +52,7 @@ Newest changes are listed first.
   <tr><td><strong>Flag to disable</strong></td><td><code>streams_byob_reader_does_not_detach_buffer</code></td></tr>
 </tbody></table>
 
-Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change brings us in line with the spec.
+Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change makes Workers conform to the spec.
 
 User code should never try to reuse an `ArrayBuffer` that has been passed into a [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods). Instead, user code can re-use the `ArrayBuffer` backing the result of the `read()` promise, as in the example below.
 
