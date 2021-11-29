@@ -50,7 +50,7 @@ After you have a generated site, follow these steps:
 
 5. Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. 
 
-Then, update your `wrangler.toml`:
+Then update your `wrangler.toml`:
 
   **Personal Domain**: Add your `zone_id` and a `route`.
 
