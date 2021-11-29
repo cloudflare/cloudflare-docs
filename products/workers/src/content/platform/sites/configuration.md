@@ -28,13 +28,13 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
   - Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
 
 - `wrangler init proj --site`
-  - Creates a `wrangler.toml` and `workers-site` folder. You'll need to add a value for `bucket` based on the local path of folder you'd like to be serve.
+  - Creates a `wrangler.toml` file and `workers-site` folder. You will need to add a value for `bucket` based on the local path of the folder you would like to serve.
 
 </Definitions>
 
 ## wrangler.toml
 
-There are a few specific configuration settings for Workers Sites in your `wrangler.toml`:
+There are a few specific configuration settings for Workers Sites in your `wrangler.toml` file:
 
 <Definitions>
 
@@ -52,11 +52,11 @@ There are a few specific configuration settings for Workers Sites in your `wrang
 
 </Definitions>
 
-To learn more about the optional `include` and `exclude` fields, visit [Ignoring Subsets of Static Assets](#ignoring-subsets-of-static-assets).
+To learn more about the optional `include` and `exclude` fields, refer to [Ignoring subsets of static assets](#ignoring-subsets-of-static-assets).
 
-<Aside>
+<Aside type="note">
 
-__Note:__ if your project uses [environments](/platform/environments), make sure to place `site` at the top level config.
+If your project uses [environments](/platform/environments), make sure to place `site` at the top level configuration.
 
 </Aside>
 
@@ -90,21 +90,22 @@ route = "https://staging.example.com/docs*"
 
 ## Storage limits
 
-For very exceptionally large pages, Workers Sites might not work for you. There is a 25MB limit per page or file.
+For exceptionally large pages, Workers Sites might not work for you. There is a 25 MB limit per page or file.
 
 ## Ignoring subsets of static assets
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) - make sure to be on the [latest version](/cli-wrangler/install-update#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) - make sure to use the [latest version](/cli-wrangler/install-update#update).
 
 There are cases where users may not want to upload certain static assets to their Workers Sites.
 In this case, Workers Sites can also be configured to ignore certain files or directories using logic
 similar to [Cargo's optional include and exclude fields](https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields-optional).
-This means that we use gitignore semantics when declaring which directory entries to include or ignore in uploads.
+
+This means that you should use gitignore semantics when declaring which directory entries to include or ignore in uploads.
 
 ### Exclusively including files/directories
 
 If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your
-`[site]` section of `wrangler.toml`:
+`[site]` section of your `wrangler.toml` file:
 
 ```toml
 [site]
@@ -117,8 +118,7 @@ Wrangler will only upload files or directories matching the patterns in the `inc
 
 ### Excluding files/directories
 
-If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your
-`[site]` section of `wrangler.toml`:
+If you want to exclude files or directories in your `bucket`, you can add an `exclude` field to your `[site]` section of your `wrangler.toml` file:
 
 ```toml
 [site]
@@ -143,8 +143,8 @@ Wrangler will always ignore:
 
 #### More about include/exclude patterns
 
-You can learn more about the standard patterns used for include and exclude in the [gitignore documentation](https://git-scm.com/docs/gitignore).
+Learn more about the standard patterns used for include and exclude in the [gitignore documentation](https://git-scm.com/docs/gitignore).
 
 ## Customizing your build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack config](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
