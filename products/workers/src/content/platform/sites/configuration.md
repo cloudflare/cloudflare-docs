@@ -104,8 +104,7 @@ This means that you should use gitignore semantics when declaring which director
 
 ### Exclusively including files/directories
 
-If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your
-`[site]` section of your `wrangler.toml` file:
+If you want to include only a certain set of files or directories in your `bucket`, you can add an `include` field to your `[site]` section of your `wrangler.toml` file:
 
 ```toml
 [site]
