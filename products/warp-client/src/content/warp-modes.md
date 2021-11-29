@@ -5,6 +5,8 @@ pcx-content-type: reference
 
 # WARP modes
 
+The WARP client has several modes, to better suit different connection needs.
+
 ## 1.1.1.1
 
 1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers an encrypted service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy.

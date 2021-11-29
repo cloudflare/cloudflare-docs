@@ -6,6 +6,9 @@ pcx-content-type: reference
 
 # Installation requirements
 
+Bellow, you will find the system requirements for the operating systems supported by WARP.
+
+
 ## Windows
 <table>
   <tbody>
