@@ -1,4 +1,5 @@
 ---
+order: 3
 pcx-content-type: reference
 ---
 
@@ -22,5 +23,3 @@ dataLayer.push({
   transactionID: '12345678',
 })
 ```
-
-To use the dataLayer Compatibility Mode, go to Settings and make sure the **Activate dataLayer Compatibility Mode** switch is on.
