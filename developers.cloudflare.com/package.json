@@ -12,7 +12,7 @@
     "@mdx-js/react": "1.6.6",
     "@reach/skip-nav": "0.10.5",
     "animejs": "3.2.0",
-    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git",
+    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git#1a796d3e",
     "focus-group": "0.3.1",
     "focus-visible-polyfill": "1.0.0",
     "gatsby": "^2.32.12",
