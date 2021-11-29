@@ -3,7 +3,7 @@ pcx-content-type: concept
 order: 5
 ---
 
-# Automated exposed credentials check (Beta)
+# Automated exposed credentials check
 
 <Aside type='note'>
 
@@ -85,7 +85,3 @@ Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets
 Rules that check for exposed credentials run before Rate Limiting Rules.
 
 </Aside>
-
-## Availability
-
-Exposed credentials checking is available in Beta to all paid plans.
