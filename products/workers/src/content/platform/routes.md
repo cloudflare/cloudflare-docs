@@ -50,9 +50,9 @@ A pattern to match all requests looks like this:
 
 While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expression) pattern, route patterns follow specific rules:
 
-- The only supported operator is wildcard `*` which matches zero or more of any character.
+- The only supported operator is the wildcard (`*`), which matches zero or more of any character.
 
-- Route patterns may not contain infix wildcards or query parameters, for example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
+- Route patterns may not contain infix wildcards or query parameters. For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
 - When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
@@ -91,7 +91,7 @@ If you omit a scheme in your route pattern, it will match both `http://` and `ht
 
 #### Hostnames may optionally begin with `*`
 
-If a route pattern hostname begins with `*`, then it matches the host and all subhosts. If a route pattern hostname begins with `*.`, then it matches only all subhosts.
+If a route pattern hostname begins with `*`, then it matches the host and all subhosts. If a route pattern hostname begins with `*.`, then it only matches all subhosts.
 
 - `*example.com/` matches `https://example.com/` and `https://www.example.com/`.
 
@@ -105,7 +105,7 @@ If a route pattern path ends with `*`, then it matches all suffixes of that path
 
 <Aside type="warning">
 
-There is a well-known bug associated with path matching concerning wildcards (`*`) and forward slashes (`/`) that is documented in [Known issues.](/platform/known-issues)
+There is a well-known bug associated with path matching concerning wildcards (`*`) and forward slashes (`/`) that is documented in [Known issues](/platform/known-issues).
 
 </Aside>
 
