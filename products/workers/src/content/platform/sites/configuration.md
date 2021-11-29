@@ -28,7 +28,7 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
   - Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
 
 - `wrangler init proj --site`
-  - Creates a `wrangler.toml` file and `workers-site` folder. You will need to add a value for `bucket` based on the local path of the folder you would like to serve.
+  - Creates a `wrangler.toml` file and `workers-site` folder. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
 
 </Definitions>
 
@@ -56,7 +56,7 @@ To learn more about the optional `include` and `exclude` fields, refer to [Ignor
 
 <Aside type="note">
 
-If your project uses [environments](/platform/environments), make sure to place `site` at the top level configuration.
+If your project uses [environments](/platform/environments), make sure to place `site` above any environment-specific configuration blocks.
 
 </Aside>
 
