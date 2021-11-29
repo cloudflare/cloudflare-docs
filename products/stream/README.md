@@ -1,4 +1,4 @@
-# Cloudflare Stream docs
+# Cloudflare Stream
 
 [View docs →](https://developers.cloudflare.com/stream)
 
