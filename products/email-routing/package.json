@@ -1,7 +1,7 @@
 {
   "private": true,
   "dependencies": {
-    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git#b35e7c89"
+    "cloudflare-docs-engine": "git+https://github.com/cloudflare/cloudflare-docs-engine.git#1a796d3e"
   },
   "scripts": {
     "bootstrap": "node_modules/cloudflare-docs-engine/bin/commands.sh bootstrap",
