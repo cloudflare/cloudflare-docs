@@ -71,7 +71,7 @@ In this example, all requests destined for example.com and whose paths are prefi
 
 ### Validity
 
-The set of rules governing route pattern validity:
+The following set of rules govern route pattern validity.
 
 #### Route patterns must include your zone
 
