@@ -90,7 +90,7 @@ export default {
 }
 ```
 
-The same functionality can be achieved in a Durable Object, simply by omitting the `await` for the POST request. The request will complete before the Durable Object exits:
+The same functionality can be achieved in a Durable Object, simply by omitting the call to `ctx.waitUntil()` for the POST request. The request will complete before the Durable Object exits:
 
 ```js
 ---
