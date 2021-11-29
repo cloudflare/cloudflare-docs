@@ -13,25 +13,23 @@ Routes allow users to map a URL pattern to a Worker script to enable Workers to 
 
 For zones proxied on Cloudflare\*, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script.
 
-Route patterns can be added with the Cloudflare API or on the [Workers tab](https://dash.cloudflare.com/?zone=workers) in the Cloudflare dashboard (after selecting a zone).
+Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
 ![Workers Route Modal](./add-route-modal.png)
 
 Cloudflare Site routes are comprised of:
 
-- Route URL (see [Matching Behavior](#matching-behavior))
+- Route URL (refer to [Matching Behavior](#matching-behavior))
 - Worker script to execute on matching requests
-- Failure mode for rate-limited accounts on the free plan (see [daily request limits](/platform/limits#request-limits))
+- Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/platform/limits#request-limits))
 
-The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
-
-\* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
+The Routes REST API documentation can be found [in the Workers API documentation](https://api.cloudflare.com/#worker-routes-properties).
 
 ## Routes with *.workers.dev
 
-Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable from the Workers dashboard sidebar. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
+Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
-To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, select the **Workers** icon on your account home, or **Workers** then **Manage Workers** on your zone's dashboard, and begin setup on the right side of the Workers dashboard under **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (e.g., `my-worker.my-subdomain.workers.dev.`).
+To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to **Account Home** > **Workers** > **Overview** > **Your subdomain**. The `name` field in your Worker configuration is used as the secondary subdomain for the deployed script, (for example, `my-worker.my-subdomain.workers.dev.`).
 
 ### Matching Behavior
 
@@ -52,9 +50,9 @@ A pattern to match all requests looks like this:
 
 While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expression) pattern, route patterns follow specific rules:
 
-- The only supported operator is wildcard `*` which matches zero or more of any character.
+- The only supported operator is the wildcard (`*`), which matches zero or more of any character.
 
-- Route patterns may not contain infix wildcards or query parameters, e.g. neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
+- Route patterns may not contain infix wildcards or query parameters. For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
 - When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
@@ -73,11 +71,11 @@ In this example, all requests destined for example.com and whose paths are prefi
 
 ### Validity
 
-Here is the full set of rules governing route pattern validity:
+The following set of rules govern route pattern validity.
 
 #### Route patterns must include your zone
 
-If your zone is `example.com`, then the simplest possible route pattern you can have is `example.com`, which would match `http://example.com/` and `https://example.com/`, and _nothing else_. As with a URL, there is an implied path of `/` if you do not specify one.
+If your zone is `example.com`, then the simplest possible route pattern you can have is `example.com`, which would match `http://example.com/` and `https://example.com/`, and nothing else. As with a URL, there is an implied path of `/` if you do not specify one.
 
 #### Route patterns may not contain any query parameters
 
@@ -85,34 +83,34 @@ For example, `https://example.com/?anything` is not a valid route pattern.
 
 #### Route patterns may optionally begin with http:// or https://
 
-If you omit a scheme in your route pattern, it will match both http:// and https:// URLs. If you include http:// or https://, it will only match HTTP or HTTPS requests, respectively.
+If you omit a scheme in your route pattern, it will match both `http://` and `https://` URLs. If you include `http://` or `https://`, it will only match HTTP or HTTPS requests, respectively.
 
-- `https://*.example.com/` matches `https://www.example.com/` but _not_ `http://www.example.com/`
+- `https://*.example.com/` matches `https://www.example.com/` but not `http://www.example.com/`.
 
-- `*.example.com/` matches both `https://www.example.com/` _and_ `http://www.example.com/`.
+- `*.example.com/` matches both `https://www.example.com/` and `http://www.example.com/`.
 
 #### Hostnames may optionally begin with `*`
 
-If a route pattern hostname begins with `*`, then it matches the host *and* all subhosts. If a route pattern hostname begins with `*.`, then it matches *only* all subhosts.
+If a route pattern hostname begins with `*`, then it matches the host and all subhosts. If a route pattern hostname begins with `*.`, then it only matches all subhosts.
 
-- `*example.com/` matches `https://example.com/` *and* `https://www.example.com/`
+- `*example.com/` matches `https://example.com/` and `https://www.example.com/`.
 
-- `*.example.com/` matches `https://www.example.com/` but *not* `https://example.com/`
+- `*.example.com/` matches `https://www.example.com/` but not `https://example.com/`.
 
 #### Paths may optionally end with `*`
 
 If a route pattern path ends with `*`, then it matches all suffixes of that path.
 
-- `https://example.com/path*` matches `https://example.com/path` _and_ `https://example.com/path2` _and_ `https://example.com/path/readme.txt`
+- `https://example.com/path*` matches `https://example.com/path` and `https://example.com/path2` and `https://example.com/path/readme.txt`
 
 <Aside type="warning">
 
-There is a well-known bug associated with path matching concerning wildcards and forward slashes that is documented in the [Known issues section.](/platform/known-issues)
+There is a well-known bug associated with path matching concerning wildcards (`*`) and forward slashes (`/`) that is documented in [Known issues](/platform/known-issues).
 
 </Aside>
 
 #### Subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a worker on `myname.example.com`, and you've added `example.com` to Cloudflare but have not added any DNS records for `example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 To support this, you should use the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)).
