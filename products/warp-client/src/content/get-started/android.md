@@ -15,7 +15,13 @@ By default, 1.1.1.1:Faster Internet is configured to WARP mode. You can also con
 1. Toggle the **WARP** button to **Connected**.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
 
-Your connection to the Internet and your DNS queries are now protected.
+Your connection to the Internet and your DNS queries are now protected. Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case:
+
+1. Open 1.1.1.1: Faster Internet.
+1. Toggle the WARP button and choose **Switch to DNS only mode**. If the WARP toggle is disconnected, tap the **menu** button.
+1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1**.
+
+You are now using encryption only for your DNS queries.
 
 ## How to remove the application
 

@@ -22,7 +22,7 @@ Bellow, you will find the system requirements for the operating systems supporte
     </tr>
     <tr>
       <td><strong>Hard drive space</strong></td>
-      <td>184MB</td>
+      <td>184 MB</td>
     </tr>
     <tr>
       <td><strong>Memory</strong></td>

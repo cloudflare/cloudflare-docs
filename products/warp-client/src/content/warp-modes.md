@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # WARP modes
 
-The WARP client has several modes, to better suit different connection needs.
+The WARP client has several modes, to better suit different connection needs:
 
 ## 1.1.1.1
 
@@ -42,4 +42,4 @@ While WARP is able to take advantage of the many Cloudflare data centers around 
  
 ## WARP Unlimited
 
-WARP Unlimited is our monthly subscription offering for WARP+. For the time being, WARP Unlimited can only be purchased via your iOS and Android devices.
+WARP Unlimited is our monthly subscription offering for WARP+. For the time being, WARP Unlimited can only be purchased via iOS and Android devices.
