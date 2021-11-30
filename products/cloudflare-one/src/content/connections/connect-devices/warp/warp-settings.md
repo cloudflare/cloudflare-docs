@@ -26,7 +26,26 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 </div>
 </details>
 
-When the toggle is enabled, users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, no one-time passwords are generated, and the users will not be able to change the client's configuration.
+<Aside type='note'>
+  
+This feature needs the **Switch Locked** feature to be set to **True**. You can enable the feature via MDM or under **Settings** > **Devices** on the Teams dashboard.
+
+</Aside>
+
+When this toggle is **enabled**, you can provide end users with an one-time password that will allow them to toggle off the WARP client in case they need to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection). 
+
+When the toggle is **disabled**, one-time passwords will not be generated, and end users will not be able to toggle the client off when **Switch Locked* is true.
+
+You can also set a timeout to define how long the WARP client is allowed to be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect. 
+
+When you want to allow a user to disable the WARP client:
+
+1. Log in to the Teams Dashboard and ensure the **Admin override** toggle is enabled. 
+1. Retrieve the 7-digit override code for their device by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired device, and scrolling down to **User details**.
+1. Copy the code and share it with the end user for them to enter on their device.
+
+Users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and enter the override code in the pop-up window. The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
+
 
 ## Device enrollment permissions
 
