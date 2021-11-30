@@ -164,7 +164,7 @@ If you are generating a high-volume of tokens, it is best to generate new tokens
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
 ```bash
-curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys
+curl -X POST -H "Authorization: Bearer $TOKEN"  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/keys"
 ```
 
 The response will return `pem` and `jwk` values.
