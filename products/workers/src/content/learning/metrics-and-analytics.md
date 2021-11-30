@@ -11,7 +11,7 @@ There are two graphical sources of information about your Workers traffic at a g
 
 ## Workers metrics
 
-Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). Select **Workers** > **Manage Workers** > **your Worker** to view its metrics in [**Overview**](https://dash.cloudflare.com/?account=workers/overview).
+Workers metrics aggregate request data for an individual Worker script (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). Select **Workers** > **Manage Workers** > **your Worker** to view its metrics.
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
 
