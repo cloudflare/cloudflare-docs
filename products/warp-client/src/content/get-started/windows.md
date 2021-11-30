@@ -35,6 +35,6 @@ The Windows application places log files in two locations based on what part of 
 
 ## How to remove the application
 
-1. Click the **Start** menu and search for **Settings**. You can also press <kbd>Win key</kbd> + <kbd>I</kbd>).
+1. Click the **Start** menu and search for **Settings**. You can also press <kbd>⊞ Win</kbd> + <kbd>i</kbd>).
 1. Select **Apps** > **App & Features**.
 1. Scroll down to Cloudflare WARP and click **Uninstall**.
