@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 9
 pcx-content-type: faq
 ---
 
