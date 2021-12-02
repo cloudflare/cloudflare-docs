@@ -3,17 +3,17 @@ order: 6
 pcx-content-type: how-to
 ---
 
-# Create Mass Redirects via API
+# Create Bulk Redirects via API
 
-To create Mass Redirects via API, you must:
+To create Bulk Redirects via API, you must:
 
-1. Create a Mass Redirect List via API.
+1. Create a Bulk Redirect List via API.
 1. Add items (URL Redirects) to the list created in step 1.
-1. Create a Mass Redirect Rule via API, which enables the list created in step 1.
+1. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
-## 1. Create a Mass Redirect List via API
+## 1. Create a Bulk Redirect List via API
 
-Use the [Create list](https://api.cloudflare.com/#rules-lists-create-list) operation to create a new Mass Redirect List. The list `kind` must be `redirect`.
+Use the [Create list](https://api.cloudflare.com/#rules-lists-create-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
 
 ```json
 curl -X POST \
@@ -111,15 +111,15 @@ If the operation already completed successfully, the response will be similar to
 }
 ```
 
-## 3. Create a Mass Redirect Rule via API
+## 3. Create a Bulk Redirect Rule via API
 
-Since Mass Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Mass Redirect Rule.
+Since Bulk Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Bulk Redirect Rule.
 
-Add Mass Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
+Add Bulk Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
 
-In a Mass Redirect Rule you must:
+In a Bulk Redirect Rule you must:
 * Set `action` to `redirect`
-* Define an `action_parameters` object with additional configuration settings — refer to [JSON objects: Mass Redirect Rule](#) for details.
+* Define an `action_parameters` object with additional configuration settings — refer to [JSON objects: Bulk Redirect Rule](#) for details.
 
 The following request creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule:
 
@@ -134,7 +134,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets
   "rules": [
     {
       "expression": "http.request.full_uri in $my_redirect_list",
-      "description": "Mass Redirect rule.",
+      "description": "Bulk Redirect rule.",
       "action": "redirect",
       "action_parameters": {
         "from_list": {
@@ -161,7 +161,7 @@ The response will be similar to the following:
         "id": "8da312df846b4258a05bcd454ea943be",
         "version": "1",
         "expression": "http.request.full_uri in $my_redirect_list",
-        "description": "Mass Redirect rule.",
+        "description": "Bulk Redirect rule.",
         "action": "redirect",
         "action_parameters": {
           "from_list": {

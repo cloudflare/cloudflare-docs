@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # How it works
 
-For each incoming request, Cloudflare evaluates all URL Redirects of each Mass Redirect List that is enabled by a Mass Redirect Rule.
+For each incoming request, Cloudflare evaluates all URL Redirects of each Bulk Redirect List that is enabled by a Bulk Redirect Rule.
 
 If there is a match for a URL Redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL Redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
 
@@ -17,7 +17,7 @@ The URL matching algorithm is different depending on the value of the _Subpath m
 
 The matching algorithm for URL Redirects with _Subpath matching_ disabled is the following:
 
-1. For each Mass Redirect Rule, check if the request URL matches the source URL of any URL Redirect in the Mass Redirect List associated with the rule.
+1. For each Bulk Redirect Rule, check if the request URL matches the source URL of any URL Redirect in the Bulk Redirect List associated with the rule.
 
 1. Select the first redirect in the list that matches all the following conditions:
     * The URL scheme (for example, `https`) matches.

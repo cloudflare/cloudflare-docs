@@ -100,7 +100,7 @@ A fully populated IP List item JSON object has the following structure:
 }
 ```
 
-A fully populated Mass Redirect List item JSON object has the following structure:
+A fully populated Bulk Redirect List item JSON object has the following structure:
 
 ```json
 {
@@ -162,8 +162,8 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>redirect</code><br /><Type>Object</Type></td>
-            <td>An object that contains the definition of a URL redirect. Refer to the <a href="https://developers.cloudflare.com/rules/mass-redirects/reference/parameters">URL Redirect parameters</a> for details.</td>
-            <td><p>Applies only to Mass Redirect Lists.</p></td>
+            <td>An object that contains the definition of a URL redirect. Refer to the <a href="https://developers.cloudflare.com/rules/bulk-redirects/reference/parameters">URL Redirect parameters</a> for details.</td>
+            <td><p>Applies only to Bulk Redirect Lists.</p></td>
         </tr>
         <tr>
             <td><code>created_on</code><br /><Type>String</Type></td>
