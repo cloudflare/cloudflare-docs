@@ -14,7 +14,7 @@ Alternatively, download the client from one of the following links after checkin
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Windows 8, Windows 10</td>
+      <td>Windows 8.1, Windows 10, Windows 11</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
@@ -44,7 +44,7 @@ __[Windows Beta Builds](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.
   <tbody>
     <tr>
       <td><strong>OS Ver</strong></td>
-      <td>Big Sur, High Sierra, Catalina</td>
+      <td>Mojave, Catalina, Big Sur, Monterey</td>
     </tr>
     <tr>
       <td><strong>OS Type</strong></td>
