@@ -15,19 +15,19 @@ The URL Redirect parameters are the following:
     - API field name: `source_url`.
     - The URL string that the incoming request URL must match for the redirect to be applied. This property is mandatory. The maximum length of the source URL is 32 KB.
     - The value must be a valid URL, but the URL scheme is not required (for example, `https`); when the scheme is omitted, the redirect applies to both `http` and `https` URL schemes.
-    - The exact behavior of the URL matching algorithm, which matches an incoming request with the redirect’s source URL, depends on the values of the _Include subdomains_ and _Subpath matching_ properties.
+    - The exact behavior of the URL matching algorithm, which matches an incoming request with the redirect’s source URL, depends on the values of the **Include subdomains** and **Subpath matching** properties.
     - For more information on the supported URL components, refer to [Supported URL components](/mass-redirects/reference/url-components).
 
 - **Target URL** <Type>String</Type>
     - API field name: `target_url`.
     - The URL where the client will be redirected to when there is a match for the URL Redirect. This property is mandatory. The maximum length of the target URL is 32 KB.
-    - The value must be a valid URL. The final target URL depends on the values of the _Preserve query string_ and _Preserve path suffix_ properties.
+    - The value must be a valid URL. The final target URL depends on the values of the **Preserve query string** and **Preserve path suffix** properties.
     - For more information on the supported URL components, refer to [Supported URL components](/mass-redirects/reference/url-components).
 
 - **Subpath matching** <Type>Boolean</Type>
     - API field name: `subpath_matching`.
     - If true, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current redirect. The default value is `false`.
-    - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with subpath matching enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when *Preserve path suffix* is true. Refer to *Preserve path suffix* for details.
+    - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with subpath matching enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when **Preserve path suffix** is true.
     - Refer to [URL matching algorithm](#) for details.
 
 - **Include subdomains** <Type>Boolean</Type>
@@ -39,12 +39,12 @@ The URL Redirect parameters are the following:
 - **Preserve query string** <Type>Boolean</Type>
     - API field name: `preserve_query_string`.
     - If true, the redirect URL will keep the query string of the original request. The default value is `false`.
-    - For example, a URL Redirect from /my-folder/ to /other-folder/ with _Preserve query string_ enabled will redirect a request from `/my-folder/?name=value#section` to `/other-folder/?name=value#section`. If _Preserve query string_ is disabled, the request will be redirected from `/my-folder/?name=value#section` to `/other-folder/`.
+    - For example, a URL Redirect from /my-folder/ to /other-folder/ with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value#section` to `/other-folder/?name=value#section`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value#section` to `/other-folder/`.
 
 - **Preserve path suffix** <Type>Boolean</Type>
     - API field name: `preserve_path_suffix`.
-    - Applicable only when _Subpath matching_ is enabled. If true, defines that the redirect URL will include the remaining (non-matched) path elements of the source URL, if any. The default value is `true`.
-    - For example, when both _Subpath matching_ and _Preserve path suffix_ are enabled, a URL Redirect from `/my-folder/` to `/another-folder/` will redirect an incoming request from `/my-folder/foo` to `/another-folder/foo`. If _Preserve path suffix_ is disabled, the same request would still match the URL Redirect, but it would redirect the client from `/my-folder/foo` to `/another-folder/`.
+    - Applicable only when **Subpath matching** is enabled. If true, defines that the redirect URL will include the remaining (non-matched) path elements of the source URL, if any. The default value is `true`.
+    - For example, when both **Subpath matching** and **Preserve path suffix** are enabled, a URL Redirect from `/my-folder/` to `/another-folder/` will redirect an incoming request from `/my-folder/foo` to `/another-folder/foo`. If **Preserve path suffix** is disabled, the same request would still match the URL Redirect, but it would redirect the client from `/my-folder/foo` to `/another-folder/`.
 
 - **Status code** <Type>Integer</Type>
     - API field name: `status_code`.
