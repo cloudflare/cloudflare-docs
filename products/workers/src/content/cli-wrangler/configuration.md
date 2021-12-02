@@ -284,7 +284,7 @@ You can also define your `site` using an [alternative TOML syntax](https://githu
 
 #### Storage Limits
 
-For exceptionally large pages, Workers Sites may not be ideal. There is a 25MB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
+For exceptionally large pages, Workers Sites may not be ideal. There is a 25 MiB limit per page or file. Additionally, Wrangler will create an asset manifest for your files that will count towards your script’s size limit. If you have too many files, you may not be able to use Workers Sites.
 
 #### Exclusively including files/directories
 
