@@ -8,7 +8,7 @@ pcx-content-type: reference
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
 ## Client Orchestration API
-The WARP client talks with our edge outside the tunnel for operations like registration or settings changes. To enable users to perform these operations, this IPv4 address must be allowed:
+The WARP client talks with our edge outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
 
  - IPv4 API Endpoint: `162.159.192.1`
 
