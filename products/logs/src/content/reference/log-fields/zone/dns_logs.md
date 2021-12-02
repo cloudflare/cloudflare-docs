@@ -3,3 +3,23 @@
 
 title: DNS logs 
 ---
+
+# DNS logs
+
+The descriptions below detail the fields available for `dns_logs`.
+
+<TableWrap>
+
+| Field | Value | Type |
+| -- | -- | -- |
+| ColoCode | IATA airport code of data center that received the request | string |
+| EDNSSubnet | [EDNS Client Subnet](https://developers.cloudflare.com/logs/reference/glossary#edns-client-subnet-ecs) (IPv4 or IPv6) | string |
+| EDNSSubnetLength | [EDNS Client Subnet](https://developers.cloudflare.com/logs/reference/glossary#edns-client-subnet-ecs) length | int |
+| QueryName | Name of the query that was sent | string |
+| QueryType | Integer value of [query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4) | int |
+| ResponseCached | Indication if response was cached | bool |
+| ResponseCode | Integer value of [response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6) | int |
+| SourceIP | IP address of the client (IPv4 or IPv6) | string |
+| Timestamp | Timestamp when the query occurred | int or string |
+
+</TableWrap>
