@@ -72,7 +72,7 @@ There is no hard limit for duration. However, after 30 seconds, there is a highe
 
 ### Unbound Usage Model
 
-The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped, but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
 ## KV limits
 
