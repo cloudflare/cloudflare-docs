@@ -27,5 +27,5 @@ You are now using encryption only for your DNS queries.
 
 1. Find the application on the home screen.
 1. Touch and hold on the application tile.
-1. Tap **Remove App**.
+1. Select **Remove App**.
 1. Select **Delete App**.

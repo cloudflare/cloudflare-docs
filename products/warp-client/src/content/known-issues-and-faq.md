@@ -6,7 +6,7 @@ pcx-content-type: faq
 
 # FAQ
 
-Below you will find answers to our most commonly asked questions regarding the WARP client. If you cannot find the answer you are looking for, visit our [community page](https://community.cloudflare.com/).
+Below you will find answers to our most commonly asked questions regarding the WARP client. If you cannot find the answer you are looking for, visit the [community page](https://community.cloudflare.com/).
 
 ## Why am I not connecting to a closer Cloudflare data center?
 
@@ -18,13 +18,13 @@ As our [Network Map](https://www.cloudflare.com/network/) shows, we have locatio
 
 ## Why is my public IP address sometimes visible?
 
-Cloudflare WARP Client in WARP mode was meant to ensure all your traffic is kept private between you and the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) (that is, the site you are connecting to), but not *from* the origin itself. In a number of cases, if the origin site you are communicating with cannot determine who you are and where you are from, they cannot serve locale-relevant content to you (that is, anything realated to a customized user experience, such as language or reagional configurations).
+Cloudflare WARP Client in WARP mode was meant to ensure all your traffic is kept private between you and the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) (that is, the site you are connecting to), but not from the origin itself. In a number of cases, if the origin site you are communicating with cannot determine who you are and where you are from, it cannot serve locale-relevant content to you (that is, anything related to a customized user experience, such as language or regional configurations).
 
 Sites inside Cloudflare network are able to see this information. If a site is showing you your IP address, chances are they are in our network. Most sites outside our network, however, are unable to see this information and instead see the nearest egress server to their server. We are working to see if in the future we can find a way to more easily share this information with a limited number of sites outside Cloudflare's network, where it is relevant to both parties.
 
 ## Why has my throughput dropped while using WARP?
 
-Cloudflare WARP is in part powered by 1.1.1.1, the world's fastest DNS resolver. When visiting sites or going to a new location on the Internet, you should see fast DNS lookups. WARP, however, is built to trade some throughput for enhanced privacy, by encrypting all traffic both to and from your device. While this is not noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though, and continue to work on improving performance all over the system.
+Cloudflare WARP is in part powered by 1.1.1.1, the world's fastest DNS resolver. When visiting sites or going to a new location on the Internet, you should see fast DNS lookups. WARP, however, is built to trade some throughput for enhanced privacy, by encrypting all traffic both to and from your device. While this is not noticeable at most mobile speeds, on desktop systems in countries where high-speed broadband is available, you may notice a drop. We think the tradeoff is worth it and continue to work on improving performance all over the system.
 
 ## What about the performance of the WARP app?
 

@@ -8,13 +8,13 @@ pcx-content-type: how-to
 
 1. [Download __Cloudflare_WARP.zip__](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
 1. Navigate to the downloads folder.
-1. Double-click on **Cloudflare_WARP.zip**.
-1. Double-click on the **Cloudflare_WARP.pkg** file that was extracted.
+1. Open **Cloudflare_WARP.zip**.
+1. Open the **Cloudflare_WARP.pkg** file that was extracted.
 1. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
 ![macOS Menu Bar](../static/macOSMenuBar.png)
 
-## What we place on your device
+## What Cloudflare places on your device
 
 ### Cloudflare WARP.app
 

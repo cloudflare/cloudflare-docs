@@ -9,7 +9,7 @@ The WARP Client application uses a VPN profile and/or service that enables us to
 
 ## What does Cloudflare do with your data?
 
-When not part of a Cloudflare for Teams organization, Cloudflare stores the absolute minimum amount of data we believe is required to provide the service. We will not sell, rent, share, or otherwise disclose your personal information to anyone except as necessary to provide our services or as otherwise described in our Privacy Policy without first providing you with notice and the opportunity to consent. We do not use the data to identify who you are or what you are doing on the Internet beyond the exceptions below. We do not store any data except as set forth in our Privacy Policy. Such data may include: your app installation id, the amount of data transferred through Cloudflare's network, and your average speed when you are using the WARP Client application.
+When not part of a Cloudflare for Teams organization, Cloudflare stores the absolute minimum amount of data we believe is required to provide the service. We will not sell, rent, share or otherwise disclose your personal information to anyone except as necessary to provide our services or as otherwise described in our Privacy Policy without first providing you with notice and the opportunity to consent. We do not use the data to identify who you are or what you are doing on the Internet beyond the exceptions below. We do not store any data except as set forth in our Privacy Policy. Such data may include: your app installation ID, the amount of data transferred through Cloudflare's network, and your average speed when you are using the WARP Client application.
 
 ## How Cloudflare Uses User Data:
 

@@ -37,7 +37,7 @@ $ warp-cli enable-always-on
 
 ### Switching modes
 
-You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For instance:
+You can use `warp-cli set-mode --help` to get a list of the modes to switch between. For example:
 
 - **DNS only mode via DoH:** `warp-cli set-mode doh`.
 - **WARP with DoH:** `warp-cli set-mode warp+doh`.
@@ -51,6 +51,7 @@ The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-
 - **Malware and adult content:** `warp-cli set-families-mode full`
 
 ### Additional commands
+
 A complete list of all supported commands can be found by running:
 
 ```sh
