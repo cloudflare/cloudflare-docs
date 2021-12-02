@@ -82,7 +82,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 | [Keys/namespace](#kv)                 | unlimited  |
 | [Key size](#kv)                       | 512 bytes  |
 | [Key metadata](#kv)                   | 1024 bytes |
-| [Value size](#kv)                     | 25 MB      |
+| [Value size](#kv)                     | 25 MiB     |
 
 </TableWrap>
 
@@ -232,7 +232,7 @@ Workers KV supports:
 - Up to 100 Namespaces per account
 - Unlimited keys per namespace
 - Keys of up to 512 bytes
-- Values of up to 25 MB
+- Values of up to 25 MiB
 - Metadata of up to 1024 bytes per key
 - Unlimited reads per second
 - Unlimited writes per second, if they are to different keys
