@@ -55,8 +55,8 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
 | [Request](#request)         | 100,000&nbsp;requests/day<br/>1000&nbsp;requests/min | none                                        | none                                      |
 | [Worker memory](#memory)    | 128 MB                                               | 128 MB                                      | 128 MB                                    |
-| [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger |                                           |
-| [Duration](#duration)       |                                                      |                                             | 30 s HTTP request <br/> 30 s Cron trigger |
+| [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |                                           |
+| [Duration](#duration)       |                                                      |                                             | No limit* |
 
 </TableWrap>
 
@@ -64,9 +64,15 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
+<Aside type="note" header="No limit for duration*">
+
+There is no hard limit for duration. However, after 30 seconds, there is a higher change of eviction.
+
+</Aside>
+
 ### Unbound Usage Model
 
-The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds. Unbound Worker limits are based on [duration](#duration), meaning the limit includes the time a script is waiting for responses from network calls. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
 ## KV limits
 
