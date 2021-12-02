@@ -19,7 +19,7 @@ The Cloudflare API base URL is:
 https://api.cloudflare.com/client/v4
 ```
 
-The `{:zone_identifier}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
+The `{:zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 
 The `{:script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Script Monitor scripts](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts) operation for every monitored script.
 
@@ -27,10 +27,10 @@ The following table summarizes the available operations:
 
 | Operation | Method + URL stub | Notes |
 |-----------|-------------------|-------|
-| [Get Page Shield settings][1] | `GET zones/{:zone_identifier}/script_monitor` | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield settings][2] | `PUT zones/{:zone_identifier}/script_monitor` | Updates the Page Shield status (enabled/disabled). |
-| [List Page Shield scripts][3] | `GET zones/{:zone_identifier}/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
-| [Get a script][4] | `GET zones/{:zone_identifier}/script_monitor/scripts/{:script_id}` | Fetch the details of a currently monitored script.
+| [Get Page Shield settings][1] | `GET zones/{:zone_id}/script_monitor` | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield settings][2] | `PUT zones/{:zone_id}/script_monitor` | Updates the Page Shield status (enabled/disabled). |
+| [List Page Shield scripts][3] | `GET zones/{:zone_id}/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
+| [Get a script][4] | `GET zones/{:zone_id}/script_monitor/scripts/{:script_id}` | Fetch the details of a currently monitored script.
 
 [1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
 [2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
@@ -39,7 +39,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-* The script content classification (`Malicious`/`Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 60 — score values above the threshold are considered malicious.
+The script content classification (`Malicious`/`Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 60 — score values above the threshold are considered malicious.
 
 ## Common API calls
 
@@ -51,7 +51,7 @@ This example obtains the current status of Page Shield (enabled/disabled).
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{:zone_identifier}/script_monitor" \
+curl -X GET "https://api.cloudflare.com/client/v4/zones/{:zone_id}/script_monitor" \
   -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   -H "Content-Type: application/json"
@@ -80,7 +80,7 @@ This example enables Page Shield in the specified zone.
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/{:zone_identifier}/script_monitor" \
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/{:zone_id}/script_monitor" \
   -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   -H "Content-Type: application/json" \
@@ -110,7 +110,7 @@ This example fetches a list of scripts monitored by Script Monitor on hostname `
 ---
 header: Request
 ---
-curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_identifier}/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
+curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_id}/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
   -H "X-Auth-Email: user@example.com" \
   -H "X-Auth-Key: REDACTED" \
   -H "Content-Type: application/json"
@@ -131,7 +131,9 @@ header: Response
       "host": "example.net",
       "js_integrity_score": 10,
       "domain_reported_malicious": false,
-      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "url_reported_malicious": true,
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seen_on_first": "http://malicious.example.com/page_one.html"
     },
     {
       "script_id": "83c8da2267394ce8465b74c299658fea",
@@ -142,7 +144,9 @@ header: Response
       "host": "example.net",
       "js_integrity_score": 50,
       "domain_reported_malicious": false,
-      "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45"
+      "url_reported_malicious": true,
+      "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+      "seen_on_first": "http://malicious.example.com/page_one.html"
     },
     // (...)
   ],
@@ -163,7 +167,7 @@ Some fields displayed in the example response may not be available, depending on
 
 For details on the available filtering, paging, and sorting parameters, refer to the [API reference](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts).
 
-## Get details of a monitored script
+### Get details of a monitored script
 
 This example obtains the details of a script monitored by Page Shield with script ID `8337233faec2357ff84465a919534e4d`.
 
@@ -171,7 +175,7 @@ This example obtains the details of a script monitored by Page Shield with scrip
 ---
 header: Request
 ---
-curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_identifier}/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
+curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_id}/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
  -H "X-Auth-Email: user@example.com" \
  -H "X-Auth-Key: REDACTED" \
  -H "Content-Type: application/json"
@@ -191,6 +195,7 @@ header: Response
     "host": "example.net",
     "js_integrity_score": 10,
     "domain_reported_malicious": false,
+    "url_reported_malicious": true,
     "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "seen_on_first": "http://malicious.example.com/page_one.html",
     "seen_on": [

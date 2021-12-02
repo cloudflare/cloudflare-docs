@@ -17,15 +17,15 @@ Depending on your Cloudflare plan, you may also be able to:
 
 ## Use the Script Monitor dashboard
 
-To review the scripts tracked by Script Monitor:
+To review the scripts tracked by Page Shield:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 1. Go to **Firewall** > **Page Shield**.
 1. Under **Script Monitor**, review your scripts.
 1. To filter scripts, use the following options:
 
-    * **Search**: Search for a specific URL
-    * **Host**: Look for scripts appearing on specific hostnames
+    * **Search**: Search for a specific URL.
+    * **Host**: Look for scripts appearing on specific hostnames.
     * **Page** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page. Searches the page where the first script occurred and the latest occurrences list.
 
 If you recently activated Page Shield, you may see a delay in reporting.

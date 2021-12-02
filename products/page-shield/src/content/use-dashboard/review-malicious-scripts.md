@@ -16,13 +16,15 @@ This feature is only available to Enterprise customers with a paid add-on.
 
 To review the scripts considered malicious:
 
-1. In your dashboard, go to **Firewall** > **Page Shield**.
-
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+1. Go to **Firewall** > **Page Shield**.
 1. Under **Script Monitor**, click **Details** for each script considered malicious. The script details will contain:
 
-  * **Script content classification**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99). The score threshold for considering a script as malicious is 60.
-  * **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
-  * **Malicious Domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
+    * **Script content classification**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
+    * **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
+    * **Malicious Domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
+
+    For more information, refer to [Detecting malicious scripts](/about/malicious-script-detection).
 
 1. Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/use-dashboard/monitor-scripts#view-script-details), review and update the pages where the malicious script was detected.
 

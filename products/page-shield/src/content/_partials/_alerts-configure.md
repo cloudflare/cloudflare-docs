@@ -1,7 +1,7 @@
 To set up alerts:
 
 1. Go to **Firewall** > **Page Shield**.
-1. Select **Configure Alerts**.
+1. Click **Configure Alerts**.
 1. Select an [alert type](/reference/alerts).
 1. Fill in the required information and select **Create**.
 
