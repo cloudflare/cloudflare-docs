@@ -20,10 +20,4 @@ Future versions of Page Shield should add the ability to block scripts.
 
 ## Learn more
 
-For more background on Page Shield, check out our [introductory blog post](https://blog.cloudflare.com/introducing-page-shield/).
-
-## Get started
-
-To get started with Page Shield, refer to the Page Shield [setup guide](/get-started).
-
-To manage Page Shield using an API, refer to the [Script Monitor API](/reference/script-monitor-api).
+For more background on Page Shield, check out our [blog post](https://blog.cloudflare.com/page-shield-is-now-generally-available/).

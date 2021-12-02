@@ -14,7 +14,7 @@ Page Shield includes the following features:
 * **Page attribution**: Allows you to find in which page a script first appeared, and view a list of the latest occurrences of the script in your pages.
 * **Malicious code detection**: Detects malicious code in your pages using threat intelligence and machine learning.
 * **Code change detection**: Detects any changes in the scripts loaded in your pages.
-* **Script alerts**: Receive notifications about newly detected scripts, scripts loaded from unknown domains, new scripts considered malicious, or code changes in your existing scripts.
+* **Alerts**: Receive notifications about newly detected scripts, scripts loaded from unknown domains, new scripts considered malicious, or code changes in your existing scripts.
 
 <ButtonGroup>
   <Button type="primary" href="/get-started">Set up Page Shield</Button>
@@ -30,3 +30,9 @@ Basic alerts<br/>(New Script Alert, New Domain Alert) | | | Yes | Yes | Yes
 Page attribution                              |     |     | Yes | Yes | Yes
 Malicious code detection and alerting         |     |     |     |     | Yes
 Code change detection and alerting            |     |     |     |     | Yes
+
+## Get started
+
+To get started with Page Shield, refer to the Page Shield [setup guide](/get-started).
+
+To manage Page Shield using an API, refer to the [Script Monitor API](/reference/script-monitor-api).
