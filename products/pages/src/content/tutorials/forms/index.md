@@ -15,7 +15,7 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 </Aside>
 
-This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/platform/functions). Refer to the [Get started with Pages](/get-started) guide to familiarize with the platform.
+This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/platform/functions). Refer to the [Get started guide](/get-started) guide to familiarize yourself with the platform.
 
 
 ## Overview
@@ -36,7 +36,7 @@ Below is an example HTML5 form with a few inputs and their validation rules defi
 </form>
 ```
 
-If a HTML5 form has validation rules defined, browsers will automatically check all rules when the user attempts to submit the form. Should there be any errors, the submission is prevented and the browser displays the error message(s) to user for correction. The `<form>` will only `POST` data to the `/submit` endpoint when there are no outstanding validation errors. This entire process is native to HTML5 and only requires the appropriate form and input attibutes to exist — no JavaScript is required!
+If an HTML5 form has validation rules defined, browsers will automatically check all rules when the user attempts to submit the form. Should there be any errors, the submission is prevented and the browser displays the error message(s) to the user for correction. The `<form>` will only `POST` data to the `/submit` endpoint when there are no outstanding validation errors. This entire process is native to HTML5 and only requires the appropriate form and input attributes to exist — no JavaScript is required.
 
 Form elements may also have a [`<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) element associated with them, allowing you to clearly describe each input. This is great for visual clarity, of course, but it also allows for more accessible user experiences since the HTML markup is more well-defined. Assistive technologies directly benefit from this; for example, screen readers can announce which `<input>` is focused. And when a `<label>` is clicked, its assigned form input is focused instead, increasing the activation area for the input.
 
@@ -121,9 +121,9 @@ You may now begin working in the `new-project` directory you created.
 
 The form for this example is fairly straightforward. It includes an array of different input types, including checkboxes for selecting multiple values. The form also does not include any validations so that you may see how empty and/or missing values are interpreted on the server.
 
-You will only be using plain HTML for this example project. Of course, you may use your preferred JavaScript framework, but raw languages have been chosen for simplicity and familiarity – all frameworks are abstracting and/or producing a similar result.
+You will only be using plain HTML for this example project. You may use your preferred JavaScript framework, but raw languages have been chosen for simplicity and familiarity – all frameworks are abstracting and/or producing a similar result.
 
-Create a `public/index.html` in your project directory. All frontend assets will exist within this `public` directory and this `index.html` file will serve as the home page for the website.
+Create a `public/index.html` in your project directory. All front-end assets will exist within this `public` directory and this `index.html` file will serve as the home page for the website.
 
 Copy and paste the following content into your `public/index.html` file:
 
@@ -192,7 +192,7 @@ This HTML document will contain a form with a few fields for the user to fill ou
 
 Technically, only the `<form>` and its child elements are necessary. The `<head>` and the enclosing `<html>` and `<body>` tags are optional and not strictly necessary for a valid HTML document.
 
-The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you'd like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/lukeed/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
+The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/lukeed/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
 </Aside>
 
@@ -230,7 +230,7 @@ export async function onRequestPost(context) {
 
 The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`Request`](https://developers.cloudflare.com/workers/runtime-apis/request) object, which can be accessed through the `context.request` key.
 
-As mentioned, a `<form>` defaults to the `application/x-www-form-urlencoded` MIME type when submitting. And, for more advanced scenarios, the `enctype="multipart/form-data"` attribute is needed. Luckily, both MIME types can be parsed and treated as [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)! This means that with Workers – which includes Pages Functions – you are able to use the native [`Request.formData`](https://developer.mozilla.org/en-US/docs/Web/API/Request/formData) parser.
+As mentioned, a `<form>` defaults to the `application/x-www-form-urlencoded` MIME type when submitting. And, for more advanced scenarios, the `enctype="multipart/form-data"` attribute is needed. Luckily, both MIME types can be parsed and treated as [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). This means that with Workers – which includes Pages Functions – you are able to use the native [`Request.formData`](https://developer.mozilla.org/en-US/docs/Web/API/Request/formData) parser.
 
 For illustrative purposes, the example application's form handler will reply with all values it received. A `Response` must always be returned by the handler, too:
 
@@ -256,7 +256,7 @@ export async function onRequestPost(context) {
 }
 ```
 
-With this handler in place, the example is now fully functional! When a submission is received, the Worker will reply with a JSON list of the `FormData` key-value pairs.
+With this handler in place, the example is now fully functional. When a submission is received, the Worker will reply with a JSON list of the `FormData` key-value pairs.
 
 However, if you want to reply with a JSON object instead of the key-value pairs (an Array of Arrays), then you must do so manually. Recently, JavaScript added the [`Object.fromEntries`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries) utility. This works well in some cases; however, the example `<form>` includes a `movies` checklist that allows for multiple values. If using `Object.fromEntries`, the generated object would only keep one of the `movies` values, discarding the rest. To avoid this, you must write your own `FormData` to `Object` utility instead:
 
@@ -296,13 +296,11 @@ export async function onRequestPost(context) {
 ```
 
 The final snippet (above) allows the Worker to retain all values, returning a JSON response with an accurate representation of the `<form>` submission.
-
-
 ### Deployment
 
-You have now done a lot of work within your project – it's time to see it in action!
+You are now ready to deploy your project.
 
-If you haven't already done so, you must save your progress within `git` and then push the commit(s) to the GitHub repository:
+If you have not already done so, save your progress within `git` and then push the commit(s) to the GitHub repository:
 
 ```sh
 # Add all files
@@ -315,7 +313,7 @@ $ git push -u origin main
 
 Your work now resides within the GitHub repository, which means that Pages is able to access it too.
 
-If this is your first Cloudflare Pages project, refer to the [Get Started](/pages/get-started) for a complete walkthrough. After selecting the appropriate GitHub respository, you must configure your project with the following build settings:
+If this is your first Cloudflare Pages project, refer to the [Get started guide](/pages/get-started) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
 * **Project name** – Your choice
 * **Production branch** – `main`
@@ -326,7 +324,7 @@ If this is your first Cloudflare Pages project, refer to the [Get Started](/page
 After clicking the **Save and Deploy** button, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
 
-## Resources
+## Related Resources
 
 In this tutorial, you built and deployed a website and its backend using Cloudflare Pages with its Workers integration. You created a static HTML document with a form that communicates with a Worker handler to parse the submission request(s).
 
