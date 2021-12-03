@@ -80,7 +80,6 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
-    "gatsby-plugin-remove-trailing-slashes",
 
     // Support JSX components pulled in from docs engine
     {
