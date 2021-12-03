@@ -66,7 +66,7 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 <Aside type="note" header="No limit for duration*">
 
-There is no hard limit for duration. However, after 30 seconds, there is a higher change of eviction.
+There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
 
 </Aside>
 
