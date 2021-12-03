@@ -9,7 +9,7 @@ Cloudflare Zaraz allows you to track the actions your users are taking on your w
 
 Common user actions you will probably be interested in tracking are Successful Signups, CTA clicks, and Purchases, among others. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
 
-To start tracking events, add the Events API JavaScript code to your website. Example:
+To start tracking events, add the Events API JavaScript code to your website. The following is an example for tracking purchases:
 
 ```js
 zaraz.track(“purchase”, { value: “200”, currency: “USD”})
@@ -19,5 +19,5 @@ Only the first parameter is required. This parameter should be a string specifyi
 
 After using the Events API in your website to track an action:
 
-1. Create a [trigger that matches your `zaraz.track`call](/create-a-trigger))
-1. Add an [event that uses the trigger](/create-an-event)
+1. Create a [trigger that matches your `zaraz.track` call](/get-started/create-trigger)
+1. Add an [event that uses the trigger](/get-started/send-events)
