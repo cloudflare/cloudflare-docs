@@ -28,7 +28,7 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 
 <Aside type='note'>
   
-This feature needs the **Switch Locked** feature to be set to **True**. You can enable the feature via MDM or under **Settings** > **Devices** on the Teams dashboard.
+This feature needs the <b>Switch Locked</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Teams dashboard.
 
 </Aside>
 
