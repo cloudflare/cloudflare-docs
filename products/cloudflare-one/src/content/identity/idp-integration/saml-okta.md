@@ -11,66 +11,43 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 To set up SAML with Okta as your identity provider:
 
-1. Log in to your Okta Admin portal, and choose **Applications**.
-1. Click **Add Application**.
+1. Log in to your **Okta Admin** portal, and choose **Applications**.
+1. Click **Create App Integration**.
+1. In the pop-up dialog, select **SAML 2.0**.
+1. Click **Next**. 
+1. Enter an app name and click **Next**.
 
     ![Okta Applications page](../../static/documentation/identity/saml-okta/saml-okta-1.png)
 
-1. Click **Create New App**. The Create a New Application Integration card displays.
-
-1. Select **SAML 2.0**.
-
-1. Click **Create**. The **Create SAML Integration** card displays.
-
-    ![Okta Create SAML Integration card](../../static/documentation/identity/saml-okta/saml-okta-4.png)
-
-1. Enter an **App name**.
-1. Click **Next**. The SAML Settings card displays.
-
-    ![Okta SAML Settings card](../../static/documentation/identity/saml-okta/saml-okta-5.png)
-
-1. In the **Single sign on URL** and the **Audience URI** **(SP Entity ID)** fields, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the Single sign on URL and the Audience URI (SP Entity ID) fields, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-
-1. Select the value to pass from the **Name ID** drop-down list.
-1. In **Attribute Statements** **Name** field, enter “email” to create a new attribute.
-1. In the **Value** field, enter a user email.
+    
+1. In the **Attribute Statements Name** field, enter `email` to create a new attribute.
+1. In the **Value** field, enter `user.email`.
 1. Click **Next**.
-1. Click **Finish**. The _Applications_ page displays.
+1. Select **I’m an Okta customer adding an internal app** and check **This is an internal app that we have created**.
 
-    ![Okta Create SAML Application page](../../static/documentation/identity/saml-okta/saml-okta-6.png)
+    ![Okta Applications page](../../static/documentation/identity/saml-okta/saml-okta-2.png)
 
-1. Click **Assign Applications**. The _application name_ page displays, where you assign groups or users who can access this application. Our example application name is _samlapp_.
-
-1. Click **People** or **Groups**. The _Assign application name to Groups_ card displays, where you grant users or groups permission to access your application.
-
-    ![Okta Assign Application page](../../static/documentation/identity/saml-okta/saml-okta-7.png)
-
-1. Click **Done**. The assignments display on the Application page.
-
-    ![Okta Role Assignments](../../static/documentation/identity/saml-okta/saml-okta-8.png)
-
-1. Choose the **Sign On** tab to retrieve the identity provider information.
-
-1. On the **Teams dashboard**, navigate to **Configuration > Authentication**.
-
-1. Click *+ Add* under **Login Methods**, and select SAML.
-
-1. Copy and paste the following information into the relevant fields.
-
-   * **Name**: Name your IdP.
-   * **Single Sign On URL**: Enter the IdP Single-Sign-On URL.
-   * **IdP Entity ID**: Enter the IdP issuer.
-   * **Signing Certificate**: Copy the certificate from Okta in **X.509 Certificate** between **Begin Certificate** and **End Certificate**.
-
-1. Under **Optional configurations**, enter the name “email” as your SAML attribute.
-
+1. Click **Finish**.
+1. On the Applications page, navigate to **Assignments**. 
+1. Click **Assign** and assign individuals or groups you want to grant access to.
+1. Click **Done**. The assignments display on the Applications page.
+1. Navigate to the **General** tab to retrieve the SAML provider information.
+1. On the Teams dashboard, navigate to **Settings** > **Authentication**.
+1. Click **Add new** under **Login Methods**, and select *SAML*.
+1. Fill in the following information:
+    * **Name**: Name your identity provider.
+    * **Single Sign On URL**: Enter the IdP Single-Sign-On URL. You can find it under **General** > **SAML Settings** in your Okta Admin portal.
+    * **Issuer ID**: enter `http://www.okta.com/<your-okta-entity-id>`
+    * **Signing Certificate**: Under **Sign On** > **SAML Signing Certificates** in your Okta Admin portal, download the active certificate. Open the certificate and copy-paste the contents of the certificate into this field.
+    * **Optional configurations**: enter `email` as your SAML attribute.
 1. Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+The identity provider is now set up.
 
 ## Download SP metadata (optional)
 
