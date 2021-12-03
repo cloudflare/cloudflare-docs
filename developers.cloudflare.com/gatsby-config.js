@@ -163,12 +163,6 @@ module.exports = {
     // Consider enabling for PWA + offline functionality
     // https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
-    {
-      resolve: "gatsby-plugin-canonical-urls",
-      options: {
-        siteUrl: `https://developers.cloudflare.com`,
-        stripQueryString: true,
-      },
-    },
+    "gatsby-plugin-canonical-urls",
   ],
 }
