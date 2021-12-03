@@ -77,7 +77,13 @@ Every time you commit new code to your Blazor site, Cloudflare Pages will automa
 
 ### A file is over the 25MB limit
 
-If you get error like *"Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MB limit"* then you have two options. Either you try to reduce size of your assets with following [guide](https://docs.microsoft.com/en-us/aspnet/core/blazor/performance?view=aspnetcore-6.0#minimize-app-download-size) **or** remove the _*.wasm_ files from the output (e.g. `rm output/wwwroot/_framework/*.wasm`) and modify your Blazor app to [load the Brotli compressed files](https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-6.0#compression) instead. 
+If you receive the error message `Error: Asset "/opt/buildhome/repo/output/wwwroot/_framework/dotnet.wasm" is over the 25MB limit`, you have two options:
+
+1. Reduce the size of your assets with the following [guide](https://docs.microsoft.com/en-us/aspnet/core/blazor/performance?view=aspnetcore-6.0#minimize-app-download-size).
+
+Or
+
+2. Remove the `*.wasm` files from the output (`rm output/wwwroot/_framework/*.wasm`) and modify your Blazor application to [load the Brotli compressed files](https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-6.0#compression) instead. 
 
 ## Learn more
 
