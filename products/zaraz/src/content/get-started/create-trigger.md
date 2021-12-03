@@ -10,8 +10,8 @@ Triggers are a set of conditions you can use to determine if and when Zaraz shou
 In order to set a new trigger:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website. 
-1. Go to **Zaraz** > **Triggers**. 
-1. Select **Create trigger**. 
+1. Go to **Zaraz**.
+1. In **Triggers** select **Create trigger**. 
 1. Give the trigger a name. This name will be used in the Zaraz dashboard and should be descriptive.
 1. In **Match Rules** create the condition that activates the trigger.
     1. In **Variable name** input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the name of an event a user sends using `zarazTrack`. The list of variables you can use as triggers is available in the [Accessing User Properties](/user-properties) table. 

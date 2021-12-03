@@ -9,7 +9,7 @@ Events are bundles of information you send to a third-party tool when a particul
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website. 
 1. Go to **Zaraz**.
-1. Select the third-party tool you want to send an Event to — like Facebook Pixel, or Google Analytics. 
+1. Under **Third-party tools** select the third-party tool you want to send an Event to — like Facebook Pixel, or Google Analytics. 
 1. Click the **Events** tab. 
 1. In **Tracking Events** you can see a list of events currently sent to the tool you chose. Clicking each event shows you more details about it. To add a new event, click **Add new event**.
 1. Give the event a name. This name will be used by you and your team when working in the dashboard. Depending on the tool you may need to configure additional settings.
