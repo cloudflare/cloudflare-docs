@@ -8,62 +8,41 @@ pcx-content-type: how-to
 You can integrate Okta with Cloudflare Access to allow users to reach applications protected by Access with their Okta account.
 
 1. In your Okta dashboard, click **Admin**.
-
 1. Select the **Applications** tab in the Admin dashboard.
+1. Click **Create App Integration** in the top right corner.
+1. In the pop-up dialog, select **OpenID Connect**.
 
- ![Admin Dash](../../static/documentation/identity/okta/select-admin.png)
+ ![OpenID connect option](../../static/documentation/identity/okta/okta-1.png)
 
-1. Click **Add Application** on the next page.
+1. Choose `Web Application` as the Application type and click **Next**.
 
-1. Click **Create New App** in the top right corner.
-
-1. Choose `Web` as the Platform and toggle **OpenID Connect**. Click **Create**.
-
- ![Create New App](../../static/documentation/identity/okta/web-app.png)
-
-1. You can name the application to be any value. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. Enter any name for the application. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
- ![Create New App](../../static/documentation/identity/okta/add-uri.png)
+1. Specify an assignment. Any value can be selected based on the desired behavior.
+1. Click **Save**.
+1. From the application view, navigate to the **Sign On** tab.
+1. Scroll down to the OpenID ConnectID Token.
 
-1. Once saved, choose the `Sign On` tab from the application view.
+    ![OpenID connect option](../../static/documentation/identity/okta/okta-2.png)
 
- ![Create New App](../../static/documentation/identity/okta/app-view.png)
+1. Click **Edit** and set the Groups claim filter to *Matches regex* and the value `.*`.
+1. Return to the **General** tab. Scroll down to find your credentials, and copy the ID and secret.
 
-1. Scroll down to the `OpenID ConnectID Token`.
+    ![Client credentials](../../static/documentation/identity/okta/okta-3.png)
 
-1. Click **Edit** and edit the Groups claim filter to Matches regex and the value `.*`.
-
- ![Scroll Down](../../static/documentation/identity/okta/okta-edit.png)
-
-1. Next, click the **Assignments** tab.
-
- ![Assignments Tab](../../static/documentation/identity/okta/assignments-tab.png)
-
-1. Click **Assign** and assign the application to all users in your organization.
-
- ![Assign App](../../static/documentation/identity/okta/assign-app.png)
-
-1. Return to the **General** tab. Scroll down to find your credentials. Copy the ID and secret.
-
- ![Credentials](../../static/documentation/identity/okta/credentials.png)
-
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
-
+1. On the Teams dashboard, navigate to **Settings** > **Authentication**.
 1. Under **Login methods**, click **Add new**.
-
-1. Select **Okta** as your IdP.
-
+1. Select **Okta** as your identity provider.
 1. Input the ID, secret, and the Okta account URL.
-
-1. (optional) [Create an Okta API Token](https://developer.okta.com/docs/guides/create-an-api-token/overview/) and input the token. This will prevent your Okta groups from failing if you have more than 100 groups.
-
+1. (optional) Create an Okta API Token and input the token. This will prevent your Okta groups from failing if you have more than 100 groups.
 1. Click **Save**.
 
-To test that your connection is working, navigate to **Settings > Authentication > Login methods** and click **Test** next to Okta.
+To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta.
+
 
 ## Example API Configuration
 
