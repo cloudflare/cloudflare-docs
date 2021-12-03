@@ -51,9 +51,11 @@ let [client, server] = Object.values(new WebSocketPair())
 <Definitions>
 
 - `event` <TypeLink href="#events">WebSocketEvent</TypeLink>
-    - The WebSocket event (refer to [Events](/websockets#events)) to listen to.
+
+    - The WebSocket event (refer to [Events](/runtime-apis/websockets#events) to listen to.
 
 - <Code>callbackFunction(message<TypeLink href="#message">Message</TypeLink>) <Type>Function</Type></Code>
+
     - A function to be called when the Websocket responds to a specific event.
 
 </Definitions>
@@ -69,8 +71,11 @@ let [client, server] = Object.values(new WebSocketPair())
 <Definitions>
 
 - <Code>code<ParamType>integer</ParamType></Code> <PropMeta>optional</PropMeta>
+
   - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
+
 - <Code>reason<ParamType>string</ParamType></Code> <PropMeta>optional</PropMeta>
+
   - A human-readable string indicating why the WebSocket connection was closed.
 
 </Definitions>
@@ -86,6 +91,7 @@ let [client, server] = Object.values(new WebSocketPair())
 <Definitions>
 
 - <Code>message<ParamType>string</ParamType></Code>
+
   - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
 </Definitions>
