@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # dataLayer Compatibility Mode
 
-Zaraz offers backwards compatibility with the `dataLayer` function from tag management software like GTM/Tealium, used to track events and other parameters. This way you can keep your current implementation and Zaraz will automatically collect your events.
+Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function from tag management software like GTM/Tealium, used to track events and other parameters. This way you can keep your current implementation and Zaraz will automatically collect your events.
 
 In this case, you will keep using the `dataLayer.push` function to send data from the client-side to Zaraz:
 
