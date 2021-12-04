@@ -32,3 +32,6 @@ To pause automatic deployments, go to the Pages project's **Settings** > **Build
 ![pause button](git.pause.png)
 
 Selecting **Pause deployments** will present a confirmation and, once confirmed, the **Pause deployments** button will be replaced with a **Resume deployments** button. While paused, your **Deployments** list will present a banner message, reminding you that automatic deployments are not enabled.
+
+## Changing the connected repository
+There is no way to change the repository connected to your page. You need to create a different project.
