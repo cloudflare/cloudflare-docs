@@ -41,7 +41,7 @@ SAML integrations allow users to include additional headers or claims that can b
 
 ### Sign SAML authentication request
 
-This optional configuration signs the Access JWT with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.com/cdn-cgi/access/certs`.
+This optional configuration signs the Access JWT with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
 ### Email attribute name
 
