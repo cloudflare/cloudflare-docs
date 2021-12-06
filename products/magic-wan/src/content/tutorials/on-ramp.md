@@ -10,7 +10,7 @@ You can use a variety of on-ramp options with Magic WAN, including [Anycast GRE 
 
 ## Set up a GRE on-ramp using Gateway
 
-Before you can begin using GRE as on-ramp, you must have already completed onboarding with Magic Transit and Magic WAN. The `account-tag` must also be added to your Magic Transit config.
+Before you can begin using GRE as on-ramp, you must have already completed onboarding with Magic WAN.
 
 ### 1. Enable Gateway 
 
@@ -18,7 +18,7 @@ Contact your account manager to enable Teams Gateway on your account.
 
 ### 2. Set up your client
 
-First, reserve an IP for the GRE tunnel and then create a VM instance. The example below uses the Google Cloud Platform, but you can choose what to connect.
+First, reserve an IP for the GRE tunnel and then create a VM instance. The example below uses the Google Cloud Platform, but you should set up a GRE tunnel from the device on your side.
 
 **Reserve an IP for the GRE tunnel**
 

@@ -16,7 +16,7 @@ pcx-content-type: concept
 | [Environment variables](#environment-variables)                                 | 32/worker | 32/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
-| [Number of scripts](#number-of-scripts)                                         | 30        | 30        |
+| [Number of scripts](#number-of-scripts)                                         | 30        | 100       |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
@@ -55,8 +55,8 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | --------------------------- | ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
 | [Request](#request)         | 100,000&nbsp;requests/day<br/>1000&nbsp;requests/min | none                                        | none                                      |
 | [Worker memory](#memory)    | 128 MB                                               | 128 MB                                      | 128 MB                                    |
-| [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger |                                           |
-| [Duration](#duration)       |                                                      |                                             | 30 s HTTP request <br/> 30 s Cron trigger |
+| [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |                                           |
+| [Duration](#duration)       |                                                      |                                             | No limit* |
 
 </TableWrap>
 
@@ -64,9 +64,15 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
+<Aside type="note" header="No limit for duration*">
+
+There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
+
+</Aside>
+
 ### Unbound Usage Model
 
-The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds. Unbound Worker limits are based on [duration](#duration), meaning the limit includes the time a script is waiting for responses from network calls. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
 
 ## KV limits
 
@@ -82,7 +88,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 | [Keys/namespace](#kv)                 | unlimited  |
 | [Key size](#kv)                       | 512 bytes  |
 | [Key metadata](#kv)                   | 1024 bytes |
-| [Value size](#kv)                     | 25 MB      |
+| [Value size](#kv)                     | 25 MiB     |
 
 </TableWrap>
 
@@ -232,7 +238,7 @@ Workers KV supports:
 - Up to 100 Namespaces per account
 - Unlimited keys per namespace
 - Keys of up to 512 bytes
-- Values of up to 25 MB
+- Values of up to 25 MiB
 - Metadata of up to 1024 bytes per key
 - Unlimited reads per second
 - Unlimited writes per second, if they are to different keys

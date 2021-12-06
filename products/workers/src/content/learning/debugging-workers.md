@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Debugging Workers
 
-Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production. In this article, we will walk you through how to effectively debug your Workers application, as well as provide some code samples to help you get up and running:
+Debugging is a critical part of developing a new application — whether running code in the initial stages of development, or trying to understand an issue occurring in production. In this article, you will learn how to effectively debug your Workers application, as well as review some code samples to help you get started:
 
 <YouTube id="8iPmy7ePYDE"/>
 
@@ -13,9 +13,9 @@ Debugging is a critical part of developing a new application — whether running
 
 ## Local testing with `wrangler dev`
 
-When you’re developing your Workers application, `wrangler dev` can significantly reduce the time it takes to testing and debugging new features. It can help you get feedback quickly while iterating, by easily exposing logs on localhost, and allows you to experiment easily without deploying to production.
+When you are developing your Workers application, the [`wrangler dev`](/cli-wrangler/commands#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
 
-To get started, run `wrangler dev` in your Workers project directory. `wrangler` will deploy your application to our preview service, and make it available for access on `localhost`:
+To get started, run `wrangler dev` in your Workers project directory. The `wrangler dev` command will deploy your application to the preview service, and make it available for access on `localhost`:
 
 ```sh
 $ wrangler dev
@@ -53,7 +53,7 @@ Received new request to url: https://example.com/
 
 Inserting `console.log` lines throughout your code can help you understand the state of your application in various stages until you reach the desired output.
 
-You can customize how `wrangler dev` works to fit your needs: see [the docs](/cli-wrangler/commands#dev-alpha) for available configuration options.
+You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/cli-wrangler/commands#dev) for available configuration options.
 
 <Aside type="warning">
 
