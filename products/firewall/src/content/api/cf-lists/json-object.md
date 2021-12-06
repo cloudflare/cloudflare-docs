@@ -15,7 +15,7 @@ A JSON response for the [Rules Lists API](https://api.cloudflare.com/#filters-pr
   "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
   "name": "my_list_name",
   "description": "List description.",
-  "kind": "[ip|redirect]",
+  "kind": "(ip|redirect)",
   "num_items": 10,
   "num_referencing_filters": 2,
   "created_on": "2021-01-01T08:00:00Z",
@@ -179,4 +179,4 @@ The JSON object properties for a list item are defined as follows:
   </table>
 </TableWrap>
 
-For a detailed specification, see the [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) documentation.
+For a detailed specification, refer to the [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) documentation.
