@@ -118,3 +118,10 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
 1. Set the **Proxy** switch to *Enabled*.
+
+## Integrated experiences
+
+Cloudflare for Teams allows you to perform one-click actions to accelerate Office 365 traffic. Navigate to **Settings** > **Network** on the Teams dash and either:
+
+* **Create a Do Not Inspect policy** that bypasses inspection for Office 365 traffic. This policy uses the [domains and IP address specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service), and in addition to that, it uses our own Cloudflare’s intelligence to determine which traffic is part of this app type. 
+* **Exclude Office 365 Traffic** by adding your application’s IP address as a split tunnel entry. This uses the [IP addresses specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service).
