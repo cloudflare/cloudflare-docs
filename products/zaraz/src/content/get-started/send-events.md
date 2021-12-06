@@ -5,15 +5,15 @@ pcx-content-type: how-to
 
 # Send Events to a third-party tool
 
-Events are bundles of information you send to a third-party tool when a particular trigger is matched. To start using them, first create a trigger that determines the condition for which the event is sent. If you have already [set up a trigger](/get-started/create-trigger), here is how to create an event.
+Events are bundles of information you send to a third-party tool when a particular trigger is matched. To start using them, first create a trigger that determines the condition for which the event is sent. If you have already [set up a trigger](/create-trigger), here is how to create an event.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website. 
 
 1. Go to **Zaraz**.
 
-1. Under **Third-party tools** select the third-party tool you want to send an Event to — like Facebook Pixel, or Google Analytics.
+1. Under **Third-party tools** select the third-party tool you want to send an Event to — like Facebook Pixel, or Google Analytics.  
 
-1. Click the **Events** tab.
+1. Click the **Events** tab. 
 
 1. In **Tracking Events** you can see a list of events currently sent to the tool you chose. Clicking the links in each event shows you more details about the conditions associated with the Event. To add a new event, click **Create event**.
 
@@ -25,4 +25,4 @@ Events are bundles of information you send to a third-party tool when a particul
 
 1. Click **Save**.
 
-The new event created will appear in the third-party tool, in the **Events** tab, under **Tracking Events**.
+The new event created will appear in the third-party tool, in the **Events** tab, under **Tracking Events**. 
