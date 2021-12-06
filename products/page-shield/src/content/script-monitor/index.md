@@ -1,12 +1,12 @@
 ---
-title: Script Monitor (Beta)
+title: Script Monitor
 order: 1
 pcx-content-type: landing-page
 ---
 
 import ScriptMDefinition from "../_partials/_script-monitor-definition.md"
 
-# Cloudflare Script Monitor (Beta)
+# Cloudflare Script Monitor
 
 <ScriptMDefinition/>
 

@@ -4,7 +4,7 @@ order: 15
 pcx-content-type: faq
 ---
 
-# Frequently Asked Questions
+# FAQs
 
 ## Do I still need to create "Edge Cache TTL" page rules with "Cache Level: Cache Everything"?
 

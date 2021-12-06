@@ -5,9 +5,9 @@ pcx-content-type: concept
 
 # Environments
 
-<Aside>
+<Aside type="note">
 
-__Note__: You can only use environments with [wrangler](/cli-wrangler).
+You can only use environments with [wrangler](/cli-wrangler).
 
 </Aside>
 
@@ -50,21 +50,6 @@ routes = ["example.com/*"]
 You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
 For this reason, Wrangler appends the environment name to the top-level name to publish a Worker script. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
-
-The layout of an example `[env.dev]` environment is displayed below:
-
-```toml
----
-filename: wrangler.toml
----
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-[env.dev]
-name = "your-worker-dev"
-route = "your-custom-route"
-```
 
 The layout of an example `[env.dev]` environment is displayed below:
 
@@ -333,7 +318,7 @@ workers_dev = true
 type = "rust"
 ```
 
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env production` setting.
+With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
 
 ### Same name for multiple environments
 

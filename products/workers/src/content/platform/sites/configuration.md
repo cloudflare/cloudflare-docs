@@ -90,7 +90,7 @@ route = "https://staging.example.com/docs*"
 
 ## Storage limits
 
-For very exceptionally large pages, Workers Sites might not work for you. There is a 25MB limit per page or file.
+For very exceptionally large pages, Workers Sites might not work for you. There is a 25 MiB limit per page or file.
 
 ## Ignoring subsets of static assets
 

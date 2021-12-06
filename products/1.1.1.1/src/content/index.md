@@ -1,36 +1,15 @@
 ---
-order: -2
-type: overview
-pcx-content: landing-page
+title: Overview
+pcx-content-type: overview
+order: 0
 ---
 
-# Overview
+# Cloudflare 1.1.1.1
 
-<br/>
-<div class="medium-img">
+1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. [DNS resolvers](https://www.cloudflare.com/learning/dns/what-is-dns/) translate domains like `cloudflare.com` into the IP addresses necessary to reach the website (like 104.16.123.96). 
 
-![Cloudflare 1.1.1.1](static/1111-fancycolor.gif)
+Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers. 1.1.1.1 has also been measured to be the [fastest DNS resolver available](https://www.dnsperf.com/#!dns-resolvers) — it is deployed in hundreds of cities worldwide, and has access to the addresses of millions of domain names on the same servers it runs on.
 
-</div>
+Beyond the regular service, 1.1.1.1 also offers a [version made for families](/1.1.1.1-for-families) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/encrypted-dns/dns-over-https) or [DNS over TLS (DoT)](/encrypted-dns/dns-over-tls) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/other-ways-to-use-1.1.1.1/dns-over-tor).
 
-<ContentColumn>
-
-1.1.1.1 is a fast and private way to browse the internet. It is a DNS resolver - kind of like Google Maps for your computer, it translates places (like cloudflare.com) into addresses (like `2400:cb00:2048:1::c629:d7a2`). 1.1.1.1 is deployed in 150+ cities worldwide, and has access to the addresses of 7M+ domain names on the same servers it runs on so [it’s the fastest resolver out there](https://www.dnsperf.com/#!dns-resolvers).
-
-The addresses of 1.1.1.1 are:
-
-- `1.1.1.1`
-- `1.0.0.1`
-- `2606:4700:4700::1111`
-- `2606:4700:4700::1001`
-
-Moreover, you can access 1.1.1.1 as a Tor hidden service at this address:
-
-- [dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion](./fun-stuff/dns-over-tor/).
-
-<ButtonGroup>
-  <Button type="primary" href="/1.1.1.1/setting-up-1.1.1.1">Set up 1.1.1.1</Button>
-  <Button type="secondary" href="/1.1.1.1/what-is-1.1.1.1">Learn more</Button>
-</ButtonGroup>
-
-</ContentColumn>
+1.1.1.1 is completely free. Setting it up takes minutes and requires no special software.

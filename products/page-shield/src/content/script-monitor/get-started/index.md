@@ -1,6 +1,6 @@
 ---
 title: Get started
-order: 0
+order: 2
 pcx-content-type: how-to
 ---
 
@@ -12,7 +12,7 @@ To enable Script Monitor:
 1. In your dashboard, go to **Firewall** > **Page Shield**.
 1. For **Script Monitor**, select **On**.
 
-For more guidance on using the Script Monitor dashboard, see [Monitor scripts](../use-dashboard)
+For more guidance on using the Script Monitor dashboard, refer to [Monitor scripts](../use-dashboard).
 
 ## Configure alerts
 
@@ -25,7 +25,7 @@ To set up alerts:
 1. Select **Configure an alert**.
 1. Select an alert type:
     - **New Domain Alert**: Triggered hourly by JavaScript dependencies from new host domains
-    - **New Scripts Alert**: Triggered daily by any new JavasScript dependencies
+    - **New Scripts Alert**: Triggered daily by any new JavaScript dependencies
 1. Fill in the required information and select **Create**.
 
 To edit, delete, or disable an alert, go to your [account notifications](https://dash.cloudflare.com/?to=/:account/notifications).

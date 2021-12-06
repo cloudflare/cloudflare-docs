@@ -16,7 +16,7 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:load-balancing"]'}
   },
   siteMetadata: {
-    title: "Cloudflare Load Balancing",
+    title: "Cloudflare Load Balancing docs",
     description: "Balance traffic loads, manage failovers, monitor server and pool health, and apply geographic control with Cloudflare Load Balancing",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/load-balancing",

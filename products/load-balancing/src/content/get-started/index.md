@@ -102,7 +102,7 @@ Before directing any traffic to your pools, make sure that your pools and monito
 1. Click **Manage Pools**.
 1. For pools and individual origins, review the values in the **Health** and **Origin Health** columns.
 
-For more information on pool and origin health statuses, refer to [How a pool becomes unhealthy](understand-basics/health-details#how-a-pool-becomes-unhealthy).
+For more information on pool and origin health statuses, refer to [How a pool becomes unhealthy](/understand-basics/health-details#how-a-pool-becomes-unhealthy).
 
 </div>
 

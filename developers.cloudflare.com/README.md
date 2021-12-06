@@ -1,3 +1,3 @@
-# Developers Site
+# Developer Docs Home Page
 
-Visit site at https://developers.cloudflare.com
+Visit the site at https://developers.cloudflare.com.

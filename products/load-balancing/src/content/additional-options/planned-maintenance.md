@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Planned maintenance
+# Perform planned maintenance
 
 When you change application settings or add new assets, you will likely want to make these changes on one origin server at a time. Going server by server reduces the risk of changes and ensures a more consistent user experience.
 

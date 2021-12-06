@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy an Nuxt.js site
 
 [Nuxt.js](https://nuxtjs.org/) is a framework making web development simple and powerful.
@@ -16,6 +18,7 @@ Create a new project using `npx`, giving it the title `my-nuxt-app` in your term
 $ npx create-nuxt-app my-nuxt-app
 $ cd my-nuxt-app
 ```
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

@@ -1,6 +1,6 @@
 ---
 title: Get started
-order: 3
+order: 1
 pcx-content-type: navigation
 ---
 

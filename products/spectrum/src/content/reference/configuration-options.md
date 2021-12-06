@@ -15,7 +15,7 @@ Some of these features require an Enterprise plan. If you would like to upgrade,
 
 ## IP addresses
 
-When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
+When a Spectrum application is created, it is assigned a unique IPv4 and IPv6 address, or you can provision the application to be IPv6 only. The addresses are not static, and they may change over time. The best way to look up the current addresses is by using DNS. The DNS name of the Spectrum application will always return the IPs currently dedicated to the application.
 
 The addresses are Anycasted from all Cloudflare data centers, with the exception of data centers in China.
 
@@ -88,6 +88,12 @@ If IP Access Rules is enabled for a Spectrum application, Cloudflare will respec
 ## Edge TLS Termination
 
 If you enable **Edge TLS Termination** for a Spectrum application, Cloudflare will encrypt traffic for the application at the Edge. The Edge TLS Termination toggle applies only to TCP applications.
+
+Spectrum offers three modes of TLS termination: 'Flexible', 'Full', and 'Full (Strict)'.
+
+'Flexible' enables termination of the client connection at the edge, but does not enable TLS from Cloudflare to your origin. Traffic will be sent over an encrypted connection from the client to Cloudflare, but not from Cloudflare to the origin.
+
+'Full' specifies that traffic from Cloudflare to the origin will also be encrypted but without certificate validation. When set to 'Full (Strict)', traffic from Cloudflare to the origin will also be encrypted with strict validation of the origin certificate.
 
 TLS versions supported by Spectrum include TLS 1.1, TLS 1.2, and TLS 1.3.
 

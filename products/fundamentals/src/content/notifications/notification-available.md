@@ -1,7 +1,7 @@
 ---
-order: 5
+order: 6
 title: Types of Notifications
-pcx-content: concept
+pcx-content-type: concept
 ---
 
 import SSLTroubleshoot from "../_partials/_troubleshoot-ssl"
@@ -149,6 +149,48 @@ Purchase of Magic Transit.
 **What should you do if you receive one?**
 
 You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](https://developers.cloudflare.com/byoip/dynamic-advertisement).
+
+</div>
+</details>
+
+<details>
+<summary>Security Events Alert</summary>
+<div>
+
+**Who is it for?**
+
+Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
+
+For more information, refer to [WAF alerts](https://developers.cloudflare.com/waf/alerts).
+
+**Included with**
+
+Business and Enterprise plans.
+
+**What should you do if you receive one?**
+
+Review the information in [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+
+</div>
+</details>
+
+<details>
+<summary>Advanced Security Events Alert</summary>
+<div>
+
+**Who is it for?**
+
+Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
+
+For more information, refer to [WAF alerts](https://developers.cloudflare.com/waf/alerts).
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+Review the information in [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
 
 </div>
 </details>

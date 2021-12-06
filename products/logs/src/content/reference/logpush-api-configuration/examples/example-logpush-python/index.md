@@ -5,6 +5,12 @@ pcx-content-type: interim
 
 # Manage Logpush with Python
 
+<Aside type="note">
+
+The examples below are for zone-scoped data sets. Account-scoped data sets should use `<ACCOUNT_ID>` instead of `<ZONE_ID>`.
+
+</Aside>
+
 ```python
 import json
 import requests

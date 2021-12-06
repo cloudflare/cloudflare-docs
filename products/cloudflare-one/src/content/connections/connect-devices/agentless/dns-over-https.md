@@ -11,6 +11,13 @@ Browsers can be configured to use any DoH endpoint. If you choose to configure D
 
 ### Firefox
 
+<Aside type='note'>
+
+If you want to disable DoH for your organization so that Gateway can be enforced, create a policy to block [this canary domain](https://support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet).
+
+</Aside>
+
+
 <TableWrap>
 
 | Before you start |

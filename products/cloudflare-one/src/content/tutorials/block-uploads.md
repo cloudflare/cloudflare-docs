@@ -29,7 +29,7 @@ Name the policy and provide an optional description.
 
 ![Add Policy](../static/secure-web-gateway/block-uploads/name-policy.png)
 
-Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list containst the destinations used by Google Drive.
+Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list contains the destinations used by Google Drive.
 
 In the rule builder, select "Application" in the **Selector** field, "in" in the **Operator** field, and under "File Sharing" select "Google Drive" in the **Value** field.
 
@@ -74,8 +74,6 @@ Navigate to the `Settings` section of the Cloudflare for Teams Dashboard and sel
 Next, build a rule to decide which devices can enroll in your account. 
 
 1. Navigate to **Settings > Devices > Device enrollment**.
-
-    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
 
 1. Click **Manage**.
 

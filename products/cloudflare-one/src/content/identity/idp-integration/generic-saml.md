@@ -31,9 +31,6 @@ The typical setup requirements are:
 
 1. On the Teams Dashboard, navigate to **Settings** > **Authentication**.
 1. In the Login methods card, click **Add new** and select *SAML*.
-    
-    ![SAML dialog](../../static/documentation/identity/generic-saml-dashboard.png)
-
 1. Choose a descriptive name for your identity provider.
 1. Enter the Single Sign on URL, IdP Entity ID or Issuer URL, and Signing certificate.
 1. If you do not wish to enter any of the [additional SAML configurations](#additional-saml-configurations), click **Save**.

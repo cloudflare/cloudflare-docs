@@ -21,7 +21,7 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
 
-1. Enter an **Application name**. You users willsee this name on the login page.
+1. Enter an **Application name**. Your users will see this name on the login page.
 
 1. Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
 

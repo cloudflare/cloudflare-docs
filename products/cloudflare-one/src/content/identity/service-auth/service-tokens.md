@@ -44,7 +44,7 @@ This is the **only time** Cloudflare Access will display the Client Secret. If y
 
 6. Click **Close**.
 
-You can now use the service token when you create [service auth policies](/policies/zero-trust/).
+You can now use the service token when you create [service auth policies](/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 Access expects both values as headers in any request sent to the applications behind Access. Add the following to the headers of any requests and name them as follows:

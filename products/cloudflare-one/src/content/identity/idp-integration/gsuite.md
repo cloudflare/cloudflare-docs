@@ -9,23 +9,17 @@ You can integrate a Google Workspace (formerly Google Suite) account with Cloudf
 
 Once integrated, users will login with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+Please note that you don't need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
 1. Log into the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
 
  ![GCP Console](../../static/documentation/identity/gsuite/gcp-home.png)
 
-1. Click **Create Project** to create a new project. Name the project and click **Create**.
-
- ![Create Project](../../static/documentation/identity/gsuite/create-project.png)
-
- You should now see a Dashboard for your project.
+1. Click **Create Project** to create a new project. Name the project and click **Create**. You should now see a Dashboard for your project.
 
  ![Post Create](../../static/documentation/identity/gsuite/post-create.png)
 
 1. On the left-hand side, select `APIs & Services` and click **Dashboard**.
-
- ![Click API](../../static/documentation/identity/gsuite/click-api.png)
 
 1. In the screen that loads, click **+ Enable APIs and Services** in the top toolbar.
 
@@ -35,11 +29,7 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
 1. Select `Admin SDK API` by Google.
 
-1. Click **Enable** on the Admin SDK API page.
-
- ![Admin SDK](../../static/documentation/identity/gsuite/enable-admin-sdk.png)
-
- The Admin SDK will be added to your project.
+1. Click **Enable** on the Admin SDK API page. The Admin SDK will be added to your project.
 
  ![Admin SDK](../../static/documentation/identity/gsuite/post-enable.png)
 
@@ -52,8 +42,6 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
  ![Internal Users](../../static/documentation/identity/gsuite/consent-internal.png)
 
 1. Input information about the application.
-
- ![App Domain](../../static/documentation/identity/gsuite/consent-screen-app-name.png)
 
  In this case, you are making an application available to your users and can add your team's contact information.
 
@@ -76,8 +64,6 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
  ![Select OAuth](../../static/documentation/identity/gsuite/select-oauth.png)
 
 1. Select `Web application` as the Application type.
-
- ![Create OAuth](../../static/documentation/identity/gsuite/create-oauth.png)
 
 1. Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/glossary#team-domain). 
 

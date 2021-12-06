@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Vue application
 
 Vue is a progressive JavaScript framework for building user interfaces. A core principle of Vue is incremental adoption: this makes it easy to build Vue applications that live side-by-side with your existing code.
@@ -16,6 +18,8 @@ First, install the Vue CLI using NPM, and then run `vue create` in your terminal
 $ npm install -g @vue/cli
 $ vue create my-vue-app
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

@@ -3,14 +3,14 @@ order: 1
 pcx-content-type: concept
 ---
 
-# Groups
+# Access groups
 
 ## Definition
 A group is a set of rules that can be configured once and then quickly applied across many Access applications. You can select a group as a selector in any Zero Trust policy, and all the criteria from the selected group will apply to that application.
 
-<Aside>
+<Aside type="note">
 
-Groups in Teams are distinct from groups in your identity provider, like Okta groups. Groups in Teams can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.
+Access groups are distinct from groups in your identity provider, like Okta groups. Access groups can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.
 
 </Aside>
 

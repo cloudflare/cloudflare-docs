@@ -1,8 +1,14 @@
 ---
 pcx-content-type: reference
 ---
-
+ 
 # Fetching bulk analytics
+
+ <Aside type='note'>
+
+Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
+  
+ </Aside>
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request.
 

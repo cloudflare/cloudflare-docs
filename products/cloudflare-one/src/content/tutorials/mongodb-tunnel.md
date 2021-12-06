@@ -28,25 +28,21 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-First, follow [these instructions](/setup) to set up Cloudflare Access in your account.
+1. Follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-Next, navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+1. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
 
-![Apps](../static/secure-origin-connections/mongodb-tunnel/apps.png)
+1. Click **Add an application** and choose `Self-hosted`.
 
-Click **Add an application** and choose `Self-hosted`.
+1. Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-![Apps](../static/secure-origin-connections/mongodb-tunnel/self-hosted.png)
+  ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+1. Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
 
-![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
+  ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
-Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
-
-![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
-
-Click **Next** again and add the application.
+1. Click **Next** again and add the application.
 
 ## Configure the Kubernetes deployment
 

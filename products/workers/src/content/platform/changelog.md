@@ -1,8 +1,74 @@
 # Changelog
 
+## 11/19/2021
+
+- Durable Object stubs that receive an overload exception will be permanently broken to match the behavior of other exception types.
+- Fixed issue where preview service claimed Let’s Encrypt certificates were expired.
+- [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) is now supported.
+
+## 11/12/2021
+
+- The `AbortSignal` object has a new `reason` property indicating the reason for the cancellation. The reason can be specified when the `AbortSignal` is triggered or created.
+- Unhandled rejection warnings will be printed to the inspector console.
+
+## 11/5/2021
+
+- Upgrade to V8 9.6. This adds support for WebAssembly reference types. Refer to the [V8 release v9.6 · V8](https://v8.dev/blog/v8-release-96) for more details.
+- Streams: When using the BYOB reader, the `ArrayBuffer` of the provided TypedArray should be detached, per the Streams spec. Because Workers was not previously enforcing that rule, and changing to comply with the spec could breaking existing code, a new compatibility flag, [streams_byob_reader_detaches_buffer](https://github.com/cloudflare/cloudflare-docs/pull/2644), has been introduced that will be enabled by default on 2021-11-10. User code should never try to reuse an `ArrayBuffer` that has been passed in to a BYOB readers `read()` method. The more recently added extension method `readAtLeast()` will always detach the `ArrayBuffer` and is unaffected by the compatibility flag setting.
+
+## 10/21/2021
+
+- Added support for the `signal` option in `EventTarget.addEventListener()`, to remove an event listener in response to an `AbortSignal`.
+- The `unhandledrejection` and `rejectionhandled` events are now supported.
+- The `ReadableStreamDefaultReader` and `ReadableStreamBYOBReader` constructors are now supported.
+- Added non-standard `ReadableStreamBYOBReader` method `.readAtLeast(size, buffer)` that can be used to return a buffer with at least `size` bytes. The `buffer` parameter must be an `ArrayBufferView`. Behavior is identical to `.read()` except that at least `size` bytes are read, only returning fewer if EOF is encountered. One final call to `.readAtLeast()` is still needed to get back a `done = true` value.
+- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to: https://developers.cloudflare.com/workers/platform/compatibility-dates
+
+## 10/14/2021
+
+- `request.signal` will always return an `AbortSignal`.
+- Cloudflare Workers’ integration with Chrome DevTools profiling now more accurately reports the line numbers and time elapsed. Previously, the line numbers were shown as one line later then the actual code, and the time shown would be proportional but much longer than the actual time used.
+- Upgrade to v8 9.5. Refer to [V8 release v9.5 · V8](https://v8.dev/blog/v8-release-95) for more details.
+
+## 9/24/2021
+
+- The `AbortController` and `AbortSignal` objects are now available.
+- The Web Platform `queueMicrotask` API is now available.
+- It is now possible to use new `EventTarget()` and to create custom `EventTarget` subclasses.
+- The `once` option is now supported on `addEventTarget` to register event handlers that will be invoked only once.
+- Per the HTML specification, a listener passed in to the `addEventListener` function is allowed to either be a function or an object with a `handleEvent` member function. Previously, Workers only supported the function option, now it supports both.
+- The `Event` object now supports most standard methods and properties.
+- V8 updated from 9.3 to 9.4.
+
+## 9/3/2021
+
+- The `crypto.randomUUID()` method can be used to generate a new random version 4 UUID.
+- Durable Objects are now scheduled more evenly around a colocation (colo).
+
+## 8/5/2021
+
+- No user-facing changes. Just bug fixes & internal maintenance.
+
+## 7/30/2021
+
+- Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+
+## 7/23/2021
+
+- Performance and stability improvements.
+
+## 7/16/2021
+
+- Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
+- Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusal or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
+- Durable Object constructors may now initiate I/O, such as `fetch()` calls.
+- Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
+- In Durable Objects, the callback passed to `storage.transaction()` can now return a value, which will be propagated as the return value of the `transaction()` call.
+
 ## 7/13/2021
 
-- The preview service now prints a warning in the devtools console when a script uses Response/Request.clone() but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
+- The preview service now prints a warning in the devtools console when a script uses `Response/Request.clone()` but does not read one of the cloned bodies. Such a situation forces the runtime to buffer the entire message body in memory, which reduces performance. [Find an example here](https://cloudflareworkers.com/#823fbe463bfafd5a06bcfeabbdf5eeae:https://tutorial.cloudflareworkers.com).
 
 ## 7/1/2021
 
