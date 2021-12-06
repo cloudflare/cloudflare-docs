@@ -18,6 +18,30 @@ A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more UR
 
 ![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](../images/bulk-redirects/concepts-diagram.png)
 
+The following example defines a Bulk Redirect List named `list_b` with two URL Redirects:
+
+<Example>
+
+**`list_b` Bulk Redirect List**
+
+Source URL                | Target URL                 | Status code
+--------------------------|----------------------------|------------------
+`example.com/about`       | `https://example.com/news` | `301` (the default)
+`example.com/new_feature` | `https://example.com/soon` | `302`
+
+</Example>
+
+The following Bulk Redirect Rule, named `Rule 2`, enables the URL Redirects in the `list_b` Bulk Redirect List:
+
+<Example>
+
+**`Rule 2` Bulk Redirect Rule**
+
+* **Rule name**: `Rule 2`
+* **Associated list**: `list_b`
+
+</Example>
+
 ## URL Redirects
 
 A URL Redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
