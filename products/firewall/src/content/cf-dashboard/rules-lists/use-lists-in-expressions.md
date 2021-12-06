@@ -29,7 +29,7 @@ This expression filters requests from IP addresses that are in an IP List named 
 
 Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
-For more on creating lists, see [_Use IP Lists: Manage lists_](/cf-dashboard/rules-lists/manage-lists).
+For more on creating lists, refer to [Use IP Lists: Manage lists](/cf-dashboard/rules-lists/manage-lists).
 
 To create a new rule via API using the Cloudflare Open Proxies Managed List, use the following expression:
 
