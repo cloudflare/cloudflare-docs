@@ -11,7 +11,7 @@ The following use cases go through example Bulk Redirect Rule configurations and
 
 In this example the original domain was replaced with a different domain. All functionality was maintained, except for the HTTP service (port 80) which was discontinued.
 
-Create a Bulk Redirect List with the following URL redirect:
+Create a Bulk Redirect List with the following URL Redirect:
 
 * **Source URL**: `example.com/`
 * **Target URL**: `https://example.net/`
@@ -31,7 +31,7 @@ Request URL                               | URL after redirect
 
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
 
-1. Create a Bulk Redirect List with the following URL redirect:
+1. Create a Bulk Redirect List with the following URL Redirect:
 
     * **Source URL**: `example.com/`
     * **Target URL**: `https://example.net/`
@@ -53,10 +53,10 @@ Request URL                               | URL after redirect
 
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.
 
-1. Create a Bulk Redirect List named `uk_redirect_list` with the following URL redirect:
+1. Create a Bulk Redirect List named `uk_redirect_list` with the following URL Redirect:
 
-    * **Source URL**: https://example.com/
-    * **Target URL**: https://example.co.uk/
+    * **Source URL**: `https://example.com/`
+    * **Target URL**: `https://example.co.uk/`
     * **Subpath matching**: Enabled
     * **Preserve query string**: Enabled
 
