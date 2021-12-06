@@ -23,7 +23,13 @@ Cloudflare Site routes are comprised of:
 - Worker script to execute on matching requests
 - Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/platform/limits#request-limits))
 
-The Routes REST API documentation can be found [in the Workers API documentation](https://api.cloudflare.com/#worker-routes-properties).
+The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
+
+If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
+
+You may enter a placeholder AAAA record pointing to [100::](https://datatracker.ietf.org/doc/html/rfc6666), which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the reserved IPv6 discard prefix but is not the only value allowed. For example, you may also use an A record pointed to 192.0.2.1 or a CNAME pointed to any resolvable target.
+
+\* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
 
 ## Routes with *.workers.dev
 
