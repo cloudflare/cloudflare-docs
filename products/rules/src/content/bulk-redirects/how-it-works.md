@@ -35,6 +35,8 @@ The following URL Redirect parameters control the matching behavior between the 
 
 </Definitions>
 
+For detailed information on these parameters, refer to [URL Redirect parameters](/bulk-redirects/reference/parameters).
+
 ## Configuring the path and query string behavior
 
 The following parameters configure how Cloudflare determines the path and query string of the final target URL:
@@ -64,6 +66,8 @@ The following parameters configure how Cloudflare determines the path and query 
   - If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
 
 </Definitions>
+
+For detailed information on these parameters, refer to [URL Redirect parameters](/bulk-redirects/reference/parameters).
 
 ## URL matching algorithm
 
