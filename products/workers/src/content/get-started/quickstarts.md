@@ -31,12 +31,6 @@ $ wrangler generate <new-project-name> <github-repo-url>
 --------------------------------
 
 ## Templates
-
-<WorkerStarter
-  title="Ideal Development Starter"
-  description="Typescript starter that takes care to ensure minimal recompilation times with esbuild and bundle upload time with miniflare."
-  repo="mrbbot/miniflare-typescript-esbuild-jest"
-/>
   
 <WorkerStarter
   title="JavaScript Starter"
@@ -60,6 +54,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   title="Router"
   description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic."
   repo="cloudflare/worker-template-router"
+/>
+  
+<WorkerStarter
+  title="Ideal Development Starter"
+  description="Typescript starter that takes care to ensure minimal recompilation times with esbuild and bundle upload time with miniflare."
+  repo="mrbbot/miniflare-typescript-esbuild-jest"
 />
 
 <WorkerStarter
