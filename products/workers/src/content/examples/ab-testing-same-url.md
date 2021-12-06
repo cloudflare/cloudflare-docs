@@ -7,7 +7,7 @@ tags:
 pcx-content-type: configuration
 ---
 
-# A/B testing
+# A/B Testing with Same-URL Direct Access
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>
