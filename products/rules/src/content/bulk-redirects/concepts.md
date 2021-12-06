@@ -20,9 +20,9 @@ A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more UR
 
 ## URL Redirects
 
-A URL redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
+A URL Redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
 
-When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How it works](/bulk-redirects/how-it-works).
+When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL Redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How it works](/bulk-redirects/how-it-works).
 
 URL Redirects are the list items of Bulk Redirect Lists.
 
