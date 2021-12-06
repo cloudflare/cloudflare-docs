@@ -1,9 +1,10 @@
 ---
+title: Reference
 order: 8
 pcx-content-type: navigation
 ---
 
-# Reference
+# Bulk Redirects reference
 
 Refer to the following pages for more information about Bulk Redirects:
 

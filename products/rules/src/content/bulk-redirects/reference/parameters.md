@@ -34,12 +34,12 @@ The URL Redirect parameters are the following:
     - API field name: `include_subdomains`.
     - If true, the source URL hostname will also apply to any subdomains — the redirect will match for all subdomains to the left of the domain portion of the source URL, as well as the specified domain. The default value is `false`.
     - For example, a redirect with source URL defined as `http://example.com/about` will also apply to requests with source URL `http://a.example.com/about` or `http://a.b.example.com/about`.
-    - Refer to [URL matching algorithm](#) for details.
+    - Refer to [Matching the source URL of redirects](/bulk-redirects/how-it-works#matching-the-source-url-of-redirects) for details.
 
 - **Preserve query string** <Type>Boolean</Type>
     - API field name: `preserve_query_string`.
     - If true, the redirect URL will keep the query string of the original request. The default value is `false`.
-    - For example, a URL Redirect from /my-folder/ to /other-folder/ with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value#section` to `/other-folder/?name=value#section`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value#section` to `/other-folder/`.
+    - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
 
 - **Preserve path suffix** <Type>Boolean</Type>
     - API field name: `preserve_path_suffix`.
@@ -49,6 +49,6 @@ The URL Redirect parameters are the following:
 - **Status code** <Type>Integer</Type>
     - API field name: `status_code`.
     - The HTTP status code returned to the client when redirecting. The default value is `301`.
-    - The value must be one of the following: `301` (Moved permanently), `302` (Found, previously Moved temporarily), `307` (Temporary redirect), or `308` (Permanent redirect).
+    - The value must be one of the following: `301` (Moved permanently), `302` (Found, also known as Moved temporarily), `307` (Temporary redirect), or `308` (Permanent redirect).
 
 </Definitions>
