@@ -8,15 +8,23 @@ pcx-content-type: concept
 
 Bulk Redirects involve the following elements:
 
-* **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a Transform Rule. A Bulk Redirect Rule has an associated Bulk Redirect List.
+* **URL Redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL Redirects are the list items of Bulk Redirect Lists.
 
 * **Bulk Redirect List**: A list, similar to IP Lists, containing one or more URL Redirects. Reference a Bulk Redirect List in a Bulk Redirect Rule to enable all the URL Redirects in the list. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-* **URL Redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL Redirects are the list items of Bulk Redirect Lists.
+* **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a Transform Rule. A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL Redirects.
 
 ![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](../images/bulk-redirects/concepts-diagram.png)
+
+## URL Redirects
+
+A URL redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
+
+When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How it works](/bulk-redirects/how-it-works).
+
+URL Redirects are the list items of Bulk Redirect Lists.
 
 ## Bulk Redirect Lists
 
