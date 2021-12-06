@@ -43,7 +43,12 @@ The following parameters configure how Cloudflare determines the path and query 
 
 - **Preserve query string** <PropMeta>(default: false)</PropMeta>
 
-  - If true, the final target URL will keep the query string of the original request.
+  - If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL Redirect:
+  
+    - Source URL: `https://example.com/about`
+    - Target URL: `https://example.com/newpage`
+
+  - With this configuration and **Preserve query string** enabled, an incoming request to `http://example.com/about?q=term` would be redirected to `https://example.com/newpage?q=term`. If **Preserve query string** is disabled, the same incoming request would be redirected to `https://example.com/newpage`.
 
 - **Preserve path suffix** <PropMeta>(default: true)</PropMeta>
 
