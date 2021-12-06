@@ -9,47 +9,71 @@ For each incoming request, Cloudflare evaluates all URL Redirects of each Bulk R
 
 If there is a match for a URL Redirect according to the URL matching algorithm, the redirect action is performed immediately, according to the URL Redirect configuration parameters. Cloudflare performs no further processing once a redirect action has been executed.
 
+## Matching the source URL of redirects
+
+The following URL Redirect parameters control the matching behavior between the request URL and source URLs of the configured (and enabled) URL Redirects:
+
+<Definitions>
+
+- **Subpath matching** <PropMeta>(default: false)</PropMeta>
+
+  - If true, the URL Redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL Redirect:
+  
+    - Source URL: `https://example.com/foo/`
+    - Target URL: `https://example.com/qux/`
+
+  - With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
+
+- **Include subdomains** <PropMeta>(default: false)</PropMeta>
+
+  - If true, the source URL hostname of the URL Redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL Redirect:
+  
+    - Source URL: `https://example.com/about`
+    - Target URL: `https://example.com/newpage`
+
+  - With this configuration and **Includes subdomains** enabled, incoming requests to `http://a.example.com/about` and `http://a.b.example.com/about` would also match, in addition to the specified domain with no subdomain (`https://example.com/about`).
+
+</Definitions>
+
+## Configuring the path and query string behavior
+
+The following parameters configure how Cloudflare determines the path and query string of the final target URL:
+
+<Definitions>
+
+- **Preserve query string** <PropMeta>(default: false)</PropMeta>
+
+  - If true, the final target URL will keep the query string of the original request.
+
+- **Preserve path suffix** <PropMeta>(default: true)</PropMeta>
+
+  - Defines if the final target URL will include the parts of the request path that did not match the redirect's source URL.
+  
+  - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL Redirect:
+  
+    - Source URL: `https://example.com/a/`
+    - Target URL: `https://example.com/b/`
+  
+  - An incoming request to `https://example.com/a/foo` will be redirected to `https://example.com/b/foo`.
+  
+  - If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
+
+</Definitions>
+
 ## URL matching algorithm
 
-The URL matching algorithm is different depending on the value of the _Subpath matching_ option of a URL Redirect.
+The URL of an incoming request matches a URL Redirect in a list if:
 
-### Exact path matching
+1. The scheme (`http` or `http`) is the same as the source URL of the URL Redirect definition. Source URLs with no scheme will match both `http` and `https`.
+1. The hostname is the same as the hostname in the source URL of the URL Redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
+1. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
 
-The matching algorithm for URL Redirects with _Subpath matching_ disabled is the following:
+### Determining the URL Redirect to apply
 
-1. For each Bulk Redirect Rule, check if the request URL matches the source URL of any URL Redirect in the Bulk Redirect List associated with the rule.
+If multiple URL Redirects can apply, then the redirect that wins is determined by the following rules:
 
-1. Select the first redirect in the list that matches all the following conditions:
-    * The URL scheme (for example, `https`) matches.
-    * The hostname matches. This match takes subdomains into consideration for URL Redirects with the _Include subdomains_ option enabled.
+1. URL Redirects with the exact hostname win over URL Redirects with the **Include subdomains** option enabled.
+1. URL Redirects with **Include subdomains** enabled win over other URL Redirects with **Include subdomains** enabled if their domain is more specific.
+1. URL Redirects with a concrete scheme win over URL Redirects that match both `http` and `https` schemes.
 
-The first match wins over other possible matches. The precedence will be determined by how the redirects are ordered. The ordering will be done based on the following criteria (in order of decreasing importance):
-
-1. Redirects with the exact hostname.
-1. Redirects that include a subdomain:
-    1. Longer domains that include a subdomain (that is, cases where there is a more specific match).
-    1. Shorter domains that include a subdomain.
-1. Scheme of the URL Redirect’s source URL:
-    * `https`
-    * `http`
-    * Any other protocol
-
-Regarding criterion 2 (redirects that include a subdomain), if there are two URL Redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request addressed at `mumble.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
-
-### Subpath matching
-
-The matching algorithm for URL Redirects that have _Subpath matching_ enabled is the following:
-
-1. Use the previous algorithm (exact path matching) to find an exact match.
-
-1. If there is no exact match, use the same algorithm but try all subpaths, up to a limit of 32, considering only the URL Redirects with _Subpath matching_ enabled.
-
-    For example, if the path is `/my-folder/item/`, the following subpaths will be checked for a match (in this order):
-
-    * `/my-folder/item/`
-    * `/my-folder/item`
-    * `/my-folder/`
-    * `/my-folder`
-    * `/`
-
-The first subpath to match wins.
+Regarding ordering rule 2 (more specific domains win over less specific domains), if there are two URL Redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request to `qux.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
