@@ -57,7 +57,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 />
 
 <WorkerStarter
-  title="Ideal Development Starter"
+  title="Miniflare Example Project"
   description="Typescript starter that takes care to ensure minimal recompilation times with esbuild and bundle upload time with miniflare."
   repo="mrbbot/miniflare-typescript-esbuild-jest"
 />
