@@ -1,5 +1,4 @@
 ---
-title: Bulk Redirects
 pcx-content-type: concept
 order: 4
 ---
