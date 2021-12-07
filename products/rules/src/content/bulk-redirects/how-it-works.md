@@ -54,7 +54,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
 - **Preserve path suffix** <PropMeta>(default: true)</PropMeta>
 
-  - Defines if the final target URL will include the parts of the request path that did not match the redirect's source URL.
+  - Defines if the final target URL will include the parts of the request path that did not match the URL Redirect's source URL.
   
   - When **Subpath matching** is enabled, the path that was not matched is copied over to the final target URL. For example, consider the following source and target URLs of a URL Redirect:
   
@@ -77,7 +77,7 @@ The URL of an incoming request matches a URL Redirect in a list if:
 
 1. The hostname is the same as the hostname in the source URL of the URL Redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
 
-1. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
+1. The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL Redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
 
     <Aside type="note" header="Note">
 
@@ -86,7 +86,7 @@ The URL of an incoming request matches a URL Redirect in a list if:
     * This URL Redirect would be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16` (16 slashes in path).
     * This URL Redirect would _not_ be considered for an incoming request with path `/1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17` (17 slashes in path).
 
-    This does not affect URL Redirects with **Subpath matching** disabled.
+    This does not affect URL Redirects with **Subpath matching** disabled. Exact path matches are always considered, even for redirects with **Subpath matching** enabled.
 
     </Aside>
 

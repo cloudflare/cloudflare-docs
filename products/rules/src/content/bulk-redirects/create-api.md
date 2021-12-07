@@ -63,14 +63,14 @@ curl -X POST \
     "redirect": {
       "source_url": "example.com/blog/",
       "target_url": "https://example.com/blog/latest"
-    },
+    }
   },
   {
     "redirect": {
       "source_url": "example.net/",
       "target_url": "https://example.net/under-construction.html",
       "status_code": 307
-    },
+    }
   }
 ]'
 ```
@@ -117,14 +117,15 @@ Since Bulk Redirect Lists are just containers of URL Redirects, you have to enab
 
 Add Bulk Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
 
-In a Bulk Redirect Rule you must:
-* Set `action` to `redirect`
-* Define an `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/bulk-redirects/reference/json-objects#bulk-redirect-rule) for details.
+A Bulk Redirect Rule must have:
 
-The following request creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule:
+* `action` set to `redirect`
+* An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/bulk-redirects/reference/json-objects#bulk-redirect-rule) for details.
+
+The following request of the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 
 ```json
-curl -X POST "https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
 -H "X-Auth-Key: <KEY>" \
 -H "X-Auth-Email: <EMAIL>" \
 -d '{
@@ -174,6 +175,96 @@ The response will be similar to the following:
     ],
     "last_updated": "2021-10-28T09:20:42Z",
     "phase": "http_request_transform"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://api.cloudflare.com/#account-rulesets-update-account-ruleset) operation instead, like in the following example:
+
+```json
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
+-H "X-Auth-Key: <KEY>" \
+-H "X-Auth-Email: <EMAIL>" \
+-d '{
+  "name": "My redirect ruleset",
+  "kind": "root",
+  "phase": "http_request_redirect",
+  "rules": [
+    {
+      "expression": "http.request.full_uri in $my_redirect_list_2",
+      "description": "Bulk Redirect rule 1",
+      "action": "redirect",
+      "action_parameters": {
+        "from_list": {
+          "name": "my_redirect_list_1",
+          "key": "http.request.full_uri"
+        }
+      }
+    },
+    {
+      "expression": "http.request.full_uri in $my_redirect_list_2",
+      "description": "Bulk Redirect rule 2",
+      "action": "redirect",
+      "action_parameters": {
+        "from_list": {
+          "name": "my_redirect_list_2",
+          "key": "http.request.full_uri"
+        }
+      }
+    }
+  ]
+}'
+```
+
+The response will be similar to the following:
+
+```json
+{
+  "result": {
+    "id": "67013aa153df4e5fbda92f92bc979331",
+    "name": "default",
+    "description": "",
+    "kind": "root",
+    "version": "2",
+    "rules": [
+      {
+        "id": "8be62ab2ef9a4a41af30c24ff8e73e41",
+        "version": "1",
+        "action": "redirect",
+        "action_parameters": {
+          "from_list": {
+            "name": "my_redirect_list_1",
+            "key": "http.request.full_uri"
+          }
+        },
+        "expression": "http.request.full_uri in $my_redirect_list_1",
+        "description": "Bulk Redirect rule 1",
+        "last_updated": "2021-12-03T15:38:51.658387Z",
+        "ref": "8be62ab2ef9a4a41af30c24ff8e73e41",
+        "enabled": true
+      },
+      {
+        "id": "97e38797fb2b4b22a4919800f1318a5c",
+        "version": "1",
+        "action": "redirect",
+        "action_parameters": {
+          "from_list": {
+            "name": "my_redirect_list_2",
+            "key": "http.request.full_uri"
+          }
+        },
+        "expression": "http.request.full_uri in $my_redirect_list_2",
+        "description": "Bulk Redirect rule 2",
+        "last_updated": "2021-12-03T15:38:51.658387Z",
+        "ref": "97e38797fb2b4b22a4919800f1318a5c",
+        "enabled": true
+      }
+    ],
+    "last_updated": "2021-12-03T15:38:51.658387Z",
+    "phase": "http_request_redirect"
   },
   "success": true,
   "errors": [],

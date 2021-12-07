@@ -12,9 +12,9 @@ You can use a CSV file to create Bulk Redirects [using the Cloudflare dashboard]
 <SOURCE_URL>,<TARGET_URL>[,<STATUS_CODE>,<PRESERVE_QUERY_STRING>,<INCLUDE_SUBDOMAINS>,<SUBPATH_MATCHING>,<PRESERVE_PATH_SUFFIX>]
 ```
 
-Only the `<SOURCE_URL>` and `<TARGET_URL>` values are mandatory. The default value of `<STATUS_CODE>` is `301` and the default value for all the boolean fields is `FALSE`.
+Only the `<SOURCE_URL>` and `<TARGET_URL>` values are mandatory. The default value of `<STATUS_CODE>` is `301` and the default value for all the boolean parameters is `FALSE`.
 
-To enable one of the options, use the value `TRUE`. To keep an option disabled, enter a comma (delimiter) without entering any value.
+To enable one of the URL Redirect parameters, use one of the following values: `TRUE`, `true`, or `1`. To keep an option disabled, use one of `FALSE`, `false`, or `0`, or enter a comma (delimiter) without entering any value.
 
 ## Example CSV file
 
@@ -22,7 +22,7 @@ All the lines in this example are valid lines that you can import in the dashboa
 
 ```txt
 example.com/contacts,https://example.net/contact-us,301,,,,
-example.com/about,https://example.net/about-us,,,TRUE,,
+example.com/about,https://example.net/about-us,,FALSE,TRUE,,
 "example.com/search?q=bar,baz",https://example.net/search,,TRUE
 example.com/docs,https://example.com/draft-docs,302,,TRUE
 ```

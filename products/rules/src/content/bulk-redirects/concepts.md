@@ -10,9 +10,9 @@ Bulk Redirects involve the following elements:
 
 * **URL Redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL Redirects are the list items of Bulk Redirect Lists.
 
-* **Bulk Redirect List**: A list, similar to IP Lists, containing one or more URL Redirects. Reference a Bulk Redirect List in a Bulk Redirect Rule to enable all the URL Redirects in the list. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
+* **Bulk Redirect List**: A list, similar to an IP List, containing one or more URL Redirects. To enable all the URL Redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-* **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a Transform Rule. A Bulk Redirect Rule has an associated Bulk Redirect List.
+* **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/transform). A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL Redirects.
 
@@ -66,7 +66,7 @@ You can only reference Bulk Redirect Lists in Bulk Redirect Rules. Other types o
 
 Bulk Redirect Rules are rules powered by the Ruleset Engine that enable one or more URL Redirects through a Bulk Redirect List.
 
-When you configure a Bulk Redirect Rule, you associate a Bulk Redirect List to it, which enables all the URL Redirects in that list. You can create a rule for each list, or have many Bulk Redirect rules referencing the same Bulk Redirect List.
+When you configure a Bulk Redirect Rule, you associate a Bulk Redirect List to it, which enables all the URL Redirects in that list. You can create a rule for each list, or have many Bulk Redirect Rules referencing the same Bulk Redirect List.
 
 A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an action and an expression. Besides these two properties, it also has a name, an optional description, an associated Bulk Redirect List, and a key.
 
@@ -74,9 +74,9 @@ A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an actio
 
 The rule expression specifies the conditions that must be met for the rule to run. By default, all URL Redirects of the specified list will apply.
 
-The default expression of a Bulk Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the request URL after some basic normalization (if URL Normalization is enabled) should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
+The default expression of a Bulk Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the request URL after some basic normalization (if [URL Normalization](/normalization) is enabled) should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
-You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Bulk Redirect Rule to `ip.src.country == "GB" and http.request.full_uri in $redirect_list`, there will only be a match for clients from the United Kingdom.
+You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Bulk Redirect Rule to `ip.src.country == "GB" and http.request.full_uri in $redirect_list`, there will only be a match for requests coming from the United Kingdom.
 
 <Aside type="note" header="Note">
 

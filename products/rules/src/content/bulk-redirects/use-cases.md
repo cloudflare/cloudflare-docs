@@ -18,7 +18,7 @@ Create a Bulk Redirect List with the following URL Redirect:
 * **Subpath matching**: Enabled
 * **Preserve query string**: Enabled
 
-This configuration would perform the following redirects:
+This configuration will perform the following redirects:
 
 Request URL                               | URL after redirect
 ------------------------------------------|------------------------------------------
@@ -39,7 +39,7 @@ In this example, an old website was discontinued and replaced by a new one in a 
 
 1. Create a Bulk Redirect Rule that enables this list.
 
-This configuration would perform the following redirects:
+This configuration will perform the following redirects:
 
 Request URL                               | URL after redirect
 ------------------------------------------|-----------------------
@@ -66,7 +66,7 @@ In this example, all website visitors from the United Kingdom will be redirected
     ip.src.country == "GB" and http.request.full_uri in $uk_redirect_list
     ```
 
-This configuration would perform the following redirects for UK visitors:
+This configuration will perform the following redirects for UK visitors:
 
 Request URL                               | URL after redirect
 ------------------------------------------|--------------------------------------------
