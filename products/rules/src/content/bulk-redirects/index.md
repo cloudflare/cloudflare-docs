@@ -1,9 +1,10 @@
 ---
+title: Bulk Redirects
 pcx-content-type: concept
 order: 4
 ---
 
-# Bulk Redirects
+# Bulk Redirects (beta)
 
 Bulk Redirects allow you to define a large number of redirects at the account level. These redirects navigate the user from a source URL to a target URL using a given HTTP status code.
 
