@@ -271,3 +271,26 @@ Load Balancing is not enabled for your account or zone.
 For Enterprise customers, reach out to your Cloudflare Account Team.  Free, Pro, and Business customers _[contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)_.
 
 
+## Validation failed error
+
+### Cause
+You will receive this below error while trying to configure host header value while configuring Load balancer origin.
+```
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1002,
+      "message": "Host header \"www.selecthub.com\" not allowed for origin domain \"www.selecthub.com.c.section.io\": validation failed"
+    }
+  ],
+  "messages": []
+}
+
+```
+Screen Shot 2021-12-04 at 11.14.43 PM
+
+### Solution
+Cloudflare is now restricting configured origin host headers to FQDNs that are immediate subdomains of a zone associated with the account. For example : this would be the same zone as the Load balancer itself, but origin pools may be used across multiple Load balancers.
+
