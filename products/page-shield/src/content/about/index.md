@@ -24,4 +24,4 @@ Future versions of Page Shield should add the ability to block scripts.
 
 ## Learn more
 
-For more background on Page Shield, check out our [blog post](https://blog.cloudflare.com/page-shield-is-now-generally-available/).
+For more background on Page Shield, check out our [blog post](https://blog.cloudflare.com/introducing-page-shield/).
