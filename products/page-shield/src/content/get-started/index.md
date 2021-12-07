@@ -17,7 +17,7 @@ To enable Page Shield:
 1. Go to **Firewall** > **Page Shield**.
 1. Click **Enable Page Shield**.
 
-For more guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor scripts](/use-dashboard/monitor-scripts).
+For guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor scripts](/use-dashboard/monitor-scripts).
 
 ## Configure alerts
 
