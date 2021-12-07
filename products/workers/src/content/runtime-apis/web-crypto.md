@@ -134,7 +134,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
     example, to generate a new AES-GCM key:
 
     ```js
-    let keyPair = crypto.subtle.generateKey(
+    let keyPair = await crypto.subtle.generateKey(
       {
         name: "AES-GCM",
         length: "256"
