@@ -18,6 +18,12 @@ The URL Redirect parameters are the following:
     - The exact behavior of the URL matching algorithm, which matches an incoming request with the redirect’s source URL, depends on the values of the **Include subdomains** and **Subpath matching** properties.
     - For more information on the supported URL components, refer to [Supported URL components](/bulk-redirects/reference/url-components).
 
+    <Aside type="warning" header="Important">
+
+    To ensure good performance at the edge, you can only have up to 16 URL Redirects with the same source URL **path** across all Bulk Redirect Lists in your account, regardless of the URL Redirect domain.
+
+    </Aside>
+
 - **Target URL** <Type>String</Type>
     - API field name: `target_url`.
     - The URL where the client will be redirected to when there is a match for the URL Redirect. This property is mandatory. The maximum length of the target URL is 32 KB.
@@ -28,7 +34,7 @@ The URL Redirect parameters are the following:
     - API field name: `subpath_matching`.
     - If true, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current redirect. The default value is `false`.
     - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with subpath matching enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when **Preserve path suffix** is true.
-    - Refer to [URL matching algorithm](#) for details.
+    - Refer to [Matching the source URL of redirects](/bulk-redirects/how-it-works#matching-the-source-url-of-redirects) for details.
 
 - **Include subdomains** <Type>Boolean</Type>
     - API field name: `include_subdomains`.
