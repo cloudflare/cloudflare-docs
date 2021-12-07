@@ -39,7 +39,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-The script content classification (`Malicious`/`Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 60 — score values above the threshold are considered malicious.
+The "malicious code" classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 60 — score values above the threshold are considered malicious.
 
 ## Common API calls
 
@@ -129,11 +129,12 @@ header: Response
       "first_seen_at": "2021-11-18T10:51:08Z",
       "last_seen_at": "2021-11-22T09:57:54Z",
       "host": "example.net",
-      "js_integrity_score": 10,
       "domain_reported_malicious": false,
-      "url_reported_malicious": true,
+      "url_reported_malicious": false,
+      "seen_on_first": "http://malicious.example.com/page_one.html",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "seen_on_first": "http://malicious.example.com/page_one.html"
+      "js_integrity_score": 10,
+      "fetched_at": "2021-11-21T16:58:07Z"
     },
     {
       "script_id": "83c8da2267394ce8465b74c299658fea",
@@ -142,11 +143,12 @@ header: Response
       "first_seen_at": "2021-11-17T13:15:23Z",
       "last_seen_at": "2021-11-18T09:05:20Z",
       "host": "example.net",
-      "js_integrity_score": 50,
       "domain_reported_malicious": false,
-      "url_reported_malicious": true,
+      "url_reported_malicious": false,
+      "seen_on_first": "http://malicious.example.com/page_one.html",
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
-      "seen_on_first": "http://malicious.example.com/page_one.html"
+      "js_integrity_score": 50,
+      "fetched_at": "2021-11-18T03:58:07Z"
     },
     // (...)
   ],
@@ -193,15 +195,23 @@ header: Response
     "first_seen_at": "2021-11-18T10:51:08Z",
     "last_seen_at": "2021-11-22T09:57:54Z",
     "host": "example.net",
-    "js_integrity_score": 10,
     "domain_reported_malicious": false,
-    "url_reported_malicious": true,
-    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "url_reported_malicious": false,
     "seen_on_first": "http://malicious.example.com/page_one.html",
+    "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+    "js_integrity_score": 50,
+    "fetched_at": "2021-11-21T16:58:07Z",
     "seen_on": [
       "http://malicious.example.com/page_two.html",
       "http://malicious.example.com/page_three.html",
       "http://malicious.example.com/page_four.html"
+    ],
+    "versions": [
+      {
+        "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
+        "js_integrity_score": 50,
+        "fetched_at": "2021-11-21T16:58:07Z"
+      }
     ]
   },
  "success": true,
