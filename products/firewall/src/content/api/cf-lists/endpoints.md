@@ -16,7 +16,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](ht
 
 <Aside type='warning' header='Important'>
 
-The Rules Lists API endpoints require a value for _{account_id}_.
+The Rules Lists API endpoints require a value for `{account_id}`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 

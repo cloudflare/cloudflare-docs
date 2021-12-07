@@ -88,7 +88,7 @@ This table summarizes the object properties:
 
 ## List item object structure and properties
 
-A fully populated IP List item JSON object has the following structure:
+A fully populated JSON object for an IP List item has the following structure:
 
 ```json
 {

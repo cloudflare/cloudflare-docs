@@ -65,8 +65,8 @@ Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</cod
 
 ## Managing lists
 
-- To manage and edit IP Lists from your Cloudflare account interface, see [Use IP Lists](/cf-dashboard/rules-lists).
-- To manage and edit IP Lists using the Cloudflare API, see [Lists API](/api/cf-lists/).
+- To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/cf-dashboard/rules-lists).
+- To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/api/cf-lists/).
 
 ## Using lists in expressions
 
