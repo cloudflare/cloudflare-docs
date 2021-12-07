@@ -9,14 +9,11 @@ When the WARP client is deployed, all DNS requests and/or network traffic on the
 
 To do that, there are three settings you can configure:
 
-* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP client to ignore DNS requests to a given list of domains. These DNS requests will be passed back to other DNS servers configured on existing network interfaces on the device.
- 
-This is useful when you have defined private hostnames that wouldn’t otherwise resolve on the public internet.
-
+* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP client to send DNS requests for a specified domain to a resolver that is not Cloudflare Gateway.  This is useful when you have private hostnames that wouldn’t otherwise resolve on the public internet.
 
 <Aside type="warning">
  
-DNS requests to domain names entered here will not be encrypted, managed or monitored by Cloudflare Gateway.
+DNS requests to domain names entered here will not be encrypted, monitored or subject to DNS policies by Cloudflare Gateway.
  
 </Aside>
 
