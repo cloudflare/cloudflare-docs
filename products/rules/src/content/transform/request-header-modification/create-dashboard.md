@@ -44,7 +44,7 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
     <Aside type='note'>
 
-    You can modify up to 10 HTTP request headers in a single rule.
+    You can modify up to 30 HTTP request headers in a single rule.
 
     </Aside>
 
