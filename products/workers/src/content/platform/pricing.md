@@ -73,7 +73,7 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
   
 </TableWrap>
 
-1. The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed one of these limits, further operations of that type will fail with an error.
+1. The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
 
 ## Durable Objects
 
