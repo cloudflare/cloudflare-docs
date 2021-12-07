@@ -22,4 +22,4 @@ If you are a customer with an add-on to your Enterprise plan, Cloudflare will ap
 
 ## Learn more
 
-For more background on Page Shield, check out our [blog post](https://blog.cloudflare.com/introducing-page-shield/).
+For more background on Page Shield, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-page-shield/).

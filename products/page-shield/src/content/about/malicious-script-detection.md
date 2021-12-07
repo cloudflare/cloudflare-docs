@@ -41,7 +41,7 @@ You can configure [Malicious Domain Alerts](/reference/alerts). You will receive
 
 In this type of detection, Page Shield will download the script file and run it through a classifier. The classifier will perform several operations — deobfuscation, normalization, and decoding — before looking for correlations between form field fetches and data exfiltration calls. The stronger the correlation, the more likely the script is performing malicious operations like [Magecart-type attacks](https://sansec.io/what-is-magecart).
 
-The script classifier will output a probability score for the script (also called "JS integrity score") between 1 and 99, where 1 means "definitely malicious" and 99 means "definitely not malicious". This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
+The script classifier will output a probability score for the script (also called the JS integrity score) between 1 and 99, where 1 means definitely malicious and 99 means definitely not malicious. This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
 
 The score threshold for considering a script as malicious is currently set to 60. If the script classification score is below this value, the Script Monitor dashboard will display the script as being malicious.
 
