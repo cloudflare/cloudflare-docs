@@ -47,7 +47,7 @@ Instead of adding URL Redirects manually, you can upload a CSV file with the lis
 
 1. Go to **Account Home** > **Bulk Redirects**.
 1. Click **Create Bulk Redirects**.
-1. Enter a name for the rule.
+1. Enter a rule description.
 1. Select the Bulk Redirect List you previously created.
 1. (Optional) If necessary, edit the rule expression or the list key.
 1. To save and deploy the Bulk Redirect Rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
