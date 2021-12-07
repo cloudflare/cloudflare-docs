@@ -83,29 +83,29 @@ Note that you cannot edit the Cloudflare GRE endpoint associated with your GRE t
 
 ## Network Address Translation
 
-After adding your GRE tunnels, you can use network address translation (NAT) to translate your private IP to your server’s IP address. NAT works by modifying network address information in a packet’s IP header as it moves across a router, which can help with load balancing and connecting private IP networks with non-registered IP addresses to the Internet.
+After adding your GRE tunnels, you can use Network Address Translation (NAT) to translate your private IP to your server’s IP address. NAT works by modifying network address information in a packet’s IP header as it moves across a router, which can help with load balancing and connecting private IP networks with non-registered IP addresses to the Internet.
 
 ### Configure Network Address Translation
 
-1. From your router, configure NAT from your private IP address to your server’s current IP address.
+1. On the router, configure NAT from your private IP address to your server’s current IP address.
 
-```
-Router(config)# ip nat inside source static local-ip global-ip
+```txt
+Router(config)# ip nat inside source static <LOCAL_IP> <GLOBAL_IP>
 ```
 
-2. On the router, specify which interfaces connect inside and outside of the network.
+1. On the router, specify which interfaces connect inside and outside of the network.
 
-```
+```txt
 Router(config)# interface Tunnel A
 Router(config)# ip nat outside
-Router(config)# interface 0/0(WAN interface) 
+Router(config)# interface 0/0  /* WAN interface */ 
 Router(config)# ip nat outside
-Router(config)# interface 0/0(LAN interface - to the server)
+Router(config)# interface 0/0  /* LAN interface - to the server */
 Router(config)# ip nat inside
 ```
 
-3. When you are finished, end the configuration.
+1. When you are finished, end the configuration.
 
-```
+```txt
 Router(config)# end
 ```
