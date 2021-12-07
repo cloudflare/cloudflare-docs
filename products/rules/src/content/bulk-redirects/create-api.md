@@ -119,7 +119,7 @@ Add Bulk Redirect Rules to the ruleset entry point of the `http_request_redirect
 
 In a Bulk Redirect Rule you must:
 * Set `action` to `redirect`
-* Define an `action_parameters` object with additional configuration settings — refer to [JSON objects: Bulk Redirect Rule](#) for details.
+* Define an `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/bulk-redirects/reference/json-objects#bulk-redirect-rule) for details.
 
 The following request creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule:
 
