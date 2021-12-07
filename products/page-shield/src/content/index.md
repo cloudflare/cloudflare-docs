@@ -23,13 +23,13 @@ Page Shield includes the following features:
 
 ## Availability
 
-Feature    | Free | Pro | Business | Enterprise | Enterprise w/ paid add-on
------------|------|-----|----------|------------|--------------------------
-Script Monitor                                |     | Yes | Yes | Yes | Yes
-Basic alerts<br/>(New Script Alert, New Domain Alert) | | | Yes | Yes | Yes
-Page attribution                              |     |     | Yes | Yes | Yes
-Malicious code detection and alerting         |     |     |     |     | Yes
-Code change detection and alerting            |     |     |     |     | Yes
+Feature | Free | Pro | Business | Enterprise | Enterprise w/ paid add-on
+----------|------|-----|----------|----------|----------------------------
+Script Monitor                               |     | Yes | Yes | Yes | Yes
+New Script Alerts and New Domain Alerts      |     |     | Yes | Yes | Yes
+Page attribution                             |     |     | Yes | Yes | Yes
+Malicious code detection and alerting        |     |     |     |     | Yes
+Code change detection and alerting           |     |     |     |     | Yes
 
 ## Get started
 
