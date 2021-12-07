@@ -5,17 +5,17 @@ pcx-content-type: concept
 
 # Detecting malicious scripts
 
-<Aside type="note">
-
-This feature is available as a paid add-on for customers on an Enterprise plan.
-
-</Aside>
-
 Page Shield implements different mechanisms to determine if a script is malicious. These mechanisms are:
 
 * Malicious URL checks
 * Malicious domain checks
 * Malicious script detection
+
+<Aside type="note">
+
+This feature is available as a paid add-on for customers on an Enterprise plan.
+
+</Aside>
 
 ## Malicious URL checks
 
@@ -25,7 +25,7 @@ Any updates to the threat feeds will trigger new checks for previously detected 
 
 The Script Monitor dashboard displays the scripts that were considered malicious at the top of the scripts list.
 
-You can [configure Malicious URL Alerts](#). You will receive an alert notification as soon as Cloudflare detects a malicious script URL in your zone.
+You can [configure Malicious URL Alerts](/reference/alerts). You will receive an alert notification as soon as Cloudflare detects a malicious script URL in your zone.
 
 ## Malicious domain checks
 
@@ -35,7 +35,7 @@ Any updates to the threat feeds will trigger new checks for previously detected 
 
 A domain previously reported as malicious can later be reported as non-malicious if, after further analysis, the domain is deemed safe. The Script Monitor dashboard will reflect the most up-to-date information.
 
-You can configure [Malicious Domain Alerts](#). You will receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your zone.
+You can configure [Malicious Domain Alerts](/reference/alerts). You will receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your zone.
 
 If there is a match from a new piece of JavaScript that is considered malicious, only the Malicious Domain Alert will trigger — you will not receive a New Script Alert for the same script.
 
@@ -49,4 +49,4 @@ The script classifier will output a probability score for the script (also calle
 
 The score threshold for considering a script as malicious is currently set to 60. If the script classification score is below this value, the Script Monitor dashboard will display the script as being malicious.
 
-You can configure [Malicious Domain Alerts](#). You will receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your zone.
+You can configure [Malicious Code Alerts](/reference/alerts). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your zone.
