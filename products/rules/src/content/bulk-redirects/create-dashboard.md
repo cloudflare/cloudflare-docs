@@ -15,8 +15,8 @@ To create Bulk Redirects in the Cloudflare dashboard you must:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 1. Go to **Account Home** > **Bulk Redirects**.
-1. Click **Create a Bulk Redirects list**.
-1. In the **Lists** page, click **Create new list**.
+1. Click **Create a new Bulk Redirects list**. Your browser will navigate to the **Lists** page.
+1. Click **Create new list**.
 1. Enter a list name and description, and select _Redirect_ as the content type.
 1. Click **Create**.
 
