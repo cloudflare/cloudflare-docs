@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Enable Email Routing
 
-Enabling Email Routing is easy: you create a custom email address for your domain, and link it to a destination address. This forms a **rule**. You can toggle rules on or off.
+To enable Email Routing, create a custom email address for your domain, and link it to a destination address. This forms a **rule**. You can toggle rules on or off from the Cloudflare dashboard.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 1. Go to **Email**.
