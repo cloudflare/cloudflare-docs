@@ -1,10 +1,11 @@
 ---
-order: 2
+title: Reference
+order: 4
 pcx-content-type: navigation
 ---
 
-# Reference
+# Page Shield reference
 
-Use the following APIs to manage Page Shield:
+The following pages include additional information about Page Shield:
 
 <DirectoryListing path="/reference"/>
