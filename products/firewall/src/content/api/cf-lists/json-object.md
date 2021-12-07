@@ -100,7 +100,7 @@ A fully populated JSON object for an IP List item has the following structure:
 }
 ```
 
-A fully populated Bulk Redirect List item JSON object has the following structure:
+A fully populated JSON object for a Bulk Redirect List item has the following structure:
 
 ```json
 {
