@@ -3,6 +3,7 @@ order: 4
 pcx-content-type: reference
 type: overview
 ---
+
 <ContentColumn>
 
 # Accessing User Properties 
@@ -15,27 +16,27 @@ Cloudflare Zaraz offers system properties that you can use when configuring the 
 
 Property | Type | Description
 ---------|------| ------------
-`system.page.query`| `object` | URL Query params from the ‘document.location’
-`system.page.title`| `string` | Page title
-`system.page.url`| `string` | Full URL from the ‘document.location’
-`system.page.referrer`| `string` | Page referrer from ‘document.referrer’
-`system.page.encoding`| `string` | Document character encoding from ‘document.characterSet’
-`system.cookies.NAME_OF_COOKIE`| `object` | Cookies obtained from the browser `document`.
-`system.device.ip`| `string` | Incoming IP address.
-`system.device.resolution`| `string` | Screen resolution for device.
-`system.device.viewport`| `string` | Visible webpage area in user’s device.
-`system.device.language`| `string` | Language used.
-`system.device.user-agent.ua`| `string` | Browser’s user agent.
-`system.device.user-agent.browser.name`| `string` | Browser’s name.
-`system.device.user-agent.browser.version`| `string` | Browser’s version.
-`system.device.user-agent.engine.name`| `string` | Type of browser engine (for example, WebKit). 
-`system.device.user-agent.engine.version`| `string` | Version of the browser’s engine
+`system.page.query`| `object` | Returns URL query params from the `document.location`.
+`system.page.title`| `string` | Returns the page title.
+`system.page.url`| `string` | Returns the full URL from the `document.location`.
+`system.page.referrer`| `string` | Returns the page referrer from `document.referrer`.
+`system.page.encoding`| `string` | Returns the document character encoding from `document.characterSet`.
+`system.cookies.NAME_OF_COOKIE`| `object` | Returns cookies obtained from the browser `document`.
+`system.device.ip`| `string` | Returns the incoming IP address.
+`system.device.resolution`| `string` | Returns screen resolution for device.
+`system.device.viewport`| `string` | Returns the visible web page area in user’s device.
+`system.device.language`| `string` | Returns the language used.
+`system.device.user-agent.ua`| `string` | Returns the browser’s user agent.
+`system.device.user-agent.browser.name`| `string` | Returns the browser’s name.
+`system.device.user-agent.browser.version`| `string` | Returns the browser’s version.
+`system.device.user-agent.engine.name`| `string` | Returns the type of browser engine (for example, WebKit). 
+`system.device.user-agent.engine.version`| `string` | Returns the version of the browser’s engine.
 `system.device.user-agent.os.name`| `string` | Returns the operating system.
 `system.device.user-agent.os.version`| `string` | Returns the version of the operating system.
-`system.device.user-agent.device`| `string` | Type of device used (for example, iPhone).
+`system.device.user-agent.device`| `string` | Returns the type of device used (for example, iPhone).
 `system.device.user-agent.cpu`| `string` | Returns the device’s CPU.
-`system.misc.random`| `number` | A random number unique to each request.
-`system.misc.timestamp`| `number` | Unix time in milliseconds.
-`client.__zarazTrack`| `string` | Name of the event sent using the Events API. See [Events API](/events-api) for more information.
+`system.misc.random`| `number` | Returns a random number unique to each request.
+`system.misc.timestamp`| `number` | Returns Unix time in milliseconds.
+`client.__zarazTrack`| `string` | Returns the name of the event sent using the Events API. See [Events API](/events-api) for more information.
 
 </TableWrap>
