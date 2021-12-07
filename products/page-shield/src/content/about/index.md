@@ -20,8 +20,6 @@ You can check the list of detected scripts in the Script Monitor dashboard. Sinc
 
 If you are a customer with an add-on to your Enterprise plan, Cloudflare will apply additional mechanisms to detect and report any malicious scripts in your zone. For more information, refer to [Detecting malicious scripts](/about/malicious-script-detection).
 
-Future versions of Page Shield should add the ability to block scripts.
-
 ## Learn more
 
 For more background on Page Shield, check out our [blog post](https://blog.cloudflare.com/introducing-page-shield/).

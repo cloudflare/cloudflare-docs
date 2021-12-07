@@ -37,10 +37,6 @@ A domain previously reported as malicious can later be reported as non-malicious
 
 You can configure [Malicious Domain Alerts](/reference/alerts). You will receive an alert notification as soon as Cloudflare detects a malicious script loaded from a known malicious domain in your zone.
 
-If there is a match from a new piece of JavaScript that is considered malicious, only the Malicious Domain Alert will trigger — you will not receive a New Script Alert for the same script.
-
-Malicious Domain Checks will still run periodically even if Script Monitor is disabled.
-
 ## Malicious script detection
 
 In this type of detection, Page Shield will download the script file and run it through a classifier. The classifier will perform several operations — deobfuscation, normalization, and decoding — before looking for correlations between form field fetches and data exfiltration calls. The stronger the correlation, the more likely the script is performing malicious operations like [Magecart-type attacks](https://sansec.io/what-is-magecart).
