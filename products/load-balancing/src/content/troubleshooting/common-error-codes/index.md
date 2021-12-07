@@ -275,7 +275,7 @@ For Enterprise customers, reach out to your Cloudflare Account Team.  Free, Pro,
 ## Validation failed error
 
 ### Cause
-You will receive this below error while trying to configure host header value while configuring Load balancer origin.
+You will receive this error if you try to set the host header value while configuring a load balancer origin.
 ```
 {
   "result": null,
@@ -283,7 +283,7 @@ You will receive this below error while trying to configure host header value wh
   "errors": [
     {
       "code": 1002,
-      "message": "Host header \"www.selecthub.com\" not allowed for origin domain \"www.selecthub.com.c.section.io\": validation failed"
+      "message": "Host header \"www.example.com\" not allowed for origin domain \"www.example.com.c.section.io\": validation failed"
     }
   ],
   "messages": []
@@ -292,6 +292,6 @@ You will receive this below error while trying to configure host header value wh
 ```
 
 ### Solution
-Cloudflare is now restricting configured origin host headers to FQDNs that are immediate subdomains of a zone associated with the account. For example : this would be the same zone as the Load balancer itself, but origin pools may be used across multiple Load balancers.
+Cloudflare is now restricting configured origin host headers to fully qualified domain names (FQDNs) that are immediate subdomains of a zone associated with the account. For example, this host header would be the same zone as the load balancer itself, but origin pools may be used across multiple Load balancers.
 
 ---
