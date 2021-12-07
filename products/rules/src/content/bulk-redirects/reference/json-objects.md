@@ -22,8 +22,6 @@ A fully populated Bulk Redirect Rule object has the following JSON structure:
 }
 ```
 
-`key` is an expression that defines the value that will be matched against the configured URL Redirect’s source URL values, following the rules of the [URL matching algorithm](/bulk-redirects/how-it-works#url-matching-algorithm). Refer to [Concepts](/bulk-redirects/concepts#bulk-redirect-rules) for more information.
-
 The JSON object properties must comply with the following:
 
 * `action` must be `redirect`
