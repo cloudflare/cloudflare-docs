@@ -178,7 +178,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           yarn build
         env:
           WORKERS_ENV: development
@@ -210,7 +210,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -244,7 +244,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -278,7 +278,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -312,7 +312,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -346,7 +346,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -380,7 +380,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -414,7 +414,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -446,7 +446,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -478,7 +478,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -510,7 +510,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -544,7 +544,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -578,7 +578,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -612,7 +612,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -646,7 +646,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -680,7 +680,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -714,7 +714,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -748,7 +748,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -782,7 +782,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -816,7 +816,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -850,7 +850,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -884,7 +884,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -918,7 +918,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -952,7 +952,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -986,7 +986,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1020,7 +1020,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1054,7 +1054,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1088,7 +1088,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1122,7 +1122,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1156,7 +1156,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1197,7 +1197,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1231,7 +1231,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1265,7 +1265,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1297,7 +1297,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1331,7 +1331,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1365,7 +1365,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1397,7 +1397,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1463,7 +1463,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1497,7 +1497,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1531,7 +1531,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1565,7 +1565,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1599,7 +1599,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1633,7 +1633,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1667,7 +1667,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1701,7 +1701,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1735,7 +1735,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
@@ -1769,7 +1769,7 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          yarn install
+          yarn install --pure-lockfile
           mkdir .docs
           yarn ghactionsbootstrap
           yarn build
