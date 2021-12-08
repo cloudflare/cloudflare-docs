@@ -92,9 +92,11 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 </TableWrap>
 
-<Aside type ="note" header="Free vs. Paid plan pricing">
+<Aside type="note" header="Free vs. Paid plan pricing">
 
 Refer to [KV pricing](/platform/pricing#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
+
+</Aside>
 
 ## Cache API limits
 
