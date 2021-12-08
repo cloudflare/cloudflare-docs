@@ -57,7 +57,7 @@ A successful response will return information about the live input:
     "name": "My Live Stream"
   },
   "status": null,
-  "live": {
+  "recording": {
     "mode": "automatic",
     "requireSignedURLs": false,
     "allowedOrigins": ["*.example.com"]
