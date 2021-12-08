@@ -15,7 +15,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 - [Eleventy](https://www.11ty.io/#quick-start), requires Node
 - [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/tutorials/deploy-a-static-wordpress-site))
 
-After you have a generated site, follow these steps:
+After you have generated a site, follow these steps:
 
 1. Run this Wrangler command in the root of your project’s directory:
 
