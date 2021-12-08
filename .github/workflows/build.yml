@@ -55,6 +55,7 @@ jobs:
       waiting-room: ${{ steps.filter.outputs.waiting-room }}
       warp-client: ${{ steps.filter.outputs.warp-client }}
       workers: ${{ steps.filter.outputs.workers }}
+      zaraz: ${{ steps.filter.outputs.zaraz }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2.4.2
@@ -155,6 +156,8 @@ jobs:
               - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
+            zaraz:
+              - 'products/zaraz/**'
 
   build-developers-site:
     runs-on: ubuntu-latest
@@ -1036,6 +1039,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/workers
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+  
+  build-zaraz:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.zaraz == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/zaraz
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1

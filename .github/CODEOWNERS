@@ -120,3 +120,6 @@ products/warp-client/ @cloudflare/PCX
 
 # Workers
 products/workers/ @cloudflare/workers-docs @cloudflare/PCX
+
+# Zaraz
+products/zaraz/ @cloudflare/PCX
