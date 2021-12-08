@@ -57,6 +57,7 @@ jobs:
       waf: ${{ steps.filter.outputs.waf }}
       waiting-room: ${{ steps.filter.outputs.waiting-room }}
       workers: ${{ steps.filter.outputs.workers }}
+      zaraz: ${{ steps.filter.outputs.zaraz }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2.4.2
@@ -157,6 +158,8 @@ jobs:
               - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
+            zaraz:
+              - 'products/zaraz/**'
 
   deploy-developers-site:
     runs-on: ubuntu-latest
@@ -1756,3 +1759,37 @@ jobs:
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
+  
+  deploy-zaraz:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.zaraz == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/zaraz
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          environment: "production"
+          wranglerVersion: "1.13.0"

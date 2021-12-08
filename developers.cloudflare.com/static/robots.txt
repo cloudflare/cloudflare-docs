@@ -44,3 +44,4 @@ Sitemap: https://developers.cloudflare.com/waf/sitemap.xml
 Sitemap: https://developers.cloudflare.com/waiting-room/sitemap.xml
 Sitemap: https://developers.cloudflare.com/warp-client/sitemap.xml
 Sitemap: https://developers.cloudflare.com/workers/sitemap.xml
+Sitemap: https://developers.cloudflare.com/zaraz/sitemap.xml
