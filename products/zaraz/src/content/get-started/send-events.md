@@ -3,7 +3,7 @@ order: 4
 pcx-content-type: how-to
 ---
 
-# Send Events to a third-party tool
+# Send events to a third-party tool
 
 Events are bundles of information Zaraz sends to a third-party tool when a particular trigger is matched. To start using them, first create a trigger that determines the condition for which the event is sent. If you have already [set up a trigger](/create-trigger), follow these steps to create an event.
 
@@ -17,7 +17,7 @@ Events are bundles of information Zaraz sends to a third-party tool when a parti
 
 1. Give the event a descriptive name.
 
-1. In the **Firing triggers** field, choose the relevant trigger you [previously created](/get-started/create-trigger). You may choose more than one trigger for your Event. If you choose more than one trigger, the event will be sent to the third-party tool only when all the selected triggers are matched.
+1. In the **Firing triggers** field, choose the relevant trigger you [previously created](/get-started/create-trigger). You may choose more than one trigger for your event. If you choose more than one trigger, the event will be sent to the third-party tool only when all the selected triggers are matched.
 
 1. Depending on the tool, you may also choose an **Event type** — either **Page View** or **Event**. The options you can fill out in **Event** will depend on the tool you are configuring.
 
