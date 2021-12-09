@@ -27,7 +27,7 @@ In this tutorial, you will use Workers and [Airtable](https://airtable.com) to p
 
 For this tutorial, you will be building a contact form. You can customize the fields, but the form this tutorial references will collect a first name, last name, email address, phone number, subject, and a message. 
 
-If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [Deploy a form to Pages]() tutorial.
+If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](https://developers.cloudflare.com/pages/tutorials/forms) Pages tutorial. Then continue with [Create a serverless function](/tutorials/handle-form-submissions-with-airtable).
 
 The simplified HTML markup for this form:
 
@@ -78,42 +78,15 @@ The simplified HTML markup for this form:
 </form>
 ```
 
+For example, if you fill in the `first_name` input with the text Kristian, submitting the `<form>` via the Submit button will submit data to the `/new_submission` URL with the `first_name=Hello` request payload.
 
-
-To review the basics of HTML5 forms, a `form` element generally contains an `action` attribute, which indicates the URL that the form will submit to. For example, the below `form` will submit data to the path `/new_submission`:
-
-```html
-<form action="/new_submission">
-  <input type="text" name="first_name" id="first_name"></input>
-  <button type="submit">Submit</button>
-</form>
-```
-
-<Aside type="note">
-
-If you are unfamiliar with HTML5 forms, you can refer to the Mozilla Developer Network's ["Web Forms - Working with user data"](https://developer.mozilla.org/en-US/docs/Learn/Forms) for a beginner guide.
-
-</Aside>
-
-To pass data inside of the form, you can use `input` tags. `input` tags have a `type`, which specifies how the `input` should render, and what kind of data it contains. When an `input` has a `name` attribute, the `form` will submit that data to the provided `action` URL, matching that `name` attribute. 
-
-<Aside type="note">
-
-The `id` attribute, while not required for the `input` to be submitted as part of the `form`, [may be required to ensure accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#meaningful_text_labels). If the `input` element is nested inside the `label`, the `id` is not required. If the `input` element is not nested inside the `label`, the `id` on the `input` is required along with the `for` (or `htmlFor` in React) property to ensure differently abled readers will get built-in accessibility features.
-
-Additionally, the `id` attribute is often set alongside the `name` attribute to enable styling via CSS.
-
-</Aside>
-
-For example, if you fill in the `first_name` `input` with the text "Kristian", submitting the `form` via the "Submit" `button` will submit data to the URL `/new_submission` with the data `first_name=Hello`.
-
-The `form` used in the example front-end UI builds on these basics, adding some CSS classes via Tailwind CSS, and adding the fields needed for a "Contact"-style form: "First name", "Last name", "Email", "Phone", "Subject", and "Message".
+The `<form>` used in the example front-end UI builds on these basics, adding some CSS classes via Tailwind CSS, and adding the fields needed for a Contact-style form: First name, Last name, Email, Phone, Subject, and Message.
 
 ![The completed form in the front-end user interface](./ui.png)
 
 The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit using an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST). 
 
-Some sample code is provided as an example below, including the first `input`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
+Code is provided as an example below, including the first `<input>`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
 
 ```html
 <form action="SERVERLESS_FN_URL" method="POST" class="...">
@@ -142,7 +115,7 @@ Some sample code is provided as an example below, including the first `input`, t
 </form>
 ```
 
-If you would like to follow along with this example, you can directly copy the `form` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
+If you would like to follow along with this example, you can directly copy the `<form>` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
 
 ## Create a serverless function
 
