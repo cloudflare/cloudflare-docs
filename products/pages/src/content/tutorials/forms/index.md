@@ -17,7 +17,6 @@ This tutorial will briefly touch upon the basics of HTML forms. For a more in-de
 
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/platform/functions). Refer to the [Get started guide](/get-started) guide to familiarize yourself with the platform.
 
-
 ## Overview
 
 On the web, forms are a common point of interaction between the user and the web document. They allow a user to enter data and, generally, submit their data to a server. A form is comprised of at least one form input, which can vary from text fields to dropdowns to checkboxes and more.
@@ -296,6 +295,7 @@ export async function onRequestPost(context) {
 ```
 
 The final snippet (above) allows the Worker to retain all values, returning a JSON response with an accurate representation of the `<form>` submission.
+
 ### Deployment
 
 You are now ready to deploy your project.
@@ -323,14 +323,11 @@ If this is your first Cloudflare Pages project, refer to the [Get started guide]
 
 After clicking the **Save and Deploy** button, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
-
-## Related Resources
-
 In this tutorial, you built and deployed a website and its back-end logic using Cloudflare Pages with its Workers integration. You created a static HTML document with a form that communicates with a Worker handler to parse the submission request(s).
 
 If you would like to review the full source code for this application, you can find it on [GitHub](https://github.com/lukeed/submit.pages.dev).
 
-If you enjoyed this tutorial, you may also enjoy these other Pages tutorials:
+## Related resources
 
 - [Build an API for your frontend using Cloudflare Workers](/tutorials/build-an-api-with-workers)
 - [Handle form submissions with Airtable](https://developers.cloudflare.com/workers/tutorials/handle-form-submissions-with-airtable)
