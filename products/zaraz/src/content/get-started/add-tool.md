@@ -19,7 +19,7 @@ You can add new third-party tools and load them into your website through the Cl
 
 1. Click **Save**.
 
-Your tool is now configured. Cloudflare Zaraz created the event that will load the tool into your website when the conditions you set are met. From this page you can also configure the tool's **Settings** and add additional events, by clicking **Create event**. Bear in mind that if you have more than one event associated with a tool, that tool will only be loaded into your website when all the events are met.
+Your tool is now configured. Cloudflare Zaraz created the event that will load the tool into your website when the conditions you set are met. From this page you can configure the tool's **Settings** and add additional events, by clicking **Create event**. You can also edit the events by clicking their names.
 
 <div class="full-img">
 
