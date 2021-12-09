@@ -11,13 +11,11 @@ Events are bundles of information Zaraz sends to a third-party tool when a parti
 
 1. Go to **Zaraz**.
 
-1. Under **Third-party tools**, select the third-party tool you want to send an Event to — for example, Facebook Pixel or Google Analytics.  
+1. Under **Third-party tools**, click **Edit** on the third-party tool you want to send an Event to — for example, Facebook Pixel or Google Analytics.
 
-1. Click the **Events** tab. 
+1. Click the **Create event**. 
 
-1. Under **Tracking Events**, you can find a list of events currently sent to the tool you chose. Clicking the links in each Event shows you more details about the conditions associated with it. To add a new Event, click **Create event**.
-
-1. Give the event a descriptive name. Depending on the tool, you may need to configure additional settings.
+1. Give the event a descriptive name.
 
 1. In the **Firing triggers** field, choose the relevant trigger you [previously created](/get-started/create-trigger). You may choose more than one trigger for your Event. If you choose more than one trigger, the event will be sent to the third-party tool only when all the selected triggers are matched.
 
