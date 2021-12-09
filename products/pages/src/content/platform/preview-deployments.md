@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 Preview deployments allow you to preview new versions of your project without deploying it to production. To view preview deployments, navigate from the **Account Home** > **Pages** and select your project.
 
-Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay updated as you continue to push new commits to the branch.
+Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay updated as you continue to push new commits to the branch. This is only true when pull requests originate from the repository itself.
 
 For example, if you have a repo called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/get-started#adding-a-custom-domain) attached to the project. 
 
