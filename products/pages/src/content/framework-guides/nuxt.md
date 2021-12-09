@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
 
-# Deploy an Nuxt.js site
+# Deploy a Nuxt.js site
 
 [Nuxt.js](https://nuxtjs.org/) is a framework making web development simple and powerful.
 

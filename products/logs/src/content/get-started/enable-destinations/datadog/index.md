@@ -62,10 +62,11 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
   * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
-  * `service`, `host`, `ddsource`, `ddtags`: Optional parameters allowed by Datadog
+  * `ddsource`: Set to `cloudflare`.
+  * `service`, `host`, `ddtags`: Optional parameters allowed by Datadog
 
 ```bash
-"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>"
+"datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
 ```
 
 * `dataset` - the category of logs you want to receive. See [Log fields](/reference/log-fields) for the full list of supported datasets. 
@@ -79,7 +80,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -H "X-Auth-Email: user@example.com" \
 -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",  "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
+"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
 Response:

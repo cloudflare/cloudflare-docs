@@ -4,11 +4,11 @@ pcx-content-type: navigation
 
 # Workers Sites
 
-Workers Sites enables developers to deploy __static applications__ directly to Workers.
+Workers Sites enables developers to deploy static applications directly to Workers.
 
-It’s perfect for deploying applications built with static site generators like [Hugo](https://gohugo.io) and [Gatsby](https://www.gatsbyjs.org), or frontend frameworks like [Vue](https://vuejs.org) and [React](https://reactjs.org).
+It is perfect for deploying applications built with static site generators like [Hugo](https://gohugo.io) and [Gatsby](https://www.gatsbyjs.org), or front-end frameworks like [Vue](https://vuejs.org) and [React](https://reactjs.org).
 
-To deploy with Workers Sites, select from one of these __three routes__ depending on the state of your target project:
+To deploy with Workers Sites, select from one of these three routes depending on the state of your target project:
 
 --------------------------------
 
@@ -22,7 +22,7 @@ If you have an existing project or static assets that you want to deploy with Wo
 
 ## 2. Start from scratch
 
-If you’re ready to start a brand new project, starting from scratch with Workers Sites will set up the infrastructure to deploy a simple HTML website to Workers.
+If you are ready to start a brand new project, Workers Sites will set up the infrastructure to deploy a simple HTML website to Workers.
 
 <p><Button type="primary" href="/platform/sites/start-from-scratch">Start from scratch</Button></p>
 
@@ -34,8 +34,8 @@ If you already have an application deployed to Workers, this guide will show you
 
 <p><Button type="primary" href="/platform/sites/start-from-worker">Start from a worker</Button></p>
 
-<Aside>
+<Aside type="note">
 
-__Note:__ Workers Sites is built on Workers KV, and usage rates may apply. See the [Pricing page](/platform/pricing) to learn more.
+Workers Sites is built on Workers KV, and usage rates may apply. Refer to [Pricing](/platform/pricing) to learn more.
 
 </Aside>

@@ -16,6 +16,8 @@ Email Routing main page is divided into four sections:
 
 In this section you can create as many custom email addresses as you want for your domain. Each of those custom addresses is then linked to a destination address, forming a **rule**. You can toggle a rule on or off.
 
+Note that if you have more than one destination address linked to the same custom address, Email Routing will only process the most recent rule. This means only the most recent pair of custom address and destination address (rule) will receive your forwarded emails. To avoid this, do not link more than one destination address to the same custom address.
+
 When creating a rule, you must specify an **Action**:
 
 * *Send to*: Emails will be routed to your **Destination address**. This is the default action.

@@ -12,14 +12,129 @@ When a user makes a DNS request to Gateway, Gateway matches the request against 
 When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. 
 
 Build a DNS policy by configuring the following elements:
-* [Actions](#actions)
+
 * [Expressions](#expressions)
 * [Selectors](#selectors)
 * [Operators](#operators)
+* [Actions](#actions)
 
 <Aside>
 Unless a more specific selector is configured in a policy (e.g., <code>user email</code> or <code>source IP address</code> for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 </Aside>
+
+## Expressions
+
+Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. 
+
+### Selectors
+
+Gateway matches DNS traffic against the following selectors, or criteria:
+
+#### Identity-based selectors
+
+You can build DNS policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+
+#### DOH Subdomain
+
+Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`.
+
+| UI name | API example |
+| -- | -- |
+| DOH Subdomain | `dns.doh_subdomain == "abcdefg"` |
+
+#### Domain
+
+Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and all subdomains of `example.com`.
+
+| UI name | API example |
+| -- | -- |
+| Domain | `any(dns.domains[*] == "example.com")` |
+
+#### Host
+
+Use this selector to match against only the hostname specified—for example, if you want to block only `example.com` but not `subdomain.example.com`.
+
+| UI name | API example |
+| -- | -- |
+| Host | `dns.fqdn == "www.example.com"` |
+
+#### Query Rtype
+
+Use this selector to choose the DNS resource record type that you would like to apply policies against — for example, you can choose to block A records for a domain but not MX records.
+
+| UI name | API example |
+| -- | -- |
+| Query Record Type | `dns.query_rtype == "TXT"` |
+
+#### DNS Resolver IP
+
+Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered locations.
+
+| UI name | API example |
+| -- | -- |
+| DNS Resolver IP | `any(dns.resolved_ip[*] == 198.51.100.0)` |
+
+#### Resolved IP
+
+Use this selector to filter based on the IP addresses that the query resolves to.
+
+| UI name | API example |
+| -- | -- |
+| Resolved IP | `any(dns.resolved_ips[*] == 198.51.100.0)` |
+
+#### Source IP
+
+Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway.
+
+| UI name | API example  |
+| -- | -- |
+| Source IP | `dns.src_ip == 198.51.100.0` |
+
+#### Location
+
+Use this selector to apply DNS policies to a specific location or set of locations.
+
+| UI name | API example |
+| -- | -- |
+| Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` |
+
+#### Content Categories
+
+Use this selector to apply DNS policies to traffic directed to specific content categories.
+
+| UI name | API example |
+| -- | -- |
+| Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
+
+#### Security Categories
+
+Use this selector to block traffic directed to specific security categories.
+
+| UI name | API example |
+| -- | -- |
+| Security Categories | `any(http.request.uri.category[*] in {1})` |
+
+#### Authoritative Nameserver IP
+
+Use this selector to match against the IP address of the authoritative name server IP address.
+
+| UI name | API example |
+| -- | -- |
+| Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` |
+
+
+### Operators
+
+Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
+
+| Operator              |          Meaning
+|:---------------------:|:---------------------------:|
+|  is                   |  exact match, equals        |
+|  is not               |  all except exact match     |
+|  in                   |  in any of defined entries  |
+|  not in               |  not in defined entries     |
+|  matches regex        | regex evaluates to true         |
+|  does not match regex |  all except when regex evals to true   |
 
 ## Actions
 
@@ -67,30 +182,6 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 | --- | --- | --- | --- |
 | Domain | Is | `google.com` | SafeSearch |
 
-#### Test SafeSearch
-
-You can test if SafeSearch is working by performing `dig` on the search engines. Instead of returning the regular IP address, you should see the CNAMEs returned like below:
-
-##### Google
-Google will return `forcesafesearch.google.com`.
-
-![SafeSearch Google](../../../static/documentation/policies/google-safesearch.png)
-
-##### YouTube
-YouTube will return `restrict.youtube.com`.
-
-![SafeSearch Youtube](../../../static/documentation/policies/youtube-safesearch.png)
-
-##### Bing
-Bing will return `strict.bing.com`.
-
-![SafeSearch Bing](../../../static/documentation/policies/bing-safesearch.png)
-
-##### DuckDuckGo
-DuckDuckGo will return `safe.duckduckgo.com`.
-
-![SafeSearch DuckDuckGo](../../../static/documentation/policies/duckduckgo-safesearch.png)
-
 ### YouTube Restricted Mode
 
 Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
@@ -100,98 +191,6 @@ Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Rest
 | DNS Domain | Is | `youtube.com` | YouTube Restricted |
 
 This setup ensures users will be blocked from accessing offensive sites using DNS.
-
-## Expressions
-
-Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. 
-
-### Selectors
-
-Gateway matches DNS traffic against the following selectors, or criteria:
-
-<TableWrap>
-
-| Selector | Description |
-| -------- | ----------- |
-| DOH Subdomain | Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`. |
-| Domain | Use this selector to match against a domain and all subdomains—for example, if you want to block example.com and all subdomains of example.com. |
-| Host | Use this selector to match against only the hostname specified—for example, if you want to block only example.com but not subdomain.example.com. |
-| Query Rtype | Use this selector to choose the DNS resource record type that you’d like to apply policies against — for example, you can choose to block A records for a domain but not MX records. |
-| DNS Resolver IP | Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address—these both can be used to apply policies to specific registered locations. | 
-| Resolved IP | Use this selector to filter based on the IP addresses that the query resolves to. |
-| Source IP | Use this selector to apply DNS policies to a specific source IP address that queries arrive to Gateway from — for example, this could be the WAN IP address of the stub resolver used by an organization to send queries upstream to Gateway. |
-| Location | Use this selector to apply DNS policies to a specific location or set of locations. |
-
-</TableWrap>
-
-These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client:
-
-<TableWrap>
-
-| Selector | Description |
-| -------- | ----------- |
-| User Email | Use this selector to create identity-based DNS rules based on a user’s email. |
-| User Group Emails | Use this selector to create identity-based DNS rules based on an IdP group email address of which the user is configured as a member in the IdP. |
-| User Group IDs | Use this selector to create identity-based DNS rules based on an IdP group ID of which the user is configured as a member in the IdP. |
-| User Group Names | Use this selector to create identity-based DNS rules based on an IdP group name of which the user is configured as a member in the IdP. | 
-| User Name | Use this selector to create identity-based DNS rules based on an IdP username for a particular user in the IdP. |
-
-</TableWrap>
-
-For more detailed information on DNS categories, see the [DNS categories page](/policies/filtering/dns-policies-builder/dns-categories).
-
-### Selectors - API Examples
-
-You can use the [Cloudflare API](https://api.cloudflare.com/) to build DNS filtering policies. Examples of certain selectors are provided below.
-
-* Block queries that resolve to IP `1.2.3.3` or in CIDR `1.2.3.4/30`:
-
-  ```txt
-  any(dns.resolved_ips[*] in {1.2.3.3 1.2.3.4/30})
-  ```
-
-* Block queries that resolve to the explicit IP `93.184.216.34`:
-
-  ```txt
-  any(dns.resolved_ips[*] == 93.184.216.34)`
-  ```
-
-* Block queries that resolve to an IP in an IP List, where `22509276-1c53-4a46-933a-9ff5e5e7b2ec` is the UUID for your IP List:
-
-  ```txt
-  any(dns.resolved_ips[*] in $225092761c534a46933a9ff5e5e7b2ec)`
-  ```
-
-### Operators
-
-Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
-
-| Operator              |          Meaning
-|:---------------------:|:---------------------------:|
-|  is                   |  exact match, equals        |
-|  is not               |  all except exact match     |
-|  in                   |  in any of defined entries  |
-|  not in               |  not in defined entries     |
-|  matches regex        | regex evaluates to true         |
-|  does not match regex |  all except when regex evals to true   |
-
-## Blocking a subdomain
-
-To block a domain and all subdomains, you can create the following policy:
-
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Domain | Is | `example.com` | Block |
-
-## Blocking a top-level domain
-
-Just like you can choose to block a domain and all subdomains, you can block an entire top-level domain (TLD) by creating a policy. For example, if you wish to block all domains and subdomains registered as a `.net`, create the following policy:
-
-| Selector | Operator | Value | Action |
-| --- | --- | --- | --- |
-| Domain | Matches Regex | `[.]net` | Block |
-
-Blocking a popular TLD like `.com` will prevent users from connecting to significant portions of the Internet.
 
 ## Custom block page
 

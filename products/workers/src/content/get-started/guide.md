@@ -121,7 +121,7 @@ Fundamentally, a Workers application consists of two parts:
 1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
 2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This [dispatches a `FetchEvent`](/learning/fetch-event-lifecycle) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
+When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/runtime-apis/fetch-event) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
 ```js
 ---

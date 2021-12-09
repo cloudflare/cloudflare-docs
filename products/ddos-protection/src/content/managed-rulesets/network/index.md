@@ -12,24 +12,21 @@ The Network-layer DDoS Attack Protection Managed Ruleset is always enabled — y
 
 ## Ruleset configuration
 
-<Aside type="warning">
-
-Currently, you can only configure the Network-layer DDoS Attack Protection Managed Ruleset via API.
-
-</Aside>
-
 You may need to adjust the behavior of specific rules in case of false positives or due to specific traffic patterns.
 
 Adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
 * The performed **action** when an attack is detected
-* The **sensitivity** of attack detection mechanisms
+* The **sensitivity level** of attack detection mechanisms
 
-To adjust rule behavior, [configure overrides via API](/managed-rulesets/network/configure-api).
+To adjust rule behavior, do one of the following:
+
+* [Configure Network-layer DDoS Attack Protection in the dashboard](/managed-rulesets/network/configure-dashboard).
+* [Configure Network-layer DDoS Attack Protection Managed Ruleset overrides via API](/managed-rulesets/network/configure-api).
 
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters) for more information.
 
-By default, your specific configurations (or overrides) apply to all packets, since the default rule expression is `true`. Specify a different rule expression to match a subset of incoming packets for which you want to apply the override. Refer to [Available expression fields](/managed-rulesets/network/fields) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
+Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Available expression fields](/managed-rulesets/network/fields) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
 
 ## Availability
 

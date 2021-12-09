@@ -1,5 +1,5 @@
 ---
-title: User guide
+title: Get started
 order: 1
 pcx-content-type: navigation
 ---

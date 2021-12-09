@@ -1,4 +1,4 @@
-# The Life of a Cloudflare Request docs
+# Cloudflare Fundamentals
 
 [View docs →](https://developers.cloudflare.com/fundamentals)
 

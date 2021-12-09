@@ -34,6 +34,7 @@ Sitemap: https://developers.cloudflare.com/randomness-beacon/sitemap.xml
 Sitemap: https://developers.cloudflare.com/registrar/sitemap.xml
 Sitemap: https://developers.cloudflare.com/rules/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ruleset-engine/sitemap.xml
+Sitemap: https://developers.cloudflare.com/security-center/sitemap.xml
 Sitemap: https://developers.cloudflare.com/spectrum/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ssl/sitemap.xml
 Sitemap: https://developers.cloudflare.com/stream/sitemap.xml
@@ -44,3 +45,4 @@ Sitemap: https://developers.cloudflare.com/waf/sitemap.xml
 Sitemap: https://developers.cloudflare.com/waiting-room/sitemap.xml
 Sitemap: https://developers.cloudflare.com/warp-client/sitemap.xml
 Sitemap: https://developers.cloudflare.com/workers/sitemap.xml
+Sitemap: https://developers.cloudflare.com/zaraz/sitemap.xml

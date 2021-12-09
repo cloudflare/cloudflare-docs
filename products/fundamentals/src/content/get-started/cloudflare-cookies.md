@@ -8,11 +8,11 @@ Cloudflare uses various cookies to maximize network resources, manage traffic, a
 
 ## Understanding the Cloudflare Cookies
 
-As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the `__cflb`, `__cf_bm`, `__cf_ob_info` and `__cf_use_ob`, and `__cfwaitingroom` cookies are strictly necessary to provide the services requested by our customers.
+As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the `__cflb`, `__cf_bm`, `__cf_ob_info` and `__cf_use_ob`, `__cfwaitingroom`, and `__cfruid` cookies are strictly necessary to provide the services requested by our customers.
 
 As mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required by law to disclose these cookies to their end users.
 
-Cookie data is processed in Cloudflare's data centers in the United States and is subject to the cross-border data transfer section 7 of the Cloudflare [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
+Cookie data is processed in Cloudflare's data center in the United States and is subject to the cross-border data transfer section 7 of the Cloudflare [Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
 ### __cflb cookie for Cloudflare Load Balancer session affinity
 
@@ -54,7 +54,11 @@ The `__cf_use_ob` cookie informs Cloudflare to fetch the requested resource from
 
 [Cloudflare’s Waiting Room](https://developers.cloudflare.com/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
 
-The `_cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](https://developers.cloudflare.com/waiting-room/reference/waiting-room-cookie).
+The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](https://developers.cloudflare.com/waiting-room/reference/waiting-room-cookie).
+
+### __cfruid to support Cloudflare Rate Limiting Products
+
+The `__cfruid` cookie is strictly necessary to support Cloudflare Rate Limiting products. As part of our Rate Limiting solution, this cookie is required to manage incoming traffic and to have better visibility on the origin of a particular request.
 
 ### Additional cookies used by the Challenge Platform
 
@@ -69,4 +73,4 @@ The table below shows additional cookies used by the Challenge Platform.
 
 ## Related resources
 
-- [Understanding SameSite cookie interaction with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360038470312)
+- [Understanding SameSite cookie interaction with Cloudflare](https://support.cloudflare.com/hc/articles/360038470312)

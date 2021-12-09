@@ -46,7 +46,7 @@ After you deploy the above code, run `wrangler tail` in your terminal, and then 
 
 ## View logs using `wrangler tail`
 
-With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, `wrangler tail` allows developers to “tail” their Workers application’s logs, giving real-time insight into their application's incoming requests.
+With your Workers application deployed, you may want to inspect incoming traffic. This may be useful in situations where a user is running into production issues that they cannot easily reproduce. In these instances, [`wrangler tail`](/cli-wrangler/commands#tail) allows developers to livestream their Workers application’s logs, giving real-time insight into their application's incoming requests.
 
 To get started, run `wrangler tail` in your Workers project directory. This will log any incoming requests to your application available in your local terminal.
 
@@ -83,11 +83,11 @@ You can customize how `wrangler tail` works to fit your needs: refer to [the `wr
 
 ## View logs from the dashboard
 
-You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to *Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
+You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
 ![Cloudflare dashboard showing Workers logs](./media/workers-logging-dashboard.png)
 
-A few things worth mentioning:
+Note that:
 
 - Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
@@ -118,9 +118,9 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Identifying errors: Workers Metrics
 
-You can find out whether your application is experiencing any downtime, or returning any errors by navigating from **Account Home** > to **Workers** > your **Worker script** > **Metrics** in the dashboard.
+You can find out whether your application is experiencing any downtime, or returning any errors by navigating from **Account Home** > to **Workers** > your **Worker script** > **Overview** > **View all Metrics** in the dashboard.
 
-<!-- TODO: include screenshots -->
+![metrics](./media/metrics.png)
 
 ### Debugging exceptions
 

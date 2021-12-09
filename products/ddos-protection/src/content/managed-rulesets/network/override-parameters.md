@@ -6,7 +6,7 @@ order: 3
 
 # Network-layer DDoS Attack Protection parameters
 
-Configure the Network-layer DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. To customize these parameters, [define overrides via Rulesets API](/managed-rulesets/network/configure-api).
+Define overrides for the Network-layer DDoS Attack Protection Managed Ruleset to change the action applied to a given attack or modify the sensitivity level of the detection mechanism. You can [define overrides in the Cloudflare dashboard](/managed-rulesets/network/configure-dashboard) or [define overrides via Rulesets API](/managed-rulesets/network/configure-api).
 
 The available parameters are the following:
 
@@ -43,11 +43,11 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 
 The available sensitivity levels are:
 
-Sensitivity Level | API value
+UI Value          | API value
 ------------------|----------
-High              | `"default"`
-Medium            | `"medium"`
-Low               | `"low"`
-Essentially Off   | `"eoff"`
+_High_            | `"default"`
+_Medium_          | `"medium"`
+_Low_             | `"low"`
+_Essentially Off_ | `"eoff"`
 
 In most cases, when you select the _Essentially Off_ sensitivity level the rule will not trigger for any of the selected actions, including _Log_. However, if the attack is extremely large, Cloudflare's protection systems will still trigger the rule's mitigation action to protect Cloudflare's network.
