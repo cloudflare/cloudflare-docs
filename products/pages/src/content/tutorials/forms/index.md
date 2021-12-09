@@ -65,7 +65,7 @@ Your `for` and `id` values do not need to exactly match the values shown above. 
 
 When this `<form>` is submitted with valid data, its data contents are sent to the server. You may customize how and where this data is sent by declaring attributes on the form itself. If you do not provide these details, the `<form>` will POST the data to the current URL address, which is rarely the desired behavior. To fix this, at minimum, you need to define an [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-action) attribute with the target URL address, but declaring a [`method`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-method) is often recommended too, even if you are redeclaring the default `POST` value.
 
-By default, HTML forms send their contents in the `application/x-www-form-urlencoded` MIME type. This value will be reflected in the `Content-Type` HTTP header, which the receiving server must read to determine how to parse the data contents. You may customize the MIME type through the [`enctype`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-enctype) attribute. In fact, in order for an input to accept files (via `type=file`), you must change the `enctype` to the `multipart/form-data` value:
+By default, HTML forms send their contents in the `application/x-www-form-urlencoded` MIME type. This value will be reflected in the `Content-Type` HTTP header, which the receiving server must read to determine how to parse the data contents. You may customize the MIME type through the [`enctype`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-enctype) attribute. For example, to accept files (via `type=file`), you must change the `enctype` to the `multipart/form-data` value:
 
 ```html
 <form method="POST" action="/submit" enctype="multipart/form-data">
@@ -89,7 +89,7 @@ Because the `enctype` changed, the browser changes how it sends data to the serv
 
 ## Live Example
 
-Now that you are reacquainted with how HTML forms work, it's time to deploy an example with Cloudflare Pages! The rest of this tutorial will focus on building a HTML form on Pages, including a Worker to receive and parse the form submissions.
+The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
 <Aside type="info" header="GitHub Repository">
 
@@ -198,7 +198,7 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 ### Worker
 
-The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, this poses a problem because there currently is no request handler at that `/api/submit` address – time to fix that.
+The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
 
 Cloudflare Pages offers a [Functions](https://developers.cloudflare.com/pages/platform/functions) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
@@ -326,7 +326,7 @@ After clicking the **Save and Deploy** button, your Pages project will begin its
 
 ## Related Resources
 
-In this tutorial, you built and deployed a website and its backend using Cloudflare Pages with its Workers integration. You created a static HTML document with a form that communicates with a Worker handler to parse the submission request(s).
+In this tutorial, you built and deployed a website and its back-end logic using Cloudflare Pages with its Workers integration. You created a static HTML document with a form that communicates with a Worker handler to parse the submission request(s).
 
 If you would like to review the full source code for this application, you can find it on [GitHub](https://github.com/lukeed/submit.pages.dev).
 
