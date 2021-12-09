@@ -27,7 +27,7 @@ async function handleRequest(request) {
 
 This is the least complex Worker you can write. When the Worker receives a request, the `fetch` event is dispatched. [RespondWith](/learning/fetch-event-lifecycle#respondwith) intercepts the event, promising to return the result of the `handleRequest` function to the client. Finally, `handleRequest` is actually called, and it returns a text [response](/runtime-apis/response) of `"Hello world"` which is delivered back to the client.
 
-Refer to the reference for [addEventListener](/runtime-apis/add-event-listener), [FetchEvent](/runtime-apis/fetch-event), and [FetchEvent lifecycle](/learning/fetch-event-lifecycle) to learn more.
+Refer to the documentation for [`addEventListener`](/runtime-apis/add-event-listener) and [`FetchEvent`](/runtime-apis/fetch-event) to learn more.
 
 --------------------------------
 
