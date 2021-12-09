@@ -27,4 +27,6 @@ Cloudflare Security Center (beta) brings together our suite of security products
 
 ## Availability
 
-Cloudflare Security Center is available in beta to customers on all plans. The frequency of security scans depends on your Cloudflare plan — refer to [Scan frequency](/about#scan-frequency) for more information.
+Cloudflare Security Center is available in beta to customers on all plans. If you have any comments, questions, or bugs to report, contact us at securitycenter@cloudflare.com or create a post in the [Cloudflare Community forum](https://community.cloudflare.com/c/security/security-center/65).
+
+The frequency of security scans depends on your Cloudflare plan — refer to [Scan frequency](/about#scan-frequency) for more information.
