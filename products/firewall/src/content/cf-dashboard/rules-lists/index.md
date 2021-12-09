@@ -3,31 +3,27 @@ pcx-content-type: how-to
 order: 340
 ---
 
-# Use Rules Lists
+# Use IP Lists
 
-Rules Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [_Rules Lists_](/cf-firewall-rules/rules-lists).
+IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [IP Lists](/cf-firewall-rules/rules-lists).
 
 ## Access the Lists interface
 
-Because Rules Lists are stored at the account level, the **Lists** interface is located in your account **Configurations** page, not the Cloudflare dashboard.
+IP Lists are stored at the account level. To access the **Lists** interface, follow these steps:
 
-To access the **Lists** interface, follow these steps:
-
-1. Log in to your Cloudflare account.
-1. Click on your account name or profile picture in the header and select **Account Home**.
-1. Click the **Configurations** tab.
-1. Select **Lists**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Go to **Configurations** > **Lists**.
 
 The **Lists** user interface displays.
 ![Lists UI](../../images/lists-ui.png)
 
-## Create your first Rules List
+## Create your first IP List
 
-Creating a Rules Lists involves two steps:
+Creating an IP List involves two steps:
 
-1. [Create a Firewall Rules list](/cf-dashboard/rules-lists/manage-lists/#create-a-firewall-rules-list).
+1. [Create an IP List](/cf-dashboard/rules-lists/manage-lists/#create-an-ip-list).
 1. [Add IP addresses to the list](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
-## Use Rules Lists in expressions
+## Use IP Lists in expressions
 
-To use Rules Lists in the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use IP Lists in the Cloudflare dashboard, refer to [Use lists in expressions](/cf-dashboard/rules-lists/use-lists-in-expressions).

@@ -42,7 +42,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Rule Preview does not take into account other Cloudflare firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test firewall rules that reference [Rules Lists](/cf-dashboard/rules-lists)**.
+**You cannot test firewall rules that reference [IP Lists](/cf-dashboard/rules-lists)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 

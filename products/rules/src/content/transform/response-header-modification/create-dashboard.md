@@ -12,11 +12,11 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
 1. Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](../../static/transform/overview.png)
+    ![Transform Rules tab](../../images/transform/overview.png)
 
 1. Click **Create transform rule** > **Modify Response Header**.
 
-    ![Create HTTP Response Header Modification rule page](../../static/transform/create-response-header-modification-rule.png)
+    ![Create HTTP Response Header Modification rule page](../../images/transform/create-response-header-modification-rule.png)
 
 1. Enter a descriptive name for the HTTP Response Header Modification Rule in **Rule name**.
 
@@ -40,7 +40,7 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
     The following example includes the modification of three response headers using the available actions:
 
-    ![HTTP response header modification examples](../../static/transform/response-header-modification-example.png)
+    ![HTTP response header modification examples](../../images/transform/response-header-modification-example.png)
 
     <Aside type='note'>
 

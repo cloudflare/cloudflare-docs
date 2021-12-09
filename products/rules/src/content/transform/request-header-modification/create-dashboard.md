@@ -12,11 +12,11 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 1. Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](../../static/transform/overview.png)
+    ![Transform Rules tab](../../images/transform/overview.png)
 
 1. Click **Create transform rule** > **Modify Request Header**.
 
-    ![Create HTTP Request Header Modification rule page](../../static/transform/create-request-header-modification-rule.png)
+    ![Create HTTP Request Header Modification rule page](../../images/transform/create-request-header-modification-rule.png)
 
 1. Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
 
@@ -40,7 +40,7 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
     The following example includes the modification of three headers using the available actions:
 
-    ![HTTP request header modification examples](../../static/transform/request-header-modification-example.png)
+    ![HTTP request header modification examples](../../images/transform/request-header-modification-example.png)
 
     <Aside type='note'>
 
