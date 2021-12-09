@@ -43,7 +43,7 @@ The global `fetch` method itself invokes the `Request` constructor. The [`Reques
 
 <Aside header="Learn more">
 
-Review [the FetchEvent documentation](/runtime-apis/fetch-event) for a deeper understanding of these fundamental Workers concepts.
+Review the [`FetchEvent` documentation](/runtime-apis/fetch-event) for a deeper understanding of these fundamental Workers concepts.
 
 </Aside>
 
