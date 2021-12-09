@@ -20,7 +20,7 @@ The three largest differences are: Isolates, Compute per Request, and Distribute
 
 ## Isolates
 
-[V8](https://v8.dev) orchestrates isolates: lightweight contexts that group variables with the code allowed to mutate them. You could even consider an isolate a sandbox for your function to run in.
+[V8](https://v8.dev) orchestrates isolates: lightweight contexts that provide your code with variables it can access and a safe environment to be executed within. You could even consider an isolate a sandbox for your function to run in.
 
 A single runtime can run hundreds or thousands of isolates, seamlessly switching between them. Each isolate's memory is completely isolated, so each piece of code is protected from other untrusted or user-written code on the runtime. Isolates are also designed to start very quickly. Instead of creating a virtual machine for each function, an isolate is created within an existing environment. This model eliminates the cold starts of the virtual machine model.
 
