@@ -61,7 +61,8 @@ There are two types of cache namespaces available to the Cloudflare Cache:
 
 When to use the Cache API:
 
-- When you need to read from cache without calling `fetch`. (For example, send me the response from `slow.com/resource` if and only if it is already a HIT on cache using `caches.default.match(..)`).
-- Explicitly store a response in the cache using `caches.default.put(..)` and explicitly delete `caches.default.delete(..)`. For example, say your origin is returning `max-age:0` and you cannot figure out how to change that header at your origin. You can explicitly tell Cloudflare to cache this response by setting `cache-control: max-age=1000` on the response passed into `cache.put()`.
+- When you want to programmatically save and/or delete responses from a cache. For example, say an origin is responding with a `Cache-Control: max-age:0` header and cannot be changed. Instead, you can clone the `Response`, adjust the header to the `max-age=3600` value, and then use the Cache API to save the modified `Response` for an hour.
+
+- When you want to programmatically access a Response from a cache without relying on a `fetch` request. For example, you can check to see if you have already cached a `Response` for the `https://example.com/slow-response` endpoint. If so, you can avoid the slow request.
 
 This [template](/examples/cache-api) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/platform/limits#cache-api-limits).
