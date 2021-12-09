@@ -87,7 +87,7 @@ By default, HTML forms send their contents in the `application/x-www-form-urlenc
 
 Because the `enctype` changed, the browser changes how it sends data to the server too. The `Content-Type` HTTP header will reflect the new approach and the HTTP request's body will conform to the new MIME type. The receiving server must accommodate the new format and adjust its request parsing method.
 
-## Live Example
+## Live example
 
 The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
