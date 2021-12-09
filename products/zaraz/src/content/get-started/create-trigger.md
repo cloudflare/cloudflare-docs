@@ -21,7 +21,7 @@ To create a new trigger:
 
 1. In **Match Rules**, define the condition that will activate this trigger. 
 
-    1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the name of an event a user sends using `zarazTrack`. Refer to the [Accessing User Properties](/user-properties) table for a list of variables you can use as triggers. 
+    1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the name of an event a user sends using `zaraz.track()`. Refer to the [Accessing User Properties](/user-properties) table for a list of variables you can use as triggers. 
 
     1. In the drop-down menu, choose from a list of operators, such as _Contains_, _Equals_, _Starts with_, among others.
 
