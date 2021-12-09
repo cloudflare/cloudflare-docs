@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) syntax to the new [JavaScript module](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
-## Advantages of migrating?
+## Advantages of migrating
 
 There are several reasons you might want to migrate your Workers to the module Worker syntax:
 
