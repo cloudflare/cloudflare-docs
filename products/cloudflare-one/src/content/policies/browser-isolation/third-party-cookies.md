@@ -16,9 +16,8 @@ Follow these instructions to enable third-party cookies in your browser:
 
 1. Open Chrome.
 1. At the top right, click the three-dot menu and go to **Settings**.
-1. Scroll down to **Privacy and security**, click **Cookies and other site data**.
-1. Click **See all cookies and site data** > **Remove all**.
-1. Confirm by clicking **Clear all**.
+1. Go to **Privacy and security** > **Cookies and other site data**.
+1. Click **Allow all cookies**.
 
 ## Firefox (Private Browsing mode)
 
@@ -42,5 +41,5 @@ Follow these instructions to enable third-party cookies in your browser:
 
 1. Open Brave.
 1. Click the menu and go to **Settings**.
-1. Go to **Additional settings** > **Privacy and Security** > **Cookies and other site data**.
+1. Go to **Privacy and Security** > **Cookies and other site data**.
 1. Click **Allow all cookies**.
