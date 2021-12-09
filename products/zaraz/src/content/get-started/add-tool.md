@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Add a third-party tool
 
-You can add new third-party tools and load them into your website through the Cloudflare dashboard. If your tool needs more than a simple `pageview` event to trigger it, [create the trigger](/get-started/create-trigger) you need first.
+You can add new third-party tools and load them into your website through the Cloudflare dashboard. If your tool needs more than a simple `Pageview` event to trigger it, [create the trigger](/get-started/create-trigger) you need first.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 
