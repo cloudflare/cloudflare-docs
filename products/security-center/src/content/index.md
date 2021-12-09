@@ -6,7 +6,7 @@ order: 0
 
 # Cloudflare Security Center
 
-Cloudflare Security Center brings together our suite of security products, our security expertise, and unique Internet intelligence as a unified security intelligence solution. Security Center enables you to strengthen your security posture by:
+Cloudflare Security Center (beta) brings together our suite of security products, our security expertise, and unique Internet intelligence as a unified security intelligence solution. Security Center enables you to strengthen your security posture by:
 
 * Mapping your cyber attack surface
 * Providing asset inventory and discovery
