@@ -28,7 +28,7 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
   $ npm i @cloudflare/kv-asset-handler
   ```
 
-3. Import the package’s code into your Worker script, and use it in the handler you would like to respond with static assets:
+3. Import the package’s code into your Worker script and invoke it within your function handler to respond with static assets:
 
   ```js
   import { getAssetFromKV } from "@cloudflare/kv-asset-handler"
