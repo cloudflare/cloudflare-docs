@@ -27,4 +27,4 @@ Your tool is now configured. Cloudflare Zaraz created the event that will load t
 
 </div>
 
-Click **Third-party list** to go back to the main Cloudflare Zaraz page. Here you will see your tool listed under **Third-party tools**, and the name of the Event associated with it. In this page you can also click the **Active** toggle to enable or disable your tool, **Edit** your tool or **Delete** your tool.
+Click **Third-party list** to go back to the main Cloudflare Zaraz page. Here you will see your tool listed under **Third-party tools**, and the name of the event associated with it. In this page you can also click the **Active** toggle to enable or disable your tool, **Edit** your tool or **Delete** your tool.
