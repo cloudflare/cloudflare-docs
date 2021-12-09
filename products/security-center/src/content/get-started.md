@@ -18,4 +18,4 @@ This guide covers the steps you need to take to set up Security Center in your C
 1. Navigate to **Account Home** > **Security Center**.
 1. Under **Perform initial scan**, click **Start scan**.
 
-The initial Security Insights scan will start. The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account.
+The initial Security Insights scan will start. The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account. When the scan is complete, the status of the page will change from **Scan in Progress** to **Last Scan Completed: `<DATE_TIME>`**.
