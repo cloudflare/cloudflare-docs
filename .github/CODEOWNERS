@@ -91,6 +91,9 @@ products/rules/ @cloudflare/PCX
 # Ruleset Engine
 products/ruleset-engine/ @cloudflare/PCX
 
+# Security Center
+products/security-center/ @cloudflare/PCX
+
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
 

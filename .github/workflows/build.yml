@@ -45,6 +45,7 @@ jobs:
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
       ruleset-engine: ${{ steps.filter.outputs.ruleset-engine }}
+      security-center: ${{ steps.filter.outputs.security-center }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -136,6 +137,8 @@ jobs:
               - 'products/rules/**'
             ruleset-engine:
               - 'products/ruleset-engine/**'
+            security-center:
+              - 'products/security-center/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -849,6 +852,25 @@ jobs:
       run:
         shell: bash
         working-directory: products/ruleset-engine
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+
+  build-security-center:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.security-center == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/security-center
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
