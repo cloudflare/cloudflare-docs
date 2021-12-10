@@ -48,7 +48,6 @@ export default = {
     return Response.redirect(destination.toString(), statusCode);
   },
 };
-export default worker;
 ```
 
 ## Accessing event or context data
