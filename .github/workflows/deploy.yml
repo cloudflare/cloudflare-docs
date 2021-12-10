@@ -1795,7 +1795,7 @@ jobs:
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
-  
+
   deploy-zaraz:
     runs-on: ubuntu-latest
     needs: changes
