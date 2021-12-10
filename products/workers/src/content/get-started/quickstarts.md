@@ -57,6 +57,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
 />
 
 <WorkerStarter
+  title="Miniflare Example Project"
+  description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment."
+  repo="mrbbot/miniflare-typescript-esbuild-jest"
+/>
+
+<WorkerStarter
   title="Sunder Starter (Typescript)"
   description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
   repo="sunderjs/sunder-worker-template"
