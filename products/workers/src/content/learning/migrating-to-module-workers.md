@@ -5,15 +5,15 @@ pcx-content-type: concept
 
 # Migrating to module Workers
 
-This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) syntax to the new [JavaScript module](https://blog.cloudflare.com/workers-javascript-modules/) format.
+This guide will show you how to migrate your Workers from the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) syntax to the new [Module Worker](https://blog.cloudflare.com/workers-javascript-modules/) format.
 
 ## Advantages of migrating
 
-There are several reasons you might want to migrate your Workers to the module Worker syntax:
+There are several reasons you might want to migrate your Workers to the module syntax:
 
-1. Cloudflare Durable Objects require the module syntax to work.
-1. Module Workers do not require any global bindings to be set up behind the scenes, making them safer and faster to run.
-1. Workers written in the new module format can be published to npm and shared; they can also be imported into other module Workers.
+1. Durable Objects require the module syntax to work.
+1. Module Workers do not rely on any global bindings, which means the Workers runtime does not need to set up fresh execution contexts, making Module Workers safer and faster to run.
+1. Module Workers are ES Modules, which allows them to be shared and published to npm, for example. Module Workers can be imported by and composed within other Module Workers.
 
 ## Migrating a simple Worker
 
@@ -26,11 +26,8 @@ async function handler(request) {
   const base = "https://example.com";
   const statusCode = 301;
 
-  const url = new URL(request.url);
-  const { pathname, search } = url;
-
-  const destinationURL = base + pathname + search;
-  return Response.redirect(destinationURL, statusCode);
+  const destination = new URL(request.url, base);
+  return Response.redirect(destination.toString(), statusCode);
 }
 
 // Initialize Worker
@@ -39,17 +36,16 @@ addEventListener("fetch", (event) => {
 });
 ```
 
-JavaScript module Workers replace the `addEventListener` syntax with an object declared with `export default`. The example code above becomes:
+Module Workers replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
 
 ```javascript
 export default = {
   fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
-    const url = new URL(request.url);
-    const { pathname, search } = url;
-    const destinationURL = base + pathname + search;
-    return Response.redirect(destinationURL, statusCode);
+    
+    const destination = new URL(request.url, base);
+    return Response.redirect(destination.toString(), statusCode);
   },
 };
 export default worker;
@@ -57,7 +53,7 @@ export default worker;
 
 ## Accessing event or context data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#waituntil) to delay execution. Just like with the Service Worker syntax, module Workers have access to the [`fetchEvent` object](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#supported-fetchevent-properties).
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#waituntil) to delay execution. Just like with the Service Worker syntax, Module Workers have access to the [`fetchEvent` object](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#supported-fetchevent-properties).
 
 This example code:
 
