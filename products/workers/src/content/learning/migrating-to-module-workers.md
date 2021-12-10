@@ -12,14 +12,14 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 There are several reasons you might want to migrate your Workers to the module Worker syntax:
 
 1. Cloudflare Durable Objects require the module syntax to work.
-1. Security and performance. Module Workers don’t require any global bindings to be set up behind the scenes, making them safer and faster to run.
-1. Composability. Workers written in the new module format can be published to npm and shared, they can also be imported into other module Workers.
+1. Module Workers do not require any global bindings to be set up behind the scenes, making them safer and faster to run.
+1. Workers written in the new module format can be published to npm and shared; they can also be imported into other module Workers.
 
 ## Migrating a simple Worker
 
-Let’s take a straightforward example, a Worker that redirects all incoming requests to a URL with a 301 status code.
+The following example demonstrates a Worker that redirects all incoming requests to a URL with a `301` status code.
 
-With the Service Worker syntax, our Worker looks like:
+With the Service Worker syntax, the example Worker looks like:
 
 ```javascript
 async function handler(request) {
@@ -57,9 +57,9 @@ export default worker;
 
 ## Accessing event or context data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [waitUntil](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#waituntil) to delay execution. Just like with the Service Worker syntax, module Workers have access to the [fetchEvent object](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#supported-fetchevent-properties).
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#waituntil) to delay execution. Just like with the Service Worker syntax, module Workers have access to the [`fetchEvent` object](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#supported-fetchevent-properties).
 
-This means that:
+This example code:
 
 ```javascript
 async function handler(event) {
@@ -73,7 +73,7 @@ addEventListener("scheduled", (event) => {
 });
 ```
 
-Becomes:
+Then becomes:
 
 ```javascript
 async function triggerEvent(event) {
@@ -92,9 +92,9 @@ export default worker;
 
 ## Module Workers in the dashboard
 
-The module Worker syntax has full support in the Cloudflare Dashboard. You can go to https://workers.new/, pick the HTTP Handler example and click “Create Service”. After it’s created, click “Quick Edit” and it will launch the dashboard. Click the “Send” button at the top to test if your service is returning “Hello world”.
+The module Worker syntax has full support in the Cloudflare dashboard. Go to **Workers** > **Create a Service** > pick the HTTP Handler example > **Create Service**. After your service is created, select **Quick Edit** and it will launch the dashboard. Select **Send** at the top to test if your service is returning `“Hello world”`.
 
-Now, you can replace:
+Then replace:
 
 ```javascript
 addEventListener("fetch", (event) => {
@@ -116,11 +116,11 @@ export default {
 };
 ```
 
-Click “Save and Deploy” and then click “Send” again to test that your Worker is still returning “Hello world”.
+Select **Save and Deploy** and then select **Send** again to test that your Worker is still returning `“Hello world”`.
 
 ## Configuring your wrangler.toml
 
-To add support for module Workers to an existing project, you can update your `wrangler.toml` file like so:
+To add support for module Workers to an existing project, update your `wrangler.toml` file like so:
 
 ```toml
 name = "my-worker"
