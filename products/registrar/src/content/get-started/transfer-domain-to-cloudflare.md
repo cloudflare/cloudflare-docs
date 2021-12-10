@@ -114,7 +114,7 @@ After this step, your previous registrar will also email you to confirm your req
 
 <Aside type="note">
 
-The FOA email is always included with `.us` domain transfers.
+Registrants transferring a `.us` domain will always receive a FOA email.
 
 </Aside>
 

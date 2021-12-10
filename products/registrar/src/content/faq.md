@@ -92,7 +92,7 @@ In summary, here is what will happen after a domain expires:
 
 ## .US connection requirements
 
-Registrants of `.us` domains are required to have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
+Registrants of `.us` domains must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
 
 <details>
 <summary>Nexus Category 1</summary>
@@ -137,17 +137,15 @@ In addition to nexus information, registrants must also identify their intended 
 * Government
 * Education
 
-
-
 ### .US WHOIS requirements
 
-The .US registry requires that domain contact data must be displayed in the public WHOIS database. Redaction and/or use of WHOIS privacy services is prohibited. This is a registry policy that all registrars must comply with.
+The .US registry requires that domain contact data is displayed in the public WHOIS database. Redaction and/or use of WHOIS privacy services is prohibited. This is a registry policy that all registrars must comply with.
 
 ### .US domain transfers
 
-Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. The approve link **must** be clicked within five days for the transfer to proceed. Failure to respond will result in the cancellation of the transfer request.
+Transferring a `.us` domain works in a similar way to other domains, but always requires approval via the Form of Authorization (FOA) email. You must click the approve link within five days for the transfer to proceed. If you do not respond, the transfer request will be cancelled.
 
-Refer to [Tranfer your domain to Cloudflare](/get-started/transfer-domain-to-cloudflare) for more information on this topic.
+Refer to [Transfer your domain to Cloudflare](/get-started/transfer-domain-to-cloudflare) for more information.
 
 ---
 
