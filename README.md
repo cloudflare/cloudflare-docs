@@ -51,6 +51,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | WAF                     | waf                  | [Test](https://waf.cloudflare-docs.workers.dev/waf)                                   | [Prod](https://developers.cloudflare.com/waf)                  |
 | WARP Client             | warp-client          | [Test](https://warp-client.cloudflare-docs.workers.dev/warp-client)                   | [Prod](https://developers.cloudflare.com/warp-client)          |
 | Workers                 | workers              | [Test](https://workers.cloudflare-docs.workers.dev/workers)                           | [Prod](https://developers.cloudflare.com/workers)              |
+| Zaraz                   | zaraz                | [Test](https://zaraz.cloudflare-docs.workers.dev/zaraz)                               | [Prod](https://developers.cloudflare.com/zaraz)                |
 
 ### Deployment
 
