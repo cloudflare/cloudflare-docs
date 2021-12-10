@@ -1,5 +1,10 @@
 # Changelog
 
+## 12/2/2021
+
+- The Streams spec requires that methods returning promises must not throw synchronous errors. As part of the effort of making the Streams implementation more spec compliant, we are converting a number of sync throws to async rejections.
+- Major V8 update: 9.6 → 9.7. See [V8 release v9.7 · V8](https://v8.dev/blog/v8-release-97) for more details.
+
 ## 11/19/2021
 
 - Durable Object stubs that receive an overload exception will be permanently broken to match the behavior of other exception types.
