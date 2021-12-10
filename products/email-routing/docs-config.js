@@ -14,15 +14,15 @@ module.exports = {
     }
   ],
   search: {
-    indexName: "",
-    apiKey: "",
-    algoliaOptions: { facetFilters: '' },
+    indexName: "developers-cloudflare",
+    apiKey: "b23088ab4d346409f9d3ece6606344c3",
+    algoliaOptions: { 'facetFilters': '["project:email-routing"]' }
   },
   siteMetadata: {
     title: "Cloudflare Email Routing docs",
-    description: "Simplify the way you create and manage email addresses. With Email Routing, you can create any number of custom email addresses that you can use in situations where you do not want to share your real email address.",
+    description: "Simplify the way you create and manage email addresses. Create any number of custom email addresses to use in situations where you do not want to share your primary email address, and Email Routing will forward your email messages for you.",
     author: "@cloudflare",
-    url: "https://developers.cloudflare.com/firewall",
+    url: "https://developers.cloudflare.com/email-routing",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",
   }
 }

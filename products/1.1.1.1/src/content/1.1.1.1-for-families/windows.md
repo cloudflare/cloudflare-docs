@@ -1,11 +1,12 @@
 ---
 order:
+title: Windows 10
 pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 
-# Windows 10
+# Set up 1.1.1.1 for Families - Windows 10
 
 Follow these steps to configure 1.1.1.1 for Families:
 

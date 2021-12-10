@@ -170,6 +170,11 @@ const products = [
     icon: "ruleset-engine",
   },
   {
+    title: "Security Center",
+    path: "security-center",
+    icon: "security-center",
+  },
+  {
     title: "Spectrum",
     path: "spectrum",
     icon: "spectrum",
@@ -218,6 +223,11 @@ const products = [
     title: "Workers",
     path: "workers",
     icon: "workers",
+  },
+  {
+    title: "Zaraz",
+    path: "zaraz",
+    icon: "zaraz",
   },
 ]
 

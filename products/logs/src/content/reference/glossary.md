@@ -61,6 +61,10 @@ HTTP response code sent from Cloudflare to the client (end user). The Cloudflare
 
 HTTP response code sent from the origin server to Cloudflare
 
+#### EDNS Client Subnet (ECS)
+
+ECS is forwarded by recursive resolvers and contains information about the network that the DNS query is originating from. Not all resolvers choose to forward ECS, but if they do, usually a part of the IP address is omitted. The subnet length indicates the size of the client subnet in bits that is forwarded. So if the last octet of an IPv4 address is omitted (for example, 192.0.2.x.), the subnet length will be 24.
+
 ### Threat related terms
 
 #### Threat

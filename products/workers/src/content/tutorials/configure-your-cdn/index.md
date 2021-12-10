@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-In this tutorial, you will build and publish a Cloudflare Workers function that serves assets from a storage platform (in this example, [Google Cloud Storage](https://cloud.google.com/storage/)) to your users. This approach, called “white-labelling”, often takes the form of complex DNS configuration. With Cloudflare Workers, and Cloudflare’s CDN, you can build a solution to this complexity in a few lines of code.
+In this tutorial, you will build and publish a Cloudflare Workers function that serves assets from a storage platform (in this example, [Google Cloud Storage](https://cloud.google.com/storage/)) to your users. This approach, called white-labelling, often takes the form of complex DNS configuration. With Cloudflare Workers, and Cloudflare’s CDN, you can build a solution to this complexity in a few lines of code.
 
 This tutorial will teach you how to build and publish a Cloudflare Workers function to configure your CDN. No prior experience with serverless functions or Cloudflare Workers is assumed.
 
@@ -21,11 +21,11 @@ If you want to review the code used in this tutorial, the final version of the c
 
 ## Prerequisites
 
-This tutorial assumes that you have a public bucket on Google Cloud Storage. You will use it to serve assets through your Cloudflare Workers function. If you do not have a Google Cloud Storage bucket to use with this project, review [Google Cloud’s “Cloud Storage Quickstart” guide](https://cloud.google.com/storage/docs/quickstart-console).
+This tutorial assumes that you have a public bucket on Google Cloud Storage. You will use it to serve assets through your Cloudflare Workers function. If you do not have a Google Cloud Storage bucket to use with this project, review [Google Cloud’s Cloud Storage Quickstart guide](https://cloud.google.com/storage/docs/quickstart-console).
 
 This tutorial makes use of sample images to illustrate serving data through your Cloudflare Workers function. If you have an existing set of images you would like to use, you can upload those to your Google Cloud Storage bucket and use them — if you do not have an existing set of images, this tutorial provides a sample set of profile pictures via [UIFaces.com](http://uifaces.com/), formatted in numeric order (`1.jpg`, `2.jpg`, … `199.jpg`).
 
-To follow along with this tutorial using the data set provided, download the [sample image collection](https://storage.cloud.google.com/workers-docs-configure-your-cdn-tutorial/faces.zip), and upload the zipped folder “faces” to root of your bucket. The directory structure should look like this:
+To follow along with this tutorial using the data set provided, download the [sample image collection](https://storage.cloud.google.com/workers-docs-configure-your-cdn-tutorial/faces.zip), and upload the zipped folder `faces` to root of your bucket. The directory structure should look like this:
 
 ```txt
 your-bucket
@@ -36,7 +36,7 @@ your-bucket
     └── 99.jpg
 ```
 
-Finally, to ensure that you can access the objects from your Workers function, your Google Cloud Storage bucket should be publicly accessible. To ensure this, follow the “Making groups of objects publicly readable” guide in the Google Cloud Storage docs, which can be found at [Google Cloud’s documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
+Finally, to ensure that you can access the objects from your Workers function, your Google Cloud Storage bucket should be publicly accessible. To ensure this, follow the [Making groups of objects publicly readable guide in the Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
 
 ## Generate
 
@@ -127,7 +127,7 @@ async function handleRequest(event) {
 
 Looking back at the original definition of this project, at the beginning of the [Build](/tutorials/configure-your-cdn#build) section, the `serveAsset` function should parse the URL, find what asset is being requested, and serve it from the configured Cloud Storage bucket. To do this, the `event.request.url` field should be parsed using the `URL` library, and set to `url`. 
 
-Given an instance of the `URL` class, `url`, there are a number of useful properties that can be used to query the incoming request. `serveAsset` should check the `pathname`, which contains the part of the URL _after_ the `host`: for example, given the URL `https://assets.mysite.com/faces/1.jpg`, the pathname will be `/faces/1.jpg`:
+Given an instance of the `URL` class, `url`, there are a number of useful properties that can be used to query the incoming request. `serveAsset` should check the `pathname`, which contains the part of the URL after the `host`: for example, given the URL `https://assets.mysite.com/faces/1.jpg`, the pathname will be `/faces/1.jpg`:
 
 ```js
 ---
@@ -192,7 +192,7 @@ async function serveAsset(event) {
 }
 ```
 
-At this point in the tutorial, if an asset is requested that does not exist, or if your bucket policy does not include public access to an asset, `serveAsset` will pass back the corresponding error page directly to the client. Instead of doing this, the returned response should be checked in `handleRequest`: if the status code is higher than `399` (where 200-level status codes indicate “success”, and 399-level status codes indicate “redirection”), you can return a truncated `response` with just the `status` and `statusText` from response:
+At this point in the tutorial, if an asset is requested that does not exist, or if your bucket policy does not include public access to an asset, `serveAsset` will pass back the corresponding error page directly to the client. Instead of doing this, the returned response should be checked in `handleRequest`: if the status code is higher than `399` (where `200`-level status codes indicate success, and `399`-level status codes indicate redirection), you can return a truncated `response` with just the `status` and `statusText` from response:
 
 ```js
 ---

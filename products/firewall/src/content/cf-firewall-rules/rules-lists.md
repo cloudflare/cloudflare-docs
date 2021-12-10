@@ -3,9 +3,9 @@ pcx-content-type: concept
 order: 240
 ---
 
-# Rules Lists
+# IP Lists
 
-Use Rules Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expressions. You can choose to create your own custom list of IP addresses or use a list managed by Cloudflare.
+Use IP Lists to refer to a group of IP addresses collectively, by name, in your firewall rule expressions. You can choose to create your own custom list of IP addresses or use a list managed by Cloudflare.
 
 For example, use a list of known office IP addresses in a firewall rule that allows requests from the addresses on the list to bypass security features. Or you may want to block requests that don't come from the known office addresses.
 
@@ -13,23 +13,23 @@ When you update the content of a list, any rules that use the list are automatic
 
 Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into firewall rules for any of your zones.
 
-## Advantages of Lists
+## Advantages of IP Lists
 
-Using Rules Lists has these advantages:
+Using IP Lists has these advantages:
 
-- When creating a firewall rule, using a Rules List is easier and less error-prone than adding a long list of IP addresses to a firewall rules expression.
-- When updating a set of firewall rules that target the same group of IP addresses, using a Rules List is easier and less error prone than editing multiple firewall rules.
-- Rules Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
+- When creating a firewall rule, using an IP List is easier and less error-prone than adding a long list of IP addresses to a firewall rules expression.
+- When updating a set of firewall rules that target the same group of IP addresses, using an IP List is easier and less error prone than editing multiple firewall rules.
+- IP Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
 
 ## Managed IP Lists: Open Proxies
 
-Use Managed IP Lists to access Cloudflare's IP threat intelligence. 
+Use Managed IP Lists to access Cloudflare's IP threat intelligence.
 
-Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API. 
+Cloudflare scans public, open proxy lists for reachable, open proxies. After verifying the proxies, Cloudflare determines their exit IPs and creates a list of IPs you can use when writing rules via the dashboard or API.
 
 ## Entitlements
 
-The number of Rules Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
+The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
 
 <TableWrap><table style="width: 100%">
 
@@ -48,7 +48,7 @@ The number of Rules Lists you can create depends on the Cloudflare plans associa
   </thead>
   <tbody>
     <tr>
-      <td><strong>Number of Rules Lists</strong></td>
+      <td><strong>Number of IP Lists</strong></td>
       <td>1</td>
       <td>10</td>
       <td>10</td>
@@ -57,19 +57,21 @@ The number of Rules Lists you can create depends on the Cloudflare plans associa
   </tbody>
 </table></TableWrap>
 
-<Aside header="Important">
-  Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</code> requires a Cloudflare Enterprise plan.
+<Aside type="note" header="Important">
+
+Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</code> requires a Cloudflare Enterprise plan.
+
 </Aside>
 
 ## Managing lists
 
-- To manage and edit lists from your Cloudflare account interface, see [_Use Rules Lists_](/cf-dashboard/rules-lists).
-- To manage and edit lists using the Cloudflare API, see [_Rules Lists API_](/api/cf-lists/).
+- To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/cf-dashboard/rules-lists).
+- To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/api/cf-lists/).
 
 ## Using lists in expressions
 
-Both the Cloudflare dashboard and the Cloudflare API support Rules Lists.
+Both the Cloudflare dashboard and the Cloudflare API support IP Lists.
 
-To use Rules Lists in an expression from the Cloudflare dashboard, see [_Use lists in expressions_](/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use IP Lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/cf-dashboard/rules-lists/use-lists-in-expressions).
 
-To refer to a rules list in a Cloudflare Filters API expression, see [_Values: Rules Lists_](/cf-firewall-language/values#rules-lists) in the Firewall Rules language reference.
+To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: IP Lists](/cf-firewall-language/values#ip-lists) in the Firewall Rules language reference.

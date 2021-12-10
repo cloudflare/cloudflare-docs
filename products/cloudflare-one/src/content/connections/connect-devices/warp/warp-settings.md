@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 6
 pcx-content-type: reference
 ---
 
@@ -26,7 +26,26 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 </div>
 </details>
 
-When the toggle is enabled, users will be able to make changes to the WARP client configuration if they have a one-time password. When the toggle is disabled, no one-time passwords are generated, and the users will not be able to change the client's configuration.
+<Aside type='note'>
+  
+This feature needs the <b>Switch Locked</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Teams dashboard.
+
+</Aside>
+
+When this toggle is **enabled**, you can provide end users with an one-time password that will allow them to toggle off the WARP client in case they need to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection). 
+
+When the toggle is **disabled**, one-time passwords will not be generated, and end users will not be able to toggle the client off when **Switch Locked* is true.
+
+You can also set a timeout to define how long the WARP client is allowed to be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect. 
+
+When you want to allow a user to disable the WARP client:
+
+1. Log in to the Teams Dashboard and ensure the **Admin override** toggle is enabled. 
+1. Retrieve the 7-digit override code for their device by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired device, and scrolling down to **User details**.
+1. Copy the code and share it with the end user for them to enter on their device.
+
+Users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and enter the override code in the pop-up window. The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
+
 
 ## Device enrollment permissions
 
@@ -99,3 +118,10 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
 1. Set the **Proxy** switch to *Enabled*.
+
+## Integrated experiences
+
+Cloudflare for Teams allows you to perform one-click actions to accelerate Office 365 traffic. Navigate to **Settings** > **Network** on the Teams dash and either:
+
+* **Create a Do Not Inspect policy** that bypasses inspection for Office 365 traffic. This policy uses the [domains and IP address specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service), and in addition to that, it uses our own Cloudflare’s intelligence to determine which traffic is part of this app type. 
+* **Exclude Office 365 Traffic** by adding your application’s IP address as a split tunnel entry. This uses the [IP addresses specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service).

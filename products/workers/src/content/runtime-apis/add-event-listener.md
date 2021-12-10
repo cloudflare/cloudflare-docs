@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 ## Background
 
-This function defines triggers for a Worker script to execute. There are currently two types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/runtime-apis/fetch-event) and `"scheduled"` listeners which are sent a [`ScheduledEvent`](/runtime-apis/scheduled-event).
+The `addEventListener` function defines triggers for a Worker script to execute. There are currently two types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/runtime-apis/fetch-event) and `"scheduled"` listeners which are sent a [`ScheduledEvent`](/runtime-apis/scheduled-event).
 
 ## Syntax
 
@@ -15,7 +15,7 @@ This function defines triggers for a Worker script to execute. There are current
 
 - <Code>addEventListener(type, listener)</Code> <Type>void</Type>
 
-  - If multiple `"fetch"` listeners are registered, when one doesn’t call [`event.respondWith()`](/runtime-apis/fetch-event#methods), the runtime delivers the event to the next registered listener.
+  - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/runtime-apis/fetch-event#methods), the runtime delivers the event to the next registered listener.
   - A `"fetch"` listener and a `"scheduled"` listener can be registered in the same script.
   - A script can have only one `"scheduled"` listener.
 
@@ -26,7 +26,7 @@ This function defines triggers for a Worker script to execute. There are current
 <Definitions>
 
 - `type` <Type>string</Type>
-  - Currently the only types supported are `"fetch"` and `"scheduled"`.
+  - The only types supported are `"fetch"` and `"scheduled"`.
 
 - `listener` <Type>function</Type>
   - The function to handle incoming events to the Worker script. The listener is passed a single argument:
@@ -35,7 +35,7 @@ This function defines triggers for a Worker script to execute. There are current
 
     - `event` <Type>FetchEvent</Type> or <Type>ScheduledEvent</Type>
 
-      - The events dispatched to a Worker. See [`FetchEvent`](/runtime-apis/fetch-event) or [`ScheduledEvent`](/runtime-apis/scheduled-event).
+      - The events dispatched to a Worker. Refer to [`FetchEvent`](/runtime-apis/fetch-event) or [`ScheduledEvent`](/runtime-apis/scheduled-event).
 
     </Definitions>
 

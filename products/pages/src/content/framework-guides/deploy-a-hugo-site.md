@@ -39,6 +39,13 @@ If you use the package manager [Chocolatey](https://chocolatey.org/), run the `c
 ```sh
 $ choco install hugo --confirm
 ```
+### Windows (Scoop)
+
+If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
+
+```sh
+$ scoop install hugo 
+```
 
 ### Manual installation
 

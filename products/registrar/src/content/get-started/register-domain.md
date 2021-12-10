@@ -29,20 +29,20 @@ The expiration date and price will update automatically based on the term select
 
   <TableWrap>
 
-  Field | Required? | Restrictions
-  ------|-----------|-------------
-  First Name | Yes | Minimum of two letters.
-  Last Name | Yes | Minimum of two letters.
-  Email | Yes | Must be a properly formatted email address.
-  Organization | No | Optional for most TLDs. In some cases, the Organization field may be populated by default with data from First and Last names.
-  Phone number | Yes | Must select a valid country code from the drop-down options. Only numbers will be accepted in the phone number field.
-  Ext | No | Only numbers may be entered.
-  Address 1 | Yes | May not be all numeric.
-  Address 2 | No | -
-  City | Yes | -
-  State | Yes | -
-  Country | Yes | You must select one from the drop-down options.
-  Postal Code | Yes | Must be a properly formatted postal code.
+  | Field | Required? | Restrictions |
+  | ------|-----------|------------- |
+  | First Name | Yes | Minimum of two letters. |
+  | Last Name | Yes | Minimum of two letters. |
+  | Email | Yes | Must be a properly formatted email address. |
+  | Organization | No | Optional for most TLDs. In some cases, the Organization field may be populated by default with data from First and Last names. |
+  | Phone number | Yes | Must select a valid country code from the drop-down options. Only numbers will be accepted in the phone number field. |
+  | Ext | No | Only numbers may be entered. |
+  | Address 1 | Yes | May not be all numeric. |
+  | Address 2 | No | - |
+  | City | Yes | - |
+  | State | Yes | - |
+  | Country | Yes | You must select one from the drop-down options. |
+  | Postal Code | Yes | Must be a properly formatted postal code. |
 
   </TableWrap>
 

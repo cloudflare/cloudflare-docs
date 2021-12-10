@@ -165,7 +165,7 @@ A technology which combines several different application login screens into one
 Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
 
 ## team name
-The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under the **Authentication** tab. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
+The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under **Settings** > **General**. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
 
 | team domain | team name |
 |-------------|-----------|

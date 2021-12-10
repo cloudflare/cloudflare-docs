@@ -46,15 +46,15 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | Feature                             | Support | Example                                                         | Notes                                                                                             |
 | ----------------------------------- | ------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code                                                            |
-| Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                                                                                   |
-| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | See [Splats](#splats)                                                                             |
-| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | See [Placeholders](#placeholders)                                                                 |
-| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                   |
-| Force                               | Yes     | `/workers/ /workers/index.html`                                 | Redirects are always followed, regardless of whether or not an asset matches the incoming request |
-| Proxying                            | No      | `/blog/* https://blog.my.domain/:splat 200`                     |                                                                                                   |
-| Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                   |
-| Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                                                                                   |
-| Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                                                                                   |
+| Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                                                                                    |
+| Splats                              | Yes     | `/blog/* /blog/:splat`                                          | See [Splats](#splats)                                                                              |
+| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | See [Placeholders](#placeholders)                                                                  |
+| Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                    |
+| Force                               | Yes     | `/pagethatexists /otherpage`                                    | Redirects are always followed, regardless of whether or not an asset matches the incoming request |
+| Proxying                            | No      | `/blog/* https://blog.my.domain/:splat 200`                     |                                                                                                    |
+| Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                    |
+| Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                                                                                    |
+| Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                                                                                    |
 
 </TableWrap>
 

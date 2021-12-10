@@ -99,11 +99,11 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1. Route the private IP addresses of your server’s network to Cloudflare, where:
 
-  * `10.0.0.0/10` is the IP or CIDR range of your server
+  * `10.0.0.0/8` is the IP or CIDR range of your server
   * `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
  
  ```sh
- $ cloudflared tunnel route ip add 10.0.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
+ $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
  ```
 
 1. Open your Teams dashboard to the **Gateway > Policies** tab.
@@ -119,8 +119,6 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
    ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
 
 1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
-
-   ![Split Tunnel](../static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/policies/filtering/network-policies).
 
