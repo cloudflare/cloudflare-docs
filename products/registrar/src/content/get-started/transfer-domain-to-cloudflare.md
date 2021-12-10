@@ -106,11 +106,17 @@ You can modify the contact information, if needed:
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
+### 8. Approve the transfer
 
-### 8. Approve the transfer with your previous registrar
+Once you have requested your transfer, Cloudflare will begin processing it, and send a Form of Authorization (FOA) email to the registrant, if the information is available in the public WHOIS database. The FOA is what authorizes the domain transfer. 
 
-Once you have requested your transfer, Cloudflare will begin processing it. Your previous registrar will email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current registrar dashboard.
+After this step, your previous registrar will also email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current registrar dashboard.
 
+<Aside type="note">
+
+Registrants transferring a `.us` domain will always receive a FOA email.
+
+</Aside>
 
 ## Transfer statuses
 
