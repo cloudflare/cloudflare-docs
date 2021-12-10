@@ -14,7 +14,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 ## Before you start
 
-* [Install](/connections/connect-apps/install-and-setup/installation).
+* [Install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
 * [Enable HTTP filtering](/policies/filtering/http-policies) by turning on the **Proxy** switch under **Settings** > **Network** > **L7 Firewall**.
 * [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Teams organization.
 * [Install the WARP client](/connections/connect-devices/warp) on the devices you want to allow into your network.
