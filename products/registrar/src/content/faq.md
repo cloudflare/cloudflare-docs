@@ -10,7 +10,7 @@ Below you will find answers to our most commonly asked questions on Cloudflare R
 
 * [Domain transfers](#domain-transfers)
 * [Domain registrations](#domain-registrations)
-* [.US connection requirements](#us-connection-requirements)
+* [Additional requirements for .US domains](#additional-requirements-for-us-domains)
 * [Billing](#billing)
 
 ## Domain transfers
@@ -90,7 +90,7 @@ In summary, here is what will happen after a domain expires:
 
 ---
 
-## .US connection requirements
+## Additional requirements for .US domains
 
 Registrants of `.us` domains must have a genuine connection to the United States as described in the [usTLD Nexus Policy](https://www.about.us/policies). When registering a domain name, registrants must identify the category under which they qualify for the usTLD Nexus Requirement:
 
