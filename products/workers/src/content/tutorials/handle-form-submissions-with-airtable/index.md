@@ -205,7 +205,7 @@ Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY o
 
 Before you continue, review the keys that you should have from Airtable:
 
-1. **Airtable Table Name:** the name for your table, e.g., "Form Submissions".
+1. **Airtable Table Name:** the name for your table, like "Form Submissions".
 2. **Airtable Base ID:** the alphanumeric base ID found at the top of your base's API page.
 3. **Airtable API Key:** the private API key found in example API requests on the Airtable API documentation page.
 
@@ -333,7 +333,7 @@ $ wrangler publish
  https://workers-airtable-form.cloudflare.workers.dev
 ```
 
-You will notice that your function is deployed to a unique URL—for instance, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute—the second part is the _path_ for our form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
+You will notice that your function is deployed to a unique URL — for instance, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the _path_ for our form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
 
 ```html
 <form action="https://workers-airtable-form.cloudflare.workers.dev/submit" method="POST" class="...">
