@@ -13,37 +13,46 @@ The GraphQL Analytics API is available to all Cloudflare users; however, users o
 
 Use the table below to identify which data nodes are included in your customer plan and the range of historical data you can query. For example, Free plans have access to the last 24 hours of `browserPerf1mGroups` data, while Enterprise plans have access to the last 30 days.
 
-<Aside type="info" header="Info">
+<Aside type="note">
 
-Access to Network Analytics <b>ipFlows</b> nodes is only available to Enterprise customers using Cloudflare <a href="https://www.cloudflare.com/magic-transit/">Magic Transit</a> or <a href="https://developers.cloudflare.com/spectrum/about/byoip">BYOIP for Spectrum</a>
+Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only available to Enterprise customers using Cloudflare [Magic Transit](https://www.cloudflare.com/magic-transit/) or Cloudflare [Spectrum](https://developers.cloudflare.com/spectrum/).
+
 </Aside>
 
 <TableWrap>
 
-| Data node                            |     Free |      Pro | Business | Enterprise |
-| :----------------------------------- | -------: | -------: | -------: | ---------: |
-| `browserPerf1mGroups`                | 24 hours |   7 days |  30 days |    30 days |
-| `firewallEventsAdaptiveByTimeGroups` |  14 days |  14 days |  30 days |    30 days |
-| `firewallEventsAdaptiveGroups`       |      n/a |   3 days |  30 days |    30 days |
-| `firewallEventsAdaptive`             |  14 days |  14 days |  30 days |    30 days |
-| `firewallRulePreviewGroups`          |      n/a |      n/a |      n/a |    30 days |
-| `healthCheckEventsGroups`            |      n/a |   3 days |  30 days |    90 days |
-| `healthCheckEvents`                  |      n/a |   3 days |  30 days |    90 days |
-| `httpRequests1dByColoGroups`         |      n/a |      n/a |      n/a |   365 days |
-| `httpRequests1dGroups`               | 365 days | 365 days | 365 days |   365 days |
-| `httpRequests1hGroups`               |   3 days |   7 days |  30 days |    90 days |
-| `httpRequests1mByColoGroups`         |      n/a |      n/a |      n/a |     7 days |
-| `httpRequests1mGroups`               |      n/a | 24 hours |   3 days |     7 days |
-| `ipFlows1mGroups`                    |      n/a |      n/a |      n/a |    30 days |
-| `ipFlows1hGroups`                    |      n/a |      n/a |      n/a |   6 months |
-| `ipFlows1dGroups`                    |      n/a |      n/a |      n/a |     1 year |
-| `ipFlows1mAttackGroups`              |      n/a |      n/a |      n/a |     1 year |
-| `loadBalancingRequestsGroups`        |      n/a |   3 days |  30 days |    30 days |
-| `loadBalancingRequests`              |      n/a |   3 days |  30 days |    30 days |
-| `synAvgPps1mGroups`                  |      n/a |      n/a |      n/a |     7 days |
-| `magicFirewallSamplesAdaptiveGroups` |      n/a |      n/a |      n/a |     7 days |
+| Data node                                     |     Free |      Pro | Business | Enterprise |
+| :-------------------------------------------- | -------: | -------: | -------: | ---------: |
+| `browserPerf1mGroups`                         | 24 hours |   7 days |  30 days |    30 days |
+| `dosdNetworkAnalyticsAdaptiveGroups`          |      n/a |      n/a |      n/a |    90 days |
+| `dosdAttackAnalyticsAdaptiveGroups`           |      n/a |      n/a |      n/a |    90 days |
+| `firewallEventsAdaptiveByTimeGroups`          |  14 days |  14 days |  30 days |    30 days |
+| `firewallEventsAdaptiveGroups`                |      n/a |   3 days |  30 days |    30 days |
+| `firewallEventsAdaptive`                      |  14 days |  14 days |  30 days |    30 days |
+| `firewallRulePreviewGroups`                   |      n/a |      n/a |      n/a |    30 days |
+| `flowtrackdNetworkAnalyticsAdaptiveGroups`    |      n/a |      n/a |      n/a |    90 days |
+| `healthCheckEventsGroups`                     |      n/a |   3 days |  30 days |    90 days |
+| `healthCheckEvents`                           |      n/a |   3 days |  30 days |    90 days |
+| `httpRequests1dByColoGroups`                  |      n/a |      n/a |      n/a |   365 days |
+| `httpRequests1dGroups`                        | 365 days | 365 days | 365 days |   365 days |
+| `httpRequests1hGroups`                        |   3 days |   7 days |  30 days |    90 days |
+| `httpRequests1mByColoGroups`                  |      n/a |      n/a |      n/a |     7 days |
+| `httpRequests1mGroups`                        |      n/a | 24 hours |   3 days |     7 days |
+| `ipFlows1mGroups`*                            |      n/a |      n/a |      n/a |    30 days |
+| `ipFlows1hGroups`*                            |      n/a |      n/a |      n/a |   6 months |
+| `ipFlows1dGroups`*                            |      n/a |      n/a |      n/a |     1 year |
+| `ipFlows1mAttackGroups`*                      |      n/a |      n/a |      n/a |     1 year |
+| `loadBalancingRequestsGroups`                 |      n/a |   3 days |  30 days |    30 days |
+| `loadBalancingRequests`                       |      n/a |   3 days |  30 days |    30 days |
+| `magicFirewallNetworkAnalyticsAdaptiveGroups` |      n/a |      n/a |      n/a |    90 days |
+| `magicFirewallSamplesAdaptiveGroups`          |      n/a |      n/a |      n/a |     7 days |
+| `magicTransitNetworkAnalyticsAdaptiveGroups`  |      n/a |      n/a |      n/a |    90 days |
+| `spectrumNetworkAnalyticsAdaptiveGroups`      |      n/a |      n/a |      n/a |    90 days |
+| `synAvgPps1mGroups`                           |      n/a |      n/a |      n/a |     7 days |
 
 </TableWrap>
+
+_* These nodes are deprecated. Refer to [Data Sets](/graphql-api/features/data-sets#deprecated-data-nodes) for more information._
 
 ### Query settings for account limits
 

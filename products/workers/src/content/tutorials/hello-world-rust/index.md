@@ -9,41 +9,38 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 # Hello World in Rust
 
-This tutorial will walk you through the steps of generating, building, previewing, configuring, and publishing
-a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
+In this tutorial, you will learn how to generate, build, preview, configure, and publish a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
 <TutorialsBeforeYouStart/>
 
 ## Generate
 
-Cloudflare's command-line tool for managing Workers projects, Wrangler, has great support for templates – pre-built collections of code that make it easy to get started writing Workers. We'll make use of the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
+Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
 
-In the command line, generate your Workers project by passing in a project name (we'll use rustwasm-markdown-parser), and the template URL to base your project on.
+In the command line, generate your Workers project by passing in a project name and the template URL to base your project on:
 
 ```sh
 ~ $ wrangler generate rustwasm-markdown-parser https://github.com/cloudflare/rustwasm-worker-template/
 ```
 
-This creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
+This command creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
 
-Wrangler templates are just Git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/templates), there's a ton of options to help you get started.
+Wrangler templates are Git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
 
 ## Workers Playground
 
-You can test how your Workers function will look when it's deployed by using the preview service, which you can access with the `preview` command:
+You can test how your Workers function will execute when it is deployed by using the [`dev` command](/cli-wrangler/commands#dev):
 
 ```sh
-rustwasm-markdown-parser $ wrangler preview --watch
+rustwasm-markdown-parser $ wrangler dev
 ```
 
-Using the `preview` command will open a browser tab with your Cloudflare Workers function loaded in the Cloudflare preview UI.
-
-The `--watch` flag for `preview` tells Wrangler to watch your Worker project for changes and update the preview tab live with the latest URL. Let's leave Wrangler running in `--watch` mode for now as we continue the tutorial.
+Using the `dev` command will establish a connection between localhost and an edge server that operates your Worker in development.
 
 ## Building
 
-Let's make our Workers function more interesting. We'll pull in a dependency from the `crates.io` ecosystem called `pulldown-cmark`.
-We'll add this to our `Cargo.toml`:
+Begin building your project by pulling in a dependency from the `crates.io` ecosystem called `pulldown-cmark`.
+Add the following content to your `Cargo.toml` file:
 
 ```toml
 ## Cargo.toml
@@ -52,8 +49,7 @@ We'll add this to our `Cargo.toml`:
 pulldown-cmark = "0.4.0"
 ```
 
-Now we'll leverage the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Let's change
-our `src/lib.rs` to look like this:
+Use the code in the `string-to-string` example from the `pulldown-cmark` GitHub repository. Change your `src/lib.rs` to look like this:
 
 ```rust
 ---
@@ -90,7 +86,7 @@ pub fn parse() -> String {
     let mut html_output: String = String::with_capacity(markdown_input.len() * 3 / 2);
     html::push_html(&mut html_output, parser);
 
-    // Check that the output is what we expected.
+    // Check that the output is what you expected.
     let expected_html: &str = "<p>Hello world, this is a <del>complicated</del> <em>very simple</em> example.</p>\n";
     assert_eq!(expected_html, &html_output);
 
@@ -98,7 +94,7 @@ pub fn parse() -> String {
 }
 ```
 
-Now we'll update our `worker/worker.js` to use the new code we've written:
+Update your `worker/worker.js` to use the new code:
 
 ```javascript
 addEventListener('fetch', (event) => {
@@ -125,20 +121,20 @@ If `wrangler dev` is running, you will see the output of your Rust program in yo
 
 ## Publish
 
-And with that, you're finished writing a Cloudflare Workers function with Rust-generated Wasm!
+At this point in the tutorial, you have finished writing a Cloudflare Workers function with Rust-generated Wasm.
 
-Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, we'll run `wrangler publish`, which will _build_ and _publish_ your code:
+Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
 ![Publish](./media/publish.gif)
 
 ## Resources
 
-In this tutorial, you built and published a Rust-generated WebAssembly serverless function that parses Markdown. If you'd like to see the full source code for this application, you can find it [on GitHub](https://github.com/granjef3/rustwasm-markdown-parser).
+In this tutorial, you built and published a Rust-generated WebAssembly serverless function that parses Markdown. If you would like to review the full source code for this application, you can find it [on GitHub](https://github.com/granjef3/rustwasm-markdown-parser).
 
-If you enjoyed this tutorial, we encourage you to explore our other tutorials for building on Cloudflare Workers:
+If you enjoyed this tutorial, below you can find other tutorials for building on Cloudflare Workers:
 
 - [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
 - [Build a JAMStack app](/tutorials/build-a-jamstack-app)
 - [Build a QR code generator](/tutorials/build-a-qr-code-generator)
 
-If you want to get started building your own projects, check out the quick-start templates we've provided in our [Starters](/starters).
+If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).

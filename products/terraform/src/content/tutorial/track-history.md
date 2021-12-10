@@ -67,14 +67,19 @@ First, create the GitHub repository to store the config. This can be done via th
 $ export GITHUB_USER=your-github-user
 $ export GITHUB_TOKEN=your-github-token
 
-$ export GITHUB_URL=$(curl -sSXPOST https://api.github.com/user/repos?access_token=$GITHUB_TOKEN -H 'Content-Type: application/json' \
--d '{"name": "cf-config", "private":"true"}' 2>/dev/null | jq -r .ssh_url)
+$ export GITHUB_URL=$(curl -H "Authorization: token $GITHUB_TOKEN" -d '{"name": "cf-config", "private": true}' "https://api.github.com/user/repos" 2> /dev/null | jq -r .ssh_url)
 
 $ echo $GITHUB_URL
 git@github.com:$GITHUB_USER/cf-config.git
 ```
 
 Next, initialize a git repository and make the first commit.
+
+<Aside type="note" header="Note:">
+
+You might need to [add your SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account). 
+  
+</Aside>
 
 ```sh
 $ git init

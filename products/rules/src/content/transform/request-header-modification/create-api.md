@@ -7,13 +7,13 @@ order: 2
 
 # Create an HTTP Request Header Modification Rule via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create HTTP Request Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. See [Request header modification examples](/transform/request-header-modification/examples) for examples of rule definitions.
+Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create HTTP Request Header Modification Rules via API. Define the header modification configuration in the `action_parameters` field. Refer to [Request header modification examples](/transform/request-header-modification/examples) for examples of rule definitions.
 
 When creating an HTTP Request Header Modification Rule via API, make sure you:
 
-* Set the rule action to `rewrite`
-* Define the [header modification parameters](/transform/request-header-modification/reference/parameters) in the `action_parameters` field according to the operation to perform (set or remove header)
-* Deploy the rule to the `http_request_late_transform` phase at the zone level
+* Set the rule action to `rewrite`.
+* Define the [header modification parameters](/transform/request-header-modification/reference/parameters) in the `action_parameters` field according to the operation to perform (set or remove header).
+* Deploy the rule to the `http_request_late_transform` phase at the zone level.
 
 ---
 

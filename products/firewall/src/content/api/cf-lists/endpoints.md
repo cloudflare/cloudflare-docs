@@ -10,13 +10,13 @@ To invoke a [Cloudflare Rules Lists API](https://api.cloudflare.com/#rules-lists
 
 `https://api.cloudflare.com/client/v4/`
 
-For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
 <Aside type='warning' header='Important'>
 
-The Rules Lists endpoints require a value for _{account_id}_.
+The Rules Lists API endpoints require a value for `{account_id}`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
@@ -70,11 +70,11 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 
 ## Manage items in a list
 
-Nearly all the operations for managing items in a Rules List are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
+Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
-Asynchronous Rules Lists operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get Bulk Operation](https://api.cloudflare.com/#rules-lists-get-bulk-operation) endpoint and specify the ID of the operation you want to monitor.
+Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get Bulk Operation](https://api.cloudflare.com/#rules-lists-get-bulk-operation) endpoint and specify the ID of the operation you want to monitor.
 
-When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an HTTP 201 status code.
+When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an `HTTP 201` status code.
 
 <TableWrap>
   <table style="table-layout:fixed; width:100%;">

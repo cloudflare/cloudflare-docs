@@ -56,9 +56,9 @@ async function readRequestBody(request) {
     return JSON.stringify(body)
   }
   else {
-    const myBlob = await request.blob()
-    const objectURL = URL.createObjectURL(myBlob)
-    return objectURL
+    // Perhaps some other type of data was submitted in the form
+    // like an image, or some other binary data. 
+    return 'a file';
   }
 }
 

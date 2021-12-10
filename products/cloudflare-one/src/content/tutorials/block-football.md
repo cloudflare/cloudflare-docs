@@ -31,8 +31,6 @@ In this mode, the Cloudflare WARP client runs on user devices and proxies all In
 
 To begin, navigate to the `Gateway` section of the Cloudflare for Teams dashboard and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/policies/filtering/http-policies#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
 
-![Policy Start](../static/secure-web-gateway/block-football/policy-start.png)
-
 Click **Create a policy** to add a new HTTP policy. Give the policy a name and description.
 
 Next, create a rule to block any subdomain that uses a particular host. This example uses `espn.com` as the host. The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host.
@@ -45,9 +43,7 @@ Next, create a rule to block any subdomain that uses a particular host. This exa
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
 
-![Block Action](../static/secure-web-gateway/block-football/block-espn-action.png)
-
-Click **Create policy** to save the rule.
+Next, click **Create policy** to save the rule.
 
 ![ESPN List](../static/secure-web-gateway/block-football/after-block-espn.png)
 
@@ -84,8 +80,6 @@ Once saved, the policy should now appear in your policy list.
 
 You can click the arrow in the policy list to expand a policy and quickly view its contents.
 
-![Policy Start](../static/secure-web-gateway/block-football/expand-list.png)
-
 ## Integrate your identity provider
 
 The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
@@ -97,8 +91,6 @@ Navigate to the `Settings` section of the Cloudflare for Teams dashboard and sel
 Next, build a rule to decide which devices can enroll in your account. 
 
 1. Navigate to **Settings > Devices > Device enrollment**.
-
-    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
 
 1. Click **Manage**.
 

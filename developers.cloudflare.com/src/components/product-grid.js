@@ -13,16 +13,19 @@ $["byoip"]                = require("@cloudflare/cloudflare-brand-assets/resourc
 $["cache"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cache.js").pathD
 $["cloudflare-for-teams"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-for-teams.js").pathD
 $["cloudflare-one"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/cloudflare-one.js").pathD
+$["ddos-protection"]      = require("../../../products/ddos-protection/src/content/icons/ddos-protection").pathD
 $["distributed-web"]      = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/distributed-web.js").pathD
+$["email-routing"]        = require("../../../products/email-routing/src/content/icons/email-routing").pathD
 $["firewall"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
-$["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
-$["image-resizing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/images.js").pathD
 $["fundamentals"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/fundamentals.js").pathD
+$["http3"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/http3.js").pathD
+$["images"]               = require("../../../products/images/src/content/icons/images").pathD
 $["load-balancing"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/load-balancing.js").pathD
 $["logs"]                 = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/logs.js").pathD
 $["magic-transit"]        = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-transit.js").pathD
 $["magic-firewall"]       = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/firewall.js").pathD
 $["magic-wan"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/magic-wan.js").pathD
+$["network-error-logging"] = require("../../../products/network-error-logging/src/content/icons/network-error-logging.js").pathD
 $["network-interconnect"] = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/network-interconnect.js").pathD
 $["pages"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/pages.js").pathD
 $["page-shield"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/page-shield.js").pathD
@@ -32,6 +35,7 @@ $["randomness-beacon"]    = require("@cloudflare/cloudflare-brand-assets/resourc
 $["registrar"]            = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/registrar.js").pathD
 $["rules"]                = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/rules.js").pathD
 $["ruleset-engine"]       = require("../../../products/ruleset-engine/src/content/icons/ruleset-engine").pathD
+$["security-center"]      = require("../../../products/security-center/src/content/icons/security-center").pathD
 $["spectrum"]             = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/spectrum.js").pathD
 $["ssl"]                  = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/ssl.js").pathD
 $["stream"]               = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/stream.js").pathD
@@ -42,6 +46,7 @@ $["waf"]                  = require("@cloudflare/cloudflare-brand-assets/resourc
 $["waiting-room"]         = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/waiting-room.js").pathD
 $["warp-client"]          = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/warp-client.js").pathD
 $["workers"]              = require("@cloudflare/cloudflare-brand-assets/resources/product-icons/workers.js").pathD
+$["zaraz"]                = require("../../../products/zaraz/src/content/icons/zaraz").pathD
 
 const products = [
   {
@@ -97,9 +102,26 @@ const products = [
     wrap: true,
   },
   {
+    title: "Cloudflare Fundamentals",
+    path: "fundamentals",
+    icon: "fundamentals",
+    wrap: true
+  },
+  {
+    title: "Cloudflare Image Optimization",
+    path: "images",
+    icon: "images",
+    wrap: true,
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",
+  },
+  {
+    title: "DDoS Protection",
+    path: "ddos-protection",
+    icon: "ddos-protection",
   },
   {
     title: "Distributed Web Gateway",
@@ -107,6 +129,11 @@ const products = [
     icon: "distributed-web",
     wrap: true,
   },
+{
+  title: "Email Routing",
+  path: "email-routing",
+  icon: "email-routing",
+},
   {
     title: "Firewall Rules",
     path: "firewall",
@@ -116,17 +143,6 @@ const products = [
     title: "HTTP/3",
     path: "http3",
     icon: "http3",
-  },
-  {
-    title: "Image Resizing",
-    path: "image-resizing",
-    icon: "image-resizing",
-  },
-  {
-    title: "Cloudflare Fundamentals",
-    path: "fundamentals",
-    icon: "fundamentals",
-    wrap: true
   },
   {
     title: "Load Balancing",
@@ -153,6 +169,12 @@ const products = [
     path: "magic-wan",
     icon: "magic-wan",
   },
+  {
+    title: "Network Error Logging",
+    path: "network-error-logging",
+    icon: "network-error-logging",
+    wrap: true,
+  }, 
   {
     title: "Network Interconnect",
     path: "network-interconnect",
@@ -199,6 +221,11 @@ const products = [
     title: "Ruleset Engine",
     path: "ruleset-engine",
     icon: "ruleset-engine",
+  },
+  {
+    title: "Security Center",
+    path: "security-center",
+    icon: "security-center",
   },
   {
     title: "Spectrum",
@@ -249,6 +276,11 @@ const products = [
     title: "Workers",
     path: "workers",
     icon: "workers",
+  },
+  {
+    title: "Zaraz",
+    path: "zaraz",
+    icon: "zaraz",
   },
 ]
 

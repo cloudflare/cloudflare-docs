@@ -1,7 +1,6 @@
 ---
 title: JSON object
 pcx-content-type: reference
-alwaysopen: true
 order: 781
 ---
 

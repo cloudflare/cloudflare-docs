@@ -17,9 +17,6 @@ These steps help you set up Centrify as your identity provider:
     ![Centrify Security Overview](../../static/documentation/identity/centrify/centrify-1.png)
 
 1. Click **Add Web Apps**.
-
-    ![Add Web Apps](../../static/documentation/identity/centrify/centrify-2.png)
-
 1. Select the **Custom** tab and click **Add OpenID Connect**.
 1. On the **Add Web App** screen click **Yes** to create an OpenID Connect application.
 

@@ -1,7 +1,6 @@
 ---
 title: Endpoints
 pcx-content-type: reference
-alwaysopen: true
 order: 782
 ---
 
@@ -24,7 +23,7 @@ PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint
 To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
 
 ```bash
-https://api.cloudflare.com/client/v4/
+https://api.cloudflare.com/client/v4
 ```
 
 For authentication instructions, see [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
@@ -41,7 +40,7 @@ To retrieve a list of zones you have access to, use the [List Zones](https://api
 
 </Aside>
 
-The Cloudflare Rulesets API supports the operations outlined below. Visit the associated links for examples.
+The Cloudflare Rulesets API supports the operations outlined below. Visit the associated links for API endpoints and examples.
 
 ## List and view rulesets
 

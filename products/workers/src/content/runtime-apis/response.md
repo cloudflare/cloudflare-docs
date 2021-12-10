@@ -93,9 +93,9 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
+- <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer).
+  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
 
 - <Code>formData()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">Promise{`<FormData>`}</TypeLink>
 

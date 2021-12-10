@@ -35,6 +35,8 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 For example, if the user's identity in your Okta or GSuite provider is `jdoe@example.com` then Access will look to match that identity to the Unix user `jdoe`.
 
+You can create a user entry with duplicate `uid`, `gid`, and home directory to link an identity to an existing user with a different username. You will need to create a password for it separately and add it to the same groups to replicate permissions.
+
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
 ```sh

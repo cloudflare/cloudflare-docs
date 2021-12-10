@@ -10,7 +10,6 @@ const getProduct = (name) => {
 
 const products = [
   "1.1.1.1",
-  "access",
   "analytics",
   "api",
   "byoip",
@@ -152,6 +151,14 @@ module.exports = {
         display: "minimal-ui",
         icon: "src/images/cloudflare-icon.png"
       }
+    },
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: "GTM-PKQFGQB",
+        dataLayerName: "cfDataLayer",
+        selfHostedOrigin: "https://tr.www.cloudflare.com"
+      },
     },
     // Consider enabling for PWA + offline functionality
     // https://gatsby.dev/offline

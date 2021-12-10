@@ -1,6 +1,6 @@
 ---
 order:
-pcx-content: how-to
+pcx-content-type: tutorial
 ---
 
 # DNS over Discord

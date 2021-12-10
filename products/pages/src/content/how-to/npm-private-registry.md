@@ -10,7 +10,7 @@ You will be be adjusting the [environment variables](/platform/build-configurati
 
 <Aside type="warning">
 
-**Important:** Be sure to trigger a new deployment after changing any settings.
+Be sure to trigger a new deployment after changing any settings.
 
 </Aside>
 
@@ -42,7 +42,7 @@ In your Pages project's **Settings** > **Environment variables**, add a new [env
 
 <Aside type="warning">
 
-**Important:** Add the `NPM_TOKEN` variable to both the **Production** and **Preview** environments.
+Add the `NPM_TOKEN` variable to both the **Production** and **Preview** environments.
 
 </Aside>
 
@@ -61,9 +61,9 @@ When multiple registries are in use, a project will need to define its own root-
 
 Here, all packages under the `@foobar` scope are directed towards the GitHub Packages registry. Then the registries are assigned their own access tokens via their respective environment variable names.
 
-<Aside>
+<Aside type="note">
 
-**Note:** You only need to define an Access Token for the npm registry (refer to `TOKEN_FOR_NPM` in our example) if it is hosting private packages that your application requires.
+You only need to define an Access Token for the npm registry (refer to `TOKEN_FOR_NPM` in the example) if it is hosting private packages that your application requires.
 
 </Aside>
 

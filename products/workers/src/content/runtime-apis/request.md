@@ -43,7 +43,7 @@ The global `fetch` method itself invokes the `Request` constructor. The [`Reques
 
 <Aside header="Learn more">
 
-Review [Understanding the FetchEvent Lifecycle](/learning/fetch-event-lifecycle) for a deeper understanding of these fundamental Workers concepts.
+Review the [`FetchEvent` documentation](/runtime-apis/fetch-event) for a deeper understanding of these fundamental Workers concepts.
 
 </Aside>
 
@@ -201,6 +201,10 @@ All plans have access to:
 
   - The organisation which owns the ASN of the incoming request, e.g. `Google Cloud`.
 
+- `botManagement` <Type>Object | null</Type>
+
+  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`. Refer to the [`Bot Management Variables`](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
+
 - `colo` <Type>string</Type>
 
   - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
@@ -208,6 +212,10 @@ All plans have access to:
 - `country` <Type>string | null</Type>
 
   - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
+
+- `isEUCountry` <Type>string | null</Type>
+
+  - If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
 
 - `httpProtocol` <Type>string</Type>
 
@@ -289,7 +297,7 @@ These methods are only available on an instance of a `Request` object or through
 
 - `arrayBuffer()` <Type>Promise&lt;ArrayBuffer></Type>
 
-  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer) representation of the request body.
+  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
 - `formData()` <Type>Promise&lt;FormData></Type>
 

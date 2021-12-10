@@ -1,27 +1,21 @@
 ---
 pcx-content-type: reference
 order: 787
+type: overview
 ---
 
 # Delete a rule in a ruleset
 
-Deletes a single rule in a ruleset.
+Deletes a single rule in a ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-```bash
----
-header: Account-level endpoint
----
-DELETE /accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id}
-```
+| Operation | Method + Endpoint |
+|-----------|-------------------|
+| [Delete an individual rule][dr-account] (account) | `DELETE /accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
+| Delete an individual rule (zone) | `DELETE /zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id}` |
 
-```bash
----
-header: Zone-level endpoint
----
-DELETE /zones/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id}
-```
+[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-an-individual-rule
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 
@@ -29,22 +23,25 @@ If the delete operation succeeds, the API method call returns a `200 OK` HTTP st
 
 The following example deletes rule `{rule-id-1}` belonging to ruleset `{ruleset-id}`.
 
+<details open>
+<summary>Request</summary>
+<div>
+
 ```json
----
-header: Request
----
 curl -X DELETE \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id-1}"
+  -H "X-Auth-Email: user@example.com" \
+  -H "X-Auth-Key: REDACTED" \
+  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/rules/{rule-id-1}"
 ```
 
-The response includes the complete ruleset after deleting the rule.
+</div>
+</details>
+
+<details>
+<summary>Response</summary>
+<div>
 
 ```json
----
-header: Response
----
 {
   "result": {
     "id": "{ruleset-id}",
@@ -72,3 +69,8 @@ header: Response
   "messages": []
 }
 ```
+
+</div>
+</details>
+
+The response includes the complete ruleset after deleting the rule.

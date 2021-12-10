@@ -47,6 +47,7 @@ Osaka | [Equinix OS1 - Osaka](https://www.peeringdb.com/fac/1791)
 Singapore | [Equinix SG1 - Singapore](https://www.peeringdb.com/fac/282)
 Tokyo | [Equinix TY1 - Tokyo](https://www.peeringdb.com/fac/168)
 Tokyo | [Equinix TY2 - Tokyo](https://www.peeringdb.com/fac/452)
+Tokyo | [AT TOKYO (CC1/CC2)](https://www.peeringdb.com/fac/738)
 | **Australia** |
 Sydney | [Equinix SY1/SY2 - Sydney](https://www.peeringdb.com/fac/131)
 | **Europe** |

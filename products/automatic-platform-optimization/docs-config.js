@@ -24,7 +24,7 @@ module.exports = {
     algoliaOptions: { 'facetFilters': '["project:automatic-platform-optimization"]'}
   },
   siteMetadata: {
-    title: "Cloudflare Automatic Platform Optimization",
+    title: "Cloudflare Automatic Platform Optimization docs",
     description: "With Automatic Platform Optimization, Cloudflare serves your entire site from our edge network, ensuring customers see improved performance when visiting your site.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/automatic-platform-optimization",

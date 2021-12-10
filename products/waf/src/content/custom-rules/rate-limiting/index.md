@@ -1,11 +1,11 @@
 ---
 pcx-content-type: concept
-order: 1
+order: 2
 ---
 
 # Rate Limiting rules
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
 This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
 

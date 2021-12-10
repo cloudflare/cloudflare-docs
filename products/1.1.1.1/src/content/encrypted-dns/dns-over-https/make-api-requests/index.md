@@ -1,7 +1,7 @@
 ---
-order: 1
-pcx-content: reference
 title: Make API requests to 1.1.1.1
+order: 1
+pcx-content-type: reference
 ---
 
 # Make API requests to 1.1.1.1 over DoH
@@ -24,7 +24,7 @@ When making requests using `GET`, the DNS query is encoded into the URL. An addi
 
 If you use JSON format, set `application/dns-json` URL parameter, and if you use DNS wireformat, use `application/dns-message` as either the URL parameter of `ct` or a `Content-Type` header for `POST` requests.
 
-See also curl examples for [UDP wireformat](/encrypted-dns/dns-over-https/dns-wireformat) and [JSON](/encrypted-dns/dns-over-https/json).
+See also curl examples for [UDP wireformat](/encrypted-dns/dns-over-https/make-api-requests/dns-wireformat) and [JSON](/encrypted-dns/dns-over-https/make-api-requests/dns-json).
 
 ## Send multiple questions in a query
 
@@ -50,11 +50,11 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 
 <TableWrap>
 
-HTTP Status | Meaning
-------------|-----------
-400         | DNS query not specified or too small.
-413         | DNS query is larger than maximum allowed DNS message size.
-415         | Unsupported content type.
-504         | Resolver timeout while waiting for the query response.
+| HTTP Status | Meaning |
+| ------------|----------- |
+| 400         | DNS query not specified or too small. |
+| 413         | DNS query is larger than maximum allowed DNS message size. |
+| 415         | Unsupported content type. |
+| 504         | Resolver timeout while waiting for the query response. |
 
 </TableWrap>

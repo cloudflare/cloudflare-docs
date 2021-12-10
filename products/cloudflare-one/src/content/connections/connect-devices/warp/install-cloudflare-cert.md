@@ -1,9 +1,15 @@
 ---
-order: 3
+order: 2
 pcx-content-type: how-to
 ---
 
 # Install the Cloudflare certificate
+
+<Aside type='note'>
+ 
+This procedure is only required to enable specific Cloudflare for Teams features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
+ 
+</Aside>
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
@@ -22,10 +28,22 @@ To verify your download, check that the certificate's thumbprint matches:
 ```txt
 BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 ```
+```
+➜  ~ openssl x509 -noout -fingerprint -sha1 -inform der -in <Cloudflare_CA.crt>
+SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
+➜  ~ openssl x509 -noout -fingerprint -sha1 -inform pem -in <Cloudflare_CA.pem>
+SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
+```
 
 #### SHA256
 ```txt
 F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
+```
+```
+➜  ~ openssl x509 -noout -fingerprint -sha256 -inform der -in <Cloudflare_CA.crt>
+sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
+➜  ~ openssl x509 -noout -fingerprint -sha256 -inform pem -in <Cloudflare_CA.pem>
+sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
 ```
 
 ## Add the certificate to your system
@@ -354,7 +372,17 @@ The command below will set the `cafile` configuration to use the Cloudflare cert
 
 ### Google Cloud SDK
 
-The command below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
+
+```
+curl -O https://curl.se/ca/cacert.pem
+
+cat cacert.pem >> ca.pem
+
+cat Cloudflare_CA.pem >> ca.pem
+
+gcloud config set core/custom_ca_certs_file /Users/mgusev/ca.pem
+```
 
  ```
  gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
@@ -363,3 +391,8 @@ The command below will set the Google Cloud SDK to use the Cloudflare certificat
 ### AWS CLI
 
 If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+
+
+## IntelliJ IDEA
+
+Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)

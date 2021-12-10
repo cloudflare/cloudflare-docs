@@ -49,14 +49,14 @@ Then run `wrangler --version` to confirm that the installation was successful:
 
 ```sh
 $ wrangler --version
-👷 ✨  wrangler 1.12.2
+👷 ✨  wrangler 1.19.4
 ```
 
 --------------------------------
 
 ## 3. Configure the Workers CLI
 
-With installation complete, `wrangler` will need access to a Cloudflare API token to manage Workers resources on your behalf.
+With installation complete, `wrangler` will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
 
 Run the command `wrangler login`, which will automate this process.
 
@@ -66,10 +66,10 @@ Wrangler will attempt to automatically open your web browser to complete the log
 $ wrangler login
 Allow Wrangler to open a page in your browser? [y/n]
 y
-💁  Opened a link in your default browser: https://dash.cloudflare.com/wrangler?key=girjeanvioajsdn...
+💁  Opened a link in your default browser: https://dash.cloudflare.com/oauth2/...
 ```
 
-Open the browser, log into your account, and select **Authorize Wrangler**. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 --------------------------------
 
@@ -103,7 +103,7 @@ Refer to the [Quick Starts](/get-started/quickstarts) page to see a complete lis
 For example, to build a Workers project in TypeScript, run:
 
 ```sh
-~/ $ wrangler generate my-typescript-worker https://github.com/EverlastingBugstopper/worker-typescript-template
+~/ $ wrangler generate my-typescript-worker https://github.com/cloudflare/worker-typescript-template
 ```
 
 To start a project from your own code — rather than a starter — use [`wrangler init`](/cli-wrangler/commands#init).
@@ -121,7 +121,7 @@ Fundamentally, a Workers application consists of two parts:
 1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
 2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This [dispatches a `FetchEvent`](/learning/fetch-event-lifecycle) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
+When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/runtime-apis/fetch-event) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
 ```js
 ---

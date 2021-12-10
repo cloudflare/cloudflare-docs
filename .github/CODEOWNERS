@@ -1,9 +1,6 @@
 # 1.1.1.1
 products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
-# Access
-products/access/ @cloudflare/access-docs @cloudflare/PCX
-
 # Analytics
 products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
 
@@ -31,11 +28,17 @@ products/cloudflare-one/ @cloudflare/PCX
 # Developers homepage
 developers.cloudflare.com/ @cloudflare/PCX
 
+# DDoS Protection
+products/ddos-protection/ @cloudflare/PCX
+
 # Distributed Web
 products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
 products/docs-engine/ @cloudflare/PCX
+
+# Email Routing
+products/email-routing/ @cloudflare/PCX
 
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
@@ -49,8 +52,8 @@ products/fundamentals/ @cloudflare/PCX
 # HTTP/3
 products/http3/ @ConzorKingKong @cloudflare/PCX
 
-# Image Resizing
-products/images/ @kornel @cloudflare/PCX
+# Cloudflare Images
+products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
 # Load Balancing
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
@@ -85,6 +88,12 @@ products/registrar/ @cloudflare/PCX
 # Rules
 products/rules/ @cloudflare/PCX
 
+# Ruleset Engine
+products/ruleset-engine/ @cloudflare/PCX
+
+# Security Center
+products/security-center/ @cloudflare/PCX
+
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
 
@@ -114,3 +123,6 @@ products/warp-client/ @cloudflare/PCX
 
 # Workers
 products/workers/ @cloudflare/workers-docs @cloudflare/PCX
+
+# Zaraz
+products/zaraz/ @cloudflare/PCX

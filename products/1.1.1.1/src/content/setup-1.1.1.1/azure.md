@@ -1,9 +1,10 @@
 ---
 order:
-pcx-content: how-to
+title: Azure
+pcx-content-type: how-to
 ---
 
-# Azure
+# Set up 1.1.1.1 - Azure
 
 Follow these steps to configure 1.1.1.1:
 

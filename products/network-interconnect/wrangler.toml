@@ -1,7 +1,7 @@
 name = "network-interconnect"
 type = "webpack"
-account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 workers_dev = true
+account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
 
 [env.production]
 workers_dev = false

@@ -5,9 +5,9 @@ pcx-content-type: concept
 
 # Environments
 
-<Aside>
+<Aside type="note">
 
-__Note__: You can only use environments with [wrangler](/cli-wrangler).
+You can only use environments with [wrangler](/cli-wrangler).
 
 </Aside>
 
@@ -318,7 +318,7 @@ workers_dev = true
 type = "rust"
 ```
 
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env production` setting.
+With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
 
 ### Same name for multiple environments
 

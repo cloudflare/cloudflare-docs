@@ -9,7 +9,7 @@ To define a WAF exception via API, create a rule with `skip` action in a [phase 
 
 To configure the WAF exception, define the `action_parameters` object according to the [exception type](/managed-rulesets/waf-exceptions#types-of-waf-exceptions).
 
-Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare.com/ruleset-engine/add-rule-phase-rulesets) for more information on adding rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
+Refer to [Add rules to phase entry point rulesets](https://developers.cloudflare.com/ruleset-engine/basic-operations/add-rule-phase-rulesets) for more information on adding rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
 
 <Aside type="note" header="Rule execution order">
 

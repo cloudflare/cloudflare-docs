@@ -89,14 +89,14 @@ The Firewall Rules language [operators](/cf-firewall-language/operators) do not 
 * `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
 * `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
-## Rules Lists
+## IP Lists
 
-[Rules Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
+[IP Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
 
-To refer to a Rules List in a firewall rules expression, use _$<list_name>_ and specify the `in` [operator](/cf-firewall-language/operators). This example expression filters requests from IP addresses that are in a Rules List named _office_network_:
+To refer to an IP List in a firewall rule expression, use `$<list_name>` and specify the `in` [operator](/cf-firewall-language/operators). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-Note that names for Rules Lists can only include lowercase letters, numbers and the underscore (`_`) character. For guidance on creating and managing lists, see [_Use Rules Lists: Manage Lists_](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).
+Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Use IP Lists: Manage Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).

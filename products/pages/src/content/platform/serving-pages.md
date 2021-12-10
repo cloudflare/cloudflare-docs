@@ -22,4 +22,16 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 ## Caching and performance
 
-Pages includes good caching defaults. That means that every time you deploy an asset to Pages, it remains cached on the Cloudflare CDN until your next deploy. As much as possible, Pages sets `ETag` and `If-None-Match` headers to allow clients to also cache content in their browsers — for more details on these behaviors, refer to the MDN [HTTP Caching page](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching). Pages will also serve Gzip and Brotli responses whenever possible.
+Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. Therefore, you should avoid setting Page Rules or custom caching on your site. 
+
+<Aside type="note" header="Purging the cache">
+
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served."
+
+</Aside>
+
+For browser caching, Pages always sends `Etag` headers for `200 OK` responses, which the browser then returns in an `If-None-Match` header on subsequent requests for that asset. Pages compares the `If-None-Match` header from the request with the `Etag` it's planning to send, and if they match, Pages instead responds with a `304 Not Modified` that tells the browser it's safe to use what is stored in local cache.
+
+Pages currently returns `200` responses for HTTP range requests; however, the team is working on adding spec-compliant `206` partial responses.
+
+Pages will also serve Gzip and Brotli responses whenever possible.

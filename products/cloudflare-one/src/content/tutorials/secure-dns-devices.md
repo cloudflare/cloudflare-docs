@@ -59,8 +59,6 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1. Navigate to **Settings > Devices > Device enrollment**.
 
-    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
-
 1. Click **Manage**.
 
 1. Click **Add a rule**.

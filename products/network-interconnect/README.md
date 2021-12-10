@@ -1,4 +1,4 @@
-# Cloudflare Network Interconnect docs
+# Cloudflare Network Interconnect
 
 [View docs →](https://developers.cloudflare.com/network-interconnect)
 

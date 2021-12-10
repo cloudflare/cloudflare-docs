@@ -34,7 +34,7 @@ To set cache TTL by response status, [create a Page Rule](/how-to/create-page-ru
 ```json
 curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/pagerules" \     
 -H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: ${CF_AUTH_KEY} \
+-H "X-Auth-Key: ${CF_AUTH_KEY}" \
 -H "Content-Type: application/json" \
 --data '{
   "targets": [

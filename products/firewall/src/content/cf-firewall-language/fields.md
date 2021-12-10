@@ -25,9 +25,11 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - The Cloudflare Firewall Rules language does not support the `slice` operator.
 
-<Aside type='note'>
+<Aside type='note' header="Availability notes">
 
-Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+* Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+
+* Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
 </Aside>
 
@@ -193,6 +195,39 @@ The Cloudflare Firewall Rules language supports these standard fields:
       </td>
    </tr>
    <tr>
+      <td valign="top"><code>ip.src.lat</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the latitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">37.78044</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>ip.src.lon</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the longitude associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">-122.39055</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>ip.src.city</code><br /><Type>String</Type></td>
+      <td>
+         <p>Represents the city associated with the client IP address.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">San Francisco</code>
+         </p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr>
       <td valign="top"><code>ip.geoip.asnum</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
@@ -325,7 +360,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.verified_bot</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.client.bot</code>.
           </p>
         </td>
     </tr>
@@ -342,7 +377,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
     <tr>
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.bot_management.verified_bot</code>.</p>
         </td>
     </tr>
     <tr>
@@ -489,7 +524,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.len</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The length of the packet. <br />
+         The length of the packet including the header. <br />
          Example value:
          <code class="InlineCode">60</code>
         </td>
@@ -817,6 +852,23 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
          </p>
          <p>When <code class="InlineCode">true,</code> <code class="InlineCode">http.request.headers</code>, <code class="InlineCode">http.request.headers.names</code>, and <code class="InlineCode">http.request.headers.values</code> may not contain all of the headers sent in the HTTP request.
          </p>
+      </td>
+   </tr>
+   <tr id="field-http-request-accepted_languages">
+      <td valign="top"><code>http.request.accepted_languages</code><br /><Type>Array&lt;String&gt;</Type></td>
+      <td>
+         <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/cf-firewall-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
+         <p>Example 1:<br/>
+         Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
+         <code class="InlineCode">http.request.accepted_languages[0] == "fr-CH"</code><br/>
+         <code class="InlineCode">http.request.accepted_languages == ["fr-CH", "en", "fr", "de"]</code>
+         </p>
+         <p>Example 2:<br/>
+         Request without an <code class="InlineCode">Accept-Language</code> HTTP header and a URI of <code class="InlineCode">https://www.example.com/my-path</code>. In this case:<br/>
+         <code class="InlineCode">concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"</code>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
       </td>
    </tr>
 </table>
