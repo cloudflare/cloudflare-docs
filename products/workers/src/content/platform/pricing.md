@@ -15,13 +15,13 @@ All included usage is on a monthly basis.
 
 <TableWrap>
 
-|                      | Free plan                    | Paid Plan - Unbound                                          | Paid plan - Bundled          |
-| -------------------- | ---------------------------- | ------------------------------------------------------------ | ---------------------------- |
-| Requests             | 100,000 / day                | 1 million, + $0.15/million                                   | 10 million, +$0.50/million   |
-| Duration             | 10ms CPU time / invocation   | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>            | 50 ms CPU time / invocation  |
+|                      | Free plan                    | Paid Plan - Bundled                                          | Paid plan - Unbound                              |
+| -------------------- | ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+| Requests             | 100,000 / day                | 10 million, +$0.50/million                                  | 1 million, + $0.15/million                        |
+| Duration             | 10ms CPU time / invocation   | 50 ms CPU time / invocation                                  | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>|
   
 </TableWrap>
-
+ 
 1. Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
 2. Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
