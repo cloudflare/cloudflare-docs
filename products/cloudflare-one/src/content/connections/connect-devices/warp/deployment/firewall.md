@@ -8,7 +8,7 @@ pcx-content-type: reference
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
 ## Client Orchestration API
-The WARP client talks with our edge outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
+The WARP client talks with our edge outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address through your firewall and/or create a bypass rule if you are doing any TLS interceptoin:
 
  - IPv4 API Endpoint: `162.159.192.1`
 
@@ -16,12 +16,18 @@ The WARP client talks with our edge outside the tunnel for operations like regis
   The Orchestration API endpoint is currently shared with our Consumer WARP Client. In early 2022 we will be splitting this out to its own dedicated IP address.
 </Aside>
 
+## Gateway DoH IP
+All DNS traffic is sent via HTTPS to the following addresses even when running in WARP mode. You must allow the following addresses through your firewall and/or create a bypass rule if you are doing any TLS interceptoin:
+
+ - IPv4 DoH Endpoint: `162.159.36.1`
+ - IPv6 DoH Endpoint: `2606:4700:4700::1111`
+
 ## WARP Ingress IP
 These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
 - IPv4 Range: `162.159.193.0/24`
 - IPv6 Range: `2606:4700:100::/48`
 
-## UDP Ports
+## WARP UDP Ports
 WARP utilizes UDP for all of its communications. By default, the UDP Port required for WARP is: UDP 2408. WARP can fallback to: UDP 500, UDP 1701, or UDP 4500.
 
 ## Creating firewall rules
