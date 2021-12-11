@@ -27,7 +27,7 @@ The API expects endpoint parameters in the GET request query string.  See the ex
 `logs/received`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>]
+https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
 ```
 
 `logs/rayids/<rayid>`
@@ -48,6 +48,7 @@ The following table describes the parameters available:
 | <em>sample</em> | <p>- Return only a sample of records</p> <p>- Do not include if returning all records</p> <p>- Value can range from 0.001 to 1.0 (inclusive)</p> <p>- <em>sample=0.1</em> means return 10% (1 in 10) of all records</p> <p>- Results are random; therefore, different numbers of results for repeated requests are likely</p> | /logs/received | No |
 | <em>fields</em> | <p>- Comma-separated list of fields to return</p> <p>- If empty, the default list is returned</p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
 | <em>timestamps</em> | <p>- Format in which timestamp fields will be returned</p> <p>- Value options are: <em>unixnano</em> (default), <em>unix</em>, <em>rfc3339</em></p> <p>- Timestamps retuned as integers for <em>unix</em> and <em>unixnano</em> and as strings for <em>rfc3339</em></p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
+| <em>CVE-2021-44228</em> | <p>- Optional redaction for [CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228).  This option will replace every occurrence of the string `${` with `x{`.</p> <p> Example: `CVE-2021-44228=true` </p> | <p>/logs/received</p> | No |
 
 </TableWrap>
 
