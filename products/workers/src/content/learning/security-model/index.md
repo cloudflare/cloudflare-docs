@@ -19,7 +19,7 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 
 ## Architectural overview
 
-Begining with a quick overview of the Workers runtime architecture:
+Beginning with a quick overview of the Workers runtime architecture:
 
 <div className="security-page-workers-architecture-diagram">
 
@@ -135,7 +135,7 @@ The industry encounters new Spectre attacks. Every couple months, researchers un
 
 But is it enough to merely deploy the latest patches?
 
-More vulnerabilities exist but have not yet been publicized. To defend against Spectre, Cloudflare needed to take a different approach. It is not enough to block individual known vulnerabilities. Instead, entire classes of vulnerabilties must be addressed at once.
+More vulnerabilities exist but have not yet been publicized. To defend against Spectre, Cloudflare needed to take a different approach. It is not enough to block individual known vulnerabilities. Instead, entire classes of vulnerabilities must be addressed at once.
 
 ### Building a defense
 

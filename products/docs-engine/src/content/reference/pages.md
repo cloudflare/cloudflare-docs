@@ -5,7 +5,7 @@ pcx-content-type: configuration
 
 # Pages
 
-By default, Markdown (MDX) files placed inside the `src/content` directory (or `src/content` [prefixed by `contentRepoFolder`](/reference/configuration#properties)) will automatically be turned into a page (a built HTML file) and added to the main navigation (sidebar on desktop, overlayed menu on mobile).
+By default, Markdown (MDX) files placed inside the `src/content` directory (or `src/content` [prefixed by `contentRepoFolder`](/reference/configuration#properties)) will automatically be turned into a page (a built HTML file) and added to the main navigation (sidebar on desktop, overlaid menu on mobile).
 
 The Cloudflare Docs Engine renders pages with [MDX](https://mdxjs.com/).
 

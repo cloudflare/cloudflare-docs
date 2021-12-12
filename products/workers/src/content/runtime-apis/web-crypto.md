@@ -313,8 +313,8 @@ __Footnotes:__
 1. <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
 * Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
 * Unlike NodeJS, we will not support "raw" import of private keys.
-* Since this algorithm is non-standard, the implementation may change over time. While we cannot guarantee it at this time, we will strive to maintain backward compatabilityand compatability with NodeJS's behavior.
-Any notable compatability notes will be communicated in release notes and via this developer document.
+* Since this algorithm is non-standard, the implementation may change over time. While we cannot guarantee it at this time, we will strive to maintain backward compatabilityand compatibility with NodeJS's behavior.
+Any notable compatibility notes will be communicated in release notes and via this developer document.
 2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard, but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
 
 --------------------------------

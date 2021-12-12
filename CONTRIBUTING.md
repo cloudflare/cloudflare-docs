@@ -30,4 +30,4 @@ Before proposing significant changes, open an issue so that we can discuss your 
     * Add any other information you think is helpful or needs addressed. If your PR fixes an open issue, indicate that your PR is addressing the issue and provide a link to the issue.
  
 A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
- If a pull request is not approved, the “wont fix” label is applied and a comment is added to explain why the pull request was closed.
+ If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.

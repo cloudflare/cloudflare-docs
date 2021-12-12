@@ -66,7 +66,7 @@
 ## 7/16/2021
 
 - Workers can now make up to 1000 subrequests to Durable Objects from a within a single request invocation, up from the prior limit of 50.
-- Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusal or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
+- Major changes to Durable Objects implementation, the details of which will be the subject of an upcoming blog post. In theory, the changes should not harm existing apps, except to make them faster. Let your account team know if you observe anything unusual or report your issue in the [Workers Discord](https://discord.gg/cloudflaredev).
 - Durable Object constructors may now initiate I/O, such as `fetch()` calls.
 - Added Durable Objects `state.blockConcurrencyWhile()` API useful for delaying delivery of requests and other events while performing some critical state-affecting task. For example, this can be used to perform start-up initialization in an object’s constructor.
 - In Durable Objects, the callback passed to `storage.transaction()` can now return a value, which will be propagated as the return value of the `transaction()` call.
@@ -174,7 +174,7 @@ Changes this week:
 
 New this week:
 - V8 has been updated from 8.8 to 8.9.
-- During a `fetch()`, if the destination server commits certain HTTP protocol errors, such as returning invalid (unparseable) headers, we now throw an exception whose description explains the problem, rather than an “internal error”.
+- During a `fetch()`, if the destination server commits certain HTTP protocol errors, such as returning invalid (unparsable) headers, we now throw an exception whose description explains the problem, rather than an “internal error”.
 
 New last week (forgot to post):
 - Added support for `waitUntil()` in Durable Objects. It is a method on the state object passed to the Durable Object class’s constructor.

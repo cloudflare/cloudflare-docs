@@ -31,7 +31,7 @@ Cloudflare advertises all of its prefixes over the CNI, but the process occurs o
 
 <Aside type="note">
 
-Why does my CNI need to accept all of Cloudflare's prefixes? Accepting all of Cloudflare's prefixes ensures your CNI is fully utilized, and traffic routed from PoPs back to the CNI is secure, fast, and realiable.
+Why does my CNI need to accept all of Cloudflare's prefixes? Accepting all of Cloudflare's prefixes ensures your CNI is fully utilized, and traffic routed from PoPs back to the CNI is secure, fast, and reliable.
 
 </Aside>
 
