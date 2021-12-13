@@ -35,9 +35,19 @@ Once your monitor is created, you need to attach it to an origin pool:
 1. On a specific pool, click **Edit**.
 1. Update the following information:
 
-    - **Monitor**: Select your monitor.
-    - **Health Check Regions:** Specifies geographic regions from which Cloudflare should send health check requests. Because of [how monitors check pool health](/understand-basics/health-details#how-an-origin-becomes-unhealthy), selecting multiple regions could increase the load on your servers.
-    - **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
+  - **Monitor**: Select your monitor.
+  - **Health Check Regions:** Specifies geographic regions from which Cloudflare should send health check requests. Because of [how monitors check pool health](/understand-basics/health-details#how-an-origin-becomes-unhealthy), selecting multiple regions could increase the load on your servers.
+    
+<Aside type="note">
+    
+**Note**:  
+Difference between selecting the **All Data Center vs All regions** for the Health Check Region.
+- All datacenters will send requests from over 200+ colos and therefore has an understanding about the entire state of the world. 
+- All regions will kick off probes from our 13 regions and sends 39 requests, for example choosing three main colos per region can calculate quorum and ensure the correct status is communicated. 
+    
+</Aside>
+
+   - **Notification E-mail:** Contains email addresses that receive notifications (individual, mailing list address, PagerDuty address).
 
 1. Click **Save**. The status of your health check will be _unknown_ until the results of the first check are available.
 
