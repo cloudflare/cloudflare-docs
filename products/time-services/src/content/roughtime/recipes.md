@@ -99,7 +99,7 @@ when your clock is skewed. On Ubuntu GNU/Linux, you can do something like this:
 ```
 skew := time.Duration(math.Abs(float64(delta)))
 if skew > 10*time.Second {
-  summmary := "Check your clock!"
+  summary := "Check your clock!"
   body := fmt.Sprintf("%s says it's off by %v.", servers[0].Name, skew)
   cmd := exec.Command("notify-send", "-i", "clock", summary, body)
   if err := cmd.Run(); err != nil {

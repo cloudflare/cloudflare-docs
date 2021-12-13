@@ -42,7 +42,7 @@ This field is only required to enforce DNS policies when deploying the client in
 | ----- | -------- |
 | `service_mode` | string |
 
-**Description.** 	Allows you to choose the opertional mode of the client.
+**Description.** 	Allows you to choose the operational mode of the client.
 
 **Value:**
 - `1dot1` Gateway enforcement of DNS policies only through [DoH](/glossary#doh). All other traffic is handled by your devices default mechanisms
@@ -125,7 +125,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | ----- | -------- |
 | `auth_client_id` | string |
 
-**Description.** The automatically genereated ID when you created your [Service Token](/identity/service-auth/service-tokens).
+**Description.** The automatically generated ID when you created your [Service Token](/identity/service-auth/service-tokens).
 
 **Value:** `Client ID` from your service token. 
 
@@ -135,7 +135,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | ----- | -------- |
 | `auth_client_secret` | string |
 
-**Description.** The automatically genereated secret when you created your [Service Token](/identity/service-auth/service-tokens).
+**Description.** The automatically generated secret when you created your [Service Token](/identity/service-auth/service-tokens).
 
 **Value:** `Client Secret` from your service token. 
 

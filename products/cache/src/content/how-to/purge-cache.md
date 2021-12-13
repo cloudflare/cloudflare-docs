@@ -147,7 +147,7 @@ There are several limitations regarding purge by prefix:
 - [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
 - URI query strings & fragments cannot purge by prefix: 
   - `www.example.com/foo?a=b` (query string)
-  - `www.exmaple.com/foo#bar` (fragment)
+  - `www.example.com/foo#bar` (fragment)
 
 <Aside type="warning" header="Warning">
 

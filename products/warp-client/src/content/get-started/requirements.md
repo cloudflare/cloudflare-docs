@@ -7,7 +7,7 @@ type: overview
 
 # Installation requirements
 
-Bellow, you will find the system requirements for the operating systems supported by WARP.
+Below, you will find the system requirements for the operating systems supported by WARP.
 
 <TableWrap>
 

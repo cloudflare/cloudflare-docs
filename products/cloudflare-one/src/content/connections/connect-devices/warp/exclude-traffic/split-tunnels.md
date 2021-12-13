@@ -30,7 +30,7 @@ To set up Split Tunnels:
  
 1. Under **Split Tunnels**, select the mode you want to choose.
 
-    * **(default) Exclude IPs and domains**. All traffic will be sent to Cloudflare Gateway ecept for the IPs and domains you specify.
+    * **(default) Exclude IPs and domains**. All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
     * **Include IPs and Domains**. Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
 1. If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
