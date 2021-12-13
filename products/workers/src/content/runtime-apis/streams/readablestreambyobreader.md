@@ -10,7 +10,7 @@ pcx-content-type: configuration
 
 ## Background
 
-`BYOB` is an abbreviation of "bring your own buffer." A `ReadableStreamBYOBReader` allows reading into a developer-supplied buffer, thus minimizing copies.
+`BYOB` is an abbreviation of bring your own buffer. A `ReadableStreamBYOBReader` allows reading into a developer-supplied buffer, thus minimizing copies.
 
 An instance of `ReadableStreamBYOBReader` is functionally identical to [`ReadableStreamDefaultReader`](/runtime-apis/streams/readablestreamdefaultreader) with the exception of the `read` method.
 
@@ -29,6 +29,10 @@ const reader = readable.getReader({ mode: "byob" })
 
   - Returns a promise with the next available chunk of data read into a passed-in buffer.
 
+- <Code>readAtLeast(minBytes, buffer<ParamType>ArrayBufferView</ParamType>)</Code> <TypeLink href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">Promise&lt;ReadableStreamBYOBReadResult></TypeLink>
+
+  - Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read. 
+
 </Definitions>
 
 ## Common issues
@@ -37,13 +41,13 @@ const reader = readable.getReader({ mode: "byob" })
 
   `read` provides no control over the minimum number of bytes that should be read into the buffer. Even if you allocate a 1MiB buffer, the kernel is perfectly within its rights to fulfill this read with a single byte, whether or not an EOF immediately follows.
 
-  In practice, we have found that `read` typically fills only 1% of the provided buffer.
+  In practice, the Workers team has found that `read` typically fills only 1% of the provided buffer.
 
-  Workers team is considering implementing or proposing a change to the Streams API to allow users to specify `minBytes` that should be read into the buffer before resolving the read.
+  `readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read.
 
   </Aside>
 
-## See also
+## Related resources
 
-- [Using Streams.](/learning/using-streams)
-- [Background about BYOB readers in the Streams API WHATWG specification.](https://streams.spec.whatwg.org/#byob-readers)
+- [Using Streams](/learning/using-streams)
+- [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)
