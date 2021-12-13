@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: reference
 ---
 
-# CLI configurations
+# CLI configuration
 
 Command-line flags let you configure properties across origins in the same `cloudflared`. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/ingress) in your configuration file.
 
