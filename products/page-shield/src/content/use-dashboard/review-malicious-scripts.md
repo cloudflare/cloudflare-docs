@@ -19,7 +19,7 @@ To review the scripts considered malicious:
 1. Go to **Firewall** > **Page Shield**.
 1. Under **Script Monitor**, click **Details** for each script considered malicious. The script details will contain:
 
-    * **Malicious Code**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
+    * **Malicious content**: Whether Cloudflare's internal systems consider the script malicious or not, and what is the score of the current script version (1-99).
     * **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
     * **Malicious Domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
 
