@@ -172,6 +172,10 @@ Response
 }
 ```
 
+## Custom fields
+
+You can add custom fields to your HTTP request log entries in the form of HTTP request headers, HTTP response headers, and cookies. Custom fields configuration applies to all the Logpush jobs in an account or zone that use the HTTP requests data set. To learn more, refer to [Configure custom fields](/reference/logpush-api-configuration/custom-fields).
+
 ## Audit
 
 The following actions are recorded in **Cloudflare Audit Logs**: create, update, and delete job.
