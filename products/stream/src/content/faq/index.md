@@ -15,6 +15,10 @@ pcx-content-type: faq
 
 Cloudflare decides on which bitrate, resolution, and codec is best for you. We deliver all videos to industry standard H264 codec. We use a few different adaptive streaming levels from 360p to 1080p to ensure smooth streaming for your audience watching on different devices and bandwidth constraints.
 
+## Does Stream support multi-audio tracks?
+
+Stream does not currently support multi-audio tracks.
+
 ### Can I download original video files from Stream?
 
 You cannot download the *exact* input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](https://developers.cloudflare.com/stream/viewing-videos/download-videos) feature to get encoded MP4s for use cases like offline viewing.
