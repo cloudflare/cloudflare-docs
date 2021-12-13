@@ -16,7 +16,7 @@ Cloudflare Zaraz offers system properties that you can use when configuring the 
 
 | Property | Type | Description |
 | ---------|------| ------------ |
-| `system.page.query`| `object` | Returns URL query params from the `document.location`. |
+| `system.page.query.QUERY_PARAM`| `string` | Returns the value of a URL query parameter. Replace QUERY_PARAM with the name of your parameter. |
 | `system.page.title`| `string` | Returns the page title. |
 | `system.page.url.search`| `string` | Returns search parameters provided, beginning with the leading `?` character. |
 | `system.page.url.pathname`| `string` | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment. |
@@ -28,7 +28,7 @@ Cloudflare Zaraz offers system properties that you can use when configuring the 
 | `system.page.url.protocol`| `string` | Returns the protocol scheme of the URL, including the final `:`. |
 | `system.page.url.origin`| `string` | Returns the origin of the URL, that is its scheme, its domain and its port. |
 | `system.page.url.href`| `string` | Returns the origin of the URL, that is its scheme, its domain and its port. |
-| `system.page.url.baseDomain`| `string` | Returns ?????????????????????????????????????????????????????????????????????????????????????. |
+| `system.page.url.baseDomain`| `string` | Returns the base domain part of the URL, without any subdomains. |
 | `system.page.referrer`| `string` | Returns the page referrer from `document.referrer`. |
 | `system.page.encoding`| `string` | Returns the document character encoding from `document.characterSet`. |
 | `system.cookies.NAME_OF_COOKIE`| `object` | Returns cookies obtained from the browser `document`. |
