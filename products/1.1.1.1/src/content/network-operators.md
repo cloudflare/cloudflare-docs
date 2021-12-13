@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: reference
 ---
 
-# Network Operators
+# Network operators
 
 Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/setup-1.1.1.1) and [1.1.1.1 for Families](/1.1.1.1-for-families) in place of operating their own recursive DNS infrastructure.
 
