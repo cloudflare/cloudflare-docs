@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 // In root product-icons folder, SVG files will be generated from the docs-config.js folder from each product
-// To regenerate icons: npm run generate:icons
+// To regenerate icons: yarn generate:icons
 
 if (!fs.existsSync(path.join(__dirname, "./product-icons", "utf8"))) {
   fs.mkdirSync("./product-icons", { recursive: true }, (err) => {
