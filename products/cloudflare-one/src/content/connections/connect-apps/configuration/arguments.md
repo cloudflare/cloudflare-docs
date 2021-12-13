@@ -3,7 +3,17 @@ order: 2
 pcx-content-type: reference
 ---
 
-# Arguments
+# CLI configurations
+
+CLI flags let you configure properties across origins in the same `cloudflared`. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/ingress) in your configuration file.
+
+For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
+
+```bash
+$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
+```
+
+The following is a list of CLI flags you can use to configure your tunnels:
 
 - [`config`](#config)
 - [`ingress`](#ingress)
@@ -11,7 +21,6 @@ pcx-content-type: reference
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
-- [`no-tls-verify`](#no-tls-verify)
 - [`metrics`](#metrics)
 - [`metrics-update-freq`](#metrics-update-freq)
 - [`tag`](#tag)
@@ -40,7 +49,6 @@ Refer to the [Ingress Rules docs](/connections/connect-apps/configuration/ingres
 ## `originRequest`
 
 Configures how `cloudflared` will send requests to your local services.
-Refer to the [Origin Configuration docs](/connections/connect-apps/configuration/ingress#origin-configurations) for details.
 
 ## `autoupdate-freq`
 
@@ -65,15 +73,6 @@ Disables periodic check for updates, restarting the server with the new version.
 | `origincert value` | `~/.cloudflared/cert.pem` | `TUNNEL_ORIGIN_CERT` |
 
 Specifies the Tunnel certificate for one of your zones, authorizing the client to serve as an origin for that zone. A certificate is required to use Cloudflare Tunnel. You can obtain a certificate by using the login command or by visiting `https://dash.cloudflare.com/argotunnel`.
-
-## `no-tls-verify`
-
-| Syntax | Default |
-|--|--|
-| `no-tls-verify` | `false` |
-
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
-The connection from your machine to Cloudflare's Edge is still encrypted and verified using TLS.
 
 ## `grace-period`
 
