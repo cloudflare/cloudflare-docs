@@ -1,7 +1,6 @@
 module.exports = {
     product: "DNS",
     pathPrefix: "/dns",
-    productLogoPathD: require('./src/content/icons/dns').pathD,
     contentRepo: "cloudflare/cloudflare-docs",
     contentRepoFolder: "products/dns",
     externalLinks: [{
