@@ -17,7 +17,7 @@ Cloudflare decides on which bitrate, resolution, and codec is best for you. We d
 
 ## Does Stream support multi-audio tracks?
 
-Stream does not currently support multi-audio tracks.
+Stream does not currently support multi-audio tracks. For files with multiple audio tracks, Stream uses the first available audio track.
 
 ### Can I download original video files from Stream?
 
