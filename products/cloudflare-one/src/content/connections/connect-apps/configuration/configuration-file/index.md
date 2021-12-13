@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-# Configuration file (YAML)
+# Configuration file
 
 <Aside type="note">
 
