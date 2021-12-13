@@ -6,9 +6,9 @@ type: overview
 
 <ContentColumn>
 
-# Accessing User Properties 
+# Accessing user and system properties 
 
-Cloudflare Zaraz offers system properties that you can use when configuring the dashboard. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Here is a full list of the System properties, how can you access them, and their values:
+Cloudflare Zaraz offers user and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Here is a list of user and system properties, how can you access them, and their values:
 
 </ContentColumn>
 
