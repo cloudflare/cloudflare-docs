@@ -56,7 +56,7 @@ The [Cache API](/runtime-apis/cache) can be thought of as an ephemeral key-value
 There are two types of cache namespaces available to the Cloudflare Cache:
 
 - __`caches.default`__ – You can access the default cache (the same cache shared with `fetch` requests) by accessing `caches.default`. This is useful when needing to override content that is already cached, after receiving the response.
-- __New namespaces__ – You can access a namespaced cache (separate from the cache shared with `fetch` requests) using `let cache = await caches.open(CACHE_NAME)`. This can be useful when writing new content to the cache, for example, after running a more compute heavy operation such as parsing HTML or running a computation, to store them locally in the colocation and readily access them on the following request, rather having to rerun the same operation. Note that [`caches.open`](https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/open) is an async function, unlike `caches.default`.
+- __`caches.open()`__ – You can access a namespaced cache (separate from the cache shared with `fetch` requests) using `let cache = await caches.open(CACHE_NAME)`. Note that [`caches.open`](https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/open) is an async function, unlike `caches.default`.
 
 
 When to use the Cache API:
