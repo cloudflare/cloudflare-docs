@@ -41,7 +41,6 @@ warp-routing:
 ### Ingress rules
 
 Once your top-level configuration is complete, you can begin addressing origin-specific configurations. By writing ingress rules in the configuration file, you can specify which local services a request should be proxied to.
-s
 Refer to the [ingress rules page](/connections/connect-apps/configuration/configuration-file/ingress) for more information on writing ingress rules and how they work.
 
 ## Creating a configuration file
