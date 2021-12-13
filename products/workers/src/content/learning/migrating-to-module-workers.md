@@ -39,7 +39,7 @@ addEventListener("fetch", (event) => {
 Module Workers replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
 
 ```javascript
-export default = {
+export default {
   fetch(request) {
     const base = "https://example.com";
     const statusCode = 301;
