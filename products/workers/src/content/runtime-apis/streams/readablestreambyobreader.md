@@ -49,5 +49,5 @@ const reader = readable.getReader({ mode: "byob" })
 
 ## Related resources
 
-- [Using Streams.](/learning/using-streams)
-- [Background about BYOB readers in the Streams API WHATWG specification.](https://streams.spec.whatwg.org/#byob-readers)
+- [Using Streams](/learning/using-streams)
+- [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)
