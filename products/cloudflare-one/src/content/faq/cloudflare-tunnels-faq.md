@@ -92,7 +92,7 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 
 * Take note of any specific error messages and/or problematic behaviors.
 
-* Take note of any options you specified, either on the CLI or in your configuration file, when starting your tunnel.
+* Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
 * Set [`log-level`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/arguments#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
