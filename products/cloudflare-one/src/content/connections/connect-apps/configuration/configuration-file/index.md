@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-# YAML configuration
+# Configuration file (YAML)
 
 <Aside type="note">
 
@@ -21,16 +21,13 @@ The structure of a configuration file will be different depending on the type of
 
 ### Top-level configurations
 
-When creating a configuration file, you have the option to  is best practice to  first keys will likely be `tunnel` and `credentials-file`. Whether you are exposing an application or a network on the Internet, it is common to list these keys as the first ones in your configuration file:
+When creating a configuration file, it is best practice to list `tunnel` and `credentials-file` as your first key/value pairs. Whether you are exposing an application or a network on the Internet, it is common to list these keys as the first ones in your configuration file:
 
-* **Exposing an application**:
 
 ```txt
 tunnel: The tunnel UUID
 credentials-file: /path/your-tunnels-credentials-file.json
 ```
-
-* **Exposing a private network**:
 
 If you’re [exposing a private network](/connections/connect-apps/configuration/private-networks), you need to add the `warp-routing` key and set it to `true`:
 

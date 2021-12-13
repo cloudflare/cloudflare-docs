@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # CLI configurations
 
-CLI flags let you configure properties across origins in the same `cloudflared`. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/ingress) in your configuration file.
+Command-line flags let you configure properties across origins in the same `cloudflared`. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/ingress) in your configuration file.
 
 For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
 
@@ -13,11 +13,13 @@ For example, the following command will run the `mytunnel` tunnel by proxying tr
 $ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
 ```
 
-The following is a list of CLI flags you can use to configure your tunnels:
+The following is a list of common CLI flags you can use to configure your tunnels. For a complete list of flags, run:
+
+```bash
+$ cloudflared tunnel help
+```
 
 - [`config`](#config)
-- [`ingress`](#ingress)
-- [`originRequest`](#originrequest)
 - [`autoupdate-freq`](#autoupdate-freq)
 - [`no-autoupdate`](#no-autoupdate)
 - [`origincert`](#origincert)
@@ -40,15 +42,6 @@ The following is a list of CLI flags you can use to configure your tunnels:
 | `config value` | `~/.cloudflared/config.yml` |
 
 Specifies the path to a config file in YAML format.
-
-## `ingress`
-
-Configures which local services `cloudflared` will proxy incoming requests to.
-Refer to the [Ingress Rules docs](/connections/connect-apps/configuration/ingress) for details.
-
-## `originRequest`
-
-Configures how `cloudflared` will send requests to your local services.
 
 ## `autoupdate-freq`
 

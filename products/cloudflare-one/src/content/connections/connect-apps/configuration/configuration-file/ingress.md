@@ -129,7 +129,7 @@ ingress:
   # responds with HTTP 404).
   - service: http_status:404
 ```
-To set both top-level configurations and origin-specific configurations, you can use the following properties:
+To set both top-level configurations and origin-specific configurations, you can use the following properties within  `originRequest` rules:
 
 - [connectTimeout](#connecttimeout)
 - [tlsTimeout](#tlstimeout)
