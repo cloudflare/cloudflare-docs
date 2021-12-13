@@ -5,20 +5,16 @@ pcx-content-type: reference
 
 # Ingress rules
 
-You can configure ingress rules to proxy traffic from multiple hostnames to multiple services using a single instance of `cloudflared` and a single Tunnel.
-
 Each incoming request received by `cloudflared` causes `cloudflared` to send a request to a local service.
-By configuring **ingress rules** in the [configuration file](/connections/connect-apps/configuration/configuration-file), you can specify which local services a request should be proxied to.
+By configuring ingress rules in the [configuration file](/connections/connect-apps/configuration/configuration-file), you can specify which local services a request should be proxied to.
 
 You can define ingress rules in the configuration file.
 
 ## Requirements
 
-Configuration files that contain ingress rules must always include a catch-all rule that concludes the ingress file.
+Configuration files that contain ingress rules must always include a catch-all rule that concludes the file.
 
-In the following example, `- service: http_status:404` serves as the catch-all rule for the file.
-
-The file also includes the Tunnel UUID, path to the credentials file, and two ingress rules. The Tunnel UUID or name can alternatively be specified in the `tunnel run` command, and the path to the credentials file can be excluded if it is located at the default file path.
+In the following example, `- service: http_status:404` serves as the catch-all rule for the file. The file also includes the Tunnel UUID, the path to the credentials file, and two ingress rules. Alternatively, the Tunnel UUID or name can be specified in the `tunnel run` command.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -104,46 +100,16 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | Hello World | Test server for validating your Cloudflare Tunnel setup. | `hello_world` |
 | HTTP status | Responds to all requests with the given HTTP status. | `http_status:404` |
 
-## Single-service configuration
+## Origin configuration
 
-If you need to proxy traffic to only one local service, you can do so using the config file. As an alternative, you can set up single-service configurations using command-line flags.
+If you need to proxy traffic to multiple origins within one instance of `cloudflared`, you can define the way `cloudflared` sends requests to each service by specifying configuration options as part of your ingress rules.
 
-This is an example of a single service configured on the command line:
-
-```bash
-$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
-```
-
-## Validating your configuration
-
-To validate the ingress rules in your configuration file, run:
-
-```bash
-$ cloudflared tunnel ingress validate
-```
-
-This will ensure that the set of ingress rules specified in your config file is valid.
-
-## Testing your configuration
-
-To verify that `cloudflared` will proxy the right traffic to the right local service, use `cloudflared tunnel ingress rule`. This checks a URL against every rule, from first to last, and shows the first rule that matches. For example:
-
-```bash
-$ cloudflared tunnel ingress rule https://foo.example.com
-Using rules from /usr/local/etc/cloudflared/config.yml
-Matched rule #3
-	hostname: *.example.com
-	service: https://localhost:8000
-```
-
-## Advanced configurations
-
-You can define the way that `cloudflared` sends requests to each service by specifying additional configuration options. The following example sets a 30-second connection timeout for all services except for one.
+In the following example, the top-level configuration `connectTimeout: 30s` sets a 30-second connection timeout for all services within that instance of `cloudflared`. The ingress rule for `service: localhost:8002` then configures an exception to the top-level configuration by setting `connectTimeout` for that service at `10s`. The 30-second connection timeout still applies to all other services.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
 credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
-originRequest: # Root-level configuration
+originRequest: # Top-level configuration
   connectTimeout: 30s
 
 ingress:
@@ -163,8 +129,7 @@ ingress:
   # responds with HTTP 404).
   - service: http_status:404
 ```
-
-You can use the following configuration options inside of an ingress rule.
+To set both top-level configurations and origin-specific configurations, you can use the following properties within  `originRequest` rules:
 
 - [connectTimeout](#connecttimeout)
 - [tlsTimeout](#tlstimeout)
@@ -271,3 +236,25 @@ This configures what type of proxy will be started. Valid options are:
 
  - `""` for the regular proxy
  - `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
+
+## Validating your configuration
+
+To validate the ingress rules in your configuration file, run:
+
+```bash
+$ cloudflared tunnel ingress validate
+```
+
+This will ensure that the set of ingress rules specified in your config file is valid.
+
+## Testing your configuration
+
+To verify that `cloudflared` will proxy the right traffic to the right local service, use `cloudflared tunnel ingress rule`. This checks a URL against every rule, from first to last, and shows the first rule that matches. For example:
+
+```bash
+$ cloudflared tunnel ingress rule https://foo.example.com
+Using rules from /usr/local/etc/cloudflared/config.yml
+Matched rule #3
+	hostname: *.example.com
+	service: https://localhost:8000
+```
