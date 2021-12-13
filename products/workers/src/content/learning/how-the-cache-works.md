@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # How the Cache works
 
-Workers was designed and built on top of Cloudflare's edge network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, colocation-local storage, as a convenient way to frequently access static or dynamic content.
+Workers was designed and built on top of Cloudflare's edge network to allow developers to interact directly with the Cloudflare cache. The cache can provide ephemeral, data center-local storage, as a convenient way to frequently access static or dynamic content.
 
 By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare’s CDN. To learn about the benefits of caching, refer to the Learning Center’s article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
