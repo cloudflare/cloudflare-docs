@@ -1,9 +1,9 @@
 ---
-order: 8
+order: 5
 pcx-content-type: reference
 ---
 
-# Network Operators
+# Network operators
 
 Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/setup-1.1.1.1) and [1.1.1.1 for Families](/1.1.1.1-for-families) in place of operating their own recursive DNS infrastructure.
 
@@ -43,7 +43,7 @@ Families (Adult Content + Malware) | 1.1.1.3 / 1.0.0.3  | `https://family.cloudf
 
 </TableWrap>
 
-You may wish to provide end-users options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](https://developers.cloudflare.com/1.1.1.1/1.1.1.1-for-families) endpoints.
+You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/1.1.1.1-for-families) endpoints.
 
 ## Rate Limiting
 
