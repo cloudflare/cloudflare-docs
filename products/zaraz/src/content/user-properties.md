@@ -2,6 +2,7 @@
 order: 4
 pcx-content-type: reference
 type: overview
+title: Access properties
 ---
 
 <ContentColumn>
