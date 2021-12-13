@@ -47,7 +47,7 @@ An example PROXY Protocol line for an IPv6 address would look like:
 
 When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
 
-When UDP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend the first UDP datagram on a stream with a PROXY Protcol binary header.
+When UDP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend the first UDP datagram on a stream with a PROXY Protocol binary header.
 
 ### The Proxy Protocol v2 Header
 

@@ -13,7 +13,7 @@ Advanced Certificate Manager offers a flexible and customizable way to issue and
 
 <Aside type="note" header="Note">
 
-Advanced certificates supercede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
+Advanced certificates supersede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
 
 </Aside>
 

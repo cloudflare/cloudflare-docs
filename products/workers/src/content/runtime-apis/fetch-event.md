@@ -206,7 +206,7 @@ The `passThroughOnException` command prevents a runtime error response when the 
 
 To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
 
-With the Service Worker format, `passThroughOnException` is added to the `FetchEvent` interface, making it availabled within the `event`.
+With the Service Worker format, `passThroughOnException` is added to the `FetchEvent` interface, making it available within the `event`.
 
 With the Module Worker format, `passThroughOnException` is available on the `context` parameter object.
 

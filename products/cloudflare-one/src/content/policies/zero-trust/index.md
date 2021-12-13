@@ -93,7 +93,7 @@ Here is a list of all the criteria you can apply:
 
 ## Order of execution
 
-Policies are evaluted based on their action type and ordering. Bypass and Service Auth policies are evaluated first based on their order. Then, Block and Allow policies are evaluated based on their order.
+Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first based on their order. Then, Block and Allow policies are evaluated based on their order.
 
 For example, if you have a list of policies that reflects the following:
 

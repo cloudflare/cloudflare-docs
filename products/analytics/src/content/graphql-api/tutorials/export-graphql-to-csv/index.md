@@ -10,7 +10,7 @@ Produced CSV could be easily ingested by tools like [Splunk][6] for further
 visualization and usage.
 
 Therefore, this example queries the `ipFlows1mAttacksGroups` [data set][1],
-which containes minutely aggregates of Network Analytics attack activity.
+which contains minutely aggregates of Network Analytics attack activity.
 
 <Aside type="warning">
 

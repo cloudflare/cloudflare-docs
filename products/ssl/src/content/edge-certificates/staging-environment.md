@@ -42,7 +42,7 @@ You should confirm whether:
 
 ### Step 3 — Push certificate to production
 
-Asssuming there are no issues, push your custom (modern) certificate to your production environment:
+Assuming there are no issues, push your custom (modern) certificate to your production environment:
 
 1. Navigate to **SSL/TLS** > **Staging Certificates**.
 1. Click a custom certificate.

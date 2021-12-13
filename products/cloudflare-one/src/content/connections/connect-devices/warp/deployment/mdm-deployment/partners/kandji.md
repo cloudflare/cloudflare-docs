@@ -188,7 +188,7 @@ else
         # Check to see if the installed_version is less than the enforced_version. If it is then
         # exit 1 to initiate the installation process.
         if [[ "$installed_version" -lt "$enforced_version" ]]; then
-            echo "Installed app version $installed_version less than enforced verison $ENFORCED_VERSION"
+            echo "Installed app version $installed_version less than enforced version $ENFORCED_VERSION"
             echo "Starting the app install process ..."
             exit 1
 

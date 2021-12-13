@@ -26,7 +26,7 @@ Prior to setting up DNS Firewall, you need:
 1. Click **Add Firewall Cluster**.
 1. Fill out the required fields, including:
     - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
-    - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propogate.
+    - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
     - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks.
 1. Click **Continue**.
 1. On the following screen, save the values for **Your new DNS Firewall IP Addresses**.

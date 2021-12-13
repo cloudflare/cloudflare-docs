@@ -78,7 +78,7 @@ The `--loglevel` flag indicates the logging level, which can be one of {`debug`,
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
 
 ### Check location of credentials file
-If you encouter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
+If you encounter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
 
 ```sh
 $ cloudflared tunnel run
