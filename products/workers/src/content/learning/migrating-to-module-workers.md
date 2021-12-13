@@ -43,7 +43,7 @@ export default {
   fetch(request) {
     const base = "https://example.com";
     const statusCode = 301;
-    
+
     const destination = new URL(request.url, base);
     return Response.redirect(destination.toString(), statusCode);
   },
@@ -57,14 +57,14 @@ Workers often need access to data not in the `request` object. For example, some
 This example code:
 
 ```javascript
-async function handler(event) {
+async function triggerEvent(event) {
   // Fetch some data
   console.log("cron processed", event.scheduledTime);
 }
 
 // Initialize Worker
 addEventListener("scheduled", (event) => {
-  event.waitUntil(handler(event));
+  event.waitUntil(triggerEvent(event));
 });
 ```
 
