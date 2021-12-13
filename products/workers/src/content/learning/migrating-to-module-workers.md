@@ -52,7 +52,7 @@ export default {
 
 ## Accessing event or context data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#waituntil) to delay execution. Module workers can access `waitUntil` vida the `context` parameter. For a list of Module worker parameters, see [this list](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters).
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/runtime-apis/fetch-event#waituntil) to delay execution. Module workers can access `waitUntil` vida the `context` parameter. For a list of Module worker parameters, see [this list](/runtime-apis/fetch-event#parameters).
 
 This example code:
 
