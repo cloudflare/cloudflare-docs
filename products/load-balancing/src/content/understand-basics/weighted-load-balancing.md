@@ -33,7 +33,7 @@ If an origin is used in multiple pools and has multiple weights assigned, the to
 
 When enabled, [session affinity](../session-affinity) can affect traffic distribution since established sessions are not reset when origin weights are modified.
 
-When using [DNS-only load balancing](../proxy-status#gray-clouded-dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.
+When using [DNS-only load balancing](/understand-basics/proxy-modes#gray-clouded-dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.
 
 ---
 
