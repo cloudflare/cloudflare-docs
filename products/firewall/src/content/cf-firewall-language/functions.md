@@ -56,10 +56,10 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>ends_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - Returns `true` when a source string ends with a given substring. Returns `false` otherwise.
+  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
   - _Example:_<br />
-    `ends_with("/welcome.html", ".html") == true`
+    If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
     <Aside type='warning'>
 
@@ -123,10 +123,10 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
 - <code>starts_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - Returns `true` when a source string starts with a given substring. Returns `false` otherwise.
+  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
   - _Example:_<br />
-    `starts_with("/blog/first-post", "/blog") == true`
+    If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
     <Aside type='warning'>
 
