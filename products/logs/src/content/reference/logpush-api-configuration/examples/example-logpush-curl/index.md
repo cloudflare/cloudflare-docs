@@ -305,3 +305,73 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
       "error_message": null
     },
 ```
+
+## Step 6 - Updating `logpull_options`
+
+If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current `logpull_options` for your zone.
+
+```bash
+curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
+    -H 'X-Auth-Key: <YOUR_AUTH_KEY>' \
+    -H 'X-Auth-Email: <YOUR_EMAIL>' | jq .
+```
+
+### Response 
+
+```json
+{
+    "errors": [],
+    "messages": [],
+    "result": {
+        "id": 146,
+        "dataset": "http_requests",
+        "logstream": true,
+        "frequency": "high",
+        "kind": "",
+        "enabled": true,
+        "name": "<DOMAIN_NAME>",
+        "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+        "destination_conf": "s3://<BUCKET_PATH_HTTP_REQUESTS>?region=us-west-2",
+        "last_complete": "2021-12-14T19:56:49Z",
+        "last_error": null,
+        "error_message": null
+    },
+    "success": true
+}
+```
+
+Next, edit the `logpull_options` as desired and create a `PUT` request. The following example enables the `CVE-2021-44228` redaction CVE-2021-44228 option.
+
+```bash
+curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/${ZONE_TAG}/logpush/jobs/${JOB_ID}/' \
+    -H 'X-Auth-Key: <YOUR_AUTH_KEY>' \
+    -H 'X-Auth-Email: <YOUR_EMAIL>' \
+    -H 'Content-Type: application/json' \
+    --data-raw '{
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true"
+}'
+```
+
+### Response 
+
+```json
+{
+    "errors": [],
+    "messages": [],
+    "result": {
+        "id": 146,
+        "dataset": "http_requests",
+        "logstream": true,
+        "frequency": "high",
+        "kind": "",
+        "enabled": true,
+        "name": null,
+        "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true",
+        "destination_conf": "s3://<BUCKET_PATH_HTTP_REQUESTS>?region=us-west-2",
+        "last_complete": "2021-12-14T20:02:19Z",
+        "last_error": null,
+        "error_message": null
+    },
+    "success": true
+}
+```
