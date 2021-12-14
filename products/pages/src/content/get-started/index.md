@@ -93,19 +93,23 @@ While every Cloudflare Pages site receives a custom subdomain during deployment,
 
 ![Domains](./images/domains.png)
 
-Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**. Depending on the domain, you will need to configure nameservers or add a custom CNAME record to point the domain to your Cloudflare Pages site.
+Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**. 
+
+If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and configure your nameservers. If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone — you will need to add a custom CNAME record to point the domain to your Cloudflare Pages site.
 
 #### Configure nameservers
 
-Configure your nameservers to point to Cloudflare's name servers. If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
+To use a custom apex domain (for example, `example.com`) with your Pages project, configure your nameservers to point to Cloudflare's nameservers. If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
 
 #### Add a custom CNAME record
 
-If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. You can configure your DNS settings in the **DNS** section of the Cloudflare dashboard.
+If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging into your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
 
-| Type         | Name               | Content            |
-| ------------ | ------------------ | ------------------ |
-| `CNAME`      | `domain.com`       | `custom.pages.dev` |
+| Type         | Name                     | Content            |
+| ------------ | ------------------------ | ------------------ |
+| `CNAME`      | `shop.example.com`       | `custom.pages.dev` |
+
+If your site is already managed as a Cloudflare zone, the CNAME record will be added automatically after you confirm your DNS record.
 
 <Aside type="note">
 
