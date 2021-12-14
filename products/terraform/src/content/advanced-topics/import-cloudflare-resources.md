@@ -100,7 +100,7 @@ resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net_2" {
 }
 ```
 
-Calling terraform `plan` now will attempt to create these resources as if they did not exist, which is not preferred. To fix this, [import the real state of those resources](/advanced-topics/importing-cloudflare-resources#import-resources-into-terraform-state) from Cloudflare into the Terraform state file (`.tfstate`) via Terraform import.
+Calling terraform `plan` now will attempt to create these resources as if they did not exist, which is not preferred. To fix this, [import the real state of those resources](/advanced-topics/import-cloudflare-resources#import-resources-into-terraform-state) from Cloudflare into the Terraform state file (`.tfstate`) via Terraform import.
 
 ```sh
 $ terraform plan
