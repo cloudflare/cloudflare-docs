@@ -20,6 +20,7 @@ To get write access to this repo, please reach out to the __Developer Docs__ roo
 | Automatic Platform Optimization | automatic-platform-optimization | [Test](https://automatic-platform-optimization.cloudflare-docs.workers.dev/automatic-platform-optimization) | [Prod](https://developers.cloudflare.com/automatic-platform-optimization) |
 | Bots                    | bots                 | [Test](https://bots.cloudflare-docs.workers.dev/bots)                                 | [Prod](https://developers.cloudflare.com/bots)     
 | BYOIP                   | byoip                | [Test](https://byoip.cloudflare-docs.workers.dev/byoip)                               | [Prod](https://developers.cloudflare.com/byoip)                |
+| Cache                   | cache                | [Test](https://cache.cloudflare-docs.workers.dev/cache/)                               | [Prod](https://developers.cloudflare.com/cache/)                |
 | Cloudflare One          | cloudflare-one       | [Test](https://cloudflare-one.cloudflare-docs.workers.dev/cloudflare-one)             | [Prod](https://developers.cloudflare.com/cloudflare-one)       |
 | DDoS Protection         | ddos-protection      | [Test](https://ddos-protection.cloudflare-docs.workers.dev/ddos-protection)           | [Prod](https://developers.cloudflare.com/ddos-protection)      |
 | Distributed Web Gateway | distributed-web      | [Test](https://distributed-web.cloudflare-docs.workers.dev/distributed-web)           | [Prod](https://developers.cloudflare.com/distributed-web)      |
