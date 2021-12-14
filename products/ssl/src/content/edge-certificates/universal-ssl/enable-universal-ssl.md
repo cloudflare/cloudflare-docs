@@ -21,7 +21,7 @@ For non-authoritative or partial domains (domains on a CNAME setup), Universal S
 - Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
 - Validated:
 
-    - Immediately if you add [Domain Control Validation (DCV)](../changing-dcv-method) records to your authoritative DNS.
+    - Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/changing-dcv-method) records to your authoritative DNS.
     - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
 
 ## Disable Universal SSL
