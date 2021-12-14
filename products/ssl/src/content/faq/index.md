@@ -1,4 +1,5 @@
 ---
+title: FAQ
 order: 201
 pcx-content-type: navigation
 ---
