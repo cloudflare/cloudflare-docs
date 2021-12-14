@@ -394,8 +394,11 @@ You can turn usage notifications on or off by going to the Notifications tab in 
 
 Click the Add button and scroll down to Workers.
 
-![notifications-tab](./media/workers-usage-notifications.png)
+![notifications-tab](./media/add-workers-notifications.png)
 
+Once you enable these notifications and add recepients, you'll be able to edit or turn off in the Notifications tab.
+
+![notifications-tab](./media/workers-overview-notifications.png)
 --------------------------------
 
 ## Next steps
