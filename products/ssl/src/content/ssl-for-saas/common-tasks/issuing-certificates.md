@@ -20,17 +20,3 @@ Once you have [set up your SSL for SaaS application](/ssl-for-saas/getting-start
 ## Via the API
 
 <CreateCustomHostnameAPI/>
-
-## Monitor certificates
-
-Certificates move through the following stages as they progress to Cloudflare’s edge:
-
-1. Initializing
-2. Pending Validation
-3. Pending Issuance
-4. Pending Deployment
-5. Active
-
-Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** within five minutes. If you see any errors, you or your customer may need to take additional actions to [validate the certificate](../certificate-validation-methods).
-
-You can monitor a certificate's status in the dashboard (at **SSL/TLS** > **Custom Hostnames**) or by [using the API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details).

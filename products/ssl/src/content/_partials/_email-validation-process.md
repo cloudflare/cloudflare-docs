@@ -2,4 +2,4 @@ The addresses listed in this field will receive an email from `support@certvalid
 
 ![Certificate Validation Email](../static/certvalidate-email.png)
 
-As soon as the domain owner has clicked the link in this email and clicked **Approve** on the validation page, the certificate will move through the [various statuses](/ssl-for-saas/common-tasks/issuing-certificates#monitor-certificates) until it becomes **Active**.
+As soon as the domain owner has clicked the link in this email and clicked **Approve** on the validation page, the certificate will move through the [various statuses](/ssl-tls/certificate-statuses) until it becomes **Active**.
