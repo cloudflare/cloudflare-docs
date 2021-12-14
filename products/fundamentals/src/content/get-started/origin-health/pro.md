@@ -13,6 +13,7 @@ import DDoS from "../../_partials/_origin-ddos"
 import FirewallOptions from "../../_partials/_origin-firewall-options"
 import Caching from "../../_partials/_origin-caching"
 import LoadBalancing from "../../_partials/_origin-load-balancing"
+import ZeroDowntimeFailover from "../../_partials/_dns-zero-downtime-failover"
 
 # Protect your origin server — Pro
 
@@ -45,3 +46,7 @@ import LoadBalancing from "../../_partials/_origin-load-balancing"
 ### Distribute traffic
 
 <LoadBalancing/>
+
+### Zero Downtime Failover
+
+<ZeroDowntimeFailover/>
