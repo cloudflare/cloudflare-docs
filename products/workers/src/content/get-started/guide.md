@@ -384,7 +384,11 @@ Workers Weekly Summary provides a breakdown of your overall Workers usage for yo
 
 Workers Usage Report is an on-demand usage notification that's triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
 
+<Aside type ="note" header="Workers Unbound">
+
 If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/learning/metrics-and-analytics#egress-data).
+
+</Aside>
 
 ![workers-usage-report](./media/workers-usage-report.png)
 
@@ -399,6 +403,7 @@ Click the Add button and scroll down to Workers.
 Once you enable these notifications and add recepients, you'll be able to edit or turn off in the Notifications tab.
 
 ![notifications-tab](./media/workers-overview-notifications.png)
+
 --------------------------------
 
 ## Next steps
