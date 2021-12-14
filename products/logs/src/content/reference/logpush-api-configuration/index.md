@@ -148,7 +148,7 @@ The four options that you can customize are:
 1. Fields: See *[Log fields](/reference/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
 1. Sampling rate: Value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
 1. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
-1. Optional redaction for CVE-2021-44228: This option will replace every occurrence of `${` with `x{`.  To enable it, set "CVE_2021_44228=true".
+1. Optional redaction for CVE-2021-44228: This option will replace every occurrence of `${` with `x{`.  To enable it, set "CVE-2021-44228=true".
 
 To check if `logpull_options` are valid:
 
