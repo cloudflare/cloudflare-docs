@@ -374,6 +374,38 @@ You can also configure a GitHub repository to automatically deploy every time yo
 
 --------------------------------
 
+## 8. Turn on/off usage notifications
+
+We provide two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled if you create a new free account with Workers.
+
+Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
+
+![workers-weekly-summary](./media/workers-weekly-summary.png)
+
+Workers Usage Report is an on-demand usage notification that's triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
+
+<Aside type ="note" header="Workers Unbound">
+
+If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/learning/metrics-and-analytics#egress-data).
+
+</Aside>
+
+![workers-usage-report](./media/workers-usage-report.png)
+
+You can turn usage notifications on or off by going to the Notifications tab in your account's home page.
+
+![notifications-tab](./media/notifications-tab.png)
+
+Click the Add button and scroll down to Workers.
+
+![notifications-tab](./media/add-workers-notifications.png)
+
+Once you enable these notifications and add recepients, you'll be able to edit or turn off in the Notifications tab.
+
+![notifications-tab](./media/workers-overview-notifications.png)
+
+--------------------------------
+
 ## Next steps
 
 This is just the beginning of what you can do with Cloudflare Workers. To do more with Workers, refer to the [Tutorials](/tutorials) section.

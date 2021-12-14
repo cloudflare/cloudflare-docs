@@ -58,9 +58,9 @@ The Duration per execution chart shows historical [duration](/platform/limits#du
 
 Workers on the [Bundled Usage Model](/platform/pricing#usage-models) may have high durations, even with a 50 ms CPU time limit, if they are running many network-bound operations like `fetch` requests, and waiting on responses.
 
-### Data Egress
+### Egress Data
 
-The Data Egress chart shows the total amount of data sent out of the Worker over the selected time period. The data is broken into `subrequest` and `response body` to help with understanding when and where the data is being sent out from. If you are sending data to members of the [Bandwidth Alliance](https://www.cloudflare.com/bandwidth-alliance/), the values shown in this chart may not align with the usage costs at the end of the month. For more information billing refer to [Pricing](/platform/pricing#usage-models).
+The egress data chart shows the total amount of data sent out of the Worker over the selected time period. The data is broken into subrequest and response body to help with understanding when and where the data is being sent out from.
 
 ### Metrics retention
 
