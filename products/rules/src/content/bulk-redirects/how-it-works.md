@@ -73,7 +73,7 @@ For detailed information on these parameters, refer to [URL Redirect parameters]
 
 The URL of an incoming request matches a URL Redirect in a list if:
 
-1. The scheme (`http` or `http`) is the same as the source URL of the URL Redirect definition. Source URLs with no scheme will match both `http` and `https`.
+1. The scheme (`http` or `https`) is the same as the source URL of the URL Redirect definition. Source URLs with no scheme will match both `http` and `https`.
 
 1. The hostname is the same as the hostname in the source URL of the URL Redirect definition. If **Include subdomains** is enabled, the subdomains of the hostname in the redirect definition will also match.
 
