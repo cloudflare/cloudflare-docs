@@ -4,6 +4,8 @@ pcx-content-type: how-to
 
 # Register a new domain
 
+If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/faq#additional-requirements-for-us-domains) before proceeding.
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Go to **Registrar** > **Register**.
 
 1. In the search box, enter the domain name you wish to register. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.  
