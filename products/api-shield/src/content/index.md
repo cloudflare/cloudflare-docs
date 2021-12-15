@@ -5,7 +5,7 @@ pcx-content-type: landing-page
 type: overview
 ---
 
-# Cloudflare API Security
+# Cloudflare API Shield
 
 Cloudflare offers a range of products to help identify and address API vulnerabilities.
 
@@ -27,6 +27,7 @@ Cloudflare offers the following features to help learn about and secure your API
 For additional details, see our [blog post](https://blog.cloudflare.com/api-abuse-detection/).
 
 ## Availability
-Cloudflare API Security products are available to Enterprise customers only. 
+
+Cloudflare API Shield products are available to Enterprise customers only (though anyone can set up [Mutual TLS](/products/mtls) with a Cloudflare-managed certificate authority). 
 
 Additionally, API Discovery, Volumetric Abuse Detection, and Sequential Abuse Detection are currently enabled by request. If you are interested in using these products, contact your account team.
