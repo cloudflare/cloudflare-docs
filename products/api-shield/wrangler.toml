@@ -1,4 +1,4 @@
-name = "api-security"
+name = "api-shield"
 type = "webpack"
 workers_dev = true
 account_id = "b54f07a6c269ecca2fa60f1ae4920c99" # cloudflare-docs.workers.dev
