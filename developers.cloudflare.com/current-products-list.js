@@ -7,9 +7,9 @@ const products = [
     icon: "api",
   },
   {
-    title: "API Security",
-    path: "api-security",
-    icon: "api-security",
+    title: "API Shield",
+    path: "api-shield",
+    icon: "api-shield",
   },
   {
     title: "Analytics",
