@@ -5,7 +5,7 @@ order: 4
 
 # Mutual TLS (mTLS)
 
-Mutual TLS (mTLS) authentication uses client certificates to ensure that traffic between client and server is bidirectionally secure and trusted. It also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.
+Mutual TLS (mTLS) authentication uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. It also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.
 
 ![mTLS sequence diagram](../images/api-shield-call-sequence.png)
 
