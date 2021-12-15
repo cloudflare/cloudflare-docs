@@ -343,7 +343,7 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 Next, edit the `logpull_options` as desired and create a `PUT` request. The following example enables the `CVE-2021-44228` redaction CVE-2021-44228 option.
 
 ```bash
-curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/${ZONE_TAG}/logpush/jobs/${JOB_ID}/' \
+curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
     -H 'X-Auth-Key: <YOUR_AUTH_KEY>' \
     -H 'X-Auth-Email: <YOUR_EMAIL>' \
     -H 'Content-Type: application/json' \
