@@ -295,7 +295,7 @@ type = "webpack"
 
 By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
 
-#### (Optional) Configure for deploying to a registered domain
+### (Optional) Configure for deploying to a registered domain
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
@@ -357,7 +357,7 @@ __Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you 
 
 </Aside>
 
-#### (Optional) Publish your project to a registered domain
+### (Optional) Publish your project to a registered domain
 
 To deploy the production environment set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
 
@@ -374,7 +374,7 @@ You can also configure a GitHub repository to automatically deploy every time yo
 
 --------------------------------
 
-## 8. Turn on/off usage notifications
+## 9. Turn on/off usage notifications
 
 We provide two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled if you create a new free account with Workers.
 
