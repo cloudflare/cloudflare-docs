@@ -351,6 +351,8 @@ curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/${ZONE_TAG}/logpush/j
     "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true"
 }'
 ```
+  
+Note that at this time, the `CVE-2021-44228` option is not available through the UI, and updating your Logpush job through the UI will remove this option.
 
 ### Response 
 

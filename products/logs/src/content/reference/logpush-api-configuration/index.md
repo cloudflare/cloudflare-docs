@@ -150,6 +150,8 @@ The four options that you can customize are:
 1. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
 1. Optional redaction for CVE-2021-44228: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 
+**Note**: The `CVE-2021-44228` parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
+
 To check if `logpull_options` are valid:
 
 ```bash
