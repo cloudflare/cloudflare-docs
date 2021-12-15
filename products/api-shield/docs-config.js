@@ -1,6 +1,9 @@
+const productIconKey = "api-shield";
+
 module.exports = {
   product: "API Shield",
   pathPrefix: "/api-shield",
+  productIconKey,
   productLogoPathD: require('./src/content/icons/api-shield').pathD,
   contentRepo: "cloudflare/cloudflare-docs",
   contentRepoFolder: "products/api-shield",
