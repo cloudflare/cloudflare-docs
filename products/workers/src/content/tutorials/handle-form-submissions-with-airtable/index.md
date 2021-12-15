@@ -282,7 +282,7 @@ While the majority of this function is concerned with parsing the request body (
 
 The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in your Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in our table with a value for each field.
 
-After you call `createAirtableRecord` (the function you will define next), you will redirect the client back to our `FORM_URL`. This function can be changed, for example, to redirect to a Thank You page, or something similar.
+After you call `createAirtableRecord` (the function you will define next), you will redirect the client back to `FORM_URL`. This function can be changed, for example, to redirect to a Thank You page, or something similar.
 
 The `createAirtableRecord` function accepts a `body` parameter, which conforms to the Airtable API's required format—namely, a JavaScript object containing key-value pairs under `fields`, representing a single record to be created on your table:
 
@@ -347,7 +347,7 @@ After you have deployed your new form (refer to the [HTML forms](https://develop
 
 With this tutorial completed, you have created a Workers serverless function that can accept form submissions and persist them to Airtable. You have learned how to parse form data, set up environment variables, and use the `fetch` API to make requests to external services outside of our Workers function.
 
-You can find the source for this project — both the front-end UI, as well as the serverless function that communicates with Airtable, [on GitHub](https://github.com/cloudflare/workers-airtable-form).
+You can find the source for this project — both the front-end UI and the serverless function that communicates with Airtable — [on GitHub](https://github.com/cloudflare/workers-airtable-form).
 
 To do more with Workers, review other available tutorials below:
 
