@@ -351,9 +351,9 @@ header: Publish to workers.dev
 ~/my-worker $ wrangler publish
 ```
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
-__Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#523error) while DNS is propagating. It should work after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
 
 </Aside>
 
@@ -376,7 +376,7 @@ You can also configure a GitHub repository to automatically deploy every time yo
 
 ## 9. Turn on/off usage notifications
 
-Cloudflare provide two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled when you create a new free account with Workers.
+Cloudflare provides two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled when you create a new free account with Workers.
 
 Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
 
@@ -396,7 +396,7 @@ You can turn usage notifications on or off by going to **Account Home** > **Noti
 
 ![notifications-tab](./media/notifications-tab.png)
 
-Select **Add** button and scroll down to Workers.
+Select **Add** and scroll down to Workers.
 
 ![notifications-tab](./media/add-workers-notifications.png)
 
