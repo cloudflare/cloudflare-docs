@@ -14,7 +14,7 @@ jobs:
       onedot: ${{ steps.filter.outputs.onedot }}
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
-      api-security: ${{ steps.filter.outputs.api-security }}
+      api-shield: ${{ steps.filter.outputs.api-shield }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
@@ -73,8 +73,8 @@ jobs:
               - 'products/analytics/**'
             api:
               - 'products/api/**'
-            api-security:
-              - 'products/api-security/**'
+            api-shield:
+              - 'products/api-shield/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
@@ -298,14 +298,14 @@ jobs:
           environment: "production"
           wranglerVersion: "1.13.0"
 
-  deploy-api-security:
+  deploy-api-shield:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.api-security == 'true' }}
+    if: ${{ needs.changes.outputs.api-shield == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/api-security
+        working-directory: products/api-shield
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -322,13 +322,13 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
+          workingDirectory: "products/api-shield"
           wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
+          workingDirectory: "products/api-shield"
           environment: "production"
           wranglerVersion: "1.13.0"
 
