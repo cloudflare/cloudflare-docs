@@ -462,3 +462,12 @@ In your `wrangler.toml` file, make sure the `dir` and `main` entries point to th
 
 #### Error when deleting migration
 When deleting a migration using `wrangler publish --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+
+#### Error: Durable Object is overloaded.
+A single instance of a Durable Object cannot do more work than is possible on a single thread. These errors mean the Durable Object has too much work to keep up with incoming requests:
+
+- `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
+- `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
+- `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+
+To solve this you can either do less work per request, or send fewer requests, for instance by splitting the requests among more instances of the Durable Object.
