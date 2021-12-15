@@ -5,13 +5,13 @@ order: 4
 
 # Mutual TLS (mTLS)
 
-Mutual TLS (mTLS) authentication uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. It also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.
+Mutual TLS (mTLS) authentication uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. mTLS also allows requests that do not authenticate via an identity provider, such as Internet-of-things (IoT) devices, to demonstrate they can reach a given resource.
 
 ![mTLS sequence diagram](../images/api-shield-call-sequence.png)
 
 Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
 
-Specifying the API hosts and Cloudflare will block all requests that do not have a certificate for mutual TLS (mTLS) authentication.
+When you specify the API hosts, Cloudflare will block all requests that do not have a certificate for mutual TLS (mTLS) authentication.
 
 <Aside type='note'>
 
@@ -29,7 +29,7 @@ To protect your application with mTLS authentication, use this workflow:
 
 1. [Enable mTLS](https://developers.cloudflare.com/ssl/client-certificates/enable-mtls) for the hosts you wish to protect.
 
-1. Create Cloudflare firewall rules that [require API requests to present a valid client certificate](https://developers.cloudflare.com/firewall/recipes/require-valid-client-certificate). The **Firewall** app in the Cloudflare dashboard provides a dedicated interface where you can [create mTLS rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).
+1. Create Cloudflare Firewall Rules that [require API requests to present a valid client certificate](https://developers.cloudflare.com/firewall/recipes/require-valid-client-certificate). The **Firewall** app in the Cloudflare dashboard provides a dedicated interface where you can [create mTLS rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule).
 
 <Aside type='warning' header='Important'>
 

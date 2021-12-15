@@ -3,13 +3,13 @@ pcx-content-type: concept
 order: 4
 ---
 
-# Schema validation
+# Schema Validation
 
-An API Schema defines which API requests are valid based on several request properties like target endpoint and HTTP method.
+An API schema defines which API requests are valid based on several request properties like target endpoint and HTTP method.
 
-Schema Validation allows you to check if incoming traffic complies with a previously supplied API Schema. When you provide an API Schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
+Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-API Shield supports API Schemas using OpenAPI Specification v3. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
+API Shield supports API schemas using OpenAPI Specification v3. The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
 To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](https://developers.cloudflare.com/firewall/cf-dashboard/configure-schema-validation).
 
@@ -25,4 +25,4 @@ Cloudflare Schema Validation requires unique Operation IDs for each endpoint and
 
 ## Limitations
 
-Currently, API Shield cannot validate some features of API Schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
+Currently, API Shield cannot validate some features of API schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
