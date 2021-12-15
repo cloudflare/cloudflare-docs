@@ -15,13 +15,13 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 Cloudflare Workers excels as a performant serverless functions platform. This makes it a great fit for handling form submissions from your front-end applications, particularly when you need to send those submissions to an external API or database.
 
-In this tutorial, you will use Workers and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a great, free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions, and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
+In this tutorial, you will use Workers and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a great, free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
 ![Example GIF of complete Airtable and serverless function integration](./example.gif)
 
-[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form)—note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)), as well as a serverless function for handling the interaction with Airtable. 
+[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form). Note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)) and a serverless function for handling the interaction with Airtable. 
 
-[The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience. It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JS-heavy forms, such as with React or other front-end frameworks.
+[The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience. It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JavaScript-heavy forms, such as with React or other front-end frameworks.
 
 ## Create a form
 
@@ -119,9 +119,9 @@ If you would like to follow along with this example, you can directly copy the `
 
 ## Create a serverless function
 
-In order to handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data, and prepares it for submission to Airtable.
+In order to handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
 
-To begin, use `wrangler` to generate a new function, called `airtable-form-handler`, and navigate to it in our terminal:
+To begin, use `wrangler` to generate a new function, called `airtable-form-handler`, and navigate to it in your terminal:
 
 ```sh
 ---
@@ -137,7 +137,7 @@ If you have chosen to work with the [sample codebase on GitHub](https://github.c
 
 </Aside>
 
-In the `wrangler.toml` file of your project's directory, add your Cloudflare account ID. [Refer to the Get Started guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you are unsure where to find your Cloudflare Account ID.
+In the `wrangler.toml` file of your project's directory, add your Cloudflare Account ID. [Refer to the Get started guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) to find your Cloudflare Account ID.
 
 ```toml
 ---
@@ -154,11 +154,11 @@ account_id = "yourAccountId"
 
 When your serverless function is completed, it will send data up to an Airtable base via Airtable's REST API.
 
-If you do not have an Airtable account, create one (the free plan is sufficient to complete this tutorial). In Airtable's dashboard, create a new base, choosing to **Start from scratch**:
+If you do not have an Airtable account, create one (the free plan is sufficient to complete this tutorial). In Airtable's dashboard, create a new base by selecting **Start from scratch**:
 
 ![Creating a new base in Airtable's user interface](./new-base.png)
 
-After you have created a new base, you can set it up for use with the front-end form. Delete the existing columns, and create six columns, with the following "field types":
+After you have created a new base, you can set it up for use with the front-end form. Delete the existing columns, and create six columns, with the following field types:
 
 | Field name   | Airtable field type |
 | ------------ | ------------------- |
@@ -169,15 +169,15 @@ After you have created a new base, you can set it up for use with the front-end 
 | Subject      | "Single line text"  |
 | Message      | "Long text"         |
 
-The completed fields should look like the below screenshot in the Airtable UI. Note that the field names are case-sensitive: if you change them to anything else, you will need to exactly match your new field names in the API request we make to Airtable later in the tutorial.
+The completed fields should look like the below screenshot in the Airtable UI. Note that the field names are case-sensitive: if you change them to anything else, you will need to exactly match your new field names in the API request you make to Airtable later in the tutorial.
 
 ![An example of the configured Airtable column headers in a table](./columns.png)
 
-Finally, give your base's table a name. Right-click the table name at the top left of the screen (it will likely have a name like "Table 1"), and give it a more descriptive name, like "Form Submissions".
+Finally, give your base's table a name. Right-click the table name at the top left of the screen (it will likely have a name like Table 1), and give it a more descriptive name, like Form Submissions.
 
 ![Renaming the Airtable table inside of the user interface](./form-submissions.png)
 
-With your new Airtable base set up, you can grab the values from Airtable's UI that you need to make API requests.
+With your new Airtable base set up, you can copy the values from Airtable's UI that you need to make API requests.
 
 Refer to [Airtable's API page](https://airtable.com/api), and select your new base. In the API documentation page, find your **Airtable base ID** (the highlighted text in the below screenshot). You can also check the **Show API key** checkbox in the top right of the window, to easily access your Airtable API key from the same page.
 
@@ -187,7 +187,7 @@ Further down the page, you will begin to see example requests, showing you how t
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](./api-key.png)
 
-To make this API key available in your codebase, you can use the [`wrangler secret`](cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
+To make this API key available in your codebase, use the [`wrangler secret`](cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
 
 Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
 
@@ -202,10 +202,9 @@ Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY o
 ✨  Success! Uploaded secret AIRTABLE_API_KEY.
 ```
 
-
 Before you continue, review the keys that you should have from Airtable:
 
-1. **Airtable Table Name:** the name for your table, like "Form Submissions".
+1. **Airtable Table Name:** the name for your table, like Form Submissions.
 2. **Airtable Base ID:** the alphanumeric base ID found at the top of your base's API page.
 3. **Airtable API Key:** the private API key found in example API requests on the Airtable API documentation page.
 
@@ -236,7 +235,7 @@ async function handleRequest(request) {
 }
 ```
 
-The `submitHandler` has two functions. First, it will parse the form data coming from our HTML5 form. Once the data is parsed, you will use the Airtable API to persist a new _row_ (a new form submission) to our table:
+The `submitHandler` has two functions. First, it will parse the form data coming from our HTML5 form. Once the data is parsed, you will use the Airtable API to persist a new row (a new form submission) to your table:
 
 ```js
 ---
@@ -281,9 +280,9 @@ const submitHandler = async request => {
 
 While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405). 
 
-The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in our Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in our table with a value for each field.
+The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in your Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in our table with a value for each field.
 
-After we call `createAirtableRecord` (the function you will define next), you will redirect the client back to our `FORM_URL`. This function can be changed, for example, to redirect to a "Thank You" page, or something similar.
+After you call `createAirtableRecord` (the function you will define next), you will redirect the client back to `FORM_URL`. This function can be changed, for example, to redirect to a Thank You page, or something similar.
 
 The `createAirtableRecord` function accepts a `body` parameter, which conforms to the Airtable API's required format—namely, a JavaScript object containing key-value pairs under `fields`, representing a single record to be created on your table:
 
@@ -333,24 +332,24 @@ $ wrangler publish
  https://workers-airtable-form.cloudflare.workers.dev
 ```
 
-You will notice that your function is deployed to a unique URL — for instance, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the _path_ for our form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
+You will notice that your function is deployed to a unique URL — for example, `https://workers-airtable-form.cloudflare.workers.dev`. This represents the first part of your front-end form's `action` attribute — the second part is the path for your form handler, which is `/submit`. In your front-end UI, configure your `form` tag as seen below:
 
 ```html
 <form action="https://workers-airtable-form.cloudflare.workers.dev/submit" method="POST" class="...">
 <!-- The rest of your HTML form -->
 ```
 
-After you have deployed your new form (Cloudflare recommends using [Pages](https://pages.dev) for this), you should be able to submit a new form submission, and see the value show up immediately in Airtable:
+After you have deployed your new form (refer to the [HTML forms](https://developers.cloudflare.com/pages/tutorials/forms) tutorial if you need help creating a form), you should be able to submit a new form submission, and see the value show up immediately in Airtable:
 
 ![Example GIF of complete Airtable and serverless function integration](./example.gif)
 
 ## Conclusion
 
-With this tutorial completed, you have created a Workers serverless function that can accept form submissions, and persist them to Airtable. You have learned how to parse form data, set up environment variables, and use the `fetch` API to make requests to external services outside of our Workers function.
+With this tutorial completed, you have created a Workers serverless function that can accept form submissions and persist them to Airtable. You have learned how to parse form data, set up environment variables, and use the `fetch` API to make requests to external services outside of our Workers function.
 
-You can find the source for this project—both the front-end UI, as well as the serverless function that communicates with Airtable, [on GitHub](https://github.com/cloudflare/workers-airtable-form).
+You can find the source for this project — both the front-end UI and the serverless function that communicates with Airtable — [on GitHub](https://github.com/cloudflare/workers-airtable-form).
 
-To do more with Workers, review some other available tutorials below:
+To do more with Workers, review other available tutorials below:
 
 - [Build a Slackbot](https://developers.cloudflare.com/workers/tutorials/build-a-slackbot)
 - [Build a To-Do List Jamstack App](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)
