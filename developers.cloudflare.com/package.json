@@ -62,14 +62,14 @@
   },
   "license": "Apache-2.0 OR MIT",
   "scripts": {
-    "build": "npm run clean && gatsby build --prefix-paths",
+    "build": "yarn clean && gatsby build --prefix-paths",
     "build:incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages --prefix-paths",
     "clean": "gatsby clean",
     "develop": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "publish": "npm run build && wrangler publish",
+    "publish": "yarn build && wrangler publish",
     "serve": "gatsby serve",
-    "start": "npm run develop",
+    "start": "yarn develop",
     "generate:icons": "cd ../ && node create-svg-files.js"
   }
 }

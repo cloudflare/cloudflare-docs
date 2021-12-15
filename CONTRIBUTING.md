@@ -29,5 +29,11 @@ Before proposing significant changes, open an issue so that we can discuss your 
     * Use bullet points to summarize the changes in the commits
     * Add any other information you think is helpful or needs addressed. If your PR fixes an open issue, indicate that your PR is addressing the issue and provide a link to the issue.
  
+## Package manager
+
+* [Yarn](https://classic.yarnpkg.com/en/docs/install) is the recommended package manager that must be used in installing dependencies. 
+* Generated yarn.lock files must be committed to git.
+
+
 A member of the Product Content Experience team will review the pull request. If the changes are straightforward, the pull request is approved and can be merged. If the pull request is more technical and requires an additional review, the new reviewer will leave any additional feedback.
  If a pull request is not approved, the “won't fix” label is applied and a comment is added to explain why the pull request was closed.

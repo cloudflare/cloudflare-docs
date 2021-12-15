@@ -5,7 +5,7 @@ const product = args[0];
 
 if (!product) {
   console.error(
-    "You must provide a directory to watch. Run the develop script with npm run develop -- $product."
+    "You must provide a directory to watch. Run the develop script with yarn develop -- $product."
   );
   process.exit(1);
 }
