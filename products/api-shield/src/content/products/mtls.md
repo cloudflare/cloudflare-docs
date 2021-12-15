@@ -11,7 +11,7 @@ Mutual TLS (mTLS) authentication uses client certificates to ensure traffic betw
 
 Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
 
-Specify the API hosts and Cloudflare will block all requests that do not have a certificate for mutual TLS (mTLS) authentication.
+Specifying the API hosts and Cloudflare will block all requests that do not have a certificate for mutual TLS (mTLS) authentication.
 
 <Aside type='note'>
 
