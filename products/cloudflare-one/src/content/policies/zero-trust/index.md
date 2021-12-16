@@ -104,3 +104,9 @@ For example, if you have a list of policies that reflects the following:
 * Allow E
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
+
+<Aside type='Warning'>
+
+    If a user is denied access to an application by a Block policy, and subsequently allowed access by an Allow policy for that same application, the latter will let the user through. Please double-check the scope of your policies to ensure there is no unintended overlap.
+    
+</Aside>
