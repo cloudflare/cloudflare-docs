@@ -27,3 +27,19 @@ To adjust how your application responds to specific fingerprints, use them with:
 - [Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard)
 - [Transform Rules](https://developers.cloudflare.com/rules/transform)
 - [Cloudflare Workers](https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties)
+
+## Use cases
+
+### Block or allow certain traffic
+
+A group of similar requests may share the same JA3 fingerprint. For this reason, JA3 may be useful in blocking an incoming threat. For example, if you notice that a bot attack is not caught by existing defenses, create a [Firewall Rule](https://developers.cloudflare.com/firewall/cf-dashboard) that blocks/challenges the JA3 used for the attack.
+
+Alternatively, if existing defenses are blocking traffic that is actually legitimate, create a [Firewall Rule](https://developers.cloudflare.com/firewall/cf-dashboard) that allows the JA3 seen across good requests.
+
+JA3 may also be useful if you want to immediately remedy false positives or false negatives with Bot Management.
+
+### Allow mobile traffic
+
+Often, mobile application traffic will produce the same JA3 fingerprint across devices and users. This means you can identify your mobile application traffic by its JA3 fingerprint.
+
+Use the JA3 fingerprint to [allow traffic](https://developers.cloudflare.com/firewall/recipes/challenge-bad-bots#adjust-for-mobile-traffic) from your mobile application, but block or challenge remaining traffic.

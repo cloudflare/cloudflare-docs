@@ -17,6 +17,7 @@ Scores range from 1 through 99. Low scores indicate the request comes from a scr
 These examples use:
 - `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots
 - `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
+- `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint)
 
 ## Suggested rules
 
@@ -71,7 +72,9 @@ This example offers the same protection as the browser-only rule, but allows aut
 
 Since Bot Management can be more sensitive to mobile traffic, you might want to set lower thresholds if your domain has a high volume of mobile traffic.
 
-The following rules would block definitely automated mobile traffic, but only challenge likely automated traffic.
+If you are handling requests from your own mobile application, you might want to allow it based on its specific [JA3 fingerprint](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint).
+
+The following rules would allow traffic from your mobile application, block definitely automated mobile traffic, and challenge likely automated traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -81,6 +84,10 @@ The following rules would block definitely automated mobile traffic, but only ch
   </tr>
   </thead>
   <tbody>
+  <tr>
+      <td><code>(cf.bot_management.ja3_hash eq df669e7ea913f1ac0c0cce9a201a2ec1)</code></td>
+      <td><em>Allow</em></td>
+    </tr>
     <tr>
       <td><code>(cf.bot_management.score lt 2) and (http.user_agent contains "App_Name 2.0")</code></td>
       <td><em>Block</em></td>
@@ -96,6 +103,7 @@ The following rules would block definitely automated mobile traffic, but only ch
 
 If your domain saw mobile, browser, and API traffic, you would want to arrange these example rules in the following order:
 - API
+- Mobile - Allow
 - Mobile - Block
 - Mobile - Challenge
 - Browser - Block
