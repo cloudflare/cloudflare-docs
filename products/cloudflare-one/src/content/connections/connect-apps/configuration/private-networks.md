@@ -14,13 +14,13 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 ## Before you start
 
-* [Install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
+* [Download and install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
 * [Enable HTTP filtering](/policies/filtering/http-policies) by turning on the **Proxy** switch under **Settings** > **Network** > **L7 Firewall**.
 * [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Teams organization.
 * [Install the WARP client](/connections/connect-devices/warp) on the devices you want to allow into your network.
 * (optional) [Integrate your preferred identity provider](/identity/idp-integration) with Cloudflare for Teams. 
 
-## Create a tunnel to connect your network
+## Connect your network to Cloudflare
 
 1. Authenticate `cloudflared` with the command below. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 
@@ -34,7 +34,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
     $ cloudflared tunnel create acme-network
     ```
 
-1. Finally, configure your tunnel with the IP/CIDR range of your private network. By doing this, you are creating a private network and making the WARP client aware that any requests to this IP range need to be routed to your new tunnel. 
+1. Finally, configure your tunnel with the IP/CIDR range of your private network.
 
     ```bash
     $ cloudflared tunnel route ip add 12.55.0.0/16
@@ -47,11 +47,11 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 1. Next, create a [configuration file](/connections/connect-apps/configuration/configuration-file) for the tunnel. The configuration file will be structured as follows: 
 
-    ```txt
+    ```yaml
     tunnel: <Tunnel-UUID>
-    credentials-file: /root/.cloudflared/credentials-file.json
+    credentials-file: </root/.cloudflared/credentials-file.json>
     warp-routing:
-    enabled: true
+        enabled: true
     ```
 
 1. Run the tunnel. Traffic inside of your organization coming from enrolled WARP clients will be sent to this instance when the destination is your private IP range.
