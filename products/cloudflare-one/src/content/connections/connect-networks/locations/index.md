@@ -93,7 +93,7 @@ Cloudflare Gateway will identify your location based on the DNS over HTTPS hostn
 
 #### DoH subdomain
 
-Each location in Teams has a unique DoH subdomain (previously known as a unique id). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. 
+Each location in Teams has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings. 
 
 In the example below, the DoH subdomain is: `9y65g5srsm`.
 
