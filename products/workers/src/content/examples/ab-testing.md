@@ -16,7 +16,7 @@ pcx-content-type: configuration
 ```js
 const NAME = "myExampleWorkersABTest";
 
-async function ABTestingWithPassthrough(req) {
+async function abTestingWithPassthrough(req) {
   const url = new URL(req.url);
   // Enable Passthrough to allow direct access to control and test routes.
   if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test")) return fetch(req);
@@ -24,8 +24,8 @@ async function ABTestingWithPassthrough(req) {
   const cookie = req.headers.get("cookie");
   if (cookie && cookie.includes(`${NAME}=control`)) {
     url.pathname = "/control" + url.pathname;
-  } else if {
-    (cookie && cookie.includes(`${NAME}=test`)) url.pathname = "/test" + url.pathname;
+  } else if (cookie && cookie.includes(`${NAME}=test`)) {
+    url.pathname = "/test" + url.pathname;
   } else {
     // If there is no cookie, this is a new client. Choose a group and set the cookie.
     const group = Math.random() < 0.5 ? "test" : "control"; // 50/50 split
@@ -44,7 +44,7 @@ async function ABTestingWithPassthrough(req) {
   return fetch(url);
 }
 
-addEventListener('fetch', e => {
-  e.respondWith(ABTestingWithPassthrough(e.request));
+addEventListener("fetch", e => {
+  e.respondWith(abTestingWithPassthrough(e.request));
 });
 ```
