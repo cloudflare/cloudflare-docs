@@ -13,6 +13,8 @@ Zone-scoped HTTP requests are available in both Logpush and Logpull. All other d
 
 Unless otherwise noted, fields are available in both Logpush v1 (Logpush prior to mid-2020) and Logpush v2 (all Logpush jobs after mid-2020).
 
+For log field *ClientIPClass*, Cloudflare recommends using [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags) to classify IPs.
+
 ## Zone-scoped data sets
 
 <DirectoryListing path="/reference/log-fields/zone"/>
