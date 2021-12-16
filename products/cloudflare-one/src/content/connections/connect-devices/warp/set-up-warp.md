@@ -64,7 +64,7 @@ Create device enrollment rules to define which users in your organization should
 
 ### 4. (optional) Add a location to Gateway. 
 
-By default, the WARP client will direct DoH queries to a default DNS endpoint when enrolled to your account. If you need like to direct these queries to a separate DNS endpoint, [add a location](/connections/connect-networks/locations) to Gateway. This will create a new DoH endpoint, which you can add when deploying the WARP client to your devices.
+By default, the WARP client will direct DoH queries to a default DNS endpoint when enrolled to your account. If you need to direct these queries to a separate DNS endpoint, [add a location](/connections/connect-networks/locations) to Gateway. This will create a new DoH endpoint, which you can add when deploying the WARP client to your devices.
 
 Add your office as a location on Gateway. Gateway will assign a [DoH subdomain](/glossary#doh-subdomain) to that location — you will then need this value when deploying the WARP client to your devices.
 
