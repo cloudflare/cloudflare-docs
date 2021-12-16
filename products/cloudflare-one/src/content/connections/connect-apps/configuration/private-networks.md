@@ -71,7 +71,9 @@ To check that, navigate to **Settings** > **Network** > **Split Tunnels** on the
 
 ## Configure devices to connect to your network
 
-1. On the devices you want to connect to your network, install the Cloudflare root certificate. This step is optional if TLS decryption under **Settings** > **Network** > **Firewall** is disabled for this device. You can find the certificate under **Settings** > **Devices** > **Certificates** and follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+1. Make sure the WARP client is [installed](/connections/connect-devices/warp/deployment) on the devices you want to connect to your network.
+
+1. (Optional) On those devices, install the Cloudflare root certificate if you plan to use the WARP client for traffic filtering with Gateway. You can find the certificate under **Settings** > **Devices** > **Certificates** and follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
 
 1. Next, [log in](/connections/connect-devices/warp/deployment) to the WARP client with Cloudflare for Teams on each of the devices you want to connect.
     * For desktop clients, go to **Account** > **Login with Cloudflare for Teams** and enter your organization's [team name](/glossary#team-name).
