@@ -45,7 +45,7 @@ These are the rule types you can choose from:
 
 | Include | Exclusion | Require |
 | ------- | ------- | ------- |
-| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclusion rule works like a NOT logical operator. A user meeting any Exclusion criteria won’t be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclusion rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
 
 ## Criteria
 
@@ -105,7 +105,7 @@ For example, if you have a list of policies that reflects the following:
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
 
-<Aside type='Warning'>
+<Aside type='warning'>
 
     Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application. 
     
