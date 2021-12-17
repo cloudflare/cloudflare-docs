@@ -21,7 +21,7 @@ module.exports = {
   siteMetadata: {
     title: "Cloudflare API Shield docs",
     description:
-      "Protect your APIs from simple and sophisticated attacks using Cloudflare API Security products.",
+      "Protect your APIs from simple and sophisticated attacks using Cloudflare API Shield products.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/api-shield",
     image: "https://www.cloudflare.com/img/cf-twitter-card.png",
