@@ -115,8 +115,8 @@ Otherwise, you could set lower thresholds for mobile traffic. The following rule
 If your domain saw mobile, browser, and API traffic, you would want to arrange these example rules in the following order:
 - API
 - Mobile:
-  - If consistent JA3 fingerprint, set *Allow* rule
-  - If not, put the *Block* rule first and then the *Challenge* rule
+  - If consistent JA3 fingerprint, set *Allow* rule.
+  - If not, put the *Block* rule first and then the *Challenge* rule.
 - Browser - Block
 
 ### Static resource protection

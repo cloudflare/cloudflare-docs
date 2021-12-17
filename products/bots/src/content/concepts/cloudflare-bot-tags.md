@@ -10,7 +10,7 @@ Bot Tags provide more detail about *why* Cloudflare assigned a [bot score](/conc
 
 Use these tags to learn more about your bot traffic and better inform security settings.
 
-<Aside type="note" header="Note:">
+<Aside type="note" header="Note">
 
 Bot tags are only available to Enterprise customers who have purchased Bot Management.
 
