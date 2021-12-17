@@ -32,7 +32,7 @@
     </tr>
     <tr>
       <td><b>Additional control</b></td>
-      <td>Ability to restrict by path, IP address, and more. Access to <code class="InlineCode">bot score</code> field in Firewall, Workers, and Logs</td>
+      <td>Ability to restrict by path, IP address, and more. Access to <a href="/concepts/bot-score">bot score</a>, <a href="/concepts/ja3-fingerprint">JA3 fingerprint</a>, and <a href="/concepts/cloudflare-bot-tags">bot tags</a> fields.</td>
     </tr>
   </tbody>
 </table>
