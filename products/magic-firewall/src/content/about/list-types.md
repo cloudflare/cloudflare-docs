@@ -7,9 +7,9 @@ pcx-content-type: concept
 
 ## Threat intelligence
 
-Cloudflare sees approximately 28 million HTTP requests each second and blocks 76 billion cyber threats each day. Cloudflare uses that data to detect malicious actors on the Internet and turns that information into a list of known malicious IPs. Cloudflare also integrates with a number of third party vendors to augment the coverage.
+Cloudflare sees approximately 28 million HTTP requests each second and blocks 76 billion cyber threats each day. Cloudflare uses that data to detect malicious actors on the Internet and turns that information into a list of known malicious IP addresses. Cloudflare also integrates with a number of third-party vendors to augment the coverage.
 
-The threat intelligence feed categories include Malware, Anonymizer, and Botnet Command-and-Control centers. Malware and Botnet lists cover properties on the Internet distributing malware and known command and control centers. Anonymizers contain a list of known forward proxies that allow attackers to hide their IP addresses.
+The threat intelligence feed categories include Malware, Anonymizer, and Botnet Command-and-Control centers. Malware and Botnet lists cover properties on the Internet distributing malware and known command-and-control centers. Anonymizers contain a list of known forward proxies that allow attackers to hide their IP addresses.
 
 ## IP lists
 
