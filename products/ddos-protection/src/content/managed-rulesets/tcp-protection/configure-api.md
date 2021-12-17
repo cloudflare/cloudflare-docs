@@ -37,7 +37,7 @@ This example obtains the current status of Advanced TCP Protection (enabled or d
 
 ```bash
 ---
-header: Example request
+header: Request
 ---
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection" \
 -H "Authorization: Bearer <API_TOKEN>" \
@@ -46,7 +46,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_
 
 ```json
 ---
-header: Example response
+header: Response
 ---
 {
   "result": {
