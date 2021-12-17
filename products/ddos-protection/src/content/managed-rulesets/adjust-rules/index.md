@@ -1,6 +1,6 @@
 ---
 pcx-content-type: navigation
-order: 4
+order: 5
 ---
 
 # Adjusting DDoS rules
