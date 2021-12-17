@@ -1,6 +1,7 @@
 ---
 title: Analytics
 pcx-content-type: concept
+order: 1
 ---
 
 # Magic Firewall Analytics
