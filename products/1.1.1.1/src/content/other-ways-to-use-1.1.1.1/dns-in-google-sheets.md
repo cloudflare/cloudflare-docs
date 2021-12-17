@@ -53,7 +53,7 @@ function NSLookup(type, domain) {
   var response = JSON.parse(resultText);
 
   if (response.Status !== 0) {
-    return errors[response.Status].name;
+    return errors[response.Status].description;
   }
 
   var outputData = [];
