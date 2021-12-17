@@ -342,7 +342,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='note'>
 
-Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
+Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/plans/bm-subscription) enabled.
 
 </Aside>
 
@@ -371,6 +371,16 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
           <p>Represents the likelihood that a request originates from a bot using a score from 1&#8211;99.
           </p>
           <p>A low score indicates that the request comes from a bot or an automated agent. A high score indicates that a human issued the request.
+          </p>
+        </td>
+    </tr>
+    <tr>
+        <td><p><code>cf.bot_management.ja3_hash</code><br /><Type>string</Type></p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="https://developers.cloudflare.com/bots/concepts/ja3-fingerprint">JA3 Fingerprints</a>.
           </p>
         </td>
     </tr>
