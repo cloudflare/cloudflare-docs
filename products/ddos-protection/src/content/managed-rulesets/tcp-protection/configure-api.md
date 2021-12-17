@@ -8,7 +8,7 @@ order: 2
 
 You can configure Advanced TCP Protection using the Advanced TCP Protection API.
 
-For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+The Advanced TCP Protection API only supports API token authentication. For more information on API authentication, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
 ## Endpoints
 
