@@ -30,7 +30,7 @@ To enable the Cloudflare Logpush service:
 
 1. Select **Sumo Logic**.
 
-1. Enter or select the **HTTP Source Address**.
+1. Enter or select the **HTTP Source Address**. Note that the same collector can be used for multiple Logpush jobs, but each job must have a dedicated source.
 
 1. Click **Validate access**.
     
