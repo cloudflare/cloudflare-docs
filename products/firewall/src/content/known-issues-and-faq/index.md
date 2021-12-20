@@ -18,7 +18,7 @@ No. The number of active rules is fixed based on customer plan. See [_Entitlemen
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the **Visual Expression Editor** in the **Firewall Rules** UI does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the **Visual Expression Editor** does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
 

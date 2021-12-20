@@ -7,9 +7,9 @@ order: 210
 
 ## Overview
 
-Every Cloudflare firewall rule, no matter how complex, is really just a combination of two elements: an **expression** and an **action**. Expressions define the criteria for an HTTP request to trigger an action; the action tells Cloudflare what to do with that request.
+Every Cloudflare firewall rule, no matter how complex, is essentially a combination of two elements: an **expression** and an **action**. Expressions define the criteria for an HTTP request to trigger an action; the action tells Cloudflare what to do with that request.
 
-When an HTTP request reaches the firewall, Cloudflare compares values from the request to those defined in the expression. If the expression returns `true`, the expression matches, and Cloudflare triggers the action for that rule.
+When an HTTP request reaches the Firewall, Cloudflare compares values from the request to those defined in the expression. If the expression returns `true`, the expression matches, and Cloudflare triggers the action for that rule.
 
 ## Working with expressions
 
@@ -19,7 +19,9 @@ The Expression Builder’s visual interface allows you to build expressions with
 
 By comparison, the Expression Editor is text only, but it supports advanced features not available in the builder. You can find both in the **Firewall Rules** tab.
 
-The [_Cloudflare Filters API_](/api/cf-filters) provides an interface for programmatically managing expressions. Use [_Firewall Rules API_](/api/cf-firewall-rules) to combine a filter with an action and deploy a new firewall rule.
+Rule expressions must follow the syntax of the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
+
+The [Cloudflare Filters API](/api/cf-filters) provides an interface for programmatically managing expressions. Use [Firewall Rules API](/api/cf-firewall-rules) to combine a filter with an action and deploy a new firewall rule.
 
 ## Simple and compound expressions
 
@@ -58,7 +60,7 @@ Simple expressions use this pattern:
 <field> <comparison operator> <value>
 ```
 
-For more on creating firewall rules using Cloudflare’s visual builder, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules).
+For more on creating firewall rules using Cloudflare’s visual builder, see [Create, edit, and delete rules](/cf-dashboard/create-edit-delete-rules).
 
 For a list of supported fields and comparison operators, see [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
