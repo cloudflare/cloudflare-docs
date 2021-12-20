@@ -1,13 +1,14 @@
 ---
+title: Actions
 pcx-content-type: reference
 order: 220
 ---
 
-# Actions
+# Firewall Rules actions
 
 ## Overview
 
-Actions tell Cloudflare how to handle HTTP requests that have matched a firewall rule expression.
+The action of a Firewall Rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
 ## Supported actions
 
@@ -173,4 +174,4 @@ Choosing an action in the Cloudflare Expression Builder is simple. After naming 
 
 ![Create Firewall Rule page](../images/firewall-rules-actions-1.png)
 
-For more on building firewall rules in the Firewall App, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules/).
+For more on building firewall rules in the Firewall app, see [Create, edit, and delete rules](/cf-dashboard/create-edit-delete-rules/).

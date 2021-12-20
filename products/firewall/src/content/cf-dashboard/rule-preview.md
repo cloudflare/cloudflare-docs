@@ -5,7 +5,7 @@ type: table
 order: 330
 ---
 
-# Preview rules
+# Preview Firewall Rules
 
 <ContentColumn>
 
@@ -126,7 +126,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
-        <td></td>
+        <td>❌</td>
         <td>&#x2705;</td>
         <td>❌</td>
       </tr>
