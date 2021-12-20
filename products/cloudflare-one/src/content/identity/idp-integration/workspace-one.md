@@ -40,6 +40,6 @@ To retrieve those values:
 1. Click **Save**.
 1. Click **Test Provider** to ensure the values have been entered correctly.
 
-## Configure Compliance Settings
+## Configure compliance settings
 
-Workspace ONE integrated posture checks work with the Compliance flags in Workspace ONE. All compliance tests must pass for the device to be considered compliant.
+Workspace ONE posture checks work with the Compliance flags in Workspace ONE. All compliance tests must pass for the device to be considered compliant.
