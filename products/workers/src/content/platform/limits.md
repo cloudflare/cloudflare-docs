@@ -81,7 +81,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 | Feature                               | Free                  | Paid       |
 | ------------------------------------- | --------------------- | ---------- |
 | [Reads/second](#kv)                   | 100,000 reads per day | unlimited  |
-| [Writes/second (different keys)](#kv) | 1000 reads per day    | unlimited  |
+| [Writes/second (different keys)](#kv) | 1,000 writes per day  | unlimited  |
 | [Writes/second (same key)](#kv)       | 1                     | 1          |
 | [Operations/worker invocation](#kv)   | 1000                  | 1000       |
 | [Namespaces](#kv)                     | 100                   | 100        |
