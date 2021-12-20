@@ -63,7 +63,7 @@ Both the **Create Firewall** and **Edit Firewall** panels include the visual **E
 
 ### Expression Editor
 
-Advanced users will appreciate the **Expression Editor** (shown below), which trades the visual simplicity of the builder for the raw power of the [Cloudflare Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language). The editor also supports advanced features, such as grouping symbols, for constructing highly sophisticated, targeted rules.
+Advanced users will appreciate the **Expression Editor** (shown below), which trades the visual simplicity of the builder for the raw power of the [Cloudflare Firewall Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language). The editor also supports advanced features, such as grouping symbols, for constructing highly sophisticated, targeted rules.
 
 ![Expression Editor](../images/firewall-rules-intro-exp-editor.png)
 
@@ -134,5 +134,5 @@ To get started building your own firewall rules, see [_Manage Firewall Rules in 
 Those eager to dive straight into the technical details can refer to these topics:
 
 * [_Common use cases_](https://developers.cloudflare.com/firewall/recipes)
-* [_Firewall Rules language_](https://developers.cloudflare.com/firewall/cf-firewall-language)
+* [_Firewall Rules language_](https://developers.cloudflare.com/ruleset-engine/rules-language)
 * [_Manage rules via the APIs_](https://developers.cloudflare.com/firewall/api/)

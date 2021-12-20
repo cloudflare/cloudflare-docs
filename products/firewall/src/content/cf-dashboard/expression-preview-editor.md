@@ -43,7 +43,7 @@ In general, you can switch back and forth between the Expression Builder and the
 
 ## Create nested expressions
 
-A key advantage of the Expression Editor is support for parentheses as [grouping symbols](/cf-firewall-language/operators/#grouping-symbols), which allow you to explicitly group and nest expressions and, in turn, create highly targeted expressions.
+A key advantage of the Expression Editor is support for parentheses as [grouping symbols](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/#grouping-symbols), which allow you to explicitly group and nest expressions and, in turn, create highly targeted expressions.
 
 This example a rule that challenges any visitor who is not from Malaysia and tries to access WordPress URI paths.
 
@@ -57,4 +57,4 @@ Cloudflare validates all expressions before saving them, so if your expression i
 
 ![Error message](../images/firewall-rules-expressions-editor-6.png)
 
-The Expression Editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see [_Firewall Rules language_](/cf-firewall-language).
+The Expression Editor supports the entire Firewall Rules Language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).

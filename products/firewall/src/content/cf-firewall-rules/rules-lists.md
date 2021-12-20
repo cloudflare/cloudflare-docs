@@ -74,4 +74,4 @@ Both the Cloudflare dashboard and the Cloudflare API support IP Lists.
 
 To use IP Lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/cf-dashboard/rules-lists/use-lists-in-expressions).
 
-To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: IP Lists](/cf-firewall-language/values#ip-lists) in the Firewall Rules language reference.
+To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: IP Lists](https://developers.cloudflare.com/ruleset-engine/rules-language/values#ip-lists) in the Rules language reference.

@@ -13,7 +13,7 @@ The Rules Lists API supports different types of lists:
 
 The [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) provides an interface for programmatically managing these types of lists.
 
-To use an IP List in an expression, refer to [Values: IP Lists](/cf-firewall-language/values/#ip-lists) in the Firewall Rules language documentation.
+To use an IP List in an expression, refer to [Values: IP Lists](https://developers.cloudflare.com/ruleset-engine/rules-language/values/#ip-lists) in the Rules language documentation.
 
 ## Get started
 

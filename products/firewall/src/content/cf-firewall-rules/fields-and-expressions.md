@@ -60,7 +60,7 @@ Simple expressions use this pattern:
 
 For more on creating firewall rules using Cloudflare’s visual builder, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules).
 
-For a list of supported fields and comparison operators, see [_Firewall Rules language_](/cf-firewall-language/).
+For a list of supported fields and comparison operators, see [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
 ### Compound expressions
 
@@ -94,4 +94,4 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 ![Expression Builder with compound expression](../images/firewall-rules-expressions-explained-2.png)
 
-For a list of supported logical operators, see [_Firewall Rules language: Operators_](/cf-firewall-language/operators).
+For a list of supported logical operators, see [Rules language: Operators](https://developers.cloudflare.com/ruleset-engine/rules-language/operators).

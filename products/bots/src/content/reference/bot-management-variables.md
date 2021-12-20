@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Bot Management variables
 
-Bot Management provides access to several [new variables](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#dynamic-fields) within the Firewall expression builder.
+Bot Management provides access to several [new variables](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#dynamic-fields) within the Firewall expression builder.
 
 - **Bot Score**: An integer between 1-99 that indicates [Cloudflare's level of certainty](/concepts/bot-score) that a request comes from a bot.
 - **Verified Bot**: A boolean value that is true if the request comes from a good bot, like Google or Bing. Most customers choose to allow this traffic. For more details, see [Traffic from known bots](https://developers.cloudflare.com/firewall/known-issues-and-faq#how-does-firewall-rules-handle-traffic-from-known-bots).

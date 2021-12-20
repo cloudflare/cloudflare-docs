@@ -17,7 +17,7 @@ May be associated with a firewall rule declaring that the request should be bloc
 
 Use Rules Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/api/cf-lists/) for more information.
 
-Before getting started with the Cloudflare Filters API, familiarize yourself with Firewall Rules [expressions](/cf-firewall-rules/fields-and-expressions/). For a complete reference, see [_Firewall Rules language_](/cf-firewall-language).
+Before getting started with the Cloudflare Filters API, familiarize yourself with Firewall Rules [expressions](/cf-firewall-rules/fields-and-expressions/). For a complete reference, see [Rules language](/rules-language).
 
 ## Differences from other Cloudflare APIs
 
