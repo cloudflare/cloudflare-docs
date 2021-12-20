@@ -246,7 +246,7 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 <Aside type='warning' header='Important'>
 
-Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/cf-dashboard/create-edit-delete-rules/) does not.
+Only the [Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](https://developers.cloudflare.com/firewall/api/) support grouping symbols. The [Expression Builder](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) does not.
 
 </Aside>
 
