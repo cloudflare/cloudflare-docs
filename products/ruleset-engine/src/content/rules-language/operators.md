@@ -6,12 +6,12 @@ type: table
 
 # Operators and grouping symbols
 
-The Cloudflare Firewall Rules language supports comparison and logical operators:
+The Cloudflare Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
 - [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-[Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
+[Grouping symbols](/rules-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
 
 ## Comparison operators
 
@@ -23,7 +23,7 @@ This is the general pattern for using comparison operators:
 <field> <comparison operator> <value>
 ```
 
-The Cloudflare Firewall Rules language supports these comparison operators:
+The Rules language supports these comparison operators:
 
 <Aside type='warning' header='Important'>
 
@@ -250,7 +250,7 @@ Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [
 
 </Aside>
 
-The Firewall Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
+The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
 ### Group expressions
 

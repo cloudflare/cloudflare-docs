@@ -5,14 +5,14 @@ order: 640
 
 # Functions
 
-The Cloudflare Firewall Rules language provides functions for manipulating and validating values in an expression:
+The Cloudflare Rules language provides functions for manipulating and validating values in an expression:
 
 - [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
 - The [HMAC Validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
 
 ## Transformation functions
 
-The Cloudflare Firewall Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case sensitive.
+The Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case sensitive.
 
 For example, the `lower()` function converts all uppercase characters in a string to lowercase.
 
@@ -22,9 +22,9 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/cf-firewall-language/values#arrays) for more information.
+Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/rules-language/values#arrays) for more information.
 
-The Cloudflare Firewall Rules language supports these transformation functions:
+The Rules language supports these transformation functions:
 
 <Definitions>
 
@@ -191,7 +191,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ### Overview
 
-You can validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
+You can validate hash-based message authentication code (HMAC) tokens in a rule expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
 
 ```java
 is_timed_hmac_valid_v0(
@@ -247,7 +247,7 @@ http.host == "download.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/recipes/).
+To review examples of rules that use HMAC validation, see [Firewall: Common use cases](https://developers.cloudflare.com/firewall/recipes).
 
 ### MessageMAC
 
