@@ -15,9 +15,11 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 ![Firewall Rules order and priority](../images/firewall-rules-order-and-priority-1.png)
 
-<Aside type="warning">
+<Aside type="warning" header="Important">
 
-You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/).
+* The execution order diagram does not include products powered by the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) like the [WAF](https://developers.cloudflare.com/waf/) or [Transform Rules](https://developers.cloudflare.com/rules/transform).
+
+* You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/).
 
 </Aside>
 
