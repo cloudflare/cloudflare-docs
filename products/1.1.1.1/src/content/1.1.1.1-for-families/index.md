@@ -87,3 +87,18 @@ security.cloudflare-dns.com
 ```txt
 family.cloudflare-dns.com
 ```
+
+## Testing
+
+Test if restricted content is blocked by visiting the following URLs.
+
+**Test if malware is blocked**
+
+```txt
+https://phishing.testcategory.com/
+```
+**Test if adult content is blocked**
+
+```txt
+https://nudity.testcategory.com/
+```
