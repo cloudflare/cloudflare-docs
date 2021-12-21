@@ -182,6 +182,12 @@ curl -X POST \
 }'
 ```
 
+<Aside type="note" header="Note for Cloudflare Access users">
+
+If you are a Cloudflare Access user, as of January 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a new ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
+
+</Aside>
+
 ## Final remarks
 
 * You can configure up to 40 custom fields across all field types (HTTP request headers, HTTP response headers, and cookies) per zone.

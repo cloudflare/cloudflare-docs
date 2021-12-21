@@ -124,8 +124,8 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "EdgeResponseBytes": 4600,
    "EdgeResponseStatus": 200,
    "EdgeStartTimestamp": "2019-11-10T09:51:07Z",
-   "RayID": "5y1250bcjd621y99"
-   "RequestHeaders":{"cf-access-user":"srhea"},
+   "RayID": "5y1250bcjd621y99",
+   "RequestHeaders":{"cf-access-user":"srhea"}
 }
 {
    "ClientIP": "198.51.100.206",
@@ -137,14 +137,16 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "EdgeResponseBytes": 4570,
    "EdgeResponseStatus": 200,
    "EdgeStartTimestamp": "2019-11-10T09:51:27Z",
-   "RayID": "yzrCqUhRd6DVz72a"
-   "RequestHeaders":{"cf-access-user":"srhea"},
+   "RayID": "yzrCqUhRd6DVz72a",
+   "RequestHeaders":{"cf-access-user":"srhea"}
 }
 ```
 
-Using the `cf-access-user` field
-In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior.
-Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/` panel, but the logs can only identify user interactions that result in a new HTTP request.
+### Using the `cf-access-user` field
+
+In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Configure custom fields](https://developers.cloudflare.com/logs/reference/logpush-api-configuration/custom-fields) for instructions.
+
+Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/panel`, but the logs can only identify user interactions that result in a new HTTP request.
 
 ### Cloudflare logpush integration
 
