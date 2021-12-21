@@ -32,8 +32,9 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 1. Run this command:
 
-    ```bash
-    curl -s https://<your team domain>/cdn-cgi/access/certs | jq .keys[0] | lokey to pem -----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA01SvMv4TgFIECQgzHaRL DGVaKhRQHjgdiSOpbqhHQMdcNtBIM0HAQbrs7YS6sQCCdZC5wCvlq3xgqdU5J6k YI5OCSsIWXKkobAl6PbXHdN0bJximeiHGa3O0hMREP6RKBoI6ayNmZ3WlVGWY 6ie47KGqN69l7fPKyZvszb4GdpxE0r8gllZZwIuPjzlghXRlrkaP48ucQwo+tq PSSdDdW57TCFmy+G547W5iWZWJIeNkfVu9t6FktvCwSZ1ekum3X7IQcd0O0DWSR Aj9tzNDPkzOeSFxmQkKpWs8Qw7ZBIfLOsO3DCH6VPNhS2cqhw1AAMunh8alDKQU aQIDAQAB -----END PUBLIC KEY-----
+    ```console
+    $ curl -s 'https://<your team domain>/cdn-cgi/access/certs' | jq '.keys[0]' | lokey to pem
+    b'-----BEGIN PUBLIC KEY----- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA01SvMv4TgFIECQgzHaRL DGVaKhRQHjgdiSOpbqhHQMdcNtBIM0HAQbrs7YS6sQCCdZC5wCvlq3xgqdU5J6k YI5OCSsIWXKkobAl6PbXHdN0bJximeiHGa3O0hMREP6RKBoI6ayNmZ3WlVGWY 6ie47KGqN69l7fPKyZvszb4GdpxE0r8gllZZwIuPjzlghXRlrkaP48ucQwo+tq PSSdDdW57TCFmy+G547W5iWZWJIeNkfVu9t6FktvCwSZ1ekum3X7IQcd0O0DWSR Aj9tzNDPkzOeSFxmQkKpWs8Qw7ZBIfLOsO3DCH6VPNhS2cqhw1AAMunh8alDKQU aQIDAQAB -----END PUBLIC KEY-----'
     ```
 
     If an error occurs while running `lokey`, install the [Python six](https://pypi.python.org/pypi/six) library, and try again:
@@ -56,7 +57,7 @@ Before you start, click the **Settings** button to copy the AUD tag from your **
 
 * JWT Issuer: `https://<Your Team Domain>`
 
-    
+
 ### Updating your Access signing keys
     
 Cloudflare Access uses a certificate to sign responses between your identity provider, Cloudflare and the Access JWT. The signing key can be used to validate the Access JWT. If you want your identity provider to verify signed responses, you will need to provide the public key from your Access account. The public key can be found at [your team domain](/glossary#team-domain).
