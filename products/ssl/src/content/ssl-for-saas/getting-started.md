@@ -29,7 +29,7 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 1. Create a [new application](https://support.cloudflare.com/hc/articles/201720164) and select the **Free** plan.
 1. Navigate to **DNS**.
 1. Create two DNS records:
-    - A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare wil send custom hostname traffic).
+    - A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
     - A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
     <Example>
