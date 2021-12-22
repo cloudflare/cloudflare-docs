@@ -5,6 +5,7 @@ pcx-content-type: how-to
 ---
 
 import DCVDefinition from "../_partials/_dcv-definition.md"
+import DCVCNAMEDefinition from "../_partials/_dcv-cname-definition.md"
 import CNAMECertValidation from "../_partials/_cname-cert-verification.md"
 import GenericValidationProcess from "../_partials/_generic-validation-process.md"
 import EmailValidationDefinition from "../_partials/_email-validation-definition.md"
@@ -88,7 +89,7 @@ At your authoritative DNS provider, create a TXT record named the **name** and c
 
 #### CNAME
 
-If you use *Digicert* as your Certificate Authority (CA), you can complete DCV with a special CNAME record.
+<DCVCNAMEDefinition/>
 
 Since this method is only available using the API, you need to make a [PATCH request](hhttps://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method) and set a `"validation_method":"cname"` parameter.
 
