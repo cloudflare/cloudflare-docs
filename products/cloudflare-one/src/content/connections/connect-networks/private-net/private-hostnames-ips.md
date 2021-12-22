@@ -9,7 +9,7 @@ Building out a private network has two primary components: the infrastructure si
 
 The infrastructure side of the equation is powered by Cloudflare Tunnel, which connects your infrastructure to Cloudflare — whether that be a singular application, many applications, or an entire network segment. This is made possible by running `cloudflared` in your environment to establish multiple secure, outbound-only, load-balanced links to Cloudflare. Simply put, Tunnel is what connects your network to Cloudflare.
 
-On the other side of this equation, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling, and it establishes a secure, WireGuard-based connection from your users’ devices to the Cloudflare network.
+On the client side, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling, and it establishes a secure, WireGuard-based connection from your users’ devices to the Cloudflare network.
 
 ![Network diagram](../../../static/documentation/connections/private-ips-diagram.png)
 
@@ -51,7 +51,7 @@ Finally, update `cloudflared` on your target private network to the latest avail
 
 You can now resolve requests through the internal DNS server you set up in your private network. 
 
-## Test the setup
+## Test the conection
 
 For testing, run a `dig` command for the internal DNS service. Here is an example for a Private DNS Resolver listening on a Private IP `10.0.0.25` and on Port 1053, for a private domain to be resolved: 
 
