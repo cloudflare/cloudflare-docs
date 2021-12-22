@@ -32,7 +32,7 @@ If you are using [Cloudflare Registrar](https://developers.cloudflare.com/regist
 
 ### Update your nameservers
 
-Once you have added a domain (aka zone) to Cloudflare, that zone will receive two assigned authoritative nameservers.
+Once you have added a domain (also known as a *zone*) to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
 #### Get nameserver names
 

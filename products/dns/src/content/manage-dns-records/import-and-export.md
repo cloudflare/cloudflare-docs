@@ -11,7 +11,7 @@ When you add a new domain to Cloudflare, Cloudflare automatically scans for comm
 
 If you want more control over which records are imported and how, use the bulk import functionality.
 
-### Format your file:
+### Format your file
     
 Create a [BIND zone file](https://help.dyn.com/how-to-format-a-zone-file/) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
