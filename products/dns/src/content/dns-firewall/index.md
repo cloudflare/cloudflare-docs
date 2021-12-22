@@ -28,6 +28,7 @@ DNS Firewall provides the following benefits while allowing organizations total 
 - Global distribution
 - DNS caching
 - Bandwidth savings
+- Rate limiting per data center
 
 ## Availability
 
