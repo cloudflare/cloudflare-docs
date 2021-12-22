@@ -36,7 +36,7 @@ const DEFAULT_SECURITY_HEADERS = {
     X-XSS-Protection header prevents a page from loading if an XSS attack is detected. 
     @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
     */
-    "X-XSS-Protection": "0; mode=block",
+    "X-XSS-Protection": "0",
     /*
     X-Frame-Options header prevents click-jacking attacks. 
     @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
