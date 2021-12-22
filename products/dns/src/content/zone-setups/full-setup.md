@@ -5,7 +5,7 @@ pcx-content-type: tutorial
 
 # Full setup
 
-To use Cloudflare for your authoritative DNS, update the administration settings at your current registrar. 
+To use Cloudflare's authoritative nameservers for your domain, add the nameserver pair provided by Cloudflare at your registrar. 
 
 <Aside type="note" header="Note:">
 
@@ -32,7 +32,7 @@ If you are using [Cloudflare Registrar](https://developers.cloudflare.com/regist
 
 ### Update your nameservers
 
-Once you have added an application to Cloudflare, that application will receive two assigned nameservers.
+Once you have added a domain (also known as a *zone*) to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
 #### Get nameserver names
 
@@ -45,8 +45,8 @@ Once you have added an application to Cloudflare, that application will receive 
 
 1. Log into the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 1. Disable **DNSSEC** for your domain. 
-1. Remove your existing nameservers.
-1. Create new nameservers. If these names are not [copied exactly](#get-nameserver-names), your DNS will not resolve correctly.
+1. Remove your existing authoritative nameservers.
+1. Create new authoritative nameservers. If their names are not [copied exactly](#get-nameserver-names), your DNS will not resolve correctly.
 
     <details>
     <summary>Provider-specific instructions</summary>

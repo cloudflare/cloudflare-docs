@@ -15,13 +15,17 @@ Historically, PTR records prevented outbound SMTP servers from being blocked by 
 
 Now, PTR records are primarily useful for those who own a dedicated IP space. They can help populate trace routes and security tools with human-readable domain names.
 
-As PTR records are exclusively used for reverse DNS lookups, they should only be added to reverse zones.
-
-## Create a reverse zone and PTR record
+As PTR records are mainly used for reverse DNS lookups, they should preferably be added to reverse zones.
 
 ### Availability
 
-The following Cloudflare customers can create reverse zones:
+Any customer can create PTR records, but only Enterprise customers can create reverse zones.
+
+## Create a reverse zone and add a PTR record
+
+### Availability
+
+The following Cloudflare customers can create reverse zones (for example, `2.0.192.in-addr.arpa`):
 
 - Enterprise customers with an IPv4 address space can add the IPv4 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
 - Enterprise customers with an IPv6 address space need to contact their account team to get the IPv6 reverse zone added to their account.

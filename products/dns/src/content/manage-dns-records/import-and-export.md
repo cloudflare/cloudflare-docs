@@ -11,13 +11,7 @@ When you add a new domain to Cloudflare, Cloudflare automatically scans for comm
 
 If you want more control over which records are imported and how, use the bulk import functionality.
 
-The number of imported records per domain depends on your plan:
-
-- **Free**: 200 records
-- **Pro** and **Business**: 3500 records
-- **Enterprise**: 3500 records, but can request a limit increase
-
-### Format your file:
+### Format your file
     
 Create a [BIND zone file](https://help.dyn.com/how-to-format-a-zone-file/) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
