@@ -1,9 +1,10 @@
 ---
+title: FAQ
 order: 3
 pcx-content-type: faq
 ---
 
-# FAQs
+# FAQs — DNS Firewall
 
 <details>
 <summary>How does DNS Firewall choose a backend nameserver to query upstream?</summary>
@@ -42,10 +43,10 @@ Yes. Often, DNS providers want to see a client's IP via EDNS-Client-Subnet becau
 
 When EDNS is enabled, the DNS Firewall gives out the geographically correct answer in cache based on the client IP subnet. To do this, the DNS Firewall segments its cache. For example:
 
-1. A resolver says it is looking for an answer for client `1.2.3.0/24`.
+1. A resolver says it is looking for an answer for client `192.0.2.0/24`.
 1. The DNS Firewall will proxy the request to the origin for the answer.
 1. The DNS Firewall  will cache the answer from the origin, but only for that `/24`.
-1. `1.2.9.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
+1. `203.0.113.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
 
 <Aside type="note">
 

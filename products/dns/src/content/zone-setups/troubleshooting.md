@@ -1,9 +1,10 @@
 ---
+title: Troubleshooting
 order: 5
 pcx-content-type: reference
 ---
 
-# Troubleshooting
+# Troubleshooting zone setups
 
 ## Nameservers
 

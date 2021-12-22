@@ -5,9 +5,9 @@ pcx-content-type: tutorial
 
 # Partial (CNAME) setup
 
-With a partial (CNAME) setup, you can use Cloudflare DNS while maintaining authoritative DNS outside of Cloudflare.
+A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 
-Use this option to migrate individual subdomains onto Cloudflare or when you cannot update your authoritative DNS.
+Use this option to proxy only individual subdomains through Cloudflare's global edge network when you cannot change your authoritative DNS provider.
 
 
 ## Set up a partial domain
