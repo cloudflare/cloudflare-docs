@@ -5,6 +5,7 @@ pcx-content-type: configuration
 ---
 
 import DCVDefinition from "../../_partials/_dcv-definition.md"
+import DCVCNAMEDefinition from "../../_partials/_dcv-cname-definition.md"
 import CNAMECertValidation from "../../_partials/_cname-cert-verification.md"
 import CreateHostname from "../../_partials/_ssl-for-saas-create-hostname.md"
 import EmailValidationDefinition from "../../_partials/_email-validation-definition.md"
@@ -52,7 +53,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 ### CNAME (manual)
 
-You can also complete DCV with a special CNAME record.
+<DCVCNAMEDefinition/>
 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
 
