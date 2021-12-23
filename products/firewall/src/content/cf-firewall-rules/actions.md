@@ -115,6 +115,21 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
         <td>4</td>
       </tr>
       <tr>
+        <td><em>Managed Challenge</em></td>
+        <td>
+          <ul>
+            Helps reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will perform the following actions:
+            <li>
+              Show a non-interactive challenge page (similar to the current JS Challenge)
+            </li>
+            <li>
+              Show a Captcha
+            </li>
+          </ul>
+        </td>
+        <td>5</td>
+      </tr>
+      <tr>
         <td><em>JS Challenge</em></td>
         <td>
           <ul>
