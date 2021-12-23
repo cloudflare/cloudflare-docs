@@ -313,7 +313,7 @@ $ git push -u origin main
 
 Your work now resides within the GitHub repository, which means that Pages is able to access it too.
 
-If this is your first Cloudflare Pages project, refer to the [Get started guide](/pages/get-started) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
+If this is your first Cloudflare Pages project, refer to the [Get started guide](/get-started) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
 * **Project name** – Your choice
 * **Production branch** – `main`
