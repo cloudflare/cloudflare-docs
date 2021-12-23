@@ -67,7 +67,7 @@ If you are contributing to [@cloudflare/cloudflare-docs](https://github.com/clou
   ~/cloudflare-docs $ yarn install
   ```
 
-1. Run the `develop` command passing the product folder name (the name of a `products/` sub-folder) as an argument — for example, `docs-engine`:
+1. From the root directory, run the `develop` command passing the product folder name (the name of a `products/` sub-folder) as an argument — for example, `docs-engine`:
 
   ```sh
   ~/cloudflare-docs $ yarn develop -- docs-engine
