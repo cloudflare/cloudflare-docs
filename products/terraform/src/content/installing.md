@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Install Terraform
 
-The installation process for Terraform ships as a single binary file. For official instructions for installing Terraform, refer to [Install Terraform](https://www.terraform.io/intro/getting-started/install.html). The examples below include installation information for popular operating systems.
+The installation process for Terraform ships as a single binary file. For official instructions for installing Terraform, refer to [Install Terraform](https://learn.hashicorp.com/terraform). The examples below include installation information for popular operating systems.
 
 ## Mac
 
