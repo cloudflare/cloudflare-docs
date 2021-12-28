@@ -17,7 +17,7 @@ To receive WAF alerts, you must configure a [notification](https://developers.cl
 
 ## Set up a notification for WAF alerts
 
-For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](https://developers.cloudflare.com/fundamentals/notifications/create-notification).
+For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](https://developers.cloudflare.com/fundamentals/notifications/create-notifications).
 
 ---
 

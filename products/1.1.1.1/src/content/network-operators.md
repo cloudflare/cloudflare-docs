@@ -43,7 +43,7 @@ Families (Adult Content + Malware) | 1.1.1.3 / 1.0.0.3  | `https://family.cloudf
 
 </TableWrap>
 
-You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/1.1.1.1-for-families) endpoints.
+You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1-for-families) endpoints.
 
 ## Rate Limiting
 
