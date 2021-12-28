@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Manage subdomains
 
-Once you have [added your main domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://support.cloudflare.com/hc/articles/205195708), you also might want to set up a subdomain (`www.example.com` or `blog.example.com`).
+Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://support.cloudflare.com/hc/articles/205195708), you also might want to set up a subdomain (`www.example.com` or `blog.example.com`).
 
 ## Create a subdomain
 
@@ -15,9 +15,9 @@ If you have already added that subdomain at your host, create a corresponding [D
 
 ## Set up redirects
 
-### Redirect a subdomain to your domain
+### Redirect a subdomain to root domain
 
-Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your main domain (`example.com`).
+Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your root domain (`example.com`).
 
 1. Create a [proxied DNS A record](https://support.cloudflare.com/hc/articles/360019093151) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
@@ -29,7 +29,7 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
 
     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your main domain. You will likely want to include **Subpath matching** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
+1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
     <Example>
     
@@ -39,12 +39,12 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
     
     </Example>
 
-### Redirect your domain to a subdomain
+### Redirect root domain to a subdomain
 
-Sometimes, you might want all traffic to your main domain (`example.com`) to actually go to a subdomain (`www.example.com`).
+Sometimes, you might want all traffic to your root domain (`example.com`) to actually go to a subdomain (`www.example.com`).
 
 1. If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain.
-1. Create a proxied DNS A record for your main domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
+1. Create a proxied DNS A record for your root domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
     <Example>
 
@@ -54,7 +54,7 @@ Sometimes, you might want all traffic to your main domain (`example.com`) to act
 
     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your main domain to your subdomain. You will likely want to include **Subpath matching** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
 
     <Example>
     
