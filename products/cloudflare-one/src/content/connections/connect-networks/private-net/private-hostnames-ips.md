@@ -71,7 +71,7 @@ If you are encountering issues when setting up private IPs and hostnames for you
 
 * Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to communicate with Cloudflare.
 
-* Double-check the precedence of your application policies in the **Gateway** > **Policies** > **Network policies** tab. Ensure that a more global Block or Allow policy will not supercede the application policies
+* Double-check the precedence of your application policies in the **Gateway** > **Policies** > **Network policies** tab. Ensure that a more global Block or Allow policy will not override the application policies.
 
 * Ensure your Private DNS resolver is available over a routable private IP address.
 
