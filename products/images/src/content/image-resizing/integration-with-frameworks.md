@@ -14,7 +14,7 @@ Image Resizing can be used automatically with Next.js' [`next/image` component](
 import Image from "next/image";
 
 const normalizeSrc = (src) => {
-  return src[0] === "/" ? src.slice(1) : src;
+  return src.startsWith("/") ? src.slice(1) : src;
 };
 
 const cloudflareLoader = ({ src, width, quality }) => {
