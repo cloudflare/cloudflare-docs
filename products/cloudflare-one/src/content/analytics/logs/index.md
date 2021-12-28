@@ -21,4 +21,4 @@ Cloudflare for Teams logs are stored for a varying period of time based on the s
 
 ## How does Cloudflare use this data?
 
-For more information on how we use this data, please refer to our [Privacy Policy](https://www.cloudflare.com/en-gb/application/privacypolicy/).
+For more information on how we use this data, please refer to our [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/).

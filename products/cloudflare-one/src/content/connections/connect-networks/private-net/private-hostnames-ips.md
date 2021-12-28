@@ -5,15 +5,15 @@ pcx-content-type: concept
 
 # Private hostnames and IPs
 
-Building out a private network has two primary components: the infrastructure side, and the client side.
+Building out a private network has two primary components: the infrastructure side and the client side.
 
-The infrastructure side of the equation is powered by Cloudflare Tunnel, which connects your infrastructure to Cloudflare — whether that be a singular application, many applications, or an entire network segment. This is made possible by running `cloudflared` in your environment to establish multiple secure, outbound-only, load-balanced links to Cloudflare.
+The infrastructure side is powered by Cloudflare Tunnel, which connects your infrastructure to Cloudflare — whether that be a singular application, many applications, or an entire network segment. This is made possible by running `cloudflared` in your environment to establish multiple secure, outbound-only, load-balanced links to Cloudflare.
 
-On the client side, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling, and it establishes a secure connection from your users’ devices to the Cloudflare network.
+On the client side, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling and it establishes a secure connection from your users’ devices to the Cloudflare network.
 
 ![Network diagram](../../../static/documentation/connections/private-ips-diagram.png)
 
-In this page, we will cover how to define your internal DNS resolver with Cloudflare for Teams, and how to create a new Private IP/Hostname application in Cloudflare Access.
+In this page, we will cover how to define your internal DNS resolver with Cloudflare for Teams and how to create a new Private IP/Hostname application in Cloudflare Access.
 
 ## Before you start
 
@@ -39,7 +39,7 @@ Next, we need to create a [Local Domain Fallback](/connections/connect-devices/w
 
 <Aside type='note'>
 
-While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/connections/connect-networks/private-net#optional-ensure-that-traffic-can-reach-your-network).
+While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/connections/connect-networks/private-net).
 
 </Aside>
 
@@ -69,7 +69,7 @@ If you are encountering issues when setting up private IPs and hostnames for you
 
 * Ensure that end-user devices are enrolled into WARP by visiting `help.teams.cloudflare.com` on those devices. The page should return `Your network is fully protected`.
 
-* Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
+* Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to communicate with Cloudflare.
 
 * Double-check the precedence of your application policies in the **Gateway** > **Policies** > **Network policies** tab. Ensure that a more global Block or Allow policy will not supercede the application policies
 

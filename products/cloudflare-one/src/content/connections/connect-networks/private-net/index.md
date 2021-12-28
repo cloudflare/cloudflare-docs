@@ -62,7 +62,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 ## (optional) Ensure that traffic can reach your network
 
-By default, Cloudflare for Teams [excludes traffic](/connections/connect-devices/warp/exclude-traffic/split-tunnels) to a specific set of destinations from WARP encryption. If you have not changed your default Split Tunnel settings, you can skip this step. If you have altered this configuration, for example by adding/removing entries to the Exclude list or by setting Split Tunnels mode to **Include**, make sure that traffic to the IP/CIDR you are associating with your private network is indeed set to be encrypted by WARP.
+By default, Cloudflare for Teams [excludes traffic](/connections/connect-devices/warp/exclude-traffic/split-tunnels) to a specific set of destinations from WARP encryption. If you have not changed your default Split Tunnel settings, you can skip this step. If you have altered this configuration, for example by adding or removing entries to the Exclude list or by setting Split Tunnels mode to **Include**, make sure that traffic to the IP/CIDR you are associating with your private network is set to be encrypted by WARP.
 
 To check that, navigate to **Settings** > **Network** > **Split Tunnels** on the Teams Dashboard, and click **Manage**.
 
