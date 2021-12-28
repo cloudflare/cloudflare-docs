@@ -137,3 +137,7 @@ filename: _headers
   Permissions-Policy: document-domain=()
   Content-Security-Policy: script-src 'self'; frame-ancestors 'none';
 ```
+
+## Limits
+
+File can have a maximum of 100 header rules.
