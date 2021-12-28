@@ -13,7 +13,9 @@ Most subdomains serve a specific purpose within the overall context of your webs
 
 If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain (`blog`, `store`).
 
-## Redirect a subdomain to your domain
+## Set up redirects
+
+### Redirect a subdomain to your domain
 
 Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your main domain (`example.com`).
 
@@ -29,7 +31,15 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
 
 1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your main domain. You will likely want to include **Subpath matching** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
-## Redirect your domain to a subdomain
+    <Example>
+    
+    | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
+    | --------- | --------- | --- | --- |
+    | `https://www.example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
+    
+    </Example>
+
+### Redirect your domain to a subdomain
 
 Sometimes, you might want all traffic to your main domain (`example.com`) to actually go to a subdomain (`www.example.com`).
 
@@ -45,6 +55,14 @@ Sometimes, you might want all traffic to your main domain (`example.com`) to act
     </Example>
 
 1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your main domain to your subdomain. You will likely want to include **Subpath matching** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+
+    <Example>
+    
+    | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
+    | --------- | --------- | --- | --- |
+    | `https://example.com` | `https://www.example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
+    
+    </Example>
 
 ## SSL/TLS for subdomains
 
