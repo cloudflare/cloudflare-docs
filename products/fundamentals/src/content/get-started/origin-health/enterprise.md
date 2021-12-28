@@ -31,7 +31,7 @@ When you secure origin connections, it prevents attackers from discovering and o
 
 ## Monitor origin health
 
-For passive monitoring, [create notifications](/notifications/configure-create/create-notifications) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
+For passive monitoring, [create notifications](/notifications/create-notifications) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
 
 <OriginHealthCheck/>
 

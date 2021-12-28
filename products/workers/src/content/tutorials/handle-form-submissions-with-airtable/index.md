@@ -187,7 +187,7 @@ Further down the page, you will begin to see example requests, showing you how t
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](./api-key.png)
 
-To make this API key available in your codebase, use the [`wrangler secret`](cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
+To make this API key available in your codebase, use the [`wrangler secret`](/cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
 
 Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
 
