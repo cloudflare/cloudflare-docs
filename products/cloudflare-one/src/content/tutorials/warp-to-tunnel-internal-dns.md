@@ -1,25 +1,24 @@
 ---
-updated: 2021-12-24
-category: 🌐 Connections
-difficulty: Advanced
+updated: 2021-12-28
+category: 🔐 Zero Trust
 pcx-content-type: tutorial
 ---
 
-# Connect to Private IPs and Hostnames
+# Connect to private hostnames and IPs with Cloudflare Tunnel
 
-You can use Cloudflare’s Zero Trust platform to connect to infrastructure you manage. You can connect from devices to private resources that use TCP or UDP with built-in Zero Trust controls through Cloudflare’s network. This model provides the convenience and flexibility of a traditional private network with identity-driven controls.
+Building out a private network has two primary components: the infrastructure side, and the client side.
 
-The infrastructure connects to Cloudflare using Cloudflare Tunnel, a product powered by a lightweight connector that you deploy in your environment. The connector can connect one or many applications or network segments simultaneously. The connector relies on establishing an outbound-only tunnel to Cloudflare’s edge so that you do not have to open holes in your firewall.
+The infrastructure side of the equation is powered by Cloudflare Tunnel, which connects your infrastructure to Cloudflare — whether that be a singular application, many applications, or an entire network segment. This is made possible by running `cloudflared` in your environment to establish multiple secure, outbound-only, load-balanced links to Cloudflare. Simply put, Tunnel is what connects your network to Cloudflare.
 
-Your client device connects through Cloudflare’s network, and on to your infrastructure, using a lightweight agent called Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling, and it establishes a secure, WireGuard-based connection from your users’ devices to the Cloudflare network.
-​​
+On the other side of this equation, your end users need to be able to easily connect to Cloudflare and, more importantly, your network. This connection is handled by Cloudflare WARP. This client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling, and it establishes a secure, WireGuard-based connection from your users’ devices to the Cloudflare network.
+
 ![Warp to Tunnel](../static/secure-origin-connections/warp-to-tunnel-internal-dns/warp-to-tunnel.png)
 
 **📝 Pre-requisites:**
 
-* Cloudflare Tunnel must be configured to route traffic to a private IP space
-* `cloudflared` must be connected to Cloudflare from your target private network
-* Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare
+* Cloudflare Tunnel must be properly [configured](/connections/connect-apps/configuration) to route traffic to a private IP space.
+* `cloudflared` must be connected to Cloudflare from your target private network.
+* Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
 **🗺️ This tutorial covers how to:**
 
@@ -30,32 +29,37 @@ Your client device connects through Cloudflare’s network, and on to your infra
 
 ## Enable UDP support
 
-To get started, login to the Cloudflare for Teams dashboard and navigate to Settings.
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
 
-![Enable UDP](../static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
+    ![Network Settings](../static/secure-origin-connections/warp-to-tunnel-internal-dns/network-settings.png)
 
-In Settings, you’ll select Network and scroll down until you see Firewall Proxy settings. Here, you’ll find two options: TCP and UDP. Ensure Proxy is enabled and both TCP and UDP are selected.
+1. Scroll down to Firewall settings.
+1. Ensure the Proxy is enabled and both TCP and UDP are selected.
 
-![Network Settings](../static/secure-origin-connections/warp-to-tunnel-internal-dns/network-settings.png)
+    ![Enable UDP](../static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
 
 ## Create a local domain fallback entry
 
-Next, we will remain in Network Settings and navigate to Local Domain Fallback and select Manage.
+Next, we need to create a [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains) entry.
 
-![Manage Local Domains](../static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
+1. Remain in Network Settings and scroll further down to **Local Domain Fallback**.
 
-You’ll then create a new Local Domain Fallback entry pointing to the internal DNS resolver.  If you already have an internal DNS resolver setup for your private network, this will be the domain configured for that resolver.
+    ![Manage Local Domains](../static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
 
-Here, I have created a rule that will direct Cloudflare WARP to resolve all requests for `myorg.internal` through your internal resolver at `10.0.0.25` rather than attempting to resolve this request publicly.
+2. Click **Manage**.
+3. Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.internal` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly. 
 
 ![Create Local Domains](../static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
-Note: While we are in Network Settings, make certain that Split Tunnel rules are configured to
-allow traffic for private IPs to be included in the traffic sent by WARP to Cloudflare.
+<Aside type='note'>
+
+While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/connections/connect-networks/private-net#optional-ensure-that-traffic-can-reach-your-network).
+
+</Aside>
 
 ## Update `cloudflared`
 
-Next, we need to update our Tunnel configuration to ensure we’re using QUIC as our default transport protocol. This can be accomplished by either setting `protocol: QUIC` in your config.yml or by passing –protocol quic directly through your CLI args run command.
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: QUIC` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI. 
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 
@@ -63,15 +67,17 @@ Finally, update to the latest available version (2021.12.3 as of the time of wri
 
 You can now resolve requests through the internal DNS server you set up in your private network.
 
-For testing, run a `dig` command for the internal DNS service:
+## Test the setup
 
-Here is an example for a Private DNS Resolver listening on a Private IP 10.0.0.25 and on Port 1053, for a private domain to be resolved:
+For testing, run a `dig` command for the internal DNS service. Here is an example for a Private DNS Resolver listening on a Private IP `10.0.0.25` and on Port 1053, for a private domain to be resolved: 
 
-`dig @10.0.0.25 -p 1053 AAAA www.myorg.internal`
+```sh
+$ dig @10.0.0.25 -p 1053 AAAA www.myorg.internal
+```
 
-If you turn off the Teams client in your eyeball, you can then retry that dig and it should fail.
+The `dig` will fail if the WARP client is disabled in your end user's device.
 
-## Troubleshooting Tips and Tricks
+## Troubleshooting
 
 * Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Cloudflare for Teams dashboard.
 
