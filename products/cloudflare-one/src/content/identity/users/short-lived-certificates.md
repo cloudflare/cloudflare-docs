@@ -44,15 +44,15 @@ $ sudo adduser jdoe
 ```
 ## 4. **Save your public key**
 
-1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system.
+1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file to your local system.
 
-2. Use the following command to change directories to the SSH configuration directory on the machine:
+2. Use the following command to change directories to the SSH configuration directory on the remote target machine:
 
 ```sh
 $ cd /etc/ssh
 ```
 
-3. Once there, you can use the following command to both generate the file and open a text editor to input the public key.
+3. Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
 
 ```sh
 $ vim ca.pub
@@ -67,11 +67,11 @@ $ vim ca.pub
 
 ## 5. Modify your SSHD config
 
-Cloudflare Access requires two changes to the `sshd_config` file used on the target machine.
+Cloudflare Access requires two changes to the `sshd_config` file used on the remote target machine.
 
 The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
 
-1. While staying within the `/etc/ssh` directory, open the `sshd_config` file.
+1. While staying within the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
 
 ```sh
 $ vim /etc/ssh/sshd_config
@@ -99,7 +99,7 @@ The change above will tell your SSH configuration to use the public key saved in
 
 ## 6. Restart your SSH server
 
-Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
+Once you have modified your SSHD configuration, you still need to restart the SSH service on the remote machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
 ### Debian/Ubuntu
 
