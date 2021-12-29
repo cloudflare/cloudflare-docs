@@ -1,6 +1,6 @@
 ---
 order: 0
-pcx-content-type: how-to
+pcx-content-type: reference
 ---
 
 # Manage domains
@@ -17,7 +17,7 @@ Cloudflare also offers an at-cost registrar service to [purchase new domain name
 
 A web host keeps your website online so visitors can reach it via the domain name.
 
-Cloudflare **does not** offer web hosting for **most** websites, though you can deploy and host JAMstack sites with [Cloudflare Pages](https://developers.cloudflare.com/pages/).
+Cloudflare does not offer web hosting for most websites, though you can deploy and host JAMstack sites with [Cloudflare Pages](https://developers.cloudflare.com/pages/).
 
 ## Add a domain to Cloudflare
 
