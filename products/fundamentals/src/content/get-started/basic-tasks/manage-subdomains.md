@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # Manage subdomains
 
-Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://support.cloudflare.com/hc/articles/205195708), you also might want to set up a subdomain (`www.example.com` or `blog.example.com`).
-
-## Create a subdomain
+Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://support.cloudflare.com/hc/articles/205195708), you also might want to set up a *subdomain*.
 
 Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
+
+## Create a subdomain
 
 If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain (`blog`, `store`).
 
