@@ -93,8 +93,8 @@ The root certificate is now installed and ready to be used.
 You can install the Cloudflare certificate on your terminal, too.
 
 1. Download the Cloudflare certificate.
-1. Open Terminal.
-1. Launch the following command:
+2. Open Terminal.
+3. Launch the following command:
 
  ```bash
  sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
@@ -105,6 +105,28 @@ You can install the Cloudflare certificate on your terminal, too.
  ```bash
 sudo cat Cloudflare_CA.crt >> /usr/local/etc/openssl/cert.pem
  ```
+ 
+### Ubuntu
+
+1. Download the Cloudflare certificate
+2. Open terminal
+3. Enter the following command:
+
+```
+sudo cp Cloudflare_CA.crt /usr/local/share/ca-certificates
+```
+
+Note if the directory does not exist, you must make it:
+
+```
+sudo mkdir /usr/local/share/ca-certificates
+```
+
+Then 
+
+```
+sudo update-ca-certificates
+```
 
 ### iOS
 
