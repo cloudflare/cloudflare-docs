@@ -95,7 +95,7 @@ Test if restricted content is blocked by visiting the following URLs.
 **Test if malware is blocked**
 
 ```txt
-https://phishing.testcategory.com/
+https://malware.testcategory.com/
 ```
 **Test if adult content is blocked**
 
