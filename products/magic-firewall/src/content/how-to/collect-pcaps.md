@@ -7,7 +7,9 @@ pcx-content-type: how-to
 
 PCAPs API can be used to capture packets flowing at the edge.
 
-The first version of PCAPs API will support packets flowing through the Magic Transit System. The packets flowing at all edge metals are sampled, and these sampled packets are collected to build a PCAP file. This collection type is the simple pcap type. For now, only requests to collect "magic-transit" system and "simple" type are supported. Support for other systems and collection types will be added later.
+Before we collect a pcap we need to first understand the "system" and "type" of a packet capture. A pcap's "system" is the product/logical subsystem where packets are captured. And a pcap's "type" is how the captured packets are built into a pcap file.
+
+Currently, when a pcap is requested, packets flowing at the edge through the Magic Transit System are captured. So, the system  is "magic-transit". These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file.  This way of sampling packets and building a pcap is the "simple" type.
 
 ## Send a PCAP collect Request
 
@@ -45,7 +47,9 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
         "system": "magic-transit"
 }'
 ```
-"filter_v1" can be left empty to collect all packets, without any filtering.
+"filter_v1" can be left empty to collect all packets, without any filtering. 
+
+Currently, you can only send one collect request per minute.
 
 
 
@@ -73,12 +77,13 @@ The response to this message will be a JSON body which contains the details of t
   "messages": []
 }
 ```
-The response will have the "status" field set to "pending" while the collection is in progress. You need to wait for the pcap collection to complete before downloading the file. Monitoring a collect request is described next.
+The response will have the "status" field set to "pending" while the collection is in progress. You need to wait for the pcap collection to complete before downloading the file.  The status will change to "success" when the pcap is ready to download. Checking a collect request's status is described next.
 
-For the initial release, You can only send one collect request per minute. This restriction will be lifted later.
+
 
 ## Check PCAP status
-To check the status of a running job a request to the endpoint can be sent specifying the pcap identifier received in the response in the previous step.
+To check the status of a running job, a request to the endpoint can be sent specifying the pcap identifier. The pcap identifier is received in the response of a collect request (see the previous step).
+
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
 -H 'Content-Type: application/json' \
@@ -123,7 +128,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${
 
 
 ## List PCAPs
-To list all the requests sent so far you can use the command below
+To list all the requests sent so far, you can use the command below
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 -H 'Content-Type: application/json' \
@@ -131,7 +136,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 -H 'X-Auth-Key: 00000000000'
 ```
 
-The response will include an array of upto 50 requests sent in the past. This will include completed requests and requests whose collection is ongoing. A sample response could look like:
+The response will include an array of up to 50 requests sent in the past. This will include completed requests and requests whose collection is ongoing. A sample response could look like:
 ```
 {
   "result": [
