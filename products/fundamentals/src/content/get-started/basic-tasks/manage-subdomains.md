@@ -11,7 +11,7 @@ Most subdomains serve a specific purpose within the overall context of your webs
 
 ## Create a subdomain
 
-If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain (`blog`, `store`).
+If you have already added a subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain (`blog`, `store`).
 
 ## Set up redirects
 

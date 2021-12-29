@@ -45,7 +45,7 @@ If you have an alias domain that simply forwards traffic to another domain, you 
 
     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your alias domain to your other domain. You will likely want to select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
+1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
 
     <Example>
     
