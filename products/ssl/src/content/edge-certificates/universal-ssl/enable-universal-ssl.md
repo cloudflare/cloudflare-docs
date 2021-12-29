@@ -3,9 +3,11 @@ order: 1
 pcx-content-type: how-to
 ---
 
-# Manage universal certificates
+# Manage Universal SSL certificates
 
 ## Enable Universal SSL
+
+Once you enable Universal SSL, you can review the [certificate's status](/ssl-tls/certificate-statuses) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
 
 ### Authoritative (Full) domains
 

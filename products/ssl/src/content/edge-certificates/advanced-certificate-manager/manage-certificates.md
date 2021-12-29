@@ -9,6 +9,10 @@ import CipherSuitesDefinition from "../../_partials/_cipher-suites-definition.md
 
 ## Create a certificate
 
+If you are using an existing [Universal SSL certificate](/edge-certificates/universal-ssl), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
+
+Once you order a certificate, you can review the [certificate's status](/ssl-tls/certificate-statuses) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+
 ### Using the dashboard
 
 To create a new advanced certificate in the dashboard:
