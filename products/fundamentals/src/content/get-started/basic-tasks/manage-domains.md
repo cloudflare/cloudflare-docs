@@ -51,7 +51,7 @@ If you have an alias domain that simply forwards traffic to another domain, you 
     
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
-    | `https://previous.com` | `https://new.com` | 301 | *Include subdomains* and *Subpath matching* |
+    | `previous.com` | `https://new.com` | 301 | *Include subdomains* and *Subpath matching* |
     
     </Example>
 

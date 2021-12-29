@@ -35,7 +35,7 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
     
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
-    | `https://www.example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
+    | `www.example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
     
     </Example>
 
@@ -60,7 +60,7 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
     
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
-    | `https://example.com` | `https://www.example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
+    | `example.com` | `https://www.example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
     
     </Example>
 
