@@ -25,6 +25,10 @@ For help adding a domain to Cloudflare, refer to our [setup guide](https://suppo
 
 Once you finish adding your domain, you likely will want to also [update your domain's nameservers](https://support.cloudflare.com/hc/articles/205195708) to get Cloudflare's performance and security benefits.
 
+## Remove a domain from Cloudflare
+
+For help removing an active domain from Cloudflare, refer to [our Support guide](https://support.cloudflare.com/hc/articles/360033554252).
+
 ## Redirect one domain to another
 
 If you have an alias domain that simply forwards traffic to another domain, you can set up redirects directly within Cloudflare.
