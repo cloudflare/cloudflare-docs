@@ -36,7 +36,12 @@ To make sure your domain is accessible over HTTPS:
 
 ## Troubleshooting
 
-Depending on your domain's security settings, you might accidentally block search engine crawlers. If you notice SEO issues, first review your [Firewall rules](https://developers.cloudflare.com/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) and [bot protection](https://developers.cloudflare.com/bots/concepts/bot#verified-bots) settings.
+Depending on your domain's security settings, you might accidentally block search engine crawlers.
+
+If you notice SEO issues, make sure your:
+
+- [Firewall rules](https://developers.cloudflare.com/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
+- [Bot protection](https://developers.cloudflare.com/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
 
 If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](https://support.cloudflare.com/hc/articles/200169806).
 
