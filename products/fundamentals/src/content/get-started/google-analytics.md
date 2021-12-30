@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 Using Cloudflare does not affect Google Analytics (GA) tracking.
 
-Cloudflare proxies traffic to your origin web server, but the GA JavaScript code never actually sends traffic to your domain. Instead, it executes directly in a user's browser and does not interact with Cloudflare.
+Cloudflare proxies traffic to your origin web server, but the GA JavaScript code never actually sends traffic to your server. Instead, it executes directly in a user's browser and does not interact with Cloudflare.
 
 Cloudflare only affects analytics tools that read logs directly from your web server (like awstats).
 
