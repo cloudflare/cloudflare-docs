@@ -52,4 +52,4 @@ The following characteristics do not affect your domain's SEO:
 - **Changing your nameservers**: Using Cloudflare's nameservers does not affect your domain's SEO.
 - **Server location**: According to Google, [server location](http://www.seroundtable.com/seo-geo-location-server-google-17468.html) is not important for SEO.
 - **Sites sharing IP addresses**: Search engines do not generally penalize domains using shared IP addresses unless several of these sites are malicious or spammy.
-- **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and would only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.
+- **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.
