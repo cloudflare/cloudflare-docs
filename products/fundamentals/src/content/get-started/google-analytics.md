@@ -3,7 +3,7 @@ title: Cloudflare and Google Analytics
 pcx-content-type: reference
 ---
 
-# Using Cloudflare with Google Analytics 
+# Using Google Analytics with Cloudflare
 
 Using Cloudflare does not affect Google Analytics (GA) tracking.
 
