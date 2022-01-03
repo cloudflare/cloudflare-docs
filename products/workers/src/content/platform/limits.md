@@ -121,7 +121,7 @@ Refer to [KV pricing](/platform/pricing#workers-kv) to review the specific KV op
 | [Storage per class](#durable-objects)   | unlimited
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
-| [Value size](#durable-objects)          | 32 KiB
+| [Value size](#durable-objects)          | 128 KiB
 | [CPU per request](#durable-objects)     | 30s
 
 </TableWrap>
