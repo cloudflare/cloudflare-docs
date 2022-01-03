@@ -288,6 +288,68 @@ Business plans or higher.
 
 Investigate to confirm it is an expected change.
 
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their zone.
+
+For more information, refer to [Detecting malicious scripts](https://developers.cloudflare.com/page-shield/about/malicious-script-detection).
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Review the information in the Page Shield dashboard about the detected malicious script, and eventually update the pages where the script was detected. For more information, refer to [Review scripts considered malicious](https://developers.cloudflare.com/page-shield/use-dashboard/review-malicious-scripts).
+
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious URL Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their zone.
+
+For more information, refer to [Detecting malicious scripts](https://developers.cloudflare.com/page-shield/about/malicious-script-detection).
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Review the information in the Page Shield dashboard about the detected malicious script, and eventually update the pages where the script was detected. For more information, refer to [Review scripts considered malicious](https://developers.cloudflare.com/page-shield/use-dashboard/review-malicious-scripts).
+
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious Script Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in your zone as malicious.
+
+For more information, refer to [Detecting malicious scripts](https://developers.cloudflare.com/page-shield/about/malicious-script-detection).
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Review the information in the Page Shield dashboard about the detected malicious script, and eventually update the pages where the script was detected. For more information, refer to [Review scripts considered malicious](https://developers.cloudflare.com/page-shield/use-dashboard/review-malicious-scripts).
 
 </div>
 </details>
