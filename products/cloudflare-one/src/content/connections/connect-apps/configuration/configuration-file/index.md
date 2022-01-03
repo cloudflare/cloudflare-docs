@@ -66,5 +66,5 @@ $ cat config.yaml
 Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When running a tunnel, make sure you specify the path to your configuration file:
 
 ```sh
-$ cloudflared tunnel run --config /path/your-config-file.yaml run tunnel-name
+$ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
 ```
