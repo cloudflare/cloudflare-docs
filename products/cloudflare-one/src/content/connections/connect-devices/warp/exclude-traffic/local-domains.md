@@ -31,7 +31,12 @@ You can add or remove domains from the Local Domains list at any time.
 On the Local Domains page, enter the domain, the DNS server(s) that should resolve that domain name and an optional description in the relevant fields. Then, click **Add domain**.
  
 The domain will appear in the list of Local Domain entries.
- 
+
+## Specifying a DNS server
+
+It is recommended to always specify at least one DNS server that local domain fallback should use for the domain specified. Without a value specified the client will make a best effort to identify the DNS server(s) used on the device before it started. and use that server for each domain in the list. 
+
+
 ## Delete a domain
  
 To remove a domain from the list, locate the domain and then click **Delete**.
