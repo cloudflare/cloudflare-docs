@@ -400,7 +400,7 @@ Select **Add** and scroll down to Workers.
 
 ![notifications-tab](./media/add-workers-notifications.png)
 
-After you enable notifications and add recepients, edit or turn off notifications by returning to **Notifications**.
+After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
 
 ![notifications-tab](./media/workers-overview-notifications.png)
 
