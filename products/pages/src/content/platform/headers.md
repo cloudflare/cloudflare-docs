@@ -140,4 +140,4 @@ filename: _headers
 
 ## Limits
 
-A `headers` file can have a maximum of 100 header rules.
+A `_headers` file can have a maximum of 100 header rules.
