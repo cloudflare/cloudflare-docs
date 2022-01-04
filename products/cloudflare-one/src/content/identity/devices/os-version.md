@@ -31,7 +31,11 @@ To enable the OS version check:
 ## Determine the OS Version
 Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
 
-**Note** you must ensure the version is entered is a valid x.x.x semver. If the command below only returns a value of `x.x` you must append a `.0` so the complete version looks like `x.x.0` 
+<Aside type='note'>
+
+You must ensure the version is entered is a valid `x.x.x` Semver. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
+  
+  </Aside>
 
 ### On macOS
 1. Open a terminal window
