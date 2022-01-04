@@ -9,7 +9,7 @@ When the WARP client is deployed, all DNS requests and/or network traffic on the
 
 To do that, there are three settings you can configure:
 
-* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP client to send DNS requests for a specified domain to a resolver that is not Cloudflare Gateway.  This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
+* **Use [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains)** to instruct the WARP client to send DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
 
 <Aside type="warning">
  
@@ -39,6 +39,6 @@ You may still be required to run WARP alongside a legacy VPN product, and we are
 
 <Aside type='note'>
 
- Every time the Split Tunnel configuration is changed in the Teams Dashboard, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN and you may need to re-start it manually.
+ Every time the Split Tunnel configuration is changed in the Teams Dashboard, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN and you may need to restart it manually.
  
 </Aside>
