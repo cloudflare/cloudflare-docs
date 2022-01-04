@@ -17,7 +17,7 @@ title: OS Version
 </div>
 </details>
 
-The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than a given **Semver** version. The version formation must be specified as a valid Semver (ex. x.x.x or 1.2.0)
+The OS Version device posture attribute checks whether the version of a device’s operating system matches, is greater than or lesser than a given **Semver** version. The version formation must be specified as a valid Semver (for example, `x.x.x` or `1.2.0`)
 
 To enable the OS version check:
 
