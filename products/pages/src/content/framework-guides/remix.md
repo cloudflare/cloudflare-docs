@@ -19,7 +19,7 @@ $ npx create-remix@latest
 
 ```
 
-After running the above command, you will be prompted to name your project and select your deploy method. This guide uses Cloudflare Pages. 
+After running the above command, you will be prompted in the CLI to name your project and select your deploy method. This guide uses Cloudflare Pages. 
 
 By selecting Cloudflare Pages as your deploy option in the CLI drop down, your folder will have a `functions/[[path]].ts` file. This is the functions integration where we serve your Remix application on all function paths of your website. After selecting your deployment option, change the directory to your project and see your project by running the following command: 
 
