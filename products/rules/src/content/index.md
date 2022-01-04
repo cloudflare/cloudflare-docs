@@ -6,7 +6,7 @@ order: 1
 
 # Cloudflare Rules
 
-Cloudflare Rules allows you to perform adjustments to incoming requests, and trigger certain actions when a request matches a URL pattern.
+Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers of requests and responses, and trigger certain actions when a request matches a URL pattern.
 
 ## Main features
 
