@@ -15,7 +15,7 @@ You have two ways of installing WARP on Linux, depending on the distro you are u
 
 <Aside type="note">
 
-If you get an error message when trying to install via the terminal, download the package that suits your distro from our [package repository](https://pkg.cloudflareclient.com/packages/cloudflare-warp).
+If you get an error message when trying to install via the terminal, download the package that suits your distro from the [package repository](https://pkg.cloudflareclient.com/packages/cloudflare-warp).
 
 </Aside>
 
