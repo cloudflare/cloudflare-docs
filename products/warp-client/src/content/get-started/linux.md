@@ -8,10 +8,16 @@ pcx-content-type: how-to
 
 You have two ways of installing WARP on Linux, depending on the distro you are using:
 
-1. Find the [setup repository](https://pkg.cloudflareclient.com/).
-1. Install the `cloudflare-warp` package that suits your distro:
-    1. **apt-based OS** (like Ubuntu): `sudo apt install cloudflare-warp`.
-    2. **yum-based OS** (like CentOS or RHEL): `sudo yum install cloudflare-warp`.
+* Find the latest WARP client on our [package repository](https://pkg.cloudflareclient.com/).
+* Install the `cloudflare-warp` package that suits your distro:
+    * **apt-based OS** (like Ubuntu): `sudo apt install cloudflare-warp`.
+    * **yum-based OS** (like CentOS or RHEL): `sudo yum install cloudflare-warp`.
+
+<Aside type="note">
+
+If you get an error message when trying to install via the terminal, download the package that suits your distro from the [package repository](https://pkg.cloudflareclient.com/packages/cloudflare-warp).
+
+</Aside>
 
 ## Using WARP
 
