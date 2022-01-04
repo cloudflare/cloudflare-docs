@@ -15,6 +15,10 @@ This specialized server is called a DNS recursive resolver. The resolver’s job
 
 Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
 
+## How can I check if my computer / smartphone / tablet is connected to 1.1.1.1?
+
+Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1 and that it is working.
+
 ## What do DNS resolvers do?
 
 DNS resolvers are like address books for the Internet. They translate the name of places to addresses so that your browser can figure out how to get there. DNS resolvers do this by working backwards from the top until they find the website your are looking for.

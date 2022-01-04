@@ -20,6 +20,7 @@ You can select between these two options in 1.1.1.1: Faster Internet's settings.
 1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
 1. Toggle the **WARP** button to **Connected**.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 Your connection to the Internet and your DNS queries are now protected. Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case: 
 
@@ -27,13 +28,13 @@ Your connection to the Internet and your DNS queries are now protected. Alternat
 1. Toggle the WARP button and choose **Switch to DNS only mode**. If the WARP toggle is disconnected, tap the **menu button**.
 1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1** > **Done**.
 
-You are now using encryption only for your DNS queries.
+You are now using encryption only for your DNS queries. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 ## Configure 1.1.1.1 manually
 
 <Aside type="note">
 
-If you configure 1.1.1.1 manually, you will have to do it for every WiFi network your device connects to. This method doesn't work for cellular connections.
+If you configure 1.1.1.1 manually, you will have to do it for every WiFi network your device connects to. This method does not work for cellular connections.
 
 </Aside>
 
@@ -53,5 +54,6 @@ If you configure 1.1.1.1 manually, you will have to do it for every WiFi network
     ```
 
 1. Select **Save**.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 <CaptivePortals/>
