@@ -121,7 +121,8 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
             <li>
               Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
             </li>
-            <li>Depending on the characteristics of a request, Cloudflare will perform the following actions:
+            <li>
+              Depending on the characteristics of a request, Cloudflare will perform the following actions:
               <ul>
                 <li>
                   Show a non-interactive challenge page (similar to the current JS Challenge).
