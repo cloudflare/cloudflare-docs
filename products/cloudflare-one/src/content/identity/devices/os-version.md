@@ -38,16 +38,16 @@ You must ensure the version is entered is a valid `x.x.x` Semver. If the command
   </Aside>
 
 ### On macOS
-1. Open a terminal window
-1. Use the `defaults` command to check for the value of `SystemVersionStampAsString`
+1. Open a terminal window.
+1. Use the `defaults` command to check for the value of `SystemVersionStampAsString`.
 
 ```txt
 defaults read loginwindow SystemVersionStampAsString
 ```
 
 ### On Windows
-1. Open a powershell windows
-1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class
+1. Open a Powershell window.
+1. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
 
 ```txt
 (Get-CimInstance Win32_OperatingSystem).version
