@@ -25,9 +25,17 @@ Pages uploads each file on your site to Cloudflare's globally distributed networ
 
 The maximum file size for a single Cloudflare Pages site asset is 25MB.
 
+## Headers
+
+A `_headers` file can have a maximum of 100 header rules.
+
 ## Preview deployments
 
 You can have an unlimited number of [preview deployments](/platform/preview-deployments) active on your project at a time.
+
+## Redirects
+
+A `_redirects` file can have a maximum of 100 redirect rules.
 
 ## Users
 
