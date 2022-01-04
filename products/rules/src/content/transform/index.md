@@ -1,10 +1,9 @@
 ---
-title: Transform Rules
 pcx-content-type: concept
 order: 2
 ---
 
-# About Transform Rules
+# Transform Rules
 
 Transform Rules allow you to adjust the URI path, query string, and HTTP headers of incoming requests at the edge.
 
