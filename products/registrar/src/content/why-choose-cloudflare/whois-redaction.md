@@ -14,7 +14,7 @@ Cloudflare’s WHOIS service can be found at https://rdap.cloudflare.com/. Selec
 
 ## What is WHOIS redaction?
 
-WHOIS redaction removes most contact information categorized as personal data (such as registrant name, email address, postal address) from the published WHOIS record for a domain. These fields will read `Data Redacted`. The name server, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS, due to ICANN policy: 
+WHOIS redaction removes most contact information categorized as personal data (such as registrant name, email address, postal address) from the published WHOIS record for a domain. These fields will read `Data Redacted`. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS, due to ICANN policy: 
 
 * Registrant state/province.
 * Registrant country.
@@ -35,7 +35,7 @@ Some registries do not allow domains to be registered with WHOIS Redaction or WH
 
 ## What is RDAP?
 
-RDAP (Registration Data Access Protocol) is a new standard for querying domain contact and name server information for all registered domains. This new protocol offers some advantages over WHOIS, including standardized data access, support for internationalization, and secure access controls. RDAP is intended to eventually replace WHOIS. However, Cloudflare currently provides both WHOIS and RDAP search capability.
+RDAP (Registration Data Access Protocol) is a new standard for querying domain contact and nameserver information for all registered domains. This new protocol offers some advantages over WHOIS, including standardized data access, support for internationalization, and secure access controls. RDAP is intended to eventually replace WHOIS. However, Cloudflare currently provides both WHOIS and RDAP search capability.
 
 Cloudflare’s RDAP service can be found at https://rdap.cloudflare.com/. Select **RDAP** as the search type.
 
