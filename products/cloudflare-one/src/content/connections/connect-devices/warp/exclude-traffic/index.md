@@ -37,4 +37,4 @@ You may still be required to run WARP alongside a legacy VPN product, and we're 
 
 * **Split Tunnel your VPN Server**. Make sure the VPN server you are connecting to is also excluded from WARP.
 
-* Every time the Split Tunnel configuration is changed in the Teams Dash, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN, and you may need to re-start it manually.
+* Every time the Split Tunnel configuration is changed in the Teams Dashboard, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN and you may need to re-start it manually.
