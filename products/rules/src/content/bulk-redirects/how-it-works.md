@@ -1,9 +1,10 @@
 ---
+title: How it works
 order: 3
 pcx-content-type: concept
 ---
 
-# How it works
+# How Bulk Redirects work
 
 For each incoming request, Cloudflare evaluates all URL Redirects of each Bulk Redirect List that is enabled by a Bulk Redirect Rule.
 

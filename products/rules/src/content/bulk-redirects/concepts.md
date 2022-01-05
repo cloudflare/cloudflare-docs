@@ -74,7 +74,7 @@ A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an actio
 
 The rule expression specifies the conditions that must be met for the rule to run. By default, all URL Redirects of the specified list will apply.
 
-The default expression of a Bulk Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the request URL after some basic normalization (if [URL Normalization](/normalization) is enabled) should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
+The default expression of a Bulk Redirect Rule is `http.request.full_uri in $<LIST_NAME>`, which means that the request URL after some basic normalization (if [URL normalization](/normalization) is enabled) should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
 You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Bulk Redirect Rule to `ip.src.country == "GB" and http.request.full_uri in $redirect_list`, there will only be a match for requests coming from the United Kingdom.
 

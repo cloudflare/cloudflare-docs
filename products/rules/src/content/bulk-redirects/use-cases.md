@@ -1,9 +1,10 @@
 ---
+title: Use cases
 order: 7
 pcx-content-type: configuration
 ---
 
-# Use cases
+# Common Bulk Redirect use cases
 
 The following use cases go through example Bulk Redirect Rule configurations and sample request URLs.
 
