@@ -10,7 +10,7 @@ You can manipulate the headers included in the HTTP response through HTTP Respon
 
 * Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response.
 * Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response.
-* Remove an HTTP header from the response (remove all headers with the provided name).
+* Remove an HTTP header from the response.
 
 You can create an HTTP Response Header Modification Rule [in the dashboard](/transform/response-header-modification/create-dashboard) or [via API](/transform/response-header-modification/create-api).
 
@@ -23,6 +23,8 @@ To modify HTTP headers in the **request**, refer to [HTTP Request Header Modific
 * You cannot modify or remove HTTP response headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP response header, which you can remove.
 
 * You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`.
+
+* The HTTP response header removal operation will remove all response headers with the provided name.
 
 * If you modify the value of an existing HTTP response header using an expression that evaluates to an empty string (`""`) or an undefined value, the HTTP response header is **removed**.
 
