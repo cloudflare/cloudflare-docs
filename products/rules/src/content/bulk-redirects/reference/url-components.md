@@ -1,14 +1,15 @@
 ---
+title: Supported URL components
 order: 3
 type: overview
 pcx-content-type: reference
 ---
 
-# Supported URL components
+# Supported URL components in Bulk Redirects
 
-The source and target URLs support different URL components.
+The source and target URLs of a URL Redirect support different URL components.
 
-In the following reference table, the provided URL component examples are based on the following URL:
+In the reference table below, the provided URL component examples are based on the following URL:
 
 ```txt
 https://user:password@www.example.com:443/search?q=term#results
