@@ -4,7 +4,7 @@ pcx-content-type: configuration
 
 # Require a valid client certificate
 
-Use Cloudflare [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield) to protect your API or web application with client-certificate-based encryption.
+Use Cloudflare [API Shield™](https://developers.cloudflare.com/api-shield) to protect your API or web application with client-certificate-based encryption.
 
 Before you can use API Shield to protect your API or web application, you must do the following:
 
