@@ -38,16 +38,16 @@ On the other side of this equation, your end users need to be able to easily con
 
     ![Enable UDP](../static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
 
-## Create a local domain fallback entry
+## Create a Local Domain Fallback entry
 
 Next, we need to create a [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains) entry.
 
-1. Remain in Network Settings and scroll further down to **Local Domain Fallback**.
+1. Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
 
     ![Manage Local Domains](../static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
 
 2. Click **Manage**.
-3. Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.internal` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly. 
+3. Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly. 
 
 ![Create Local Domains](../static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
@@ -69,24 +69,36 @@ You can now resolve requests through the internal DNS server you set up in your 
 
 ## Test the setup
 
-For testing, run a `dig` command for the internal DNS service. Here is an example for a Private DNS Resolver listening on a Private IP `10.0.0.25` and on Port 1053, for a private domain to be resolved: 
+For testing, run a `dig` command for the internal DNS service: 
 
 ```sh
-$ dig @10.0.0.25 -p 1053 AAAA www.myorg.internal
+$ dig AAAA www.myorg.privatecorp
 ```
 
-The `dig` will fail if the WARP client is disabled in your end user's device.
+The `dig` will work because `myorg.privatecorp` was configured above as a fallback domain. If you skip that step, you can still force `dig` to use your private DNS resolver:
+
+```sh
+$ dig @10.0.0.25 AAAA www.myorg.privatecorp
+```
+
+Both `dig` commands will fail if the WARP client is disabled in your end user's device.
 
 ## Troubleshooting
 
+Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
+
 * Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Cloudflare for Teams dashboard.
 
-* Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
+* Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 
 * Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
-* Double check the precedence of your Application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supercede the application policies
+* Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
 
-* Ensure your Private DNS resolver is available over a routable private IP address
+* Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
 
-* Ensure requests to a private IP or hostname are arriving to Tunnel by viewing requests in the Gateway Network Logs.
+* Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
+
+* Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
+
+* Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.
