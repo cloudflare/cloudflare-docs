@@ -9,7 +9,7 @@ An API schema defines which API requests are valid based on several request prop
 
 Schema Validation allows you to check if incoming traffic complies with a previously supplied API schema. When you provide an API schema, API Shield creates rules for incoming traffic from the schema definitions. These rules define which traffic is allowed and which traffic gets logged or blocked.
 
-To configure Schema Validation for one or more hosts using the dashboard, check [Configure Schema Validation](configure).
+For help configuring Schema Validation for one or more hosts using the dashboard, refer to [Configure Schema Validation](configure).
 
 <Aside type='note'>
 
