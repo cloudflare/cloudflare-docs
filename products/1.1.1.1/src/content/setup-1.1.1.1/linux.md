@@ -33,6 +33,8 @@ Follow these steps to configure 1.1.1.1 in Ubuntu and Debian:
 
 1. Click **Apply**.
 
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
+
 ## Debian
 
 1. In the command line, type:
@@ -61,8 +63,10 @@ Follow these steps to configure 1.1.1.1 in Ubuntu and Debian:
 
 1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
 
-```
-:wq
-```
+  ```
+  :wq
+  ```
+
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 <CaptivePortals/>
