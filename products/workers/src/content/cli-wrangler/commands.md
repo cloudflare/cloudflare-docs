@@ -466,7 +466,7 @@ $ wrangler secret list --env ENVIRONMENT_NAME
 <Definitions>
 
 - `--env $ENVIRONMENT_NAME` <PropMeta>optional</PropMeta>
-  - If defined, only the specified environemnt's secrets will be listed. Refer to [Environments](/platform/environments) for more information.
+  - If defined, only the specified environment's secrets will be listed. Refer to [Environments](/platform/environments) for more information.
 
 </Definitions>
 
