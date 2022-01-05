@@ -50,8 +50,8 @@ Review the list of Cloudflare features that function in this manner.
 - [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056)
 - [Polish](https://developers.cloudflare.com/images/polish)
 - [Mirage](https://support.cloudflare.com/hc/articles/219178057)
-- [Hotlink Protection](https://support.cloudflare.com/hc/en-us/articles/200170026-Understanding-Cloudflare-Hotlink-Protection)
-- [Email address obfuscation](https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email-Address-Obfuscation-)
+- [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)
+- [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016)
 - [Bot Management Javascript Detections](https://developers.cloudflare.com/bots/reference/javascript-detections)
 
 <Aside type="note" header="Note:">
@@ -64,6 +64,6 @@ The list above may not be complete. If you think a product or feature should be 
 
 Resolve common caching concerns.
 
-- [Learn about Cloudflare's cache response statuses](https://developers.cloudflare.com/cache/about/default-cache-behavior#cloudflare-cache-responses)
-- [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/en-us/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
-- [Diagnose Always Online issues](https://developers.cloudflare.com/cache/best-practices/always-online)
+- [Learn about Cloudflare's cache response statuses](/about/default-cache-behavior#cloudflare-cache-responses)
+- [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
+- [Diagnose Always Online issues](/best-practices/always-online)
