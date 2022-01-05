@@ -14,7 +14,7 @@ Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers o
 
 * **URL normalization**: Modify the URLs of incoming requests so that they conform to a consistent formatting standard.
 
-* **Page Rules**: Trigger certain actions when a request matches a URL pattern. For more information, refer to [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+* **Page Rules**: Trigger certain actions when a request matches a URL pattern. For more information, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
 ## Related products
 
