@@ -39,7 +39,7 @@ If you are using Cloudflare in a stacked CDN and authenticating HTTP requests ba
 
 `X-Forwarded-For` maintains proxy server and original visitor IP addresses. If there was no existing `X-Forwarded-For` header in the request sent to Cloudflare, `X-Forwarded-For` has an identical value to the `CF-Connecting-IP` header. For example: `X-Forwarded-For: 203.0.113.1`.
 
-If an `X-Forwarded-For` header was already present in the request to Cloudflare, Cloudflare appends the IP address of the HTTP proxy to the header: `X-Forwarded-For: 198.51.100.101,198.51.100.102,203.0.113.1`
+If an `X-Forwarded-For` header was already present in the request to Cloudflare, Cloudflare appends the IP address of the HTTP proxy to the header: `X-Forwarded-For: 203.0.113.1,198.51.100.101,198.51.100.102`
 
 In the examples above, `203.0.113.1` is the original visitor IP address and `198.51.100.101` and `198.51.100.102` are proxy server IP addresses provided to Cloudflare via the `X-Forwarded-For` header.
 
