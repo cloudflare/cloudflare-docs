@@ -49,5 +49,6 @@ Cloudflare Zaraz offers user and system properties that you can use when configu
 | `{{ system.misc.random }}`| `number` | Returns a random number unique to each request. |
 | `{{ system.misc.timestamp }}`| `number` | Returns Unix time in milliseconds. |
 | `{{ client.__zarazTrack }}`| `string` | Returns the name of the event sent using the Events API. Refer to [Events API](/events-api) for more information. |
+| `{{ client.PARAMETER }}`| `string` | Returns a specific parameter value sent using the Events API. Replace PARAMETER with the name of your parameter. Refer to [Events API](/events-api) for more information. |
 
 </TableWrap>
