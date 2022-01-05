@@ -62,9 +62,9 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 </Definitions>
 
-<Aside>
+<Aside type="note">
 
-__Note:__ Timers are only available inside of [the Request Context](/runtime-apis/request#the-request-context).
+Timers are only available inside of [the Request Context](/runtime-apis/request#the-request-context).
 
 </Aside>
 
@@ -82,13 +82,13 @@ The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortCo
 
 - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch">fetch()</TypeLink>
 
-  - Starts the process of fetching a resource from the network. See [FetchAPI](/runtime-apis/fetch).
+  - Starts the process of fetching a resource from the network. Refer to [Fetch API](/runtime-apis/fetch).
 
 </Definitions>
 
-<Aside>
+<Aside type="note">
 
-__Note:__ The Fetch API is only available inside of [the Request Context](/runtime-apis/request#the-request-context).
+The Fetch API is only available inside of [the Request Context](/runtime-apis/request#the-request-context).
 
 </Aside>
 
@@ -96,20 +96,20 @@ __Note:__ The Fetch API is only available inside of [the Request Context](/runti
 
 ## Encoding API
 
-Both TextEncoder and TextDecoder support UTF-8 encoding/decoding.
+Both `TextEncoder` and `TextDecoder` support UTF-8 encoding/decoding.
 
-[Go to the docs](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API)
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API).
 
 --------------------------------
 
 ## URL API
 
-The URL API supports urls conforming to http and https schemes.
+The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
-[Go to the docs](https://developer.mozilla.org/en-US/docs/Web/API/URL)
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
-<Aside>
+<Aside type="note">
 
-__Note:__ The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you’d like to use another URL implementation, you can [shim the URL class using webpack](/cli-wrangler/webpack/#shimming-globals).
+The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/cli-wrangler/webpack/#shimming-globals).
 
 </Aside>
