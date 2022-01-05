@@ -4,7 +4,7 @@ pcx-content-type: how-to
 order: 3
 ---
 
-# Configure URL normalization in the Cloudflare dashboard
+# Configure URL normalization in the dashboard
 
 Use the **Rules** app in the Cloudflare dashboard to define [URL normalization](/normalization) settings.
 
