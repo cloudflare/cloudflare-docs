@@ -54,12 +54,6 @@ Review the list of Cloudflare features that function in this manner.
 - [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016)
 - [Bot Management Javascript Detections](https://developers.cloudflare.com/bots/reference/javascript-detections)
 
-<Aside type="note" header="Note:">
-
-The list above may not be complete. If you think a product or feature should be added, add a post in the [Community](https://community.cloudflare.com/).
-
-</Aside>
-
 ## Troubleshoot
 
 Resolve common caching concerns.
