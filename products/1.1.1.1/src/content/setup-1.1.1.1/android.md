@@ -20,6 +20,7 @@ You can select between these two options in 1.1.1.1: Faster Internet's settings.
 1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
 1. Toggle the **WARP** button to **Connected**.
 1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 Your connection to the Internet and your DNS queries are now protected. Alternatively, you may want to only encrypt your DNS queries and leave the remaining traffic unencrypted. If this is the case: 
 
@@ -27,7 +28,7 @@ Your connection to the Internet and your DNS queries are now protected. Alternat
 1. Toggle the WARP button and choose **Switch to DNS only mode**. If the WARP toggle is disconnected, tap the **menu button**.
 1. You will see two options: 1.1.1.1 and WARP. Select **1.1.1.1**.
 
-You are now using encryption only for your DNS queries.
+You are now using encryption only for your DNS queries. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure everything is working.
 
 ## Configure 1.1.1.1 manually
 
@@ -59,5 +60,6 @@ Android Pie and later supports DNS over TLS to secure your queries through encry
     ```
 
 1. Click **Save**. You may need to disconnect from the Wi-Fi and reconnect for the changes to take place.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 <CaptivePortals/>

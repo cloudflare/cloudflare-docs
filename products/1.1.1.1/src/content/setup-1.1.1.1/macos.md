@@ -24,6 +24,7 @@ Follow these steps to configure 1.1.1.1:
     ```
 
 1. Click **OK** > **Apply**.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 ## IPv6
 
@@ -38,6 +39,7 @@ Follow these steps to configure 1.1.1.1:
     ```
 
 1. Click **OK** > **Apply**.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 <CaptivePortals/>
 
