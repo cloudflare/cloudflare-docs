@@ -22,7 +22,7 @@ The following headers are required for all endpoint calls:
 
 Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
 
-* `X-Auth-Token` - the Cloudflare API token
+*  `-H "Authorization: Bearer <your-auth-token>"`
 
 ## Parameters
 
