@@ -2,21 +2,23 @@
 order: 4
 pcx-content-type: reference
 type: overview
-title: Access properties
+title: Properties reference
 ---
 
 <ContentColumn>
 
-# Accessing user and system properties 
+# Zaraz event and system properties
 
-Cloudflare Zaraz offers user and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Here is a list of user and system properties, how can you access them, and their values:
+Cloudflare Zaraz offers event and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of event and system properties, how can you access them, and their values:
 
 </ContentColumn>
+
+## System properties
 
 <TableWrap>
 
 | Property | Type | Description |
-| ---------|------| ------------ |
+| --- | --- | --- |
 | `{{ system.page.query.QUERY_PARAM }}`| `string` | Returns the value of a URL query parameter. Replace QUERY_PARAM with the name of your parameter. |
 | `{{ system.page.title }}`| `string` | Returns the page title. |
 | `{{ system.page.url.search }}`| `string` | Returns search parameters provided, beginning with the leading `?` character. |
@@ -48,7 +50,17 @@ Cloudflare Zaraz offers user and system properties that you can use when configu
 | `{{ system.device.user-agent.cpu }}`| `string` | Returns the device’s CPU. |
 | `{{ system.misc.random }}`| `number` | Returns a random number unique to each request. |
 | `{{ system.misc.timestamp }}`| `number` | Returns Unix time in milliseconds. |
+
+
+</TableWrap>
+
+## Event properties
+
+<TableWrap>
+
+| Property | Type | Description |
+| --- | --- | --- |
 | `{{ client.__zarazTrack }}`| `string` | Returns the name of the event sent using the Events API. Refer to [Events API](/events-api) for more information. |
-| `{{ client.PARAMETER }}`| `string` | Returns a specific parameter value sent using the Events API. Replace PARAMETER with the name of your parameter. Refer to [Events API](/events-api) for more information. |
+| `{{ client.PARAMETER }}`| `string` | Returns a specific parameter value sent using the Events API. Replace `PARAMETER` with the name of your parameter. Refer to [Events API](/events-api) for more information. |
 
 </TableWrap>

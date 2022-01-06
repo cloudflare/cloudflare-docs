@@ -19,5 +19,7 @@ Only the first parameter is required. This parameter should be a string specifyi
 
 After using the Events API in your website to track an action:
 
-1. Create a [trigger that matches your `zaraz.track` call](/get-started/create-trigger)
-1. Add an [event that uses the trigger](/get-started/send-events)
+1. Create a [trigger that matches your `zaraz.track` call](/get-started/create-trigger).
+1. Add an [event that uses the trigger](/get-started/send-events).
+
+For more information regarding the properties you can use with the Events API, refer to [Event properties](/properties-reference#event-properties).
