@@ -3,31 +3,42 @@ title: Collect PCAPs
 pcx-content-type: how-to
 ---
 
-# Packet Captures API
+# Packet Captures (PCAPs) API
 
-PCAPs API can be used to capture packets flowing at the edge.
+The PCAPs API can be used to capture packets flowing at the edge.
 
-Before we collect a pcap we need to first understand the "system" and "type" of a packet capture. A pcap's "system" is the product/logical subsystem where packets are captured. And a pcap's "type" is how the captured packets are built into a pcap file.
+Before collecting a PCAP, you should first understand a packet capture's `system` and `type`. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
 
-Currently, when a pcap is requested, packets flowing at the edge through the Magic Transit System are captured. So, the system  is "magic-transit". These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file.  This way of sampling packets and building a pcap is the "simple" type.
+Currently, when a PCAP is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`. These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file. This type of sampling packets and building a PCAP is the `simple` type.
+
+<Aside>
+
+This feature is currently in an Early Access state. For access, contact your account team.
+
+</Aside>
 
 ## Send a PCAP collect Request
 
 To send a collect request, send a JSON body specifying:
 
-1. "time_limit": The number of seconds to limit the pcap to. Should be a number less than 300 seconds. Cannot be set to zero.
-1. "packet_limit": The number of packets to limit the pcap to. Should be a number less than 10000. Cannot be set to zero.
-1. "type": like described above must be "simple"
-1. "system": like described above must be "magic-transit"
+- `time_limit`: The number of seconds to limit the PCAP. The number should be less than 300 seconds and cannot be set to zero.
+- `packet_limit`: The number of packets to limit the PCAP. The number should be less than 10000 and cannot be set to zero.
+- `type`: Must be `simple` as described in the above example.
+- `system`: Must be `magic-transit` as described in the above example.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
-1. IPv4 Source address
-2. IPv4 Destination address
-3. (TCP/UDP) Source port
-4. (TCP/UDP) Destination port
-5. IP Protocol
+- IPv4 Source address
+- IPv4 Destination address
+- (TCP/UDP) Source port
+- (TCP/UDP) Destination port
+- IP Protocol
 
-A complete request will look like this:
+Currently, you can only send one collect request per minute.
+
+### Example request
+
+A complete request will look like the following:
+
 ```
 curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 -H 'Content-Type: application/json' \
@@ -47,13 +58,12 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
         "system": "magic-transit"
 }'
 ```
-"filter_v1" can be left empty to collect all packets, without any filtering. 
+`filter_v1` can be left empty to collect all packets without any filtering. 
 
-Currently, you can only send one collect request per minute.
+### Example response
 
+The response to this message will be a JSON body containing the details of the job running to build the packet capture. The response will contain a unique identifier for the packet capture request, and the details that were sent in the request.
 
-
-The response to this message will be a JSON body which contains the details of the Job that is running to build the Packet Capture. It will contain a unique identifier for this Packet capture request. It will also include details that were sent in the request.
 ```
 {
   "result": {
@@ -77,12 +87,12 @@ The response to this message will be a JSON body which contains the details of t
   "messages": []
 }
 ```
-The response will have the "status" field set to "pending" while the collection is in progress. You need to wait for the pcap collection to complete before downloading the file.  The status will change to "success" when the pcap is ready to download. Checking a collect request's status is described next.
 
-
+The response will have the `status` field set to `pending` while the collection is in progress. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status will change to `success`.
 
 ## Check PCAP status
-To check the status of a running job, a request to the endpoint can be sent specifying the pcap identifier. The pcap identifier is received in the response of a collect request (see the previous step).
+
+To check the status of a running job, send a request to the endpoint and specify the PCAP identifier. The PCAP identifier is received in the response of a collect request as shown in the previous step.
 
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id} \
@@ -90,7 +100,9 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${
 -H 'X-Auth-Email: user@example.com' \
 -H 'X-Auth-Key: 00000000000'
 ```
-The response will be similar to the one received on requesting a pcap collection.
+
+The response will be similar to the one received when requesting a PCAP collection.
+
 ```
 {
   "result": {
@@ -114,10 +126,13 @@ The response will be similar to the one received on requesting a pcap collection
   "messages": []
 }
 ```
-While the collection is ongoing, the status will be set to "pending". Once the pcap is ready to download, the status will change to "success".  Then the file is ready to download.
+
+While the collection is ongoing, the status will be set to `pending`. Once the PCAP is ready to download, the status will change to `success` and the file is ready to download.
 
 ## Download PCAP
-Once the collection is complete, you can download the pcap by specifying the pcap identifier used earlier.
+
+Once the collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
+
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
 -H 'Content-Type: application/json' \
@@ -126,9 +141,10 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${
 --output download.pcap
 ```
 
-
 ## List PCAPs
-To list all the requests sent so far, you can use the command below
+
+To list all the requests sent so far, you can use the command below.
+
 ```
 curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 -H 'Content-Type: application/json' \
@@ -136,7 +152,8 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 -H 'X-Auth-Key: 00000000000'
 ```
 
-The response will include an array of up to 50 requests sent in the past. This will include completed requests and requests whose collection is ongoing. A sample response could look like:
+The response will include an array of up to 50 requests sent in the past and will also include completed and ongoing requests. A sample response may look like the example below.
+
 ```
 {
   "result": [
@@ -156,4 +173,3 @@ The response will include an array of up to 50 requests sent in the past. This w
   "messages": []
 }
 ```
-
