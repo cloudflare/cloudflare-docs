@@ -20,6 +20,10 @@ The following headers are required for all endpoint calls:
 * `X-Auth-Email` - the Cloudflare account email address associated with the domain
 * `X-Auth-Key` - the Cloudflare API key
 
+Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
+
+*  `Authorization: Bearer <REDACTED>`
+
 ## Parameters
 
 The API expects endpoint parameters in the GET request query string.  See the example formats below.
