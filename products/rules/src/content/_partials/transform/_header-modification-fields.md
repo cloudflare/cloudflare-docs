@@ -1,7 +1,5 @@
-* `cf.bot_detection.js_check_score`
 * `cf.bot_management.*`
 * `cf.client.bot`
-* `cf.client_trust_score`
 * `cf.threat_score`
 * `cf.colo.id`
 * `cf.edge.server_ip`
