@@ -47,16 +47,6 @@ In both cases, disabling your load balancer prevents traffic from going to any a
 
 ## SSL/TLS coverage
 
-### When using Cloudflare for authoritative DNS
+Due to internal limitations, Cloudflare [Universal SSL certificates](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
-If you [changed your nameservers](https://support.cloudflare.com/hc/articles/205195708) to point to Cloudflare, you automatically get a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl). This certificate covers your root domain and up to one level of subdomain (`subdomain.example.com`). 
-
-If your load balancing hostname is deeper than one level (`dev.subdomain.example.com`), purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager).
-
-### When not using Cloudflare for authoritative DNS
-
-If your domain is using another DNS provider for authoritative DNS but you are still proxying individual subdomains, you are using a *partial* or *CNAME* setup.
-
-To get a Universal SSL certificate, you need to [create a proxied DNS record](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) for that specific hostname. You may also want to add [Domain Control Validation (DCV)](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/changing-dcv-method) records to prevent any downtime.
-
-Alternatively, you could purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) and validate that certificate once to cover multiple hostnames.
+To get coverage for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](https://support.cloudflare.com/hc/articles/360019093151) for that hostname. To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager).

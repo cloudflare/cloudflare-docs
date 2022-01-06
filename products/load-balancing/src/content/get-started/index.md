@@ -164,11 +164,13 @@ Either option would use your load balancer to distribute requests going to `test
 
 As you send sample requests to your test domain, review the [load balancing analytics](/reference/load-balancing-analytics) page to make sure your load balancer is distributing requests like you were expecting.
 
-## Step 6 — Review DNS records and SSL coverage
+## Step 6 — Review DNS records and SSL/TLS coverage
 
-Before you deploy your load balancer, review your DNS records and SSL coverage.
+Before you deploy your load balancer, review your DNS records and SSL/TLS coverage.
 
-Common errors include [misunderstanding the priority order](/reference/dns-records#priority-order) for DNS records and [not having a valid SSL certificate](/reference/dns-records#ssltls-coverage) for your load balancing hostname.
+Sometimes, you might [misunderstand the priority order](/reference/dns-records#priority-order) for DNS records and route more or less traffic than intended to your load balancer.
+
+Universal SSL certificates do not cover load balancing hostnames without existing DNS records. For additional details, refer to [SSL/TLS coverage](/reference/dns-records#ssltls-coverage).
 
 ## Step 7 — Deploy your load balancer on live traffic
 
