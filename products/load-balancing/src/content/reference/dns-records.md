@@ -45,14 +45,16 @@ When you disable a load balancer, requests to a specific hostname depend on your
 
 In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
 
-## Universal SSL
+## SSL/TLS coverage
 
-### Proxied domains
+### When using Cloudflare for authoritative DNS
 
-If you [changed your nameservers](https://support.cloudflare.com/hc/articles/205195708) to point to Cloudflare, you get an SSL certificate by default. Cloudflare has already issued an [SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) covering your root domain and up to one level of subdomain (`subdomain.example.com`).
+If you [changed your nameservers](https://support.cloudflare.com/hc/articles/205195708) to point to Cloudflare and have a proxied DNS record for your root domain, you get an SSL certificate by default. 
 
-### Non-proxied domains
+Cloudflare has already issued a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) covering your root domain and up to one level of subdomain (`subdomain.example.com`). If your load balancing hostname is deeper than one level (`dev.subdomain.example.com`), purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager).
 
-If your domain is using a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832) where traffic is not proxied through Cloudflare, you need to take additional actions to get an SSL certificate.
+### When not using Cloudflare for authoritative DNS
 
-To get an SSL certificate, [create a proxied DNS record](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) for the hostname associated with the load balancer. You may also want to add [Domain Control Validation (DCV)](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/changing-dcv-method) records to prevent any downtime.
+If your domain is using another DNS provider for authoritative DNS but you are still proxying individual subdomains, you are using a *partial* or *CNAME* setup.
+
+To get a Universal SSL certificate, you need to [create a proxied DNS record](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) for that specific hostname. You may also want to add [Domain Control Validation (DCV)](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/changing-dcv-method) records to prevent any downtime.
