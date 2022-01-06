@@ -11,10 +11,9 @@ Once you enable Universal SSL, you can review the [certificate's status](/ssl-tl
 
 ### Authoritative (Full) domains
 
-For an authoritative or full domain — domains that changed their [domain nameservers](https://support.cloudflare.com/hc/articles/205195708) – Universal SSL requires two steps:
+For an authoritative or full domain — domains that changed their [domain nameservers](https://support.cloudflare.com/hc/articles/205195708) – your domain should receive its Universal SSL certificate within **24 hours**. This certificate covers your root domain and all first-level subdomains (`subdomain.example.com`).
 
-1. Once you change your domain nameservers, your domain should receive its Universal SSL certificate within **24 hours**.
-1. Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
+Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
 
 ### Non-authoritative (Partial) domains
 
@@ -25,6 +24,8 @@ For non-authoritative or partial domains (domains on a CNAME setup), Universal S
 
     - Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/changing-dcv-method) records to your authoritative DNS.
     - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
+
+Unless you cover and validate multiple subdomains with an [advanced certificate](../../advanced-certificate-manager), you will need to proxy and validate each new subdomains as they are added. 
 
 ## Disable Universal SSL
 
