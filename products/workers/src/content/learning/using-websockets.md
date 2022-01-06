@@ -23,12 +23,6 @@ WebSockets utilize a simple event-based system for receiving and sending message
 
 ## Writing a WebSocket Server
 
-<Aside type="note">
-
-The `wrangler dev` tool currently does not support connecting to Workers via the WebSocket protocol. Support for WebSockets in `wrangler dev` is tracked in [this GitHub issue](https://github.com/cloudflare/wrangler/issues/1910).
-
-</Aside>
-
 WebSocket servers in Cloudflare Workers allow you to receive messages from a client in real time. This guide will show you how to set up a WebSocket server in Workers.
 
 A client can make a WebSocket request in the browser by instantiating a new instance of `WebSocket`, passing in the URL for your Workers function:
