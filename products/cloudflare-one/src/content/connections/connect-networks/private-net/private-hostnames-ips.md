@@ -13,4 +13,86 @@ On the client side, your end users need to be able to easily connect to Cloudfla
 
 ![Network diagram](../../../static/documentation/connections/private-ips-diagram.png)
 
-For more information on how to connect private hostnames and IPs with Cloudflare Tunnel, see [this tutorial](/content/tutorials/warp-to-tunnel-internal-dns).
+Follow the steps below to define your internal DNS resolver with Cloudflare for Teams and to resolve requests to your private network using Cloudflare Tunnel.
+
+## Prerequisites
+
+* Cloudflare Tunnel must be properly [configured](/connections/connect-apps/configuration) to route traffic to a private IP space.
+* `cloudflared` must be connected to Cloudflare from your target private network.
+* Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
+
+## Enable UDP support
+
+1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
+
+    ![Network Settings](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/network-settings.png)
+
+1. Scroll down to Firewall settings.
+1. Ensure the Proxy is enabled and both TCP and UDP are selected.
+
+    ![Enable UDP](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
+
+## Create a Local Domain Fallback entry
+
+Next, we need to create a [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains) entry.
+
+1. Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
+
+    ![Manage Local Domains](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
+
+2. Click **Manage**.
+3. Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly. 
+
+![Create Local Domains](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
+
+<Aside type='note'>
+
+While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/connections/connect-networks/private-net#optional-ensure-that-traffic-can-reach-your-network).
+
+</Aside>
+
+## Update `cloudflared`
+
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: QUIC` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI. 
+
+Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
+
+![Update Cloudflared](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/update-cfd.png)
+
+You can now resolve requests through the internal DNS server you set up in your private network.
+
+## Test the setup
+
+For testing, run a `dig` command for the internal DNS service: 
+
+```sh
+$ dig AAAA www.myorg.privatecorp
+```
+
+The `dig` will work because `myorg.privatecorp` was configured above as a fallback domain. If you skip that step, you can still force `dig` to use your private DNS resolver:
+
+```sh
+$ dig @10.0.0.25 AAAA www.myorg.privatecorp
+```
+
+Both `dig` commands will fail if the WARP client is disabled in your end user's device.
+
+## Troubleshooting
+
+Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
+
+* Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Cloudflare for Teams dashboard.
+
+* Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
+
+* Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
+
+* Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
+
+* Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
+
+* Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
+
+* Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
+
+* Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.
