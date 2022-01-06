@@ -62,4 +62,4 @@ When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Man
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Check the specific Managed Ruleset documentation for details.
 
-For more information on phases, see [Phases](https://developers.cloudflare.com/ruleset-engine/#phases).
+For more information on phases, see [Phases](https://developers.cloudflare.com/ruleset-engine/about#phases).

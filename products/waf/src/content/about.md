@@ -36,7 +36,7 @@ You can [create custom rulesets](https://developers.cloudflare.com/ruleset-engin
 
 ## Available phases
 
-The Web Application Firewall provides the following [phases](https://developers.cloudflare.com/ruleset-engine/#phases) where you can deploy WAF rules:
+The Web Application Firewall provides the following [phases](https://developers.cloudflare.com/ruleset-engine/about#phases) where you can deploy WAF rules:
 
 * `http_request_firewall_custom`
 * `http_request_firewall_managed`
@@ -72,7 +72,7 @@ Currently, creating and deploying custom rulesets is only available via API.
 
 </Aside>
 
-To learn more about phases, refer to [Phases](https://developers.cloudflare.com/ruleset-engine/#phases) in the Ruleset Engine documentation.
+To learn more about phases, refer to [Phases](https://developers.cloudflare.com/ruleset-engine/about#phases) in the Ruleset Engine documentation.
 
 ---
 
