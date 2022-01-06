@@ -47,7 +47,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
         "system": "magic-transit"
 }'
 ```
-"filter_v1" can be left empty to collect all packets, without any filtering. 
+"filter_v1" uses wirefilter expressions to filter the pcap and can be left empty to collect all packets, without any filtering. 
 
 Currently, you can only send one collect request per minute.
 
