@@ -29,7 +29,7 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
 
     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
+1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
     <Example>
     
@@ -54,7 +54,7 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
 
     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
 
     <Example>
     
