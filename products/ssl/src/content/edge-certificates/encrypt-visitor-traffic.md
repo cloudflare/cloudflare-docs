@@ -11,11 +11,13 @@ It's best to redirect this traffic over HTTPS, as well as ensure other resources
 
 ## Prerequisites
 
-Before trying to enforce HTTPS connections, make sure that your application has an active [edge certificate](/edge-certificates). Otherwise, visitors will not be able to access your application at all.
+Before trying to enforce HTTPS connections, make sure that your application has an active [edge certificate](/get-started#step-1--choose-an-edge-certificate). Otherwise, visitors will not be able to access your application at all.
+
+Also, make sure that your [SSL encryption mode](/origin-configuration/ssl-modes) is not set to **Off**. Otherwise, Cloudflare will redirect all visitor connections automatically to HTTP. 
 
 ## Step 1 — Evaluate existing redirects
 
-To make sure that your visitors do not get stuck in a [redirect loop](https://support.cloudflare.com/hc/articles/115000219871), evaluate existing redirects at your origin server and within Cloudflare.
+To make sure that your visitors do not get stuck in a [redirect loop](https://support.cloudflare.com/hc/articles/115000219871), evaluate existing redirects at your origin server and within the Cloudflare dashboard.
 
 You should generally avoid redirects at your origin server. Not only are you likely to forget about them, but they also reduce application performance. It's much faster for Cloudflare to redirect requests before they ever reach your origin!
 
