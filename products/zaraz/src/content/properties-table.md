@@ -2,14 +2,14 @@
 order: 4
 pcx-content-type: reference
 type: overview
-title: Properties table
+title: Properties reference
 ---
 
 <ContentColumn>
 
-# Accessing event and system properties
+# Zaraz event and system properties
 
-Cloudflare Zaraz offers event and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below, is a list of event and system properties, how can you access them, and their values:
+Cloudflare Zaraz offers event and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of event and system properties, how can you access them, and their values:
 
 </ContentColumn>
 
