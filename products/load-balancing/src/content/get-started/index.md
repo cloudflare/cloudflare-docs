@@ -164,7 +164,15 @@ Either option would use your load balancer to distribute requests going to `test
 
 As you send sample requests to your test domain, review the [load balancing analytics](/reference/load-balancing-analytics) page to make sure your load balancer is distributing requests like you were expecting.
 
-## Step 6 — Deploy your load balancer on live traffic
+## Step 6 — Review DNS records and SSL/TLS coverage
+
+Before you deploy your load balancer, review your DNS records and SSL/TLS coverage.
+
+Sometimes, you might [misunderstand the priority order](/reference/dns-records#priority-order) for DNS records and route more or less traffic than intended to your load balancer.
+
+Universal SSL certificates do not cover load balancing hostnames without existing DNS records. For additional details, refer to [SSL/TLS coverage](/reference/dns-records#ssltls-coverage).
+
+## Step 7 — Deploy your load balancer on live traffic
 
 Now that you have set up your load balancer and verified everything is working correctly, you can put the load balancer on a live domain or subdomain.
 
@@ -179,6 +187,6 @@ If you have an Enterprise account, also evaluate your application for any exclud
 
 </Aside>
 
-## Step 7 — Continue reviewing load balancing analytics
+## Step 8 — Continue reviewing load balancing analytics
 
 Repeat [Step 5](#step-5--review-load-balancing-analytics) to ensure your load balancer is acting as expected.

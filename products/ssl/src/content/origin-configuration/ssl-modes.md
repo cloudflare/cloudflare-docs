@@ -7,11 +7,11 @@ import SSLModeErrors from "../_partials/_ssl-mode-errors.md"
 
 # Encryption modes
 
-The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server, and how SSL certificates presented by your origin will be validated.
+The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
 
 If possible, Cloudflare strongly recommends using [**Full**](#full) or [**Full (strict)**](#full-strict) modes to prevent malicious connections to your origin.
 
-For more details about how encryption modes fit into the bigger picture of SSL/TLS protection, refer to [Get started](/get-started).
+For more details about how your encryption mode fits into the bigger picture of SSL/TLS protection, refer to [Get started](/get-started).
 
 <Aside type="note" header="Tip:">
 
@@ -63,7 +63,7 @@ When you set your SSL/TLS encryption mode to **Off**, you will not see the optio
 
 ## Flexible
 
-Setting your encryption mode to **Flexible** makes your site partially secure. Cloudflare enforces HTTPS between your visitor and Cloudflare, but all connections between Cloudflare and your origin are made through HTTP. As a result, an SSL certificate is not required on your origin.
+Setting your encryption mode to **Flexible** makes your site partially secure. Cloudflare allows HTTPS connections between your visitor and Cloudflare, but all connections between Cloudflare and your origin are made through HTTP. As a result, an SSL certificate is not required on your origin.
 
 ### Use when
 
@@ -83,7 +83,7 @@ If your application contains sensitive information (personalized data, user logi
 
 ## Full
 
-When you set your encryption mode to **Full**, Cloudflare enforces HTTPS between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
+When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
 ### Use when
 
@@ -92,8 +92,6 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 ### Required setup
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/origin-configuration/origin-ca), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
-
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 <SSLModeErrors/>
 
@@ -124,8 +122,6 @@ Your origin needs to be able to support an SSL certificate that is:
 ### Required setup
 
 Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
-
-To prevent any unencrypted requests from reaching your origin, enable [Always Use HTTPS](/edge-certificates/additional-options/always-use-https).
 
 ### Limitations
 

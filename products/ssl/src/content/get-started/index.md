@@ -49,7 +49,13 @@ Before choosing an encryption mode, make sure you have changed relevant settings
 
 </Aside>
 
-## Step 3 (optional) — Enable additional features
+## Step 3 — Enforce HTTPS connections
+
+Even if your application has an active edge certificate, visitors can still access resources over unsecured HTTP connections.
+
+Using various Cloudflare settings, however, you can force all or most visitor connections to [use HTTPS](/edge-certificates/encrypt-visitor-traffic).
+
+## Step 4 (optional) — Enable additional features
 
 After you have chosen your edge certificate and updated your encryption mode, review the following Cloudflare settings:
 
