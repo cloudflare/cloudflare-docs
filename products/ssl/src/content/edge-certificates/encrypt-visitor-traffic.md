@@ -7,7 +7,7 @@ order: 3
 
 Even with an active SSL/TLS certificate, visitors can still access resources over unsecured HTTP connections.
 
-It's best to redirect this traffic over HTTPS, as well as ensure other resources (such as images) are also loaded over HTTPS.
+It is best to redirect this traffic over HTTPS, as well as ensure other resources (such as images) are also loaded over HTTPS.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ Also, make sure that your [SSL encryption mode](/origin-configuration/ssl-modes)
 
 To make sure that your visitors do not get stuck in a [redirect loop](https://support.cloudflare.com/hc/articles/115000219871), evaluate existing redirects at your origin server and within the Cloudflare dashboard.
 
-You should generally avoid redirects at your origin server. Not only are you likely to forget about them, but they also reduce application performance. It's much faster for Cloudflare to redirect requests before they ever reach your origin!
+You should generally avoid redirects at your origin server. Not only are you likely to forget about them, but they also reduce application performance. It is much faster for Cloudflare to redirect requests before they ever reach your origin.
 
 Make sure that your redirects within Cloudflare are not forwarding traffic to URLs starting with `http`.
 

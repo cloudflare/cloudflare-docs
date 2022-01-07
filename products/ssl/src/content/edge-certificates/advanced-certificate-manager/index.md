@@ -32,7 +32,7 @@ Advanced certificates allow you multiple customization options:
 
 <Aside type="note">
 
-Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows you to add up to 100 edge certificates per zone.
+Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 edge certificates per zone.
 
 </Aside>
 
