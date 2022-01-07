@@ -53,7 +53,7 @@ While on the Network Settings page, ensure that **Split Tunnels** are configured
 
 ## Update `cloudflared`
 
-Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: QUIC` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI. 
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI. 
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 
