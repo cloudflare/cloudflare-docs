@@ -21,7 +21,7 @@ You can add new third-party tools and load them into your website through the Cl
 
 Your tool is now configured. Cloudflare Zaraz automatically creates the `Pageview` event that will load the tool into your website when the conditions you set are met. 
 
-From this page you can configure the tool's **Settings** and add additional events, by clicking **Create event**. You can also edit the events listed by clicking their names.
+From this page you can configure the tool's **Settings** or add additional events by clicking **Create event**. You can also edit the events listed by clicking their names.
 
 <div class="full-img">
 
