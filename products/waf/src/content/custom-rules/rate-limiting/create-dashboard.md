@@ -6,21 +6,21 @@ type: overview
 
 # Create Rate Limiting rules in the dashboard
 
+Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
+
 <Aside type='warning'>
 
 This feature is only available for selected customers on an Enterprise plan.
 
-</Aside>
+For guidance on the previous version of Rate Limiting rules, available at **Firewall** > **Tools**, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
-Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
+</Aside>
 
 ## Create a Rate Limiting rule
 
 To create a new Rate Limiting rule:
 
-1. Log in to the Cloudflare dashboard.
-
-1. Select the **Websites** tab and choose the site for which you want to create a rule.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 1. Navigate to **Firewall** > **Custom Rules**.
 
