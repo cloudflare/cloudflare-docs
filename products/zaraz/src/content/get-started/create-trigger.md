@@ -30,7 +30,7 @@ To create a new, custom trigger:
     The following is an example of a complete rule:
 
     ```txt
-    {{ client.__zarazTrack }}` Contains `purchase`
+    {{ client.__zarazTrack }} Contains purchase
     ```
 
 1. Click **Save**. 
