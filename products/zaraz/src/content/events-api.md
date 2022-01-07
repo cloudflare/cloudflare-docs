@@ -12,7 +12,7 @@ Common user actions you will probably be interested in tracking are Successful S
 To start tracking events, add the Events API JavaScript code to your website. The following is an example for tracking purchases:
 
 ```js
-zaraz.track(“purchase”, { value: “200”, currency: “USD”})
+zaraz.track("purchase", { value: "200", currency: "USD"})
 ```
 
 Only the first parameter is required. This parameter should be a string specifying the name of the event you want to track. The second parameter is an optional free-form object that can be used to send an additional set of key-value properties. For example, if the `event` you are tracking is "purchase", this object can include `price`, `currency`, `transaction_id`, or `tax`. You choose what you want to track.
