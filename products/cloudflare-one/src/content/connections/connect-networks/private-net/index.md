@@ -51,7 +51,7 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
     tunnel: <Tunnel-UUID>
     credentials-file: /root/.cloudflared/credentials-file.json
     warp-routing:
-    enabled: true
+        enabled: true
     ```
 
 1. Run the tunnel. Traffic inside of your organization coming from enrolled WARP clients will be sent to this instance when the destination is your private IP range.
