@@ -7,9 +7,9 @@ pcx-content-type: tutorial
 
 # Add an HTML Form with Formspree
 
-Almost every website, whether it's a simple HTML portfolio page, or a complex javascript application, will need a form to collect user data. [Formspree](https://formspree.io) is a backend service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
+Almost every website, whether it is a simple HTML portfolio page or a complex JavaScript application, will need a form to collect user data. [Formspree](https://formspree.io) is a back-end service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
 
-In this tutorial, you will create a `<form>` using plain HTML and CSS and add it to a static HTML website hosted on Cloudflare Pages. Refer to the [Get started guide](/get-started) guide to familiarize yourself with the platform. You'll use Formspree to collect the submitted data, and send out email notifications when new submissions arrive, without requiring any javascript or backend coding.
+In this tutorial, you will create a `<form>` using plain HTML and CSS and add it to a static HTML website hosted on Cloudflare Pages. Refer to the [Get started guide](/get-started) guide to familiarize yourself with the platform. You will use Formspree to collect the submitted data and send out email notifications when new submissions arrive, without requiring any JavaScript or back-end coding.
 
 ### Setup
 
@@ -30,17 +30,17 @@ $ git branch -M main
 
 You may now begin working in the `new-project` directory you created.
 
-### The Website Markup
+### The website markup
 
-You will only be using plain HTML for this example project. The home page will include a simple "Contact Us" form that accepts a name, email address and message. 
+You will only be using plain HTML for this example project. The home page will include a Contact Us form that accepts a name, email address, and message. 
 
 <Aside type="note">
 
-The form code is adapted from the [HTML Forms tutorial](/tutorials/forms). For a more in-depth explanation of how HTML forms work, and additional learning resources, please refer to that tutorial.
+The form code is adapted from the HTML Forms tutorial. For a more in-depth explanation of how HTML forms work and additional learning resources, refer to the [HTML Forms tutorial](/tutorials/forms).
 
 </Aside>
 
-Here's the form code:
+The form code:
 
 ```html
 <form method="POST" action="/">
@@ -57,18 +57,16 @@ Here's the form code:
 </form>
 ```
 
+The `action` attribute determines where the form data is sent. You will update this later to send form data to Formspree. All `<input>` tags must have a unique `name` in order to capture the user's data. The `for` and `id` values must match in order to link the `<label>` with the corresponding `<input>` for accessibility tools like screen readers.
+
 <Aside type="note">
 
-A few notes: 
-
-- The `action` attribute determines where the form data is sent. We will update this later to send form data to Formspree.
-- All `<input>` tags must have a unique `name` in order to capture the user's data. 
-- The `for` and `id` values must match in order to link the `<label>` with the corresponding `<input>` for accessibility tools like screen readers.
-- See the [HTML Forms tutorial](/tutorials/forms#Overview) for further discussion of how to build an HTML form.
+Refer to the [HTML Forms tutorial](/tutorials/forms#Overview) on how to build an HTML form.
 
 </Aside>
 
-To add this form to your website, first create a `public/index.html` in your project directory. The `public` directory should contain all front-end assets, and this `index.html` file will serve as the home page for the website.
+
+To add this form to your website, first, create a `public/index.html` in your project directory. The `public` directory should contain all front-end assets, and the `index.html` file will serve as the home page for the website.
 
 Copy and paste the following content into your `public/index.html` file, which includes the above form:
 
@@ -100,7 +98,7 @@ Copy and paste the following content into your `public/index.html` file, which i
 </html>
 ```
 
-Now you have an HTML document containing a "Contact-Us" form with a few fields for the user to fill out. However you haven't set the `action` attribute yet to a server that can handle the form data. You'll do that in the next section.
+Now you have an HTML document containing a Contact-Us form with several fields for the user to fill out. However, you have not yet set the `action` attribute to a server that can handle the form data. You will do this in the next section of this tutorial.
 
 <Aside type="info" header="GitHub Repository">
 
@@ -108,19 +106,19 @@ The source code for this example is [available on GitHub](https://github.com/for
 
 </Aside>
 
-### The Formspree Backend
+### The Formspree back end
 
 The HTML form is complete, however, when the user submits this form, the data will be sent in a `POST` request to the `/` URL. No server exists to process the data at that URL, so it will cause an error. To fix that, create a new Formspree form, and copy its unique URL into the form's `action`.  
 
-To create a Formspree form, first [sign up for an account on Formspree](https://formspree.io/register).
+To create a Formspree form, sign up for [an account on Formspree](https://formspree.io/register).
 
-Next, create a new form with the `+ New form` button, call it "Contact-us form" and update the recipient email to an email where you wish to receive your form submissions. Then click `Create Form`.
+Next, create a new form with the **+ New form** button. Name it `Contact-us form` and update the recipient email to an email where you wish to receive your form submissions. Then select **Create Form**.
 
 <GatsbyImage image="./new-form-dialog.png" alt="Creating a Formspree form" />
 
 ![Creating a Formspree form](./new-form-dialog.png)
 
-You’ll then be presented with instructions on how to integrate your new form. 
+You will then be presented with instructions on how to integrate your new form. 
 
 ![Formspree endpoint](./form-endpoint.png)
 
@@ -137,11 +135,11 @@ Now when you submit your form, you should be redirected to a thank-you page. The
 
 From here you can adjust your form processing logic to change the [redirect page](https://help.formspree.io/hc/en-us/articles/360012378333--Thank-You-redirect), update the [notification email address](https://help.formspree.io/hc/en-us/articles/115008379348-Changing-a-form-email-address), or add plugins like [Google Sheets](https://help.formspree.io/hc/en-us/articles/360036563573-Use-Google-Sheets-to-send-your-submissions-to-a-spreadsheet), [Slack](https://help.formspree.io/hc/en-us/articles/360045648933-Send-Slack-notifications) and more. 
 
-For more help setting up Formspree you can check out the following resources:
+For more help setting up Formspree, refer to the following resources:
 
-- For general help with formspree check out the [Formspree help site](https://help.formspree.io/hc/en-us) 
-- For examples and inspiration for your own HTML forms, see the [Formspree form library](https://formspree.io/library) 
-- For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, check out the [Formspree guides](https://formspree.io/guides)
+- For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
+- For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
+- For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
 
 ### Deployment
 
