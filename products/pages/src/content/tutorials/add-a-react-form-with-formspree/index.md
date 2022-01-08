@@ -214,6 +214,30 @@ If this is your first Cloudflare Pages project, refer to the [Get started guide]
 
 After selecting **Save and Deploy**, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
+## Tip: Using environment variables
+
+Sometimes it is helpful to set up two forms, one for development, and one for production. That way you can develop and test your form without corrupting your production dataset, or sending test notifications to clients.
+
+To set up production and development forms first create a second form in Formspree. Name this form Contact Us Testing, and note the form's [hashid](https://help.formspree.io/hc/en-us/articles/360015130174-Getting-your-form-s-hashid-). 
+
+Then change the `useForm` hook in your ContactForm.js file so that it is initialized with an environment variable, rather than a string:
+
+```jsx
+const [state, handleSubmit] = useForm(process.env.REACT_APP_FORM_ID);
+```
+
+In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environment variable to both the Production and Preview environments. Use your original form's hashid for Production, and the new test form's hashid for the Preview environment:
+
+![Environment variables](./env-vars.png)
+
+Now, when you commit and push changes to a branch of your git repo, a new preview app will be created with a form that submits to the test form URL. However, your production website will continue to submit to the original form URL.
+
+<Aside type="note">
+
+Create React App uses the prefix `REACT_APP_` to designate environment variables that are accessible to front end javascript code. A different framework will use a different prefix to expose environment variables. For example, in the case of Next.js, the prefix is `NEXT_PUBLIC_`. Consult the documentation of your front end framework to determine how to access environment variables from your React code.
+
+</Aside>
+
 In this tutorial, you built and deployed a website using Cloudflare Pages and Formspree to handle form submissions. You created a React application with a form that communicates with Formspree to process and store submission requests and send notifications.
 
 If you would like to review the full source code for this application, you can find it on [GitHub](https://github.com/formspree/formspree-example-cloudflare-react).
