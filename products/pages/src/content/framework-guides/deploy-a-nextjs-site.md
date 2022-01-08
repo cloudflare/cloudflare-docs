@@ -57,6 +57,20 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Next.js site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
+## Dynamic Routes
+
+Next.js [Dynamic Routes](https://nextjs.org/docs/routing/dynamic-routes) require a rewrite that can be added using [Functions](/pages/platform/functions). Consider the following dynamic route: `pages/post/[pid].js`. To intercept all requests matching that route and serve `/post/[pid].html` (created when exporting your Next.js site) to them, add a function at `/functions/post/[pid].js` with the following content:
+
+```js
+export function onRequestGet({ env, request }) {
+  return env.ASSETS.fetch(
+    new Request(new URL("/post/[pid]", request.url).toString(), request)
+  );
+}
+```
+
+This function assumes that the Next.js [`trailingSlash` option](https://nextjs.org/docs/api-reference/next.config.js/trailing-slash) is disabled (default). If you have the `trailingSlash` option enabled, the rewrite must point to `"/profiles/[profile]/"` (notice the trailing slash).
+
 ## Learn more
 
 By completing this guide, you have successfully deployed your Next.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
