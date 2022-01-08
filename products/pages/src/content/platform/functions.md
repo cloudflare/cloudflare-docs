@@ -26,15 +26,15 @@ For example, assume this directory structure:
 ```
 ├── ...
 ├── functions
-|   └── api
-│       ├── [[path]].ts
-│       ├── [username]
-│       │   └── profile.ts
-│       ├── time.ts
-│       └── todos
-│           ├── [[path]].ts
-│           ├── [id].ts
-│           └── index.ts
+|   ├── api
+│   │   ├── time.ts
+│   │   └── todos
+│   │       ├── [[path]].ts
+│   │       ├── [id].ts
+│   │       └── index.ts
+│   ├── [[path]].ts
+│   └── [username]
+│       └── profile.ts
 └── ...
 ```
 
@@ -45,8 +45,8 @@ The following routes will be generated based on the file structure, mapping the 
 /api/todos => ./functions/api/todos/index.ts
 /api/todos/* => ./functions/api/todos/[id].ts
 /api/todos/*/** => ./functions/api/todos/[[path]].ts
-/*/profile => ./functions/api/[username]/profile.ts
-/** => ./functions/api/[[path]].ts
+/*/profile => ./functions/[username]/profile.ts
+/** => ./functions/[[path]].ts
 ```
 
 ### Path segments
