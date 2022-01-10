@@ -19,7 +19,6 @@ pcx-content-type: configuration
 
 async function handleRequest(event) {
   const request = event.request
-  const cacheUrl = new URL(request.url)
 
   // Construct the cache key from the cache URL
   const cacheKey = new Request(cacheUrl.toString(), request)
