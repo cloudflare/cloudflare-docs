@@ -6,7 +6,9 @@ pcx-content-type: concept
 # Headers
 
 <Aside type="note">
-  Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](https://developers.cloudflare.com/pages/platform/functions) even if the function route matches the URL pattern. If your Pages application uses server-side rendering, or headers should be applied to responses from Functions, you must set those headers on the response object in the Function implementation.
+
+  Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](https://developers.cloudflare.com/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](https://developers.cloudflare.com/pages/platform/functions#adding-middleware)  for shared behavior.
+  
 </Aside>
 
 ## Attaching headers
