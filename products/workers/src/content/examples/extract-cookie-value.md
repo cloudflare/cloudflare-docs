@@ -37,6 +37,6 @@ addEventListener("fetch", event => {
 
 <Aside type="note" header="External Dependencies">
 
-This example requires the npm package [`cookie`](https://www.npmjs.com/package/cookie) to be installed in your javascript project.
+This example requires the npm package [`cookie`](https://www.npmjs.com/package/cookie) to be installed in your JavaScript project.
 
 </Aside>
