@@ -71,11 +71,17 @@ $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
 
 ## Editing a configuration file
 
-When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas) to propagate the changes without restarting the tunnel or causing any downtime.
+When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas) to propagate the new configuration with minimal downtime.
 
 1. Have a `cloudflared` instance running with the original version of the configuration file.
 1. Start a `cloudflared` replica running with the updated version of the configuration file.
 1. Wait for the replica to be fully running and usable.
 1. Stop the first instance of `cloudflared`.
 
-Your `cloudflared` will now be running with the updated version of your configuration file.
+Your `cloudflared` will now be running with the updated version of your configuration file. 
+
+<Aside type='note' header='Traffic handling'>
+
+When the first instance of <code>cloudflared</code> is stopped, it will drop long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
+
+</Aside>
