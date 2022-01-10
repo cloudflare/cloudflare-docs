@@ -128,7 +128,8 @@ Next, install the [Worktop][worktop] framework for Cloudflare Workers.
 ---
 header: Installing Worktop
 ---
-$ npm install worktop worktop.build
+$ npm install worktop
+$ npm install worktop.build --save-dev
 ```
 
 Worktop solves common needs such as routing, path parameters, and  HTTP methods.
