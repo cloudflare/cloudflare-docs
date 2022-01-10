@@ -82,6 +82,6 @@ Your `cloudflared` will now be running with the updated version of your configur
 
 <Aside type='note' header='Traffic handling'>
 
-When the first instance of <code>cloudflared</code> is stopped, it will drop long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
+When the first instance of <code>cloudflared</code> is stopped, long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH) will be dropped. UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
 
 </Aside>
