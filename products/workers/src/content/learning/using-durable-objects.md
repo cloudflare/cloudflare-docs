@@ -445,7 +445,7 @@ export class Counter {
 }
 ```
 
-## See also
+## Related resources
 
 - [Durable Objects runtime API](/runtime-apis/durable-objects)
 
