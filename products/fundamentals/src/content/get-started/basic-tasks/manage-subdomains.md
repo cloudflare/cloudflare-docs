@@ -70,7 +70,7 @@ If your main domain is using Cloudflare's [Universal SSL certificate](https://de
 
 For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations#full-setup).
 
-## Restrict access to subdomains
+## Customize subdomain behavior
 
 If you want custom settings and access for a specific subdomain within Cloudflare, refer to [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
 
