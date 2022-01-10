@@ -22,7 +22,7 @@ The available Rate Limiting rule parameters are the following:
 - `action` <Type>String</Type>
     - Field name in the dashboard: **Choose action**.
     - Action to perform when the request rate specified in the rule is reached.
-    - Use one of the following values: `block`, `challenge`, `js_challenge`, or `log`.
+    - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
 - `characteristics` <Type>Array&lt;String&gt;</Type>
     - Field name in the dashboard: **With the same**.
@@ -63,14 +63,14 @@ The available Rate Limiting rule parameters are the following:
     - Field name in the dashboard: **Duration**.
     - Once the request rate is reached, the Rate Limiting rule blocks further requests for the period of time defined in this field (in seconds).
     - Use one of the following values: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
-    - The value must be `0` when action is `challenge` or `js_challenge`.
+    - The value must be `0` when action is `challenge`, `js_challenge`, or `managed_challenge`.
 
 - `mitigation_expression` <Type>String</Type> <PropMeta>optional</PropMeta>
     - Field name in the dashboard: N/A (currently only available via API).
     - Scope of the mitigation action.
     - Allows you to specify an action scope different from the rule scope. For example, you can count login attempts at the `/login` URI path using the `expression` field and then perform rate limiting on the entire site using the `mitigation_expression` field.
     - The default value is `""` (empty string). When set to the default value, Cloudflare uses the value of the `expression` field as the mitigation expression.
-    - The value must be the same as the `expression` value or `""` when action is `challenge` or `js_challenge`.
+    - The value must be the same as the `expression` value or `""` when action is `challenge`, `js_challenge`, or `managed_challenge`.
 
 </Definitions>
 
