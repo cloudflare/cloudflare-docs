@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 import CSRDefinition from "../../_partials/_csr-definition.md" 
 
-# Certificate Signing Requests (CSR)
+# Certificate Signing Requests (CSRs)
 
 <CSRDefinition/>
 

@@ -64,7 +64,7 @@ The process to determine the signing thumbprint of a file varies depending on th
     $ ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
     ```
 
-1. Next, run the following commant to extract the SHA1 thumbprint:
+1. Next, run the following command to extract the SHA1 thumbprint:
 
     ```sh
     $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :                              

@@ -101,10 +101,10 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
           <ul>
             <li>
               Useful for ensuring that the visitor accessing the site is human,
-              not automated
+              not automated.
             </li>
             <li>
-              The client that made the request must pass a Captcha Challenge.
+              The client that made the request must pass a CAPTCHA challenge.
             </li>
             <li>
               If successful, Cloudflare accepts the matched request; otherwise,
@@ -113,6 +113,28 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
           </ul>
         </td>
         <td>4</td>
+      </tr>
+      <tr>
+        <td><em>Managed Challenge</em></td>
+        <td>
+          <ul>
+            <li>
+              Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
+            </li>
+            <li>
+              Depending on the characteristics of a request, Cloudflare will perform the following actions:
+              <ul>
+                <li>
+                  Show a non-interactive challenge page (similar to the current JS Challenge).
+                </li>
+                <li>
+                  Show a CAPTCHA challenge.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+        <td>5</td>
       </tr>
       <tr>
         <td><em>JS Challenge</em></td>
@@ -133,12 +155,12 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
             </li>
           </ul>
         </td>
-        <td>5</td>
+        <td>6</td>
       </tr>
       <tr>
         <td><em>Block</em></td>
         <td>Matching requests are denied access to the site.</td>
-        <td>6</td>
+        <td>7</td>
       </tr>
     </tbody>
 

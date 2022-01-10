@@ -51,14 +51,10 @@ pcx-content-type: tutorial
  The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
  </Aside>
 
-   ![Salefsorce configuration](../static/zero-trust-security/access/salesforce.png)
-
 1. Navigate to **Security Controls > Single Sign-On Settings**.
 1. Set the following global settings:
     * **SAML Enabled:** true
     * **Make federation ID case-insensitive:** true
-
-
 
 ## Create a new SAML Single-Sign On configuration
 
@@ -72,10 +68,7 @@ Configure as follows:
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
   * **Identity Provider Login URL**: This is the SSO endpoint provided in the Teams dashboard for that application.
 
-1. Click **Save**.
-
-  ![Salefsorce configuration](../static/zero-trust-security/access/salesforce-sso.png)
-  
+1. Click **Save**.  
 1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
 1. At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.
 1. (Optional) To force all users to sign in through Cloudflare Access:

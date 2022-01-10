@@ -15,59 +15,6 @@ Yes. With [Named Tunnels](https://blog.cloudflare.com/argo-tunnels-that-live-for
 
 Yes. Cloudflare Tunnel has full support for Websockets.
 
-## What are the ports and IPs used by `cloudflared`?
-
-Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from cloudflared. The parameters below can be configured for egress traffic inside of a firewall.
-
-**Edge connections**
-- TCP port 7844 (HTTPS)
-- IPs are those behind **region1.argotunnel.com** and **region2.argotunnel.com** \*
-
-**API requests**
-- TCP port 443 (HTTPS)
-- IPs are those behind **api.cloudflare.com** \*
-
-Below the output of `dig` commands towards the above hostnames:
-
-```bash
-$ dig region1.argotunnel.com
-...
-
-;; ANSWER SECTION:
-region1.argotunnel.com.	86400	IN	A	198.41.192.7
-region1.argotunnel.com.	86400	IN	A	198.41.192.47
-region1.argotunnel.com.	86400	IN	A	198.41.192.107
-region1.argotunnel.com.	86400	IN	A	198.41.192.167
-region1.argotunnel.com.	86400	IN	A	198.41.192.227
-
-...
-
-$ dig region2.argotunnel.com
-
-...
-
-;; ANSWER SECTION:
-region2.argotunnel.com.	300	IN	A	198.41.200.193
-region2.argotunnel.com.	300	IN	A	198.41.200.233
-region2.argotunnel.com.	300	IN	A	198.41.200.13
-region2.argotunnel.com.	300	IN	A	198.41.200.53
-region2.argotunnel.com.	300	IN	A	198.41.200.113
-
-...
-
-$ dig api.cloudflare.com
-
-...
-
-;; ANSWER SECTION:
-api.cloudflare.com.     41      IN      A       104.19.193.29
-api.cloudflare.com.     41      IN      A       104.19.192.29
-
-...
-```
-
-\* *These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here.*
-
 ## How can Tunnel be used with Partial DNS (CNAME Setup)?
 
 Cloudflare offers two modes of setup: Full Setup, in which the domain uses Cloudflare DNS name servers, and Partial Setup (also known as CNAME setup) in which the domain uses non-Cloudflare DNS servers.
@@ -131,7 +78,7 @@ The `--loglevel` flag indicates the logging level, which can be one of {`debug`,
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
 
 ### Check location of credentials file
-If you encouter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
+If you encounter the following error when running a Tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
 
 ```sh
 $ cloudflared tunnel run
@@ -145,7 +92,7 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 
 * Take note of any specific error messages and/or problematic behaviors.
 
-* Take note of any options you specified, either on the CLI or in your configuration file, when starting your tunnel.
+* Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
 * Set [`log-level`](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/arguments#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 

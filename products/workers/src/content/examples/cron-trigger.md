@@ -7,7 +7,7 @@ tags:
 pcx-content-type: configuration
 ---
 
-# Cron Triggers
+# Setting Cron Triggers
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>

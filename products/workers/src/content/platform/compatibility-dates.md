@@ -15,7 +15,7 @@ Compatibility dates (and flags) are how you, as a developer, opt into these chan
 compatibility_date = "2021-09-14"
 ```
 
-When you start your project, you should always set `compatibility_date` to the current date. You should occassionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the `wrangler publish` command.
+When you start your project, you should always set `compatibility_date` to the current date. You should occasionally update the `compatibility_date` field. When updating, you should refer to this page to find out what has changed, and you should be careful to test your Worker to see if the changes affect you, updating your code as necessary. The new compatibility date takes effect when you next run the `wrangler publish` command.
 
 There is no need to update your `compatibility_date` if you do not want to. The Workers runtime will support old compatibility dates forever. If, for some reason, Cloudflare finds it is necessary to make a change that will break live Workers, Cloudflare will actively contact affected developers. That said, Cloudflare aims to avoid this if at all possible.
 
@@ -43,6 +43,34 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 ## Change history
 
 Newest changes are listed first.
+
+### Streams BYOB reader detaches buffer
+
+<table><tbody>
+  <tr><td><strong>Default as of</strong></td><td>2021-11-10</td></tr>
+  <tr><td><strong>Flag to enable early</strong></td><td><code>streams_byob_reader_detaches_buffer</code></td></tr>
+  <tr><td><strong>Flag to disable</strong></td><td><code>streams_byob_reader_does_not_detach_buffer</code></td></tr>
+</tbody></table>
+
+Originally, the Workers runtime did not detach the `ArrayBuffer`s from user-provided TypedArrays when using the [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods), as required by the Streams spec, meaning it was possible to inadvertently reuse the same buffer for multiple `read()` calls. This change makes Workers conform to the spec.
+
+User code should never try to reuse an `ArrayBuffer` that has been passed into a [BYOB reader's `read()` method](/runtime-apis/streams/readablestreambyobreader#methods). Instead, user code can re-use the `ArrayBuffer` backing the result of the `read()` promise, as in the example below.
+
+```js
+  // Consume and discard `readable` using a single 4KiB buffer.
+  let reader = readable.getReader({ mode: "byob" })
+  let arrayBufferView = new Uint8Array(4096)
+  while (true) {
+    let result = await reader.read(arrayBufferView)
+    if (result.done) break
+    // Optionally something with `result` here.
+    // Re-use the same memory for the next `read()` by creating
+    // a new Uint8Array backed by the result's ArrayBuffer.
+    arrayBufferView = new Uint8Array(result.value.buffer)
+  }
+```
+
+The more recently added extension method `readAtLeast()` will always detach the `ArrayBuffer` and is unaffected by this feature flag setting.
 
 ### Durable Object `stub.fetch()` requires a full URL
 

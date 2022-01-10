@@ -342,7 +342,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='note'>
 
-Access to `cf.bot_management.verified_bot` and `cf.bot_management.score` fields requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) enabled.
+Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/plans/bm-subscription) enabled.
 
 </Aside>
 
@@ -360,7 +360,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.verified_bot</code><br /><Type>Boolean</Type></p>
         </td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.client.bot</code>.
           </p>
         </td>
     </tr>
@@ -375,9 +375,19 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><p><code>cf.bot_management.ja3_hash</code><br /><Type>string</Type></p>
+        </td>
+        <td>
+          <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
+          </p>
+          <p>For more details, refer to <a href="https://developers.cloudflare.com/bots/concepts/ja3-fingerprint">JA3 Fingerprints</a>.
+          </p>
+        </td>
+    </tr>
+    <tr>
         <td><code>cf.client.bot</code><br /><Type>Boolean</Type></td>
         <td>
-          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler.</p>
+          <p>When <code class="InlineCode">true</code>, this field indicates the request originated from a known good bot or crawler. Provides the same information as <code class="InlineCode">cf.bot_management.verified_bot</code>.</p>
         </td>
     </tr>
     <tr>
@@ -524,7 +534,7 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
         <td><p><code>ip.len</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The length of the packet. <br />
+         The length of the packet including the header. <br />
          Example value:
          <code class="InlineCode">60</code>
         </td>

@@ -67,8 +67,6 @@ _* Not available in Network Analytics dashboard yet._
 
 The **DDoS** tab under **Firewall** is currently only available to the WAF/CDN customers.
 
-Magic Transit and Spectrum customers can only adjust the sensitivity level or action of DDoS rules [using the API](/managed-rulesets/network/configure-api).
-
 </Aside>
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/reference/analytics).

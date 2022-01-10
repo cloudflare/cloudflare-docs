@@ -1,9 +1,10 @@
 ---
+title: Troubleshooting
 order: 5
 pcx-content-type: faq
 ---
 
-# Troubleshooting
+# Troubleshooting Universal SSL
 
 ## Resolve a timed out state
 
@@ -15,3 +16,7 @@ To resolve timeout issues, try one or more of the following options:
 * [Disable Universal SSL](/edge-certificates/universal-ssl/enable-universal-ssl#disable-universal-ssl) and wait at least a minute. Then, re-enable Universal SSL.
 * Send a PATCH request to the [validation endpoint](https://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method) using the same DCV method (API only).
 * Follow the [APEX validation method](/edge-certificates/changing-dcv-method#apex-validation).
+
+## Other issues
+
+For additional troubleshooting help, refer to [Troubleshooting SSL errors](https://support.cloudflare.com/hc/articles/200170566).

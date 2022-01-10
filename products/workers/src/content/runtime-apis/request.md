@@ -43,7 +43,7 @@ The global `fetch` method itself invokes the `Request` constructor. The [`Reques
 
 <Aside header="Learn more">
 
-Review [Understanding the FetchEvent Lifecycle](/learning/fetch-event-lifecycle) for a deeper understanding of these fundamental Workers concepts.
+Review the [`FetchEvent` documentation](/runtime-apis/fetch-event) for a deeper understanding of these fundamental Workers concepts.
 
 </Aside>
 
@@ -203,7 +203,7 @@ All plans have access to:
 
 - `botManagement` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`. Refer to the [`Bot Management Variables`](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
+  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to the [`Bot Management Variables`](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
 
 - `colo` <Type>string</Type>
 

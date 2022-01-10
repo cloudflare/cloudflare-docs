@@ -29,7 +29,6 @@ When you click on the row, you can see information related to the identity that 
 
 ### Explanation of the fields
 
-
 <TableWrap>
 
 | Field | Description |
@@ -52,7 +51,7 @@ When you click on the row, you can see information related to the identity that 
 ### Explanation of the fields
 
 <TableWrap>
-  
+
 | Field | Description |
 | ----- | ----------- |
 | **Host** | The hostname in the HTTP header for the HTTP request. |

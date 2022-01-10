@@ -3,16 +3,17 @@ order: 1
 pcx-content-type: how-to
 ---
 
-# Manage universal certificates
+# Manage Universal SSL certificates
 
 ## Enable Universal SSL
 
+Once you enable Universal SSL, you can review the [certificate's status](/ssl-tls/certificate-statuses) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+
 ### Authoritative (Full) domains
 
-For an authoritative or full domain — domains that changed their [domain nameservers](https://support.cloudflare.com/hc/articles/205195708) – Universal SSL requires two steps:
+For an authoritative or full domain — domains that changed their [domain nameservers](https://support.cloudflare.com/hc/articles/205195708) – your domain should receive its Universal SSL certificate within **24 hours**. This certificate covers your root domain and all first-level subdomains (`subdomain.example.com`).
 
-1. Once you change your domain nameservers, your domain should receive its Universal SSL certificate within **24 hours**.
-1. Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
+Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/origin-configuration/ssl-modes).
 
 ### Non-authoritative (Partial) domains
 
@@ -21,8 +22,10 @@ For non-authoritative or partial domains (domains on a CNAME setup), Universal S
 - Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
 - Validated:
 
-    - Immediately if you add [Domain Control Validation (DCV)](../changing-dcv-method) records to your authoritative DNS.
+    - Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/changing-dcv-method) records to your authoritative DNS.
     - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
+
+Unless you cover and validate multiple subdomains with an [advanced certificate](../../advanced-certificate-manager), you will need to proxy and validate each new subdomains as they are added. 
 
 ## Disable Universal SSL
 

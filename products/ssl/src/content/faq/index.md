@@ -1,9 +1,10 @@
 ---
+title: FAQ
 order: 201
 pcx-content-type: navigation
 ---
 
-# FAQ
+# General FAQs
 
 For FAQs and other troubleshooting information, refer to the following resources:
 

@@ -121,7 +121,7 @@ Fundamentally, a Workers application consists of two parts:
 1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
 2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This [dispatches a `FetchEvent`](/learning/fetch-event-lifecycle) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
+When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/runtime-apis/fetch-event) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
 ```js
 ---
@@ -295,7 +295,7 @@ type = "webpack"
 
 By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
 
-#### (Optional) Configure for deploying to a registered domain
+### (Optional) Configure for deploying to a registered domain
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
@@ -351,13 +351,13 @@ header: Publish to workers.dev
 ~/my-worker $ wrangler publish
 ```
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
-__Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you may initially see [523 errors](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#523error) while DNS is propagating. It should work after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
 
 </Aside>
 
-#### (Optional) Publish your project to a registered domain
+### (Optional) Publish your project to a registered domain
 
 To deploy the production environment set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
 
@@ -371,6 +371,38 @@ header: Publish to example.com
 For more information on environments, refer to the [Wrangler documentation](/cli-wrangler/configuration#environments).
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+
+--------------------------------
+
+## 9. Turn on/off usage notifications
+
+Cloudflare provides two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled when you create a new free account with Workers.
+
+Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
+
+![workers-weekly-summary](./media/workers-weekly-summary.png)
+
+Workers Usage Report is an on-demand usage notification that is triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
+
+<Aside type ="note" header="Workers Unbound">
+
+If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/learning/metrics-and-analytics#egress-data).
+
+</Aside>
+
+![workers-usage-report](./media/workers-usage-report.png)
+
+You can turn usage notifications on or off by going to **Account Home** > **Notifications**.
+
+![notifications-tab](./media/notifications-tab.png)
+
+Select **Add** and scroll down to Workers.
+
+![notifications-tab](./media/add-workers-notifications.png)
+
+After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
+
+![notifications-tab](./media/workers-overview-notifications.png)
 
 --------------------------------
 

@@ -14,7 +14,7 @@ jobs:
       onedot: ${{ steps.filter.outputs.onedot }}
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
-      api-security: ${{ steps.filter.outputs.api-security }}
+      api-shield: ${{ steps.filter.outputs.api-shield }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
@@ -25,6 +25,7 @@ jobs:
       dns: ${{ steps.filter.outputs.dns }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
+      email-routing: ${{ steps.filter.outputs.email-routing }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
@@ -46,6 +47,7 @@ jobs:
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
       ruleset-engine: ${{ steps.filter.outputs.ruleset-engine }}
+      security-center: ${{ steps.filter.outputs.security-center }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -56,6 +58,7 @@ jobs:
       waf: ${{ steps.filter.outputs.waf }}
       waiting-room: ${{ steps.filter.outputs.waiting-room }}
       workers: ${{ steps.filter.outputs.workers }}
+      zaraz: ${{ steps.filter.outputs.zaraz }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2.4.2
@@ -70,8 +73,8 @@ jobs:
               - 'products/analytics/**'
             api:
               - 'products/api/**'
-            api-security:
-              - 'products/api-security/**'
+            api-shield:
+              - 'products/api-shield/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
@@ -92,6 +95,8 @@ jobs:
               - 'products/distributed-web/**'
             docs-engine:
               - 'products/docs-engine/**'
+            email-routing:
+              - 'products/email-routing/**'
             events:
               - 'products/events/**'
             firewall:
@@ -134,6 +139,8 @@ jobs:
               - 'products/rules/**'
             ruleset-engine:
               - 'products/ruleset-engine/**'
+            security-center:
+              - 'products/security-center/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -154,6 +161,8 @@ jobs:
               - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
+            zaraz:
+              - 'products/zaraz/**'
 
   deploy-developers-site:
     runs-on: ubuntu-latest
@@ -169,8 +178,8 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
-          npm run build
+          yarn install --pure-lockfile
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -201,10 +210,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -235,10 +244,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -269,10 +278,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -289,37 +298,37 @@ jobs:
           environment: "production"
           wranglerVersion: "1.13.0"
 
-  deploy-api-security:
+  deploy-api-shield:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.api-security == 'true' }}
+    if: ${{ needs.changes.outputs.api-shield == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/api-security
+        working-directory: products/api-shield
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
+          workingDirectory: "products/api-shield"
           wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
+          workingDirectory: "products/api-shield"
           environment: "production"
           wranglerVersion: "1.13.0"
 
@@ -337,10 +346,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -371,10 +380,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -405,10 +414,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -437,10 +446,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -469,10 +478,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -501,10 +510,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -520,7 +529,7 @@ jobs:
           workingDirectory: "products/cloudflare-one"
           environment: "production"
           wranglerVersion: "1.13.0"
-          
+
   deploy-dns:
     runs-on: ubuntu-latest
     needs: changes
@@ -535,10 +544,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -554,7 +563,6 @@ jobs:
           workingDirectory: "products/dns"
           environment: "production"
           wranglerVersion: "1.13.0"
-
 
   deploy-ddos-protection:
     runs-on: ubuntu-latest
@@ -570,10 +578,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -581,14 +589,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ddos-protection"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ddos-protection"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -604,10 +612,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -638,10 +646,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -655,6 +663,40 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
+          environment: "production"
+          wranglerVersion: "1.13.0"
+
+  deploy-email-routing:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.email-routing == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/email-routing
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/email-routing"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/email-routing"
           environment: "production"
           wranglerVersion: "1.13.0"
 
@@ -672,10 +714,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -706,10 +748,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -740,10 +782,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -774,10 +816,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -808,10 +850,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -842,10 +884,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -876,10 +918,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -910,10 +952,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -944,10 +986,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -978,10 +1020,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1012,10 +1054,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1046,10 +1088,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1057,14 +1099,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-error-logging"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-error-logging"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -1080,10 +1122,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1114,10 +1156,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1155,10 +1197,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1189,10 +1231,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1223,10 +1265,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1255,10 +1297,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1289,10 +1331,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1323,10 +1365,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1355,10 +1397,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1372,6 +1414,40 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ruleset-engine"
           environment: "production"
+
+  deploy-security-center:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.security-center == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/security-center
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/security-center"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/security-center"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-spectrum:
     runs-on: ubuntu-latest
@@ -1387,10 +1463,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1421,10 +1497,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1455,10 +1531,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1489,10 +1565,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1523,10 +1599,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1557,10 +1633,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1591,10 +1667,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1625,10 +1701,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1659,10 +1735,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1693,10 +1769,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1719,3 +1795,37 @@ jobs:
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
+
+  deploy-zaraz:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.zaraz == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/zaraz
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          environment: "production"
+          wranglerVersion: "1.13.0"

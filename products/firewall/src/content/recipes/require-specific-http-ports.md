@@ -4,7 +4,7 @@ pcx-content-type: configuration
 
 # Require specific HTTP ports
 
-By default, Cloudflare allows requests on a number of different HTTP ports (see [_Identifying network ports compatible with Cloudflare's proxy_](https://support.cloudflare.com/hc/en-us/articles/200169156-Identifying-network-ports-compatible-with-Cloudflare-s-proxy) on the Cloudflare support site).
+By default, Cloudflare allows requests on a number of different HTTP ports (refer to [Network ports](https://developers.cloudflare.com/fundamentals/get-started/network-ports).
 
 You can target requests based on their HTTP port with the `cf.edge.server_port` [dynamic field](/cf-firewall-language/fields/#dynamic-fields).
 

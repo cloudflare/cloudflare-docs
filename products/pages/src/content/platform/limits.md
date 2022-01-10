@@ -19,15 +19,23 @@ A Cloudflare Pages project can be attached to a maximum of ten (10) custom domai
 
 ## Files
 
-Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency exprience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
+Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files.
 
 ## File size
 
 The maximum file size for a single Cloudflare Pages site asset is 25MB.
 
+## Headers
+
+A `_headers` file can have a maximum of 100 header rules.
+
 ## Preview deployments
 
 You can have an unlimited number of [preview deployments](/platform/preview-deployments) active on your project at a time.
+
+## Redirects
+
+A `_redirects` file can have a maximum of 100 redirect rules.
 
 ## Users
 

@@ -1,9 +1,11 @@
 ---
+title: Validate certificates
 order: 3
 pcx-content-type: configuration
 ---
 
 import DCVDefinition from "../../_partials/_dcv-definition.md"
+import DCVCNAMEDefinition from "../../_partials/_dcv-cname-definition.md"
 import CNAMECertValidation from "../../_partials/_cname-cert-verification.md"
 import CreateHostname from "../../_partials/_ssl-for-saas-create-hostname.md"
 import EmailValidationDefinition from "../../_partials/_email-validation-definition.md"
@@ -11,7 +13,7 @@ import TXTValidationDefinition from "../../_partials/_txt-validation-definition.
 import EmailValidationProcess from "../../_partials/_email-validation-process.md"
 import ValidatePatch from "../../_partials/_ssl-for-saas-validate-patch.md"
 
-# Validate certificates
+# Validate certificates — SSL for SaaS
 
 <DCVDefinition/>
 
@@ -51,7 +53,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 ### CNAME (manual)
 
-You can also complete DCV with a special CNAME record. This method is only available for custom hostnames.
+<DCVCNAMEDefinition/>
 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
 

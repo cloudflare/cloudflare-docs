@@ -45,4 +45,4 @@ In practise this generally means that you can open both Chrome and Firefox to us
 
 To release a browser session please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-**Safari** is more susceptible to presenting this errror. [See workaround](/feedback/known-limitations#safari).
+**Safari** is more susceptible to presenting this error. [See workaround](/feedback/known-limitations#safari).

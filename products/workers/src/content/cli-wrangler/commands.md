@@ -466,7 +466,7 @@ $ wrangler secret list --env ENVIRONMENT_NAME
 <Definitions>
 
 - `--env $ENVIRONMENT_NAME` <PropMeta>optional</PropMeta>
-  - If defined, only the specified environemnt's secrets will be listed. Refer to [Environments](/platform/environments) for more information.
+  - If defined, only the specified environment's secrets will be listed. Refer to [Environments](/platform/environments) for more information.
 
 </Definitions>
 
@@ -496,7 +496,7 @@ kv_namespaces = [
 ]
 ```
 
-Successfull operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
+Successful operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
 
 ```js
 let value = await MY_KV.get("my-key")

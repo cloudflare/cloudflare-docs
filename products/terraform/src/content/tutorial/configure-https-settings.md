@@ -101,7 +101,7 @@ To git@github.com:$GITHUB_USER/cf-config.git
 
 ## 3. Apply and verify the changes
 
-Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile curl against BoringSSL](https://ec.haxx.se/building-boringssl.html).
+Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile curl against BoringSSL](https://everything.curl.dev/source/build/tls/boringssl#build-boringssl).
 
 ```sh
 $ curl -v --tlsv1.3 https://www.upinatoms.com 2>&1 | grep "SSL connection\|error"

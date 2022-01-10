@@ -1,16 +1,19 @@
 ---
-order: 3
+title: Domain Control Validation (DCV)
+order: 4
 pcx-content-type: how-to
 ---
 
 import DCVDefinition from "../_partials/_dcv-definition.md"
+import DCVCNAMEDefinition from "../_partials/_dcv-cname-definition.md"
 import CNAMECertValidation from "../_partials/_cname-cert-verification.md"
 import GenericValidationProcess from "../_partials/_generic-validation-process.md"
 import EmailValidationDefinition from "../_partials/_email-validation-definition.md"
 import TXTValidationDefinition from "../_partials/_txt-validation-definition.md"
 import EmailValidationProcess from "../_partials/_email-validation-process.md"
+import DCVValidatePatch from "../_partials/_dcv-validate-patch.md"
 
-# Domain Control Validation (DCV)
+# Domain Control Validation (DCV) — SSL/TLS
 
 <DCVDefinition/>
 
@@ -69,6 +72,8 @@ Though this process happens relatively quickly, your application may experience 
 
 At your authoritative DNS provider, create a TXT record named the **name** and containing the **value**. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
+<DCVValidatePatch/>
+
 #### Email
 
 <EmailValidationDefinition/>
@@ -80,9 +85,21 @@ At your authoritative DNS provider, create a TXT record named the **name** and c
 
 <EmailValidationProcess/>
 
+<DCVValidatePatch/>
+
+#### CNAME
+
+<DCVCNAMEDefinition/>
+
+Since this method is only available using the API, you need to make a [PATCH request](hhttps://api.cloudflare.com/#ssl-verification-edit-ssl-certificate-pack-validation-method) and set a `"validation_method":"cname"` parameter.
+
+In the response, you will see two properties inside of the `verification_info` object: `cname` and `cname_target` (you can also see these values in the dashboard by clicking that specific hostname certificate). Then, use these values to add a CNAME record at your authoritative DNS provider.
+
+<DCVValidatePatch/>
+
 ### Verify DCV status
 
-To verify the DCV status of a domain, either view the certificate in the dashboard or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
+To verify the [DCV status](/ssl-tls/certificate-statuses) of a domain, either view the certificate in the dashboard or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
 
 A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 

@@ -25,7 +25,7 @@ concurrently(
   },
   async () => {
     console.log(
-      "There was an error running Gatsby in this directory. Try doing an npm install and npm bootstrap in the product directory first."
+      "There was an error running Gatsby in this directory. Try doing an yarn install and yarn bootstrap in the product directory first."
     );
 
     process.exit(1);

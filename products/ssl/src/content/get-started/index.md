@@ -1,4 +1,5 @@
 ---
+title: Get started
 order: 1
 pcx-content-type: tutorial
 ---
@@ -9,7 +10,7 @@ import CustomCertificateDefinition from "../_partials/_custom-certificates-defin
 import KeylessSSLDefinition from "../_partials/_keyless-ssl-definition.md"
 import SSLforSaaSDefinition from "../_partials/_ssl-for-saas-definition.md"
 
-# Get started
+# Get started with SSL/TLS
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
@@ -26,7 +27,7 @@ Follow the steps below to enable SSL/TLS protection for your application.
 Cloudflare offers a variety of options for your application's edge certificates:
 
 - [**Universal certificates**](/edge-certificates/universal-ssl): <UniversalSSLDefinition/>
-- [**Advanced certificates**](/edge-certificates/advanced-certificate-manager) (which supercede legacy [Dedicated Certificates](https://support.cloudflare.com/hc/articles/228009108)): <ACMDefinition/>
+- [**Advanced certificates**](/edge-certificates/advanced-certificate-manager) (which supersede legacy [Dedicated Certificates](https://support.cloudflare.com/hc/articles/228009108)): <ACMDefinition/>
 - [**Custom certificates**](/edge-certificates/custom-certificates): <CustomCertificateDefinition/>
 - [**Keyless certificates**](/keyless-ssl) (Enterprise only): <KeylessSSLDefinition/>
 
@@ -48,7 +49,13 @@ Before choosing an encryption mode, make sure you have changed relevant settings
 
 </Aside>
 
-## Step 3 (optional) — Enable additional features
+## Step 3 — Enforce HTTPS connections
+
+Even if your application has an active edge certificate, visitors can still access resources over unsecured HTTP connections.
+
+Using various Cloudflare settings, however, you can force all or most visitor connections to [use HTTPS](/edge-certificates/encrypt-visitor-traffic).
+
+## Step 4 (optional) — Enable additional features
 
 After you have chosen your edge certificate and updated your encryption mode, review the following Cloudflare settings:
 

@@ -26,8 +26,8 @@ terraform {
 }
 
 provider "cloudflare" {
-      email = "you@example.com"
-      api_token = "your-api-token"
+  email = "you@example.com"
+  api_token = "your-api-token"
 }
 
 variable "zone_id" {

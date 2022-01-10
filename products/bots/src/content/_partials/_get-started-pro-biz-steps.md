@@ -2,8 +2,9 @@ To start using Super Bot Fight Mode:
 1. Go to **Firewall** > **Bots**.
 1. Select **Configure Super Bot Fight Mode**.
 1. Choose how your domain should respond to various types of traffic:
-    - See [Static resource protection](/about/static-resources/) for more additional details on supported file types
-    - See [JavaScript detections](/about/javascript-detections) for more information on invisible code injection
+    - For more details on verified bots, refer to [Verified Bots](/concepts/bot#verified-bots).
+    - For more details on supported file types, refer to [Static resource protection](/about/static-resources/) 
+    - For more details on invisible code injection, refer to [JavaScript detections](/about/javascript-detections).
 
 <Aside type="warning" header='Warning'>
 

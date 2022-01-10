@@ -39,8 +39,10 @@ If you are not using a framework, you may input `exit 0` into the **Build comman
 | Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
 | Nuxt.js                      | `nuxt generate`                      | `dist`                      |
 | Pelican                      | `pelican $content [-s settings.py]`  | `output`                    |
+| Quasar                       | `quasar build`                       | `dist/spa`                  |
 | React (create-react-app)     | `npm run build`                      | `build`                     |
 | React Static                 | `react-static build`                 | `dist`                      |
+| Remix                        | `npm run build`                      | `public`                    |
 | Slate                        | `./deploy.sh`                        | `build`                     |
 | Svelte                       | `npm run build`                      | `public`                    |
 | Umi                          | `umi build`                          | `dist`                      |

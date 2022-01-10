@@ -9,7 +9,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
 1. Ensure you have the latest version of [Wrangler](/cli-wrangler/install-update#update) and Node.js installed.
 
-2. In your terminal run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. For example, I’ll create a project called my-site by running this command:
+2. In your terminal, run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. The following example creates a project called `my-site`:
 
   ```sh
   $ wrangler generate --site my-site
@@ -18,18 +18,18 @@ To start from scratch to create a Workers Site, follow these steps:
   This command creates the following:
 
     - `public`: The static assets for your project. By default it contains an `index.html` and a `favicon.ico`.
-    - `workers-site`: The JavaScript for serving your assets. You don’t need to edit this- but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
-    - `wrangler.toml`: Your configuration file. You’ll configure your account and project information here.
+    - `workers-site`: The JavaScript for serving your assets. You do not need to edit this but if you want to see how it works or add more functionality to your Worker, you can edit `workers-site/index.js`.
+    - `wrangler.toml`: Your configuration file where you configure your account and project information.
 
-3. Add your `account_id` your `wrangler.toml`. You can find your `account_id` on the right sidebar of the Workers or Overview Dashboard. Note: You may need to scroll down! For more details on finding your `account_id` visit [Getting started](/get-started/guide#6a-obtaining-your-account-id-and-zone-id).
+3. Add your `account_id` to your `wrangler.toml` file. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > choose your **website** > **Overview** > **Account ID**. For more details on finding your `account_id`, refer to the [Get started guide](/get-started/guide#6a-obtaining-your-account-id-and-zone-id).
 
-4. You can preview your site by running:
+4. You can preview your site by running the [`wrangler dev`](/cli-wrangler/commands#dev) command:
 
   ```sh
   $ wrangler dev
   ```
 
-5. Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Then update your `wrangler.toml` file accordingly:
+5. Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone.Then update your `wrangler.toml` file:
 
     **`*.workers.dev`**: Enable the `workers_dev` configuration.
 
@@ -48,7 +48,7 @@ To start from scratch to create a Workers Site, follow these steps:
 
     <Aside type="note">
 
-    Refer to the documentation on [Routes](/platform/routes) to configure `route` properly.
+    Refer to the documentation on [Routes](/platform/routes) to configure a `route` properly.
 
     </Aside>
   

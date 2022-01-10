@@ -37,6 +37,9 @@ products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/
 # Documentation Engine
 products/docs-engine/ @cloudflare/PCX
 
+# Email Routing
+products/email-routing/ @cloudflare/PCX
+
 # Events
 products/events/ @ConzorKingKong @cloudflare/PCX
 
@@ -88,6 +91,9 @@ products/rules/ @cloudflare/PCX
 # Ruleset Engine
 products/ruleset-engine/ @cloudflare/PCX
 
+# Security Center
+products/security-center/ @cloudflare/PCX
+
 # Spectrum
 products/spectrum/ @ConzorKingKong @cloudflare/PCX
 
@@ -117,3 +123,6 @@ products/warp-client/ @cloudflare/PCX
 
 # Workers
 products/workers/ @cloudflare/workers-docs @cloudflare/PCX
+
+# Zaraz
+products/zaraz/ @cloudflare/PCX

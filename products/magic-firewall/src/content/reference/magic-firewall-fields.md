@@ -93,7 +93,7 @@ pcx-content-type: reference
         <td><p><code>ip.len</code><br /><Type>Number</Type></p>
         </td>
         <td>
-         The length of the packet. <br />
+         The length of the packet including the header. <br />
          Example value:
          <code class="InlineCode">60</code>
         </td>

@@ -228,7 +228,7 @@ The default time interval is set to 24 hours. Note that for correct calculations
 
 #### Review the Lambda function logs in AWS
 
-If you detect issues with your AWS Lambda function in Elastic, you can review the AWS CloudWatch logs that are generated automatically for tht specific Lambda function.
+If you detect issues with your AWS Lambda function in Elastic, you can review the AWS CloudWatch logs that are generated automatically for the specific Lambda function.
 
 To begin, in AWS:
 

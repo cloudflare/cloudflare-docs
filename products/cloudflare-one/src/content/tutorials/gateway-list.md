@@ -61,6 +61,6 @@ You can now use the list in the Cloudflare gateway rule builder. This example us
 
 ![List Upload](../static/secure-web-gateway/gateway-list/build-rule.png)
 
-You can now modifiy the rule precedence of the list-based rule in the UI by dragging and dropping the row.
+You can now modify the rule precedence of the list-based rule in the UI by dragging and dropping the row.
 
 ![List Upload](../static/secure-web-gateway/gateway-list/list-precedence.png)

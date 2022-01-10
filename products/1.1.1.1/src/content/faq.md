@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 8
 pcx-content-type: faq
 ---
 
@@ -14,6 +14,10 @@ Below you will find answers to our most commonly asked questions on 1.1.1.1 DNS 
 This specialized server is called a DNS recursive resolver. The resolver’s job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
 
 Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
+
+## How can I check if my computer / smartphone / tablet is connected to 1.1.1.1?
+
+Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1 and that it is working.
 
 ## What do DNS resolvers do?
 

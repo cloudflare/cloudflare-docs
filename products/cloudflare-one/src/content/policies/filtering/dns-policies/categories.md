@@ -125,6 +125,7 @@ If the category has multiple words in the name (e.g. *Parked & For Sale Domains*
 
 | Category | Test domain |
 | -------- | ----------- |
+| *Adult Themes* | `nudity.testcategory.com` |
 | *Anonymizer* | `anonymizer.testcategory.com` |
 | *Command and Control & Botnet* | `commandandcontrolandbotnet.testcategory.com` |
 | *Cryptomining* | `cryptomining.testcategory.com` |

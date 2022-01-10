@@ -1,12 +1,13 @@
 ---
 order:
+title: Windows 10
 pcx-content-type: how-to
 ---
 
 import CaptivePortals from "../_partials/_captive-portals.md"
 import Encrypted from "../_partials/_encrypted.md"
 
-# Windows 10
+# Set up 1.1.1.1 - Windows 10
 
 Follow these steps to configure 1.1.1.1:
 
@@ -35,6 +36,7 @@ Follow these steps to configure 1.1.1.1:
     ```
 
 1. Click **Close**.
+1. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 <CaptivePortals/>
 <Encrypted/>

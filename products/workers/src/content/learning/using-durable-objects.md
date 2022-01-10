@@ -365,11 +365,9 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 [Wrangler tail](/cli-wrangler/commands#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
 
-While the Workers dashboard does support editing Workers that use modules syntax:
-* If you edit a script in the editor that is bound to Durable Objects and save it, the Durable Objects bindings will be lost.
-* Previewing scripts that bind Durable Objects does not work in the editor.
+[Wrangler dev](/cli-wrangler/commands#dev) establishes a tunnel from your local development environment to Cloudflare's edge, allowing you to test your Worker and Durable Objects as they are developed.
 
-These are both bugs that will be fixed soon.
+The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
 ### Object Location
 
@@ -464,3 +462,12 @@ In your `wrangler.toml` file, make sure the `dir` and `main` entries point to th
 
 #### Error when deleting migration
 When deleting a migration using `wrangler publish --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+
+#### Error: Durable Object is overloaded.
+A single instance of a Durable Object cannot do more work than is possible on a single thread. These errors mean the Durable Object has too much work to keep up with incoming requests:
+
+- `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
+- `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
+- `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+
+To solve this you can either do less work per request, or send fewer requests, for instance by splitting the requests among more instances of the Durable Object.

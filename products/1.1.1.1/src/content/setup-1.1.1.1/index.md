@@ -9,6 +9,8 @@ By default, the DNS server your devices use is provided by your Internet provide
 
 Before changing your DNS servers to 1.1.1.1, take note of any information already in place. This way, you can revert to using your previous DNS server should you want to.
 
+After configuring your system, you can check if you are connected to 1.1.1.1 by visiting [1.1.1.1/help](https://1.1.1.1/help).
+
 Select a platform to get started:
 
 <DirectoryListing path="/setup-1.1.1.1"/>
