@@ -71,7 +71,7 @@ $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
 
 ## Editing a configuration file
 
-When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas) to propagate the new configuration with minimal downtime.
+When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas) to propagate the new configuration with minimal downtime.
 
 1. Have a `cloudflared` instance running with the original version of the configuration file.
 1. Start a `cloudflared` replica running with the updated version of the configuration file.
