@@ -13,7 +13,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 For a high-level introduction to Durable Objects, [see the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
 
-For details on the specific Durable Object APIs, [see the runtime API](/runtime-apis/durable-objects).
+For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/runtime-apis/durable-objects).
 
 ## Using Durable Objects
 
