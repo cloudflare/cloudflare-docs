@@ -72,6 +72,10 @@ For deeper subdomains (`dev.blog.example.com`), use a [different type of certifi
 
 ## Customize subdomain behavior
 
-If you want custom settings and access for a specific subdomain within Cloudflare, refer to [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
+If you want custom Cloudflare settings for individual subdomains, your approach will vary depending on your plan.
+
+Enterprise customers can set up custom settings and access for a specific subdomain within Cloudflare with [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
+
+All other customers can set up subdomain-specific [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to alter Cloudflare settings.
 
 If you want a subdomain's DNS settings managed totally outside of Cloudflare — meaning this subdomain can be managed by individuals without access to your Cloudflare account — refer to [Delegating subdomains outside of Cloudflare](https://support.cloudflare.com/hc/articles/360021357131).
