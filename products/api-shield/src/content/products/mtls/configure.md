@@ -47,13 +47,13 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
 ### Expression Builder
 
-To review your mTLS rule in the Firewall Rules Expression Builder, click the wrench icon associated with your rule.
+To review your mTLS rule in the Firewall Rules Expression Builder, click the **wrench icon** associated with your rule.
 
 In the **Expression Preview**, your mTLS rule includes a [compound expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/#compound-expressions) formed from two [simple expressions](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/#simple-expressions) joined by the `and` operator.
 
 The first expression uses the `http.host` field, combined with the `in` operator, to capture the hosts your mTLS rule applies to.
 
-The second expression — `not cf.tls_client_auth.cert_verified` — returns `true` when a request to access your API or web application does _not_ present a valid client certificate.
+The second expression — `not cf.tls_client_auth.cert_verified` — returns `true` when a request to access your API or web application does not present a valid client certificate.
 
 Because the [action](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
 
