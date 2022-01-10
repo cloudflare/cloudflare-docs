@@ -127,7 +127,7 @@ export async function onRequestGet({ params }) {
 }
 
 ```
-The above will return each character at `/character/{id}` id being associated to the character.
+The above will return each character at `/character/{id}` ID being associated with the character.
 
 ### Handling multiple requests in a single function
 
