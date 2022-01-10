@@ -111,7 +111,7 @@ export async function onRequestPost(request) {
   return new Response(`Hello world`);
 }
 ```
-Another helpful example for handling single path segments can be quering an API for data, eg. [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
+Another helpful example for handling single path segments can be querying an API for data, for example, [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
 
 ```js
 ---
