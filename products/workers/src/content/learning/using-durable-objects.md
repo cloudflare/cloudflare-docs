@@ -447,6 +447,10 @@ export class Counter {
 }
 ```
 
+## Related resources
+
+- [Durable Objects runtime API](/runtime-apis/durable-objects)
+
 ## Troubleshooting
 
 ### Debugging
