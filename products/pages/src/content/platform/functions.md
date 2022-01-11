@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 <Aside type="note" header="Functions is currently in beta">
 
-You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues).
+You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
 
 </Aside>
 
