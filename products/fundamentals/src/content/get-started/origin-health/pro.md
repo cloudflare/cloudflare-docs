@@ -31,6 +31,10 @@ import ZeroDowntimeFailover from "../../_partials/_dns-zero-downtime-failover"
 
 <OriginLBAlert/>
 
+### Zero Downtime Failover
+
+<ZeroDowntimeFailover/>
+
 ## Reduce origin traffic
 
 ### Block traffic
@@ -46,7 +50,3 @@ import ZeroDowntimeFailover from "../../_partials/_dns-zero-downtime-failover"
 ### Distribute traffic
 
 <LoadBalancing/>
-
-### Zero Downtime Failover
-
-<ZeroDowntimeFailover/>
