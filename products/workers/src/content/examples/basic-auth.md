@@ -120,7 +120,8 @@ function basicAuthentication(request) {
   // Decodes the base64 value and performs unicode normalization.
   // @see https://datatracker.ietf.org/doc/html/rfc7613#section-3.3.2 (and #section-4.2.2)
   // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-  const decoded = atob(encoded).normalize()
+  const buffer = Uint8Array.from(atob(encoded), character => character.charCodeAt(0))
+  const decoded =  new TextDecoder().decode(buffer).normalize()
   
   // The username & password are split by the first colon.
   //=> example: "username:password"
