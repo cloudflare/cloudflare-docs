@@ -14,8 +14,8 @@ Here are some known bugs and issues that we're aware of with Cloudflare Pages:
 - By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](https://developers.cloudflare.com/pages/platform/build-configuration) for configuration options.
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms and Serverless Functions features.
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
-- Cloudflare Pages is not supported with Cloudflare Apps; you may see a `1014` error if you use both in a deployment.
 - Cloudflare's Load Balancer does not work with `*.pages.dev` projects; an `Error 1000: DNS points to prohibited IP` will appear.
 - A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
+- [Functions (beta)](/platform/functions) does not currently support adding/removing polyfills, so your bundler (e.g. Webpack) may not run.
 
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
