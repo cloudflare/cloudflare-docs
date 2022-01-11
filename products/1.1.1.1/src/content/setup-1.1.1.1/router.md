@@ -31,6 +31,7 @@ Follow these steps to configure 1.1.1.1:
     ```
 
 1. Save the updated settings.
+1. Open a web browser in a device connected to your router and visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
 ## Using DNS-Over-TLS on OpenWRT
 

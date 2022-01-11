@@ -18,7 +18,7 @@ curl \
 -X POST \
 -d '{"url":"https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4","meta":{"name":"My First Stream Video"}}' \
 -H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUND_ID/stream/copy
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 ```
 
 ```json

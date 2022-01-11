@@ -31,7 +31,7 @@ Some common uses include:
 
 <Aside type="warning" header="Warning">
 
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript that relies on Node’s Crypto API, you’ll need to invest in translating it to use Web Crypto primitives.
+The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 
 </Aside>
 
@@ -277,7 +277,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 ### Supported algorithms
 
 Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI), as shown in the following table.
-We are happy to add support for more algorithms — [let us know about your use case](https://community.cloudflare.com/c/developers/workers).
+The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
 
 A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.
 [//]: #  An x (✘) indicates that this feature is part of the specification but not implemented.
@@ -312,14 +312,14 @@ __Footnotes:__
 
 1. <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
 * Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
-* Unlike NodeJS, we will not support "raw" import of private keys.
-* Since this algorithm is non-standard, the implementation may change over time. While we cannot guarantee it at this time, we will strive to maintain backward compatabilityand compatibility with NodeJS's behavior.
+* Unlike NodeJS, Cloudflare will not support raw import of private keys.
+* The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
 Any notable compatibility notes will be communicated in release notes and via this developer document.
-2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard, but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
+2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
 
 --------------------------------
 
-## See also
+## Related resources
 
 - [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
 - [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)

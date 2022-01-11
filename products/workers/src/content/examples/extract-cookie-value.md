@@ -15,8 +15,6 @@ pcx-content-type: configuration
 
 ```js
 import { parse } from "cookie"
-// OR
-import { parse } from "worktop/cookie"
 
 // The name of the cookie
 const COOKIE_NAME = "__uid"
@@ -39,6 +37,6 @@ addEventListener("fetch", event => {
 
 <Aside type="note" header="External Dependencies">
 
-This example is set up to depend on [`cookie@0.4.1`](https://www.npmjs.com/package/cookie/v/0.4.1) or [`worktop@0.7.1`](https://www.npmjs.com/package/worktop/v/0.7.1). You may pick either package, as they both work the same way.
+This example requires the npm package [`cookie`](https://www.npmjs.com/package/cookie) to be installed in your JavaScript project.
 
 </Aside>

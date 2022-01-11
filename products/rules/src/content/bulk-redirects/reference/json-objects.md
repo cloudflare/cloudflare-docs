@@ -1,9 +1,10 @@
 ---
+title: API JSON objects
 order: 5
 pcx-content-type: reference
 ---
 
-# API JSON objects
+# Bulk Redirects API JSON objects
 
 ## Bulk Redirect Rule
 

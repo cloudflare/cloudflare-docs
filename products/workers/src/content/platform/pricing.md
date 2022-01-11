@@ -113,10 +113,10 @@ If 100 Durable Objects each had 100 WebSocket connections established to each of
 Total = ~$64.65 USD + $202.36 USD + Minimum $5/mo usage = $272.01
 
 - 100 requests to establish the WebSockets.
-- 100 messages per minute * 100 Durable Objects * 60 minutes * 24 hours * 30 days = 432,000,000 requests
+- 100 messages per minute \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests
 - (432 million requests - included 1 million requests) x $0.15 / 1,000,000 = $64.65
-- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days / 2 = 129,600,000 seconds
-- 129,600,000 seconds * 128 MB / 1 GB = 16,588,800 GB-s
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days / 2 = 129,600,000 seconds
+- 129,600,000 seconds \* 128 MB / 1 GB = 16,588,800 GB-s
 - (16,588,800 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $202.36
 
 #### Example 3
@@ -126,10 +126,10 @@ If 100 Durable Objects each had a single WebSocket connection established to eac
 Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 - 100 requests to establish the WebSockets.
-- 1 message per second * 100 connections * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 requests
+- 1 message per second \* 100 connections \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 requests
 - (259.2 million requests - included 1 million requests) x $0.15 / 1,000,000 = $38.73
-- 100 Durable Objects * 60 seconds * 60 minutes * 24 hours * 30 days = 259,200,000 seconds
-- 259,200,000 seconds * 128 MB / 1 GB = 33,177,600 GB-s
+- 100 Durable Objects \* 60 seconds \* 60 minutes \* 24 hours \* 30 days = 259,200,000 seconds
+- 259,200,000 seconds \* 128 MB / 1 GB = 33,177,600 GB-s
 - (33,177,600 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 = $409.72
 
 ## Durable Objects storage API

@@ -17,7 +17,10 @@ Mixed content is often due to factors not under the website owner’s control su
 
 ## Enable Automatic HTTPS Rewrites
 
-Enable **Automatic HTTPS Rewrites** via the **SSL/TLS** app to rewrite HTTP resources as HTTPS at Cloudflare without making any changes to the HTML source at your origin server.
+To enable **Automatic HTTPS Rewrites**:
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+1. Navigate to **SSL/TLS** > **Edge Certificates**.
+1. For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
 
 ## Limitations
 

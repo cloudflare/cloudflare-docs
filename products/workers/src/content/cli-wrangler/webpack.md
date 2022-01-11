@@ -60,7 +60,7 @@ webpack_config = "webpack.config.js"
 
 ### Example with multiple environments
 
-It is possible to use different webpack configuration files within different [Wrangler environments](/workers/platform/environments). For example, the `"webpack.development.js"` configuration file is used during `wrangler dev` for development, but other, more production-ready configurations are used when building for the staging or production environments:
+It is possible to use different webpack configuration files within different [Wrangler environments](/platform/environments). For example, the `"webpack.development.js"` configuration file is used during `wrangler dev` for development, but other, more production-ready configurations are used when building for the staging or production environments:
 
 
 ```toml

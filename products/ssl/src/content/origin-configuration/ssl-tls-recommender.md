@@ -13,13 +13,21 @@ For more background, refer to the [introductory blog post](https://blog.cloudfla
 
 </Aside>
 
-## Enable SSL/TLS recommendations
+## Common tasks
+
+### Enable SSL/TLS recommendations
 
 To enable SSL/TLS recommendations:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 1. Navigate to **SSL/TLS**.
 1. For **SSL/TLS Recommender**, switch the toggle to **On**.
+
+### Manually trigger a new scan
+
+Once you enable it, the recommender runs future scans periodically — typically every two days — and sends notifications if new recommendations become available.
+
+To manually re-trigger a new scan, disable and then [re-enable SSL/TLS recommendations](#enable-ssltls-recommendations).
 
 ## How it works
 
@@ -28,8 +36,6 @@ Once enabled, the SSL/TLS Recommender runs an origin scan using the user agent `
 Based on this initial scan, the Recommender may decide that you could use a stronger [SSL encryption mode](/origin-configuration/ssl-modes). It will never recommend a weaker option than what is currently configured.
 
 If so, it will send the zone owner an email with the recommended option and add a *Recommended by Cloudflare* tag to that option on the **SSL/TLS** page. You are not required to use this recommendation. 
-
-Recommender will run future scans periodically and send notifications if new recommendations become available.
 
 <Aside type="note">
 

@@ -121,7 +121,7 @@ Refer to [KV pricing](/platform/pricing#workers-kv) to review the specific KV op
 | [Storage per class](#durable-objects)   | unlimited
 | [Storage per object](#durable-objects)  | unlimited
 | [Key size](#durable-objects)            | 2048 bytes
-| [Value size](#durable-objects)          | 32 KiB
+| [Value size](#durable-objects)          | 128 KiB
 | [CPU per request](#durable-objects)     | 30s
 
 </TableWrap>
@@ -282,7 +282,7 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 - Storage keys of up to 2 KiB (2048 bytes)
 
-- Storage values of up to 32 KiB (32768 bytes)
+- Storage values of up to 128 KiB (131072 bytes)
 
 - 30s of CPU time per request, including websocket messages
 

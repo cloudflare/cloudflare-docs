@@ -5,17 +5,19 @@ order: 2
 
 # Rate Limiting rules
 
+Rate Limiting rules allow you to define rate limits for incoming requests matching an expression, as well as actions to take when those rate limits are reached.
+
 <Aside type='warning'>
 
 This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
 
-</Aside>
+For guidance on the previous version of Rate Limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
-Rate Limiting rules allow you to define rate limits for incoming requests matching an expression, as well as actions to take when those rate limits are reached.
+</Aside>
 
 ## Rule parameters
 
-Like other rules evaluated by Cloudflare's ruleset engine, Rate Limiting rules have an associated **expression** and an **action**.
+Like other rules evaluated by Cloudflare's Ruleset Engine, Rate Limiting rules have an associated **expression** and an **action**.
 
 The **expression** specifies the criteria you are matching traffic on — the same as in [Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting rules, the action occurs when the request rate reaches the specified limit.
 

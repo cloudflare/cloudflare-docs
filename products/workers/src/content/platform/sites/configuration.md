@@ -3,7 +3,7 @@ order: 3
 pcx-content-type: configuration
 ---
 
-# Configuration
+# Workers Sites configuration
 
 Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/wrangler).
 

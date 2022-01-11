@@ -19,7 +19,7 @@ pcx-content-type: reference
 | `cloudflared tunnel route ip delete` | Deletes the row for a given CIDR from your routing table. That portion of your network will no longer be reachable by the WARP client. |
 | `cloudflared tunnel route ip get <IP/CIDR>` | Checks which row of the routing table will be used to proxy a given IP. This helps check and validate your configuration. |
 | `cloudflared tunnel route dns` | Creates a DNS CNAME record hostname that points to the tunnel. |
-| `cloudflared tunnel run --config path/config.yaml run <NAME or UUID>` | Runs a tunnel, creating highly available connections between your server and the Cloudflare edge. You can provide name or UUID of the tunnel to run either as the last command line argument or in the configuration file using `tunnel: <NAME>`.  |
+| `cloudflared tunnel --config path/config.yaml run <NAME or UUID>` | Runs a tunnel, creating highly available connections between your server and the Cloudflare edge. You can provide name or UUID of the tunnel to run either as the last command line argument or in the configuration file using `tunnel: <NAME>`.  |
 | `cloudflared tunnel info <NAME or UUID>` | Displays details about the active connectors for a given tunnel identified by name of UUID. |
 | `cloudflared tunnel cleanup <NAME or UUID>` | Deletes connections for tunnels with the given UUIDs or names. This is useful if you get an error trying to delete or run a tunnel after `cloudflared` is not shut down gracefully (for example, if a `kill` command is issued). |
 | `cloudflared tunnel delete <NAME or UUID>` | Deletes tunnels with the given name or UUID. A tunnel cannot be deleted if it has active connections. To delete the tunnel unconditionally, use the `-f` flag. |

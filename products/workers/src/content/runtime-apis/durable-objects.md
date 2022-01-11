@@ -157,7 +157,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - <Code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
 
-  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 32 KiB (32768 bytes).
+  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 128 KiB (131072 bytes).
 
     __Supported options:__
 
@@ -187,7 +187,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - <Code>put(entries<ParamType>Object</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
 
-  - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a max size of 2048 bytes and each value is limited to 32 KiB (32768 bytes).
+  - Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
 
     __Supported options:__ Same as `put(key, value, options)`, above.
 
@@ -369,7 +369,7 @@ let id = OBJECT_NAMESPACE.idFromString(hexId)
 
 </Definitions>
 
-This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as as a string.
+This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as a string.
 
 A stringified object ID is a 64-digit hexadecimal number. However, not all 64-digit hex numbers are valid IDs. This method will throw if it is passed an ID that was not originally created by `newUniqueId()` or `idFromName()`. It will also throw if the ID was originally created for a different namespace.
 
@@ -422,3 +422,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 ## Listing Durable Objects
 
 The Cloudflare REST API supports retrieving a [list of Durable Objects](https://api.cloudflare.com/#durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://api.cloudflare.com/#durable-objects-namespace-list-namespaces) associated with an account.
+
+## Related resources
+
+- [Learn how to use Durable Objects](/learning/using-durable-objects)

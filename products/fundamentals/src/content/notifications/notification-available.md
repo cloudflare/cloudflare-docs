@@ -7,6 +7,8 @@ pcx-content-type: concept
 import SSLTroubleshoot from "../_partials/_troubleshoot-ssl"
 import DDOS from "../_partials/_ddos"
 import Errors5xx from "../_partials/_errors"
+import PageShieldDetectMaliciousScripts from "../_partials/_script-monitor-detect-malicious-scripts"
+import PageShieldReviewMaliciousScripts from "../_partials/_script-monitor-review-malicious-scripts"
 
 # What kinds of Notifications are available?
 
@@ -288,6 +290,68 @@ Business plans or higher.
 
 Investigate to confirm it is an expected change.
 
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious Domain Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their zone.
+
+<PageShieldDetectMaliciousScripts/>
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+<PageShieldReviewMaliciousScripts/>
+
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious URL Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their zone.
+
+<PageShieldDetectMaliciousScripts/>
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+<PageShieldReviewMaliciousScripts/>
+
+</div>
+</details>
+
+<details>
+<summary>Script Monitor New Malicious Script Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their zone as malicious.
+
+<PageShieldDetectMaliciousScripts/>
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+<PageShieldReviewMaliciousScripts/>
 
 </div>
 </details>
