@@ -137,10 +137,13 @@ Worktop solves common needs such as routing, path parameters, and  HTTP methods.
 Edit `package.json` and add the `build` script:
 
 ```json
-"scripts": {
-  "build": "worktop build index.js",
-  ...
-},
+{
+  // ...
+  "scripts": {
+    "build": "worktop build index.js",
+    // ...
+  }
+}
 ```
 
 Edit your `wrangler.toml` file found in your Worker's project directory. Set the type to `"javascript"` (not `"webpack"`) and add the `[build]` and `[build.upload]` sections as shown in the following snippet:
