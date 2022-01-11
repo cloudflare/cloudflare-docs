@@ -3,7 +3,13 @@ order: 6
 pcx-content-type: concept
 ---
 
-# Functions
+# Functions (beta)
+
+<Aside type="note" header="Functions is currently in beta">
+
+You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+
+</Aside>
 
 With Pages, you can now build full-stack applications by executing code on the Cloudflare network with help from [Cloudflare Workers](https://workers.cloudflare.com/). Functions enable you to run server-side code to enable dynamic functionality without running a dedicated server. With Functions, you can introduce application aspects such as authenticating, querying databases, handling form submissions, or working with middleware.
 
