@@ -16,6 +16,12 @@ The WARP client talks with our edge outside the tunnel for operations like regis
   The Orchestration API endpoint is currently shared with our Consumer WARP Client. In early 2022 we will be splitting this out to its own dedicated IP address.
 </Aside>
 
+## DoH IP
+All DNS requests through WARP are sent outside the tunnel via DoH. The following IP addresses must be reachable for DNS to work correctly.
+
+ - IPv4 DoH Address: `162.159.36.1`
+ - IPv6 DoH Address: `2606:4700:4700::1111`
+
 ## WARP Ingress IP
 These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
 - IPv4 Range: `162.159.193.0/24`
