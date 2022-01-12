@@ -5,19 +5,21 @@ pcx-content-type: how-to
 
 # Check that a policy is working
 
-<Aside>
+<Aside type='note'>
+
 Before you start, please make sure you are connected to a network that is associated with the location where the policy is applied.
+
 </Aside>
 
-Once you've created a policy to block a domain, you can use either `dig` or `nslookup` on your to see if the policy is working as intended.
+Once you have created a policy to block a domain, you can use either `dig` or `nslookup` on your to see if the policy is working as intended.
 
 If you are using a policy to block `example.com`, you can do the following to see if Gateway is blocking `example.com`:
 
 1. Open your terminal.
 
-2. Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter
+1. Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
 
-3. If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
+1. If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
 
  ![Blocked when block page disabled](../../../static/documentation/faq/blocked-disabled.png)
 
