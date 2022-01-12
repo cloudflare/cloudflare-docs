@@ -9,12 +9,12 @@ Use the Firewall Rules API to programmatically manage your rules.
 
 When working with the Firewall Rules API, refer to these topics for additional context:
 
-- [Actions](/cf-firewall-rules/actions/)
-- [Expressions](/cf-firewall-rules/fields-and-expressions/)
-- [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language/)
-- [Cloudflare Filters](/api/cf-filters/)
+- [Actions](/cf-firewall-rules/actions)
+- [Expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions)
+- [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language)
+- [Cloudflare Filters](/api/cf-filters)
 
-To get started with the API, review the Firewall Rules API [JSON object](/api/cf-firewall-rules/json-object/) and [Endpoints](/api/cf-firewall-rules/endpoints/).
+To get started with the API, review the Firewall Rules API [JSON object](/api/cf-firewall-rules/json-object) and [Endpoints](/api/cf-firewall-rules/endpoints).
 
 ## Differences from other Cloudflare APIs
 

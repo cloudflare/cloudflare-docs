@@ -63,7 +63,7 @@ The **Edit Firewall Rule** dialog displays, and the Expression Builder's visual 
 
 ![Edit Firewall Rule dialog with example mTLS rule](../images/firewall-rules-edit-firewall-rule-api-shield.png)
 
-Note **Expression Preview**. Your mTLS rule includes a [compound expression](/cf-firewall-rules/fields-and-expressions/#compound-expressions) formed from two [simple expressions](/cf-firewall-rules/fields-and-expressions/#simple-expressions) joined by the `and` operator.
+Note **Expression Preview**. Your mTLS rule includes a [compound expression](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/#compound-expressions) formed from two [simple expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/#simple-expressions) joined by the `and` operator.
 
 The first expression uses the `http.host` field, combined with the `in` operator, to capture the hosts your mTLS rule applies to.
 

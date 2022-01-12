@@ -10,19 +10,23 @@ order: 200
 
 **Cloudflare Firewall Rules** is a flexible and intuitive framework for filtering HTTP requests. It gives you fine-grained control over which requests reach your applications.
 
-Firewall Rules complements existing Cloudflare tools by allowing you to create rules that combine a variety of techniques. For example, rather than managing 3 independent rules in 3 different places, you can easily create a single firewall rule that blocks traffic to a URI when the request comes from a particular IP and the user-agent matches a specific string or a pattern. Once you are satisfied with the rule, you can deploy it yourself, immediately.
+Firewall Rules allows you to create rules combining several conditions. For example, you can create a single Firewall Rule that blocks traffic to a URI when the request comes from a particular IP and the user-agent matches a specific string or a pattern. Once you are satisfied with the rule, you can deploy it yourself, immediately.
 
 Fundamentally, Firewall Rules gives you the power to proactively inspect incoming site traffic and automatically respond to threats. You define **expressions** that tell Cloudflare what to look for and specify the appropriate **action** to take when those criteria are satisfied.
 
 It is a simple concept, but like the Wireshark Display Filter language that inspired our own expression language, the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language) is a powerful tool that allows organizations to rapidly adapt to a constantly evolving threat landscape.
 
+To write Firewall Rule expressions, use the Firewall Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), the Firewall Rules language follows the same syntax of the Cloudflare Rules language.
+
+For more information on rule expressions and the available operators, fields, and functions, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
+
 ## Working with Firewall Rules
 
-To configure Firewall Rules from the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, see [Manage rules in the Cloudflare dashboard](/cf-dashboard).
+To configure Firewall Rules from the Cloudflare dashboard, use the **Firewall Rules** tab in the **Firewall** app. For more, refer to [Manage rules in the Cloudflare dashboard](/cf-dashboard).
 
-To configure Firewall Rules with the Cloudflare API, use the Firewall Rules API. Use the Cloudflare Filters API to manage expressions. For more, see [Manage rules via the APIs](/api).
+To configure Firewall Rules with the Cloudflare API, use the Firewall Rules API. Use the Cloudflare Filters API to manage expressions. For more information, refer to [Manage rules via the APIs](/api).
 
-You can also manage Firewall Rules through Terraform. For more, see [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
+You can also manage Firewall Rules through Terraform. For more, refer to [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
 ### Firewall Rules tab
 
@@ -69,7 +73,7 @@ Advanced users will appreciate the **Expression Editor** (shown below), which tr
 
 ### Firewall Rules APIs
 
-Power users, particularly those who develop large numbers of firewall rules, can use the Cloudflare API to programmatically manage Firewall Rules (see [Manage rules via the API](https://developers.cloudflare.com/firewall/api)).
+Power users, particularly those who develop large numbers of Firewall Rules, can use the Cloudflare API to programmatically manage Firewall Rules. Refer to [Manage rules via the API](/api) for more information.
 
 ## Entitlements
 
@@ -127,12 +131,12 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 ## Get started
 
-Unless you are already an advanced user, review [expressions](/cf-firewall-rules/fields-and-expressions/) and [actions](/cf-firewall-rules/actions/), which form the foundation of Firewall Rules.
+Unless you are already an advanced user, refer to [Expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions) and [Actions](/cf-firewall-rules/actions) to learn more about the basic elements of Firewall Rules.
 
-To get started building your own firewall rules, see [Manage Firewall Rules in the dashboard](/cf-dashboard/create-edit-delete-rules/).
+To get started building your own Firewall Rules, see [Manage Firewall Rules in the dashboard](/cf-dashboard/create-edit-delete-rules).
 
 Those eager to dive straight into the technical details can refer to these topics:
 
 * [Common use cases](https://developers.cloudflare.com/firewall/recipes)
-* [Manage rules via the APIs](https://developers.cloudflare.com/firewall/api)
+* [Manage Firewall Rules via the APIs](https://developers.cloudflare.com/firewall/api)
 * [Cloudflare Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language)

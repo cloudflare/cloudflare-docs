@@ -38,3 +38,5 @@ This filter expression has a `(this or that) and not this` structure designed to
 Imagine that this is an IP for your office. This expression demonstrates a filter that might be used (in a firewall rule) to block access to the WordPress login when accessed outside the office network.
 
 Cloudflare has implemented a matching engine that uses expressions defined in the style of Wireshark® display filters, available under the GNU General Public License (GPL) v2. This means that we have combined the power of expressions from a network protocol analyzer with the features of Cloudflare to give you fine-grained control, globally, and at speed.
+
+For more information on rule expressions, refer to [Expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions) in the Rules language documentation.

@@ -1,13 +1,14 @@
 ---
+title: Edit rule expressions
 pcx-content-type: how-to
 order: 320
 ---
 
-# Edit rule expressions
+# Edit Firewall Rule expressions
 
 ## Overview
 
-The **Expression Editor** is a text-only interface for creating Firewall Rules expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports the entire specification of Cloudflare's [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
+The **Expression Editor** is a text-only interface for creating Firewall Rule expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports the entire specification of Cloudflare's [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
 For example, only the Expression Editor supports grouping symbols. Cloudflare designed the Rules language with [Wireshark Display Filters®](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html) in mind, so although there are some subtle differences, Wireshark users should feel right at home with Cloudflare rules and be able to easily port their existing rules to Cloudflare.
 

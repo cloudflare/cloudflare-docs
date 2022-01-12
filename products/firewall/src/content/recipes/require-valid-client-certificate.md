@@ -22,7 +22,7 @@ If you need to use a different CA, contact a Cloudflare Customer Success Manager
 
 This example creates a firewall rule that requires API calls to present a valid client certificate. When the client certificate cannot be verified, the rule triggers the _Block_ action.
 
-The rule includes a compound expression that comprises two [simple expressions](/cf-firewall-rules/fields-and-expressions#simple-expressions) joined by the `and` operator.
+The rule includes a compound expression that comprises two [simple expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions#simple-expressions) joined by the `and` operator.
 
 The first expression uses the `http.host` field and the `in` operator to capture the hosts that should be protected — `orangeclouded.com` and `api.orangeclouded.com` in this example.
 

@@ -1,9 +1,10 @@
 ---
+title: Fields
 pcx-content-type: reference
-order: 610
+order: 5
 ---
 
-# Fields
+# Fields reference
 
 The Cloudflare Rules language supports a range of field types:
 
