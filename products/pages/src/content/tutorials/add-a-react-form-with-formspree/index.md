@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-# Add a React Form with Formspree
+# Add a React form with Formspree
 
 Almost every React website needs a form to collect user data. [Formspree](https://formspree.io/) is a back-end service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
 
@@ -156,7 +156,7 @@ The source code for this example is [available on GitHub](https://github.com/for
 </Aside>
 
 
-## The Formspree Backend
+## The Formspree back end
 
 The React form is complete, however, when the user submits this form, they will get a `Form not found` error. To fix this, create a new Formspree form, and copy its unique ID into the form's `useForm` invocation.
 
@@ -165,7 +165,7 @@ To create a Formspree form, sign up for [an account on Formspree](https://formsp
 
 ![Creating a Formspree form](./new-form-dialog.png)
 
-You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 6 alphanumeric characters from the URL) and paste it into the `useForm` function in the ContactForm component you created above.
+You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 6 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
 ![Formspree endpoint](./form-endpoint.png)
 
@@ -177,7 +177,7 @@ const [state, handleSubmit] = useForm("mqldaqwx");
 /* replace the random-like string above with your own form's ID */
 ```
 
-Now when you submit your form, you should be shown a thank-you message. The form data will be submitted to your account on Formspree.io.
+Now when you submit your form, you should be shown a Thank You message. The form data will be submitted to your account on [Formspree.io](formspree.io).
 
 From here you can adjust your form processing logic to update the [notification email address](https://help.formspree.io/hc/en-us/articles/115008379348-Changing-a-form-email-address), or add plugins like [Google Sheets](https://help.formspree.io/hc/en-us/articles/360036563573-Use-Google-Sheets-to-send-your-submissions-to-a-spreadsheet), [Slack](https://help.formspree.io/hc/en-us/articles/360045648933-Send-Slack-notifications), and more.
 
@@ -214,19 +214,19 @@ If this is your first Cloudflare Pages project, refer to the [Get started guide]
 
 After selecting **Save and Deploy**, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
-## Tip: Using environment variables
+## Using environment variables with forms
 
 Sometimes it is helpful to set up two forms, one for development, and one for production. That way you can develop and test your form without corrupting your production dataset, or sending test notifications to clients.
 
-To set up production and development forms first create a second form in Formspree. Name this form Contact Us Testing, and note the form's [hashid](https://help.formspree.io/hc/en-us/articles/360015130174-Getting-your-form-s-hashid-). 
+To set up production and development forms first create a second form in Formspree. Name this form Contact Us Testing, and note the form's [`hashid`](https://help.formspree.io/hc/en-us/articles/360015130174-Getting-your-form-s-hashid-). 
 
-Then change the `useForm` hook in your ContactForm.js file so that it is initialized with an environment variable, rather than a string:
+Then change the `useForm` hook in your `ContactForm.js` file so that it is initialized with an environment variable, rather than a string:
 
 ```jsx
 const [state, handleSubmit] = useForm(process.env.REACT_APP_FORM_ID);
 ```
 
-In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environment variable to both the Production and Preview environments. Use your original form's hashid for Production, and the new test form's hashid for the Preview environment:
+In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environment variable to both the Production and Preview environments. Use your original form's `hashid` for Production, and the new test form's `hashid` for the Preview environment:
 
 ![Environment variables](./env-vars.png)
 
@@ -234,7 +234,7 @@ Now, when you commit and push changes to a branch of your git repo, a new previe
 
 <Aside type="note">
 
-Create React App uses the prefix `REACT_APP_` to designate environment variables that are accessible to front end javascript code. A different framework will use a different prefix to expose environment variables. For example, in the case of Next.js, the prefix is `NEXT_PUBLIC_`. Consult the documentation of your front end framework to determine how to access environment variables from your React code.
+Create React App uses the prefix `REACT_APP_` to designate environment variables that are accessible to front-end JavaScript code. A different framework will use a different prefix to expose environment variables. For example, in the case of Next.js, the prefix is `NEXT_PUBLIC_`. Consult the documentation of your front-end framework to determine how to access environment variables from your React code.
 
 </Aside>
 
