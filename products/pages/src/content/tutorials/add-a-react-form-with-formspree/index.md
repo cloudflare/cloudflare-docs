@@ -11,7 +11,7 @@ Almost every React website needs a form to collect user data. [Formspree](https:
 
 In this tutorial, you will create a `<form>` component using React and add it to a single page application built with `create-react-app`. Though you are using `create-react-app` (CRA), the concepts will apply to any React framework including Next.js, Gatsby, and more. You will use Formspree to collect the submitted data and send out email notifications when new submissions arrive, without requiring any server-side coding.
 
-You will deploy your site to Cloudflare Pages. Refer to the [Get started guide](/get-started) guide to familiarize yourself with the platform. 
+You will deploy your site to Cloudflare Pages. Refer to the [Get started guide](/get-started) to familiarize yourself with the platform. 
 
 ## Setup
 
@@ -165,7 +165,7 @@ To create a Formspree form, sign up for [an account on Formspree](https://formsp
 
 ![Creating a Formspree form](./new-form-dialog.png)
 
-You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 6 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
+You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
 ![Formspree endpoint](./form-endpoint.png)
 
