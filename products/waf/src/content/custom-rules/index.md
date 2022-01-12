@@ -3,7 +3,7 @@ pcx-content-type: concept
 order: 3
 ---
 
-# Custom Rules (Beta)
+# Custom Rules
 
 Custom Rules allow you to protect your website and your APIs from malicious or excessive incoming traffic.
 
