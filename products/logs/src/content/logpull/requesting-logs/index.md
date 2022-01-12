@@ -31,13 +31,13 @@ The API expects endpoint parameters in the GET request query string.  See the ex
 `logs/received`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
 ```
 
 `logs/rayids/<rayid>`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/rayids/<ray_id>?[&fields=<string>][&timestamps=<strings>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/<ray_id>?[&fields=<string>][&timestamps=<strings>]
 ```
 
 The following table describes the parameters available:
@@ -94,7 +94,7 @@ The IATA code returned as part of the Ray ID does not need to included in the re
 
 Unless specified in the <em>fields parameter</em>, the API returns a limited set of log fields. This default field set may change at any time. The list of all available fields is at:
 
-`https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received/fields`
+`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields`
 
 The order in which fields are specified doesn't matter, and the order of fields in the response is not specified.
 
