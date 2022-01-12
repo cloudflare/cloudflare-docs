@@ -92,7 +92,7 @@ Example request using cURL:
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>", "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
+"destination_conf":"s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -106,7 +106,7 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
     "destination_conf": "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>",
     "last_complete": null,
     "last_error": null,
@@ -138,7 +138,7 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
     "destination_conf": "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>",
     "last_complete": null,
     "last_error": null,

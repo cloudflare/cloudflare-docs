@@ -11,8 +11,8 @@ To estimate the amount of data for a zone per day (the number of log lines and t
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-12-15T00:00:00Z&end=2018-12-15T01:00:00Z&sample=0.1" \
     >sample.log
 ...

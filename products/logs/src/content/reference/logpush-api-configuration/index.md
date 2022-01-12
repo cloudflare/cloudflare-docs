@@ -38,7 +38,7 @@ For concrete examples, see the tutorial [Manage Logpush with cURL](/reference/lo
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-$ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
+$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" \
     'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 ```
 
@@ -50,8 +50,8 @@ To issue an ownership challenge token to your destination:
 
 ```bash
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
--H "X-Auth-Email: user@example.com" \ 
--H "X-Auth-Key: api_key" \
+-H "X-Auth-Email: <EMAIL>" \ 
+-H "X-Auth-Key: <API_KEY>" \
 -H "Content-Type: application/json" \ 
 --data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
@@ -134,8 +134,8 @@ Log options, such as fields or sampling rate, are configured in the `logpull_opt
 
 ```bash
 curl -sv \
-    -H'X-Auth-Email: <REDACTED>' \
-    -H'X-Auth-Key: <REDACTED>' \
+    -H'X-Auth-Email: <EMAIL>' \
+    -H'X-Auth-Key: <API_KEY>' \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 

@@ -77,10 +77,10 @@ Example request using cURL:
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
+"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -94,7 +94,7 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
     "destination_conf": "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",
     "last_complete": null,
     "last_error": null,
@@ -126,7 +126,7 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
     "destination_conf": "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",
     "last_complete": null,
     "last_error": null,
