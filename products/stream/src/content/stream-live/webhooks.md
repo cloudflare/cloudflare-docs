@@ -25,7 +25,7 @@ The webhook payload will look similar to this:
 }
 ```
 
-The `event_type` property of the data object will either be live_input.connected or live_input.disconnected.
+The `event_type` property of the data object will either be `live_input.connected` or `live_input.disconnected`.
 
 ## How to subscribe to Stream Live Webhooks
 
