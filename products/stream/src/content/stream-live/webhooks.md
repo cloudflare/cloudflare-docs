@@ -55,4 +55,4 @@ The `event_type` property of the data object will either be `live_input.connecte
 1. By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma delimited list of Input IDs in the text field.
 ![Finish Notification Setup](./stream-live-webhooks-add-notifications-4.png)
 
-10. Click "Create" when done
+1. When you are done, click **Create**. 
