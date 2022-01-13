@@ -19,7 +19,7 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
  ![Azure AD New Registration](../../static/documentation/identity/azure/click-new-reg.png)
 
-1. Name your application, select **Single-page application (SPA)** from the **Select a platform** dropdown, and enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. Name your application, select **Web** from the **Select a platform** dropdown, and enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
