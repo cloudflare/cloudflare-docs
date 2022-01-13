@@ -7,7 +7,7 @@ import RegionMapping from "../../_partials/_region-mapping.md"
 
 # Pool steering
 
-When you [create a load balancer](/how-to/create-load-balancer), their are several options for **Traffic Steering**, which decides how your load balancer routes traffic to attached and available pools.
+When you [create a load balancer](/how-to/create-load-balancer), their are several options for **Traffic Steering**, which decide how your load balancer routes traffic to attached and available pools.
 
 <Aside type="note">
 
