@@ -33,7 +33,7 @@ The `event_type` property of the data object will either be `live_input.connecte
 
 ![Click on Notifications](./stream-live-webhooks-notifications-tab.png)
 
-2. Click on the "Destinations" tab
+1. From the **Notifications** page, click the **Destinations** tab.
 ![Click on Destinations](./stream-live-webhooks-destination-page.png)
 
 1.  On the **Destinations page under **Webhooks**, click **Create**.
