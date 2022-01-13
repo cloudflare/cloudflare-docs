@@ -26,14 +26,20 @@ Below is an example call and response using this method:
 
 ### Request
 
-```bash
+```json
 curl -X POST \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json" \
-     -d '[
-{"filter":{"expression":"http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34"}, "action": "block"}
-]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
+  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
+  -H "X-Auth-Email: <EMAIL>" \
+  -H "X-Auth-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '[
+  {
+    "filter": {
+      "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34"
+    },
+    "action": "block"
+  }
+]' 
 ```
 
 ### Response
@@ -42,12 +48,12 @@ curl -X POST \
 {
   "result": [
     {
-      "id": "5fe867f3bc854c3ba0a29085d9aa1b34",
+      "id": "<RULE_ID>",
       "paused": false,
       "action": "block",
       "priority": null,
       "filter": {
-        "id": "e756e92ad16749a4947aa8d2f63ee120",
+        "id": "<FILTER_ID>",
         "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34",
         "paused": false
       }
