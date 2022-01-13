@@ -264,7 +264,7 @@ async function errorHandler(context) {
 export const onRequest = errorHandler;
 ```
 
-Another usecase for `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the next()function will pass control to the next middleware function, depending on the order of execution. For example: 
+Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example: 
 
 ```js
 export const onRequest = [
