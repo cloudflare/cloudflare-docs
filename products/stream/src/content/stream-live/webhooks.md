@@ -7,6 +7,26 @@ pcx-content-type: tutorial
 
 Stream Live supports webhooks that notify your service when an Input connects or disconnects to Stream Live. 
 
+# Example Webhook Payload
+
+The webhook payload will look similar to this:
+
+```json
+{
+  "name": "Live Webhook Test",
+  "text": "Notification type: Stream Live Input\nInput ID: eb222fcca08eeb1ae84c981ebe8aeeb6\nEvent type: live_input.disconnected\nUpdated at: 2022-01-13T11:43:41.855717910Z",
+  "data": {
+    "notification_name": "Stream Live Input",
+    "input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
+    "event_type": "live_input.disconnected",
+    "updated_at": "2022-01-13T11:43:41.855717910Z"
+  },
+  "ts": 1642074233
+}
+```
+
+The `event_type` property of the data object will either be live_input.connected or live_input.disconnected.
+
 ## How to subscribe to Stream Live Webhooks
 
 1. Login to your Cloudflare account and click on "Notifications"
@@ -17,4 +37,14 @@ Stream Live supports webhooks that notify your service when an Input connects or
 
 4. Configure the webhook and click "Save and Test"
 
-5. 
+5. Next, you will add a Notification. Click on the "All Notifications" tab
+
+6. Click on "Add"
+
+7. Select Stream from the list of notification options
+
+8. Give the notification a name and choose the destination name from the Webhooks dropdown that you setup earlier. Then click "Next"
+
+9. By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain Inputs, paste a comma delimited list of Input IDs
+
+10. Click "Create" when done
