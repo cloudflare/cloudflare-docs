@@ -11,22 +11,20 @@ order: 475
 
 ## Delete multiple filters
 
-```txt
-DELETE zones/<ZONE_ID>/filters
-```
-
-### Request
-
 ```bash
+---
+header: Request
+---
 curl -X DELETE \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters?id=<FILTER_ID>" \
   -H "X-Auth-Email: <EMAIL>" \
   -H "X-Auth-Key: <API_KEY>" 
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [],
   "success": true,
@@ -37,22 +35,22 @@ curl -X DELETE \
 
 ## Delete a single filter
 
-```txt
-DELETE zones/<ZONE_ID>/filters/<FILTER_ID>
-```
-
-### Request
+This example deletes a single filter with ID `<FILTER_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X DELETE \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>"
   -H "X-Auth-Email: <EMAIL>" 
   -H "X-Auth-Key: <API_KEY>" 
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": null,
   "success": true,

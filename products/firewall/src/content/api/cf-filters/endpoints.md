@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-type: table
+type: overview
 order: 455
 ---
 
@@ -30,13 +30,12 @@ The Cloudflare Filters API supports the operations outlined below. Visit the ass
 
 </ContentColumn>
 
-<TableWrap style='width:100%'>
 <table style='table-layout:fixed; width:100%'>
   <thead>
     <tr>
-        <th>Operation</th>
+        <th style="width: 20%">Operation</th>
         <th>Method & Endpoint</th>
-        <th>Notes</th>
+        <th style='width: 30%'>Notes</th>
     </tr>
   </thead>
   <tbody>
@@ -46,36 +45,35 @@ The Cloudflare Filters API supports the operations outlined below. Visit the ass
           <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/get/#get-all-filters'>Fetch all filters</a></td>
+          <td><a href='/api/cf-filters/get/#get-all-filters'>Get filters</a></td>
           <td><code class="InlineCode">GET zones/{'<ZONE_ID>'}/filters</code></td>
           <td>Lists all current filters. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.</td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/get/#get-by-filter-id'>Fetch a filter by ID</a></td>
+          <td><a href='/api/cf-filters/get/#get-by-filter-id'>Get a filter</a></td>
           <td><code class="InlineCode">GET zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}</code></td>
           <td>Retrieve a single filter by ID.</td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/put/#update-multiple-filters'>Update multiple filters</a></td>
+          <td><a href='/api/cf-filters/put/#update-multiple-filters'>Update filters</a></td>
           <td><code class="InlineCode">PUT zones/{'<ZONE_ID>'}/filters</code></td>
           <td>Handled as a single transaction. All filters must exist for operation to succeed. If there is an error, the entire operation fails.</td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/put/#update-a-single-filter'>Update a single filter by ID</a></td>
+          <td><a href='/api/cf-filters/put/#update-a-single-filter'>Update a filter</a></td>
           <td><code class="InlineCode">PUT zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}</code></td>
           <td>Update a single filter by ID.</td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/delete/#delete-multiple-filters'>Delete multiple filters</a></td>
+          <td><a href='/api/cf-filters/delete/#delete-multiple-filters'>Delete filters</a></td>
           <td><code class="InlineCode">DELETE zones/{'<ZONE_ID>'}/filters</code></td>
           <td><p>Delete existing filters. Must specify list of filter IDs.</p>
           <p>Empty requests result in no deletion. Returns HTTP status code 200 if a specified filter does not exist.</p></td>
       </tr>
       <tr>
-          <td><a href='/api/cf-filters/delete/#delete-a-single-filter'>Delete a single filter by ID</a></td>
+          <td><a href='/api/cf-filters/delete/#delete-a-single-filter'>Delete a filter</a></td>
           <td><code class="InlineCode">DELETE zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}</code></td>
           <td>Delete a filter by ID.</td>
       </tr>
   </tbody>
 </table>
-</TableWrap>
