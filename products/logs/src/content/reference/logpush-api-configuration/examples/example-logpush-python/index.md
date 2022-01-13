@@ -17,7 +17,7 @@ import requests
 
 url = "https://api.cloudflare.com/client/v4/"
 
-x_auth_email = "EMAIL"
+x_auth_email = "<EMAIL>"
 x_auth_key = "API_KEY"
 
 zone_id = "ZONE_ID"
