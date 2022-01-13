@@ -65,7 +65,6 @@ Refer to the [HTML Forms tutorial](/tutorials/forms#Overview) on how to build an
 
 </Aside>
 
-
 To add this form to your website, first, create a `public/index.html` in your project directory. The `public` directory should contain all front-end assets, and the `index.html` file will serve as the home page for the website.
 
 Copy and paste the following content into your `public/index.html` file, which includes the above form:
