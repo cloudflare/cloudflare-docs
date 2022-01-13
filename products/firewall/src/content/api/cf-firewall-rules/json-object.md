@@ -63,6 +63,7 @@ This table summarizes the object properties:
             allow<br />
             challenge<br />
             js_challenge<br />
+            managed_challenge<br />
             block<br /></em>
         </td>
       </tr>
