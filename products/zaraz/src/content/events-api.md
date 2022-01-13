@@ -9,9 +9,9 @@ Cloudflare Zaraz has an Events API that lets you customize Zaraz to your needs. 
 
 ## Zaraz Track
 
-`zaraz.track` allows you to track the actions your users are taking on your website, and other events that might happen in real-time. 
+`zaraz.track` allows you to track the actions your users are taking on your website, and other events that might happen in real time. 
 
-Common user actions you will probably be interested in tracking are successful sign-ups, calls-to-action clicks, and purchases, among others. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
+Common user actions you will probably be interested in tracking are successful sign-ups, calls-to-action clicks, and purchases. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
 
 To start tracking events, add `zaraz.track` to your website. The following is an example for tracking purchases:
 
