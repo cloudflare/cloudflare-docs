@@ -9,7 +9,7 @@ Below are limits observed by the Cloudflare Pages free plan. For more details on
 
 ## Builds
 
-Each time you push new code to your GitHub repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the free plan. Refer to the Pro and Business plans on the Pages [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently. 
+Each time you push new code to your git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the free plan. Refer to the Pro and Business plans on the Pages [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently. 
 
 Builds will timeout after 20 minutes.
 
@@ -39,7 +39,7 @@ A `_redirects` file can have a maximum of 100 redirect rules.
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your GitHub project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your git project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without impacting your Pages site.
 
 ## Sites
 
