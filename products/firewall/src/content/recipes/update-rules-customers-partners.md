@@ -2,9 +2,9 @@
 pcx-content-type: configuration
 ---
 
-# Update firewall rules for customers or partners
+# Update Firewall Rules for customers or partners
 
-You may want to adjust your firewall rules to increase access by customers or partners.
+You may want to adjust your Firewall Rules to increase access by customers or partners.
 
 Potential examples include:
 
@@ -17,9 +17,9 @@ These rules can bypass Cloudflare's security features and are generally not reco
 
 </Aside>
 
-## Update firewall rules by ASN
+## Update Firewall Rules by ASN
 
-If a customer or partner is large enough, you could set up a firewall rule based on an [autonomous system number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
+If a customer or partner is large enough, you could set up a Firewall Rule based on an [autonomous system number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/).
 
 ### Allow traffic by ASN
 
@@ -71,9 +71,9 @@ If a request meets these criteria, your firewall bypasses normal `User Agent Blo
   </tbody>
 </table>
 
-##  Update firewall rules by IP
+##  Update Firewall Rules by IP
 
-For smaller organizations, you could set up firewall rules based on IP addresses.
+For smaller organizations, you could set up Firewall Rules based on IP addresses.
 
 ### Allow traffic by IP address
 

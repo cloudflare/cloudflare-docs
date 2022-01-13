@@ -58,4 +58,4 @@ Cloudflare validates all expressions before saving them, so if your expression i
 
 ![Error message](../images/firewall-rules-expressions-editor-6.png)
 
-The Expression Editor supports the entire Cloudflare Rules language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, see [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
+The Expression Editor supports the entire Cloudflare Rules language. For a complete listing of supported fields and operators, as well as guidance on using grouping symbols, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).

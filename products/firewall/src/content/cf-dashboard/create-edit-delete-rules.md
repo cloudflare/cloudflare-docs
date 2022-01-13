@@ -8,9 +8,9 @@ import firewallRulesExpressionBuilder10 from '../images/firewall-rules-expressio
 
 # Create, edit, and delete rules
 
-The **Create Firewall Rule** page in the Firewall app is a good guide to the parts of a Firewall Rule. When an incoming HTTP request matches the **expression** in a firewall rule, the specified **action** is triggered:
+The **Create Firewall Rule** page in the Firewall app is a good guide to the parts of a Firewall Rule. When an incoming HTTP request matches the **expression** in a Firewall Rule, the specified **action** is triggered:
 
-![create firewall rule page](../images/firewall-rules-expression-builder-1.png)
+![Create Firewall Rule page](../images/firewall-rules-expression-builder-1.png)
 
 Note that a simple expression has the following syntax:
 
@@ -28,7 +28,7 @@ Firewall Rules expressions have a 4 KB limit (approximately 4,000 text character
 
 The Firewall app in the Cloudflare dashboard offers two options for editing expressions.
 
-The **Expression Builder** allows you to create expressions using drop-down lists and emphasizes an intuitive visual approach to creating firewall rules:
+The **Expression Builder** allows you to create expressions using drop-down lists and emphasizes an intuitive visual approach to creating Firewall Rules:
 
 ![Expression Builder](../images/firewall-rules-expression-builder-0.png)
 
@@ -36,29 +36,24 @@ The **Expression Editor** is a text-only interface that supports advanced featur
 
 ![Expression Editor](../images/firewall-rules-expression-editor-0.png)
 
-Both interfaces are available in the **Create Firewall Rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, see [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
+Both interfaces are available in the **Create Firewall Rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, refer to [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
 
 ## Create a Firewall Rule
 
 <Aside type='note' header='Note'>
 
-Create a **Firewall Rule** based on the filters and exclusions you select within Firewall Analytics by clicking **Create firewall rule** in **Firewall** > **Overview**.
+Create a Firewall Rule based on the filters and exclusions you select within Firewall Analytics by clicking **Create firewall rule** in **Firewall** > **Overview**.
 
 </Aside>
 
 To create a new Firewall Rule:
 
-1. Log in to the **Cloudflare** dashboard.
-1. Select the **Websites** tab and choose the site for which you want to create a new Firewall Rule.
-1. To open Firewall Rules from the Cloudflare dashboard, click the **Firewall** tile in the app bar, and then click the **Firewall Rules** tab.
-
-   ![Firewall Rules tab](../images/firewall-rules-expression-builder-2.png)
-
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Navigate to **Firewall** > **Firewall Rules**.
 1. Click **Create a Firewall Rule**.
-
 1. In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
 
-   ![Create firewall rule](../images/create-firewall-rule-1.png)
+   ![Create Firewall Rule](../images/create-firewall-rule-1.png)
 
 1. Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
@@ -68,7 +63,7 @@ To create a new Firewall Rule:
 
    ![Select operator](../images/firewall-rules-expression-builder-4.png)
 
-   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, see [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
+   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, refer to [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
 
 1. Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 

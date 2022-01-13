@@ -167,11 +167,3 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
 
   </table>
 </TableWrap>
-
-## Choosing actions in the Rule Builder
-
-Choosing an action in the Cloudflare Expression Builder is simple. After naming a rule and building your expression, pick the appropriate option from the **Choose an action** drop-down list. In this example, the chosen action is _Block_:
-
-![Create Firewall Rule page](../images/firewall-rules-actions-1.png)
-
-For more on building firewall rules in the Firewall app, see [Create, edit, and delete rules](/cf-dashboard/create-edit-delete-rules/).

@@ -1,10 +1,10 @@
 ---
-title: Frequently asked questions
+title: FAQ
 pcx-content-type: faq
 weight: 700
 ---
 
-# Frequently asked questions (FAQ)
+# Firewall Rules FAQ
 
 ## How many rules can I have on my site?
 
@@ -28,7 +28,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
-Also, note that _http.request.method_ fields requires all-caps for method names.
+Also, note that `http.request.method` fields requires all-caps for method names.
 
 ## How can I use the Threat Score effectively?
 
@@ -49,7 +49,7 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 When you create a Firewall rule with a _Block_, _Challenge (Captcha)_, or _JS Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
-See [_How do I create an exception to exclude certain requests from being blocked or challenged?_](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged)
+Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
 ### Bots currently detected
 

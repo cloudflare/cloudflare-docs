@@ -5,7 +5,7 @@ order: 340
 
 # Use IP Lists
 
-IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, see [IP Lists](/cf-firewall-rules/rules-lists).
+IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your Firewall Rule expressions. For an introduction, refer to [IP Lists](/cf-firewall-rules/rules-lists).
 
 ## Access the Lists interface
 

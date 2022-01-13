@@ -14,9 +14,7 @@ Firewall Rules allows you to create rules combining several conditions. For exam
 
 Fundamentally, Firewall Rules gives you the power to proactively inspect incoming site traffic and automatically respond to threats. You define **expressions** that tell Cloudflare what to look for and specify the appropriate **action** to take when those criteria are satisfied.
 
-It is a simple concept, but like the Wireshark Display Filter language that inspired our own expression language, the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language) is a powerful tool that allows organizations to rapidly adapt to a constantly evolving threat landscape.
-
-To write Firewall Rule expressions, use the Firewall Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), the Firewall Rules language follows the same syntax of the Cloudflare Rules language.
+To write Firewall Rule expressions, use the Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), Firewall Rule expressions use the same syntax of the Cloudflare Rules language.
 
 For more information on rule expressions and the available operators, fields, and functions, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
@@ -30,7 +28,7 @@ You can also manage Firewall Rules through Terraform. For more, refer to [Gettin
 
 ### Firewall Rules tab
 
-The **Rules List** gives you a snapshot of recent activity and allows you to manage firewall rules in a single convenient location.
+The **Rules List** gives you a snapshot of recent activity and allows you to manage Firewall Rules in a single convenient location.
 
 ![Firewall Rules tab](../images/cf-firewall-rules-panel.png)
 
@@ -55,21 +53,9 @@ You should aim for a low Challenge Solve Rate. Review the CSR of your CAPTCHA ru
 
 Currently, Cloudflare does not calculate the CSR of Managed Challenges.
 
-For customers on a Free plan, any rules configured with the _Challenge (Captcha)_ action now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules configured with the _Challenge (Captcha)_ action will use Managed Challenges. For more information, refer to [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
 </Aside>
-
-### Expression Builder
-
-Both the **Create Firewall** and **Edit Firewall** panels include the visual **Expression Builder** (outlined below, in orange), which is an excellent tool to start with.
-
-![Expression Builder](../images/firewall-rules-intro-exp-builder.png)
-
-### Expression Editor
-
-Advanced users will appreciate the **Expression Editor** (shown below), which trades the visual simplicity of the builder for the raw power of the [Cloudflare Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language). The editor also supports advanced features, such as grouping symbols, for constructing highly sophisticated, targeted rules.
-
-![Expression Editor](../images/firewall-rules-intro-exp-editor.png)
 
 ### Firewall Rules APIs
 
@@ -77,7 +63,7 @@ Power users, particularly those who develop large numbers of Firewall Rules, can
 
 ## Entitlements
 
-Cloudflare Firewall Rules is available to all customers. Keep in mind that the number of firewall rules you can have active on your account is based on your type of plan, as is support for the _Log_ action and support for regular expressions.
+Cloudflare Firewall Rules is available to all customers. However, the number of active Firewall Rules you can have and support for the _Log_ action and regular expressions depend on your Cloudflare plan.
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
@@ -133,10 +119,10 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 Unless you are already an advanced user, refer to [Expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions) and [Actions](/cf-firewall-rules/actions) to learn more about the basic elements of Firewall Rules.
 
-To get started building your own Firewall Rules, see [Manage Firewall Rules in the dashboard](/cf-dashboard/create-edit-delete-rules).
+To get started building your own Firewall Rules, refer to [Manage Firewall Rules in the dashboard](/cf-dashboard/create-edit-delete-rules).
 
 Those eager to dive straight into the technical details can refer to these topics:
 
-* [Common use cases](https://developers.cloudflare.com/firewall/recipes)
-* [Manage Firewall Rules via the APIs](https://developers.cloudflare.com/firewall/api)
+* [Common use cases](/recipes)
+* [Manage Firewall Rules via the APIs](/api)
 * [Cloudflare Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language)

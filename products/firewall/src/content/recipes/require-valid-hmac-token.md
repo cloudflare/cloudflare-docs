@@ -32,7 +32,7 @@ where
 
 - `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a base64-encoded **MAC**
 
-The firewall rule below blocks requests to `example.com` that do not include a valid HMAC.
+The Firewall Rule below blocks requests to `example.com` that do not include a valid HMAC.
 
 The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#messagemac):
 
@@ -67,7 +67,7 @@ Since the expression in this example uses the `not` operator, it only matches wh
 
 When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
-For more, see [Functions: HMAC Validation](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#hmac-validation).
+For more information, refer to [Functions: HMAC Validation](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#hmac-validation).
 
 </Aside>
 
