@@ -53,11 +53,10 @@ Example response to add or modify a caption
 
 ## List captions
 
-To view captions associated with a video, make a `GET` request to the `captions` endpoint.
+Use the command below to view captions associated with a video.
 
 ```bash
-curl -X GET \
--H 'Authorization: Bearer $TOKEN' \
+curl -H 'Authorization: Bearer $TOKEN' \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 ```
 
