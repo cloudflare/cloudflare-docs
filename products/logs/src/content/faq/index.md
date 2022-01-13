@@ -59,7 +59,7 @@ The proper way to resolve the issue is to fix the certificates. This flag is onl
 Ensure that you can publish events to your Splunk instance through `curl` without the `-k` flag and with the `insecure-skip-verify` parameter set to `false` as in the following example:
 
 ```bash
-curl  "https://<SPLUNK_ENDPOINT-URL>?channel=<SPLUNK_CHANNEL-ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>" \
+curl  "https://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>" \
    -H "Authorization: Splunk <SPLUNK_AUTH_TOKEN>" \
    -d '{"BotScore":99,"BotScoreSrc":"Machine Learning","CacheCacheStatus":"miss","CacheResponseBytes":2478}'
 {"text":"Success","code":0}
