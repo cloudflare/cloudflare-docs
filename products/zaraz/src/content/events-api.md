@@ -30,7 +30,7 @@ For more information regarding the properties you can use with `zaraz.track`, re
 
 ## Zaraz Set
 
-`zaraz.set` allows you to define your own variables. The variables you define will be automatically included with your `zaraz.track` calls or behavioral triggers. To start using your own variables, add `zaraz.set(key, value, [options])` to your website. The `options` argument is optional. 
+`zaraz.set` allows you to define your own variables. The variables you define will be automatically included with your `zaraz.track` calls or behavioral triggers. To start using your own variables, add `zaraz.set(key, value, [options])` to your website. The `[options]` argument is optional. 
 
 The following is an example for a new `user_id`:
 
@@ -54,4 +54,4 @@ Example:
 zaraz.set('product_name': 't-shirt', {scope: 'page'})
 ```
 
-This example make the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to another page. Refer to [Event properties](/properties-reference#event-properties) for more details.
+This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/properties-reference#event-properties) for more details.
