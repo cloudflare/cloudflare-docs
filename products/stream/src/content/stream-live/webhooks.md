@@ -36,7 +36,7 @@ The `event_type` property of the data object will either be `live_input.connecte
 2. Click on the "Destinations" tab
 ![Click on Destinations](./stream-live-webhooks-destination-page.png)
 
-3. Click on the "Create" button on the Destinations page
+1.  On the **Destinations page under **Webhooks**, click **Create**.
 
 4. Configure the webhook and click "Save and Test"
 ![Configure Destination](./stream-live-webhooks-add-destination.png)
