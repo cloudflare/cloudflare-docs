@@ -36,3 +36,25 @@ To create a new, custom trigger:
 1. Click **Save**. 
 
 Your trigger is now complete. If you go back to the main page you will see it listed under **Triggers** and which tools use it. You can also **Edit** or **Delete** your trigger.
+
+## Blocking Triggers
+
+You may need to block one or more events in a tool from firing when a specific condition arises. For these cases, you can set Blocking Triggers.
+
+When you add Blocking Triggers to an event, the event will not fire when the conditions you specify are true. If the tool has more than one event, other events without Blocking Triggers will still work for that specific tool.
+
+To block a tool entirely, you have to configure Blocking Triggers on every event that belongs to that tool. Note that when you use Blocking Triggers, Zaraz will still load on the page.
+
+To create Blocking Triggers, start by [creating the trigger](#create-a-trigger) with the conditions you want to use to block an event. Then:
+
+1. Go to [Zaraz's main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+1. Locate the third-party tool with the event you want to block and click **Edit**.
+1. In **Event Name**, click the event you want to block.
+1. In **Blocking Triggers**, use the dropdown menu to add a trigger to block the event.
+1. Click **Save**.
+
+<Aside type='note'>
+
+Blocking Triggers are useful if you wish to block specific events, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, we recommend using [Page Rules to block Zaraz](/get-started/block-zaraz). 
+
+</Aside>
