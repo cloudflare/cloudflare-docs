@@ -49,7 +49,8 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 | `{{ system.device.user-agent.device }}`| `string` | Returns the type of device used (for example, iPhone). |
 | `{{ system.device.user-agent.cpu }}`| `string` | Returns the device’s CPU. |
 | `{{ system.misc.random }}`| `number` | Returns a random number unique to each request. |
-| `{{ system.misc.timestamp }}`| `number` | Returns Unix time in milliseconds. |
+| `{{ system.misc.timestamp }}`| `number` | Returns Unix time in seconds. |
+| `{{ system.misc.timestampMilliseconds }}`| `number` | Returns Unix time in milliseconds. |
 
 
 </TableWrap>
