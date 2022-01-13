@@ -46,7 +46,7 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1. [Access the Lists interface](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1. [Access the Lists interface](/cf-dashboard/rules-lists) available at **Configurations** > **Lists**.
 
 1. Click the **Edit** button associated with the list that you want to edit.
 
@@ -82,7 +82,7 @@ The updated list displays.
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/api/cf-lists/endpoints).
+If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/api/cf-lists/endpoints).
 
 </Aside>
 
