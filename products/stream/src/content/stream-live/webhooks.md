@@ -49,7 +49,9 @@ The `event_type` property of the data object will either be `live_input.connecte
 1. Under the list of products, locate **Stream** and and click **Select**.
 ![Select Stream](./stream-live-webhooks-add-notifications-2.png)
 
-8. Give the notification a name and choose the destination name from the Webhooks dropdown that you setup earlier. Then click "Next"
+1. Enter a name and optional description.
+1. Under **Webhooks**,  click **Add webhook** and click your newly created webhook.
+1. Click **Next**.
 ![Configure Notification](./stream-live-webhooks-add-notifications-3.png)
 
 1. By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma delimited list of Input IDs in the text field.
