@@ -41,7 +41,7 @@ The `event_type` property of the data object will either be `live_input.connecte
 1. Enter the information for your webhook and click **Save and Test**.
 ![Configure Destination](./stream-live-webhooks-add-destination.png)
 
-5. Next, you will add a Notification. Click on the "All Notifications" tab
+1. To create the notification, from the **Notifications** page, click the **All Notifications** tab.
 
 1. Next to **Notifications**, click **Add**.
 ![Click Add on Notificatons page](./stream-live-webhooks-add-notifications-1.png)
