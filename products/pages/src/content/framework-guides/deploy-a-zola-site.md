@@ -98,6 +98,12 @@ Below the configuration, make sure to set the **Environment Variables (advanced)
 
 For example, `ZOLA_VERSION`: `0.14.0`.
 
+<Aside type="warning">
+
+Currently, Cloudflare Pages only supports `ZOLA_VERSION`: <=`0.14.0` in builds.
+
+</Aside>
+
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `zola`, your project dependencies, and building your site, before deploying it.
 
 <Aside type="note">
