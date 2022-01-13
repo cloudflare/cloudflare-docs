@@ -31,7 +31,7 @@ The API expects endpoint parameters in the GET request query string.  See the ex
 `logs/received`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<FIELDS>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
 ```
 
 `logs/rayids/<rayid>`
