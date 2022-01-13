@@ -128,7 +128,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 **Relevant links:** [Learning Center guide on DNS records](https://www.cloudflare.com/learning/dns/dns-records/)
 
 ## DNS server
-Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2400:cb00:2048:1::c629:d7a2 (in IPv6).
+Each device connected to the Internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as 192.168.1.1 (in IPv4), or more complex newer alphanumeric IP addresses such as 2001:db8::1:1:1:1 (in IPv6).
 
 **Related terms:** DNS
 
