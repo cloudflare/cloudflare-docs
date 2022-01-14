@@ -1,5 +1,9 @@
 # Changelog
 
+## 1/7/2022
+
+- The `workers_api_getters_setters_on_prototype` configuration flag corrects the way Workers attaches property getters and setters to API objects so that they can be properly subclassed.
+
 ## 12/22/2021
 
 - Async iteration (using `for` and `await`) on instances of `ReadableStream` is now available.
