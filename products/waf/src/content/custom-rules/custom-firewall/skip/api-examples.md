@@ -8,7 +8,9 @@ pcx-content-type: configuration
 
 Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to configure Custom Rules via API.
 
-The `skip` action supports different [skip options](/custom-rules/custom-firewall/skip/options), according to the security features or products that you wish to skip. The following sections cover the different scenarios available for Custom Firewall rules.
+The `skip` action supports different [skip options](/custom-rules/custom-firewall/skip/options), according to the security features or products that you wish to skip.
+
+The following sections provide examples for the different skip rule scenarios available for Custom Firewall rules.
 
 Take the following into account regarding the provided examples:
 
