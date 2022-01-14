@@ -60,10 +60,10 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 * `name` (optional) - Use your domain name as the job name.
 * `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below. 
 
-  * `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
+  * `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input'.
   * `<DATADOG_API_KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
   * `ddsource`: Set to `cloudflare`.
-  * `service`, `host`, `ddtags`: Optional parameters allowed by Datadog
+  * `service`, `host`, `ddtags`: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"

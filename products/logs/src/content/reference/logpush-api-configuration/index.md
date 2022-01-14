@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 ## Endpoints
 
-The table below summarizes the job operations available. All the examples in this page are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/reference/log-fields) page.
+The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/reference/log-fields) page.
 
 The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
@@ -16,18 +16,18 @@ The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates t
 
 | Operation | Description | URL |
 |---|---|---|
-| POST | Create job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
-| GET | Retrieve job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| GET | Retrieve all jobs for all datasets | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
-| GET | Retrieve all jobs for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/jobs</em> |
-| GET | Retrieve all available fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields</em> |
-| GET | Retrieve all default fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields/default</em> |
-| PUT | Update job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| DELETE | Delete job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| POST | Check whether destination exists | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/destination/exists</em> |
-| POST | Get ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership</em> |
-| POST | Validate ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership/validate</em> |
-| POST | Validate log options | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/origin</em> |
+| POST | Create job | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs</em> |
+| GET | Retrieve job | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;</em> |
+| GET | Retrieve all jobs for all datasets | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs</em> |
+| GET | Retrieve all jobs for a dataset  | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/jobs</em> |
+| GET | Retrieve all available fields for a dataset  | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields</em> |
+| GET | Retrieve all default fields for a dataset  | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields/default</em> |
+| PUT | Update job | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;</em> |
+| DELETE | Delete job | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;</em> |
+| POST | Check whether destination exists | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/destination/exists</em> |
+| POST | Get ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership</em> |
+| POST | Validate ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate</em> |
+| POST | Validate log options | <em>https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin</em> |
 
 </TableWrap>
 
