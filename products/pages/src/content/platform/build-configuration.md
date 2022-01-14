@@ -59,15 +59,15 @@ The following system environment variables are injected by default (but can be o
 
 | Environment Variable  | Injected value                        | Example use-case                                                               |
 | --------------------- | ------------------------------------- | ------------------------------------------------------------------------------ |
-| `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages vs locally                          |
-| `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting e.g. Sentry                       |
-| `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customising build based on branch e.g. disabling debug logging on `production` |
+| `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages versus locally                          |
+| `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting, for example, Sentry                       |
+| `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customizing build based on branch, for example, disabling debug logging on `production` |
 
 ## Language support and tools
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go. 
 
-If you need to use a specific version of a language, (e.g., Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
+If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
 
 Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
 

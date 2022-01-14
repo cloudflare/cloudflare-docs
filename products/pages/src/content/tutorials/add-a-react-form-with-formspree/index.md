@@ -147,14 +147,13 @@ function App() {
 export default App;
 ```
 
-Now you have a single-page application containing a Contact Us form with several fields for the user to fill out. However, you have not set up the form to submit to a valid form endpoint yet. You will do that in the next section.
+Now you have a single-page application containing a Contact Us form with several fields for the user to fill out. However, you have not set up the form to submit to a valid form endpoint yet. You will do that in the [next section](/add-a-react-form-with-formspree#the-formspree-back-end).
 
 <Aside type="info" header="GitHub repository">
 
 The source code for this example is [available on GitHub](https://github.com/formspree/formspree-example-cloudflare-react). It is a live Pages application with a [live demo](https://formspree-example-cloudflare-react.pages.dev/) available, too. 
 
 </Aside>
-
 
 ## The Formspree back end
 

@@ -2,11 +2,11 @@
 pcx-content-type: tutorial
 ---
 
-# Build an API for your frontend using Cloudflare Workers
+# Build an API for your front end using Cloudflare Workers
 
 ## Introduction
 
-In this tutorial, you will build an API on [Cloudflare Workers](https://www.cloudflare.com/learning/serverless/glossary/serverless-and-cloudflare-workers/) that can be used by your Pages application. Workers serve as a great companion to your front-end applications on Cloudflare Pages. In this tutorial, you will build a simple JSON API that returns blog posts that can be retrieved and rendered in a frontend application.
+In this tutorial, you will build an API on [Cloudflare Workers](https://www.cloudflare.com/learning/serverless/glossary/serverless-and-cloudflare-workers/) that can be used by your Pages application. Workers serve as a great companion to your front-end applications on Cloudflare Pages. In this tutorial, you will build a simple JSON API that returns blog posts that can be retrieved and rendered in a front-end application.
 
 This tutorial contains two, separate applications: the backend, a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) API deployed on Cloudflare Workers, and the front end, built with React and deployed using Cloudflare Pages.
 
@@ -18,7 +18,7 @@ If you are interested in a more comprehensive approach to building applications 
 
 Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
 
-You will use the Workers TypeScript template to generate our project. Don't worry if you do not know TypeScript — you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` in your terminal to create a new project using the template:
+You will use the Workers TypeScript template to generate our project. If you do not know TypeScript — you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` in your terminal to create a new project using the template:
 
 ```sh
 ---
@@ -185,7 +185,7 @@ export default Post
 
 ### Adding CORS headers
 
-Before you are ready to deploy, you will make one more change to our handlers, adding [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to allow your frontend application to make requests to the API. In your handlers, you will update the `headers` variable accordingly:
+Before you are ready to deploy, you will make one more change to our handlers, adding [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to allow your front-end application to make requests to the API. In your handlers, you will update the `headers` variable accordingly:
 
 ```ts
 ---
@@ -243,7 +243,7 @@ $ curl serverless-api.signalnerve.workers.dev/api/posts/1
 
 ## Deploying a new React application to Pages
 
-With your serverless API deployed, we can now build the frontend of our application with React. First, you will generate the application, and then you will define the functionality by adding routing, and rendering blog posts from the API. Once you are happy with the implementation locally, you will use Cloudflare Pages to deploy it in just a matter of minutes.
+With your serverless API deployed, we can now build the front-end of our application with React. First, you will generate the application, and then you will define the functionality by adding routing, and rendering blog posts from the API. Once you are happy with the implementation locally, you will use Cloudflare Pages to deploy it in just a matter of minutes.
 
 ### Generating a new React application
 
@@ -428,7 +428,7 @@ Now, when you run `wrangler publish`, your API will be published and served on `
 
 In this tutorial, you built a full blog application by combining a front end deployed with Cloudflare Pages, and a serverless API built with Cloudflare Workers. You can find the source code for both codebases on GitHub:
 
-- Blog frontend: https://github.com/signalnerve/blog-frontend
+- Blog front end: https://github.com/signalnerve/blog-frontend
 - Serverless API: https://github.com/signalnerve/serverless-api
 
 If you enjoyed this tutorial, refer to the [headless CMS tutorial] to learn how to build a blog using Nuxt.js and Sanity.io.
