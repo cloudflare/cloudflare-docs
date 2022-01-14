@@ -7,7 +7,7 @@ type: overview
 
 # Actions reference
 
-The action of a rule tells Cloudflare how to handle HTTP requests that match the rule [expression](/rules-language/expressions).
+The action of a rule tells Cloudflare how to handle matches for the rule [expression](/rules-language/expressions).
 
 ## Supported actions
 
@@ -91,6 +91,22 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td><strong>Block</strong><br/><br/>API value:<br/><code class="InlineCode">block</code></td>
       <td>
         <p>Matching requests are denied access to the site.</p>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><strong>Rewrite</strong><br/><br/>API value:<br/><code class="InlineCode">rewrite</code></td>
+      <td>
+        <p>Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.</p>
+        <p>Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code class="InlineCode">http_request_transform</code>, <code class="InlineCode">http_request_late_transform</code>, and <code class="InlineCode">http_response_headers_transform</code>.</p>
+      </td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><strong>Redirect</strong><br/><br/>API value:<br/><code class="InlineCode">redirect</code></td>
+      <td>
+        <p>Navigates the user from a source URL to a target URL, according to the rule configuration.</p>
+        <p>Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code class="InlineCode">http_request_redirect</code> phase.</p>
       </td>
       <td>Yes</td>
     </tr>
