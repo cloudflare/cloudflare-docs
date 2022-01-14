@@ -37,7 +37,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=<unix|r
 `logs/rayids/<RAY_ID>`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/<ray_id>?[&fields=<string>][&timestamps=<strings>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/<RAY_ID>?[&fields=<string>][&timestamps=<strings>]
 ```
 
 The following table describes the parameters available:
