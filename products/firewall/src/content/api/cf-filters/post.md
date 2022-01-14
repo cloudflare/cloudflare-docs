@@ -6,15 +6,12 @@ order: 460
 
 # POST example
 
-```txt
-POST zones/<ZONE_ID>/filters
-```
-
-Creates one or more filters.
-
-## Request
+This example creates several filters using a single API call.
 
 ```json
+---
+header: Request
+---
 curl -X POST \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
   -H "X-Auth-Email: <EMAIL>" \
@@ -43,9 +40,10 @@ curl -X POST \
 ]'
 ```
 
-## Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {

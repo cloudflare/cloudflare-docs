@@ -10,15 +10,14 @@ order: 430
 
 ## Update multiple rules
 
-```txt
-PUT zones/<ZONE_ID>/firewall/rules
-```
+This example updates several Firewall Rules using a single API call.
 
 You can include up to 25 rules in the JSON object array (`-d` flag) to update as a batch. The batch is handled as a transaction.
 
-### Request
-
 ```bash
+---
+header: Request
+---
 curl -X PUT \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
   -H "X-Auth-Email: <EMAIL>" \
@@ -49,9 +48,10 @@ To update the filter, use the [Filters API](/api/cf-filters).
 
 </Aside>
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {
@@ -76,11 +76,9 @@ To update the filter, use the [Filters API](/api/cf-filters).
 
 ## Update a single rule
 
-```txt
-PUT zones/<ZONE_ID>/firewall/rules/<RULE_ID>
-```
+This example updates the Firewall Rule with ID `<RULE_ID>`.
 
-These fields are required:
+You must include the following fields in the request body:
 
 - `id`
 - `action`
@@ -88,19 +86,10 @@ These fields are required:
 
 All other fields are optional.
 
-<Aside type='note' header='Note'>
-
-`PUT` overwrites fields that are not explicitly passed in the request.
-
-For example, if the request omits `description`, any previously existing `description` value will be erased.
-
-To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request.
-
-</Aside>
-
-### Request
-
-```bash
+```json
+---
+header: Request
+---
 curl -X PUT \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
   -H "X-Auth-Email: <EMAIL>" \
@@ -121,9 +110,10 @@ curl -X PUT \
 }' 
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": {
     "id": "<RULE_ID>",
@@ -143,3 +133,13 @@ curl -X PUT \
   "messages": null
 }
 ```
+
+<Aside type='note' header='Note'>
+
+`PUT` overwrites fields that are not explicitly passed in the request.
+
+For example, if the request omits `description`, any previously existing `description` value will be erased.
+
+To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request.
+
+</Aside>

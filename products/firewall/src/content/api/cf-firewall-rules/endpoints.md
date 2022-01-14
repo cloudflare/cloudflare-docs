@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-type: table
+type: overview
 order: 415
 ---
 
@@ -30,13 +30,12 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
 
 </ContentColumn>
 
-<TableWrap style='width:100%'>
 <table style='table-layout:fixed; width:100%'>
   <thead>
       <tr>
-          <th>Operation</th>
+          <th style='width: 20%'>Operation</th>
           <th>Method & Endpoint</th>
-          <th>Notes</th>
+          <th style='width: 30%'>Notes</th>
       </tr>
   </thead>
   <tbody>
@@ -51,7 +50,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         <td>Lists all current Firewall Rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results. </td>
       </tr>
       <tr>
-        <td><a href='/api/cf-firewall-rules/get/#get-rule-by-id'>Get Firewall Rule by ID</a></td>
+        <td><a href='/api/cf-firewall-rules/get/#get-rule-by-id'>Get a Firewall Rule</a></td>
         <td><code class="InlineCode">GET&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}</code></td>
         <td>Retrieve a single Firewall Rule by ID.</td>
       </tr>
@@ -61,22 +60,21 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         <td>Handled as a single transaction. All rules must exist for operation to succeed. If there is an error, the entire operation fails.</td>
       </tr>
       <tr>
-        <td><a href='/api/cf-firewall-rules/put/#update-a-single-rule'>Update a Firewall Rule by ID</a></td>
+        <td><a href='/api/cf-firewall-rules/put/#update-a-single-rule'>Update a Firewall Rule</a></td>
         <td><code class="InlineCode">PUT&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}</code></td>
         <td>Update a single Firewall Rule by ID.</td>
       </tr>
       <tr>
-        <td><a href='/api/cf-firewall-rules/delete/#delete-all-rules'>Delete Firewall Rules</a></td>
+        <td><a href='/api/cf-firewall-rules/delete/#delete-multiple-rules'>Delete Firewall Rules</a></td>
         <td><code class="InlineCode">DELETE&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code></td>
         <td><p>Delete existing Firewall Rules. Must specify list of Firewall Rule IDs.</p>
         <p>Empty requests result in no deletion. Returns HTTP status code 200 if a specified rule does not exist.</p>
         </td>
       </tr>
       <tr>
-        <td><a href='/api/cf-firewall-rules/delete/#delete-a-single-rule'>Delete Firewall Rule by ID</a></td>
+        <td><a href='/api/cf-firewall-rules/delete/#delete-a-single-rule'>Delete a Firewall Rule</a></td>
         <td><code class="InlineCode">DELETE&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}</code></td>
         <td><p>Delete a Firewall Rule by ID.</p></td>
       </tr>
   </tbody>
 </table>
-</TableWrap>

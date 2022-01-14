@@ -11,22 +11,22 @@ order: 465
 
 ## Get all filters
 
-```txt
-GET zones/<ZONE_ID>/filters
-```
-
-### Request
+This example returns all filters in zone with ID `<ZONE_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
   -H "X-Auth-Email: <EMAIL>" \
   -H "X-Auth-Key: <API_KEY>"
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {
@@ -74,22 +74,22 @@ curl -X GET \
 
 ## Get by filter ID
 
-```txt
-GET zones/<ZONE_ID>/filters/<FILTER_ID>
-```
-
-### Request
+This example returns the filter with ID `<FILTER_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>" \
   -H "X-Auth-Email: <EMAIL>" \
   -H "X-Auth-Key: <API_KEY>"
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": {
     "id": "<FILTER_ID>",

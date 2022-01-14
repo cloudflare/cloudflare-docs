@@ -42,18 +42,20 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
 
 ### Validate expression via query string
 
-#### Request
-
 ```bash
+---
+header: Request
+---
 curl -X GET \
   'https://api.cloudflare.com/client/v4/filters/validate-expr?expression=ip.src==34' \
   -H "X-Auth-Email: <EMAIL>"
   -H "X-Auth-Key: <API_KEY>"
 ```
 
-#### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": null,
   "success": false,
@@ -76,9 +78,10 @@ Filter parsing error:
 
 ### Validate expression via JSON object
 
-#### Request
-
 ```json
+---
+header: Request
+---
 curl -X POST \
   "https://api.cloudflare.com/client/v4/filters/validate-expr" \
   -H "X-Auth-Email: <EMAIL>" \
@@ -89,9 +92,10 @@ curl -X POST \
 }' 
 ```
 
-#### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": null,
   "success": false,

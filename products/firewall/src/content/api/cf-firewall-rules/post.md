@@ -6,11 +6,7 @@ order: 420
 
 # POST example
 
-```txt
-POST zones/<ZONE_ID>/firewall/rules
-```
-
-Creates one or more Firewall Rules.
+This example creates several Firewall Rules using a single API call.
 
 <Aside type="note">
 
@@ -18,9 +14,10 @@ To create a Firewall Rule you need a [filter](/api/cf-filters/what-is-a-filter) 
 
 </Aside>
 
-## Request
-
 ```json
+---
+header: Request
+---
 curl -X POST \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
   -H "X-Auth-Email: <EMAIL>" \
@@ -58,9 +55,10 @@ curl -X POST \
 ]'
 ```
 
-## Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {

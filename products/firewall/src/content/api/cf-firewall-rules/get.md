@@ -7,26 +7,26 @@ order: 425
 # GET examples
 
 - [Get all rules](#get-all-rules)
-- [Get rule by ID](#get-by-rule-id)
+- [Get rule by ID](#get-rule-by-id)
 
 ## Get all rules
 
-```txt
-GET zones/<ZONE_ID>/firewall/rules
-```
-
-### Request
+This example returns all the Firewall Rules in the zone with ID `<ZONE_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
   -H "X-Auth-Email: <EMAIL>" \
   -H "X-Auth-Key: <API_KEY>"
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {
@@ -95,24 +95,24 @@ curl -X GET \
 }
 ```
 
-## Get by rule ID
+## Get rule by ID
 
-```txt
-GET zones/<ZONE_ID>/firewall/rules/<RULE_ID>
-```
-
-### Request
+This example returns the Firewall Rule with ID `<RULE_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X GET \
   "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
   -H "X-Auth-Email: <EMAIL>" \
   -H "X-Auth-Key: <API_KEY>"
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": {
     "id": "<RULE_ID>",
