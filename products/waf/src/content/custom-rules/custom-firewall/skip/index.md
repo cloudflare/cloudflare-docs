@@ -1,7 +1,7 @@
 ---
 title: Configure a rule with the Skip action
 order: 3
-pcx-content-type: concept
+pcx-content-type: how-to
 ---
 
 # Configure a Custom Rule with the Skip action
