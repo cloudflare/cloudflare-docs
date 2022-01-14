@@ -273,7 +273,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>
         <em
           >(http.host eq "example.com" and cf.threat_score &gt; 5) and not
-          (ip.src in {'{1.2.3.4 4.3.2.110.20.30.0/24}'})</em
+          (ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'})</em
         >
       </td>
     </tr>
@@ -286,7 +286,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>Rule 1</td>
       <td>
         Action: <em>allow</em><br />
-        Expression: <em>ip.src in {'{1.2.3.4 4.3.2.110.20.30.0/24}'}</em>
+        Expression: <em>ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'}</em>
       </td>
     </tr>
     <tr>

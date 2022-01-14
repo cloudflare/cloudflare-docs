@@ -187,7 +187,7 @@ header: Inspecting the v-for directive
 </div>
 ```
 
-To populate that `posts` array, the `asyncData` function is used, which is provided by Nuxt to make asynchronous calls (e.g., network requests) to populate the page's data.
+To populate that `posts` array, the `asyncData` function is used, which is provided by Nuxt to make asynchronous calls (for example, network requests) to populate the page's data.
 
 The `$sanity` object is provided by the Nuxt and Sanity.js integration as a way to make requests to your Sanity dataset. By calling `$sanity.fetch`, and passing a query, you can retrieve specific data from our Sanity dataset, and return it as your page's data.
 
@@ -423,7 +423,7 @@ Now, when you make a change to your Sanity.io dataset, Sanity will make a reques
 
 By completing this guide, you have successfully deployed your own blog, powered by Nuxt, Sanity.io, and Cloudflare Pages. You can find the source code for both codebases on GitHub:
 
-- Blog frontend: https://github.com/signalnerve/nuxt-sanity-blog
+- Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
 - Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
 If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more.](/tutorials/build-an-api-with-workers)

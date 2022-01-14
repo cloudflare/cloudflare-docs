@@ -6,7 +6,7 @@ import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md
 
 # Deploy a Zola site
 
-[Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you'll create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
+[Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you will create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
 
 ## Installing Zola
 
@@ -97,6 +97,12 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`. 
 
 For example, `ZOLA_VERSION`: `0.14.0`.
+
+<Aside type="warning">
+
+Currently, Cloudflare Pages only supports `ZOLA_VERSION`: <=`0.14.0` in builds.
+
+</Aside>
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `zola`, your project dependencies, and building your site, before deploying it.
 

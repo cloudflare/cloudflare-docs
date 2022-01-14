@@ -8,7 +8,7 @@ Cloudflare uses various cookies to maximize network resources, manage traffic, a
 
 ## Understanding the Cloudflare Cookies
 
-As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the `__cflb`, `__cf_bm`, `__cf_ob_info` and `__cf_use_ob`, `__cfwaitingroom`, and `__cfruid` cookies are strictly necessary to provide the services requested by our customers.
+As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the `__cflb`, `__cf_bm`, `cf_ob_info` and `cf_use_ob`, `__cfwaitingroom`, and `__cfruid` cookies are strictly necessary to provide the services requested by our customers.
 
 As mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required by law to disclose these cookies to their end users.
 
@@ -40,15 +40,15 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 </Aside>
 
-### \__cf_ob_info and \__cf_use_ob cookie for Cloudflare Always Online
+### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
-The `__cf_ob_info` cookie provides information on:
+The `cf_ob_info` cookie provides information on:
 
 - The HTTP Status Code returned by the origin web server
 - The Ray ID of the original failed request
 - The data center serving the traffic
 
-The `__cf_use_ob` cookie informs Cloudflare to fetch the requested resource from the Always Online cache on the designated port. Applicable values are: 0, 80, and 443.
+The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from the Always Online cache on the designated port. Applicable values are: 0, 80, and 443. The `cf_ob_info` and `cf_use_ob` cookies are persistent cookies that expire after 30 seconds.
 
 ### __cfwaitingroom for Cloudflare Waiting Rooms
 

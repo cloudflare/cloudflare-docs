@@ -3,7 +3,13 @@ order: 6
 pcx-content-type: concept
 ---
 
-# Functions
+# Functions (beta)
+
+<Aside type="note" header="Functions is currently in beta">
+
+You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+
+</Aside>
 
 With Pages, you can now build full-stack applications by executing code on the Cloudflare network with help from [Cloudflare Workers](https://workers.cloudflare.com/). Functions enable you to run server-side code to enable dynamic functionality without running a dedicated server. With Functions, you can introduce application aspects such as authenticating, querying databases, handling form submissions, or working with middleware.
 
@@ -111,6 +117,23 @@ export async function onRequestPost(request) {
   return new Response(`Hello world`);
 }
 ```
+Another helpful example for handling single path segments can be querying an API for data, for example, [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
+
+```js
+---
+filename:function/character/[id].js
+---
+export async function onRequestGet({ params }) {
+  const res = await fetch(
+    `https://rickandmortyapi.com/api/character/${params.id}`
+  );
+  const data = await res.json();
+  const info = JSON.stringify(data);
+  return new Response(info, null, 2);
+}
+
+```
+The above will return each character at `/character/{id}` ID being associated with the character.
 
 ### Handling multiple requests in a single function
 

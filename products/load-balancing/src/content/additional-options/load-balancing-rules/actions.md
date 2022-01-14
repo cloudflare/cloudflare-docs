@@ -42,12 +42,12 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     <tr>
       <td><em>Override</em></td>
       <td><em>Steering policy</em></td>
-      <td>Update the <a href="/understand-basics/traffic-steering">steering policy</a> associated with your load balancer.</td>
+      <td>Update the <a href="/understand-basics/traffic-steering/pool-level-steering">steering policy</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>
       <td><em>Fallback pool</em></td>
-      <td>Update the <a href="/understand-basics/traffic-steering">fallback pools</a> associated with your load balancer.</td>
+      <td>Update the <a href="/understand-basics/traffic-steering/pool-level-steering">fallback pools</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>
@@ -57,7 +57,7 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
     <tr>
       <td><em>Override</em></td>
       <td><em>Region pools</em></td>
-      <td>Update the <a href="/understand-basics/traffic-steering#geo-steering">region pools</a> associated with your load balancer.</td>
+      <td>Update the <a href="/understand-basics/traffic-steering/pool-level-steering#geo-steering">region pools</a> associated with your load balancer.</td>
     </tr>
     <tr>
       <td><em>Override</em></td>

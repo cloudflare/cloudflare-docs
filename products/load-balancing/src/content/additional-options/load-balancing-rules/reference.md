@@ -39,7 +39,7 @@ Regardless of whether your traffic is proxied, you have access to the following 
       <td>Load Balancer Region</td>
       <td valign="top"><code>cf.load_balancer.region</code><br /><Type>bytes</Type></td>
       <td>
-        <p>The <a href="/understand-basics/traffic-steering#geo-steering">region name</a> of the data center processing the request.</p>
+        <p>The <a href="/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
       </td>
     </tr>
     <tr>

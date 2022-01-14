@@ -42,7 +42,7 @@ When a Workers script is invoked by a [Cron Trigger](/platform/cron-triggers), t
 
 - <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - Use this method to notify the runtime to wait for asynchronous tasks (e.g. logging, analytics to third-party services, streaming and caching). The first `event.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a Success.
+    - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `event.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a Success.
 
 </Definitions>
 
@@ -87,6 +87,6 @@ When a Workers script is invoked by a [Cron Trigger](/platform/cron-triggers), t
 
 - <Code>ctx.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - Use this method to notify the runtime to wait for asynchronous tasks (e.g., logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a Success.
+    - Use this method to notify the runtime to wait for asynchronous tasks (for example, logging, analytics to third-party services, streaming and caching). The first `ctx.waitUntil` to fail will be observed and recorded as the status in the [Cron Trigger](/platform/cron-triggers) Past Events table. Otherwise, it will be reported as a success.
 
 </Definitions>

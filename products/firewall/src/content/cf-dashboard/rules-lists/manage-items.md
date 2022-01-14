@@ -1,4 +1,4 @@
----
+--
 pcx-content-type: how-to
 order: 360
 ---
@@ -35,10 +35,10 @@ You can combine individual addresses and CIDR ranges in the same list.
 
 To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
 
-For example, instead of `2001:8a0:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
+For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
-* `2001:8a0:6a0b:1a01:0000:0000:0000:0000/64`
-* `2001:8a0:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+* `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
+* `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
 </Aside>
 

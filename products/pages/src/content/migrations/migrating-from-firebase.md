@@ -23,7 +23,7 @@ header: firebase.json
 }
 ```
 
-Firebase Hosting does not ask for your build command, so if you are running a standard JavaScript set up, you will probably be using `npm build` or a command specific to the framework or tool you are using (e.g., `ng build`).
+Firebase Hosting does not ask for your build command, so if you are running a standard JavaScript set up, you will probably be using `npm build` or a command specific to the framework or tool you are using (for example, `ng build`).
 
 After you have found your build directory and build command, you can move your project to Cloudflare Pages.
 

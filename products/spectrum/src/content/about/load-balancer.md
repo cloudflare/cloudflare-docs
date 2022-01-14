@@ -61,17 +61,18 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
 
 ## Weights
 
-[Origin Weights](https://developers.cloudflare.com/load-balancing/understand-basics/weighted-load-balancing) allow you to have origins without the same capacity or allow you to split traffic amongst hosts for any other reason.
+[Origin Weights](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/origin-level-steering#weights) allow you to have origins without the same capacity or allow you to split traffic amongst hosts for any other reason.
 
 Weight configured within a load balancer pool will be honored with load balancing through Spectrum. If configured, Cloudflare will distribute traffic amongst the available origins within a pool according to the relative weights assigned to each origin.
 
-## Steering modes
+## Pool-level steering
 
-All steering modes are available for transport load balancing through Spectrum:
-- [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
-- [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
-- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
-- [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering#proximity-steering): Traffic goes to the closest physical data center.
+All pool steering modes are available for transport load balancing through Spectrum:
+
+- [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
+- [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
+- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
+- [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#proximity-steering): Traffic goes to the closest physical data center.
 
 ## Load balancing rules
 
