@@ -22,6 +22,6 @@ Like other rules evaluated by Cloudflare's [Ruleset Engine](https://developers.c
 
 ## Getting started
 
-To create Custom Firewall rules using the Cloudflare dashboard, see [Create Custom Firewall rules in the dashboard](/custom-rules/custom-firewall/create-dashboard).
+To create Custom Firewall rules using the Cloudflare dashboard, refer to [Create Custom Firewall rules in the dashboard](/custom-rules/custom-firewall/create-dashboard).
 
-You can also create Custom Firewall rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). See [Create Custom Firewall rules via API](/custom-rules/custom-firewall/create-api) for more information.
+You can also create Custom Firewall rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). Refer to [Create Custom Firewall rules via API](/custom-rules/custom-firewall/create-api) for more information.
