@@ -95,9 +95,18 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td>Yes</td>
     </tr>
     <tr>
+      <td><strong>Execute</strong><br/><br/>API value:<br/><code class="InlineCode">execute</code></td>
+      <td>
+        <p>Executes the rules in the ruleset specified in the rule configuration. You can specify a Managed Ruleset or a custom ruleset to execute.</p>
+        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
+      </td>
+      <td>No</td>
+    </tr>
+    <tr>
       <td><strong>Rewrite</strong><br/><br/>API value:<br/><code class="InlineCode">rewrite</code></td>
       <td>
         <p>Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.</p>
+        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
         <p>Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code class="InlineCode">http_request_transform</code>, <code class="InlineCode">http_request_late_transform</code>, and <code class="InlineCode">http_response_headers_transform</code>.</p>
       </td>
       <td>No</td>
@@ -106,6 +115,7 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td><strong>Redirect</strong><br/><br/>API value:<br/><code class="InlineCode">redirect</code></td>
       <td>
         <p>Navigates the user from a source URL to a target URL, according to the rule configuration.</p>
+        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
         <p>Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code class="InlineCode">http_request_redirect</code> phase.</p>
       </td>
       <td>Yes</td>
@@ -117,6 +127,6 @@ The available actions depend on the [phase](/about#phases) where you are configu
 
 <Aside type="note">
 
-Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for more information on these specific actions.
+Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for more information.
 
 </Aside>
