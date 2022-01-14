@@ -78,7 +78,7 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 </Aside>
 
   * `<SOURCE_TYPE>`: The Splunk sourcetype. Example: `cloudflare:json`
-  * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that’s URL-encoded. Example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`   
+  * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. Example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`   
 
 ```bash
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
