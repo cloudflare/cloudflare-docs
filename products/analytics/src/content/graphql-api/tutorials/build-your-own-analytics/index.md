@@ -9,7 +9,7 @@ In this example, we're going to see how to use the GraphQL Analytics API to buil
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 
-The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
+The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You will just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button. To download an example of a `CSS` file, you can click [here](../../../static/downloads/main.css).
 
 ## Code
 
@@ -24,10 +24,10 @@ Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) do
 
 <head>
     <title>Line Chart</title>
-    <script src="../../../../dist/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha512-60KwWtZOhzgr840mc57MV8JqDZHAws3w61mhK45KsYHmhyNFJKmfg4M7/s2Jsn4PgtQ4Uhr9xItS+HCbGTIRYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/dist/main.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
