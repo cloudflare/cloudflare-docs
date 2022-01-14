@@ -292,7 +292,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally). 
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally). 
 
 ### KV namespace
 
@@ -300,9 +300,9 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 ![KV-Binding](KV-functions.png)
 
-## KV namespace Locally 
+## KV namespace locally
 
-While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called TodoList you can access the KV namespace in your local dev by running `npx wrangler pages dev dist  --kv TodoList`. The data from this namespace can be accessed using `context.env`. 
+While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist  --kv TodoList`. The data from this namespace can be accessed using `context.env`. 
 
 ```js
 export async function onRequest({ env }) {
@@ -333,9 +333,9 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ![ENV-Binding](ENV-functions.png)
 
-## Adding Environment variable locally 
+## Adding environment variables locally
 
-When developing in your local environment, functions offers you a way to use your enviroment varibles with `context.env` you can access environment varibles on build by adding a binding to your run command like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the ENV_VALUE in your component by using `env.ENV_NAME`.
+When developing in your local environment, Functions offers you a way to use your environment variables with `context.env`. Access environment variables on your build by adding a binding to your run command like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the ENV_VALUE in your component by using `env.ENV_NAME`.
 
 For example, you can connect [Sentry](https://www.sentry.io/) to your application middleware using [Toucan js](https://github.com/robertcepa/toucan-js) and access your dsn in your component. 
 
