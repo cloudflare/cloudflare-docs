@@ -337,7 +337,7 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 When developing in your local environment, Functions offers you a way to use your environment variables with `context.env`. Access environment variables on your build by adding a binding to your run command like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the ENV_VALUE in your component by using `env.ENV_NAME`.
 
-For example, you can connect [Sentry](https://www.sentry.io/) to your application middleware using [Toucan js](https://github.com/robertcepa/toucan-js) and access your dsn in your component. 
+For example, you can connect [Sentry](https://www.sentry.io/) to your application middleware using [Toucan js](https://github.com/robertcepa/toucan-js) and access your DSN in your component. 
 
 
 ```js
