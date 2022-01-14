@@ -1,5 +1,18 @@
 # Changelog
 
+## 12/22/2021
+
+- Async iteration (using `for` and `await`) on instances of `ReadableStream` is now available.
+
+## 12/10/2021
+
+- Raised the max value size in Durable Object storage from 32 KiB to 128 KiB.
+- `AbortSignal.timeout(delay)` returns an `AbortSignal` that will be triggered after the given number of milliseconds.
+- Preview implementations of the new `ReadableStream` and new `WritableStream` constructors are available behind the `streams_enable_constructors` feature flag.
+- `crypto.DigestStream` is a non-standard extension to the crypto API that supports generating a hash digest from streaming data. The `DigestStream` itself is a `WritableStream` that does not retain the data written into it; instead, it generates a digest hash automatically when the flow of data has ended. The same hash algorithms supported by `crypto.subtle.digest()` are supported by the `crypto.DigestStream`.
+- Added early support for the `scheduler.wait()` API, which is [going through the WICG standardization process](https://github.com/WICG/scheduling-apis), to provide an `await`-able alternative to `setTimeout()`.
+- Fixed bug in `deleteAll` in Durable Objects containing more than 10000 keys that could sometimes cause incomplete data deletion and/or hangs.
+
 ## 12/2/2021
 
 - The Streams spec requires that methods returning promises must not throw synchronous errors. As part of the effort of making the Streams implementation more spec compliant, we are converting a number of sync throws to async rejections.
