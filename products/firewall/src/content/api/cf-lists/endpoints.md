@@ -16,7 +16,7 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](ht
 
 <Aside type='warning' header='Important'>
 
-The Rules Lists API endpoints require a value for `{account_id}`.
+The Rules Lists API endpoints require a value for `<ACCOUNT_ID>`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
@@ -38,22 +38,22 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
     <tbody>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-create-list'>Create List</a></td>
-          <td><code class="InlineCode">POST accounts/{'{account_id}'}/rules/lists</code></td>
+          <td><code class="InlineCode">POST accounts/{'<ACCOUNT_ID>'}/rules/lists</code></td>
           <td style='width:25%; word-wrap:break-word; white-space:normal'>Creates an empty list.</td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-list-lists'>List Lists</a></td>
-          <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists</code></td>
+          <td><code class="InlineCode">GET accounts/{'<ACCOUNT_ID>'}/rules/lists</code></td>
           <td style='width:25%; word-wrap:break-word; white-space:normal'>Fetch all lists for the account. (This request does not fetch the items in the lists.)</td>
         </tr>
         <tr>
           <td><a href='https://api.cloudflare.com/#rules-lists-get-list'>Get List</a></td>
-          <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td><code class="InlineCode">GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}</code></td>
           <td style='width:25%; word-wrap:break-word; white-space:normal'>Fetches a list by its <code class="InlineCode">id</code>. (This request does not display the items in the list.)</td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-update-list'>Update List</a></td>
-          <td><code class="InlineCode">PUT accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td><code class="InlineCode">PUT accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}</code></td>
           <td style='width:25%; word-wrap:break-word; white-space:normal'>
               <p>Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.</p>
               <p>To update an item in a list, use the <a href='https://api.cloudflare.com/#rules-lists-replace-list-items'>Replace List Items</a> operation.</p>
@@ -61,7 +61,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-delete-list'>Delete List</a></td>
-          <td><code class="InlineCode">DELETE accounts/{'{account_id}'}/rules/lists/{'{list_id}'}</code></td>
+          <td><code class="InlineCode">DELETE accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}</code></td>
           <td style='width:25%; word-wrap:break-word; white-space:normal'>Deletes the list, but only when no filters reference it. </td>
         </tr>
     </tbody>
@@ -88,7 +88,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     <tbody>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-list-list-items'>List Items</a></td>
-            <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists/{'{list_id}'}/items</code></td>
+            <td><code class="InlineCode">GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items</code></td>
             <td><p>Fetches all items in a list.</p>
                 <p>Items are sorted in ascending order by IP address.</p>
                 <p>CIDRs are sorted by IP address, then by the subnet mask.</p>
@@ -96,13 +96,13 @@ When you make requests to a list while a bulk operation on that list is in progr
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-get-list-item'>Get List Item</a></td>
-            <td><code class="InlineCode">GET accounts/{'{account_id}'}/rules/lists/{'{list_id}'}/items/{'{item_id}'}</code></td>
+            <td><code class="InlineCode">GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items/{'<ITEM_ID>'}</code></td>
             <td><p>Fetches an item from a list by ID.</p>
             </td>
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-create-list-items'>Create List Items</a></td>
-            <td><code class="InlineCode">POST accounts/{'{account_id}'}/rules/lists/{'{list_id}'}/items</code></td>
+            <td><code class="InlineCode">POST accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items</code></td>
             <td>
               <p>Appends a new item or items to a list.</p>
               <p>Replaces entries that already exist in the list, does not delete any items.</p>
@@ -112,7 +112,7 @@ When you make requests to a list while a bulk operation on that list is in progr
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-replace-list-items'>Replace List Items</a></td>
-            <td><code class="InlineCode">PUT accounts/{'{account_id}'}/rules/lists/{'{list_id}'}/items</code></td>
+            <td><code class="InlineCode">PUT accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items</code></td>
             <td>
                 <p>Deletes all current items in the list and replaces them with <code class="InlineCode">items</code>.</p>
                 <p>When <code class="InlineCode">items</code> is empty, deletes <strong>all</strong> items in the list.</p>
@@ -121,7 +121,7 @@ When you make requests to a list while a bulk operation on that list is in progr
         </tr>
         <tr>
 	        <td><a href='https://api.cloudflare.com/#rules-lists-delete-list-items'>Delete List Items</a></td>
-            <td><code class="InlineCode">DELETE accounts/{'{account_id}'}/rules/lists/{'{list_id}'}/items</code></td>
+            <td><code class="InlineCode">DELETE accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items</code></td>
             <td>
                 <p>Deletes specified list items.</p>
                 <p>The response includes an <code class="InlineCode">operation_id</code>.</p>

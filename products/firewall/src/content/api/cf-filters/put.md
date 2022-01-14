@@ -11,25 +11,26 @@ order: 470
 
 ## Update multiple filters
 
-```bash
-PUT zones/{zone_id}/filters
+```txt
+PUT zones/<ZONE_ID>/filters
 ```
 
 ### Request
 
-```bash
+```json
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json" \
-     -d '[
-{
-   "id": "60ee852f9cbb4802978d15600c7f3110",
-   "paused": false,
-   "expression": "ip.src eq 93.184.216.0",
-   "description": "IP of example.org"
-}
-]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters"
+  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
+  -H "X-Auth-Email: <EMAIL>" \
+  -H "X-Auth-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '[
+  {
+    "id": "<FILTER_ID>",
+    "paused": false,
+    "expression": "ip.src eq 93.184.216.0",
+    "description": "IP of example.org"
+  }
+]'
 ```
 
 ### Response
@@ -38,7 +39,7 @@ curl -X PUT \
 {
   "result": [
     {
-      "id": "60ee852f9cbb4802978d15600c7f3110",
+      "id": "<FILTER_ID>",
       "paused": false,
       "description": "IP of example.org",
       "expression": "ip.src eq 93.184.216.0"
@@ -52,23 +53,24 @@ curl -X PUT \
 
 ## Update a single filter
 
-```bash
-PUT zones/{zone_id}/filters/{id}
+```txt
+PUT zones/<ZONE_ID>/filters/<FILTER_ID>
 ```
 
 ### Request
 
-```bash
+```json
 curl -X PUT \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json" \
-     -d '{
-    "id": "b7ff25282d394be7b945e23c7106ce8a",
-    "paused": false,
-    "description": "Login from office",
-    "expression": "ip.src in {2400:cb00::/32 2405:8100::/32 2405:b500::/32 2606:4700::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")"
-}' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/b7ff25282d394be7b945e23c7106ce8a"
+  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>" \
+  -H "X-Auth-Email: <EMAIL>" \
+  -H "X-Auth-Key: <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "id": "<FILTER_ID>",
+  "paused": false,
+  "description": "Login from office",
+  "expression": "ip.src in {2400:cb00::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")"
+}' 
 ```
 
 ### Response
@@ -76,10 +78,10 @@ curl -X PUT \
 ```json
 {
   "result": {
-    "id": "b7ff25282d394be7b945e23c7106ce8a",
+    "id": "<FILTER_ID>",
     "paused": false,
     "description": "Login from office",
-    "expression": "ip.src in {2400:cb00::/32 2405:8100::/32 2405:b500::/32 2606:4700::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")"
+    "expression": "ip.src in {2400:cb00::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")"
   },
   "success": true,
   "errors": null,

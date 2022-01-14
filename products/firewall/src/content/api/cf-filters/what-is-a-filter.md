@@ -8,17 +8,19 @@ order: 445
 
 A filter is a way of saying:
 
-`if (traffic matches certain criteria) then...`
+```txt
+if (traffic matches certain criteria) then...
+```
 
-A filter contains an expression that would return _true_ or _false_ when evaluated against traffic passing through Cloudflare.
+A filter contains an expression that would return `true` or `false` when evaluated against traffic passing through Cloudflare.
 
 Filter expressions are human and machine readable, and you can compose complex logic to precisely match the traffic that you are interested in detecting and acting upon.
 
-A filter typically looks like:
+A filter typically looks like the following:
 
 ```json
 {
-  "id": "6f58318e7fa2477a23112e8118c66f61",
+  "id": "<FILTER_ID>",
   "expression": "(http.request.uri.path ~ \"^.*wp-login.php$\" or http.request.uri.path ~ \"^.*xmlrpc.php$\") and ip.src ne 93.184.216.34",
   "description": "WordPress login paths via the login page or mobile RPC endpoint"
 }
@@ -26,7 +28,7 @@ A filter typically looks like:
 
 The expression specified in this example filter is:
 
-```bash
+```txt
 (http.request.uri.path ~ "^.*wp-login.php$" or http.request.uri.path ~ "^.*xmlrpc.php$") and ip.src ne 93.184.216.34
 ```
 
