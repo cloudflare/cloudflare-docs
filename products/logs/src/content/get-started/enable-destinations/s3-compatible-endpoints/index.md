@@ -80,7 +80,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 ```
 <Aside type="note" header="Note">
 
-`<ENDPOINT_URL>` is the url without the bucket name or path. Example: `endpoint=sfo2.digitaloceanspaces.com`
+`<ENDPOINT_URL>` is the URL without the bucket name or path. Example: `endpoint=sfo2.digitaloceanspaces.com`
 </Aside>
 
 * `dataset` - the category of logs you want to receive; either `http_requests` (default), `spectrum_events` or `firewall_events`
