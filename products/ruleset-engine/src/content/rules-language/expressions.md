@@ -19,7 +19,7 @@ http.request.uri.path matches "/autodiscover\.(xml|src)$"
 Simple expressions have the following syntax:
 
 ```txt
-<field> <comparison-operator> <value>
+<field> <comparison_operator> <value>
 ```
 
 Where:
@@ -43,7 +43,7 @@ host eq www.example.com and not cf.edge.server_port in {80 443}
 Compound expressions have the following general syntax:
 
 ```txt
-<expression> <logical-operator> <expression>
+<expression> <logical_operator> <expression>
 ```
 
 Compound expressions allow you to generate sophisticated, highly targeted rules.
