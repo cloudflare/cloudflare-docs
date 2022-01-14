@@ -12,19 +12,18 @@ order: 475
 ## Delete multiple filters
 
 ```bash
----
-header: Request
----
-curl -X DELETE \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters?id=<FILTER_ID>" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" 
+DELETE zones/{zone_id}/filters
 ```
 
+### Request
+
+```bash
+curl -X DELETE -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters?id=60ee852f9cbb4802978d15600c7f3110"
+```
+
+### Response
+
 ```json
----
-header: Response
----
 {
   "result": [],
   "success": true,
@@ -35,22 +34,19 @@ header: Response
 
 ## Delete a single filter
 
-This example deletes a single filter with ID `<FILTER_ID>`.
-
 ```bash
----
-header: Request
----
-curl -X DELETE \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>"
-  -H "X-Auth-Email: <EMAIL>" 
-  -H "X-Auth-Key: <API_KEY>" 
+DELETE zones/{zone_id}/filters/{id}
 ```
 
+### Request
+
+```bash
+curl -X DELETE -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/60ee852f9cbb4802978d15600c7f3110"
+```
+
+### Response
+
 ```json
----
-header: Response
----
 {
   "result": null,
   "success": true,

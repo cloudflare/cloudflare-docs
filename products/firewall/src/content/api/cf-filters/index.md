@@ -26,4 +26,4 @@ The Firewall Rules API behaves differently from most Cloudflare APIs in two ways
 - API calls accept and return multiple items, and allow applying data changes to multiple items.
 - Although API calls return the [standard response](https://api.cloudflare.com/#getting-started-responses), the error object follows the [JSON API standard](http://jsonapi.org/format/#errors), such that in an error condition, it is clear which item produced the error and why.
 
-To get started, review [What is a filter?](/api/cf-filters/what-is-a-filter), followed by the Cloudflare Filters [JSON object](/api/cf-firewall-rules/json-object) and [Endpoints](/api/cf-firewall-rules/endpoints).
+To get started, review [What is a filter?](/api/cf-filters/what-is-a-filter/), followed by the Cloudflare Filters [JSON object](/api/cf-firewall-rules/json-object/) and [Endpoints](/api/cf-firewall-rules/endpoints/).

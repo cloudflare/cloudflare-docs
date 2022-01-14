@@ -6,7 +6,11 @@ order: 420
 
 # POST example
 
-This example creates several Firewall Rules using a single API call.
+```bash
+POST zones/{zone_id}/firewall/rules
+```
+
+Creates one or more Firewall Rules.
 
 <Aside type="note">
 
@@ -14,100 +18,97 @@ To create a Firewall Rule you need a [filter](/api/cf-filters/what-is-a-filter) 
 
 </Aside>
 
-```json
----
-header: Request
----
+## Request
+
+```bash
 curl -X POST \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '[
+     -H "X-Auth-Email: user@cloudflare.com" \
+     -H "X-Auth-Key: REDACTED" \
+     -H "Content-Type: application/json" \
+     -d '[
   {
     "filter": {
-      "id": "<FILTER_ID_1>"
+      "id": "b7ff25282d394be7b945e23c7106ce8a"
     },
     "action": "allow",
-    "description": "Do not challenge login from office"
+    "description": "do not challenge login from office"
   },
   {
     "filter": {
-      "id": "<FILTER_ID_2>"
+      "id": "c218c536b2bd406f958f278cf0fa8c0f"
     },
     "action": "challenge",
-    "description": "Challenge login"
+    "description": "challenge login"
   },
   {
     "filter": {
-      "id": "<FILTER_ID_3>"
+      "id": "f2a64520581a4209aab12187a0081364"
     },
     "action": "js_challenge",
     "description": "JS challenge site"
   },
   {
     "filter": {
-      "id": "<FILTER_ID_4>"
+      "id": "14217d7bd5ab435e84b1bd468bf4fb9f"
     },
     "action": "allow",
-    "description": "Allow API traffic without challenge"
+    "description": "allow API traffic without challenge"
   }
-]'
+]' "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules"
 ```
 
+## Response
+
 ```json
----
-header: Response
----
 {
   "result": [
     {
-      "id": "<RULE_ID_1>",
+      "id": "f2d427378e7542acb295380d352e2ebd",
       "paused": false,
-      "description": "Do not challenge login from office",
+      "description": "do not challenge login from office",
       "action": "allow",
       "priority": null,
       "filter": {
-        "id": "<FILTER_ID_1>",
-        "expression": "ip.src in {2400:cb00::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
+        "id": "b7ff25282d394be7b945e23c7106ce8a",
+        "expression": "ip.src in {2400:cb00::/32 2405:8100::/32 2405:b500::/32 2606:4700::/32 2803:f800::/32 2c0f:f248::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
         "paused": false,
         "description": "Login from office"
       }
     },
     {
-      "id": "<RULE_ID_2>",
+      "id": "cbf4b7a5a2a24e59a03044d6d44ceb09",
       "paused": false,
-      "description": "Challenge login",
+      "description": "challenge login",
       "action": "challenge",
       "priority": null,
       "filter": {
-        "id": "<FILTER_ID_2>",
+        "id": "c218c536b2bd406f958f278cf0fa8c0f",
         "expression": "(http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")",
         "paused": false,
         "description": "Login"
       }
     },
     {
-      "id": "<RULE_ID_3>",
+      "id": "52161eb6af4241bb9d4b32394be72fdf",
       "paused": false,
       "description": "JS challenge site",
       "action": "js_challenge",
       "priority": null,
       "filter": {
-        "id": "<FILTER_ID_3>",
+        "id": "f2a64520581a4209aab12187a0081364",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
         "paused": false,
         "description": "not /api"
       }
     },
     {
-      "id": "<RULE_ID_4>",
+      "id": "4ae338944d6143378c3cf05a7c77d983",
       "paused": false,
-      "description": "Allow API traffic without challenge",
+      "description": "allow API traffic without challenge",
       "action": "allow",
       "priority": null,
       "filter": {
-        "id": "<FILTER_ID_4>",
+        "id": "14217d7bd5ab435e84b1bd468bf4fb9f",
         "expression": "http.request.uri.path matches \"^/api/.*$\"",
         "paused": false,
         "description": "/api"
