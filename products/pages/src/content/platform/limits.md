@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Limits
 
-Below are limits observed by the Cloudflare Pages free plan. For more details on removing these limits, refer to our [Cloudflare plans](https://www.cloudflare.com/plans) page.
+Below are limits observed by the Cloudflare Pages free plan. For more details on removing these limits, refer to the [Cloudflare plans](https://www.cloudflare.com/plans) page.
 
 ## Builds
 
@@ -39,8 +39,8 @@ A `_redirects` file can have a maximum of 100 redirect rules.
 
 ## Users
 
-Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your git project--you can manage both public and private repos, open issues, and accept pull requests via GitHub without impacting your Pages site.
+Your Pages site can be managed by an unlimited number of users via the Cloudflare dashboard. Note that this does not correlate with your git project--you can manage both public and private repositories, open issues, and accept pull requests via GitHub and GitLab without impacting your Pages site.
 
 ## Sites
 
-Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Please email workers-support@cloudflare.com if you need this restriction removed.
+Cloudflare Pages supports deploying unlimited sites to your account. In order to protect against abuse of the service, Cloudflare may temporarily disable your ability to create new Pages projects, if you are deploying a large number of applications in a short amount of time. Email workers-support@cloudflare.com if you need this restriction removed.
