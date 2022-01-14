@@ -35,10 +35,10 @@ For more information regarding the properties you can use with `zaraz.track`, re
 The following is an example for a new `product_name`:
 
 ```js
-zaraz.set('product_name': 't-shirt')
+zaraz.set('product_name', 't-shirt')
 ```
 
-Using `zaraz.set('product_name': 't-shirt')` will make `product_name` included in all `zaraz.track` calls. You can then use `{{ client.product_name }}` in your triggers and events. 
+Using `zaraz.set('product_name', 't-shirt')` will make `product_name` included in all `zaraz.track` calls. You can then use `{{ client.product_name }}` in your triggers and events. 
 
 The `[options]` argument is an optional object and can include a `scope` property that has a string value:
 
@@ -51,7 +51,7 @@ Allowed values are:
 Example: 
 
 ```js
-zaraz.set('product_name': 't-shirt', {scope: 'page'})
+zaraz.set('product_name', 't-shirt', {scope: 'page'})
 ```
 
 This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/properties-reference#event-properties) for more details.
