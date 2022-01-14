@@ -29,13 +29,43 @@ The available actions depend on the [phase](/about#phases) where you are configu
   </thead>
   <tbody>
     <tr>
-      <td><strong>Log</strong><br/><br/>API value:<br/><code class="InlineCode">log</code></td>
+      <td><strong>Challenge (CAPTCHA)</strong><br/><br/>API value:<br/><code class="InlineCode">challenge</code></td>
       <td>
-        <p>Records matching requests in the Cloudflare Logs.</p>
-        <p>Only available on Enterprise plans.</p>
-        <p>Recommended for validating rules before committing to a more severe action.</p>
+        <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
+        <p>The client that made the request must pass a CAPTCHA challenge.</p>
+        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
       </td>
-      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><strong>JS Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">js_challenge</code></td>
+      <td>
+        <p>Useful for ensuring that bots and spam cannot access the requested resource; browsers, however, are free to satisfy the challenge automatically.</p>
+        <p>The client that made the request must pass a Cloudflare JavaScript Challenge before proceeding.</p>
+        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><strong>Managed Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">managed_challenge</code></td>
+      <td>
+        <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
+        <p>Depending on the characteristics of a request, Cloudflare will perform the following actions:</p>
+        <p>
+          <ul>
+            <li>Show a non-interactive challenge page, similar to the current JS Challenge.</li>
+            <li>Show a CAPTCHA challenge.</li>
+          </ul>
+        </p>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><strong>Block</strong><br/><br/>API value:<br/><code class="InlineCode">block</code></td>
+      <td>
+        <p>Matching requests are denied access to the site.</p>
+      </td>
+      <td>Yes</td>
     </tr>
     <tr>
       <td><strong>Skip</strong><br/><br/>API value:<br/><code class="InlineCode">skip</code></td>
@@ -56,49 +86,19 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td>No<br/>(but some rules may be skipped)</td>
     </tr>
     <tr>
-      <td><strong>Challenge (CAPTCHA)</strong><br/><br/>API value:<br/><code class="InlineCode">challenge</code></td>
+      <td><strong>Log</strong><br/><br/>API value:<br/><code class="InlineCode">log</code></td>
       <td>
-        <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass a CAPTCHA challenge.</p>
-        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
+        <p>Records matching requests in the Cloudflare Logs.</p>
+        <p>Only available on Enterprise plans.</p>
+        <p>Recommended for validating rules before committing to a more severe action.</p>
       </td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><strong>Managed Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">managed_challenge</code></td>
-      <td>
-        <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
-        <p>Depending on the characteristics of a request, Cloudflare will perform the following actions:</p>
-        <p>
-          <ul>
-            <li>Show a non-interactive challenge page, similar to the current JS Challenge.</li>
-            <li>Show a CAPTCHA challenge.</li>
-          </ul>
-        </p>
-      </td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><strong>JS Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">js_challenge</code></td>
-      <td>
-        <p>Useful for ensuring that bots and spam cannot access the requested resource; browsers, however, are free to satisfy the challenge automatically.</p>
-        <p>The client that made the request must pass a Cloudflare JavaScript Challenge before proceeding.</p>
-        <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
-      </td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td><strong>Block</strong><br/><br/>API value:<br/><code class="InlineCode">block</code></td>
-      <td>
-        <p>Matching requests are denied access to the site.</p>
-      </td>
-      <td>Yes</td>
+      <td>No</td>
     </tr>
     <tr>
       <td><strong>Execute</strong><br/><br/>API value:<br/><code class="InlineCode">execute</code></td>
       <td>
         <p>Executes the rules in the ruleset specified in the rule configuration. You can specify a Managed Ruleset or a custom ruleset to execute.</p>
-        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
+        <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
       </td>
       <td>No</td>
     </tr>
@@ -106,17 +106,17 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td><strong>Rewrite</strong><br/><br/>API value:<br/><code class="InlineCode">rewrite</code></td>
       <td>
         <p>Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.</p>
-        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
         <p>Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code class="InlineCode">http_request_transform</code>, <code class="InlineCode">http_request_late_transform</code>, and <code class="InlineCode">http_response_headers_transform</code>.</p>
+        <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Transform Rule.</p>
       </td>
       <td>No</td>
     </tr>
     <tr>
       <td><strong>Redirect</strong><br/><br/>API value:<br/><code class="InlineCode">redirect</code></td>
       <td>
-        <p>Navigates the user from a source URL to a target URL, according to the rule configuration.</p>
-        <p>In the Cloudflare dashboard, this action is used implicitly and it does not appear in drop-down menus.</p>
+        <p>Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.</p>
         <p>Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code class="InlineCode">http_request_redirect</code> phase.</p>
+        <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule.</p>
       </td>
       <td>Yes</td>
     </tr>
