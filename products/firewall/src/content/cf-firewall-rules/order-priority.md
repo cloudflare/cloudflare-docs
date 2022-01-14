@@ -1,10 +1,9 @@
 ---
-title: Order and priority
 pcx-content-type: concept
 order: 230
 ---
 
-# Firewall Rules order and priority
+# Order and priority
 
 import firewallRulesOrderAndPriority2 from '../images/firewall-rules-order-and-priority-2.gif'
 import firewallRulesOrderAndPriority3 from '../images/firewall-rules-order-and-priority-3.gif'
