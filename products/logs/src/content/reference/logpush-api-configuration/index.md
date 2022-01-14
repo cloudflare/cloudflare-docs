@@ -49,7 +49,7 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
+$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
 -H "X-Auth-Email: <EMAIL>" \ 
 -H "X-Auth-Key: <API_KEY>" \
 -H "Content-Type: application/json" \ 
