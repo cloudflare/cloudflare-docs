@@ -14,7 +14,8 @@ If you add a custom field in the tool's configuration page, this field will be a
 
 ## Add a custom field at the tool level
 
-1. Go to [Zaraz's main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Click **Zaraz**.
 1. Locate the third-party tool where you want to add the custom field and click **Edit**.
 1. Click **Settings** > **Add Field**.
 1. Choose the desired field from the drop-down menu, and click **Add**.
@@ -25,7 +26,8 @@ The new field will now be attached to every event that belongs to the tool.
 
 ## Add a custom field to a specific event
 
-1. Go to [Zaraz's main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Click **Zaraz**.
 1. Locate the third-party tool where you want to add the custom field and click **Edit**.
 1. Click the event you wish to modify.
 1. Click **Add Field**.
