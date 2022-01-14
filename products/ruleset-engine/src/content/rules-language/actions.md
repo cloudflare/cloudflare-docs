@@ -114,3 +114,9 @@ The available actions depend on the [phase](/about#phases) where you are configu
 </table>
 
 </TableWrap>
+
+<Aside type="note">
+
+Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for more information on these specific actions.
+
+</Aside>
