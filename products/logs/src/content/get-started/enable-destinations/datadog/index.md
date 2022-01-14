@@ -60,10 +60,10 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 * `name` (optional) - Use your domain name as the job name.
 * `destination_conf` - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below. 
 
-  * `<DATADOG-ENDPOINT-URL>`: The Datadog http logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input' 
-  * `<DATADOG-API-KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
+  * `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which is 'http-intake.logs.datadoghq.com/v1/input'.
+  * `<DATADOG_API_KEY>`: The Datadog API token. For example, '20e6d94e8c57924ad1be3c29bcaee0197d"
   * `ddsource`: Set to `cloudflare`.
-  * `service`, `host`, `ddtags`: Optional parameters allowed by Datadog
+  * `service`, `host`, `ddtags`: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
@@ -77,10 +77,10 @@ Example request using cURL:
 ```bash
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
+"destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -94,8 +94,8 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
-    "destination_conf": "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
     "last_complete": null,
     "last_error": null,
     "error_message": null
@@ -126,8 +126,8 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
-    "destination_conf": "datadog://<DATADOG-ENDPOINT-URL>?header_DD-API-KEY=<DATADOG-API-KEY>",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>",
     "last_complete": null,
     "last_error": null,
     "error_message": null
