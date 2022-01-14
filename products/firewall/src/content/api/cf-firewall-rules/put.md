@@ -79,7 +79,7 @@ To update the filter, use the [Filters API](/api/cf-filters/).
 PUT zones/{zone_id}/firewall/rules/{id}
 ```
 
-You must include the following fields in the request body:
+These fields are required:
 
 - _id_
 - _action_
@@ -141,13 +141,3 @@ curl -X PUT \
   "messages": null
 }
 ```
-
-<Aside type='note' header='Note'>
-
-`PUT` overwrites fields that are not explicitly passed in the request.
-
-For example, if the request omits `description`, any previously existing `description` value will be erased.
-
-To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request.
-
-</Aside>

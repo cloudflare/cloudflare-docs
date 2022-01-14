@@ -1,13 +1,10 @@
 ---
 title: Endpoints
 pcx-content-type: reference
-type: overview
 order: 495
 ---
 
 # Endpoints
-
-<ContentColumn>
 
 To invoke a [Cloudflare Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) operation, append the endpoint to the Cloudflare API base URL:
 
@@ -26,8 +23,6 @@ To retrieve a list of accounts to which you have access, use the [List Accounts]
 </Aside>
 
 The Cloudflare Rules Lists API supports the operations outlined below. Visit the associated links for examples.
-
-</ContentColumn>
 
 ## Manage lists
 
@@ -74,8 +69,6 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 </TableWrap>
 
 ## Manage items in a list
-
-<ContentColumn>
 
 Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 

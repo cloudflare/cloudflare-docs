@@ -9,12 +9,6 @@ order: 435
 - [Delete multiple rules](#delete-multiple-rules)
 - [Delete a single rule](#delete-a-single-rule)
 
-<Aside type='note' header='Note'>
-
-`DELETE` does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/api/cf-filters/delete).
-
-</Aside>
-
 ## Delete multiple rules
 
 ```bash

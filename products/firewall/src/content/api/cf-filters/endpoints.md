@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-type: overview
+type: table
 order: 455
 ---
 
@@ -31,12 +31,13 @@ The Cloudflare Filters API supports the operations outlined below. Visit the ass
 
 </ContentColumn>
 
+<TableWrap style='width:100%'>
 <table style='table-layout:fixed; width:100%'>
   <thead>
     <tr>
-        <th style="width: 20%">Operation</th>
+        <th>Operation</th>
         <th>Method & Endpoint</th>
-        <th style='width: 30%'>Notes</th>
+        <th>Notes</th>
     </tr>
   </thead>
   <tbody>
@@ -78,3 +79,4 @@ The Cloudflare Filters API supports the operations outlined below. Visit the ass
       </tr>
   </tbody>
 </table>
+</TableWrap>

@@ -7,7 +7,7 @@ order: 425
 # GET examples
 
 - [Get all rules](#get-all-rules)
-- [Get rule by ID](#get-rule-by-id)
+- [Get rule by ID](#get-by-rule-id)
 
 ## Get all rules
 
@@ -95,7 +95,7 @@ curl -X GET \
 }
 ```
 
-## Get rule by ID
+## Get by rule ID
 
 ```bash
 GET zones/{zone_id}/firewall/rules/{id}

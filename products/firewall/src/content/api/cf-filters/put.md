@@ -42,12 +42,6 @@ curl -X PUT \
       "paused": false,
       "description": "IP of example.org",
       "expression": "ip.src eq 93.184.216.0"
-    },
-    {
-      "id": "<FILTER_ID_2>",
-      "paused": false,
-      "description": "/api",
-      "expression": "http.request.uri.path matches \"^/api/.*$\""
     }
   ],
   "success": true,
