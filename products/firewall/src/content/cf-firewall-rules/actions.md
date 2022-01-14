@@ -18,6 +18,12 @@ For example, the _Allow_ action takes precedence over the _Block_ action. In a c
 
 There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence.
 
+<Aside type="note">
+
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
+
+</Aside>
+
 <TableWrap>
   <table style="width: 100%">
   <thead>
