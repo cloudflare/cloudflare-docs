@@ -34,4 +34,30 @@ order: 1
     </thead>
     <tbody>
     </tbody>
+        <tr>
+            <td>
+                2022-1-17
+            </td>
+            <td>
+                2022-1-24
+            </td>
+            <td>
+                Specials
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                100700
+            </td>
+            <td>
+                Apache SSRF vulnerability CVE-2021-40438
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
 </table></TableWrap>
