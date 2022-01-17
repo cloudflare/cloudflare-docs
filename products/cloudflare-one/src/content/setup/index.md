@@ -39,7 +39,9 @@ If you want to enable security features such as Browser Isolation, HTTP filterin
 
 1. **Log in to your organization's Cloudflare for Teams instance from your devices**. On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
-1. **Enable the Proxy setting in the Teams Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
+1. **Enable the Proxy setting in the Teams Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to create [Network policies](/policies/filtering/network-policies).
+
+1. **Enable TLS decryption in the Teams Dashboard.** In the **Settings** > **Network** page, enable the **TLS decryption** switch. This will allow you to start routing your HTTP traffic to Gateway. You can also choose to enable the [FIPS compliance](/connections/connect-devices/warp/warp-settings#fips-compliance) setting.
 
 Your devices are now connected to Cloudflare for Teams through the WARP client, and you can start enforcing security measures on your traffic and access requests.
 
