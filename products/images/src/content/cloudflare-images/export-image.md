@@ -32,4 +32,4 @@ $ curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
 ```
 
-Refer to the [API docs](https://api.cloudflare.com/#cloudflare-images-base-image) for more information.
+Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-base-image) for more information.
