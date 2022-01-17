@@ -125,7 +125,7 @@ This setting requires the Proxy switch to be enabled.
 
 1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
-1. Set the **Proxy** switch *Enabled*.
+1. Set the **Proxy** switch to *Enabled*.
 
 TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of cipher suites used when the switch is enabled.
 
