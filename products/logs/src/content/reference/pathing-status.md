@@ -260,8 +260,8 @@ The macro stage is comprised of many different paths. They are categorized by th
 All other paths in the MACRO stage issue a challenge. Possible scenarios include:
 
 - A clean IP (acceptable threat level) with IUAM on will trigger the JS challenge
-- A greylisted IP triggers the JS challenge (captcha challenge if IUAM is on)
-- An IP with a bad reputation (also TOR) with a threat level above the accepted threshold triggers a captcha challenge (JS challenge if IUAM is on)
+- A greylisted IP triggers the JS challenge (Managed Challenge if IUAM is on)
+- An IP with a bad reputation (also TOR) with a threat level above the accepted threshold triggers a Managed Challenge (JS challenge if IUAM is on)
 
 ## Rate Limiting
 
