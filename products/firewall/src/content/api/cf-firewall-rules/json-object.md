@@ -1,9 +1,10 @@
 ---
+title: JSON object
 pcx-content-type: reference
 order: 410
 ---
 
-# JSON object
+# Firewall Rules JSON object
 
 ## Firewall rule example JSON response
 
@@ -62,12 +63,13 @@ This table summarizes the object properties:
             allow<br />
             challenge<br />
             js_challenge<br />
+            managed_challenge<br />
             block<br /></em>
         </td>
       </tr>
       <tr>
         <td><code>priority</code><br /><Type>Number</Type></td>
-        <td>Determines the order of evaluation for the rule relative to others. Lower values indicate greater priority. Rules without a value are evaluated last. For guidance, see <a href="#avoiding-priority-conflicts"><em>Avoiding priority conflicts</em></a>.</td>
+        <td>Determines the order of evaluation for the rule relative to others. Lower values indicate greater priority. Rules without a value are evaluated last. For guidance, refer to <a href="#avoiding-priority-conflicts">Avoiding priority conflicts</a>.</td>
         <td>
           <p>Read only</p>
           <p>Maximum length: 32</p>
@@ -94,24 +96,13 @@ This table summarizes the object properties:
 
 ## Avoiding priority conflicts
 
-Priority plays a key role in configuring firewall rules because of the power of Cloudflare Filters in contrast to previous Cloudflare Firewall functionality.
-
-With Cloudflare Filters, it is possible to construct conflicting rules such as:
+Priority plays a key role in configuring Firewall Rules. With Cloudflare Filters, it is possible to construct conflicting rules such as:
 
 - Allow requests from the office IP range, and
 - Block requests with a specific user agent.
 
-Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, the Firewall Rules follow a strict ordering depending on action and priority.
+Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, Firewall Rules follows a strict ordering depending on action and priority.
 
-Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action using the following order of precedence:
+Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action according to their [order of precedence](/cf-firewall-rules/actions#supported-actions). In the example above, if no priority is set, the `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
 
-1. `log`
-1. `bypass`
-1. `allow`
-1. `challenge`
-1. `js_challenge`
-1. `block`
-
-In the example above if no priority is set, the `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
-
-To reduce the risk of unintended behavior, it's best to explicitly specify the desired priority for potentially conflicting rules.
+To reduce the risk of unintended behavior, it is best to explicitly specify the desired priority for potentially conflicting rules.

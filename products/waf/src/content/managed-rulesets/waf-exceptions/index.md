@@ -21,7 +21,7 @@ WAF exceptions can have one of the following behaviors (from highest to lowest p
 
 You define WAF exceptions in a given context — zone level or account level — and they apply only to that context. For example, if you define a WAF exception that skips all remaining rules at the account level, the WAF rules at the zone level will still be evaluated.
 
-Define the exception expression using the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language). If there is a match for the expressions of several WAF exceptions, the WAF will consider the exception with the highest priority.
+Define the exception expression using the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language). If there is a match for the expressions of several WAF exceptions, the WAF will consider the exception with the highest priority.
 
 ## Additional notes
 
