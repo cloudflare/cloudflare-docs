@@ -31,4 +31,4 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 * [Custom Firewall rules](/custom-rules/custom-firewall), available in the **Custom Rules** tab
 * [Rate Limiting rules](/custom-rules/rate-limiting), available in the **Custom Rules** tab
 * [Managed Rulesets](/managed-rulesets), available in the **WAF** tab
-* [Legacy Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128), available in the **Tools** tab
+* [Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in the **Tools** tab
