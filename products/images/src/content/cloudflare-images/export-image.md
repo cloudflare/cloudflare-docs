@@ -26,7 +26,7 @@ GET accounts/:account_identifier/images/v1/:identifier/blob
 
 Example:
 
-```sh
+```bash
 $ curl -X GET "https://api.cloudflare.com/client/v4/accounts/023e105f4ecef8ad9ca31a8372d0c353/images/v1/ZxR0pLaXRldlBtaFhhO2FiZGVnaA/blob" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
