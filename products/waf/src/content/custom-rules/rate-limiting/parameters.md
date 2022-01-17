@@ -82,6 +82,6 @@ The available Rate Limiting rule parameters are the following:
     * Create a [Custom Firewall rule](/custom-rules/custom-firewall) that blocks requests with more than one value for the cookie.
     * Validate the cookie value at the origin before performing any demanding server operations.
 
-* Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/custom-rules/rate-limiting/request-rate), which could unexpectedly trigger the rule for many visitors. Follow this recommendation:
+* Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/custom-rules/rate-limiting/request-rate), which could unexpectedly trigger the rule for many visitors.
 
-    * Use a second characteristic in your Rate Limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.
+    To prevent this situation, Cloudflare recommends that you use a second characteristic in your Rate Limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.
