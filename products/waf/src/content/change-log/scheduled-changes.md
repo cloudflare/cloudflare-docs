@@ -42,7 +42,7 @@ order: 1
                 2022-01-24
             </td>
             <td>
-                Specials
+                Cloudflare Specials
             </td>
             <td>
                 N/A
