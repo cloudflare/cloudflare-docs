@@ -51,8 +51,8 @@ Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm
 ### Adjust rules by ASN
 
 This example uses:
-- `ip.geoip.asnum` to specify the general region
-- The `cf.threat_score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic
+- The `ip.geoip.asnum` field to specify the general region.
+- The `cf.threat_score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your firewall bypasses normal `User Agent Block` rules.
 
@@ -78,8 +78,8 @@ For smaller organizations, you could set up Firewall Rules based on IP addresses
 ### Allow traffic by IP address
 
 This example:
-- Specifies the network and host
-- Uses the `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic
+- Specifies the network and host.
+- Uses the `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>

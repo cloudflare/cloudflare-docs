@@ -14,7 +14,7 @@ Firewall Rules allows you to create rules combining several conditions. For exam
 
 Fundamentally, Firewall Rules gives you the power to proactively inspect incoming site traffic and automatically respond to threats. You define **expressions** that tell Cloudflare what to look for and specify the appropriate **action** to take when those criteria are satisfied.
 
-To write Firewall Rule expressions, use the Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), Firewall Rule expressions use the same syntax of the Cloudflare Rules language.
+To write Firewall Rule expressions, use the Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/), Firewall Rules expressions use the same syntax of the Cloudflare Rules language.
 
 For more information on rule expressions and the available operators, fields, and functions, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 

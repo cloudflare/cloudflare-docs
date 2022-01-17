@@ -191,7 +191,7 @@ To get bot requests identified correctly, use only one Cloudflare Firewall Rule,
 
 Use this dashboard to:
 
-- Investigate bot activity on your website and prevent content scraping, checkout fraud, spam registration, and other malicious activities
-- Use insight to tune Cloudflare to prevent bots from excessive usage and abuse across websites, applications, and API endpoints
+- Investigate bot activity on your website and prevent content scraping, checkout fraud, spam registration, and other malicious activities.
+- Use insight to tune Cloudflare to prevent bots from excessive usage and abuse across websites, applications, and API endpoints.
 
 ![Graylog dashboard Cloudflare Bot Management](../../../static/images/graylog/dashboards/bot-management-cloudflare-dashboard-graylog.png)
