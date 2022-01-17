@@ -127,7 +127,7 @@ This setting requires the Proxy switch to be enabled.
 1. Scroll down to **L7 Firewall**.
 1. Set the **Proxy** switch *Enabled*.
 
-TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of cipher suites used when the toggle is enabled.
+TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of cipher suites used when the switch is enabled.
 
 ```txt
 :CHACHA20-POLY1305-SHA256\
@@ -146,6 +146,8 @@ TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of 
 ### FIPS compliance
 
 When enabling TLS decryption, you have the option to only enable cipher suites and TLS versions compliant with FIPS 140-2. FIPS compliance mode requires TLS version 1.2.
+
+ ![FIPS switch](../../../static/documentation/connections/fips.png)
 
 The following is a list of cipher suites used for TLS decryption when the **FIPS compliance** setting is enabled.
 
