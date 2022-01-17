@@ -1,11 +1,12 @@
 ---
+title: Fields
 pcx-content-type: reference
-order: 610
+order: 5
 ---
 
-# Fields
+# Fields reference
 
-The Cloudflare Firewall Rules language supports a range of field types:
+The Cloudflare Rules language supports a range of field types:
 
 - [Standard fields](#standard-fields) represent common, typically static properties of an HTTP request.
 - [Dynamic fields](#dynamic-fields) represent computed or derived values, typically related to Cloudflare threat intelligence about the request.
@@ -19,11 +20,11 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
-  To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/cf-firewall-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
+  To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
 
-- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in Firewall Rules `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
+- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
-- The Cloudflare Firewall Rules language does not support the `slice` operator.
+- The Cloudflare Rules language does not support the `slice` operator.
 
 <Aside type='note' header="Availability notes">
 
@@ -33,7 +34,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these standard fields:
+The Cloudflare Rules language supports these standard fields:
 
 <table>
   <thead>
@@ -116,7 +117,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
-         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/cf-firewall-language/functions/#hmac-validation">validation function</a>.
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/rules-language/functions/#hmac-validation">validation function</a>.
          </p>
       </td>
    </tr>
@@ -346,7 +347,7 @@ Access to any fields containing `cf.bot_management` requires a Cloudflare Enterp
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these dynamic fields:
+The Cloudflare Rules language supports these dynamic fields:
 
 <table>
   <thead>
@@ -681,9 +682,9 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
 
 ## URI argument and value fields
 
-The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/rules-language/values#arrays) containing the respective values.
 
-The Cloudflare Firewall Rules language supports these URI argument and value fields:
+The Cloudflare Rules language supports these URI argument and value fields:
 
 <table>
   <thead>
@@ -774,9 +775,9 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
 
 ## HTTP header fields
 
-The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
 
-The Cloudflare Firewall Rules language supports these HTTP header fields:
+The Cloudflare Rules language supports these HTTP header fields:
 
 <table>
    <tr>
@@ -868,7 +869,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.accepted_languages</code><br /><Type>Array&lt;String&gt;</Type></td>
       <td>
          <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
-         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/cf-firewall-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/rules-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
          <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
          <p>Example 1:<br/>
          Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
@@ -891,7 +892,7 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
 
 <Aside type="warning">
 
@@ -901,7 +902,7 @@ The maximum body size applies only to the values of HTTP body fields — the ori
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these HTTP body fields:
+The Cloudflare Rules language supports these HTTP body fields:
 
 <table>
   <thead>

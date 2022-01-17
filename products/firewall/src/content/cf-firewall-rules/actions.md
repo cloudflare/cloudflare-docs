@@ -1,13 +1,14 @@
 ---
+title: Actions
 pcx-content-type: reference
 order: 220
 ---
 
-# Actions
+# Firewall Rules actions
 
 ## Overview
 
-Actions tell Cloudflare how to handle HTTP requests that have matched a firewall rule expression.
+The action of a Firewall Rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
 ## Supported actions
 
@@ -16,6 +17,12 @@ The table below lists the actions available in Firewall Rules. These actions are
 For example, the _Allow_ action takes precedence over the _Block_ action. In a case where a request matches a rule with the _Allow_ action and another with the _Block_ action, precedence resolves the tie, and Cloudflare allows the request.
 
 There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence.
+
+<Aside type="note">
+
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
+
+</Aside>
 
 <TableWrap>
   <table style="width: 100%">
@@ -166,11 +173,3 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
 
   </table>
 </TableWrap>
-
-## Choosing actions in the Rule Builder
-
-Choosing an action in the Cloudflare Expression Builder is simple. After naming a rule and building your expression, pick the appropriate option from the **Choose an action** drop-down list. In this example, the chosen action is _Block_:
-
-![Create Firewall Rule page](../images/firewall-rules-actions-1.png)
-
-For more on building firewall rules in the Firewall App, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules/).

@@ -1,19 +1,19 @@
 ---
 pcx-content-type: reference
-order: 630
+order: 3
 ---
 
 # Values
 
 When an HTTP request reaches Cloudflare’s edge, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.
 
-The values that populate Firewall Rules lookup tables are drawn from a variety of sources:
+The values that populate the lookup tables of the Rules language are drawn from a variety of sources:
 
 - **Primitive properties** are obtained directly from the request (`http.request.uri.path`, for example).
 - **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.patch)` converts the value of `http.request.uri.path` to lowercase.
 - **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
-When working with values in Firewall Rules expressions, keep in mind the notes outlined below for escape characters, case sensitivity, and boolean values.
+When working with values in rule expressions, keep in mind the notes outlined below for escape characters, case sensitivity, and boolean values.
 
 ## Escape characters in values
 
@@ -29,7 +29,7 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 
@@ -49,7 +49,7 @@ not ssl
 
 ## Arrays
 
-The Cloudflare Firewall Rules language includes [fields](/cf-firewall-language/fields) of `Array` type and [functions](/cf-firewall-language/functions) with `Array` arguments and return values.
+The Cloudflare Rules language includes [fields](/rules-language/fields) of `Array` type and [functions](/rules-language/functions) with `Array` arguments and return values.
 
 You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
 
@@ -84,19 +84,19 @@ Accessing an out-of-bounds array index produces a "missing value". A missing val
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
-The Firewall Rules language [operators](/cf-firewall-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
+The Rules language [operators](/rules-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
 
 * `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
 * `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
-## IP Lists
+## Lists
 
-[IP Lists](/cf-firewall-rules/rules-lists) allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
+[Lists](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of Lists that support different kinds of list items.
 
-To refer to an IP List in a firewall rule expression, use `$<list_name>` and specify the `in` [operator](/cf-firewall-language/operators). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
+To refer to a List in a rule expression, use `$<list_name>` and specify the `in` [operator](/rules-language/operators). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing lists, refer to [Use IP Lists: Manage Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).
+Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).

@@ -4,12 +4,12 @@ pcx-content-type: navigation
 order: 400
 ---
 
-# Manage rules via the APIs
+# Manage Firewall Rules via the APIs
 
-When it comes to programmatic rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI based **Firewall Rules** feature of the **Firewall** app in the dashboard.
+When it comes to programmatic Firewall Rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI based **Firewall Rules** feature of the **Firewall** app in the dashboard.
 
-These APIs are:
+These APIs are the following:
 
-* The [Firewall Rules API](/api/cf-firewall-rules/) - to manage rules and their actions, based on criteria separately defined through filters.
-* The [Rules List API](/api/cf-lists/) - to manage named lists of IP addresses that you can use within firewall rules to filter traffic.
-* The [Cloudflare Filters API](/api/cf-filters/) - to manage the filters that enable rule matching.
+* [**Firewall Rules API**](/api/cf-firewall-rules): Manage Firewall Rules and their actions, based on criteria separately defined through filters.
+* [**Filters API**](/api/cf-filters): Manage the filters that enable rule matching.
+* [**Rules Lists API**](/api/cf-lists): Manage named lists of IP addresses that you can use within Firewall Rules to filter traffic.

@@ -1,17 +1,18 @@
 ---
+title: Operators and grouping symbols
 pcx-content-type: reference
-order: 610
-type: table
+order: 2
+type: overview
 ---
 
-# Operators and grouping symbols
+# Rule operators and grouping symbols
 
-The Cloudflare Firewall Rules language supports comparison and logical operators:
+The Cloudflare Rules language supports comparison and logical operators:
 
 - [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
 - [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-[Grouping symbols](/cf-firewall-language/operators/#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
+[Grouping symbols](#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
 
 ## Comparison operators
 
@@ -19,11 +20,11 @@ Comparison operators return `true` when a value from an HTTP request matches a v
 
 This is the general pattern for using comparison operators:
 
-```sql
-<field> <comparison operator> <value>
+```txt
+<field> <comparison_operator> <value>
 ```
 
-The Cloudflare Firewall Rules language supports these comparison operators:
+The Rules language supports these comparison operators:
 
 <Aside type='warning' header='Important'>
 
@@ -158,8 +159,8 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
 
-```sql
-<expression> <logical operator> <expression>
+```txt
+<expression> <logical_operator> <expression>
 ```
 
 ### Supported logical operators
@@ -246,11 +247,11 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 <Aside type='warning' header='Important'>
 
-Only the [Expression Editor](/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/cf-dashboard/create-edit-delete-rules/) does not.
+Only the [Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) does not.
 
 </Aside>
 
-The Firewall Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
+The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
 ### Group expressions
 
@@ -286,6 +287,6 @@ You can nest expressions grouped by parentheses inside other groups to create ve
 
 Note that when evaluating the precedence of logical operators, parentheses inside strings delimited by quotes are ignored, such as those in the following regular expression, drawn from the example above:
 
-```sql
+```txt
 "^(www|store|blog)\.example\.com"
 ```

@@ -15,7 +15,7 @@ order: 1
 
     ![Create WAF exception page](../../images/waf-exception-create.png)
 
-1. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the same language as the [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language).
+1. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
 1. In **Then**, select the [WAF exception type](/managed-rulesets/waf-exceptions#types-of-waf-exceptions) that determines which rules to skip:
 

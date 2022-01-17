@@ -15,9 +15,9 @@ To invoke a Cloudflare Filters API operation, append the endpoint to the Cloudfl
 https://api.cloudflare.com/client/v4/
 ```
 
-For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
 <Aside type='warning' header='Important'>
 

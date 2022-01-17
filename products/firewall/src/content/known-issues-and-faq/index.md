@@ -1,24 +1,24 @@
 ---
-title: Frequently asked questions
+title: FAQ
 pcx-content-type: faq
 weight: 700
 ---
 
-# Frequently asked questions (FAQ)
+# Firewall Rules FAQ
 
 ## How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. See [_Entitlements_](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Entitlements](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
 
 ## Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. See [_Entitlements_](/cf-firewall-rules/#entitlements).
+No. The number of active rules is fixed based on customer plan. Refer to [Entitlements](/cf-firewall-rules/#entitlements).
 
 ## How are certain special and escaped characters handled?
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the **Visual Expression Editor** in the **Firewall Rules** UI does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the **Visual Expression Editor** does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
 
@@ -28,7 +28,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
-Also, note that _http.request.method_ fields requires all-caps for method names.
+Also, note that `http.request.method` fields requires all-caps for method names.
 
 ## How can I use the Threat Score effectively?
 
@@ -47,9 +47,9 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 ### Caution about potentially blocking bots
 
-When you create a Firewall rule with a _Block_, _Challenge (Captcha)_, or _JS Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a Firewall rule with a _Block_, _Challenge (Captcha)_, _JS Challenge_, or _Managed Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
-See [_How do I create an exception to exclude certain requests from being blocked or challenged?_](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged)
+Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
 ### Bots currently detected
 
@@ -388,7 +388,7 @@ No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for o
 
 Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/cf-firewall-rules#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
-## Why would I not see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+## Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 
 Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
 
@@ -400,7 +400,7 @@ There are multiple reasons for this:
 * Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 * Cloudflare receives a malformed challenge answer.
 
-## Why do I see matches for a Firewall Rule that was not supposed to match the request?
+## Why do I have matches for a Firewall Rule that was not supposed to match the request?
 
 Make sure you are looking at the correct request.
 
