@@ -845,7 +845,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <br />
          <code class="InlineCode">["application/json"]</code>
          </p>
-         <p>Additionally used for logging requests according to the specified operator and the length/size entered for the header value.
+         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
          </p>
          <p>Example 2:
          <br />
@@ -853,7 +853,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          </p>
          <p>Example value 2:
          <br />
-         <code class="InlineCode">["gt 10"]</code>
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
       </td>
    </tr>
@@ -1081,7 +1081,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
          <br />
          <code class="InlineCode">["application/json"]</code>
          </p>
-         <p>Additionally used for logging responses according to the specified operator and the length/size entered for the header value.
+         <p>Additionally used to match responses according to the specified operator and the length/size entered for the header value.
          </p>
          <p>Example 2:
          <br />
@@ -1089,7 +1089,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
          </p>
          <p>Example value 2:
          <br />
-         <code class="InlineCode">["gt 10"]</code>
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
       </td>
    </tr>
