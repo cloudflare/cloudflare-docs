@@ -327,13 +327,12 @@ Workers KV is Cloudflare's globally replicated key-value storage solution. Withi
 
 ## KV namespace locally
 
-While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist  --kv TodoList`. The data from this namespace can be accessed using `context.env`. 
+While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
 ```js
 export async function onRequest({ env }) {
- await env.TodoList.put("Task", "Clean Kitchen")
-  const out = await env.TodoList.get("Task");
-  return new Response(out);
+  const task = await env.TodoList.get("Task:123");
+  return new Response(task);
 }
 ```
 
@@ -360,31 +359,14 @@ To add environment variables, go to **Account Home** > **Pages** > **your Pages 
 
 ## Adding environment variables locally
 
-When developing in your local environment, Functions offers you a way to use your environment variables with `context.env`. Access environment variables on your build by adding a binding to your run command like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the ENV_VALUE in your component by using `env.ENV_NAME`.
+When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
 
-For example, you can connect [Sentry](https://www.sentry.io/) to your application middleware using [Toucan js](https://github.com/robertcepa/toucan-js) and access your DSN in your component. 
-
+For example, you can run `npx wrangler pages dev dist --binding COLOR=\"BLUE"` and then:
 
 ```js
-const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
-  const sentry = new Toucan({
-    dsn: env.SENTRY_DSN,
-    context: { waitUntil, request },
-  });
-
-  try {
-    return await next();
-  } catch (thrown) {
-    sentry.captureException(thrown);
-    return new Response(`Error ${thrown}`, {
-      status: 500,
-    });
-  }
-};
-
-export const onRequest = [
-  SentryMiddleware,
-];
+export async function onRequest({ env }) {
+  return new Response(env.COLOR);
+}
 ```
 
 ## Advanced mode
@@ -440,6 +422,12 @@ $ npx wrangler pages dev --help
 
 # Serve a folder of static assets
 $ npx wrangler pages dev ./dist
+
+# Bind to a KV store
+$ npx wrangler pages dev ./dist --kv KV_NAMESPACE
+
+# Bind to a Durable Object
+$ npx wrangler pages dev ./dist --do ENV_NAME=CLASS_NAME
 
 # Or automatically proxy your existing tools
 $ npx wrangler pages dev -- npx react-scripts start
