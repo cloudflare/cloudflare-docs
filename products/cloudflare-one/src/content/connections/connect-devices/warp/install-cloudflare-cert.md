@@ -374,19 +374,30 @@ The command below will set the `cafile` configuration to use the Cloudflare cert
 
 The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
 
-```
-curl -O https://curl.se/ca/cacert.pem
+1. Get curl's `cacert` bundle.
 
-cat cacert.pem >> ca.pem
+    ```bash
+    curl -O https://curl.se/ca/cacert.pem
+    ```
+1. Get the Cloudflare CA.
 
-cat Cloudflare_CA.pem >> ca.pem
+    ```bash
+    curl -O https://developers.cloudflare.com/cloudflare-one/5147a72af7d01d4f3a34276f1452bf1e/Cloudflare_CA.pem
+    ```
+1. Combine the certs into a single `.pem` file.
 
-gcloud config set core/custom_ca_certs_file /Users/mgusev/ca.pem
-```
+    ```bash
+    cat cacert.pem > ~/ca.pem
+    ```
+    ```bash
+    cat Cloudflare_CA.pem >> ~/ca.pem
+    ```
 
- ```
- gcloud config set core/custom_ca_certs_file [PATH_TO_CLOUDFLARE_CERT]
- ```
+1. Configure Google Cloud to use the combined `.pem`.
+
+    ```bash
+    gcloud config set core/custom_ca_certs_file ~/ca.pem
+    ```
 
 ### AWS CLI
 
