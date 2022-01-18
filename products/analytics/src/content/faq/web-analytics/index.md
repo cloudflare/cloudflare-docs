@@ -20,7 +20,7 @@ Cloudflare is aware that the analytics beacon is blocked by these services.
 
 While Cloudflare Web Analytics uses a JS beacon, Cloudflare’s edge analytics cannot be blocked because we can measure every request that is received. Edge analytics are available to any customer who proxies traffic through Cloudflare. Currently, users on Pro, Business, and Enterprise plans get advanced web analytics powered by our edge logs.
 
-### Why am I not seeing all the metrics for single-page application (SPA) or even multiple-page application (MPA)?
+### Why am I not seeing all the metrics for single-page application (SPA) or multiple-page application (MPA)?
 
 Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using Ajax (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint. 
 
@@ -93,7 +93,7 @@ One month, but we are planning to increase the retention in the near future.
 ### Does Cloudflare Web Analytics support UTM parameters?
 
 Not yet. UTM parameters are special query string parameters that can help track where traffic is coming from. 
-Currently Cloudflare Web Analytics do not log query strings to avoid collecting potentially sensitive data, but we may add support for this in the future.
+Currently, Cloudflare Web Analytics do not log query strings to avoid collecting potentially sensitive data, but we may add support for this in the future.
 
 ### Does Web Analytics support custom events?
 

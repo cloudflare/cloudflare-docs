@@ -15,6 +15,6 @@ To filter the data shown on Web Analytics:
 
 ![Web Analytics add filter](../../../static/images/dash-web_analytics-filters.png)
 
-By default, Web Analytics shows you the previous 24 hours of data. To change the time period shown, use the drop-down menu above the graph. You can also click and drag the mouse on the graph to choose a time period.
+By default, Web Analytics shows you the previous 24 hours of data. To change the time period shown, use the drop-down menu above the graph. You can also click and drag the cursor on the graph to choose a time period.
 
 Scroll below the graph for a breakdown of top visits by country and visits by source.
