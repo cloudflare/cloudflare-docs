@@ -10,19 +10,19 @@ pcx-content-type: faq
 
 This error usually occurs when the hostname of the site loading the analytics does not match the name of the analytics site configured in the dashboard. Double-check that they are identical. 
 
-Cloudflare matches hostnames based on a postfix. For example, if you set up analytics for `example.com`, we'll allow analytics from `www.example.com`, `blog.staging.example.com`, and `fooexample.com`. However, we won't allow analytics from `example.com.br`.
+Cloudflare matches hostnames based on a postfix. For example, if you set up analytics for `example.com`, we will allow analytics from `www.example.com`, `blog.staging.example.com`, and `fooexample.com`. However, we will not allow analytics from `example.com.br`.
 
-You may also see this error if the site does not send a "Referer" or "Origin" header. The "Referer" header is required (don't try to use the "Referrer-policy" header instead). We have a change in-flight now that only the "Origin" header will be required – we believe there is no way to disable that in the browser.
+You may also see this error if the site does not send a `Referer` or `Origin` header. The `Referer` header is required (do not try to use the `Referrer-policy` header instead). We have a change in-flight now that only the `Origin` header will be required – we believe there is no way to disable that in the browser.
 
 ### The analytics beacon is blocked by ad-blockers (including adblockplus, Brave, DuckDuckGo extension, etc). Why is that?
 
 Cloudflare is aware that the analytics beacon is blocked by these services.
 
-While Cloudflare Web Analytics uses a JS beacon, Cloudflare’s edge analytics can't be blocked because we can measure every request that's received. Edge analytics are available to any customer who "orange clouds" and proxies traffic through Cloudflare. Currently, users on Pro, Business, and Enterprise plans get advanced web analytics powered by our edge logs.
+While Cloudflare Web Analytics uses a JavaScript beacon, Cloudflare’s edge analytics cannot be blocked because we can measure every request that is received. Edge analytics are available to any customer who proxies traffic through Cloudflare. Currently, users on Pro, Business, and Enterprise plans get advanced web analytics powered by our edge logs.
 
-### Why am I not seeing all the metrics for SPA (or even MPA)?
+### Why am I not seeing all the metrics for single-page application (SPA) or multiple-page application (MPA)?
 
-Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger visibilityState to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using Ajax (XmlHttpRequest), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint. 
+Every route change that occurs in the single-page app will send the measurement of the route before the route is changed to the beacon endpoint. The measurement for the last route change will be sent whenever the user leaves the tab or closes the browser window. That will trigger `visibilityState` to a hidden state. Whenever that happens, Beacon JS sends the payload using the [Navigator.sendBeacon method](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon) that should not be cancelled even when the browser window is closed. However, due to compatibility, old browsers would fallback to using Ajax (`XmlHttpRequest`), which can be cancelled when the browser window is closed, so the last payload that gets sent to the beacon endpoint can be lost. Also, due to various network conditions, there can be data loss when the payload is sent to the beacon endpoint. 
 
 ### For the same site, why would I see more data reported with an automatic setup?
 
@@ -40,22 +40,24 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 ## Setup
 
-### If I'm proxying my site through Cloudflare already, should I manually add the JS beacon?
+### I am proxying my site through Cloudflare. Should I manually add the JS beacon?
 
-You can, but you don't have to. Cloudflare Web Analytics is designed primarily for customers who do not use Cloudflare's proxy to measure their web traffic.
+You can, but you do not have to. Cloudflare Web Analytics is designed primarily for customers who do not use Cloudflare's proxy to measure their web traffic.
 
-Existing Cloudflare customers can access analytics collected from our edge on the **Analytics** tab of the dashboard. You can also enable Browser Insights to measure performance using JavaScript.
+Existing Cloudflare customers can access analytics collected from our edge on the **Analytics** tab of the dashboard. You can also enable Web Analytics to measure performance using JavaScript.
 
-Using an orange-clouded domain with [automatic setup] will report stats back to your own domain's `/cdn-cgi/rum` endpoint. If you have installed JS snippet yourself (a [manual setup]), it will report back to `cloudflareinsights.com/cdn-cgi/rum` endpoint. 
+Using a domain proxied through Cloudflare with [automatic setup] will report stats back to your own domain's `/cdn-cgi/rum` endpoint. If you have installed JS snippet yourself (a [manual setup]), it will report back to `cloudflareinsights.com/cdn-cgi/rum` endpoint. 
 
 ### Can I add Web Analytics to my site using a tag manager like Google Tag Manager (GTM)?
 
 Yes. Instead of embedding the script using a tag manager as shown here:
+
 ```bash
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$SITE_TOKEN"}'></script>
 ```
 
 Add the following script:
+
 ```bash
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'></script>
 ```
@@ -78,7 +80,7 @@ If you have a DNS-only domain, you will have to do a [manual setup] instead.
 
 Web Analytics only displays client-side analytics. All Cloudflare customers who proxy their traffic also get analytics based on traffic at their edge.
 
-Currently users on Pro, Business, and Enterprise plans get advanced HTTP traffic analytics, which is the only way to see features like a breakdown of traffic by URL based on server-side analytics. 
+Currently, users on Pro, Business, and Enterprise plans get advanced HTTP traffic analytics, which is the only way to see features like a breakdown of traffic by URL based on server-side analytics. 
 
 ### Can I use Web Analytics with AMP?
 
@@ -91,7 +93,7 @@ One month, but we are planning to increase the retention in the near future.
 ### Does Cloudflare Web Analytics support UTM parameters?
 
 Not yet. UTM parameters are special query string parameters that can help track where traffic is coming from. 
-Currently Cloudflare Web Analytics don't log query strings to avoid collecting potentially sensitive data, but we may add support for this in the future.
+Currently, Cloudflare Web Analytics do not log query strings to avoid collecting potentially sensitive data, but we may add support for this in the future.
 
 ### Does Web Analytics support custom events?
 
@@ -99,7 +101,7 @@ Not yet, but we may add support for this in the future.
   
 ### Can I track more than one website with Web Analytics?
 
-Yes. Right now there's a soft limit of 10 sites per account, but that can be adjusted by contacting Cloudflare support.
+Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
 
 [manual setup]:/web-analytics/getting-started#sites-not-proxied-through-cloudflare
 [automatic setup]:/web-analytics/getting-started#sites-proxied-through-cloudflare
