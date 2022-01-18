@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Configure custom fields
 
-You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone or account. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone/account that use the HTTP requests data set and include the request headers, response headers, or cookie fields.
+You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone or account. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone/account that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
 Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create a rule that configures custom fields. For more information on concepts like phases, rulesets, and rules, as well as the available API operations, refer to the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) documentation.
 
