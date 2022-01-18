@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Configure custom fields
 
-You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone or account. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone/account that use the HTTP requests data set, and that include these custom fields in the job configuration.
+You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone or account. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone/account that use the HTTP requests data set and include the request headers, response headers, or cookie fields.
 
 Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create a rule that configures custom fields. For more information on concepts like phases, rulesets, and rules, as well as the available API operations, refer to the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) documentation.
 
@@ -55,9 +55,9 @@ Perform the following steps to create the rule:
 
     ```bash
     curl -X GET \
-      "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-      -H "X-Auth-Email: <REDACTED>" \
-      -H "X-Auth-Key: <REDACTED>"
+    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>"
     ```
 
     If there is a ruleset for the `log_custom_fields` phase at the zone level, take note of the ruleset ID.
@@ -67,8 +67,8 @@ Perform the following steps to create the rule:
     ```json
     curl -X POST \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
     -d '{
       "name": "Zone-level phase entry point",
       "kind": "zone",
@@ -86,8 +86,8 @@ Perform the following steps to create the rule:
     ```json
     curl -X PUT \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
     -d '{
       "rules": [
         {
@@ -173,6 +173,8 @@ For example, consider the following request that creates a job that includes cus
 ```json
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs" \
+-H "X-Auth-Email: <EMAIL>" \ 
+-H "X-Auth-Key: <API_KEY>" \
 -d '{
   "name":"<DOMAIN_NAME>",
   "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
