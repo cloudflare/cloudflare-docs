@@ -1006,7 +1006,7 @@ The Cloudflare Rules language supports these HTTP body fields:
 
 ## HTTP response header fields
 
-The Rules language includes fields that represent properties of HTTP response headers.
+The Rules language includes fields that represent properties of HTTP response headers returned by the origin or by a Worker script.
 
 <Aside type="note">
 
