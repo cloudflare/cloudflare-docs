@@ -264,6 +264,31 @@ async function errorHandler(context) {
 export const onRequest = errorHandler;
 ```
 
+Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example: 
+
+```js
+// Attach multiple handlers
+export const onRequest = [
+  async ({ request,next }) => {
+    try {
+      // Call the next handler in the stack
+      const response = await next()
+      const responseText = await response.text()
+      //~> "Hello from next base middleware"
+      return new Response(responseText + " from middleware")
+    } catch (thrown) {
+      return new Response(`Error ${thrown}`, {
+        status: 500,
+        statusText: "Internal Server Error"
+      })
+    }
+  },
+  ({ request, next }) => {
+    return new Response("Hello from next base middleware");
+  }
+];
+```
+
 ### Middleware data
 
 Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all handlers throughout a request's execution.
