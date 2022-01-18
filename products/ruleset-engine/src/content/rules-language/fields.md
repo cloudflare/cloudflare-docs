@@ -11,8 +11,9 @@ The Cloudflare Rules language supports a range of field types:
 - [Standard fields](#standard-fields) represent common, typically static properties of an HTTP request.
 - [Dynamic fields](#dynamic-fields) represent computed or derived values, typically related to Cloudflare threat intelligence about the request.
 - [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
-- [HTTP header fields](#http-header-fields) represent the names and values associated with HTTP request headers.
-- [HTTP body fields](#http-body-fields) represent the properties of an HTTP request body, including forms, for example.
+- [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
+- [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
+- [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
 
 ## Standard fields
 
@@ -773,7 +774,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
   </tbody>
 </table>
 
-## HTTP header fields
+## HTTP request header fields
 
 The Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
 
@@ -844,7 +845,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <br />
          <code class="InlineCode">["application/json"]</code>
          </p>
-         <p>Additionally used for logging requests according to the specified operator and the length/size entered for the header value.
+         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
          </p>
          <p>Example 2:
          <br />
@@ -852,7 +853,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          </p>
          <p>Example value 2:
          <br />
-         <code class="InlineCode">["gt 10"]</code>
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
       </td>
    </tr>
@@ -884,7 +885,7 @@ The Cloudflare Rules language supports these HTTP header fields:
    </tr>
 </table>
 
-## HTTP body fields
+## HTTP request body fields
 
 <Aside type='note'>
 
@@ -1001,6 +1002,97 @@ The Cloudflare Rules language supports these HTTP body fields:
       </td>
     </tr>
   </tbody>
+</table>
+
+## HTTP response header fields
+
+The Rules language includes fields that represent properties of HTTP response headers returned by the origin or by a Worker script.
+
+<Aside type="note">
+
+You can only use HTTP response header fields in [HTTP Response Header Modification Rules](https://developers.cloudflare.com/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](https://developers.cloudflare.com/waf/managed-rulesets) ruleset.
+
+</Aside>
+
+The Cloudflare Rules language supports these HTTP response header fields:
+
+<table>
+   <tr>
+      <td><strong>Field Name</strong></td>
+      <td style="width: 50%;"><strong>Description</strong></td>
+   </tr>
+   <tr id="field-http-response-headers">
+      <td valign="top"><code>http.response.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+      <td>
+         <p>Represents HTTP response headers as a Map (or associative array).
+         </p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.</p>
+         <p><em><em>Decoding:</em></em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers["server"][*] == "nginx")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{'{"server": ["nginx"]}'}</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>http.response.headers.names</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+         <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the case used in the response.
+         </p>
+         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.response.headers.values</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers.names[*] == "content-type")</code>
+         </p>
+         <p>Example value:
+         <code class="InlineCode">["content-type"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>http.response.headers.values</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+         <p>Represents the values of the headers in the HTTP response.</p>
+         <p>Values are not pre-processed and retain the case used in the response.</p>
+         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.response.headers.names</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example 1:
+         <br />
+         <code class="InlineCode">any(http.response.headers.values[*] == "application/json")</code>
+         </p>
+         <p>Example value 1:
+         <br />
+         <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used to match responses according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.response.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
+         </p>
+      </td>
+   </tr>
 </table>
 
 ---
