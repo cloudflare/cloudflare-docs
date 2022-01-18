@@ -18,7 +18,7 @@ You may also see this error if the site does not send a `Referer` or `Origin` he
 
 Cloudflare is aware that the analytics beacon is blocked by these services.
 
-While Cloudflare Web Analytics uses a JS beacon, Cloudflare’s edge analytics cannot be blocked because we can measure every request that is received. Edge analytics are available to any customer who proxies traffic through Cloudflare. Currently, users on Pro, Business, and Enterprise plans get advanced web analytics powered by our edge logs.
+While Cloudflare Web Analytics uses a JavaScript beacon, Cloudflare’s edge analytics cannot be blocked because we can measure every request that is received. Edge analytics are available to any customer who proxies traffic through Cloudflare. Currently, users on Pro, Business, and Enterprise plans get advanced web analytics powered by our edge logs.
 
 ### Why am I not seeing all the metrics for single-page application (SPA) or multiple-page application (MPA)?
 
