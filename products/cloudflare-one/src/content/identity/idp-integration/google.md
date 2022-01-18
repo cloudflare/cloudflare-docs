@@ -17,7 +17,7 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
 1. On the project home page that loads, select `APIs & Services` from the sidebar and click **Dashboard**.
 
-1. You will first need to configure a consent screen. Click **Configure Consent Screen** at the top of the page.
+1. You will first need to configure a consent screen. Go to **Credentials** and click **Configure Consent Screen** at the top of the page.
 
  ![Click Consent](../../static/documentation/identity/google/click-configure-consent.png)
 
