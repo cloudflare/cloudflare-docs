@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 <Aside type="note">
 
-The examples below are for zone-scoped data sets. Account-scoped data sets should use `<ACCOUNT_ID>` instead of `<ZONE_ID>`.
+The examples below are for zone-scoped datasets. Account-scoped datasets should use `<ACCOUNT_ID>` instead of `<ZONE_ID>`.
 
 </Aside>
 

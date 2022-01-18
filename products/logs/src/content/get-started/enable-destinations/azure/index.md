@@ -24,7 +24,7 @@ To enable the Cloudflare Logpush service:
 
 1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the data set you want to push to a storage service.
+1. Select the dataset you want to push to a storage service.
 
 1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
