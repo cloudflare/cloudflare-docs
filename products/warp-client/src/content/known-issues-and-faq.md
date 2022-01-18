@@ -30,6 +30,10 @@ Cloudflare WARP is in part powered by 1.1.1.1, the world's fastest DNS resolver.
 
 Cloudflare WARP and the 1.1.1.1 with WARP applications go through performance testing that includes battery, network and CPU on a regular basis. In addition, both applications are used by millions of users worldwide that help us stay on top of issues across a wide variety of devices, networks, sites and applications.
 
+## What .NET Framework does the Windows client require?
+
+We require .NET Framework 4.7.2 or later to be installed on the device.
+
 ---
 
 ## Known issues
