@@ -292,13 +292,25 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project.
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally). 
 
 ### KV namespace
 
-Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
+Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to  **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![KV-Binding](KV-functions.png)
+
+## KV namespace locally
+
+While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist  --kv TodoList`. The data from this namespace can be accessed using `context.env`. 
+
+```js
+export async function onRequest({ env }) {
+ await env.TodoList.put("Task", "Clean Kitchen")
+  const out = await env.TodoList.get("Task");
+  return new Response(out);
+}
+```
 
 ### Durable Object namespace
 
@@ -306,7 +318,12 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
+
 ![DO-Binding](DO-functions.png)
+
+## Durable Objects locally
+
+Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class. 
 
 ### Environment variable
 
@@ -315,6 +332,35 @@ An [environment variable](https://developers.cloudflare.com/workers/platform/env
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
 ![ENV-Binding](ENV-functions.png)
+
+## Adding environment variables locally
+
+When developing in your local environment, Functions offers you a way to use your environment variables with `context.env`. Access environment variables on your build by adding a binding to your run command like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the ENV_VALUE in your component by using `env.ENV_NAME`.
+
+For example, you can connect [Sentry](https://www.sentry.io/) to your application middleware using [Toucan js](https://github.com/robertcepa/toucan-js) and access your DSN in your component. 
+
+
+```js
+const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
+  const sentry = new Toucan({
+    dsn: env.SENTRY_DSN,
+    context: { waitUntil, request },
+  });
+
+  try {
+    return await next();
+  } catch (thrown) {
+    sentry.captureException(thrown);
+    return new Response(`Error ${thrown}`, {
+      status: 500,
+    });
+  }
+};
+
+export const onRequest = [
+  SentryMiddleware,
+];
+```
 
 ## Advanced mode
 
