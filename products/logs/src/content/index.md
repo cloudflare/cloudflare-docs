@@ -12,4 +12,4 @@ Push your request or event logs to your cloud service provider using [Logpush](/
 
 If you only want to see logs of HTTP requests, you can also use [Logpull](/logpull/). The data from **Logpull** and **Logpush** is exactly the same.
 
-Note that by default, Cloudflare does not retain your HTTP request logs. If you're a Spectrum customer, logs of Spectrum events are retained automatically.
+By default, Cloudflare does not retain your HTTP request logs. However, if you are a Spectrum customer, logs of Spectrum events are retained automatically.
