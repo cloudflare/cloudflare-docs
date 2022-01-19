@@ -875,7 +875,7 @@ Below is the complete list of secrets that the Workers script will look for when
 
 | `wrangler secret` key | Value                                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| AUTH0_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). Note this must include the _scheme_ `https://` and should be a valid URL |
+| AUTH0_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). It must include the scheme `https://` and should be a valid URL |
 | AUTH0_CLIENT_ID       | Your Auth0 client ID                                                                                                         |
 | AUTH0_CLIENT_SECRET   | Your Auth0 client secret                                                                                                     |
 | AUTH0_CALLBACK_URL    | The callback url for your application (see “Setting the callback url” below)                                                 |

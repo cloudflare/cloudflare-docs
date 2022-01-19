@@ -120,7 +120,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [Edge Cache TTL](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. 
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [Edge Cache TTL](https://support.cloudflare.com/hc/articles/200168376) and [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. 
 
 - `cacheTtlByStatus` <Type>{ [key: string]: number }</Type> <PropMeta>optional</PropMeta>
 
@@ -200,7 +200,7 @@ All plans have access to:
 
 - `asOrganization` <Type>string</Type>
 
-  - The organisation which owns the ASN of the incoming request, for example, `Google Cloud`.
+  - The organization which owns the ASN of the incoming request, for example, `Google Cloud`.
 
 - `botManagement` <Type>Object | null</Type>
 
@@ -268,7 +268,7 @@ All plans have access to:
 
 - `regionCode` <Type>string | null</Type>
 
-  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first level region associated with the IP address of the incoming request, for example, `"TX"`.
+  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first-level region associated with the IP address of the incoming request, for example, `"TX"`.
 
 - `timezone` <Type>string</Type>
 

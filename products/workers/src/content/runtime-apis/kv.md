@@ -274,7 +274,7 @@ The name of your binding **does not** need to match the KV namespace's name. Ins
 
 This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
 
-When you create a namespace (see note below), it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, "06779da6940b431db6e566b4846d64db")
+When you create a namespace (see note below), it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, "06779da6940b431db6e566b4846d64db").
 
 For your Worker to execute properly, we need to define the binding (called `TODO` below). In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
