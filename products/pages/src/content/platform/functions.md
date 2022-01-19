@@ -369,6 +369,28 @@ export async function onRequest({ env }) {
 }
 ```
 
+Here is a real world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
+
+```js
+const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
+  const sentry = new Toucan({
+    dsn: env.SENTRY_DSN,
+    context: { waitUntil, request },
+  });
+  try {
+    return await next();
+  } catch (thrown) {
+    sentry.captureException(thrown);
+    return new Response(`Error ${thrown}`, {
+      status: 500,
+    });
+  }
+};
+export const onRequest = [
+  SentryMiddleware,
+];
+```
+
 ## Advanced mode
 
 In some cases, the built-in routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project.
@@ -432,15 +454,8 @@ $ npx wrangler pages dev ./dist --do ENV_NAME=CLASS_NAME
 # Or automatically proxy your existing tools
 $ npx wrangler pages dev -- npx react-scripts start
 
-# KV namespace to bind
-$ npx wrangler pages dev dist  --kv NAMESPACE
-
 # Bind variable/secret (KEY=VALUE)
-$ npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"
-
-# Durable Object to bind (NAME=CLASS)
-$ npx wrangler pages dev dist  --do NAME=\"CLASS"
-
+$ npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE\"
 ```
 
 Developing locally does not deploy your changes. It is only a means to preview and test. To deploy your changes to your Pages site, you will need to `git commit` and `git push` as normal.
