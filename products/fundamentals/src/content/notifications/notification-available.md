@@ -108,7 +108,7 @@ WAF/CDN customers who want to receive a notification when Cloudflare has mitigat
 
 **Included with**
 
-Professional or higher plans.
+Free or higher plans.
 
 **What should you do if you receive one?**
 
