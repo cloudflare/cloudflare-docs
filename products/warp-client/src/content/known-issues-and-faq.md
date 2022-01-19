@@ -38,4 +38,4 @@ We require .NET Framework 4.7.2 or later to be installed on the device.
 
 ## Known issues
 
-Applications or sites that rely on location information to enforce content licensing agreements (certain games, video streaming, music streaming, radio streaming, etc.) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
+Applications or sites that rely on location information to enforce content licensing agreements (for example, certain games, video streaming, music streaming, or radio streaming) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
