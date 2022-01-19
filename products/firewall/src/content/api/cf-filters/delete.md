@@ -6,9 +6,6 @@ order: 475
 
 # DELETE examples
 
-- [Delete multiple filters](#delete-multiple-filters)
-- [Delete a single filter](#delete-a-single-filter)
-
 ## Delete multiple filters
 
 This example deletes filters with IDs `<FILTER_ID_1>` and `<FILTER_ID_2>`.

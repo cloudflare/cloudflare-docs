@@ -5,9 +5,6 @@ order: 430
 
 # PUT examples
 
-- [Update multiple rules](#update-multiple-rules)
-- [Update a single rule](#update-a-single-rule)
-
 ## Update multiple rules
 
 This example updates several Firewall Rules using a single API call.

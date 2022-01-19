@@ -6,9 +6,6 @@ order: 470
 
 # PUT examples
 
-- [Update multiple filters](#update-multiple-filters)
-- [Update a single filter](#update-a-single-filter)
-
 ## Update multiple filters
 
 This example updates two filters with IDs `<FILTER_ID_1>` and `<FILTER_ID_2>` using a single API call.

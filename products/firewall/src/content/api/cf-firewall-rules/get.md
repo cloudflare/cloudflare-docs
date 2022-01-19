@@ -6,9 +6,6 @@ order: 425
 
 # GET examples
 
-- [Get all rules](#get-all-rules)
-- [Get rule by ID](#get-rule-by-id)
-
 ## Get all rules
 
 This example returns all the Firewall Rules in the zone with ID `<ZONE_ID>`.

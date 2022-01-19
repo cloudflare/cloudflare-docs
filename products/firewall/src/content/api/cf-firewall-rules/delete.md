@@ -6,12 +6,9 @@ order: 435
 
 # DELETE examples
 
-- [Delete multiple rules](#delete-multiple-rules)
-- [Delete a single rule](#delete-a-single-rule)
-
 <Aside type='note' header='Note'>
 
-`DELETE` does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/api/cf-filters).
+The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/api/cf-filters).
 
 </Aside>
 

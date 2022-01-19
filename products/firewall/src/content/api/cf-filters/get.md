@@ -6,9 +6,6 @@ order: 465
 
 # GET examples
 
-- [Get all filters](#get-all-filters)
-- [Get rule by ID](#get-by-filter-id)
-
 ## Get all filters
 
 This example returns all filters in zone with ID `<ZONE_ID>`.
