@@ -46,7 +46,7 @@ $ wrangler generate --site my-auth-example
 
 ## Building an authorizer
 
-Before implementing an “authorizer" in your application, which will verify that a user is logged in, it is useful to understand how Auth0’s login flow works. The condensed version of this flow is below (you can also [review a longer writeup in Auth0’s docs](https://auth0.com/docs/flows/concepts/auth-code)):
+Before implementing an authorizer in your application, which will verify that a user is logged in, it is useful to understand how Auth0’s login flow works. The condensed version of this flow is below (you can also [review a longer writeup in Auth0’s documentation](https://auth0.com/docs/flows/concepts/auth-code)):
 
 1. A user makes a request to the Workers application.
 2. If the user is not logged in, they are redirected to the login page.
@@ -729,7 +729,7 @@ In your Workers Site, you can add a **Log out** link, which will send users to t
 
 <Aside type="note">
 
-By design, the placement of the `LOGOUT CODE BLOCK` in `workers-site/index.js` is placed _after_ the `WORKERS SITES CODE BLOCK`. This is intentional: it allows users to continue to your application’s deployed Workers Site code, meaning that you can provide a corresponding `logout/index.html` template with a “You’re logged out!” message, or something similar.
+By design, the placement of the `LOGOUT CODE BLOCK` in `workers-site/index.js` is placed after the `WORKERS SITES CODE BLOCK`. This is intentional: it allows users to continue to your application’s deployed Workers Site code, meaning that you can provide a corresponding `logout/index.html` template with a `You’re logged out!` message, or something similar.
 
 </Aside>
 
@@ -766,7 +766,7 @@ export const logout = event => {
 
 #### Deploying to origin/originless
 
-While this tutorial assumes that you are deploying a Workers Sites application, you may want to put this authorization logic in front of an existing domain. This concept, known as deploying to an “origin”, is in contrast to the “originless” deploy, where your Workers deployment is the final destination for any requests from users of your application.
+While this tutorial assumes that you are deploying a Workers Sites application, you may want to put this authorization logic in front of an existing domain. This concept, known as deploying to an origin, is in contrast to the originless deploy, where your Workers deployment is the final destination for any requests from users of your application.
 
 The next section of this tutorial, [**Publish**](/tutorials/authorize-users-with-auth0#publish), assumes deployment to Workers’ built-in deployment target, `workers.dev`, but if you want to handle deploying to an existing domain, known commonly as a “zone”, you will need to take the following steps:
 
@@ -795,11 +795,11 @@ async function handleEvent(event) {
 }
 ```
 
-Given an example configuration and deployment of `https://my-auth.signalnerve.com`, your Workers script will continue to authorize users, but when it comes time to return a response back to the user, the code will now make a request to `my-auth.signalnerve.com`, and, if you have set up the “edge state hydration” concept explored earlier in this tutorial, you will still receive the same user info in your HTML response as originally configured.
+Given an example configuration and deployment of `https://my-auth.signalnerve.com`, your Workers script will continue to authorize users, but when it comes time to return a response back to the user, the code will now make a request to `my-auth.signalnerve.com`, and, if you have set up the edge state hydration concept explored earlier in this tutorial, you will still receive the same user info in your HTML response as originally configured.
 
 2. Configure your `wrangler.toml` file to associate your Workers script with a zone.
 
-Associating a configured zone from your Cloudflare account is covered in the section [“Configure for deploying to a registered domain”](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review [Get started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
+Associating a configured zone from your Cloudflare account is covered in the section [Configure for deploying to a registered domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review [Get started](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
 
 In particular, you will need to ensure that the `zone_id` and `route` keys are defined in your `wrangler.toml` and that the `workers_dev` key is disabled. You may also choose to entirely remove the `[site]` block from your `wrangler.toml` file, which will stop `wrangler` from uploading the contents of your project’s `public` folder to Workers KV:
 
@@ -831,7 +831,7 @@ You are finally ready to deploy our application to Workers. Before you can deplo
 
 ### Configuring `wrangler.toml`
 
-The `wrangler.toml` generated as part of your application tells wrangler how and where to deploy your application. Using the [“Configuring your project” section of the Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your application to your Cloudflare account:
+The `wrangler.toml` generated as part of your application tells wrangler how and where to deploy your application. Using the [Configuring your project section of the Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your application to your Cloudflare account:
 
 ```toml
 ---
@@ -851,7 +851,7 @@ header: Create a new KV namespace with Wrangler
 $ wrangler kv:namespace create AUTH_STORE
 ```
 
-The output of running that command will be a block of code that you can paste directly into `wrangler.toml`, which will “bind” your new Workers KV namespace to your application. It should look something like this:
+The output of running that command will be a block of code that you can paste directly into `wrangler.toml`, which will bind your new Workers KV namespace to your application. It should look something like this:
 
 ```toml
 ---
@@ -875,11 +875,11 @@ Below is the complete list of secrets that the Workers script will look for when
 
 | `wrangler secret` key | Value                                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| AUTH0_DOMAIN          | Your Auth0 domain (e.g. `https://myapp.auth0.com`). Note this must include the _scheme_ `https://` and should be a valid URL |
+| AUTH0_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). It must include the scheme `https://` and should be a valid URL |
 | AUTH0_CLIENT_ID       | Your Auth0 client ID                                                                                                         |
 | AUTH0_CLIENT_SECRET   | Your Auth0 client secret                                                                                                     |
-| AUTH0_CALLBACK_URL    | The callback url for your application (see “Setting the callback url” below)                                                 |
-| SALT                  | A secret string used to encrypt user `sub` values (see “Setting the salt” below)                                             |
+| AUTH0_CALLBACK_URL    | The callback url for your application (refer to [Setting the callback URL](/tutorials/authorize-users-with-auth0#setting-the-callback-url) below)                                                 |
+| SALT                  | A secret string used to encrypt user `sub` values (refer to [Setting the salt](/tutorials/authorize-users-with-auth0#setting-the-salt) below)                                             |
 
 For each key, you can find the corresponding value in your Auth0 application settings page.
 
@@ -944,7 +944,7 @@ Following this example, the callback URL for my application is `https://my-auth-
 
 #### Setting the salt
 
-In order to safely store user IDs (the sub value from Auth0) in the cookie we set in the browser, you should always refer to them by a value that cannot be easily guessed by someone else. To do this, generate a unique value based on the user’s ID and a _salt_: a secret value provided by the application.
+In order to safely store user IDs (the sub value from Auth0) in the cookie we set in the browser, you should always refer to them by a value that cannot be easily guessed by someone else. To do this, generate a unique value based on the user’s ID and a salt: a secret value provided by the application.
 
 To generate a salt, make a new, random string, and save it as a secret for our application. Previously, this tutorial used `csprng.xyz` API to generate a random piece of `state` to protect against CSRF attacks. Open `https://csprng.xyz/v1/api` in your browser, and copy the `Data` field to your clipboard. If you would like to generate a string yourself, remember that it is important that the salt cannot easily be guessed.
 
@@ -959,7 +959,7 @@ $ wrangler secret put SALT
 
 #### Allowed origin/callback URLs
 
-Note that Auth0 has great security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application config. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (e.g., `localhost:8787` for [wrangler dev][wrangler dev] usage):
+Note that Auth0 has great security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application config. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for [wrangler dev][/cli-wrangler/commands#dev] usage):
 
 | URL                                                  | Description          |
 | ---------------------------------------------------- | -------------------- |
@@ -981,7 +981,7 @@ $ wrangler publish
 
 Wrangler will compile your code, upload the associated Workers Sites folder (`public`, by default), and begin handling requests sent to your `*.workers.dev` application, or to your zone. To confirm everything works as expected, you should:
 
-1. Visit your application (e.g., [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
+1. Visit your application (for example, [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
 2. Log in with an email/password or the social identity provider of your choice, if enabled.
 3. Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4. If you see your site, you have successfully authorized users to your Workers application, using Auth0.

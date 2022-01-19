@@ -266,7 +266,7 @@ filename: index.js
 ---
 router.get('/users/:id', async ({ params } => {
   const { id } = params
-  console.log(id) // e.g. 5, if requested URL is /users/5
+  console.log(id) // for example, 5, if the requested URL is /users/5
 })
 ```
 

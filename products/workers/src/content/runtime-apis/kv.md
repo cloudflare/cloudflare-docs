@@ -233,7 +233,7 @@ Note that if your values fit in [the metadata size limit](/platform/limits#kv-li
 
 #### Listing by prefix
 
-You can also list all of the keys starting with a particular prefix. For example, say you’ve structured your keys with a user, a user id, and then some key names, separated by colons (e.g. ` user:1:<key>`). You could get the keys for user number one by doing this:
+You can also list all of the keys starting with a particular prefix. For example, say you’ve structured your keys with a user, a user id, and then some key names, separated by colons (for example, ` user:1:<key>`). You could get the keys for user number one by doing this:
 
 ```js
 addEventListener("fetch", event => {
@@ -274,7 +274,7 @@ The name of your binding **does not** need to match the KV namespace's name. Ins
 
 This is not the case with modules, see [next section](/runtime-apis/kv#referencing-kv-from-durable-objects-and-workers-using-modules-syntax).
 
-When you create a namespace (see note below), it will have a name you choose (e.g. "My tasks"), and an assigned ID (e.g. "06779da6940b431db6e566b4846d64db")
+When you create a namespace (see note below), it will have a name you choose (for example, `My tasks`), and an assigned ID (for example, "06779da6940b431db6e566b4846d64db").
 
 For your Worker to execute properly, we need to define the binding (called `TODO` below). In the `kv_namespaces` portion of your `wrangler.toml` file, add:
 
@@ -308,7 +308,7 @@ You can create a namespace <a href="https://developers.cloudflare.com/workers/cl
 
 ### Referencing KV from Durable Objects and Workers using Modules Syntax
 
-The docs above assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, e.g. `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
+The docs above assume you're using the original service worker syntax, where binding a KV namespace makes it available as a global variable with the name you chose, for example, `NAMESPACE`. Durable Objects use modules syntax, so instead of a global variable, bindings are available as properties of the `env` parameter [passed to the constructor](/runtime-apis/durable-objects#durable-object-class-definition). A typical example might look like:
 
 ```js
 export class DurableObject {
