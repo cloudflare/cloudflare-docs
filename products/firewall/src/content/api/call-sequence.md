@@ -74,6 +74,6 @@ By default, if either the filter or rule is invalid, neither will be created.
 
 However, one exception applies. If you have exceeded your rule quota, the filter could be created while creating the rule may fail. This is because the rule is created after the filter in the sequence diagram and so, we learn of the quota being exceeded after the filter was created.
 
-After you resolve the issue of exceeding your quota or requesting a feature that is unavailable to your zone (namely the _JS Challenge_ action, which is not available for Free customers), return to the recommended flow to create a rule that references the filter.
+After you resolve the issue of exceeding your quota or requesting a feature that is unavailable to your zone, return to the recommended flow to create a rule that references the filter.
 
 In summary, we strongly recommend the sequence with the two API calls. Limit your rule and filter creation using the simplified sequence for emergency situations, and only via `curl` requests.
