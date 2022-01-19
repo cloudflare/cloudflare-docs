@@ -20,19 +20,20 @@ However, for a `POST` operation, the **simplified sequence** — shown below —
 
 ![Simple flow](../images/simple-flow.png)
 
-In this sequence, a single `POST` request to the `/firewall/rules` takes the filter object in the JSON to create the filter in the Filters API (also via a `POST` request). If successful, then the Firewall Rule is created.
+In this sequence, a single `POST` request to the `/firewall/rules` endpoint takes the filter object in the JSON to create the filter in the Filters API (also via a `POST` request). If successful, the Firewall Rule is created.
 
 Below is an example call and response using this method:
 
-### Request
-
 ```json
+---
+header: Request
+---
 curl -X POST \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '[
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '[
   {
     "filter": {
       "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34"
@@ -42,9 +43,10 @@ curl -X POST \
 ]' 
 ```
 
-### Response
-
 ```json
+---
+header: Response
+---
 {
   "result": [
     {
@@ -60,8 +62,8 @@ curl -X POST \
     }
   ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 

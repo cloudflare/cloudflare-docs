@@ -13,11 +13,11 @@ This example creates several filters using a single API call.
 header: Request
 ---
 curl -X POST \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '[
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '[
   { 
     "expression": "ip.src eq 93.184.216.0"
   },
@@ -77,7 +77,7 @@ header: Response
     }
   ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```

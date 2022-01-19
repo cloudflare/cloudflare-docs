@@ -18,11 +18,11 @@ This example updates two filters with IDs `<FILTER_ID_1>` and `<FILTER_ID_2>` us
 header: Request
 ---
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '[
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '[
   {
     "id": "<FILTER_ID_1>",
     "paused": false,
@@ -57,8 +57,8 @@ header: Response
     }
   ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -71,11 +71,11 @@ This example updates the filter with ID `<FILTER_ID>`.
 header: Request
 ---
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '{
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '{
   "id": "<FILTER_ID>",
   "paused": false,
   "description": "Login from office",
@@ -95,7 +95,7 @@ header: Response
     "expression": "ip.src in {2400:cb00::/32 2a06:98c0::/29} and (http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\")"
   },
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```

@@ -18,9 +18,9 @@ This example returns all the Firewall Rules in the zone with ID `<ZONE_ID>`.
 header: Request
 ---
 curl -X GET \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>"
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -83,8 +83,8 @@ header: Response
     }
   ],
   "success": true,
-  "errors": null,
-  "messages": null,
+  "errors": [],
+  "messages": [],
   "result_info": {
     "page": 1,
     "per_page": 25,
@@ -104,9 +104,9 @@ This example returns the Firewall Rule with ID `<RULE_ID>`.
 header: Request
 ---
 curl -X GET \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>"
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -128,7 +128,7 @@ header: Response
     }
   },
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```

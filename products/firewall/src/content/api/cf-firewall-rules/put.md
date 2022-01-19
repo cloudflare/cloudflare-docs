@@ -14,16 +14,16 @@ This example updates several Firewall Rules using a single API call.
 
 You can include up to 25 rules in the JSON object array (`-d` flag) to update as a batch. The batch is handled as a transaction.
 
-```bash
+```json
 ---
 header: Request
 ---
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '[
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '[
   {
     "id": "<RULE_ID>",
     "paused": false,
@@ -69,8 +69,8 @@ header: Response
     }
   ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -91,11 +91,11 @@ All other fields are optional.
 header: Request
 ---
 curl -X PUT \
-  "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
-  -H "X-Auth-Email: <EMAIL>" \
-  -H "X-Auth-Key: <API_KEY>" \
-  -H "Content-Type: application/json" \
-  -d '{
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
+-H "Content-Type: application/json" \
+-d '{
   "id": "<RULE_ID>",
   "paused": false,
   "description": "Do not challenge login from office IPv6",
@@ -129,8 +129,8 @@ header: Response
     }
   },
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 
