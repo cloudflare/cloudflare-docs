@@ -1021,6 +1021,14 @@ y
 
 --------------------------------
 
+## Environment variables
+
+Wrangler also supports any `wrangler.toml` keys passed in as environment variables. This works by passing in `CF_` + any toml key uppercased. So you can pass them in like:
+
+`CF_NAME=my-worker CF_ACCOUNT_ID=1234 wrangler dev`
+
+--------------------------------
+
 ## --help
 
 ```sh
