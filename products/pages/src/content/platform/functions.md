@@ -443,6 +443,16 @@ $ npx wrangler pages dev ./dist
 
 # Or automatically proxy your existing tools
 $ npx wrangler pages dev -- npx react-scripts start
+
+# KV namespace to bind
+$ npx wrangler pages dev dist  --kv NAMESPACE
+
+# Bind variable/secret (KEY=VALUE)
+$ npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"
+
+# Durable Object to bind (NAME=CLASS)
+$ npx wrangler pages dev dist  --do NAME=\"CLASS"
+
 ```
 
 Developing locally does not deploy your changes. It is only a means to preview and test. To deploy your changes to your Pages site, you will need to `git commit` and `git push` as normal.
