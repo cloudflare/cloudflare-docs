@@ -58,7 +58,7 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 4. In the **Secret** field, input a secret key of your choice.
 
-5. In **Which events would you like to trigger this webhook?**, select **Let me select individual events**. Select the events you want to get notifications for (e.g., **Pull requests**, **Pushes**, and **Branch or tag creation**).
+5. In **Which events would you like to trigger this webhook?**, select **Let me select individual events**. Select the events you want to get notifications for (such as **Pull requests**, **Pushes**, and **Branch or tag creation**).
 
 6. Select **Add webhook** to finish configuration.
 

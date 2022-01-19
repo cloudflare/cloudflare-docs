@@ -93,7 +93,7 @@ When your webhook is created, it will attempt to send a test payload to your app
 
 Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to generate a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
 
-In the command line, generate your Worker project, passing in a project name (e.g., “slack-bot”), and the [template](/examples) URL to base your project on:
+In the command line, generate your Worker project, passing in a project name (for example, `slack-bot`), and the [template](/examples) URL to base your project on:
 
 ```sh
 ---
@@ -566,7 +566,7 @@ export default async request => {
 }
 ```
 
-An `IssueEvent`, the payload sent from GitHub as part of your webhook configuration, includes an `action` (what happened to the issue: e.g., it was opened, closed, locked, etc.), the `issue` itself, and the `repository`, among other things.
+An `IssueEvent`, the payload sent from GitHub as part of your webhook configuration, includes an `action` (what happened to the issue: for example, it was opened, closed, locked, etc.), the `issue` itself, and the `repository`, among other things.
 
 Use `JSON.parse` to convert the payload body of the request from JSON into a plain JS object. Use ES6 destructuring to set `action`, `issue` and `repository` as variables you can use in your code. `prefix_text` is a simple string indicating what happened to the issue, and `issue_string` is the familiar string `owner/repo#issue_number` that you have seen before: while the `lookup` handler directly used the text sent from Slack to fill in `issue_string`, you will construct it directly based on the data passed in the JSON payload.
 

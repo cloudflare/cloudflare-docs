@@ -235,7 +235,7 @@ If a Worker’s request handler attempts to call `fetch()` more than six times (
 
 **Automatic deadlock avoidance**
 
-Our implementation automatically detects if delaying a fetch would cause the Worker to deadlock, and prevents the deadlock by cancelling the least-recently-used request. For example, imagine a Worker that starts 10 requests and waits to receive all the responses *without reading the response bodies*. A fetch is not considered complete until the response body is fully-consumed (e.g. by calling `response.text()` or `response.json()`, or by reading from `response.body`). Therefore, in this scenario, the first six requests will run and their response objects would be returned, but the remaining four requests would not start until the earlier responses are consumed. If the Worker fails to actually read the earlier response bodies and is still waiting for the last four requests, then the Workers Runtime will automatically cancel the first four requests so that the remaining ones can complete. If the Worker later goes back and tries to read the response bodies, exceptions will be thrown.
+Our implementation automatically detects if delaying a fetch would cause the Worker to deadlock, and prevents the deadlock by cancelling the least-recently-used request. For example, imagine a Worker that starts 10 requests and waits to receive all the responses without reading the response bodies. A fetch is not considered complete until the response body is fully-consumed (for example, by calling `response.text()` or `response.json()`, or by reading from `response.body`). Therefore, in this scenario, the first six requests will run and their response objects would be returned, but the remaining four requests would not start until the earlier responses are consumed. If the Worker fails to actually read the earlier response bodies and is still waiting for the last four requests, then the Workers Runtime will automatically cancel the first four requests so that the remaining ones can complete. If the Worker later goes back and tries to read the response bodies, exceptions will be thrown.
 
 **Most Workers are Not Affected**
 
@@ -258,7 +258,7 @@ We chose the limit of 6 concurrent connections based on the fact that Chrome enf
 Changes this week:
 - Durable Objects storage API now supports listing keys by prefix.
 - Improved error message when a single request performs more than 1000 KV operations to make clear that a per-request limit was reached, not a global rate limit.
-- `wrangler dev` previews should now honor non-default resource limits, e.g. longer CPU limits for those in the Workers Unbound beta.
+- `wrangler dev` previews should now honor non-default resource limits, for example, longer CPU limits for those in the Workers Unbound beta.
 - Fixed off-by-one line numbers in Worker exceptions.
 - Exceptions thrown in a Durable Object’s `fetch()` method are now tunneled to its caller.
 - Fixed a bug where a large Durable Object response body could cause the Durable Object to become unresponsive.
