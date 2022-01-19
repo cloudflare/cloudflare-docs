@@ -25,6 +25,12 @@ To use a custom origin, select that option when [creating a new custom hostname]
 
 ## SNI rewrites
 
+<Aside type="note" header="Note">
+
+SNI Rewrite functionality is only available to Enterprise customers that are using SSL for SaaS with custom origins.
+    
+</Aside>
+
 When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) will both be the value of the original custom hostname. 
 
 However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/origin-configuration/ssl-modes#full-strict) on your origins.
