@@ -422,3 +422,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 ## Listing Durable Objects
 
 The Cloudflare REST API supports retrieving a [list of Durable Objects](https://api.cloudflare.com/#durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://api.cloudflare.com/#durable-objects-namespace-list-namespaces) associated with an account.
+
+## Related resources
+
+- [Learn how to use Durable Objects](/learning/using-durable-objects)

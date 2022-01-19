@@ -13,11 +13,11 @@ For example, a filter matching:
 - The HTTP path, and
 - The source IP address
 
-May be associated with a firewall rule declaring that the request should be blocked.
+May be associated with a Firewall Rule declaring that the request should be blocked.
 
-Use Rules Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/api/cf-lists/) for more information.
+Use IP Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/api/cf-lists) for more information.
 
-Before getting started with the Cloudflare Filters API, familiarize yourself with Firewall Rules [expressions](/cf-firewall-rules/fields-and-expressions/). For a complete reference, see [_Firewall Rules language_](/cf-firewall-language).
+Before getting started with the Cloudflare Filters API, familiarize yourself with rule [expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions). For a complete reference, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language).
 
 ## Differences from other Cloudflare APIs
 

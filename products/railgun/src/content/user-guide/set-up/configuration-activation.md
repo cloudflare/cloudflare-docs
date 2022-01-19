@@ -28,7 +28,7 @@ Oct 27 22:29:41 www rg-listener: [Activation] Acquired cert from server
 
 If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/user-guide/set-up/preparing-environment) so that Railgun may connect securely back to Cloudflare’s activation servers.
 
-As an example, we are going to use domain port2408.net. The newly generated certificate is signed against the port2408.net domain and our system will automatically set your new port2408.net subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. More details are in the [Testing Railgun](/user-guide/set-up/configuration-activation/#testing-railgun) section below.
+As an example, we are going to use domain port2408.net. The newly generated certificate is signed against the port2408.net domain and our system will automatically set your new port2408.net subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. More details are in the [Testing Railgun](#testing-railgun) section below.
 
 ## Starting the service
 
@@ -92,6 +92,6 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 
 ## Going live
 
-It is recommended that you consult the [Testing Railgun](/user-guide/installation#testing-railgun) section before enabling Railgun for all visitors to your site.
+It is recommended that you consult the [Testing Railgun](#testing-railgun) section before enabling Railgun for all visitors to your site.
 
 When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.

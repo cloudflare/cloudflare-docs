@@ -5,30 +5,30 @@ pcx-content-type: reference
 
 # Roles and permissions
 
-When creating a Cloudflare for Teams account, you will be given the Super Administrator role. With this role, you can invite members to join your Teams account, and assign them different roles depending on the permissions you’d like to give them.
+When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. With this role, you can invite members to join your Zero Trust account, and assign them different roles depending on the permissions you’d like to give them.
 
-A member can be given one of six roles within a Teams account:
+Only Super Administrators of Enterprise accounts will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
 <TableWrap>
 
-| Role | Permissions |
-| ---- | ----------- |
-| Super Administrator - All Privileges | <ul><li>Can edit any Cloudflare for Teams setting.</li><li>Can make purchases, update billing, and manage memberships.</li><li>Can revoke the access of other Super Administrators.</li></ul> |
-| Administrator | <ul><li>Can access the full Cloudflare for Teams account except for membership management and billing.</li></ul> |
-| Cloudflare for Teams | <ul><li>Can edit Cloudflare for Teams.</li></ul> |
-| Cloudflare for Teams PII | <ul><li>Can access Cloudflare for Teams PII data.</li></ul> |
-| Cloudflare for Teams Read Only | <ul><li>Can access Cloudflare for Teams in read only mode.</li></ul> |
-| Cloudflare for Teams Reporting | <ul><li>Can access Cloudflare for Teams reporting data.</li></ul> |
+| | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
+| -- | -- | -- | -- | -- | -- | -- | -- |
+| Super Administrator | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Cloudflare for Teams | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | - |
+| Cloudflare Access Admin | ✓ | ✓ | ✓ | - | ✓ | ✓ | - | - |
+| Cloudflare Gateway Admin | ✓ | - | ✓ | ✓ | ✓ | ✓ | - | - |
+| Cloudflare for Teams Read Only | ✓ | - | ✓ | - | ✓ | ✓ | - | - |
+| Cloudflare for Teams Reporting | - | - | - | - | ✓ | ✓ | - | - |
 
 </TableWrap>
 
-<Aside>
+## Cloudflare for Teams + PII
 
-Only Enterprise users can assign multiple roles to additional members.
+The Cloudflare for Teams + PII role should be considered add-on role to be combined with any other roles from the table above. If you assign this role to a user in your account, that user will not be able to visualize any PII. For example, you may decide to assign the Cloudflare Gateway Admin role to a user, and add the Cloudflare for Teams + PII role to prevent that user from seeing any PII in the Gateway logs.
 
-</Aside>
+## Assigning or removing a role
 
-To check the list of members in your account, or to add new members:
+To check the list of members in your account, or to manage roles and permissions:
 
 1. Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com).
 1. From your Account Home, navigate to Members.

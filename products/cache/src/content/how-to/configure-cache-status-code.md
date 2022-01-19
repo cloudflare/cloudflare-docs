@@ -21,8 +21,8 @@ By default, Cloudflare caches certain HTTP response codes with the following Ed
 | ------------------ | ------------ |
 | 200, 206, 301      |  120m        |
 | 302, 303           |  20m         |
-| 404, 410           |  10m         |
-| 403                |  1m          |
+| 404, 410           |  3m          |
+| 403                |  0s          |
 | 500, 502, 503, 504 |  0s          |
 
 ## Set cache TTL by response status via the Cloudflare dashboard

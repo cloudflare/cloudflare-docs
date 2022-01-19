@@ -1,17 +1,19 @@
 ---
+title: Fields
 pcx-content-type: reference
-order: 610
+order: 5
 ---
 
-# Fields
+# Fields reference
 
-The Cloudflare Firewall Rules language supports a range of field types:
+The Cloudflare Rules language supports a range of field types:
 
 - [Standard fields](#standard-fields) represent common, typically static properties of an HTTP request.
 - [Dynamic fields](#dynamic-fields) represent computed or derived values, typically related to Cloudflare threat intelligence about the request.
 - [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
-- [HTTP header fields](#http-header-fields) represent the names and values associated with HTTP request headers.
-- [HTTP body fields](#http-body-fields) represent the properties of an HTTP request body, including forms, for example.
+- [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
+- [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
+- [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
 
 ## Standard fields
 
@@ -19,11 +21,11 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 - Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
-  To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/cf-firewall-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
+  To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
 
-- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in Firewall Rules `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
+- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
-- The Cloudflare Firewall Rules language does not support the `slice` operator.
+- The Cloudflare Rules language does not support the `slice` operator.
 
 <Aside type='note' header="Availability notes">
 
@@ -33,7 +35,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these standard fields:
+The Cloudflare Rules language supports these standard fields:
 
 <table>
   <thead>
@@ -116,7 +118,7 @@ The Cloudflare Firewall Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
-         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/cf-firewall-language/functions/#hmac-validation">validation function</a>.
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/rules-language/functions/#hmac-validation">validation function</a>.
          </p>
       </td>
    </tr>
@@ -346,7 +348,7 @@ Access to any fields containing `cf.bot_management` requires a Cloudflare Enterp
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these dynamic fields:
+The Cloudflare Rules language supports these dynamic fields:
 
 <table>
   <thead>
@@ -681,9 +683,9 @@ The Cloudflare Firewall Rules language supports these dynamic fields:
 
 ## URI argument and value fields
 
-The Cloudflare Firewall Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/rules-language/values#arrays) containing the respective values.
 
-The Cloudflare Firewall Rules language supports these URI argument and value fields:
+The Cloudflare Rules language supports these URI argument and value fields:
 
 <table>
   <thead>
@@ -772,11 +774,11 @@ The Cloudflare Firewall Rules language supports these URI argument and value fie
   </tbody>
 </table>
 
-## HTTP header fields
+## HTTP request header fields
 
-The Firewall Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
 
-The Cloudflare Firewall Rules language supports these HTTP header fields:
+The Cloudflare Rules language supports these HTTP header fields:
 
 <table>
    <tr>
@@ -843,7 +845,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
          <br />
          <code class="InlineCode">["application/json"]</code>
          </p>
-         <p>Additionally used for logging requests according to the specified operator and the length/size entered for the header value.
+         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
          </p>
          <p>Example 2:
          <br />
@@ -851,7 +853,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
          </p>
          <p>Example value 2:
          <br />
-         <code class="InlineCode">["gt 10"]</code>
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
          </p>
       </td>
    </tr>
@@ -868,7 +870,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.accepted_languages</code><br /><Type>Array&lt;String&gt;</Type></td>
       <td>
          <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
-         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/cf-firewall-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/rules-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
          <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
          <p>Example 1:<br/>
          Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>
@@ -883,7 +885,7 @@ The Cloudflare Firewall Rules language supports these HTTP header fields:
    </tr>
 </table>
 
-## HTTP body fields
+## HTTP request body fields
 
 <Aside type='note'>
 
@@ -891,7 +893,7 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Firewall Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/cf-firewall-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
 
 <Aside type="warning">
 
@@ -901,7 +903,7 @@ The maximum body size applies only to the values of HTTP body fields — the ori
 
 </Aside>
 
-The Cloudflare Firewall Rules language supports these HTTP body fields:
+The Cloudflare Rules language supports these HTTP body fields:
 
 <table>
   <thead>
@@ -1000,6 +1002,97 @@ The Cloudflare Firewall Rules language supports these HTTP body fields:
       </td>
     </tr>
   </tbody>
+</table>
+
+## HTTP response header fields
+
+The Rules language includes fields that represent properties of HTTP response headers returned by the origin or by a Worker script.
+
+<Aside type="note">
+
+You can only use HTTP response header fields in [HTTP Response Header Modification Rules](https://developers.cloudflare.com/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](https://developers.cloudflare.com/waf/managed-rulesets) ruleset.
+
+</Aside>
+
+The Cloudflare Rules language supports these HTTP response header fields:
+
+<table>
+   <tr>
+      <td><strong>Field Name</strong></td>
+      <td style="width: 50%;"><strong>Description</strong></td>
+   </tr>
+   <tr id="field-http-response-headers">
+      <td valign="top"><code>http.response.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
+      <td>
+         <p>Represents HTTP response headers as a Map (or associative array).
+         </p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the response. The keys convert to lowercase.</p>
+         <p><em><em>Decoding:</em></em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers["server"][*] == "nginx")</code>
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">{'{"server": ["nginx"]}'}</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>http.response.headers.names</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+         <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the case used in the response.
+         </p>
+         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.response.headers.values</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.response.headers.names[*] == "content-type")</code>
+         </p>
+         <p>Example value:
+         <code class="InlineCode">["content-type"]</code>
+         </p>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top"><code>http.response.headers.values</code><br /><Type>Array&lt;String></Type></td>
+      <td>
+         <p>Represents the values of the headers in the HTTP response.</p>
+         <p>Values are not pre-processed and retain the case used in the response.</p>
+         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.response.headers.names</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example 1:
+         <br />
+         <code class="InlineCode">any(http.response.headers.values[*] == "application/json")</code>
+         </p>
+         <p>Example value 1:
+         <br />
+         <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used to match responses according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.response.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
+         </p>
+      </td>
+   </tr>
 </table>
 
 ---

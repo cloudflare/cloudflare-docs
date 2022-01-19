@@ -314,8 +314,8 @@ If you want to add (or remove) fields, change the timestamp format, or enable pr
 
 ```bash
 curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
-    -H 'X-Auth-Key: <YOUR_AUTH_KEY>' \
-    -H 'X-Auth-Email: <YOUR_EMAIL>' | jq .
+    -H 'X-Auth-Key: <API_KEY>' \
+    -H 'X-Auth-Email: <EMAIL>' | jq .
 ```
 
 ### Response 
@@ -346,8 +346,8 @@ Next, edit the `logpull_options` as desired and create a `PUT` request. The foll
 
 ```bash
 curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
-    -H 'X-Auth-Key: <YOUR_AUTH_KEY>' \
-    -H 'X-Auth-Email: <YOUR_EMAIL>' \
+    -H 'X-Auth-Key: <API_KEY>' \
+    -H 'X-Auth-Email: <EMAIL>' \
     -d '{
     "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339&CVE-2021-44228=true"
 }'

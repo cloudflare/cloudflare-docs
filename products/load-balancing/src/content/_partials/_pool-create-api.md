@@ -38,6 +38,9 @@ curl -X POST \
         }
       }
     ],
+    "origin_steering": {
+      "policy": "random"
+    },
     "notification_email":"someone@example.com,sometwo@example.com",
     "notification_filter": {
         "origin": {
@@ -94,6 +97,9 @@ header: Response
         }
       }
     ],
+    "origin_steering": {
+      "policy": "random"
+    },
     "notification_email": "someone@example.com,sometwo@example.com",
     "notification_filter": {
       "origin": {

@@ -33,15 +33,13 @@ There is no limit on number of filters per query.
 
 <Aside>
 
-View analytics is collected only when the Stream player is used. If you use a third party player, view metrics will not appear as part of these metrics.
+View analytics is collected only when the Stream player is used. If you use a third party player, view metrics will not appear as part of these metrics. Review the example below to retrieve the time viewed for videos on your account in a single query.
 
 </Aside>
 
 <Aside>
 
-Docs on this page is in progress. We have provided an example below where you can retrieve time viewed for the videos on your account in a single query.
-
-Please refer to [Cloudflare GraphQL analytics for HTTP requests](https://developers.cloudflare.com/analytics/graphql-api/getting-started) for further details on how to set up a GraphQL client for testing.
+If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP requests](https://developers.cloudflare.com/analytics/graphql-api/getting-started) for more detailed information getting started with the Cloudflare GraphQL Analytics API.
 
 </Aside>
 

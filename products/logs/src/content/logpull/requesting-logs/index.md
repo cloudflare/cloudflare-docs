@@ -22,7 +22,7 @@ The following headers are required for all endpoint calls:
 
 Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
 
-*  `Authorization: Bearer <REDACTED>`
+*  `Authorization: Bearer <API_TOKEN>`
 
 ## Parameters
 
@@ -31,13 +31,13 @@ The API expects endpoint parameters in the GET request query string.  See the ex
 `logs/received`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<fields>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=<unix|rfc3339>&end=<unix|rfc3339>[&count=<int>][&sample=<float>][&fields=<FIELDS>][&timestamps=<string>][&CVE-2021-44228=<boolean>]
 ```
 
-`logs/rayids/<rayid>`
+`logs/rayids/<RAY_ID>`
 
 ```bash
-https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/rayids/<ray_id>?[&fields=<string>][&timestamps=<strings>]
+https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/<RAY_ID>?[&fields=<string>][&timestamps=<strings>]
 ```
 
 The following table describes the parameters available:
@@ -71,17 +71,17 @@ The overlap will be handled correctly.
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=RayID,ClientIP"
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
+    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID"
 ```
 
-`logs/rayids`
+`logs/rayids/<RAY_ID>`
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/47ff6e2c812d3ccb?timestamps=rfc3339"
 ```
 
@@ -94,7 +94,7 @@ The IATA code returned as part of the Ray ID does not need to included in the re
 
 Unless specified in the <em>fields parameter</em>, the API returns a limited set of log fields. This default field set may change at any time. The list of all available fields is at:
 
-`https://api.cloudflare.com/client/v4/zones/<zone_id>/logs/received/fields`
+`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields`
 
 The order in which fields are specified doesn't matter, and the order of fields in the response is not specified.
 
@@ -102,9 +102,9 @@ Using <em>Bash</em> subshell and <em>jq</em>, you can download the logs with all
 
 ```bash
 curl -s \
-    -H "X-Auth-Email: <REDACTED>" \
-    -H "X-Auth-Key: <REDACTED>" \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" \
+    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
-*See [HTTP request fields](/reference/log-fields/#http-requests)* for the currently available fields.
+*Refer to [HTTP request fields](/reference/log-fields/#http-requests)* for the currently available fields.

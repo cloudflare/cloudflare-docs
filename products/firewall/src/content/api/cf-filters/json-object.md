@@ -41,7 +41,7 @@ This table summarizes the object properties:
       </tr>
         <tr>
           <td><code>expression</code><br /><Type>String</Type></td>
-          <td>A Firewall Rules expression used to evaluate requests. For more, see <a href="/firewall/cf-firewall-rules/fields-and-expressions/#expressions"><em>Expressions</em></a>.
+          <td>A Rules language expression used to evaluate requests. For more information, refer to <a href="https://developers.cloudflare.com/ruleset-engine/rules-language/expressions">Expressions</a>.
           </td>
           <td></td>
         </tr>
