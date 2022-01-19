@@ -5,12 +5,14 @@ pcx-content-type: concept
 
 # Services
 
-Services are the new building block for deploying applications on Cloudflare Workers. Unlike the script, a service is composable, which allows services to talk to each other, allowing to develop new kinds of services like routers, middlewares, or traffic gateways - green-blue, canary, mirror deployments gateways.
+Services are the new building block for deploying applications on Cloudflare Workers. Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects or even other services. Services can have multiple environments and can set up pipelines for promoting a service from one environment to another.
+
+Unlike the script, a service is composable, which allows services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Services also support multiple environments, allowing you to test changes in a preview environment, then promote to production when you’re confident.
 Services also support multiple environments, which allow you to test changes in a preview environment, then promote to production when you’re confident it worked.
 
 <Aside type="note">
 
-To enable a seamless transition to services, we’ve automatically migrated every script to become a service with one “production” environment — no action needed.
+To enable a seamless transition to services, all scripts have been automatically migrated to services with one “production” environment — no action needed.
 
 </Aside>
 
@@ -24,6 +26,10 @@ Currently, the dashboard is the only way to interact with service environments. 
 
 </Aside>
 
+Wrangler supports an older version of environments. With Wrangler environments, you create custom contexts for your code to run in by adding keys to your `wrangler.toml` file. Wrangler will then generate a separate script for each environment. If you make a “staging” and “prod” environment for example, Wrangler will generate `my-worker-staging` and `my-worker-prod`. 
+
+Service environments take a cleaner approach. You can create and edit environments directly in the Dashboard. Unlike Wrangler environments, Service environments don’t create extra scripts. They are, however, able to connect to their own KV stores and Durable Objects.
+
 Each environment is resolvable at a unique hostname, which is automatically generated when you create or rename the environment. There’s no waiting around after you deploy. Everything you need, like DNS records, SSL certificates, and more, is ready-to-go seconds later. If you’d like a more advanced setup, you can also add custom routes from your domain to an environment.
 
 ## Service versions
@@ -32,7 +38,7 @@ Each environment in a service has its own version history. Every time there is a
 
 ## Service bindings
 
-Services are composable, allowing one service to talk to another service. To support this, we’re introducing a new API to facilitate service-to-service communication: service bindings.
+Services are composable, allowing one service to talk to another. To support this, we’re introducing a new API to facilitate service-to-service communication: service bindings.
 
 <Aside type="warning">
 
