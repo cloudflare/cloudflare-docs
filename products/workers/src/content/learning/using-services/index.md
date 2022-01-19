@@ -8,7 +8,6 @@ pcx-content-type: concept
 Services are the new building block for deploying applications on Cloudflare Workers. Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects or even other services. Services can have multiple environments and can set up pipelines for promoting a service from one environment to another.
 
 Unlike the script, a service is composable, which allows services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Services also support multiple environments, allowing you to test changes in a preview environment, then promote to production when you’re confident.
-Services also support multiple environments, which allow you to test changes in a preview environment, then promote to production when you’re confident it worked.
 
 <Aside type="note">
 
