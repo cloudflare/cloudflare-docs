@@ -126,7 +126,7 @@ async function generateSignedUrl(url) {
   )
 
   // Signed requests expire after one minute. Note that you could choose
-  // expiration durations dynamically, depending on, e.g. the path or a query
+  // expiration durations dynamically, depending on, for example, the path or a query
   // parameter.
   const expirationMs = 60000
   const expiry = Date.now() + expirationMs

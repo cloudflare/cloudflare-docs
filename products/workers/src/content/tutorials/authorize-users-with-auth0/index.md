@@ -875,7 +875,7 @@ Below is the complete list of secrets that the Workers script will look for when
 
 | `wrangler secret` key | Value                                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| AUTH0_DOMAIN          | Your Auth0 domain (e.g. `https://myapp.auth0.com`). Note this must include the _scheme_ `https://` and should be a valid URL |
+| AUTH0_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). Note this must include the _scheme_ `https://` and should be a valid URL |
 | AUTH0_CLIENT_ID       | Your Auth0 client ID                                                                                                         |
 | AUTH0_CLIENT_SECRET   | Your Auth0 client secret                                                                                                     |
 | AUTH0_CALLBACK_URL    | The callback url for your application (see “Setting the callback url” below)                                                 |
@@ -959,7 +959,7 @@ $ wrangler secret put SALT
 
 #### Allowed origin/callback URLs
 
-Note that Auth0 has great security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application config. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (e.g., `localhost:8787` for [wrangler dev][wrangler dev] usage):
+Note that Auth0 has great security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application config. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for [wrangler dev][wrangler dev] usage):
 
 | URL                                                  | Description          |
 | ---------------------------------------------------- | -------------------- |
@@ -981,7 +981,7 @@ $ wrangler publish
 
 Wrangler will compile your code, upload the associated Workers Sites folder (`public`, by default), and begin handling requests sent to your `*.workers.dev` application, or to your zone. To confirm everything works as expected, you should:
 
-1. Visit your application (e.g., [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
+1. Visit your application (for example, [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
 2. Log in with an email/password or the social identity provider of your choice, if enabled.
 3. Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4. If you see your site, you have successfully authorized users to your Workers application, using Auth0.

@@ -40,7 +40,7 @@ export class DurableObjectExample {
 }
 ```
 
-Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -261,7 +261,7 @@ The destination class (the class that stored objects are being transferred to) f
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
 
-After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 

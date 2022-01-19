@@ -64,7 +64,7 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 
 - Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
-- Route patterns are case sensitive, e.g. `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+- Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
 A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
