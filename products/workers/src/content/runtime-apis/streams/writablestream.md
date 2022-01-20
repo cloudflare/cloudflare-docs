@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 ## Background
 
-A `WritableStream` is the `writable` property of a [`TransformStream`](/runtime-apis/streams/transformstream). On the Workers platform, `WritableStream` can’t be directly created using the `WritableStream` constructor.
+A `WritableStream` is the `writable` property of a [`TransformStream`](/runtime-apis/streams/transformstream). On the Workers platform, `WritableStream` cannot be directly created using the `WritableStream` constructor.
 
 A typical way to write to a `WritableStream` is to simply pipe a [`ReadableStream`](/runtime-apis/streams/readablestream) to it.
 
@@ -23,7 +23,7 @@ const writer = writableStream.getWriter()
 writer.write(data)
 ```
 
-See the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamdefaultwriter) documentation for further detail.
+Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamdefaultwriter) documentation for further detail.
 
 ## Properties
 
@@ -55,7 +55,7 @@ See the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamdefaul
 
 </Definitions>
 
-## See also
+## Related resources
 
 - [Using Streams.](/learning/using-streams)
 - [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)
