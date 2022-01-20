@@ -27,7 +27,7 @@ Currently, the dashboard is the only way to interact with service environments. 
 
 Wrangler supports an older version of environments. With Wrangler environments, you create custom contexts for your code to run in by adding keys to your `wrangler.toml` file. Wrangler will then generate a separate script for each environment. If you make a “staging” and “prod” environment for example, Wrangler will generate `my-worker-staging` and `my-worker-prod`. 
 
-Service environments take a cleaner approach. You can create and edit environments directly in the Dashboard. Unlike Wrangler environments, Service environments don’t create extra scripts. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the Dashboard via the quick editor.
+Service environments take a cleaner approach. You can create and edit environments directly in the Dashboard. Unlike Wrangler environments, Service environments don’t create extra scripts. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the Dashboard via the quick editor. A common workflow is to create an environment for a test feature, edit the code via the quick editor until you are satisfied with it and then promote it to production when the code is ready.
 
 Each environment is resolvable at a unique hostname, which is automatically generated when you create or rename the environment. There’s no waiting around after you deploy. Everything you need, like DNS records, SSL certificates, and more, is ready-to-go seconds later. If you’d like a more advanced setup, you can also add custom routes from your domain to an environment.
 
