@@ -46,4 +46,4 @@ Some email providers will discard what they interpret as an incoming duplicate e
 
 ## DMARC enforcing
 
-Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). Depending on the sender DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). Depending on the sender's DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
