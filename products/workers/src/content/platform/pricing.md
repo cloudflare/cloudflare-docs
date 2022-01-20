@@ -22,7 +22,7 @@ All included usage is on a monthly basis.
   
 </TableWrap>
 
-1. Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
+1. Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, metered at a granularity of 1ms, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
 
 2. Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
