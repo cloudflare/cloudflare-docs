@@ -65,8 +65,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 * `destination_conf` - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, sourcetype, authorization header in the string format below. 
 
   * `<SPLUNK_ENDPOINT_URL>`: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
-      * Cloudflare expects the HEC network port to be configured to :443 or :8088. 
-      * Cloudflare expects the Splunk endpoint to be /services/collector/raw while configuring and setting up the Logpush job.  
+      * Cloudflare expects the HEC network port to be configured to `:443` or `:8088`. 
+      * Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.  
       * Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
   * `<SPLUNK_CHANNEL_ID>`: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/). 
