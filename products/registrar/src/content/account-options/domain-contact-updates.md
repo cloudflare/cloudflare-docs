@@ -26,7 +26,8 @@ If you do not have to update these fields, your contact information is updated i
 
 <Aside type='warning' header='Important'>
 
-After clicking the **Accept** button in the approval email Cloudflare sends you, your domain will be transfer-locked for 60 days. If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button.
+After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.  
+If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button.
 
 </Aside>
 
