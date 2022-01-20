@@ -243,7 +243,35 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current environment's script.
+  - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
+
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example an environment named `staging`:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
+]
+```
+
+Because Wrangler [appends the environment name to the top-level name](/platform/environments#naming) when publishing, for a worker named `worker-name` the above example is equivalent to:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
+]
+```
+
+Note that EXAMPLE_CLASS in the staging environment is bound to a different script name compared to the top-level EXAMPLE_CLASS binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+
+```toml
+[env.another]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
+]
+```
+
 
 ### Configuring Durable Object classes with migrations
 
