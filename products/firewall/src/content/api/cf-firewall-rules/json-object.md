@@ -15,7 +15,7 @@ A JSON response for the [Firewall Rules API](https://api.cloudflare.com/#firewal
   "id": "772bf1026a72c400ea576db1ffa16407",
   "filter": {
     "id": "6f58318e7fa2477a23112e8118c66f61",
-    "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\""
+    "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\"",
     "paused": false,
     "description": "WordPress login paths",
     "ref": ""
@@ -103,6 +103,6 @@ Priority plays a key role in configuring Firewall Rules. With Cloudflare Filters
 
 Requests from the office IP range using the user agent to block would trigger both rules, but we cannot both allow and block the request. To solve this problem, Firewall Rules follows a strict ordering depending on action and priority.
 
-Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action according to their [order of precedence](/cf-firewall-rules/actions#supported-actions). In the example above, if no priority is set, the `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
+Cloudflare prioritizes rules in descending order, such that priority 1 is first and rules with no priority are last. For rules of equal priority, Cloudflare orders them by action according to their [order of precedence](/cf-firewall-rules/actions#supported-actions). In the example above, if no priority is set, the rule `allow request from the office IP range` would apply because the _allow_ action has a higher precedence than _block_.
 
 To reduce the risk of unintended behavior, it is best to explicitly specify the desired priority for potentially conflicting rules.
