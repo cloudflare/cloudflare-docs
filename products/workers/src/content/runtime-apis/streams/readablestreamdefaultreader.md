@@ -23,7 +23,7 @@ const reader = readable.getReader()
 
 - `closed` <Type>Promise</Type>
 
-  -  A promise indicating if the reader is closed. The promise is fulfilled when the reader stream closes, and is rejected if there is an error in the stream.
+  -  A promise indicating if the reader is closed. The promise is fulfilled when the reader stream closes and is rejected if there is an error in the stream.
 
 </Definitions>
 
@@ -47,11 +47,11 @@ const reader = readable.getReader()
 
 - `releaseLock()` <Type>void</Type>
 
-  - Releases the lock on the readable stream. A lock can’t be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
+  - Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
 
 </Definitions>
 
-## See also
+## Related resources
 
-- [Using Streams.](/learning/using-streams)
-- [Readable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#rs-model)
+- [Using Streams](/learning/using-streams)
+- [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
