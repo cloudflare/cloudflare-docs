@@ -64,7 +64,7 @@ To enable Logpush to Amazon S3:
 
     Note: Buckets in China regions (`cn-north-1`, `cn-northwest-1`) are currently not supported.
 
-1. Edit and paste the policy below into **S3** > **Bucket** > **Permissions** > **Bucket Policy** (make sure to replace the `Resource` value with your own bucket path):
+1. Edit and paste the policy below into **S3** > **Bucket** > **Permissions** > **Bucket Policy**, replacing the `Resource` value with your own bucket path:
 
 ```json
 {
