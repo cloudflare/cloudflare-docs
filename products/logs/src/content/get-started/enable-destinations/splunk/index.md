@@ -70,7 +70,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
       * Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
   * `<SPLUNK_CHANNEL_ID>`: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/). 
-      * Using command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`. 
+      * Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`. 
   * `<INSECURE_SKIP_VERIFY>`: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
