@@ -10,6 +10,6 @@ Cloudflare Enterprise customers have access to detailed logs of the metadata gen
 
 Push your request or event logs to your cloud service provider using [Logpush](/get-started/), which can be configured via the Cloudflare dashboard or API.
 
-If you only want to see logs of HTTP requests, you can also use [Logpull](/logpull/). The data from **Logpull** and **Logpush** is exactly the same.
+If you only want to have access to HTTP request logs, you can also use [Logpull](/logpull/). The data from **Logpull** and **Logpush** is exactly the same.
 
 By default, Cloudflare does not retain your HTTP request logs. However, if you are a Spectrum customer, logs of Spectrum events are retained automatically.

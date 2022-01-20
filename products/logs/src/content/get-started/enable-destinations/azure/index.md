@@ -26,7 +26,7 @@ To enable the Cloudflare Logpush service:
 
 1. Select the data set you want to push to a storage service.
 
-1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
 1. Select **Microsoft Azure**.
 
@@ -45,15 +45,18 @@ Once connected, Cloudflare lists Microsoft Azure as a connected service under **
 
 ## Manage via API
 
-Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You'll need to provide *Write* permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
+Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You will need to provide `Write` permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
 
 <EnableReadPermissions/>
 
 To enable Logpush to Azure:
 
-1. Create a Blob Storage container. *See [instructions from Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal)*.
+1. Create a Blob Storage container. Refer to [instructions from Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal).
 
-1. Create a shared access signature (SAS). To learn about shared access signatures, *see [information from Azure](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)*. Logpush requires a *service-level SAS*, which provides the most restricted access. To create a service-level SAS, *see [instructions from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas)* or use the *Storage Explorer* feature in your storage account portal. Select *Storage Explorer*, navigate to and then right-click on your blob container to see the *Get Shared Access Signature* option. Select that option, set an expiry time of at least 5 years, and select only *Write* permission.
+1. Create a shared access signature (SAS). To learn about shared access signatures, refer to [information from Azure](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview). 
+     * Logpush requires a service-level SAS, which provides the most restricted access. 
+     * To create a service-level SAS, refer to [instructions from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas) or use the **Storage Explorer** feature in your storage account portal. 
+     * Select **Storage Explorer**, navigate to **Blob Containers** and then right-click on your blob container to see the **Get Shared Access Signature** option. Select that option, set an expiration time of at least 5 years, and select only **Write** permission.
 
 1. Provide the SAS URL when prompted by the Logpush API or UI.
 

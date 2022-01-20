@@ -24,9 +24,9 @@ To enable the Cloudflare Logpush service:
 
 1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the data set you want to push to a storage service.
+1. Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
 1. Select **Splunk**.
 
@@ -46,8 +46,8 @@ Once connected, Cloudflare lists Splunk as a connected service under **Logs** > 
 ## Manage via API
 
 To set up a Splunk Logpush job:
-1. Create a job with the appropriate endpoint URL and authentication parameters
-1. Enable the job to begin pushing logs
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+1. Enable the job to begin pushing logs.
 
 <Aside type="note" header="Note">
 
@@ -64,29 +64,29 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 * `name` (optional) - Use your domain name as the job name.
 * `destination_conf` - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, sourcetype, authorization header in the string format below. 
 
-  * `<SPLUNK_ENDPOINT_URL>`: The Splunk raw HTTP Event Collector URL with port. Example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
-      * Cloudflare expects the HEC network port to be configured to :443 or :8088. 
-      * Cloudflare expects the Splunk endpoint to be /services/collector/raw while configuring and setting up the Logpush job.  
-      * Ensure you've enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
+  * `<SPLUNK_ENDPOINT_URL>`: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
+      * Cloudflare expects the HEC network port to be configured to `:443` or `:8088`. 
+      * Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.  
+      * Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
   * `<SPLUNK_CHANNEL_ID>`: A unique channel ID. This is a random GUID that you can generate by:
-      * Using an online tool like the [GUID generator](https://www.guidgenerator.com/) 
-      * Using command line.  Example: `python -c 'import uuid; print(uuid.uuid4())'` 
+      * Using an online tool like the [GUID generator](https://www.guidgenerator.com/). 
+      * Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`. 
   * `<INSECURE_SKIP_VERIFY>`: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
 </Aside>
 
-  * `<SOURCE_TYPE>`: The Splunk sourcetype. Example: `cloudflare:json`.
-  * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. Example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
+  * `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
+  * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
 ```bash
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
 ```
 
-* `dataset` - The category of logs you want to receive, which is either `http_requests` (default), `spectrum_events`, or `firewall_events`.
+* `dataset` - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
 
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`
+* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
@@ -167,7 +167,7 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
   Field | Operator | Value
   ------|----------|------
   Request Method | `equals` | `POST`
-  Hostname | `equals` | Your Splunk endpoint hostname. Example: `splunk.cf-analytics.com`
+  Hostname | `equals` | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com`
   URI Path | `equals` | `/services/collector/raw`
   URI Query String | `contains` | `channel`
   AS Num | `equals` | `132892`
