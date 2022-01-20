@@ -77,7 +77,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
 </Aside>
 
-  * `<SOURCE_TYPE>`: The Splunk sourcetype. For example: `cloudflare:json`.
+  * `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
   * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
 ```bash
