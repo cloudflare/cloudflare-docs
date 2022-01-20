@@ -45,7 +45,7 @@ Once connected, Cloudflare lists Microsoft Azure as a connected service under **
 
 ## Manage via API
 
-Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You will need to provide *Write* permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
+Cloudflare uses a service-level shared access signature (SAS) to gain access to your Blob Storage container. You will need to provide `Write` permission and an expiration period of at least 5 years, which will allow you to not worry about the SAS token expiring.
 
 <EnableReadPermissions/>
 
