@@ -9,7 +9,7 @@ pcx-content-type: tutorial
 
 ## Overview
 
-Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a backend server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and a recent improvement to the PostgreSQL developer experience — [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.
+Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a back-end server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and an improvement to the PostgreSQL developer experience — [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
@@ -181,7 +181,7 @@ header: Install itty-router
 $ npm install itty-router
 ```
 
-With `itty-router` installed, import the package into `index.js`, and instantiate a new router at the top of your serverless function:
+With `itty-router` installed, import the package into `index.js` and instantiate a new router at the top of your serverless function:
 
 ```js
 ---
@@ -211,7 +211,7 @@ router.get('/users', async () => {
 })
 ```
 
-With the first route configured, the Workers function needs to pass requests off to the `router`. To do this, remove the `handleRequest` function, and call `router.handle` in the `fetch` event listener directly:
+With the first route configured, the Workers function needs to pass requests off to the `router`. To do this, remove the `handleRequest` function and call `router.handle` in the `fetch` event listener directly:
 
 ```js
 ---
@@ -234,7 +234,7 @@ async function handleRequest(request) {
 }
 ```
 
-Deploy the new version of the function with `wrangler publish`. The previous code now runs at `/users`, and returns a JSON array of users:
+Deploy the new version of the function with `wrangler publish`. The previous code now runs at `/users` and returns a JSON array of users:
 
 ```json
 ---
@@ -375,7 +375,9 @@ $ curl https://postgrest-worker-example.signalnerve.workers.dev/users -X POST -H
 
 ## Conclusion
 
-In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely-scaling and secure approach to interfacing between your databases and your front-end applications, while still retaining the control and flexibility of avoiding lock-in to Database-as-a-Service tools and other complicated SDKs for data management.
+In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Workers to build a serverless API for your PostgreSQL database. This architecture provides an infinitely scaling and secure approach to interfacing between your databases and your front-end applications, while still retaining the control and flexibility of avoiding lock-in to Database-as-a-Service tools and other complicated SDKs for data management.
+
+## Related resources
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below. 
 
