@@ -16,7 +16,7 @@ pcx-content-type: concept
 | [Environment variables](#environment-variables)                                 | 32/worker | 32/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
-| [Number of scripts](#number-of-scripts)                                         | 30        | 100       |
+| [Number of Environments](#number-of-Environments)                               | 30        | 100       |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
@@ -225,9 +225,9 @@ Each environment variable has a size limitation of 5 KB.
 
 A Workers script can be up to 1 MB in size after compression.
 
-### Number of scripts
+### Number of environments
 
-Unless otherwise negotiated as a part of an enterprise level contract, all Workers accounts are limited to a maximum of 30 scripts at any given time.
+Unless otherwise negotiated as a part of an enterprise level contract, Free Tier Workers accounts can create a maximum of 30 environments, while Paid Tier Workers accounts can create 100 environments.
 
 <Aside type="note">
 
