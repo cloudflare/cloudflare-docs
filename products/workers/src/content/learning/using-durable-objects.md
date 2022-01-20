@@ -229,13 +229,15 @@ Workers that use modules syntax must have a "main" module specified from which a
 
 ### Configuring Durable Object bindings
 
-Durable Objects bindings can be configured in `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding.
+Durable Objects bindings can be configured in `wrangler.toml` by providing the class name and script name whose objects you wish to access using the binding. The script name can be omitted when creating a binding for a class that is defined in the same Worker as the binding. Currently bindings for objects is bugged under different environments, and a solution is [pending](https://github.com/cloudflare/wrangler/issues/2142).
 
 ```toml
 [durable_objects]
 bindings = [
   { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
+[env.staging]
+durable_objects.bindings = [{name = "COUNTER", class_name = "Counter"}]
 ```
 
 The `[durable_objects]` section has 1 subsection:
