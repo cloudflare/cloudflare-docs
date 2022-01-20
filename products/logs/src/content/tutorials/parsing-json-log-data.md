@@ -20,7 +20,7 @@ In this tutorial, you will learn how to parse your JSON log data using *jq*.  To
 
 To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several *jq* commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
 
-The three examples below match on a field name and provides a count of each field instance, sorted in ascending order by count.
+The following examples match on a field name and provide a count of each field instance, sorted in ascending order by count.
 
 ```bash
 $ jq -r .ClientRequestURI logs.json | sort -n | uniq -c | sort -n | tail
@@ -58,7 +58,7 @@ $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 
 ## Filtering fields
 
-Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like *Which URLs saw the most 502 errors?*. For example:
+Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like *Which URLs saw the most 502 errors?* For example:
 
 ```bash
 $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort -n | uniq -c | sort -n | tail
@@ -70,7 +70,7 @@ $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort
 18 "/"
 ```
 
-To see the top IP addresses blocked by the Cloudflare WAF:
+To find out the top IP addresses blocked by the Cloudflare WAF, use the following query:
 
 ```bash
 $ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
@@ -79,7 +79,7 @@ $ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c
 
 ## Showing cached requests
 
-To see your cache ratios, try the following query:
+To retrieve your cache ratios, try the following query:
 
 ```bash
 $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
@@ -93,7 +93,7 @@ $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 
 ## Showing TLS versions
 
-To see what TLS versions your visitors are using &mdash; for example, to decide if you can disable TLS versions that are older than 1.2 &mdash; use the following query:
+To find out which TLS versions your visitors are using &mdash; for example, to decide if you can disable TLS versions that are older than 1.2 &mdash; use the following query:
 
 ```bash
 $ jq -r '.ClientSSLProtocol' logs.json | sort -n | uniq -c | sort -n
