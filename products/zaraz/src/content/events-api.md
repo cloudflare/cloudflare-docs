@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Events API
 
-Cloudflare Zaraz has an Events API that lets you customize Zaraz to your needs. Just add the Events API JavaScript code to your website to get started. If you want to use the API in your HTML code, place it inside the `<body>` element.  
+Cloudflare Zaraz has an Events API that lets you customize Zaraz to your needs. To get started, add the Events API JavaScript code to the `<body>` element of your website.
 
 ## Zaraz Track
 

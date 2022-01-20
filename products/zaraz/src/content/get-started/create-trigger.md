@@ -29,9 +29,13 @@ To create a new, custom trigger:
 
     The following is an example of a complete rule:
 
-    ```txt
-    {{ client.__zarazTrack }} Contains purchase
-    ```
+    <TableWrap>
+
+    | Variable name | Match operation | Match string |
+    | ------------- | --------------- | ------------ |
+    | `{{ client.__zarazTrack }}` | _Contains_ | `purchase` |
+
+    </TableWrap>
 
 1. Click **Save**. 
 
