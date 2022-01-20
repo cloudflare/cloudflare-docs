@@ -60,7 +60,9 @@ For illustrative purposes, imagine that you want to store logs in the bucket `bu
 
 To enable Logpush to Amazon S3:
 
-1. Create an S3 bucket. Refer to [instructions from Amazon](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). Note: buckets in China regions (cn-north-1, cn-northwest-1) are currently not supported.
+1. Create an S3 bucket. Refer to [instructions from Amazon](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html).
+
+    Note: Buckets in China regions (`cn-north-1`, `cn-northwest-1`) are currently not supported.
 
 1. Edit and paste the policy below into **S3** > **Bucket** > **Permissions** > **Bucket Policy** (make sure to replace the `Resource` value with your own bucket path):
 
