@@ -57,7 +57,7 @@ Valid options for the `options` object include:
 - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
   - The headers for the response.
 - `ok` <Type>boolean</Type>
-  - A boolean indicating if the response was successful (status in the range 200-299).
+  - A boolean indicating if the response was successful (status in the range `200`-`299`).
 - `redirected` <Type>boolean</Type>
   - A boolean indicating if the response is the result of a redirect. If so, its URL list has more than one entry.
 - `status` <Type>int</Type>
