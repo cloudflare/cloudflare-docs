@@ -33,7 +33,7 @@ To create a new, custom trigger:
 
     | Variable name | Match operation | Match string |
     | ------------- | --------------- | ------------ |
-    | `{{ client.__zarazTrack }}` | **Contains** | `purchase` |
+    | `{{ client.__zarazTrack }}` | _Contains_ | `purchase` |
 
     </TableWrap>
 
