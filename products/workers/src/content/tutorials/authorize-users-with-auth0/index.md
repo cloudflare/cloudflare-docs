@@ -409,7 +409,7 @@ const validateToken = token => {
 }
 ```
 
-With the decoded JWT available and validated, you can hash and salt the `sub` value and use it as a unique identifier for the current user. To do this, use the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) available inside the Workers runtime. Combine the `SALT` value, a secret that you will set later in the tutorial, with the `sub` value. By creating a SHA-256 digest of these combined strings, use it as the key for storing the user’s JWT in Workers KV:
+With the decoded JWT available and validated, you can hash and salt the `sub` value and use it as a unique identifier for the current user. To do this, use the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) available inside the Workers runtime. Combine the `SALT` value, a secret that you will set later in the tutorial, with the `sub` value. After creating a SHA-256 digest of these combined strings, use the digest as the key for storing the user’s JWT in Workers KV:
 
 ```js
 ---
