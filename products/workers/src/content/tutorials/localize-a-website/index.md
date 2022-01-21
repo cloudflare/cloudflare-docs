@@ -44,7 +44,7 @@ The newly generated `i18n-example` project will contain two folders: `public`, w
 
 <pre class="CodeBlock CodeBlock-scrolls-horizontally" language="sh"><code><u><b class="CodeBlock--token-directory">~/i18n-example</b> <b class="CodeBlock--token-prompt">$</b> </u>ls<br/><u><b class="CodeBlock--token-value">public    workers-site  wrangler.toml</b></u></code></pre>
 
-Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP link) of the code for this project and copy the `public` folder to your own project to get started.
+Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
 With the static HTML for this project updated, you can focus on the Workers script inside of the `workers-site` folder, at `index.js`.
 
@@ -85,7 +85,7 @@ Begin with the `workers-site/index.js` file. Your Workers application in this tu
 
 Inside of this file, the default code for running a [Workers Site](/platform/sites) has been provided. The crucial part of the generated code lives in the `handleEvent` function. The `getAssetFromKV` function retrieves a website asset uploaded from your local `./public` folder, makes it live on Workers KV, and returns it to the user. For now, ignore `getAssetFromKV` (though if you would like to learn more, refer to [the documentation](/platform/sites/start-from-worker).
 
-To implement translations on the site, take the HTML response retrieved from KV and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [HTMLRewriter documentation](/runtime-apis/html-rewriter) for more advanced usage) to locate all elements with the `data-i18n-key` attribute, which signifies their need for translation. Any matching element will be passed to an instance of your `ElementHandler` class, which will contain the translation logic. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
+To implement translations on the site, take the HTML response retrieved from KV and pass it into a new instance of `HTMLRewriter`. When instantiating `HTMLRewriter`, you can attach handlers using the `on` function. For this tutorial, you will use the `[data-i18n-key]` selector (refer to the [HTMLRewriter documentation](/runtime-apis/html-rewriter) for more advanced usage) to locate all elements with the `data-i18n-key` attribute, which means that they must be translated. Any matching element will be passed to an instance of your `ElementHandler` class, which will contain the translation logic. With the created instance of `HTMLRewriter`, the `transform` function takes a `response` and can be returned to the client:
 
 ```js
 ---

@@ -21,18 +21,18 @@ As of August 2020, the WP2Static plugin is closed for downloads on WordPress.org
 
 In this tutorial, you will migrate a WordPress site to Cloudflare Workers, making use of [Workers Sites](/platform/sites). Serving a static version of your WordPress site has many advantages over directly exposing your WordPress site. While WordPress is extremely powerful and easy to use, the consistent discovery of new vulnerabilities make it an obvious target for hackers to attack. Because WordPress is built on PHP, each incoming request to your site regenerates a new response on the server – for most websites this is not necessary, and leads to scaling issues when your site receives a lot of traffic.
 
-You will use the free WordPress plugin [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/), which generates a completely static (HTML, CSS, and JS) version of your WordPress site. Using [Wrangler](https://github.com/cloudflare/wrangler), you will publish the site to Cloudflare Workers. The Workers Sites functionality built into Wrangler includes support for serving and caching your site directly in Cloudflare’s CDN, enabling users to view your site quickly and securely.
+You will use the free WordPress plugin [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/), which generates a completely static (HTML, CSS, and JavaScript) version of your WordPress site. Using [Wrangler](https://github.com/cloudflare/wrangler), you will publish the site to Cloudflare Workers. The Workers Sites functionality built into Wrangler includes support for serving and caching your site directly in Cloudflare’s CDN, enabling users to view your site quickly and securely.
 
 ## Prerequisites
 
 This tutorial assumes that you are:
 
-- the Administrator account on your WordPress site.
-- able to install WordPress Plugins on the site.
+- The Administrator account on your WordPress site.
+- Able to install WordPress plugins on the site.
 
 ## Setup
 
-To start,  install the [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/) plugin to export your WordPress site to a zip file. In your WordPress admin, navigate to the **Add Plugins** page, by default at `/wp-admin/plugin-install.php`. In the search bar, search WP2Static and confirm that the resulting plugin that you will be installing matches the plugin below.
+To start,  install the [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/) plugin to export your WordPress site to a ZIP file. In your WordPress admin, navigate to the **Add Plugins** page, by default at `/wp-admin/plugin-install.php`. In the search bar, search for `WP2Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
 ![Installing the plugin](./media/wordpress--install-plugin.png)
 
@@ -40,11 +40,11 @@ Select **Install** on the plugin. After it has finished installing, select **Act
 
 ### Export your WordPress site
 
-When your application refreshes, you should see a new section of your sidebar called WP2Static. Navigate to that section to begin your first static WordPress export.
+When your application refreshes, you should see a new section in your sidebar called **WP2Static**. Navigate to that section to begin your first static WordPress export.
 
-From the **Where will you host..** dropdown on the page, select _ZIP archive (.zip)_. WP2Static supports a number of different export types, including manual and automated exports. To make deployment easier, select **Allow offline usage** – this will make all the URLs in your WordPress export relative: `/logo.png` versus `https://mysite.com/logo.png`, and will reduce the number of asset errors that could occur depending on your theme and WordPress setup.
+From the **Where will you host...** dropdown on the page, select _ZIP archive (.zip)_. WP2Static supports a number of different export types, including manual and automated exports. To make deployment easier, select **Allow offline usage** – this will make all the URLs in your WordPress export relative: `/logo.png` versus `https://mysite.com/logo.png`, and will reduce the number of asset errors that could occur depending on your theme and WordPress setup.
 
-To do your first export, select **Start static site export** (this may take a while), and when it completes, save the ZIP file somewhere you can easily find it later.
+To do your first export, select **Start static site export** (this operation may take a while), and when it completes, save the ZIP file somewhere you can easily find it later.
 
 ![Exporting your WordPress site](./media/wordpress--export.png)
 
@@ -68,8 +68,8 @@ The [`--site`](/platform/sites/configuration) flag indicates that you want to de
 The newly generated `wp-static` directory will contain three components:
 
 1. A `public` directory, representing the site you want to deploy to Workers. This will be the location of your WordPress site.
-2. A `workers-site` directory, which contains the Workers script that will serve your website content. In this tutorial, you will not change anything in this folder.
-3. A `wrangler.toml` file, which contains the configuration details for our `wp-static` file. You will populate this file with some information before the project is deployed.
+1. A `workers-site` directory, which contains the Workers script that will serve your website content. In this tutorial, you will not change anything in this folder.
+1. A `wrangler.toml` file, which contains the configuration details for your `wp-static` directory. You will populate this file with some information before the project is deployed.
 
 When deploying a website using Workers Sites, your static code – your HTML, CSS, and JavaScript – will be uploaded to Workers KV. The location of these files is by default the `public` folder mentioned above.
 
@@ -103,7 +103,7 @@ $ tree wp-static
 
 ## Deploying
 
-To preview and deploy our application, fill out the fields in your `wrangler.toml` file — the configuration file for this project. Fill out the [`account_id`](/get-started/guide#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
+To preview and deploy your application, fill out the fields in your `wrangler.toml` file — the configuration file for this project. Fill out the [`account_id`](/get-started/guide#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
 
 Using Wrangler’s preview feature, you can quickly upload a version of your site to the Cloudflare Workers preview service and review that the static export looks as expected. Running `wrangler dev` will upload your static site and preview it in a browser window.
 
