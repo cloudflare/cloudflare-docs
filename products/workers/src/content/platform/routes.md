@@ -1,5 +1,4 @@
 ---
-order: 4
 pcx-content-type: concept
 ---
 
