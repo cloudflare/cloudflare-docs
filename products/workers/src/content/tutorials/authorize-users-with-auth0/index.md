@@ -633,7 +633,7 @@ To configure your deployment and publish the application, you can go to the [**P
 
 This tutorial introduces concepts for implementing authentication in Workers using Auth0. There are several potential customizations and improvements to this codebase that are out-of-scope for this tutorial. This tutorial will briefly mention a few in this section, along with links to learn more.
 
-### Using user data in our application
+### Using user data in your application
 
 In the previous section of the tutorial, you made a request to Auth0’s `/userinfo` endpoint, which provides information such as name and email address for use in your application. Using Workers’ [HTML Rewriter](/runtime-apis/html-rewriter), you can embed the `userInfo` object that you received from Auth0 directly into your site by creating an instance of the `HTMLRewriter` class and attaching a `hydrateState` handler to any found `head` tags that pass through the rewriter. The `hydrateState` handler will add a new `script` tag with an ID of `edge_state`, which you can parse and utilize in any front-end JavaScript code you will deploy with your application. Instead of simply returning `response` in `handleEvent`, replace it with the HTML rewriter code and return a transformed version of `response`:
 
