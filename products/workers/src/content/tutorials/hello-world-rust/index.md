@@ -127,7 +127,7 @@ Wrangler has built-in support for bundling, uploading, and releasing your Cloudf
 
 ![Publish](./media/publish.gif)
 
-## Resources
+## Related resources
 
 In this tutorial, you built and published a Rust-generated WebAssembly serverless function that parses Markdown. If you would like to review the full source code for this application, you can find it [on GitHub](https://github.com/granjef3/rustwasm-markdown-parser).
 
