@@ -166,7 +166,7 @@ To cache responses in a Workers function, the Cache API provides `cache.match`, 
 2. If `response` does not exist, get the asset from cloud storage, set it to `response`, and cache it.
 3. Return `response` from the function, back to the `fetch` event handler.
 
-The `Cache-Control` header is a common way that HTML responses indicate how they should be cached. The Workers implementation respects the `Cache-Control` header, in indicating how assets should be cached on Cloudflare’s CDN. In building a custom asset serving solution, and enabling caching, you should set a custom `Cache-Control` header (in this example, you will set it to `public`, and a `max-age` value of `14400` seconds, or four hours). 
+The `Cache-Control` header is a common way that HTML responses indicate how they should be cached. The Workers implementation respects the `Cache-Control` header, in indicating how assets should be cached on Cloudflare’s CDN. In building a custom asset serving solution, and enabling caching, you should set a custom `Cache-Control` header (in this example, you will set it to `public`, with a `max-age` value of `14400` seconds, or four hours). 
 
 When the asset is retrieved from cloud storage, the `serveAsset` function should construct a new instance of `Response`, copying much of the HTML response data from the cloud storage response, but overwriting the response headers. By doing this, you will define your own custom caching information, and passing it to the Workers Cache API.
 
