@@ -829,7 +829,7 @@ Deploying an origin version of this code can be a useful approach for users who 
 
 ## Publish
 
-You are ready to deploy our application to Workers. Before you can deploy your application, you need to set some configuration values both in Workers and Auth0.
+You are ready to deploy your application to Workers. Before you can deploy your application, you need to set some configuration values both in Workers and Auth0.
 
 ### Configuring `wrangler.toml`
 
