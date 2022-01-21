@@ -994,6 +994,8 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 
 By completing this tutorial, you have successfully built an application that authorizes and authenticates users on the edge using Cloudflare Workers. To see the final version of the project you built in this tutorial, refer to the example GitHub repository: [signalnerve/workers-auth0-example](https://github.com/signalnerve/workers-auth0-example/).
 
+## Related resources
+
 You can build a lot more with Workers, such as serving static and JAMstack-style applicatoins using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
 
 - [Build a Slack bot](/tutorials/build-a-slackbot)
