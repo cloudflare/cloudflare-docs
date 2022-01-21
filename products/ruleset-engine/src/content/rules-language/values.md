@@ -10,7 +10,7 @@ When an HTTP request reaches Cloudflare’s edge, Cloudflare creates a table of 
 The values that populate the lookup tables of the Rules language are drawn from a variety of sources:
 
 - **Primitive properties** are obtained directly from the request (`http.request.uri.path`, for example).
-- **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.patch)` converts the value of `http.request.uri.path` to lowercase.
+- **Derived values** are the product of a transformation, composition, or basic operation. For example, the transformation `lower(http.request.uri.path)` converts the value of `http.request.uri.path` to lowercase.
 - **Computed values** are the product of a lookup, computation, or other intelligence. For example, Cloudflare uses a machine learning process to dynamically calculate threat scores, represented by the `cf.threat_score` field.
 
 When working with values in rule expressions, keep in mind the notes outlined below for escape characters, case sensitivity, and boolean values.
