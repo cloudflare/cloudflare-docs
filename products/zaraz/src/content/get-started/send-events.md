@@ -1,6 +1,7 @@
 ---
 order: 4
 pcx-content-type: how-to
+title: Events
 ---
 
 # Send events to a third-party tool
