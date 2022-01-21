@@ -26,82 +26,53 @@ The `Subtag` code indicates a value of `tr`, which is the value you should send 
 
 A label is generated from the provided language, and the label will be visible for user selection in the player. For example, if `tr` is sent, the `Türkçe` label is created. If `de` is sent, the `Deutsch` label is created.
 
-## Add or modify captions
+## Manage  captions
 
-To add or modify captions, make a `PUT` request to the `captions` endpoint.
+Refer to the API information below to manage captions.
 
-```bash
-curl -X PUT \
- -H 'Authorization: Bearer $TOKEN' \
- -F file=@/Users/mickie/Desktop/example_caption.vtt \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/$LANGUAGE
-```
+<TableWrap>
 
-Example response to add or modify a caption
+<table>
+  <thead>
+  <tr>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-subtitles/captions-upload-a-caption/subtitle">Add captions</a>
+   </td>
+   <td><Code>PUT</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/:video_identifier/captions/:language</Code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-subtitles/captions-delete-a-caption/subtitle">Delete captions</a>
+   </td>
+   <td><Code>DELETE</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/:video_identifier/captions/:language</Code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-live-inputs-list-outputs-associated-with-a-live-input">List captions</a>
+   </td>
+   <td><Code>GET</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/:video_identifier/captions</Code>
+   </td>
+  </tr>
+  </tbody>
+</table>
 
-```bash
-{
-  "result": {
-    "language": "en",
-    "label": "English"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
+</TableWrap>
 
-## List captions
-
-Use the command below to view captions associated with a video.
-
-```bash
-curl -H 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
-```
-
-Example response to get the captions associated with a video
-
-```bash
-{
-  "result": [
-    {
-      "language": "en",
-      "label": "English"
-    },
-    {
-      "language": "de",
-      "label": "Deutsch"
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
-
-## Delete captions
-
-To delete captions, make a `DELETE` request to the `/captions` endpoint.
-
-```bash
-curl -X DELETE \
- -H 'Authorization: Bearer $TOKEN' \
- https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions/$LANGUAGE
-```
-
-If there is an entry in the `errors` response field, the caption has not been deleted.
-
-Example response to delete captions
-
-```bash
-{
-  "result": "",
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
 
 ## Limitations
 

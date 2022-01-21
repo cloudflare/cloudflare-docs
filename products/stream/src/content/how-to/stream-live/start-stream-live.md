@@ -7,6 +7,8 @@ pcx-content-type: tutorial
 
 You can start a live stream using the Stream Dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS.
 
+As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you use to push RTMP feeds automatically reconnects if the connection breaks. Some apps, like OBS, reconnect automatically while other apps, like FFmpeg, require custom configuration.
+
 ## Use the Dashboard
 
 1. Log in to your Cloudflare account.
@@ -28,48 +30,81 @@ A few seconds after pushing your live stream to Cloudflare Stream, the live vide
 
 To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint.
 
-```bash
-curl -X POST \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10, "requireSignedURLs": false, "allowedOrigins": ["*.example.com"] }}'
-```
+<TableWrap>
 
-Refer to the API documentation for [Create a live input endpoint](https://api.cloudflare.com/#stream-live-inputs-create-a-live-input) and review the `recording` parameter's properties for acceptable values.
+<table>
+  <thead>
+  <tr>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-live-inputs-create-a-live-input">Create live input</a>
+   </td>
+   <td><Code>POST</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/live_inputs</Code>
+   </td>
+  </tr>
+  </tbody>
+</table>
 
-A successful response will return information about the live input.
+</TableWrap>
 
-```json
-{
-  "uid": "f256e6ea9341d51eea64c9454659e576",
-  "rtmps": {
-    "url": "rtmps://live.cloudflare.com:443/live/",
-    "streamKey": "MTQ0MTcjM3MjI1NDE3ODIyNTI1MjYyMjE4NTI2ODI1NDcxMzUyMzcf256e6ea9351d51eea64c9454659e576"
-  },
-  "created": "2021-09-23T05:05:53.451415Z",
-  "modified": "2021-09-23T05:05:53.451415Z",
-  "meta": {
-    "name": "My Live Stream"
-  },
-  "status": null,
-  "live": {
-    "mode": "automatic",
-    "requireSignedURLs": false,
-    "allowedOrigins": ["*.example.com"]
-  }
-}
-```
+Refer to the `recording` parameter for a list of acceptable properties for this object.
 
 ## Manage live inputs
 
-Update a live input by making a `PUT` request.
+Some limits apply to the Stream Live Beta:
 
-```bash
-curl -X PUT \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/:input_id \--data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
-```
+* You can create up to 1000 live inputs per account.
+* You can configure up to 50 outputs per live input.
+* You should use a maximum recommended bitrate of 12000 kbps.
 
-Delete a live input by making a `DELETE` request.
+If your use case requires a limit increase, contact support with your use case and need.
 
-```bash
-curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/:input_id
-```
+Refer to the API information below to update or delete live inputs.
+
+<TableWrap>
+
+<table>
+  <thead>
+  <tr>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-live-inputs-update-live-input-details">Update inputs</a>
+   </td>
+   <td><Code>PUT</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/live_inputs/:live_input_identifier</Code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-live-inputs-delete-live-input">Delete inputs</a>
+   </td>
+   <td><Code>DELETE</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/live_inputs/:live_input_identifier</Code>
+   </td>
+  </tr>
+  </tbody>
+</table>
+
+</TableWrap>
 
 ## Requirements and known limitations 
 

@@ -9,58 +9,34 @@ If you have videos stored in a cloud storage bucket, you can pass an HTTP link f
 
 ## 1: Make an API call with the URL
 
-Make an HTTP request to the Stream API with the video's URL.
+Make an HTTP request to the Stream API with the video's URL using the information below.
 
-```bash
-curl \
--X POST \
--d '{"url":"https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4","meta":{"name":"My First Stream Video"}}' \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
-```
+<TableWrap>
 
-You should receive a response similar to the example below.
+<table>
+  <thead>
+  <tr>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">Upload a video from a URL</a>
+   </td>
+   <td><Code>POST</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/copy</Code>
+   </td>
+  </tr>
+  </tbody>
+</table>
 
-```json
-{
-  "result": {
-    "uid": "4544715edbe00808d89aec0a3a765c40",
-    "thumbnail": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/thumbnails/thumbnail.jpg",
-    "thumbnailTimestampPct": 0,
-    "readyToStream": false,
-    "status": {
-      "state": "downloading"
-    },
-    "meta": {
-      "downloaded-from": "https://storage.googleapis.com/zaid-test/Watermarks%20Demo/cf-ad-original.mp4",
-      "name": "My First Stream Video"
-    },
-    "created": "2020-10-16T20:20:17.872170843Z",
-    "modified": "2020-10-16T20:20:17.872170843Z",
-    "size": 9032701,
-    "preview": "https://watch.cloudflarestream.com/4544715edbe00808d89aec0a3a765c40",
-    "allowedOrigins": [],
-    "requireSignedURLs": false,
-    "uploaded": "2020-10-16T20:20:17.872170843Z",
-    "uploadExpiry": null,
-    "maxSizeBytes": 0,
-    "maxDurationSeconds": 0,
-    "duration": -1,
-    "input": {
-      "width": -1,
-      "height": -1
-    },
-    "playback": {
-      "hls": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.m3u8",
-      "dash": "https://videodelivery.net/4544715edbe00808d89aec0a3a765c40/manifest/video.mpd"
-    },
-    "watermark": null
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
+</TableWrap>
 
 ## 2: Poll the API or wait for a webhook
 
@@ -87,5 +63,3 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
       allowFullScreen/>
   </div>
 </figure>
-
-<p><Button type="primary" href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">View detailed API reference</Button></p>

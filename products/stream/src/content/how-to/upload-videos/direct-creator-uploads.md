@@ -6,11 +6,11 @@ pcx-content-type: tutorial
 
 # Direct creator uploads
 
-Direct creator uploads allow users to upload videos without API tokens. A common place to
-use Direct creator uploads is on web apps, client side applications, or on mobile apps
-where users upload content directly to Stream.
+Direct creator uploads allow users to upload videos without API tokens. A common place to use Direct creator uploads is on web apps, client side applications, or on mobile apps where users upload content directly to Stream.
 
-## Generate a unique one-time upload URL
+Limits apply to Direct Creator Uploads at the time of upload URL creation. Uploads over these limits will receive a 429 (Too Many Requests) or 413 (Payload too large) HTTP status code with more information in the response body. Contact support or your customer success manager for higher limits.
+
+## Generate one-time upload URL
 
 To give users the ability to directly upload their videos, first generate and provide them with a unique one-time upload URL with the following API request. To make API requests you will need your [Cloudflare API token](https://www.cloudflare.com/a/account/my-account) and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/). 
 
@@ -19,71 +19,43 @@ body of the `POST` request. Refer to the [Create a video and get authenticated d
 
 ## Basic Uploads
 
-If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use TUS uploads (described later in this article.)
+If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use [tus](#tus).
 
-First, request a token by calling the `direct_upload` endpoint from your server:
+<TableWrap>
 
-```bash
-curl -X POST \
- -H 'Authorization: Bearer $TOKEN' \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload \
- --data '{
-    "maxDurationSeconds": 3600,
-    "expiry": "2020-04-06T02:20:00Z",
-    "requireSignedURLs": true,
-    "allowedOrigins": ["example.com"],
-    "thumbnailTimestampPct": 0.568427,
-    "watermark": {
-        "uid": "$watermark_uid"
-    }
- }'
-```
+<table>
+  <thead>
+  <tr>
+   <th><strong>Command</strong>
+   </th>
+   <th><strong>Method</strong>
+   </th>
+   <th><strong>Endpoint</strong>
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#stream-videos-create-a-video-and-get-authenticated-direct-upload-url">Get authenticated direct upload URL</a>
+   </td>
+   <td><Code>POST</Code>
+   </td>
+   <td><Code>accounts/:account_identifier/stream/direct_upload</Code>
+   </td>
+  </tr>
+  </tbody>
+</table>
 
-A successful response looks like the example below.
+</TableWrap>
 
-```bash
-{
-  "result": {
-    "uploadURL": "https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22",
-    "uid": "f65014bc6ff5419ea86e7972a047ba22"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
-}
-```
 
-An unsuccessful response might look like the example below.
+The `uploadURL` provided in the `result` body of a successful request should be passed along to the end user to make their upload request.
 
-```bash
-{
-  "result": null,
-  "success": false,
-  "errors": [
-    {
-      "code": 10005,
-      "message": "Bad Request"
-    }
-  ],
-  "messages": [
-    {
-      "code": 10005,
-      "message": "required field maxDurationSeconds is missing"
-    }
-  ]
-}
-```
+The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/how-to/search-for-videos/).
 
-The `uploadURL` provided in the `result` body of a successful request should be
-passed along to the end user to make their upload request.
+## Request from end users
 
-The `uid` references the reserved media object's unique identifier and can be
-kept as a reference to query our [API](/how-to/search-for-videos/).
-
-## Direct creator upload request from end users
-
-Using the `uploadURL` provided in the previous request, users can upload video
-files limited to 200 MB in size.
+Using the `uploadURL` provided in the previous request, users can upload video files limited to 200 MB in size.
 
 ```bash
 curl -X POST \
@@ -91,9 +63,7 @@ curl -X POST \
   https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22
 ```
 
-A successful upload will receive a `200` response.  If the upload does not meet
-the upload constraints defined at time of creation or is larger than 200 MB in
-size, the user will receive a `4xx` response.
+A successful upload will receive a `200` response. If the upload does not meet the upload constraints defined at time of creation or is larger than 200 MB in size, the user will receive a `4xx` response.
 
 ```html
 <!DOCTYPE html>
@@ -134,9 +104,9 @@ size, the user will receive a `4xx` response.
 </html>
 ```
 
-## tus (recommended for videos over 200MB)
+## tus
 
-tus is a protocol that supports resumable uploads and works best for larger files.
+tus is a protocol that supports resumable uploads and is recommended for videos over 200MB.
 
 Typically, tus uploads require the authentication information to be sent with every request, which is not ideal for direct creators uploads because it exposes your API key (or token) to the end user.
 
@@ -185,7 +155,7 @@ async function handleRequest(request) {
 
 After you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to your endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/how-to/upload-videos/upload-video-file#resumable-uploads-with-tus-for-large-files).
 
-### Test the Direct Creator Upload endpoint
+### Test the endpoint
 
 After building your endpoint which calls Stream and returns the tokenized URL in the `location` header, you can test it with the [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the codepen demo, paste your endpoint URL in the **Upload endpoint** field and then try to upload a video. 
 
