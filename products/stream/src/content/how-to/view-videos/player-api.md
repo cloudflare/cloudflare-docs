@@ -7,36 +7,6 @@ pcx-content-type: reference
 
 The SDK provides an API for programmatically controlling the player and listening for player events.
 
-## Example
-
-```html
-<!-- You can use styles and CSS on this iframe element where the video player will appear -->
-<iframe
-  src="https://iframe.videodelivery.net/$VIDEOID"
-  style="border: none;"
-  height="720"
-  width="1280"
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-  allowfullscreen="true"
-  id="stream-player"
-></iframe>
-
-<script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
-
-<!-- Your JavaScript code below-->
-<script>
-  const player = Stream(document.getElementById('stream-player'))
-  player.addEventListener('play', () => {
-    console.log('playing!')
-  })
-  player.play().catch(() => {
-    console.log('playback failed, muting to try again')
-    player.muted = true
-    player.play()
-  })
-</script>
-```
-
 ## Methods
 
 <Definitions>
@@ -233,14 +203,44 @@ Non-standard events are prefixed with `stream-` to distinguish them from standar
 
 - `stream-adstart`
 
-  - Fires when `ad-url` attribute is present and the ad begins playback
+  - Fires when `ad-url` attribute is present and the ad begins playback.
 
 - `stream-adend`
 
-  - Fires when `ad-url` attribute is present and the ad finishes playback
+  - Fires when `ad-url` attribute is present and the ad finishes playback.
 
 - `stream-adtimeout`
 
   - Fires when `ad-url` attribute is present and the ad took too long to load.
 
 </Definitions>
+
+## Example
+
+```html
+<!-- You can use styles and CSS on this iframe element where the video player will appear -->
+<iframe
+  src="https://iframe.videodelivery.net/$VIDEOID"
+  style="border: none;"
+  height="720"
+  width="1280"
+  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+  allowfullscreen="true"
+  id="stream-player"
+></iframe>
+
+<script src="https://embed.videodelivery.net/embed/sdk.latest.js"></script>
+
+<!-- Your JavaScript code below-->
+<script>
+  const player = Stream(document.getElementById('stream-player'))
+  player.addEventListener('play', () => {
+    console.log('playing!')
+  })
+  player.play().catch(() => {
+    console.log('playback failed, muting to try again')
+    player.muted = true
+    player.play()
+  })
+</script>
+```

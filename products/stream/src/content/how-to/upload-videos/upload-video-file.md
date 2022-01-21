@@ -8,7 +8,7 @@ pcx-content-type: how-to
 
 This option for uploading videos is ideal when the video is stored on a computer with access to your API tokens.
 
-## Basic Uploads (for small videos)
+## Basic Uploads (small videos)
 
 For files smaller than 200MB, you can use form based uploads, but this option does not support resumable uploading.
 
@@ -27,7 +27,7 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 
 </Aside>
 
-## Resumable uploads with tus (for large files)
+## Resumable uploads with tus (large files)
 
 <details>
 <summary>
@@ -157,10 +157,10 @@ Refer to [go-tus](https://github.com/eventials/go-tus) on GitHub for functionali
 npm install tus-js-client
 ```
 
-2. Set up an `index.js` and configure the:
+2. Set up an `index.js` and configure:
 
-* API endpoint with your Cloudflare Account ID
-* Request headers to include an API token
+* The API endpoint with your Cloudflare Account ID
+* The request headers to include an API token
 
 ```javascript
 var fs = require("fs");
