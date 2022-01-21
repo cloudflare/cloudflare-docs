@@ -482,7 +482,7 @@ async function handleEvent(event) {
 }
 ```
 
-## Implementing CSRF protection
+## Implementing Cross-Site Request Forgery (CSRF) protection
 
 To correctly protect against CSRF attacks, your application needs to provide a `state` parameter to the Auth0 login URL. When the user logs in and is redirected back to your application, you can compare the `state` parameter in the redirect URL to your previous piece of `state`, confirming that the user is beginning and ending the login flow via your application.
 
