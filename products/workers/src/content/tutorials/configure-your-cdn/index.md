@@ -75,7 +75,7 @@ async function handleRequest(event) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `“Hello worker”`, as well as an explicit `200` status code.
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker"`, as well as an explicit `200` status code.
 
 When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
@@ -89,7 +89,7 @@ Because the asset will go through your Workers function, and Cloudflare’s netw
 
 ### Handling requests
 
-Currently, the Workers function receives requests, and returns a simple response with the text `“Hello worker!”`. Begin configuring the function by adding an additional check — requests coming in to the function should only be `GET` requests. If it receives other requests, like `POST`s or `DELETE`s, it should return an error response, with a status code of [`405`](https://httpstatuses.com/405). Using `event.request.method`, the resulting code is below:
+Currently, the Workers function receives requests, and returns a simple response with the text `"Hello worker!"`. Begin configuring the function by adding an additional check — requests coming in to the function should only be `GET` requests. If it receives other requests, like `POST`s or `DELETE`s, it should return an error response, with a status code of [`405`](https://httpstatuses.com/405). Using `event.request.method`, the resulting code is below:
 
 ```js
 ---
@@ -105,7 +105,7 @@ async function handleRequest(event) {
 }
 ```
 
-Given that the incoming request to the function is a `GET`, it should be clear that the bulk of our implementation will happen inside of that conditional, replacing the `“Hello worker!”` response. Create a separate function, `serveAsset`, which will house the majority of the implementation for the remainder of the tutorial:
+Given that the incoming request to the function is a `GET`, it should be clear that the bulk of your implementation will happen inside of that conditional, replacing the `"Hello worker!"` response. Create a separate function, `serveAsset`, which will house the majority of the implementation for the remainder of the tutorial:
 
 ```js
 ---

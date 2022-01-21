@@ -68,7 +68,7 @@ The QR code generator you will build in this tutorial will be a serverless funct
 
 ### Handling requests
 
-At this point in the tutorial, your Worker function can receive requests and return a simple response with the text `"Hello worker!"`. To handle data coming in to your serverless function, check if the incoming request is a `POST`:
+At this point in the tutorial, your Worker function can receive requests and return a simple response with the text `"Hello worker!"`. To handle data coming into your serverless function, check if the incoming request is a `POST`:
 
 ```js
 ---
@@ -97,7 +97,7 @@ function handleRequest(request) {
 }
 ```
 
-At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the `“Hello worker!”` response into a new function, `generate`, which will ultimately contain the bulk of our function’s logic:
+At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the `"Hello worker!"` response into a new function, `generate`, which will ultimately contain the bulk of your function’s logic:
 
 ```js
 ---
