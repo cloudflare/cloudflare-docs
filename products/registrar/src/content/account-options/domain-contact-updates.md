@@ -42,10 +42,10 @@ Only the current registrant may opt out of the transfer lock, however. The appro
 
 </Aside>
 
-## 60-day domain lock
+## 60-day transfer lock
 
-After the changes for the registrant contact are approved, the domain will be placed on a transfer lock for 60 days. This happens when you approve changes to the registrant contacts without checking the box to prevent the domain lock. 
+After the changes for the registrant contact are approved, the domain will be placed on a transfer lock for 60 days. This happens when you approve changes to the registrant contacts without checking the box to prevent the transfer lock. 
 
-This domain lock prevents the transfer of the domain to another registrar, and the transfer to another Cloudflare account. It does not prevent additional updates to the domain name.  
+This transfer lock prevents the transfer of the domain to another registrar, and the transfer to another Cloudflare account. It does not prevent additional updates to the domain name.  
 
 If the registrant contact is updated again while the domain is in the 60-day lock period, the lock expiration will be further extended to 60 days from the most recent update.
