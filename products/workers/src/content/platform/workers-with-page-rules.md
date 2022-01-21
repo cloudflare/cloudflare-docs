@@ -14,7 +14,7 @@ Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is
 When using Page Rules with Workers, the following workflow is applied. 
 
 1. Request arrives at Cloudflare data center.
-2. Cloudflare decides if this request is a Worker route and figures out the script ID.
+2. Cloudflare decides if this request is a Worker route.
 3. Because this is a Worker route, Cloudflare disables a number of features, including some that would be set by Page Rules.
 4. Page Rules run as part of normal request proessing with some features now disabled.
 5. Worker executes.
