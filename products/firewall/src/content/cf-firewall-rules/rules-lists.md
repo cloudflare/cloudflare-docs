@@ -63,6 +63,14 @@ Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</cod
 
 </Aside>
 
+## User role requirements
+
+The following user roles have access to the List management functionality:
+
+* Super Administrator
+* Administrator
+* Firewall
+
 ## Managing lists
 
 - To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/cf-dashboard/rules-lists).
