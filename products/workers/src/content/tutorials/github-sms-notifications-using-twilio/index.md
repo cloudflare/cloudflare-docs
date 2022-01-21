@@ -287,7 +287,7 @@ Now, when you make an update (that you configured in the GitHub **Webhook** sett
 
 You can reference the finished code on this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
 
-By completing this tutorial, you have learned how to build Webhooks using Workers, integrate Workers with GitHub and Twilio, and use Worker secrets with Wrangler.
+By completing this tutorial, you have learned how to build webhooks using Workers, integrate Workers with GitHub and Twilio, and use Worker secrets with Wrangler.
 
 ## Related resources
 
