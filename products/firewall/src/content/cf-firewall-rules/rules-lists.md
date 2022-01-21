@@ -13,8 +13,6 @@ When you update the content of a list, any rules that use the list are automatic
 
 Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into Firewall Rules for any of your zones.
 
-The Super Administrator, Administrator, or Firewall user roles have access to this functionality.
-
 ## Advantages of IP Lists
 
 Using IP Lists has these advantages:
@@ -64,6 +62,14 @@ The number of IP Lists you can create depends on the Cloudflare plans associated
 Access to the Open Proxy List in the rule builder and <code>cf.open_proxies</code> requires a Cloudflare Enterprise plan.
 
 </Aside>
+
+## User role requirements
+
+The following user roles have access to the List management functionality:
+
+* Super Administrator
+* Administrator
+* Firewall
 
 ## Managing lists
 
