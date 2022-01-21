@@ -20,14 +20,15 @@ If you change any of the following fields, Cloudflare Registrar will require a C
 * Organization
 * Email address
 
-If you update any of the fields mentioned above, Cloudflare Registrar will send an approval email to the current registrant email address. The approval email contains a link to a web page where the requested change may be viewed and approved or rejected. If the pending change is not approved or rejected within seven days, the request will automatically be canceled.
+If you update any of the fields mentioned above, Cloudflare Registrar will send an approval email to the current registrant's email address. The approval email contains a link to a web page where the requested change may be viewed and approved or rejected. If the pending change is not approved or rejected within seven days, the request will automatically be canceled.
 
-If you do not have to update these fields, your contact information is updated immediately and no further action is required.
+If you do not update these fields, your contact information is updated immediately and no further action is required.
 
 <Aside type='warning' header='Important'>
 
-After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.  
-If you do not want this transfer lock, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button.
+After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.
+
+If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button.
 
 </Aside>
 
@@ -39,8 +40,12 @@ Only the current registrant may opt out of the transfer lock, however. The appro
 
 ## 60-day transfer lock
 
-After the changes for the registrant contact are approved, the domain will be placed on a transfer lock for 60 days. This is happens when you approve changes to the registrant contacts without checking the box to prevent the transfer lock. 
+</Aside>
 
-This transfer lock prevent the transfer of the domain to another registrar, and the transfer to another Cloudflare account. It does not prevent additional updates to the domain name.  
+## 60-day domain lock
 
-If the registrant contact is updated again while the domain is in the 60 day lock period, the lock expiration will be further extended to 60 days from the most recent update.
+After the changes for the registrant contact are approved, the domain will be placed on a transfer lock for 60 days. This happens when you approve changes to the registrant contacts without checking the box to prevent the domain lock. 
+
+This domain lock prevents the transfer of the domain to another registrar, and the transfer to another Cloudflare account. It does not prevent additional updates to the domain name.  
+
+If the registrant contact is updated again while the domain is in the 60-day lock period, the lock expiration will be further extended to 60 days from the most recent update.
