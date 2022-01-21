@@ -152,7 +152,7 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-In `index.js`, require the `qr-image` package as the variable `qr`. In the `generate` function, parse the incoming request as JSON, using `request.json` and use the `text` to generate a QR code using `qr.imageSync`:
+In `index.js`, require the `qr-image` package as the variable `qr`. In the `generate` function, parse the incoming request as JSON using `request.json`, and generate a QR code from `text` using `qr.imageSync`:
 
 ```js
 ---
