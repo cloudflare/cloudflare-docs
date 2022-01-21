@@ -676,7 +676,7 @@ For a more detailed example of this functionality, refer to the [source code](ht
 
 ### Logging out users
 
-While a user’s authentication cookie expires after a day, you may want to offer the ability for a user to log out manually. This is simple to implement — instead of letting the cookie expire automatically, your Workers application should pass a `Set-cookie` header that nulls out the `cookieKey` you previously defined. Create a `logout` function in `workers-site/auth0.js` and import it in `workers-site/index.js`, calling it when a user requests `/logout`:
+While a user’s authentication cookie expires after a day, you may want to offer the ability for a user to log out manually. To implement this feature, instead of letting the cookie expire automatically, your Workers application should pass a `Set-cookie` header that nulls out the `cookieKey` you previously defined. Create a `logout` function in `workers-site/auth0.js` and import it in `workers-site/index.js`, calling it when a user requests `/logout`:
 
 ```js
 ---
