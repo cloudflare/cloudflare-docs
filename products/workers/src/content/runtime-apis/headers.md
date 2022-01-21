@@ -38,7 +38,7 @@ Cloudflare sets a number of [its own custom headers on incoming requests](https:
 ### Request headers
 
 <details>
-<summary>`CF-Connecting-IP`</summary>
+<summary>CF-Connecting-IP</summary>
 <div>
 
 In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client’s IP). `x-real-ip` can be altered by the user in their Worker script.
@@ -53,7 +53,7 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 </details>
 
 <details>
-<summary>`CF-Worker`</summary>
+<summary>CF-Worker</summary>
 <div>
 
 Added to all Worker subrequests sent via `fetch()`. Set to the name of the zone which owns the Worker making the subrequest. For example, a Worker script on route for `foo.example.com/*` from `example.com` will have all subrequests with the header:
@@ -72,7 +72,7 @@ When configuring Cloudflare Firewall Rules, do not match on this header. Firewal
 </details>
 
 <details>
-<summary>`CF-EW-Via`</summary>
+<summary>CF-EW-Via</summary>
 <div>
 
 Used for loop detection, similar to the `CDN-Loop` [header](https://blog.cloudflare.com/preventing-request-loops-using-cdn-loop/).
