@@ -19,10 +19,10 @@ With purge by single-file, cached resources are immediately removed from the sto
 
 The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
 
-A single-file purge performed through your Cloudflare dashboard does not clear objects that contain:
+A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 - [Custom cache keys](/about/cache-keys)
 - [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
-- Any of these response headers:
+- Any of these request headers:
   - `X-Forwarded-Host`
   - `X-Host`
   - `X-Forwarded-Scheme`
