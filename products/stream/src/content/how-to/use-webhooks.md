@@ -1,15 +1,15 @@
 ---
-title: Webhooks for notifications
+title: Use webhooks for notifications
 pcx-content-type: how-to
 ---
 
-# Webhooks for process notifications
+# Use webhooks for process notifications
 
 Use webhooks to notify your service when videos successfully finish processing and are ready to stream.
 
 ## Create a webhook subscription
 
-Refer to the API information below for help creating or modifying a webhook subscriptionand for an example response. The webhook notification URL must include the protocol, and only `http://` or `https://` are supported.
+Refer to the API information below for help creating or modifying a webhook subscription and for an example response. The webhook notification URL must include the protocol, and only `http://` or `https://` are supported.
 
 <TableWrap>
 
