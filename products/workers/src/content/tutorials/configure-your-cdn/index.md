@@ -140,7 +140,7 @@ function serveAsset(event) {
 }
 ```
 
-With that `path` available, the function can simply request the corresponding path from our Cloud Storage bucket. Given a constant `BUCKET_NAME` (you will set it to `my-bucket` in this tutorial), set a `BUCKET_URL` constant, append `url.pathname` to the end of it, and `fetch` it to get your function’s `response`:
+With that `path` available, the function can simply request the corresponding path from your Cloud Storage bucket. Given a constant `BUCKET_NAME` (you will set it to `my-bucket` in this tutorial), set a `BUCKET_URL` constant, append `url.pathname` to the end of it, and `fetch` it to get your function’s `response`:
 
 ```js
 ---

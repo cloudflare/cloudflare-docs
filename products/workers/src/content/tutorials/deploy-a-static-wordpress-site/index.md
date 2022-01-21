@@ -50,9 +50,9 @@ To do your first export, select **Start static site export** (this operation may
 
 ## Creating the Workers project
 
-With an export ready of our site, it is time to get to work deploying it. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/get-started/guide) guide.
+With an export ready of your site, it is time to get to work deploying it. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/get-started/guide) guide.
 
-Once Wrangler is installed and configured, we can create a new project for deploying our static WordPress site to Workers. To generate a new project run:
+Once Wrangler is installed and configured, we can create a new project for deploying your static WordPress site to Workers. To generate a new project run:
 
 ```sh
 ---
