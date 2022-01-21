@@ -23,7 +23,7 @@ If you would like to skip straight to the code, the final version of the codebas
 
 Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
 
-In the command line, run the `wrangler generate` command to create your Worker project using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template). Pass the project name “qr-code-generator”:
+In the command line, run the `wrangler generate` command to create your Worker project using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template). Pass the project name `qr-code-generator`:
 
 ```sh
 ---
@@ -56,7 +56,7 @@ function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text “Hello worker”, as well as an explicit `200` status code. 
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `Hello worker!`, as well as an explicit `200` status code. 
 
 When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
@@ -68,7 +68,7 @@ The QR code generator you will build in this tutorial will be a serverless funct
 
 ### Handling requests
 
-At this point in the tutorial, your Worker function can receive requests and return a simple response with the text “Hello worker!”. To handle data coming in to your serverless function, check if the incoming request is a `POST`:
+At this point in the tutorial, your Worker function can receive requests and return a simple response with the text `"Hello worker!"`. To handle data coming into your serverless function, check if the incoming request is a `POST`:
 
 ```js
 ---
@@ -97,7 +97,7 @@ function handleRequest(request) {
 }
 ```
 
-At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the “Hello worker!” response into a new function, `generate`, which will ultimately contain the bulk of our function’s logic:
+At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the `"Hello worker!"` response into a new function, `generate`, which will ultimately contain the bulk of your function’s logic:
 
 ```js
 ---

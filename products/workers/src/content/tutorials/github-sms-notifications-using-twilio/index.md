@@ -283,16 +283,14 @@ $ wrangler publish
 
 ![Video of receiving a text after pushing to a repo](media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-Now, when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used Git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
+Now, when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
 
 You can reference the finished code on this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
 
-By completing this tutorial, you have learned how to:
-- Build Webhooks using Workers
-- Integrate Workers with GitHub and Twilio
-- Use Worker secrets with Wrangler
+By completing this tutorial, you have learned how to build webhooks using Workers, integrate Workers with GitHub and Twilio, and use Worker secrets with Wrangler.
 
-Other tutorials:
+## Related resources
+
 - [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
 - [Build a JAMStack app](/tutorials/build-a-jamstack-app)
 - [Build a QR code generator](/tutorials/build-a-qr-code-generator)

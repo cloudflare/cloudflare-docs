@@ -634,7 +634,7 @@ export const constructGhIssueSlackMessage = (
 }
 ```
 
-Back in `src/handlers/webhook.js`, the `blocks` that are returned from `constructGhIssueSlackMessage` become the body in a new `fetch` request, an HTTP POST request to a Slack webhook URL. Once that request completes, return a simple response with status code 200, and the body text “OK”:
+Back in `src/handlers/webhook.js`, the `blocks` that are returned from `constructGhIssueSlackMessage` become the body in a new `fetch` request, an HTTP POST request to a Slack webhook URL. Once that request completes, return a response with status code `200`, and the body text `"OK"`:
 
 ```js
 ---
@@ -668,7 +668,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 </Aside>
 
-To use this constant inside of your codebase, you can use Wrangler’s [Secrets](/cli-wrangler/commands#secret) feature:
+To use this constant inside of your codebase, use the [`wrangler secret`](/cli-wrangler/commands#secret) command:
 
 ```sh
 ---

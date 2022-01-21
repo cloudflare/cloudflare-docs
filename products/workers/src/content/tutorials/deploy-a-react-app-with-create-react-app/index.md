@@ -66,7 +66,7 @@ async function handleEvent(event) {
 
 ## Configure and publish
 
-To prepare your application for deployment, open the newly-created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [Configuring your project section of Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
+To prepare your application for deployment, open the newly created `wrangler.toml` file, which represents the configuration for your Workers application. Using [Get started: Configuring your project section](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
 
 The `bucket` key in your `wrangler.toml` file indicates the build folder that Sites will deploy to Workers. While many front-end application and static site generators use the folder `public`, `create-react-app` uses the folder `build`. Change the `bucket` key in `wrangler.toml` to `build`:
 
