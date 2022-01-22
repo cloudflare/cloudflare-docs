@@ -42,3 +42,7 @@ Yes, Google Fonts are also optimized when APO is activated. You can confirm the 
 ## Can I customize query string caching with APO?
 
 For more information on query parameters, see [Query parameters and cached responses](/reference/query-parameters).
+
+## Can I run APO without Cloudflare for WordPress plugin?
+
+No, you can't, see [Intend to deprecate: running APO without Cloudflare for WordPress plugin](https://community.cloudflare.com/t/intend-to-deprecate-running-apo-without-cloudflare-for-wordpress-plugin/225330).
