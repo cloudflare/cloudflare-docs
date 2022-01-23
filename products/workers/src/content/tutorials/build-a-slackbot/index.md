@@ -87,7 +87,7 @@ There are many different event types that can be enabled for your webhook. Selec
 
 ![Create a GitHub Webhook](./media/new-github-webhook.png)
 
-When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is.  You will later return to your repository to create, edit, and close some issues to ensure that the the webhook is working once your application is deployed.
+When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is.  You will later return to your repository to create, edit, and close some issues to ensure that the webhook is working once your application is deployed.
 
 ## Generate
 
