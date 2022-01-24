@@ -6,7 +6,7 @@ You can create a pool within the [load balancer workflow](/how-to/create-load-ba
 1. For your pool, enter the following information:
     - A name (must be unique)
     - A description to provide more detail on the name
-    - A choice for [**Origin Steering**](/understand-basics/origin-level-steering), which affects how your pool routes traffic to each origin
+    - A choice for [**Origin Steering**](/understand-basics/traffic-steering/origin-level-steering), which affects how your pool routes traffic to each origin
 1. For each origin, enter the following information:
     - A name (must be unique)
     - The origin server address or associated hostname

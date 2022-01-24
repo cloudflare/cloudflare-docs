@@ -8,7 +8,7 @@ import MonitorCreate from "../_partials/_monitor-create.md"
 import MonitorPrepareServers from "../_partials/_monitor-prepare-server.md"
 import MonitorCreateAPI from "../_partials/_monitor-create-api.md"
 
-# Create a monitor
+# Manage monitors
 
 <MonitorDefinition/>
 
@@ -16,17 +16,19 @@ For more details about monitors, refer to [Monitors](/understand-basics/monitors
 
 ---
 
-## Via the dashboard
+## Create a monitor
 
-### Set up the monitor
+### Via the dashboard
+
+#### Set up the monitor
 
 <MonitorCreate/>
 
-### Prepare your servers
+#### Prepare your servers
 
 <MonitorPrepareServers/>
 
-### Attach the monitor to a pool
+#### Attach the monitor to a pool
 
 Once your monitor is created, you need to attach it to an origin pool:
 
@@ -43,16 +45,50 @@ Once your monitor is created, you need to attach it to an origin pool:
 
 ---
 
-## Via the API
+### Via the API
 
-### Set up the monitor
+#### Set up the monitor
 
 <MonitorCreateAPI/>
 
-### Prepare your servers
+#### Prepare your servers
 
 <MonitorPrepareServers/>
 
-### Attach the monitor to a pool
+#### Attach the monitor to a pool
 
 Once your monitor is created, save its `id` property. Include this value in the `monitor` parameter when [creating your pool](/how-to/create-pool#via-the-api).
+
+---
+
+## Edit a monitor
+
+### Via the dashboard
+
+To edit a monitor in the dashboard:
+
+1. Go to **Traffic** > **Load Balancing**.
+1. Click **Manage Monitors**.
+1. On a specific monitor, click **Edit**.
+1. Update settings as needed.
+1. Click **Save**.
+
+### Via the API
+
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#account-load-balancer-monitors-patch-monitor) request. For broader changes, use a [PUT](https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor) request.
+
+---
+
+## Delete a monitor
+
+### Via the dashboard
+
+To delete a monitor in the dashboard:
+
+1. Go to **Traffic** > **Load Balancing**.
+1. Click **Manage Monitors**.
+1. On a specific monitor, click **Delete**.
+
+### Via the API
+
+To delete a monitor using the API, send a [DELETE](https://api.cloudflare.com/#account-load-balancer-monitors-delete-monitor) request.
