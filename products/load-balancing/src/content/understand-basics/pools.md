@@ -56,67 +56,75 @@ The Cloudflare API supports the following commands for pools. Examples are given
   </thead>
   <tbody>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-create-pool">Create Pool</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-create-pool">Create Pool</a>
    </td>
    <td><code class="InlineCode">POST</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools</code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-delete-pool">Delete Pool</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-delete-pool">Delete Pool</a>
    </td>
    <td><code class="InlineCode">DELETE</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id</code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-list-pools">List Pools</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-list-pools">List Pools</a>
    </td>
    <td><code class="InlineCode">GET</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools</code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-pool-details">Pool Details</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-pool-details">Pool Details</a>
    </td>
    <td><code class="InlineCode">GET</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id</code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-pool-health-details">Pool Health Details</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-pool-health-details">Pool Health Details</a>
    </td>
    <td><code class="InlineCode">GET</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier/health</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id/health</code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-update-pool">Update Pool</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-patch-pool">Overwrite specific properties</a>
+   </td>
+   <td><code class="InlineCode">PATCH</code>
+   </td>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id</code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-update-pool">Overwrite existing pool</a>
    </td>
    <td><code class="InlineCode">PUT</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id</code>
    </td>
   </tr>
    <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-preview-pool">Preview Pool</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-preview-pool">Preview Pool</a>
    </td>
    <td><code class="InlineCode">POST</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier/preview</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id/preview</code>
    </td>
   </tr>
    <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancer-pools-list-pool-references">List Pool References</a>
+   <td><a href="https://api.cloudflare.com/#account-load-balancer-pools-list-pool-references">List Pool References</a>
    </td>
    <td><code class="InlineCode">GET</code>
    </td>
-   <td><code class="InlineCode">user/load_balancers/pools/:identifier/references</code>
+   <td><code class="InlineCode">accounts/:account_id/load_balancers/pools/:id/references</code>
    </td>
   </tr>
   </tbody>

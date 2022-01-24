@@ -74,7 +74,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>GET</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers</Code>
+   <td><Code>/zones/:zone_id/load_balancers</Code>
    </td>
   </tr>
   <tr>
@@ -82,7 +82,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>DELETE</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   <tr>
@@ -90,7 +90,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>GET</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers</Code>
+   <td><Code>/zones/:zone_id/load_balancers</Code>
    </td>
   </tr>
   <tr>
@@ -98,15 +98,23 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>POST</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Update Load Balancer</a>
+   <td><a href="https://api.cloudflare.com/#load-balancers-patch-load-balancer">Overwrite specific properties</a>
+   </td>
+   <td><Code>PATCH</Code>
+   </td>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Overwrite entire Load Balancer</a>
    </td>
    <td><Code>PUT</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   </tbody>
