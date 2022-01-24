@@ -61,17 +61,17 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-* `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, sourcetype, authorization header in the string format below. 
+* **name** (optional) - Use your domain name as the job name.
+* **destination_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below. 
 
-  * `<SPLUNK_ENDPOINT_URL>`: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
+  * **<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
       * Cloudflare expects the HEC network port to be configured to `:443` or `:8088`. 
       * Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.  
       * Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
-  * `<SPLUNK_CHANNEL_ID>`: A unique channel ID. This is a random GUID that you can generate by:
+  * **<SPLUNK_CHANNEL_ID>**: A unique channel ID. This is a random GUID that you can generate by:
       * Using an online tool like the [GUID generator](https://www.guidgenerator.com/). 
       * Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`. 
-  * `<INSECURE_SKIP_VERIFY>`: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
+  * **<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
@@ -84,9 +84,9 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
 ```
 
-* `dataset` - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
 
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 

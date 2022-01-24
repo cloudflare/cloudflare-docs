@@ -71,8 +71,8 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 ### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
-* `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
+* **name** (optional) - Use your domain name as the job name.
+* **destination_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
 
 ```bash
 "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>"
@@ -82,8 +82,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 `<ENDPOINT_URL>` is the URL without the bucket name or path. For example: `endpoint=sfo2.digitaloceanspaces.com`.
 </Aside>
 
-* `dataset` - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
+* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
 
 Example request using cURL:
 
