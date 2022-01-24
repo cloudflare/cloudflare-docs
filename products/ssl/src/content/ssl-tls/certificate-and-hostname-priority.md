@@ -27,6 +27,12 @@ For any given hostname, Cloudflare uses the following order to determine which c
 
 4. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
 
+<Aside type="warning">
+
+If you [issue a custom hostname certificate](/ssl-for-saas/common-tasks/issuing-certificates) with wildcards enabled, you cannot update TLS settings for these wildcard hostnames.
+
+</Aside>
+
 ---
 
 ## Certificate presentation
