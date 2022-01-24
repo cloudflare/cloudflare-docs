@@ -285,7 +285,7 @@ $ wrangler publish
 
 Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
 
-You can reference the finished code on this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
+You can reference the finished code [on GitHub](https://github.com/davidtsong/github-twilio-notifications/).
 
 By completing this tutorial, you have learned how to build webhooks using Workers, integrate Workers with GitHub and Twilio, and use Worker secrets with Wrangler.
 
