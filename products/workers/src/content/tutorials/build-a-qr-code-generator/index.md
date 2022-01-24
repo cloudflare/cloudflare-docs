@@ -17,11 +17,11 @@ In this tutorial, you will build and publish a serverless function that generate
 
 This guide will teach you how to build and publish serverless functions. This guide does not assume prior experience with serverless functions or Cloudflare Workers.
 
-If you would like to skip straight to the code, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
+If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
 ## Generate
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to start writing Workers. You will make use of the default JavaScript template to start building your project.
 
 In the command line, run the `wrangler generate` command to create your Worker project using Wrangler’s [worker-template](https://github.com/cloudflare/worker-template). Pass the project name `qr-code-generator`:
 
@@ -33,7 +33,7 @@ $ wrangler generate qr-code-generator
 $ cd qr-code-generator
 ```
 
-Wrangler templates are Git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
+Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `qr-code-generator` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -56,7 +56,7 @@ function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `Hello worker!`, as well as an explicit `200` status code. 
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. 
 
 When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
@@ -97,7 +97,7 @@ function handleRequest(request) {
 }
 ```
 
-At this point, you have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the `"Hello worker!"` response into a new function, `generate`, which will ultimately contain the bulk of your function’s logic:
+You have established the basic flow of `handleRequest`. You will now set up a response to incoming valid requests. If a `POST` request comes in, the function should generate a QR code. To start, move the `"Hello worker!"` response into a new function, `generate`, which will ultimately contain the bulk of your function’s logic:
 
 ```js
 ---
@@ -114,7 +114,7 @@ async function handleRequest(request) {
 }
 ```
 
-With the `generate` function filled out, you can call it within `handleRequest` and return its result directly to the client:
+With the `generate` function filled out, call it within `handleRequest` and return its result directly to the client:
 
 ```js
 ---
@@ -129,9 +129,9 @@ function handleRequest(request) {
 }
 ```
 
-### Building a QR Code
+### Building a QR code
 
-All projects deployed to Cloudflare Workers support NPM packages. This support makes it easy to rapidly build out functionality in your serverless functions. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG), and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
+All projects deployed to Cloudflare Workers support NPM packages. This support makes it easy to rapidly build out functionality in your serverless functions. The [`qr-image`](https://github.com/alexeyten/qr-image) package is a great way to take text and encode it into a QR code. The package supports generating the QR codes in a number of file formats (such as PNG, the default, and SVG) and configuring other aspects of the generated QR code. In the command line, install and save `qr-image` to your project’s `package.json`:
 
 ```sh
 ---
@@ -140,7 +140,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. (Learn more about [`type` configuration](/cli-wrangler/configuration).)
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/cli-wrangler/webpack) to package your project for deployment. Learn more about [`type` configuration](/cli-wrangler/configuration) in the Wrangler documentation.
 
 ```toml
 ---
@@ -152,7 +152,7 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-In `index.js`, require the `qr-image` package as the variable `qr`. In the `generate` function, parse the incoming request as JSON, using `request.json`, and use the `text` to generate a QR code using `qr.imageSync`:
+In `index.js`, require the `qr-image` package as the variable `qr`. In the `generate` function, parse the incoming request as JSON using `request.json`, and generate a QR code from `text` using `qr.imageSync`:
 
 ```js
 ---
@@ -184,7 +184,7 @@ async function generate(request) {
 
 ### Testing in an application UI
 
-The serverless function will work if a user sends a `POST` request to a route, but it would be great to also be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML document instead of the `405` error:
+The serverless function will work if a user sends a `POST` request to a route, but it would be best practice to also be able to test the function with a proper interface. At this point in the tutorial, if any request is received by your function that is not a `POST`, a `405` response is returned. The new version of `handleRequest` should return a new `Response` with a static HTML document instead of the `405` error:
 
 ```js
 ---
@@ -283,7 +283,7 @@ header: Publishing your project
 $ wrangler publish
 ```
 
-## Resources
+## Related resources
 
 In this tutorial, you built and published a serverless function to Cloudflare Workers for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/signalnerve/workers-qr-code-generator).
 
