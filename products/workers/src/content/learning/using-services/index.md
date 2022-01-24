@@ -5,9 +5,9 @@ pcx-content-type: concept
 
 # Services
 
-Services are the new building block for deploying applications on Cloudflare Workers. Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects or even other services. Services can have multiple environments and can set up pipelines for promoting a service from one environment to another.
+Services are the new building block for deploying applications on Cloudflare Workers. Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects or even other services, as well as environment variables and secrets. Services can have multiple environments and can set up pipelines for promoting a service from one environment to another.
 
-Unlike the script, a service is composable, which allows services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Services also support multiple environments, allowing you to test changes in a preview environment, then promote to production when you’re confident.
+Unlike a script, a service is composable, which allows services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Services also support multiple environments, allowing you to test changes in a preview environment, then promote to production when you’re confident.
 
 <Aside type="note">
 
@@ -15,7 +15,7 @@ To enable a seamless transition to services, all scripts have been automatically
 
 </Aside>
 
-Each service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and even resources like a KV namespace. You can create and switch between environments with just a few clicks in the dashboard.
+Each service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and even resource bindings like a KV Namespace or Durable Object. You can create and switch between environments with just a few clicks in the dashboard.
 
 ## Service environments
 
@@ -47,14 +47,8 @@ Service bindings are in closed beta currently. Visit [Service Bindings closed be
 
 ![service bindings settings](./media/service-bindings.png)
 
-A service binding allows you to send HTTP requests to another service, without those requests going over the Internet. That means you can invoke other Workers directly from your code! Service bindings open up a new world of composability. In the example below, requests are validated by an authentication service.
+A service binding allows you to send HTTP requests to another service, without those requests necessarily going over the Internet. That means you can invoke other Workers directly from your code! Service bindings open up a new world of composability. In the example below, requests are validated by an authentication service.
 
-
-<Aside type="note">
-
-Service bindings are supported in the module syntax only.
-
-</Aside>
 
 ```js
 export default {
@@ -77,7 +71,7 @@ export default {
 
 ![service binding diagram](./media/app-workers-dev.png)
 
-Service bindings use the standard fetch API, so you can continue to use your existing utilities and libraries. You can also change the environment of a service binding, so you can test a new version of a service. In the next example, 1% of requests are routed to a “canary” deployment of a service. If a request to the canary fails, it’s sent to the production deployment for another chance.
+Service bindings use the standard fetch API, so you can continue to use your existing utilities and libraries - a service binding will trigger a FetchEvent. You can also change the environment of a service binding, so you can test a new version of a service. In the next example, 1% of requests are routed to a “canary” deployment of a service. If a request to the canary fails, it’s sent to the production deployment for another chance.
 
 ```js
 export default {
@@ -96,11 +90,19 @@ export default {
 }
 ```
 
-While the interface among services is HTTP, the networking is not. In fact, there is no networking! Unlike the typical “microservice architecture,” where services communicate over a network and can suffer from latency or interruption, service bindings are a zero-cost abstraction. When you deploy a service, we build a dependency graph of its service bindings, then package all of those services into a single deployment. When one service invokes another, there is no network delay; the request is executed immediately.
+While the interface among services is HTTP, the networking is not. In fact, there is no networking to think about! Unlike the typical “microservice architecture,” where services communicate over a network and can suffer from latency or interruption, service bindings are a zero-cost abstraction. When one service invokes another, there is no network delay; the request is executed immediately.
 
 ![service bindings comparison](./media/service-bindings-comparison.png)
 
 This zero-cost model enables teams to share and reuse code within their organizations, without sacrificing latency or performance. Forget the days of convoluted YAML templates or exponential back off to orchestrate services — just write code, and we’ll stitch it all together.
+
+<Aside type="note">
+
+Note that [requests](/runtime-apis/request) can only be read once; if you need to use a request object multiple times, be sure to clone your incoming request objects.
+
+</Aside>
+
+
 
 ## Related resources
 

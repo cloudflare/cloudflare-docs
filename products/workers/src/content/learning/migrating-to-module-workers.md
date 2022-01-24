@@ -11,7 +11,7 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons you might want to migrate your Workers to the module syntax:
 
-1. Durable Objects require the module syntax to work.
+1. [Durable Objects](/learning/using-durable-objects) require the module syntax.
 1. Module Workers do not rely on any global bindings, which means the Workers runtime does not need to set up fresh execution contexts, making Module Workers safer and faster to run.
 1. Module Workers are ES Modules, which allows them to be shared and published to npm, for example. Module Workers can be imported by and composed within other Module Workers.
 
