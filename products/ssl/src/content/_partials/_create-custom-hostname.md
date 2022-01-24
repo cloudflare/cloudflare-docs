@@ -7,3 +7,9 @@
     - Whether you want to **Enable wildcard**, which adds a `*.<custom-hostname>` SAN to the custom hostname certificate. For more details, refer to [Hostname priority](/ssl-tls/certificate-and-hostname-priority#hostname-priority).
     - Choosing a value for [Custom origin server](/ssl-for-saas/hostname-specific-behavior/custom-origin).
 1. Click **Add Custom Hostname**.
+
+<Aside type="warning">
+
+If you [issue a custom hostname certificate](/ssl-for-saas/common-tasks/issuing-certificates) with wildcards enabled, you cannot customize TLS settings for these wildcard hostnames.
+
+</Aside>
