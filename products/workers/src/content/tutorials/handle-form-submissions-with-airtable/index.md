@@ -78,7 +78,7 @@ The simplified HTML markup for this form:
 </form>
 ```
 
-For example, if you fill in the `first_name` input with the text `"Kristian"`, submitting the `<form>` via the Submit button will submit data to the `/new_submission` URL with the `first_name=Hello` request payload.
+For example, if you fill in the `first_name` input with the text `"Hello"`, submitting the `<form>` via the Submit button will submit data to the `/new_submission` URL with the `first_name=Hello` request payload.
 
 The `<form>` used in the example front-end UI builds on these basics, adding some CSS classes via Tailwind CSS, and adding the fields needed for a Contact-style form: First name, Last name, Email, Phone, Subject, and Message.
 
