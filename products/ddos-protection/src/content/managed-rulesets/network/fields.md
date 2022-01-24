@@ -24,4 +24,4 @@ You can use the following fields in override expressions for the Network-layer D
 * `udp.srcport`
 * `udp.dstport`
 
-Refer to [Fields](https://developers.cloudflare.com/firewall/cf-firewall-language/fields) in the Firewall Rules language documentation for more information.
+Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields) in the Rules language documentation for more information.

@@ -20,9 +20,9 @@ To modify HTTP headers in the **request**, refer to [HTTP Request Header Modific
 
 * The response header values are calculated using the field values from the corresponding HTTP request. For example, the value of `ip.src.country` will be the country of the website visitor, not the origin where the response was sent from.
 
-* You cannot modify or remove HTTP response headers whose name starts with `cf-` or `x-cf-` except for the `cf-connecting-ip` HTTP response header, which you can remove.
+* You cannot modify or remove HTTP response headers whose name starts with `cf-` or `x-cf-`.
 
-* You cannot modify the value of any header commonly used to identify the website visitor's IP address, such as `x-forwarded-for`, `true-client-ip`, or `x-real-ip`.
+* You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 

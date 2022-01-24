@@ -4,6 +4,7 @@ pcx-content-type: concept
 ---
 
 import MonitorDefinition from "../_partials/_monitor-definition.md"
+import HealthCheckRegions from "../_partials/_health-check-regions.md"
 
 # Monitors
 
@@ -30,6 +31,20 @@ For an up-to-date list of monitor properties, refer to [Monitor properties](http
 ## Create monitors
 
 For step-by-step guidance, refer to [Create monitors](/how-to/create-monitor).
+
+---
+
+## Health check regions
+
+When you [attach a monitor to a pool](/how-to/create-monitor#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
+
+<HealthCheckRegions/>
+
+### Increased origin strain
+
+Because of how Cloudflare checks health from [multiple regions](#health-check-regions), adding multiple regions — or choosing to check health from **All Data Centers** — can send a lot of traffic to your origin.
+
+The same problem can occur when setting low values for a monitor's **Interval**.
 
 ---
 

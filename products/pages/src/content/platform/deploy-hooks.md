@@ -16,13 +16,16 @@ To create a Deploy Hook, navigate from **Account Home** to **Pages** and select 
 ![deploy hooks](deploy-hooks-add.png)
 
 ## Parameters needed
+
 To configure your Deploy Hook, you must enter two key parameters:
-   1. **Deploy hook name:** a unique identifier for your Deploy Hook (e.g. “contentful-site”)
+
+   1. **Deploy hook name:** a unique identifier for your Deploy Hook (for example, `contentful-site`)
    2. **Branch to build:** the repository branch your Deploy Hook should build
 
 ![deploy hooks](deploy-hooks-configure.png)
 
 ## Using your Deploy Hook
+
 Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
 
 ![deploy hooks](deploy-hooks-details.png)

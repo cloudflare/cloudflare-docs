@@ -4,7 +4,7 @@ pcx-content-type: configuration
 
 # Request
 
-The `Request` interface represents an HTTP request, and is part of the Fetch API.
+The `Request` interface represents an HTTP request and is part of the Fetch API.
 
 ## Background
 
@@ -94,6 +94,7 @@ let request = new Request(input [, init])
 </Definitions>
 
 #### `RequestInitCfProperties`
+
 An object containing Cloudflare-specific properties that can be set on the `Request` object. For example:
 
 ```js
@@ -111,15 +112,15 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `cacheEverything` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the page rule [“Cache Level” (to “Cache Everything”)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
 
 - `cacheKey` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - A request’s cache key is what determines if two requests are “the same” for caching purposes. If a request has the same cache key as some previous request, then we can serve the same cached response for both.
+  - A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
 
 - `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two page rules: [“Edge Cache TTL”](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [“Cache Level” (to “Cache Everything”)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. 
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [Edge Cache TTL](https://support.cloudflare.com/hc/articles/200168376) and [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. 
 
 - `cacheTtlByStatus` <Type>{ [key: string]: number }</Type> <PropMeta>optional</PropMeta>
 
@@ -151,7 +152,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 ## Properties
 
-All properties of an incoming `Request` object (i.e. `event.request`) are read only. To modify a request, you must create a new `Request` object and pass the options to modify to its [constructor](#constructor).
+All properties of an incoming `Request` object (that is, `event.request`) are read only. To modify a request, create a new `Request` object and pass the options to modify to its [constructor](#constructor).
 
 <Definitions>
 
@@ -173,7 +174,7 @@ All properties of an incoming `Request` object (i.e. `event.request`) are read o
 
 - `method` <Type>string</Type> <PropMeta>read-only</PropMeta>
 
-  - Contains the request’s method, e.g. `GET`, `POST`, etc.
+  - Contains the request’s method, for example, `GET`, `POST`, etc.
 
 - `redirect` <Type>string</Type> <PropMeta>read-only</PropMeta>
 
@@ -195,23 +196,23 @@ All plans have access to:
 
 - `asn` <Type>string</Type>
 
-  - ASN of the incoming request, e.g. `395747`.
+  - ASN of the incoming request, for example, `395747`.
 
 - `asOrganization` <Type>string</Type>
 
-  - The organisation which owns the ASN of the incoming request, e.g. `Google Cloud`.
+  - The organization which owns the ASN of the incoming request, for example, `Google Cloud`.
 
 - `botManagement` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to the [`Bot Management Variables`](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
+  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
 
 - `colo` <Type>string</Type>
 
-  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, e.g. `"DFW"`.
+  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
 
 - `country` <Type>string | null</Type>
 
-  - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, e.g. `"US"`.
+  - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, for example, `"US"`.
 
 - `isEUCountry` <Type>string | null</Type>
 
@@ -219,15 +220,15 @@ All plans have access to:
 
 - `httpProtocol` <Type>string</Type>
 
-  - HTTP Protocol, e.g. `"HTTP/2"`.
+  - HTTP Protocol, for example, `"HTTP/2"`.
 
 - `requestPriority` <Type>string | null</Type>
 
-  - The browser-requested prioritization information in the request object, e.g. `"weight=192;exclusive=0;group=3;group-weight=127"`.
+  - The browser-requested prioritization information in the request object, for example, `"weight=192;exclusive=0;group=3;group-weight=127"`.
 
 - `tlsCipher` <Type>string</Type>
 
-  - The cipher for the connection to Cloudflare, e.g. `"AEAD-AES128-GCM-SHA256"`.
+  - The cipher for the connection to Cloudflare, for example, `"AEAD-AES128-GCM-SHA256"`.
 
 - `tlsClientAuth` <Type>Object | null</Type>
 
@@ -235,47 +236,47 @@ All plans have access to:
 
 - `tlsVersion` <Type>string</Type>
 
-  - The TLS version of the connection to Cloudflare, e.g. `TLSv1.3`.
+  - The TLS version of the connection to Cloudflare, for example, `TLSv1.3`.
 
 - `city` <Type>string | null</Type>
 
-  - City of the incoming request, e.g. `"Austin"`.
+  - City of the incoming request, for example, `"Austin"`.
 
 - `continent` <Type>string | null</Type>
 
-  - Continent of the incoming request, e.g. `"NA"`.
+  - Continent of the incoming request, for example, `"NA"`.
 
 - `latitude` <Type>string | null</Type>
 
-  - Latitude of the incoming request, e.g. `"30.27130"`.
+  - Latitude of the incoming request, for example, `"30.27130"`.
 
 - `longitude` <Type>string | null</Type>
 
-  - Longitude of the incoming request, e.g. `"-97.74260"`.
+  - Longitude of the incoming request, for example, `"-97.74260"`.
 
 - `postalCode` <Type>string | null</Type>
 
-  - Postal code of the incoming request, e.g. `"78701"`.
+  - Postal code of the incoming request, for example, `"78701"`.
 
 - `metroCode` <Type>string | null</Type>
 
-  - Metro code (DMA) of the incoming request, e.g. `"635"`.
+  - Metro code (DMA) of the incoming request, for example, `"635"`.
 
 - `region` <Type>string | null</Type>
 
-  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request, e.g. `"Texas"`.
+  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request, for example, `"Texas"`.
 
 - `regionCode` <Type>string | null</Type>
 
-  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first level region associated with the IP address of the incoming request, e.g. `"TX"`.
+  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first-level region associated with the IP address of the incoming request, for example, `"TX"`.
 
 - `timezone` <Type>string</Type>
 
-  - Timezone of the incoming request, e.g. `"America/Chicago"`.
+  - Timezone of the incoming request, for example, `"America/Chicago"`.
 
 </Definitions>
 
-<Aside>
+<Aside type="warning">
 
 The `request.cf` object is not available in the Cloudflare Workers dashboard or Playground preview editor.
 
@@ -317,7 +318,7 @@ These methods are only available on an instance of a `Request` object or through
 
 ## The request context
 
-The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how workers are executed, asynchronous tasks (e.g. `fetch`) can only be run _inside_ the request context.
+The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the request context.
 
 The request context is available inside of the [`FetchEvent` handler](/runtime-apis/fetch-event/):
 
@@ -354,12 +355,11 @@ const promise = fetch("https://example.com/") // Error
 async function eventHandler(event){..}
 ```
 
-This code snippet will throw during script startup, and the `"fetch"` event
-listener will never be registered.
+This code snippet will throw during script startup, and the `"fetch"` event listener will never be registered.
 
 --------------------------------
 
-## See also
+## Related resources
 
 - [Examples: Modify request property](/examples/modify-request-property)
 - [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)

@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel without adding a site to Cloudflare's DNS. TryCloudflare will launch a process that generates a random subdomain on `trycloudflare.com`. Requests to that subdomain will be proxied through the Cloudflare network to your web server running on localhost.
 
-## Use TryCloudflare
+## Using TryCloudflare
 
 1. Follow [these instructions](/connections/connect-apps/install-and-setup/installation) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
 2. Launch a web server that is available over localhost to `cloudflared`.

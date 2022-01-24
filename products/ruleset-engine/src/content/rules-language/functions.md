@@ -1,18 +1,19 @@
 ---
+title: Functions
 pcx-content-type: reference
-order: 640
+order: 6
 ---
 
-# Functions
+# Functions reference
 
-The Cloudflare Firewall Rules language provides functions for manipulating and validating values in an expression:
+The Cloudflare Rules language provides functions for manipulating and validating values in an expression:
 
 - [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
-- The [HMAC Validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
+- The [HMAC validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
 
 ## Transformation functions
 
-The Cloudflare Firewall Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case sensitive.
+The Rules language supports several functions that transform values extracted from HTTP requests. A common use case for transformation functions is the conversion of a string of characters to uppercase or lowercase, since by default, string evaluation is case sensitive.
 
 For example, the `lower()` function converts all uppercase characters in a string to lowercase.
 
@@ -22,9 +23,9 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/cf-firewall-language/values#arrays) for more information.
+Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/rules-language/values#arrays) for more information.
 
-The Cloudflare Firewall Rules language supports these transformation functions:
+The Rules language supports these transformation functions:
 
 <Definitions>
 
@@ -63,7 +64,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `ends_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** The `ends_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
 
     </Aside>
 
@@ -130,7 +131,7 @@ The Cloudflare Firewall Rules language supports these transformation functions:
 
     <Aside type='warning'>
 
-    **Warning:** You can only use the `starts_with()` function in [rulesets](https://developers.cloudflare.com/ruleset-engine/) and [Transform Rules](https://developers.cloudflare.com/rules/transform).
+    **Warning:** The `starts_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
 
     </Aside>
 
@@ -191,7 +192,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ### Overview
 
-You can validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
+You can validate hash-based message authentication code (HMAC) tokens in a rule expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
 
 ```java
 is_timed_hmac_valid_v0(
@@ -214,7 +215,7 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 - _MessageMAC_ <Type>String</Type>
 
-  - Contains a concatenation of these HMAC elements: _message_, _separator_, _timestamp_, _mac_. For a definition and an example, see [_MessageMAC_](#messagemac).
+  - Contains a concatenation of these HMAC elements: _message_, _separator_, _timestamp_, _mac_. For a definition and an example, refer to [MessageMAC](#messagemac).
 
 - _ttl_ <Type>Integer literal</Type>
 
@@ -247,7 +248,7 @@ http.host == "download.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-To review examples of firewall rules that use HMAC validation, see [_Common use cases_](/recipes/).
+For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](https://developers.cloudflare.com/firewall/recipes).
 
 ### MessageMAC
 
@@ -270,17 +271,17 @@ and is composed of these parentheses-delimited expressions:
   <tbody>
     <tr>
       <td valign="top"><code>(.+)</code></td>
-      <td>The <em>message</em> to validate</td>
+      <td>The <em>message</em> to validate.</td>
       <td valign="top"><code class="InlineCode">/download/cat.jpg</code></td>
     </tr>
     <tr>
       <td valign="top"><code>(.*)</code></td>
-      <td>The <em>separator</em> between message and timestamp, commonly a parameter name</td>
+      <td>The <em>separator</em> between message and timestamp, commonly a parameter name.</td>
       <td valign="top"><code class="InlineCode">&verify=</code></td>
     </tr>
     <tr>
       <td valign="top"><code>(\d{'{10}'})</code></td>
-      <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds</td>
+      <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds.</td>
       <td valign="top"><code class="InlineCode">1484063137</code></td>
     </tr>
     <tr>
@@ -292,7 +293,7 @@ and is composed of these parentheses-delimited expressions:
   </tbody>
 </table>
 
-For details on generating a MessageMAC, see [_Implement token creation_](https://support.cloudflare.com/hc/articles/115001376488#6P9Gz7kmyxQrpL6r6iPKQR).
+For details on generating a MessageMAC, refer to [Implement token creation](https://support.cloudflare.com/hc/articles/115001376488#6P9Gz7kmyxQrpL6r6iPKQR).
 
 ## HMAC validation examples
 
@@ -300,7 +301,7 @@ For details on generating a MessageMAC, see [_Implement token creation_](https:/
 
 When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
-For more information, see [HMAC Validation: Overview](#overview).
+For more information, refer to [HMAC Validation: Overview](#overview).
 
 </Aside>
 
@@ -351,4 +352,4 @@ is_timed_hmac_valid_v0(
 )
 ```
 
-For more on `concat()` usage, see [_Transformation functions_](#transformation-functions).
+For more on `concat()` usage, refer to [Transformation functions](#transformation-functions).

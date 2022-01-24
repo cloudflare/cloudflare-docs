@@ -43,6 +43,7 @@ The available Rate Limiting rule parameters are the following:
     - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same Rate Limiting rule.
     - If you use `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
     - If you use `http.request.cookies["<cookie_name>"]`, refer to [Recommendations](#recommendations) for additional validations you should implement.
+    - You should not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule. Refer to [Recommendations](#recommendations) for details.
 
     - <Aside type="note">
 
@@ -76,7 +77,11 @@ The available Rate Limiting rule parameters are the following:
 
 ## Recommendations
 
-If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, follow these recommendations:
+* If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, follow these recommendations:
 
-* Create a [Custom Firewall rule](/custom-rules/custom-firewall) that blocks requests with more than one value for the cookie.
-* Validate the cookie value at the origin before performing any demanding server operations.
+    * Create a [Custom Firewall rule](/custom-rules/custom-firewall) that blocks requests with more than one value for the cookie.
+    * Validate the cookie value at the origin before performing any demanding server operations.
+
+* Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/custom-rules/rate-limiting/request-rate), which could unexpectedly trigger the rule for many visitors.
+
+    To prevent this situation, Cloudflare recommends that you use a second characteristic in your Rate Limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.

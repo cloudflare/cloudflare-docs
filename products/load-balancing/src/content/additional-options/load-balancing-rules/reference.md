@@ -39,7 +39,7 @@ Regardless of whether your traffic is proxied, you have access to the following 
       <td>Load Balancer Region</td>
       <td valign="top"><code>cf.load_balancer.region</code><br /><Type>bytes</Type></td>
       <td>
-        <p>The <a href="/understand-basics/traffic-steering#geo-steering">region name</a> of the data center processing the request.</p>
+        <p>The <a href="/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
       </td>
     </tr>
     <tr>
@@ -65,7 +65,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 
 For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
 
-For more details about the field type or properties, refer to our [Firewall rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-language/fields).
+For more details about the field type or properties, refer to the [Rules language documentation](https://developers.cloudflare.com/ruleset-engine/rules-language/fields).
 
 ## Unproxied traffic
 
@@ -127,6 +127,6 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 - **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-- **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions. 
+- **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
-For examples and usage, refer to [Operators and grouping symbols](https://developers.cloudflare.com/firewall/cf-firewall-language/operators) in the Firewall Rules documentation.
+For examples and usage, refer to [Operators and grouping symbols](https://developers.cloudflare.com/ruleset-engine/rules-language/operators) in the Rules language documentation.

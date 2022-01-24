@@ -1,7 +1,9 @@
 ---
-order: 3
+order: 4
 pcx-content-type: concept
 ---
+
+import HealthCheckRegions from "../_partials/_health-check-regions.md"
 
 # How origins and pools become unhealthy
 
@@ -32,11 +34,7 @@ A health check will fail if one of the following conditions are met:
 - The health check exceeds the duration specified in the monitor's **Timeout** field (and does so more than the specified number of **Retries**).
 - The origin does not return the **Expected codes** or **Response body** specified in the monitor's configuration.
 
-Because we want our health checks to be as accurate as possible, we send them from three separate data centers for each of the options in a pool's **Health Check Regions**. 
-
-![Health checks come from three data centers within each selected region.](../static/images/health-check-component.png)
-
-If the majority of data centers for that region pass the health checks, that region is considered healthy. If the majority of regions is healthy, then the origin itself will be considered healthy.
+<HealthCheckRegions/>
 
 <Aside type="note">
 
@@ -60,7 +58,7 @@ When an [individual origin becomes unhealthy](#how-an-origin-becomes-unhealthy),
 
 ### Traffic distribution
 
-When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Steering Policy](/understand-basics/traffic-steering):
+When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Pool-level steering policy](/understand-basics/traffic-steering/pool-level-steering):
 
 - **Off**: 
 

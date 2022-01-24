@@ -49,7 +49,7 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
 To review your mTLS rule in the Firewall Rules Expression Builder, click the **wrench icon** associated with your rule.
 
-In the **Expression Preview**, your mTLS rule includes a [compound expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/#compound-expressions) formed from two [simple expressions](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/#simple-expressions) joined by the `and` operator.
+In the **Expression Preview**, your mTLS rule includes a [compound expression](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/#compound-expressions) formed from two [simple expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/#simple-expressions) joined by the `and` operator.
 
 The first expression uses the `http.host` field, combined with the `in` operator, to capture the hosts your mTLS rule applies to.
 

@@ -72,7 +72,7 @@ kv_namespaces = [
 
 ## Pass the KV namespace object to Rust
 
-You can now access this KV namespace as the variable `KV_FROM_RUST` in JS. To read or write from the namespace in Rust, you need to pass the whole object to the Rust handler function:
+You can now access this KV namespace as the variable `KV_FROM_RUST` in JavaScript. To read or write from the namespace in Rust, you need to pass the whole object to the Rust handler function:
 
 ```js
 ---

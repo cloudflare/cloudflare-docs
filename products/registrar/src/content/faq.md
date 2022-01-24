@@ -1,5 +1,4 @@
 ---
-title: Frequently asked questions
 order: 4
 pcx-content-type: faq
 ---

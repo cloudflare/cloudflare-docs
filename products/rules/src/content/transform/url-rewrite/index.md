@@ -8,7 +8,7 @@ order: 0
 A URL Rewrite Rule can perform a static rewrite or a dynamic rewrite:
 
 * A **static rewrite** replaces a given part of a request URL (path or query string) with a static string.
-* A **dynamic rewrite** supports more advanced scenarios where you use an [expression](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions) to define the resulting path or query string.
+* A **dynamic rewrite** supports more advanced scenarios where you use an [expression](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions) to define the resulting path or query string.
 
 You can create a URL Rewrite Rule [in the dashboard](/transform/url-rewrite/create-dashboard) or [via API](/transform/url-rewrite/create-api).
 

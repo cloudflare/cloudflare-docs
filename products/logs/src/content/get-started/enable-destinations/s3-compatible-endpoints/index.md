@@ -1,11 +1,12 @@
 ---
+title: Enable S3-compatible endpoints
 order: 56
 pcx-content-type: how-to
 ---
 
 import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
 
-# Enable S3-compatible endpoints
+# Enable Logpush to S3-compatible endpoints
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
 
@@ -18,7 +19,7 @@ Cloudflare Logpush supports pushing logs to S3-compatible destinations via the C
 * [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
 * On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
-For more information about Logpush and the current production APIs, see the [Cloudflare Logpush](/get-started/) documentation.
+For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/get-started/) documentation.
 
 ## Manage via the Cloudflare dashboard
 
@@ -34,9 +35,9 @@ To enable the Cloudflare Logpush service:
 
 1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the data set you want to push to a storage service.
+1. Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
 1. Select **S3-Compatible**.
 
@@ -59,8 +60,6 @@ To set up S3-compatible endpoints:
 1. Create a job with the appropriate endpoint URL and authentication parameters.
 1. Enable the job to begin pushing logs.
 
-See below for detailed instructions.
-
 <Aside type="note" header="Note">
 
 Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compatible APIs.
@@ -72,19 +71,19 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 ### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
-* `name` (optional) - Use your domain name as the job name.
-* `destination_conf` - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
+* **name** (optional) - Use your domain name as the job name.
+* **destination_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
 
 ```bash
-"s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>"
+"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>"
 ```
 <Aside type="note" header="Note">
 
-`<ENDPOINT-URL>` is the url without the bucket name or path. Example: `endpoint=sfo2.digitaloceanspaces.com`
+`<ENDPOINT_URL>` is the URL without the bucket name or path. For example: `endpoint=sfo2.digitaloceanspaces.com`.
 </Aside>
 
-* `dataset` - the category of logs you want to receive; either `http_requests` (default), `spectrum_events` or `firewall_events`
-* `logpull_options` (optional) - To configure fields, sample rate, and timestamp format, see [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options)
+* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
 
 Example request using cURL:
 
@@ -92,7 +91,7 @@ Example request using cURL:
 curl -s -X POST \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 -d '{"name":"<DOMAIN_NAME>",
-"destination_conf":"s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>", "logpull_options":"fields=RayID,EdgeStartTimestamp&timestamps=rfc3339", "dataset":"http_requests"}' | jq .
+"destination_conf":"s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>", "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
 ```
 
 Response:
@@ -106,8 +105,8 @@ Response:
     "dataset": "http_requests",
     "enabled": false,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,
     "last_error": null,
     "error_message": null
@@ -118,7 +117,7 @@ Response:
 
 ### 2. Enable (update) a job
 
-To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You’ll use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
+To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
 
 Example request using cURL:
 
@@ -138,8 +137,8 @@ Response:
     "dataset": "http_requests",
     "enabled": true,
     "name": "<DOMAIN_NAME>",
-    "logpull_options": "fields=RayID,EdgeStartTimestamp&timestamps=rfc3339",
-    "destination_conf": "s3://<BUCKET-NAME>/<BUCKET-PATH>?region=<REGION>&access-key-id=<ACCESS-KEY-ID>&secret-access-key=<SECRET-ACCESS-KEY>&endpoint=<ENDPOINT-URL>",
+    "logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339",
+    "destination_conf": "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>",
     "last_complete": null,
     "last_error": null,
     "error_message": null

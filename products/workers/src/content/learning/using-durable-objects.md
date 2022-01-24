@@ -40,7 +40,7 @@ export class DurableObjectExample {
 }
 ```
 
-Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -243,7 +243,35 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current environment's script.
+  - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
+
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example an environment named `staging`:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
+]
+```
+
+Because Wrangler [appends the environment name to the top-level name](/platform/environments#naming) when publishing, for a worker named `worker-name` the above example is equivalent to:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
+]
+```
+
+Note that EXAMPLE_CLASS in the staging environment is bound to a different script name compared to the top-level EXAMPLE_CLASS binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+
+```toml
+[env.another]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
+]
+```
+
 
 ### Configuring Durable Object classes with migrations
 
@@ -261,7 +289,7 @@ The destination class (the class that stored objects are being transferred to) f
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
 
-After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 
