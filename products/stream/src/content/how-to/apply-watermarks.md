@@ -125,7 +125,7 @@ The `downloadedFrom` field will be populated if the profile was created by downl
 
 After you create a watermark profile, you can use the profile at upload time for watermarking videos. 
 
-Stream does not currently support specifying watermark profiles at upload time for simple u ploads.
+Stream does not currently support specifying watermark profiles at upload time for simple uploads.
 
 ### Upload video with a link
 

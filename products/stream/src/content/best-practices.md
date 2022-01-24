@@ -15,7 +15,7 @@ If you are producing a brand new file for Cloudflare Stream, Cloudflare recommen
  - H264 high profile.
  - Closed GOP.
  - Content should be encoded and uploaded in the same frame rate it was recorded.
- - Mono or Stereo audio (Stream will mix audio tracks with more than two channels down to stereo). Stream does not currently support multi-audio tracks. For files with multiple audio tracks, Stream uses the first available audio track.
+ - Mono or stereo audio (Stream will mix audio tracks with more than two channels down to stereo). Stream does not currently support multi-audio tracks. For files with multiple audio tracks, Stream uses the first available audio track.
 
 ## Recomended bitrate settings
 

@@ -132,7 +132,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vi
 
 Analytics data is found in `.data.metrics`, and Cloudflare is reserving fields such as `min` and `max` for use in the future.
 
-In this example, there are seven `totalImpressions` and 37663 `totalTimeViewedMs`.
+In this example, there are 7 `totalImpressions` and 37663 `totalTimeViewedMs`.
 
 ```bash
     "data": [

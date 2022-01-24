@@ -95,7 +95,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - Provides a hint to the browser about what the author thinks will lead to the best user experience. You can specify the value `preload="auto"` to preload the beginning of the video. Excluding the option or using `preload="metadata"` will load the metadata needed to start video playback when requested.
 
-    <Aside>
+    <Aside type="note">
 
       The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, the Stream Player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 

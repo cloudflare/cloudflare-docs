@@ -27,9 +27,9 @@ Opera           | Supported since Opera version 75+
 
 Mobile Platform   | Version
 ------------------|-----------------------------------------------------------------------------------
-Chrome on Android | Supported on Chrome 90
+Chrome on Android | Supported on Chrome 90+
 UC Browser on Android | Supported on version 12.12+
-Samsung Internet | Supported on 13+
+Samsung Internet browser | Supported on 13+
 Safari on iOS    | Supported on iOS 13.4+. Speed selector supported when not in fullscreen.
 
 </TableWrap>
