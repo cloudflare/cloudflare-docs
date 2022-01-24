@@ -9,7 +9,7 @@ You can add watermarks to videos uploaded using the Stream API.
 
 To add watermarks to your videos, you will first need to create a watermark profile. A watermark profile describes the image you would like to use as a watermark and its position. After you create a watermark profile, you can use it as an option when uploading videos.
 
-To interact with the watermark profile, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account). 
+To interact with the watermark profile, you will need a Cloudflare API token. 
 
 ## Create a watermark profile
 
@@ -125,7 +125,7 @@ The `downloadedFrom` field will be populated if the profile was created by downl
 
 After you create a watermark profile, you can use the profile at upload time for watermarking videos. 
 
-Stream does not currently support specifying watermark profiles at upload time for Simple Uploads.
+Stream does not currently support specifying watermark profiles at upload time for simple u ploads.
 
 ### Upload video with a link
 
@@ -268,4 +268,4 @@ Use the commands below to list and delete a watermark profiles.
 * After the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, you must delete the profile and create a new one.
 * After the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
 * After the watermark is applied to a video, deleting the watermark profile will not remove the watermark from the video.
-* The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
+* The maximum file size is 2 MiB (2097152 bytes), and only PNG files are supported.

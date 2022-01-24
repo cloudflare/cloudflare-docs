@@ -1,5 +1,4 @@
 ---
-title: Direct creator uploads
 order: 3
 pcx-content-type: tutorial
 ---
@@ -8,18 +7,18 @@ pcx-content-type: tutorial
 
 Direct creator uploads allow users to upload videos without API tokens. A common place to use Direct creator uploads is on web apps, client side applications, or on mobile apps where users upload content directly to Stream.
 
-Limits apply to Direct Creator Uploads at the time of upload URL creation. Uploads over these limits will receive a 429 (Too Many Requests) or 413 (Payload too large) HTTP status code with more information in the response body. Contact support or your customer success manager for higher limits.
+Limits apply to Direct Creator Uploads at the time of upload URL creation. Uploads over these limits will receive a `429` (Too Many Requests) or `413` (Payload too large) HTTP status code with more information in the response body. Contact support or your customer success manager for higher limits.
 
 ## Generate one-time upload URL
 
-To give users the ability to directly upload their videos, first generate and provide them with a unique one-time upload URL with the following API request. To make API requests you will need your [Cloudflare API token](https://www.cloudflare.com/a/account/my-account) and your Cloudflare [account ID](https://www.cloudflare.com/a/overview/). 
+To give users the ability to directly upload their videos, first generate and provide them with a unique one-time upload URL with the following API request. To make API requests you will need your Cloudflare API token and your Cloudflare account ID. 
 
 There are several constraints you can enforce on your user's uploads through the
 body of the `POST` request. Refer to the [Create a video and get authenticated direct upload URL endpoint](https://api.cloudflare.com/#stream-videos-create-a-video-and-get-authenticated-direct-upload-url) for a list of required and optional parameters that you can use to control security features.
 
 ## Basic Uploads
 
-If the uploads from your creators are under 200MB, you can use basic uploads. For videos over 200 MB, use [tus](#tus).
+If the uploads from your creators are under 200 MB, you can use basic uploads. For videos over 200 MB, use [tus](#tus).
 
 <TableWrap>
 
@@ -106,7 +105,7 @@ A successful upload will receive a `200` response. If the upload does not meet t
 
 ## tus
 
-tus is a protocol that supports resumable uploads and is recommended for videos over 200MB.
+tus is a protocol that supports resumable uploads and is recommended for videos over 200 MB.
 
 Typically, tus uploads require the authentication information to be sent with every request, which is not ideal for direct creators uploads because it exposes your API key (or token) to the end user.
 
@@ -163,9 +162,9 @@ When using Direct Creator Uploads, the **Upload endpoint** field in the demo sho
 
 <Aside>
 
-If you are developing on localhost, your test using the codepen may fail. Before testing,  push your endpoint to a server with an IP or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
+If you are developing on localhost, your test using the codepen may fail. Before testing, push your endpoint to a server with an IP or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
-</Aside>
+</Aside type="note">
 
 ### Upload-Metadata header syntax
 
@@ -173,7 +172,7 @@ You can apply the same constraints as Direct Creator Upload via basic upload whe
 
 The `Upload-Metadata` header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, not an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
-In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private.
+In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with maximum video duration of 10 minutes, and to make this video private.
 
 ```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'```
 

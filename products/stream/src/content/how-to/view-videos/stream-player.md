@@ -3,9 +3,9 @@ order: 0
 pcx-content-type: reference
 ---
 
-# View with the Stream player
+# View with the Stream Player
 
-The Stream player can be placed on a web page in an iframe element with the video UID or [signed token](/how-to/secure-your-stream) by replacing `$VIDEOID` in the example below. The Stream player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
+The Stream Player can be placed on a web page in an iframe element with the video UID or [signed token](/how-to/secure-your-stream) by replacing `$VIDEOID` in the example below. The Stream Player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
 ```html
 <iframe
@@ -61,9 +61,9 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `autoplay` <PropMeta>default: `false`</PropMeta>
 
-  - Attempts to autoplay the video when the `autoplay` flag is included as a querystring parameter. If you do not want the video to autoplay, set the flag to `autoplay=false`. Note that mobile browsers generally do not support this attribute, and users must tap the screen to begin video playback. We encourage you to consider mobile users or users with Internet usage limits as some users do not have unlimited Internet access.
+  - Attempts to autoplay the video when the `autoplay` flag is included as a querystring parameter. If you do not want the video to autoplay, set the flag to `autoplay=false`. Note that mobile browsers generally do not support this attribute, and users must tap the screen to begin video playback. We encourage you to consider mobile users or users with Internet usage limits, as some users do not have unlimited Internet access.
 
-    <Aside>
+    <Aside type="note">
 
       Some browsers now prevent videos with audio from playing automatically. You can set `muted` to `true` to allow your videos to autoplay. For more information, refer to [New &lt;video> policies for iOS](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
@@ -77,7 +77,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - Initializes the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [add captions](/how-to/add-captions). If the specified language code has no captions available, the player behaves as though no language code was provided.
 
-    <Aside>
+    <Aside type="note">
 
       The `defaultTextTrack` only works once during initialization. After initialization, the user has full control over their text track settings.
 
@@ -97,7 +97,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
     <Aside>
 
-      The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, the Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
+      The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, the Stream Player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
     </Aside>
 

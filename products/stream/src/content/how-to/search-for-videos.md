@@ -1,5 +1,4 @@
 ---
-title: Search for videos
 pcx-content-type: how-to
 ---
 

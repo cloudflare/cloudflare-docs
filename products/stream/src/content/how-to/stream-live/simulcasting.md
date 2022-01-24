@@ -11,8 +11,8 @@ Simulcasting lets you forward your live stream to third-party platforms such as 
 
 ## Create an Output via the Dashboard
 
-1. Log in to your Cloudflare account.
-1. From **Menu**, under **Products** click **Stream**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Click **Stream**.
 1. Click the **Live Inputs** tab.
 1. On the **Live Inputs** page, click a live input from the list.
 1. On the live input page, under **Outputs** click **Create Output**.

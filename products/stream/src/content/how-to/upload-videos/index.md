@@ -1,12 +1,11 @@
 ---
-title: Upload videos
 order: 1
 pcx-content-type: concept
 ---
 
 # Upload videos
 
-Stream provides four ways to upload videos to cover different use cases and accepts the following formats for upload: MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, QuickTime.
+Stream provides four ways to upload videos to cover different use cases and accepts the following formats for upload: MP4, MKV, MOV, AVI, FLV, MPEG-2 TS, MPEG-2 PS, MXF, LXF, GXF, 3GP, WebM, MPG, and QuickTime.
 
 <TableWrap>
 
@@ -32,11 +31,11 @@ If the frame rate is variable, Stream drops frames. For example, if there is mor
 - Video uploads cannot exceed 30 GB.
 - By default, you can have up to 120 videos in the `inprogress`, `queued`, or `downloading` state at the same time. Videos in the `error`, `ready`, or p`endingupload` state do not count toward this limit. If you need the concurrency limit raised, please contact Support explaining your use case and need for a higher limit.
 
-<Aside>
+  <Aside type="note">
 
-The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. This limit is not related to the number of end users streaming videos.
+  The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. This limit is not related to the number of end users streaming videos.
 
-</Aside>
+  </Aside>
 
 - An account cannot upload videos if the total video duration exceeds the video storage capacity purchased. 
 

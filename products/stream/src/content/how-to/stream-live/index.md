@@ -1,5 +1,4 @@
 ---
-title: Stream Live
 order: 3
 pcx-content-type: navigation
 ---

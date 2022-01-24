@@ -1,5 +1,4 @@
 ---
-title: View videos
 order: 2
 pcx-content-type: navigation
 ---

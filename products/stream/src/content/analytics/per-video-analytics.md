@@ -60,7 +60,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vie
 * `metrics` — One or more metrics (such as count) to compute.
 * `dimensions` Used to break down the data by given attributes.
 * `filters` — Used to filter rows by one or more dimensions.
-* `sort` — The sort order for the result set. Sort fields must be included in METRICS or DIMENSIONS
+* `sort` — The sort order for the result set. Sort fields must be included in METRICS or DIMENSIONS.
 * `to-timestamp` — The end of the time interval to query. Defaults to current time.
 * `from-timestamp` — The start of the time interval to query. Defaults to TO_TS - 6 hours.
 * `step` — Used to select time series resolution when using endpoint:
@@ -130,9 +130,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/analytics/vi
 }
 ```
 
-Analytics data is found in `.data.metrics`, and we are reserving fields such as `min` and `max` for use in the future.
+Analytics data is found in `.data.metrics`, and Cloudflare is reserving fields such as `min` and `max` for use in the future.
 
-In this example, there are 7 `totalImpressions` and 37663 `totalTimeViewedMs`.
+In this example, there are seven `totalImpressions` and 37663 `totalTimeViewedMs`.
 
 ```bash
     "data": [

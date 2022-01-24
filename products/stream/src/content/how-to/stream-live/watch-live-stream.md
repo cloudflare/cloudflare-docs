@@ -1,5 +1,4 @@
 ---
-title: Watch a live stream
 order: 7
 pcx-content-type: tutorial
 ---
@@ -101,9 +100,9 @@ The response will contain the HLS/DASH URL that can be used to play the current 
 
 ## View by live input UID
 
-By using the live input UID in place of a video ID in the HLS/DASH manifest URL, you get a static URL that will return a 200 with the manifest of the active livestream. If there is no active live stream, you will receive a 204 status code with no content.
+By using the live input UID in place of a video ID in the HLS/DASH manifest URL, you get a static URL that will return a `200` status code with the manifest of the active livestream. If there is no active live stream, you will receive a `204` status code with no content.
 
-Using the input ID in this manner is fully integrated in the Stream player, but may require some additional support for third-party players. 
+Using the input ID in this manner is fully integrated in the Stream Player, but may require some additional support for third-party players. 
 
 You can make a `GET` request to the `/lifecycle` endpoint to get additional data about a video ID or live input UID for more information.
 

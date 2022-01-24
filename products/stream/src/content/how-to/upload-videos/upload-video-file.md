@@ -1,5 +1,4 @@
 ---
-title: Upload video files
 order: 2
 pcx-content-type: how-to
 ---
@@ -10,7 +9,7 @@ This option for uploading videos is ideal when the video is stored on a computer
 
 ## Basic Uploads (small videos)
 
-For files smaller than 200MB, you can use form based uploads, but this option does not support resumable uploading.
+For files smaller than 200 MB, you can use form based uploads, but this option does not support resumable uploading.
 
 Make an HTTP request with content-type header set to `multipart/form-data` and include the media as an input with the name set to `file`.
 
@@ -21,7 +20,7 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
-<Aside>
+<Aside type="note">
 
 Note that cURL `-F` flag automatically configures the content-type header and maps `skiing.mp4` to a form input called `file`.
 
@@ -29,22 +28,15 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 
 ## Resumable uploads with tus (large files)
 
-<details>
-<summary>
-  What is tus?
-</summary>
-<div>
-tus is a protocol based on HTTP for resumable file uploads. Resumable means that an upload can be interrupted at any moment and can be resumed without re-uploading the previous data again. An interruption may happen willingly, if the user wants to pause, or by accident in case of an network issue or server outage.
-</div>
-</details>
-
 The [tus protocol](https://tus.io) is the recommended method for uploading large files to Cloudflare Stream from a computer, and popular programming languages have [tus client implementations](https://tus.io/implementations.html).
+
+tus is a protocol based on HTTP for resumable file uploads. Resumable means that an upload can be interrupted at any moment and can be resumed without re-uploading the previous data again. An interruption may happen willingly, if the user wants to pause, or by accident in case of an network issue or server outage.
 
 Cloudflare Stream requires a minimum chunk size of 5,242,880 bytes when using tus, unless the entire file is less than this amount.
 
 We recommend increasing the chunk size to 52,428,800 bytes for better performance when the client connection is expected to be reliable. The maximum chunk size can be 209,715,200 bytes.
 
-<Aside>
+<Aside type="note">
 
 Cloudflare Stream requires a chunk size divisible by 256KiB (256x1024 bytes). Round your desired chunk size to the nearest multiple of 256KiB.
 
@@ -59,12 +51,11 @@ The tus protocol allows you to add optional parameters in the [`Upload-Metadata`
 
 ## Get the video ID using tus
 
-When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, we do not recommend parsing this URL to get the ID.
+When an initial tus request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, we do not recommend parsing this URL to get the ID.
 
 Instead, use the `stream-media-id` HTTP header in the response to retrieve the video ID.
 
 For example, using the tus protocol to make a request to `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream`
-  
 will contain an HTTP header like the one below.
 
 ```
@@ -85,9 +76,11 @@ tus-upload --chunk-size 52428800 --header Authorization "Bearer $TOKEN" $PATH_TO
 
 At the beginning of the tus response, you will find the endpoint for getting information about your newly uploaded video.
 
-    INFO Creating file endpoint
-    INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b613bc3a9599cdc/stream/dd5d531a12de0c724bd1275a3b2bc9c6
-    ...
+```
+INFO Creating file endpoint
+INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b613bc3a9599cdc/stream/dd5d531a12de0c724bd1275a3b2bc9c6
+...
+```
 
 ### Golang
 
@@ -137,7 +130,7 @@ func main() {
 
 ```
 
-You can also get the progress of the upload if you' are running the upload in a goroutine.
+You can also get the progress of the upload if you are running the upload in a goroutine.
 
 ```go
 // returns the progress percentage.
@@ -159,8 +152,8 @@ npm install tus-js-client
 
 2. Set up an `index.js` and configure:
 
-* The API endpoint with your Cloudflare Account ID
-* The request headers to include an API token
+* The API endpoint with your Cloudflare Account ID.
+* The request headers to include an API token.
 
 ```javascript
 var fs = require("fs");

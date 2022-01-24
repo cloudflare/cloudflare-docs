@@ -41,7 +41,7 @@ Refer to the API information below for help creating or modifying a webhook subs
 
 ## Notifications
 
-When a video on your account finishes processing, you will receive a `POST` request notification with information about the video as seen in the example below.
+When a video on your account finishes processing, you will receive a `POST` request notification with information about the video, as seen in the example below.
 
 Note the `status` field indicates whether the video processing finished successfully.
 

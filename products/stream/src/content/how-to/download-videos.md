@@ -1,5 +1,4 @@
 ---
-title: Download videos
 pcx-content-type: how-to
 ---
 
@@ -11,7 +10,7 @@ Videos uploaded to Stream can be streamed using HLS/DASH, but for certain use ca
 1. Save the MP4 URL provided by the response to the `/downloads` endpoint. This MP4 URL will become functional when the MP4 is ready.
 1. Poll the `/downloads` endpoint until the `status` field is set to `ready` to inform you when the MP4 is available. You can now use the saved MP4 URL.
 
-<Aside>
+<Aside type="note">
 
 You cannot download the exact input file that you uploaded. However, depending on your use case, you can get encoded MP4s for use cases like offline viewing.
 
@@ -48,7 +47,7 @@ The downloads API response will include all available download types for the vid
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-delete-load-balancer">Get links to download videos</a>
+   <td><a href="https://api.cloudflare.com/#stream-mp4-downloads-list-downloads">Get links to download videos</a>
    </td>
    <td><Code>GET</Code>
    </td>

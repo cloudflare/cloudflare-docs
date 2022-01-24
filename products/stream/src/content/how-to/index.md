@@ -1,5 +1,4 @@
 ---
-title: How to
 pcx-content-type: navigation
 order: 2
 ---

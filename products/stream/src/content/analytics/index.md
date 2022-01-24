@@ -1,5 +1,4 @@
 ---
-title: Analytics
 order: 3
 pcx-content-type: navigation
 ---

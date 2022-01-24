@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # View with third-party players
 
-Stream is compatible with third-party players that support HLS and DASH manifests at no additional cost when you need more control over the Stream player.
+Stream is compatible with third-party players that support HLS and DASH manifests at no additional cost when you need more control over the Stream Player.
 
 Some use cases that might benefit from a third-party player include:
 

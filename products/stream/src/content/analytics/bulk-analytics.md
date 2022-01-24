@@ -1,5 +1,4 @@
 ---
-title: Bulk analytics
 pcx-content-type: reference
 ---
  
@@ -15,7 +14,7 @@ Stream has a GraphQL analytics API that can be used to get bulk analytics for al
 
 ## Metrics
 
-View analytics are only collected when the Stream player is used. Review the [example](#example---view-count-and-minutes-viewed) below to retrieve the time viewed for videos on your account in a single query.
+View analytics are only collected when the Stream Player is used. Review the [example](#example---view-count-and-minutes-viewed) below to retrieve the time viewed for videos on your account in a single query.
 
   - Number of views (number of times the video playback has been started)
   - Time viewed in seconds
@@ -84,7 +83,7 @@ query {
 
 The response will look something like below. Things to remember:
 
- - Each object inside ``videoPlaybackEventsAdaptiveGroups`` represents one video.
+ - Each object inside `videoPlaybackEventsAdaptiveGroups` represents one video.
  - The `uid` property represents the video uid.
  - The `count` property shows the view count for one video during the specified date range.
  - The `timeViewedMinutes` property shows the minutes viewed per video during the specified date range.
@@ -195,7 +194,7 @@ GraphQL API supports seek pagination. Using filters, you can specify the last vi
 To implement pagination:
 
   1. Call the first query without the `uid_gt` filter to get the first set of videos.
-  1. Grab the last video ID from the response from the first query,
+  1. Grab the last video ID from the response from the first query.
   1. Call the next query by specifying the `uid_gt` property and set it to the last video ID. This will return the next set of videos.
 
 The query below will return data for two videos that follow video id `5646153f8dea17f44d542a42e76cfd`:

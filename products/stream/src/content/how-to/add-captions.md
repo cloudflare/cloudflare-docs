@@ -1,12 +1,10 @@
 ---
-title: Add captions
-order: 
 pcx-content-type: how-to
 ---
 
 # Add captions
 
-Creating or modifying captions for a video requires a [Cloudflare API Token](https://www.cloudflare.com/a/account/my-account).
+Creating or modifying captions for a video requires a Cloudflare API Token..
 
 The `$LANGUAGE` must adhere to the [BCP 47 format](http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers). For your convenience, the most common language codes are provided below under [Common language codes](#common-language-codes). If the language you are adding is not included in the table, you can find the value through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes you can search through. 
 

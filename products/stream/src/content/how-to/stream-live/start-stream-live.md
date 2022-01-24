@@ -11,8 +11,8 @@ As long as your streaming software reconnects, Stream Live will continue to inge
 
 ## Use the Dashboard
 
-1. Log in to your Cloudflare account.
-1. From **Menu**, under **Products** click **Stream**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. Click **Stream**.
 1. Click the **Live Inputs** tab.
 1. Click the **Create Live Input** button.
 1. Under **Name**, enter a name for your Live Input.
@@ -61,11 +61,11 @@ Refer to the `recording` parameter for a list of acceptable properties for this 
 
 ## Manage live inputs
 
-Some limits apply to the Stream Live Beta:
+Some limits apply to the Stream Live beta:
 
 * You can create up to 1000 live inputs per account.
 * You can configure up to 50 outputs per live input.
-* You should use a maximum recommended bitrate of 12000 kbps.
+* You should use a maximum recommended bitrate of 12,000 kbps.
 
 If your use case requires a limit increase, contact support with your use case and need.
 
@@ -110,7 +110,7 @@ Refer to the API information below to update or delete live inputs.
 
 ### Requirements
 
-* Stream Live requires input GOP duration (keyframe interval) to be between 4 and 10 seconds.
+* Stream Live requires input GOP duration (keyframe interval) to be between four and ten seconds.
 * Closed GOPs are required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is the default in most encoder software such as OBS.
 * Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
 * Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
@@ -118,6 +118,6 @@ Refer to the API information below to update or delete live inputs.
 ### Known limitations 
 
 * Watermarks cannot yet be used with live videos.
-* The live videos feature does not yet work on older iOS versions, such as iOS 10, launched in 2016, and below.
+* The live videos feature does not yet work on older iOS versions, such as iOS 10 and below.
 * Hardware video encoding on Apple devices is not yet supported. When using encoder software such as OBS, x264 software encoding is required.
 * If a live video exceeds seven days in length, the recording will be truncated to seven days and will not be viewable.
