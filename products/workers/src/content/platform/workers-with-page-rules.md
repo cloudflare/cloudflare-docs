@@ -19,4 +19,4 @@ When using Page Rules with Workers, the following workflow is applied.
 4. Page Rules run as part of normal request proessing with some features now disabled.
 5. Worker executes.
 
-If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team.
+If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
