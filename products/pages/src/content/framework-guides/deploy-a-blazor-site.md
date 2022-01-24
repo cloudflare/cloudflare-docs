@@ -57,7 +57,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 | Configuration option | Value            |
 | -------------------- | ---------------- |
 | Production branch    | `main`           |
-| Build command        | `./build.sh`     |
+| Build command        | `chmod +x build.sh && ./build.sh`     |
 | Build directory      | `output/wwwroot` |
 
 </TableLayout>
