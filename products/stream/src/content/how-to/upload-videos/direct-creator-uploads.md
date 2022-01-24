@@ -160,11 +160,11 @@ After building your endpoint which calls Stream and returns the tokenized URL in
 
 When using Direct Creator Uploads, the **Upload endpoint** field in the demo should contain the URL to your endpoint, not to the `videodelivery.net` tokenized URL, which is the most common reason Direct Creator Uploads fail using tus. Users often set the tus url to the `videodelivery.net` URL instead of to their endpoint which *returns* the `videodelivery.net` URL. 
 
-<Aside>
+<Aside type="note">
 
 If you are developing on localhost, your test using the codepen may fail. Before testing, push your endpoint to a server with an IP or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
-</Aside type="note">
+</Aside>
 
 ### Upload-Metadata header syntax
 
