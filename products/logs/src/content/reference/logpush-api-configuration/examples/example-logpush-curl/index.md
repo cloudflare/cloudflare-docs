@@ -66,7 +66,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 ### Parameters
 
 * **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
-* **destination_conf** - See [Destination](/reference/logpush-api-configuration/#destination) for details.
+* **destination_conf** - Refer to [Destination](/reference/logpush-api-configuration/#destination) for details.
 * **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets; this parameter cannot be changed after the job is created.
 * **logpull_options** (optional) - Refer to [Options](/reference/logpush-api-configuration/#options).
     * Typically includes the desired fields and timestamp format.
