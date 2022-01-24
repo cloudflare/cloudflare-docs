@@ -20,6 +20,10 @@ Alternatively, download the client from one of the following links after checkin
       <td><strong>OS Type</strong></td>
       <td>64bit only</td>
     </tr>
+     <tr>
+      <td><strong>.NET Framework Min version</strong></td>
+      <td>4.7.2 or later</td>
+    </tr>
     <tr>
       <td><strong>HD Space</strong></td>
       <td>184MB</td>

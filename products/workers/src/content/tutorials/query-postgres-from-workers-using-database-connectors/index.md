@@ -159,7 +159,7 @@ In `wrangler.toml`, enter your Cloudflare account ID in the line containing `acc
 
 <Aside type="note">
 
-[Refer to our Quick Start guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you do not know where to find your Cloudflare Account ID.
+[Refer to Get started](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you need help finding your Cloudflare account ID.
 
 </Aside>
 
@@ -211,3 +211,11 @@ $ docker compose down
 
 # Stop and remove containers, networks
 ```
+
+## Related resources
+
+If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
+
+- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+- [Build a Slackbot](/tutorials/build-a-slackbot)
+- [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)

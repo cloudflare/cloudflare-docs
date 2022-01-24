@@ -87,7 +87,9 @@ You can build HTTP policies using **identity-based selectors**. These selectors 
 | -- | -- |
 | URL | `http.response.status_code == "200"` |
 
-#### Uploaded and Downloaded Mime Type
+#### Upload and Download Mime Type
+
+These selectors depend on the `Content-Type` header being present in the request (for uploads) or response (for downloads).
 
 | UI name | API example |
 | -- | -- |

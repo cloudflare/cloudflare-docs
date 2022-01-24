@@ -37,10 +37,10 @@ Valid options for the `options` object include:
     - The status code for the response, such as `200`.
 
   - `statusText` <Type>string</Type>
-    - The status message associated with the status code, like, `OK`.
+    - The status message associated with the status code, such as, `OK`.
 
   - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink> | <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ByteString">ByteString</TypeLink>
-    - Any headers to add to your response that are contained within a [`Headers`](/runtime-apis/request#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key/value pairs.
+    - Any headers to add to your response that are contained within a [`Headers`](/runtime-apis/request#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
 
 </Definitions>
 
@@ -57,7 +57,7 @@ Valid options for the `options` object include:
 - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
   - The headers for the response.
 - `ok` <Type>boolean</Type>
-  - A boolean indicating if the response was successful (status in the range 200-299).
+  - A boolean indicating if the response was successful (status in the range `200`-`299`).
 - `redirected` <Type>boolean</Type>
   - A boolean indicating if the response is the result of a redirect. If so, its URL list has more than one entry.
 - `status` <Type>int</Type>
@@ -103,7 +103,7 @@ Valid options for the `options` object include:
 
 - <Code>json()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/">Promise{`<JSON>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with the result of parsing the body text as [`JSON`](https://developer.mozilla.org/en-US/docs/Web/)
+  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with the result of parsing the body text as [`JSON`](https://developer.mozilla.org/en-US/docs/Web/).
 
 - <Code>text()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">Promise{`<USVString>`}</TypeLink>
 
@@ -113,7 +113,7 @@ Valid options for the `options` object include:
 
 --------------------------------
 
-## Additional information
+## Related resources
 
 - [Examples: Modify response](/examples/modify-response)
 - [Examples: Conditional response](/examples/conditional-response)

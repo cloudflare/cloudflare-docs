@@ -6,7 +6,7 @@ order: 2
 
 # About Ruleset Engine
 
-The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is the same syntax used in custom Firewall Rules. Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
+The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is defined by the [Rules language](/rules-language). Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
 
@@ -75,7 +75,7 @@ For more information on creating and deploying custom rulesets, check [Work with
 
 ## Rules
 
-A **rule** defines a filter and an action to perform on the incoming requests that match the filter. The rule filter **expression** defines the scope of the rule and the rule **action** defines what happens when there’s a match for the expression. Rule filter expressions use the same syntax as Firewall Rules.
+A **rule** defines a filter and an action to perform on the incoming requests that match the filter. The rule filter **expression** defines the scope of the rule and the rule **action** defines what happens when there’s a match for the expression. Rule filter expressions are defined using the [Rules language](/rules-language).
 
 For example, consider the following ruleset with four rules (R1, R2, R3, and R4). For a given incoming request, the expression of the first two rules matches the request properties. Therefore, the action for these rules runs (_Execute_ and _Log_, respectively). The action of the first rule executes a Managed Ruleset, which means that every rule in the Managed Ruleset is evaluated. The action of the second rule logs an event associated with the current phase. There is no match for the expressions of rules 3 and 4, so their actions do not run. Since no rule blocks the request, it proceeds to the next phase.
 

@@ -11,15 +11,15 @@ A JSON response for the [Filters API](https://api.cloudflare.com/#filters-proper
 
 ```json
 {
-    "id": "6f58318e7fa2477a23112e8118c66f61",
-    "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\""
-    "paused": true,
-    "description": "WordPress login paths",
-    "ref": ""
+  "id": "6f58318e7fa2477a23112e8118c66f61",
+  "expression": "http.request.uri.path ~ \"^.*/wp-login.php$\" or http.request.uri.path ~ \"^.*/xmlrpc.php$\"",
+  "paused": true,
+  "description": "WordPress login paths",
+  "ref": ""
 }
 ```
 
-This table summarizes the object properties:
+The following table summarizes the object properties:
 
 <TableWrap>
   <table style="table-layout:fixed; width: 100%;">
@@ -41,7 +41,7 @@ This table summarizes the object properties:
       </tr>
         <tr>
           <td><code>expression</code><br /><Type>String</Type></td>
-          <td>A Firewall Rules expression used to evaluate requests. For more, see <a href="/firewall/cf-firewall-rules/fields-and-expressions/#expressions"><em>Expressions</em></a>.
+          <td>A Rules language expression used to evaluate requests. For more information, refer to <a href="https://developers.cloudflare.com/ruleset-engine/rules-language/expressions">Expressions</a>.
           </td>
           <td></td>
         </tr>

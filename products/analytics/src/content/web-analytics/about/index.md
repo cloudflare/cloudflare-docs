@@ -13,4 +13,8 @@ Web Analytics supports Adaptive Bit Rate (ABR). Cloudflare's servers will select
 
 The data displayed in Web Analytics is real user monitoring (RUM). For more information, refer to [Real User Monitoring](https://en.wikipedia.org/wiki/Real_user_monitoring).
 
-Note: Web Analytics now includes the functionality formerly enabled through Browser Insights.
+<Aside type='note'>
+
+Web Analytics now includes the functionality formerly enabled through Browser Insights.
+
+</Aside>

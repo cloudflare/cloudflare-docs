@@ -20,7 +20,7 @@ async function handleRequest(request) {
   const url = new URL(request.url)
 
   // Only use the path for the cache key, removing query strings
-  // and always store using HTTPS e.g. https://www.example.com/file-uri-here
+  // and always store using HTTPS, for example, https://www.example.com/file-uri-here
   const someCustomKey = `https://${url.hostname}${url.pathname}`
 
   let response = await fetch(request, {
@@ -94,7 +94,7 @@ addEventListener("fetch", (event) => {
 })
 ```
 
-Remember, Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (e.g., belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
+Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
 
 ## Override based on origin response code
 

@@ -180,8 +180,8 @@ async function handleRequest(request) {
 
 It is common to route requests based on:
 
-- `request.method` — e.g. `GET` or `POST`.
-- `request.url` — e.g. filter based on query parameters or the pathname.
+- `request.method` — for example, `GET` or `POST`.
+- `request.url` — for example, filter based on query parameters or the pathname.
 - `request.headers` — filter based on specific headers.
 
 Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
@@ -293,7 +293,7 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
+By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (for example, `my-worker.my-subdomain.workers.dev`).
 
 ### (Optional) Configure for deploying to a registered domain
 
