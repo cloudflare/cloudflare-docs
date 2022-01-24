@@ -5,25 +5,27 @@ pcx-content-type: interim
 
 # Glossary
 
-## Terminology categories
+## Categories of terms
 
-### General Terms
+### Requests
 
 #### Request
 
-A record of each request that has been processed through the Cloudflare network
+A record of each request that has been processed through the Cloudflare network.
 
 #### Origin requests
 
-Requests served from the origin server
+Requests served from the origin server.
 
 #### Cached requests
 
-The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_. This doesn’t include _revalidated_ since the request had to be sent to the origin server.
+The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_. This does not include _revalidated_ since the request had to be sent to the origin server.
 
 #### Uncached requests
 
-The number of requests that are not cached and therefore, are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** doesn’t equal to _hit_, _stale_, _updating_, or _ignored_.
+The number of requests that are not cached and therefore, are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** does not equal to _hit_, _stale_, _updating_, or _ignored_.
+
+### Bandwidth
 
 #### Total bandwidth (Total egress bandwidth, Edge bandwidth)
 
@@ -31,7 +33,7 @@ The amount of data transferred from Cloudflare to end users within a certain per
 
 #### Origin bandwidth (Origin egress bandwidth)
 
-The amount of data transferred from the origin server to Cloudflare within a certain period of time. **Origin bandwidth** is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** doesn’t equal _0_.
+The amount of data transferred from the origin server to Cloudflare within a certain period of time. **Origin bandwidth** is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** does not equal _0_.
 
 #### Cached bandwidth (Cached egress bandwidth)
 
@@ -43,15 +45,19 @@ The percentage of bandwidth saved by caching on the Cloudflare network.
 
 #### Uncached bandwidth (Uncached egress bandwidth)
 
-The amount of bandwidth that is not cached and therefore, is served from the origin. **Uncached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** doesn’t equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
+The amount of bandwidth that is not cached and therefore, is served from the origin. **Uncached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** does not equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
+
+### Website content
 
 #### Static content
 
-Website content that can be delivered to an end user directly from cache, without hitting the origin server
+Website content that can be delivered to an end user directly from cache, without hitting the origin server.
 
 #### Dynamic content
 
-Website content that has to be fetched from the origin server
+Website content that has to be fetched from the origin server.
+
+### HTTP Response codes
 
 #### Edge response status code
 
@@ -59,13 +65,15 @@ HTTP response code sent from Cloudflare to the client (end user). The Cloudflare
 
 #### Origin response status code
 
-HTTP response code sent from the origin server to Cloudflare
+HTTP response code sent from the origin server to Cloudflare.
+
+### DNS
 
 #### EDNS Client Subnet (ECS)
 
 ECS is forwarded by recursive resolvers and contains information about the network that the DNS query is originating from. Not all resolvers choose to forward ECS, but if they do, usually a part of the IP address is omitted. The subnet length indicates the size of the client subnet in bits that is forwarded. So if the last octet of an IPv4 address is omitted (for example, 192.0.2.x.), the subnet length will be 24.
 
-### Threat related terms
+### Threats
 
 #### Threat
 
@@ -80,7 +88,7 @@ The security levels and the challenge display criteria are:
 
 #### Total Threats Stopped
 
-Indicates the number of suspicious and bad requests aimed at your site
+Indicates the number of suspicious and bad requests aimed at your site.
 
 #### Bad browser
 
@@ -92,39 +100,39 @@ This value results from the Cloudflare **Hotlink Protection** feature. **Hotlink
 
 #### Bad IP
 
-A request that came from an IP address that is not trusted by Cloudflare based on the **Threat Score**
+A request that came from an IP address that is not trusted by Cloudflare based on the **Threat Score**.
 
 #### Country block
 
-Requests from countries that were blocked based on the user configuration set in the Cloudflare **Firewall** app
+Requests from countries that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IP block (user)
 
-Requests from specific IP addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app
+Requests from specific IP addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IP range block (/16)
 
-A /16 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app
+A /16 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IP range block (/24)
 
-A /24 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app
+A /24 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IPv6 block (user)
 
-Requests from specific IPv6 addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app
+Requests from specific IPv6 addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IPv6 range block (/64)
 
-A /64 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app
+A /64 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IPv6 range block (/48)
 
-A /48 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app
+A /48 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### IPv6 range block (/32)
 
-A /32 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app
+A /32 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
 
 #### Captcha Error
 
@@ -132,9 +140,9 @@ Requests made by a bot that failed to pass the Captcha challenge.
 
 #### New Captcha (user)
 
-Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app
+Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app.
 
-### Traffic related terms
+### Traffic 
 
 #### NoRecord
 
@@ -146,28 +154,20 @@ The request has been sent from an allowlisted IP address.
 
 #### SearchEngine
 
-The search engine used to send the request
+The search engine used to send the request.
 
 #### BadHost
 
-A bad host header or no host header was used
-
-#### backupService
-
-Backup service
-
-#### monitoringService
-
-Monitoring service
+A bad host header or no host header was used.
 
 #### Tor
 
-The request was made using a Tor browser
+The request was made using a Tor browser.
 
 #### BadIP
 
-A request coming from an IP address that is not trusted by Cloudflare based on the **Threat Score**
+A request coming from an IP address that is not trusted by Cloudflare based on the **Threat Score**.
 
 #### WAF Events
 
-Events that been triggered based on **Web Applications Firewall** rules
+Events that been triggered based on **Web Applications Firewall** rules.
