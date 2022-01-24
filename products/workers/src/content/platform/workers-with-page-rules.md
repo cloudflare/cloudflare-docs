@@ -9,7 +9,7 @@ Page Rules trigger certain actions whenever a request matches one of the URL pat
 
 ## Page Rules with Workers
 
-Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules, to Internet properties. Traffic headed to your application will first visit the closest Cloudflare data center to the visitor, where services like Workers and Page Rules will run, before going, if needed, to your origin server. If your application is built on Workers and/or Pages, the [Cloudflare network edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare edge. 
+Cloudflare acts as a [reverse proxy](https://www.cloudflare.com/learning/what-is-cloudflare/) to provide services, like Page Rules, to Internet properties. Your application's traffic will pass through a Cloudflare data center that is closest to the visitor. There are hundreds of these around the world, each of which are capable of running services like Workers and Page Rules. If your application is built on Workers and/or Pages, the [Cloudflare network edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) acts as your origin server and responds to requests directly from the Cloudflare edge. 
 
 When using Page Rules with Workers, the following workflow is applied. 
 
