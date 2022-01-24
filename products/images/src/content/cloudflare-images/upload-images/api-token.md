@@ -1,9 +1,9 @@
 ---
-order:
+order: 2
 pcx-content-type: how-to
 ---
 
-# API tokens
+# API token
 
 You can create API tokens to authenticate and define what type of permissions different users have. This is needed to use the Images API. For Cloudlare Images, you will have to create a custom token. Refer to [API tokens and keys](https://developers.cloudflare.com/api/tokens) for a complete guide on Cloudflare tokens.
 
@@ -15,7 +15,7 @@ To create an API token for Images:
 1. Give your token a name. 
 1. In **Permissions**, make sure _Account_ is selected in the first drop-down menu.
 1. From the _Select_ drop-down, scroll down until you find **Cloudflare Images**.
-1. In the next drop-down, select **Read** or **Edit**, according to the amount of permissions you want this token to have.
+1. In the next drop-down, select **Read** or **Edit**, according to the permissions you want this token to have.
 1. You can further limit or expand this token in the following inputs. Refer to [API tokens and keys](https://developers.cloudflare.com/api/tokens) for more information on what each field means.
 1. Click **Continue to summary** > **Create Token** to create your token.
 
@@ -25,7 +25,7 @@ Your API token is now created and available. Make sure you copy your token from 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 1. Click **Images**.
-1. Click **Use API** in the Images tab.
+1. In the Images tab, click **Use API**.
 1. In **API token**, paste the API token you created.
 1. Input the name of the image you want to use in **Image File Name**.
 
