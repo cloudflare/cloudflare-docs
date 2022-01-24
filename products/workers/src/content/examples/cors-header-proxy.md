@@ -110,7 +110,9 @@ async function handleRequest(request) {
   response = new Response(response.body, response)
 
   // Set CORS headers
-  response.headers.set("Access-Control-Allow-Origin", url.origin)
+  response.headers.set("Access-Control-Allow-Origin", '*')
+  // Note: If you wish to serve the worker in front of an existing origin, 
+  // you may wish to change the above value fron `*` to `url.origin`
 
   // Append to/Add Vary header so browser will cache response correctly
   response.headers.append("Vary", "Origin")
