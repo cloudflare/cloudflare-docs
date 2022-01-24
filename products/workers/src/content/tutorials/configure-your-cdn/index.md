@@ -265,7 +265,7 @@ After deploying your project, open your browser to test retrieving your assets. 
 
 ![Result](./media/result.png)
 
-## Conclusion
+## Related resources
 
 In this tutorial, you built and published a serverless function to Cloudflare Workers for serving assets from cloud storage. If you would like to review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/assets-on-workers).
 
