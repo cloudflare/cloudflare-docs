@@ -82,6 +82,22 @@ filename: _headers
   x-movie-name: You are watching ":title"
 ```
 
+### Comments
+
+If you want to document the rules or headers, you can put comments on a separate lines, starting with an octothorpe (`#`). 
+
+```txt
+---
+filename: _headers
+---
+# source: https://example.org/some-security-headers
+/secure/page
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+```
+
+
 ## Examples
 
 ### Cross-Origin Resource Sharing (CORS)
