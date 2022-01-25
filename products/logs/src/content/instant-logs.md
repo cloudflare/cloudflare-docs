@@ -31,7 +31,7 @@ For the moment, HTTP is the only dataset available. In the future, we will expan
 
 ## Exporting
 
-You can download the table of logs that appears in your dash using the **Export** button. The data will be downloaded in a JSON format.
+You can download the table of logs that appears in your dash using the **Export** button. The data will be downloaded in JSON format.
 
 ## Limits
 
