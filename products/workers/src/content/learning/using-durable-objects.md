@@ -483,12 +483,11 @@ export class Counter {
 
 ### Debugging
 
-- [`wrangler dev`](/cli-wrangler/commands#dev) now supports Durable Objects.
+[`wrangler dev`](/cli-wrangler/commands#dev) and [`wrangler tail`](/cli-wrangler/commands#tail) are both available to help you debug your Durable Objects.
 
-Wrangler dev opens up a tunnel from your local development environment to Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+`wrangler dev` opens up a tunnel from your local development environment to a preview instance of your script at Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
 
-
-To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
 ### Common errors
 #### Error: `No event handlers were registered. This script does nothing.`
