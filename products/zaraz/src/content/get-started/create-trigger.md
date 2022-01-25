@@ -7,11 +7,11 @@ pcx-content-type: how-to
 
 Triggers are a set of conditions that determine if and when Cloudflare Zaraz should [send events to third-party tools](/get-started/send-events). In most cases, your objective will be to capture specific site actions that are relevant to your business. A trigger will usually be based on an action the end user has taken on your website, like clicking a button.
 
-These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/events-api) and [Data layer compatibility mode](https://developers.cloudflare.com/zaraz/datalayer-compatibility) for more information on how to implement these options.
+These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/events-api) and [Data layer compatibility mode](/datalayer-compatibility) for more information on how to implement these options.
 
 You can also use behavioral triggers with different types of rules, like Click Listeners or Form Submissions to listen for these site actions.
 
-For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `Pageview` preset configuration. If this is the case for the tool you need, just [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
+For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, just [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
 
 A valid trigger has a structure as follows:
 
@@ -25,7 +25,7 @@ The exact composition of the trigger will change depending on the type of rule y
 
 Rule type | Variable name | Match operation | Match string
 ---       | ---           | ---             | ---
-Match rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
+_Match rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
 
 </TableWrap>
 
@@ -49,11 +49,11 @@ Refer to [Rule types](#rule-types) for more information on the types of rules av
 
 1. In **Match string** input the string that completes the rule.
 
-1. To add another rule to your trigger, click **Add rule** and repeat steps 5-7 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when _all_ conditions are true.
+1. To add another rule to your trigger, click **Add rule** and repeat steps 5-8 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when all conditions are true.
 
 1. Click **Save**. 
 
-Your trigger is now complete. If you go back to the main page you will see it listed under **Triggers** and which tools use it. You can also **Edit** or **Delete** your trigger.
+Your trigger is now complete. If you go back to the main page you will see it listed under **Triggers**, as well as which tools use it. You can also **Edit** or **Delete** your trigger.
 
 ## Rule types
 
