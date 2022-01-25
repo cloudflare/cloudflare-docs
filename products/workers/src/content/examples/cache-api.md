@@ -31,7 +31,7 @@ async function handleRequest(event) {
   let response = await cache.match(cacheKey)
 
   if (!response) {
-    console.log(`Response for request url: ${request.url} not present in chace. We fetch and cache it.`); 
+    console.log(`Response for request url: ${request.url} not present in cache. Fetching and caching request.`); 
     // If not in cache, get it from origin
     response = await fetch(request)
 
