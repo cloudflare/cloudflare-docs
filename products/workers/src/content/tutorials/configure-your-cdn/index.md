@@ -25,7 +25,7 @@ This tutorial assumes that you have a public bucket on Google Cloud Storage. You
 
 This tutorial makes use of sample images to illustrate serving data through your Cloudflare Workers function. If you have an existing set of images you would like to use, you can upload those to your Google Cloud Storage bucket and use them — if you do not have an existing set of images, this tutorial provides a sample set of profile pictures via [UIFaces.com](http://uifaces.com/), formatted in numeric order (`1.jpg`, `2.jpg`, … `199.jpg`).
 
-To follow along with this tutorial using the data set provided, download the [sample image collection](https://storage.cloud.google.com/workers-docs-configure-your-cdn-tutorial/faces.zip) and upload the zipped folder `faces` to root of your bucket. The directory structure should look like this:
+To follow along with this tutorial using the data set provided, download the [sample image collection](https://storage.cloud.google.com/workers-docs-configure-your-cdn-tutorial/faces.zip) and upload the zipped folder `faces` to the root of your bucket. The directory structure should look like this:
 
 ```txt
 your-bucket
@@ -75,7 +75,7 @@ async function handleRequest(event) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code.
+In your default `index.js` file, you can observe that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code.
 
 When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. Your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network) instead of continuing to your origin server. A standard server would accept requests and return responses. Cloudflare Workers allows you to respond quickly by constructing responses directly on the Cloudflare edge network.
 
