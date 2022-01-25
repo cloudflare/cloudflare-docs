@@ -11,7 +11,7 @@ Instant Logs allows Cloudflare Enterprise customers to access a live stream of t
 
 To use Instant Logs:
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 1. Select the Enterprise domain you want to use with Instant Logs.
 
