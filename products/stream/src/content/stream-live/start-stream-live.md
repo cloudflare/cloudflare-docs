@@ -79,7 +79,7 @@ Delete a live input by making a `DELETE` request:
 curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/live_inputs/:input_id
 ```
 
-## Requirements and known limitations 
+## Requirements and known limitations
 
 ### Requirements
 
@@ -88,7 +88,7 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 * Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
 * Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
-### Known limitations (will be solved in coming weeks without any changes required from you): 
+### Known limitations (will be solved in coming weeks without any changes required from you):
 
 * Watermarks cannot yet be used with live videos.
 * The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
