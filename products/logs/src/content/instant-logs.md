@@ -44,4 +44,4 @@ If either of these limits are reached, the logs stream will automatically stop.
 
 ## Connect with us
 
-Share your feedback with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/h35x2dkuq8)!
+Share your feedback with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/h35x2dkuq8).
