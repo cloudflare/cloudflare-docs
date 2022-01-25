@@ -84,7 +84,7 @@ filename: _headers
 
 ### Comments
 
-If you want to document the rules or headers, you can put comments on a separate lines, starting with an octothorpe (`#`). 
+If you want to document the rules or headers, you can put comments on separate lines, starting with an octothorpe (`#`). 
 
 ```txt
 ---
