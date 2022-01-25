@@ -125,3 +125,9 @@ We will attempt to retry this validation check for a finite period before timing
 </Aside>
 
 If you would like to complete the issuance process before asking your customer to update their CNAME (or before changing the resolution of your target CNAME to be proxied by Cloudflare), choose another validation method.
+
+## Renew certificates issued by DCV
+
+If you are using a proxied hostname, new certificates are automatically validated [via HTTP](#http-automatic).
+
+If you need to use another validation method — for example, if you are using wildcard certificates or certificates with multiple SANs — you need to repeat the DCV process with your chosen method and share the tokens with your customer.
