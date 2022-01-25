@@ -4,14 +4,14 @@ order: 4
 pcx-content-type: how-to
 ---
 
-import DCVDefinition from "../_partials/_dcv-definition.md"
-import DCVCNAMEDefinition from "../_partials/_dcv-cname-definition.md"
-import CNAMECertValidation from "../_partials/_cname-cert-verification.md"
-import GenericValidationProcess from "../_partials/_generic-validation-process.md"
-import EmailValidationDefinition from "../_partials/_email-validation-definition.md"
-import TXTValidationDefinition from "../_partials/_txt-validation-definition.md"
-import EmailValidationProcess from "../_partials/_email-validation-process.md"
-import DCVValidatePatch from "../_partials/_dcv-validate-patch.md"
+import DCVDefinition from "../../_partials/_dcv-definition.md"
+import DCVCNAMEDefinition from "../../_partials/_dcv-cname-definition.md"
+import CNAMECertValidation from "../../_partials/_cname-cert-verification.md"
+import GenericValidationProcess from "../../_partials/_generic-validation-process.md"
+import EmailValidationDefinition from "../../_partials/_email-validation-definition.md"
+import TXTValidationDefinition from "../../_partials/_txt-validation-definition.md"
+import EmailValidationProcess from "../../_partials/_email-validation-process.md"
+import DCVValidatePatch from "../../_partials/_dcv-validate-patch.md"
 
 # Domain Control Validation (DCV) — SSL/TLS
 
@@ -27,7 +27,7 @@ If your domain is on a full setup (Cloudflare runs your [authoritative nameserve
 
 If your domain is using a [custom certificate](../custom-certificates), you need to handle DCV on your own when you obtain certificates from a CA.
 
-## Performing DCV
+## Perform DCV
 
 If your application is on a partial/CNAME setup (someone else runs your authoritative nameservers), you may need to perform DCV.
 
@@ -60,6 +60,12 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 </details>
 
 Though this process happens relatively quickly, your application may experience a brief period of downtime. If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT](#txt) or [Email](#email) validation.
+
+<Aside type="warning">
+
+For additional help, refer to [Troubleshooting DCV](troubleshooting).
+
+</Aside>
 
 #### TXT
 
@@ -103,6 +109,12 @@ To verify the [DCV status](/ssl-tls/certificate-statuses) of a domain, either vi
 
 A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 
-### Update DCV method for an active certificate
+## Update DCV method for an active certificate
 
 You cannot update the DCV method for an active certificate. To update the DCV method for a subdomain, wait until the DCV expires and then change the DCV method.
+
+## Renew certificates issued by DCV
+
+If you are using a proxied hostname, new certificates are automatically validated [via HTTP](#http).
+
+If you need to use another validation method — for example, if you are using wildcard certificates or certificates with multiple SANs — you need to repeat the DCV process with your chosen method.
