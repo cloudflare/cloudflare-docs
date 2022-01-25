@@ -25,7 +25,7 @@ In the command line, generate your Workers project by passing in a project name 
 
 This command creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
 
-Wrangler templates are Git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
+Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/examples), there is a variety of options to help you get started.
 
 ## Workers Playground
 
@@ -121,7 +121,7 @@ If `wrangler dev` is running, you will see the output of your Rust program in yo
 
 ## Publish
 
-At this point in the tutorial, you have finished writing a Cloudflare Workers function with Rust-generated Wasm.
+You have completed writing a Cloudflare Workers function with Rust-generated Wasm.
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
