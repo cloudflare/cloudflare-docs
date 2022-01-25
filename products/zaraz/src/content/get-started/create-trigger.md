@@ -5,19 +5,31 @@ pcx-content-type: how-to
 
 # Triggers
 
-Triggers are a set of conditions you can use to determine if and when Cloudflare Zaraz should [send events to third-party tools](/get-started/send-events). In most cases, your objective will be to capture specific site actions that are relevant to your business. A trigger will usually be based on an action the end user has taken on your website, like when a user clicks a button.
+Triggers are a set of conditions that determine if and when Cloudflare Zaraz should [send events to third-party tools](/get-started/send-events). In most cases, your objective will be to capture specific site actions that are relevant to your business. A trigger will usually be based on an action the end user has taken on your website, like clicking a button.
 
-These actions can be captured in a number of ways. You can use the Events API or the `dataLayer` and the Event API to send them to specific events and tools. You can also use different types of rules, instead of the Events API or `dataLayer` code in your website.
+These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/events-api) and [Data layer compatibility mode](https://developers.cloudflare.com/zaraz/datalayer-compatibility) for more information on how to implement these options.
 
-For most tools, the trigger will be a simple **page view** event type, for which Cloudflare Zaraz offers a `Pageview` preset configuration. If this is the case for the tool you are choosing, you do not need to do anything else. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the event for you.
+You can also use behavioral triggers with different types of rules, like Click Listeners or Form Submissions to listen for these site actions, instead of the Events API or `dataLayer` code.
 
-A complete trigger will look like this:
+For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `Pageview` preset configuration. If this is the case for the tool you need, just [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
+
+A valid trigger has a structure as follows:
 
 ```txt
-<trigger type> <variable name> <comparison operator> <string to match>
+<rule type> <variable name> <comparison operator> <string to match>
 ```
 
-Refer to [Trigger type](#trigger-type) for more information on the types of triggers available, and [Zaraz event and system properties](/properties-reference), for more information on the variables you can use. 
+The exact composition of the trigger will change depending on the type of rule you choose. Here is an example for a trigger based on a Page rule:
+
+<TableWrap>
+
+Rule type | Variable name | Match operation | Match string
+---       | ---           | ---             | ---
+_Page rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
+
+</TableWrap>
+
+Refer to [Rule types](#rule-types) for more information on the types of rules available, and [Zaraz event and system properties](/properties-reference), for more information on the variables you can use to create triggers. 
 
 ## Create a trigger
 
@@ -29,9 +41,9 @@ Refer to [Trigger type](#trigger-type) for more information on the types of trig
 
 1. In **Trigger Name** enter a descriptive name for your trigger.
 
-1. In **Trigger type**, choose from the actions available in the drop-down menu to start building your rule.
+1. In **Rule type**, choose from the actions available in the drop-down menu to start building your rule.
 
-1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the name of an event a user sends using `zaraz.track().
+1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the variable you should employ when [`zaraz.track()` is used in your website](/events-api).
 
 1. Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in `Variable name` and `Match string` must satisfy the comparison operator.
 
@@ -43,14 +55,96 @@ Refer to [Trigger type](#trigger-type) for more information on the types of trig
 
 Your trigger is now complete. If you go back to the main page you will see it listed under **Triggers** and which tools use it. You can also **Edit** or **Delete** your trigger.
 
-## Trigger type
+## Rule types
 
-The trigger type determines the kind of events Zaraz should listen for in your web page. Zaraz supports different trigger types which allow for the creation of complex rules. 
+The rule type determines the kind of conditions Zaraz should listen for in your web page. Zaraz supports different rule types which allow for the creation of complex rules.
 
-* **Page rule**: Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/properties-reference).
-* **Click listener**: Tracks clicks in a web page. You can setup click listeners using CSS selectors or XPath expressions.
-* Form submission: Tracks form submissions using CSS selectors. Click the **Validate** toggle button to only fire the trigger when the form has no validation errors.
-* Timer: Set up an interval of time in milliseconds before activating the trigger in **Interval**. In **Limit** specify the number of times the trigger will fire before stopping.
+<details>
+<summary>Page rule</summary>
+<div>
+
+Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/properties-reference).
+
+**Trigger example:**
+
+<TableWrap>
+
+Rule type | Variable name | Match operation | Match string
+---       | ---           | ---             | ---
+_Page rule_ | `{{ client.__zarazTrack }}` | _Contains_ | `purchase`
+
+</TableWrap>
+
+</div>
+</details>
+
+<details>
+<summary>Click listener</summary>
+<div>
+
+Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for tags** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by this trigger to reach their destination.
+
+**Trigger example for CSS selector:**
+
+<TableWrap>
+
+Rule type | Type | Selector | Wait for tags
+--- | --- | --- | ---
+_Click listener_ | _CSS_ | `#my-button` | `500`
+
+</TableWrap>
+
+**Trigger example for XPath:**
+
+<TableWrap>
+
+Rule type | Type | Selector | Wait for tags
+--- | --- | --- | ---
+_Click listener_ | _XPath_ | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`
+
+</TableWrap>
+
+</div>
+</details>
+
+<details>
+<summary>Form submission</summary>
+<div>
+
+Tracks form submissions using CSS selectors. Click the **Validate** toggle button to only fire the trigger when the form has no validation errors.
+
+**Trigger example:**
+
+<TableWrap>
+
+Rule type | CSS Selector | Validate
+--- | --- | --- 
+_Form submission_ | `#my-form` | Toggle on or off
+
+</TableWrap>
+
+</div>
+</details>
+
+
+<details>
+<summary>Timer</summary>
+<div>
+
+Set up an interval of time in milliseconds before activating the trigger in **Interval**. In **Limit** specify the number of times the trigger will fire before stopping. If you do not specify a limit the timer will run every ten seconds.
+
+**Trigger example:**
+
+<TableWrap>
+
+Rule type | Interval | Limit
+--- | --- | --- 
+_Timer_ | `50` | `2`
+
+</TableWrap>
+
+</div>
+</details>
 
 ## Blocking Triggers
 
