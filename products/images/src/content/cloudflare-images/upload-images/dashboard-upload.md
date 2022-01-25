@@ -12,4 +12,4 @@ To quickly upload a single image to your Cloudflare Images account, you can use 
 1. Click **Images**.
 1. Drag your image to **Quick upload**, or click **Drop images here or click to browse**.
 
-After the upload finishes, your new image will appear in your Images list of files.
+After the upload finishes, your new image will appear in your list of files.

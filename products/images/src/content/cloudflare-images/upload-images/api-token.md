@@ -26,7 +26,7 @@ Your API token is now created and available. Make sure you copy your token from 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 1. Click **Images**.
 1. In the Images tab, click **Use API**.
-1. In **API token**, paste the API token you created.
+1. In **API token**, paste your API token.
 1. Input the name of the image you want to use in **Image File Name**.
 
 The **cURL command** message box will show you the complete command you can use. Below, is an example for a PNG image: 
