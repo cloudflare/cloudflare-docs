@@ -28,6 +28,7 @@ You can define as many `[name]: [value]` pairs as you require on subsequent line
 ---
 filename: _headers
 ---
+# This is a comment
 /secure/page
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
@@ -81,22 +82,6 @@ filename: _headers
 /movies/:title
   x-movie-name: You are watching ":title"
 ```
-
-### Comments
-
-If you want to document the rules or headers, you can put comments on separate lines, starting with an octothorpe (`#`). 
-
-```txt
----
-filename: _headers
----
-# source: https://example.org/some-security-headers
-/secure/page
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: no-referrer
-```
-
 
 ## Examples
 
