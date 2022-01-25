@@ -29,10 +29,10 @@ Refer to [API tokens](/cloudflare-images/upload-images/api-token).
 Once you have this information, you are ready to upload your first image to Cloudflare Images using the API:
 
 ```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/:account_tag/images/v1 \
-  --header 'Authorization: Bearer :token' \
-  --form file=@./YOUR_IMAGE.jpeg
+curl -X POST \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1" \
+-H 'Authorization: Bearer <API_TOKEN>' \
+-F file=@./<YOUR_IMAGE>.jpg
 ```
 
 A successful response will look similar to this:
@@ -41,7 +41,7 @@ A successful response will look similar to this:
 {
   "result": {
     "id": "083eb7b2-5392-4565-b69e-aff66acddd00",
-    "filename": "triceratops.jpeg",
+    "filename": "triceratops.jpg",
     "uploaded": "2021-09-14T05:52:14.767Z",
     "requireSignedURLs": false,
     "variants": [

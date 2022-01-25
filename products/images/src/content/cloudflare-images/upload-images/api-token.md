@@ -32,5 +32,5 @@ Your API token is now created and available. Make sure you copy your token from 
 The **cURL command** message box will show you the complete command you can use. Below, is an example for a PNG image: 
 
 ```bash
-curl -X POST -F file=@./YOUR_IMAGE.png -H "Authorization: Bearer <Your_API_Token" https://api.cloudflare.com/client/v4/accounts/2f3dc21d188ba781322b520bbde5fb5a/images/v1
+curl -X POST -F file=@./<YOUR_IMAGE>.png -H "Authorization: Bearer <API_TOKEN>" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1
 ```

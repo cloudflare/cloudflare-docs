@@ -6,7 +6,7 @@ title: Images dashboard
 
 # Images dashboard upload
 
-To quickly upload a single image to your Cloudflare Images account, you can use the dashboard.
+Use the dashboard to quickly upload a single image to your Cloudflare Images account.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 1. Click **Images**.
