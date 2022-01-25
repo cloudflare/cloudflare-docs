@@ -9,8 +9,6 @@ Instant Logs allows Cloudflare Enterprise customers to access a live stream of t
 
 ## How to use Instant Logs
 
-To use Instant Logs:
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
 1. Select the Enterprise domain you want to use with Instant Logs.
@@ -35,7 +33,7 @@ You can download the table of logs that appears in your dash using the **Export*
 
 ## Limits
 
-There are two limits set in place:
+Instant Logs has two limits set in place:
 
 * Only one active Instant Logs session per zone.
 * Maximum session time is 60 minutes.
