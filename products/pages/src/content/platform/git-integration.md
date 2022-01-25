@@ -3,9 +3,9 @@ order: 1
 pcx-content-type: concept
 ---
 
-# GitHub integration
+# Git integration
 
-Cloudflare supports connecting Cloudflare Pages to your GitHub repositories to look for new changes to your project.
+Cloudflare supports connecting Cloudflare Pages to your GitHub and GitLab repositories to look for new changes to your project.
 
 ## Custom branches
 
@@ -17,11 +17,23 @@ You can also use [preview deployments](/platform/preview-deployments) to preview
 
 ## Organizational access
 
-When authorizing Cloudflare Pages to access your GitHub account, you can also specify access to organizations that you belong to on GitHub. This means that you can deploy projects to Cloudflare Pages from your open-source team, company, or side project.
+You can deploy projects to Cloudflare Pages from your open-source team, company, or side project on both GitHub and GitLab. 
+
+### GitHub
+
+When authorizing Cloudflare Pages to access your GitHub account, you can also specify access to organizations that you belong to on GitHub. 
+
+### GitLab
+
+By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow all organizations on your GitLab account to be available for use. 
 
 ## Removing access to your GitHub account
 
 You can remove Cloudflare Pages' access to your GitHub account by viewing the [**Applications** page](https://github.com/settings/installations) on GitHub. Note that removing access to GitHub will also disable new builds, though the last build of your site will continue to be hosted via Cloudflare Pages.
+
+## Removing access to your GitLab account
+
+You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access. 
 
 ## Pausing Automatic Builds
 
