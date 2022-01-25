@@ -1,5 +1,14 @@
 # Changelog
 
+## 2022-01-20
+
+- Updated V8: 9.7 → 9.8.
+
+## 2022-01-17
+
+- HTMLRewriter now supports inspecting and modifying end tags, not just start tags.
+- Fixed bug where Durable Objects experiencing a transient CPU overload condition would cause in-progress requests to be unable to return a response (appearing as an indefinite hang from the client side), even after the overload condition clears.
+
 ## 2022-01-07
 
 - The `workers_api_getters_setters_on_prototype` configuration flag corrects the way Workers attaches property getters and setters to API objects so that they can be properly subclassed.
@@ -20,7 +29,7 @@
 ## 2021-12-02
 
 - The Streams spec requires that methods returning promises must not throw synchronous errors. As part of the effort of making the Streams implementation more spec compliant, we are converting a number of sync throws to async rejections.
-- Major V8 update: 9.6 → 9.7. See [V8 release v9.7 · V8](https://v8.dev/blog/v8-release-97) for more details.
+- Major update: 9.6 → 9.7. See [V8 release v9.7 · V8](https://v8.dev/blog/v8-release-97) for more details.
 
 ## 2021-11-19
 
