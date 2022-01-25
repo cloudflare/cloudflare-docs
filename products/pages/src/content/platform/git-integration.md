@@ -16,12 +16,15 @@ For example, imagine that you merge new code into the `main` branch. When it is 
 You can also use [preview deployments](/platform/preview-deployments) to preview how the new version of your project looks before merging to `production`. To do this, make sure that preview deployments are enabled. You can check this by going to the Pages project's **Settings** > **Builds & deployments** > and verifying that automatic deployments are enabled and **Pause deployments** is unselected. With preview deployments, you will be able to access a deployed version of your `main` branch, or other branches that exist, whether created manually or through pull requests.
 
 ## Organizational access
+
 You can deploy projects to Cloudflare Pages from your open-source team, company, or side project on both GitHub and GitLab. 
 
 ### GitHub
+
 When authorizing Cloudflare Pages to access your GitHub account, you can also specify access to organizations that you belong to on GitHub. 
 
 ### GitLab
+
 By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow all organizations on your GitLab account to be available for use. 
 
 ## Removing access to your GitHub account
@@ -29,7 +32,8 @@ By authorizing Cloudflare Pages to access your GitLab account, you will automati
 You can remove Cloudflare Pages' access to your GitHub account by viewing the [**Applications** page](https://github.com/settings/installations) on GitHub. Note that removing access to GitHub will also disable new builds, though the last build of your site will continue to be hosted via Cloudflare Pages.
 
 ## Removing access to your GitLab account
-You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called "Cloudflare Pages" and click the button that sayd "Revoke" to revoke access. 
+
+You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access. 
 
 ## Pausing Automatic Builds
 
