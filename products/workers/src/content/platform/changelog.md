@@ -29,7 +29,7 @@
 ## 2021-12-02
 
 - The Streams spec requires that methods returning promises must not throw synchronous errors. As part of the effort of making the Streams implementation more spec compliant, we are converting a number of sync throws to async rejections.
-- Major update: 9.6 → 9.7. See [V8 release v9.7 · V8](https://v8.dev/blog/v8-release-97) for more details.
+- Major V8 update: 9.6 → 9.7. See [V8 release v9.7 · V8](https://v8.dev/blog/v8-release-97) for more details.
 
 ## 2021-11-19
 
