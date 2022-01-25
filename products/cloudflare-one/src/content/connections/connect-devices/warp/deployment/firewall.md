@@ -8,7 +8,7 @@ pcx-content-type: reference
 If your organization uses a firewall or other policies to restrict Internet traffic, you may need to make a few changes to allow WARP to connect.
 
 ## Client Orchestration API
-The WARP client talks with our edge outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
+The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
 
  - IPv4 API Endpoint: `162.159.192.1`
 
@@ -17,7 +17,7 @@ The WARP client talks with our edge outside the tunnel for operations like regis
 </Aside>
 
 ## DoH IP
-All DNS requests through WARP are sent outside the tunnel via DoH. The following IP addresses must be reachable for DNS to work correctly.
+All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
 
  - IPv4 DoH Address: `162.159.36.1`
  - IPv6 DoH Address: `2606:4700:4700::1111`
@@ -27,7 +27,7 @@ These are the IP addresses that the WARP client will connect to. All traffic fro
 - IPv4 Range: `162.159.193.0/24`
 - IPv6 Range: `2606:4700:100::/48`
 
-## UDP Ports
+### WARP UDP Ports
 WARP utilizes UDP for all of its communications. By default, the UDP Port required for WARP is: UDP 2408. WARP can fallback to: UDP 500, UDP 1701, or UDP 4500.
 
 ## Creating firewall rules
