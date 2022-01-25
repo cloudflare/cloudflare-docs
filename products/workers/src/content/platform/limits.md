@@ -16,7 +16,7 @@ pcx-content-type: concept
 | [Environment variables](#environment-variables)                                 | 32/worker | 32/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
-| [Number of Environments](#number-of-Environments)                               | 30        | 100       |
+| [Number of Environments](#number-of-environments)                               | 30        | 100       |
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
