@@ -6,7 +6,7 @@ pcx-content-type: how-to
 
 # Monitor scripts on your site
 
-Once you have [activated Page Shield](/get-started), review the **Script Monitor dashboard** to see which scripts are running on your domain. Scripts on the dashboard appear in close to real time, so use the dashboard when proactively looking for scripts.
+Once you have [activated Page Shield](/get-started), review the **Script Monitor dashboard** to see which scripts are running on your domain. Scripts on the dashboard appear in close to real time, so use the dashboard when proactively looking for scripts. The dashboard only displays scripts last seen within past 30 days.
 
 If you see unexpected scripts on the dashboard, check them for signs of malicious activity.
 
@@ -42,7 +42,7 @@ You can check the details of each script displayed in the Script Monitor dashboa
 
 * **First seen at**: The date and time when the script was first detected.
 * **First seen on page**: The page where the script was first detected.
-* **Last seen**: How long ago the script was last detected.
+* **Last seen**: How long ago the script was last detected (in the last 30 days).
 * **Last seen on pages**: The most recent pages where the script was detected (up to ten pages).
 
 This information helps you track how a script appeared in your domain, and which pages have recently loaded the script.
