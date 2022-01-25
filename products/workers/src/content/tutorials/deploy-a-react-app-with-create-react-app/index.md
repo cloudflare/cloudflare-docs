@@ -53,7 +53,7 @@ The `init --site` command will provide the scaffolding necessary to deploy your 
 
 For example, if you deploy a static site at `mystaticsite.com`, requesting `mystaticsite.com/about.html` will look for a file in KV called `about.html` and serve it back to the client. In addition, if the asset being returned from KV is cacheable, it will automatically be cached with Cloudflare’s CDN, making subsequent requests even faster.
 
-To serve a single page application, update `workers-site/index.js` with the following code to so that all HTML requests are pointed at your root `index.html` file.
+To serve a single page application, update `workers-site/index.js` with the following code so that all HTML requests are pointed at your root `index.html` file.
 
 ```js
 import { getAssetFromKV, serveSinglePageApp } from '@cloudflare/kv-asset-handler';
