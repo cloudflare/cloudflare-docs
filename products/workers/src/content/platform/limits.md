@@ -191,6 +191,8 @@ Yes. Use the [Fetch API](/runtime-apis/fetch) to make arbitrary requests to othe
 
 The limit for subrequests a Workers script can make is 50 per request. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Workers script makes could be greater than the number of `fetch(request)` calls in the script.
 
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request. 
+
 ### How long can a subrequest take?
 
 There is no set limit on the amount of real time a Worker may use. As long as the client which sent a request remains connected, the Worker may continue processing, making subrequests, and setting timeouts on behalf of that request.
