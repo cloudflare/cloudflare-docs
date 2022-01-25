@@ -39,7 +39,8 @@ There are two limits set in place:
 
 * Only one active Instant Logs session per zone.
 * Maximum session time is 60 minutes.
-* If either of these limits are reached, the logs stream will automatically stop.
+
+If either of these limits are reached, the logs stream will automatically stop.
 
 ## Connect with us
 
