@@ -19,7 +19,7 @@ To use Instant Logs:
 
 1. Click **Start streaming**.
 
-1. Narrow down on events by adding filters. To add filters, click on **Add filters**.
+1. Click **Add filters** to narrow down the events shown.
 
 The filters you can add are **Firewall action matches**, **Country**, **Path**, **Status code**, **Client IP, Host**, **HTTP Method** and **Firewall Rule ID matches**. If you would like to see filtering on additional criteria, leave us feedback on the [form](https://docs.google.com/forms/d/e/1FAIpQLSduDhqhryhOYwUolDzXiLPNy5P07EY_abnYAFF_n7CRz4OzOQ/viewform) linked on the Instant Logs page.
 
