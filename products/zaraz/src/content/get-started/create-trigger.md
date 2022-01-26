@@ -16,7 +16,7 @@ For most tools, the trigger will be a simple pageview event type, for which Clou
 A valid trigger has the following structure:
 
 ```txt
-<rule type> <variable name> <comparison operator> <string to match>
+<RULE_TYPE> <VARIABLE_NAME> <COMPARISON_OPERATOR> <STRING_TO_MATCH>
 ```
 
 The exact composition of the trigger will change depending on the type of rule you choose. Here is an example for a trigger based on a Match rule:
@@ -94,20 +94,25 @@ _Click listener_ | _CSS_ | `#my-button` | `500`
 
 </TableWrap>
 
-To improve the performance of the web page, you can limit a Click listener to a specific URL, by combining it with a Match rule. For example, to track button clicks on a specific page you can set up the following trigger:
+To improve the performance of the web page, you can limit a Click listener to a specific URL, by combining it with a Match rule. For example, to track button clicks on a specific page you can set up the following rules in a trigger:
 
 <TableWrap>
 
 Rule type | Type | Selector | Wait for events
 --- | --- | --- | ---
 _Click listener_ | _CSS_ | `#myButton` | `500`
-`AND` |
-<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+
+</TableWrap>
+
+<TableWrap>
+
+Rule type | Variable name | Match operation | Match string
+--- | --- | --- | ---
 _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to learn how to add more than one condition to a trigger.
 
 ---
 
@@ -140,20 +145,25 @@ _Form submission_ | `#my-form` | Toggle on or off
 
 </TableWrap>
 
-To improve the performance of the web page, you can limit a Form submission trigger to a specific URL, by combining it with a Match rule. For example, to track a form on a specific page you can set up the following trigger:
+To improve the performance of the web page, you can limit a Form submission trigger to a specific URL, by combining it with a Match rule. For example, to track a form on a specific page you can set up the following rules in a trigger:
 
 <TableWrap>
 
 Rule type | CSS Selector | Validate
---- | --- | --- | ---
+--- | --- | ---
 _Form submission_ | `#my-form` | Toggle on or off
-`AND` |
-<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+
+</TableWrap>
+
+<TableWrap>
+
+Rule type | Variable name | Match operation | Match string
+--- | --- | --- | ---
 _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to learn how to add more than one condition to a trigger.
 
 </div>
 </details>
@@ -175,20 +185,25 @@ _Timer_ | `50` | `2`
 
 </TableWrap>
 
-To improve the performance of the web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following trigger:
+To improve the performance of the web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
 <TableWrap>
 
 Rule type | Interval | Limit
---- | --- | --- | ---
+--- | --- | ---
 _Timer_ | `50` | `2` |
-`AND` |
-<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+
+</TableWrap>
+
+<TableWrap>
+
+Rule type | Variable name | Match operation | Match string
+--- | --- | --- | ---
 _Match rule_ | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Create a trigger**](#create-a-trigger) for details on adding more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to learn how to add more than one condition to a trigger.
 
 </div>
 </details>
