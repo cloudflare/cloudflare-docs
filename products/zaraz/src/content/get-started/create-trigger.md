@@ -94,6 +94,23 @@ _Click listener_ | _CSS_ | `#my-button` | `500`
 
 </TableWrap>
 
+To improve the performance of the web page, you can limit a Click listener to a specific URL, by combining it with a Match rule. For example, to track button clicks on a specific page you can set up the following trigger:
+
+<TableWrap>
+
+Rule type | Type | Selector | Wait for events
+--- | --- | --- | ---
+_Click listener_ | _CSS_ | `#myButton` | `500`
+`AND` |
+<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+_Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
+
+</TableWrap>
+
+Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
+
+---
+
 **Trigger example for XPath:**
 
 <TableWrap>
@@ -123,6 +140,21 @@ _Form submission_ | `#my-form` | Toggle on or off
 
 </TableWrap>
 
+To improve the performance of the web page, you can limit a Form submission trigger to a specific URL, by combining it with a Match rule. For example, to track a form on a specific page you can set up the following trigger:
+
+<TableWrap>
+
+Rule type | CSS Selector | Validate
+--- | --- | --- | ---
+_Form submission_ | `#my-form` | Toggle on or off
+`AND` |
+<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+_Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
+
+</TableWrap>
+
+Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
+
 </div>
 </details>
 
@@ -142,6 +174,21 @@ Rule type | Interval | Limit
 _Timer_ | `50` | `2`
 
 </TableWrap>
+
+To improve the performance of the web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following trigger:
+
+<TableWrap>
+
+Rule type | Interval | Limit
+--- | --- | --- | ---
+_Timer_ | `50` | `2` |
+`AND` |
+<strong>Rule type</strong> | <strong>Variable name</strong> | <strong>Match operation</strong> | <strong>Match string</strong>
+_Match rule_ | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
+
+</TableWrap>
+
+Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
 
 </div>
 </details>
