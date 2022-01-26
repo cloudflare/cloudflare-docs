@@ -17,7 +17,7 @@ Create a script to monitor IP address changes and then have that script push cha
 
 ## DNS-O-Matic
 
-[DNS-O-Matic](https://dnsomatic.com/wiki/) is a third-party tool that announces dynamic IP changes to multiple services.
+[DNS-O-Matic](https://dnsomatic.com/docs/) is a third-party tool that announces dynamic IP changes to multiple services.
 
 Configuration of DNS-O-Matic requires the following information:
 
