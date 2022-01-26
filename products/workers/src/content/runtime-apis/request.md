@@ -111,7 +111,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `cacheEverything` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the page rule [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`. 
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`. 
   This option applies to `GET` and `HEAD` request methods only.
 
 - `cacheKey` <Type>string</Type> <PropMeta>optional</PropMeta>
@@ -120,7 +120,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 - `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [Edge Cache TTL](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [Cache Level (to Cache Everything)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
 - `cacheTtlByStatus` <Type>{ [key: string]: number }</Type> <PropMeta>optional</PropMeta>
 
