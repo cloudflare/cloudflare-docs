@@ -11,21 +11,21 @@ If you want to use Cloudflare as your primary DNS provider and manage your DNS r
 ## Step 1 — Do you have an existing domain name?
 
 <details>
+<summary>Yes</summary>
+<div>
+
+If you do already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
+
+</div>
+</details>
+
+<details>
 <summary>No</summary>
 <div>
 
 If you do not already have a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](https://developers.cloudflare.com/registrar/get-started/register-domain). 
 
 Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
-
-</div>
-</details>
-
-<details>
-<summary>Yes</summary>
-<div>
-
-If you do already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
 
 </div>
 </details>
