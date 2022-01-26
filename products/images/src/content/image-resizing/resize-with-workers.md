@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Resize with Cloudflare Workers
 
-There are two ways of using Image Resizing. One is the [default URL scheme](/image-resizing/url-format), which provides an easy, declarative way of specifying image dimensions and other options. The other way is to use a JavaScript API in a [Worker](https://developers.cloudflare.com/workers/learning/getting-started). Workers give powerful programmatic control over every image request.
+Using Image Resizing with Workers gives you powerful programmatic control over every image request.
 
 Here are a few examples of the flexibility Workers give you:
 
@@ -22,13 +22,13 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 <Definitions>
 
 - **`width`**
-  - Maximum width in image pixels. The value must be an integer.
+  - Maximum width in pixels. The value must be an integer.
 
 - **`height`**
-  - Maximum height in image pixels.
+  - Maximum height in pixels.
 
 - **`dpr`**
-  - Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`.
+  - Stands for device pixel ratio. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Default is `1`.
 
 - **`fit`**
   - Resizing mode as a string. It affects interpretation of `width` and `height`:
@@ -60,7 +60,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
     - A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
     - `"auto"`, which selects focal point based on saliency detection (using maximum symmetric surround algorithm).
-    - An object `{x, y}` containing focal point coordinates in the original image expressed as <em>fractions</em> ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+    - An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
 - **`trim`**
   - An object with four properties `{left, top, right, bottom}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
@@ -71,7 +71,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
   In case of PNG images, an explicit quality setting enables use of 8-bit (palette) variant of the format, using [pngquant](https://pngquant.org)'s quality scale. Images that cannot meet the requested quality with 256 colors will fall back to 24-bit PNG format or JPEG if they are opaque.
 
 - **`format`**
-  - Output format to generate. It can be:
+  - Output format to generate. Options are:
 
     - **`avif`** — generate images in AVIF format if possible (with WebP as a fallback).
     - **`webp`** — generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
