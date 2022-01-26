@@ -26,5 +26,5 @@ If you turn this option off, you will have to proxy a subdomain for your website
   1. Add the following script to your website:
 
   ```html
-  <script src="https://newsub.example.com/cdn-cgi/zaraz/i.js"></script>
+  <script src="https://<YOUR_SUBDOMAIN>/cdn-cgi/zaraz/i.js"></script>
   ```
