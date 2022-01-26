@@ -15,7 +15,7 @@ Cloudflare Image Resizing lets you:
 
 ## Availability
 
-Image Resizing is currently available for Pro, Business, and Enterprise customers. To begin, ensure you have [enabled Image Resizing](/image-resizing/enable-image-resizing) in the Cloudflare dashboard.
+Image Resizing is currently available for Pro, Business, and Enterprise customers. To get started, make sure you have [enabled Image Resizing](/image-resizing/enable-image-resizing) in the Cloudflare dashboard.
 
 ## Two ways to use
 

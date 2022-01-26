@@ -20,8 +20,5 @@ Refer to [Creating API tokens](https://developers.cloudflare.com/api/tokens/crea
 The **cURL command** message box will show you the complete command you can use. Below, is an example for a PNG image: 
 
 ```bash
-curl -X POST 
--F file=@./<YOUR_IMAGE.png> 
--H "Authorization: Bearer <API_TOKEN>" 
-https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1
+curl -X POST -F file=@./MY_IMAGE -H "Authorization: Bearer MY_TOKEN" https://api.cloudflare.com/client/v4/accounts/2f3dc21d188ba781322b520bbde5fb5a/images/v1
 ```
