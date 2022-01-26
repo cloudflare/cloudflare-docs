@@ -1,13 +1,12 @@
 ---
+title: Full setup
 order: 0
 pcx-content-type: tutorial
 ---
 
-# Full setup
+# Use Cloudflare nameservers (Full setup)
 
-If you want to use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare, your domain should be on a full setup. 
-
-This option requires that you use Cloudflare for your authoritative nameservers.
+If you want to use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare, your domain should use Cloudflare for your authoritative nameservers.
 
 ## Step 1 — Do you have an existing domain name?
 
