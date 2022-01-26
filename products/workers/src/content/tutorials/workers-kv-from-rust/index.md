@@ -265,7 +265,7 @@ impl WorkersKv {
 }
 ```
 
-The above wrapper only exposes a subset of the options supported by the KV API, other options such as `expiration` instead of `expirationTtl` for put and other types than `text` and `arrayBuffer` for get could be wrapped in a similar fashion. Conceptually, the wrapper methods all manually construct a JS object using `Reflect::set` and then convert the return value into a standard Rust type where necessary.
+The above wrapper only exposes a subset of the options supported by the KV API, other options such as `expiration` instead of `expirationTtl` for `PUT` and other types than `text` and `arrayBuffer` for `GET` could be wrapped in a similar fashion. Conceptually, the wrapper methods all manually construct a JavaScript object using `Reflect::set` and then convert the return value into a standard Rust type where necessary.
 
 ## Using the wrapper
 
@@ -331,7 +331,7 @@ $ curl 'localhost:8787/foo'
 "bar"
 ```
 
-## Putting it all together
+## Conclusion
 
 With all previous steps complete, the final `lib.rs` should look as follows (you can also find the full code as an example repository at <https://github.com/fkettelhoit/workers-kv-from-rust>):
 
