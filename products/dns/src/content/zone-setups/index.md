@@ -13,6 +13,6 @@ When using Cloudflare DNS, you have three setup options:
 
 <Aside type="note" header="Note:">
 
-If you run your own authoritative nameservers but still want to benefit from Cloudflare's global anycase network, check out [DNS Firewall](/dns-firewall).
+If you run your own authoritative nameservers but still want to benefit from Cloudflare's global Anycast network, check out [DNS Firewall](/dns-firewall).
 
 </Aside>

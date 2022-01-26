@@ -30,9 +30,7 @@ Once you configure account-level custom nameservers, these nameservers can be ap
 
 <Aside type="note">
 
-The hostnames used for account-level custom nameservers must be using a subdomain of a zone that
-- is part of your Cloudflare account and
-- is either on the Business or Enterprise plan
+When you choose the names for your account-level nameservers, each hostname must be a subdomain of a zone that is part of your Cloudflare account and on a Business plan or higher.
 
 </Aside>
 
@@ -40,7 +38,7 @@ The hostnames used for account-level custom nameservers must be using a subdomai
 
 If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers:
 
-1. Create between 2 and 5 account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
+1. Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
 1. Cloudflare creates the [glue records](https://www.ietf.org/rfc/rfc1912.txt) automatically.
 1. To enable the custom nameservers on existing zones:
     1. Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone.
@@ -52,7 +50,7 @@ To make this custom nameserver the default for all new zones, use a [PUT command
 
 If you are **not** using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers:
 
-1. Create between 2 and 5 account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
+1. Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
 1. Add the [glue records](https://www.ietf.org/rfc/rfc1912.txt) for each entry at your DNS provider.
 1. Use a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
 1. To enable the custom nameservers on existing zones:
@@ -63,11 +61,7 @@ To make this custom nameserver the default for all new zones added to your accou
 
 ## Zone-level nameservers
 
-<Aside type="note">
-
-The zone-level custom nameservers must be using a subdomain of the zone this is configured for.
-
-</Aside>
+When you choose the names for your zone-level nameservers, each hostname must be a subdomain of the zone this is configured for.
 
 ### Using the dashboard
 
@@ -83,11 +77,11 @@ To add custom nameservers to a specific zone:
 
 ### Using the API
 
-To add zone-level custom nameservers via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and specify the custom nameservers like this in the payload:
+To add zone-level custom nameservers via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and specify the custom nameservers in the payload:
 ```
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
 ```
 
 ## Restrictions
 
-For both account-level and zone-level custom nameservers, you have to configure at least 2 custom nameservers and no more than 5.
+For both account-level and zone-level custom nameservers, you have to configure at least two custom nameservers and no more than five.
