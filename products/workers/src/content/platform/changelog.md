@@ -6,7 +6,7 @@
 
 ## 2022-01-17
 
-- HTMLRewriter now supports inspecting and modifying end tags, not just start tags.
+- `HTMLRewriter` now supports inspecting and modifying end tags, not just start tags.
 - Fixed bug where Durable Objects experiencing a transient CPU overload condition would cause in-progress requests to be unable to return a response (appearing as an indefinite hang from the client side), even after the overload condition clears.
 
 ## 2022-01-07
