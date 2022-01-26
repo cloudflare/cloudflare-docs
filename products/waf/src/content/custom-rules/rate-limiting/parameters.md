@@ -66,13 +66,6 @@ The available Rate Limiting rule parameters are the following:
     - Use one of the following values: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
     - The value must be `0` when action is `challenge`, `js_challenge`, or `managed_challenge`.
 
-- `mitigation_expression` <Type>String</Type> <PropMeta>optional</PropMeta>
-    - Field name in the dashboard: N/A (currently only available via API).
-    - Scope of the mitigation action.
-    - Allows you to specify an action scope different from the rule scope. For example, you can count login attempts at the `/login` URI path using the `expression` field and then perform rate limiting on the entire site using the `mitigation_expression` field.
-    - The default value is `""` (empty string). When set to the default value, Cloudflare uses the value of the `expression` field as the mitigation expression.
-    - The value must be the same as the `expression` value or `""` when action is `challenge`, `js_challenge`, or `managed_challenge`.
-
 </Definitions>
 
 ## Recommendations

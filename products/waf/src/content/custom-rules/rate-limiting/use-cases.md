@@ -49,7 +49,7 @@ Rule characteristics:
 
 ## Example 3
 
-The following rule performs rate limiting on requests targeting multiple URI paths in two hosts, excluding known bots. The request rate is based on IP address and `User-Agent` values. When the request rate is reached, Cloudflare performs rate limiting on all incoming requests for the two hosts.
+The following rule performs rate limiting on requests targeting multiple URI paths in two hosts, excluding known bots. The request rate is based on IP address and `User-Agent` values.
 
 <Example>
 
@@ -62,13 +62,4 @@ Rule characteristics:
 * _IP Address_
 * _HTTP Header_ > `user-agent`
 
-Mitigation expression:<br/>
-`(http.host eq "mystore1.com" or http.host eq "mystore2.com")`
-
 </Example>
-
-<Aside type='warning' header='Important'>
-
-You can only define a value for the **Mitigation expression** via API.
-
-</Aside>
