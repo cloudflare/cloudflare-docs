@@ -51,7 +51,7 @@ Customers with dedicated certificates who want to receive a notification on vali
 
 **Included with**
 
-Free plan.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
@@ -70,7 +70,7 @@ Customers with universal certificates who want to receive a notification on vali
 
 **Included with**
 
-Free plan.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
@@ -108,7 +108,7 @@ WAF/CDN customers who want to receive a notification when Cloudflare has mitigat
 
 **Included with**
 
-Professional or higher plans.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 
@@ -207,7 +207,7 @@ Any customer who wants to receive a notification when Cloudflare is unable to ac
 
 **Included with**
 
-Free plans.
+All Cloudflare plans.
 
 **What should you do if you receive one?**
 

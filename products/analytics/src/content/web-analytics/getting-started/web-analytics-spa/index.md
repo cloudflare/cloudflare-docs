@@ -9,7 +9,7 @@ pcx-content-type: reference
 
 Cloudflare Web Analytics enables measuring SPAs automatically by overriding the History API's `pushState` function and listening to the `onpopstate`. Hash-based router is not supported.
 
-To disable measuring SPAs, add the "spa" option with a false value in the data attribute as shown below.
+To disable measuring SPAs, add the `spa` option with a value of `false` in the data attribute, as shown below.
 
 ```html
 <script 

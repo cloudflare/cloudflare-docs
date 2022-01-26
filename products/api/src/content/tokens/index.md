@@ -1,10 +1,18 @@
 ---
+title: API tokens
 order: 6
 ---
 
-# API tokens
+# API tokens and keys
 
-API Tokens are the recommended way to interact with Cloudflare’s API.
+When you use the Cloudflare API, you need to authenticate your requests so we know who you are and what permissions you have.
 
-For how to create API Tokens see the [Creating Tokens](/tokens/create) section.
-For advanced filtering mechanisms and creating tokens via the API see the [Advanced Usage](/tokens/advanced) section.
+When possible, use API tokens to interact with the Cloudflare API.
+
+<DirectoryListing path="/tokens"/>
+
+<Aside type="note">
+
+Though you can still use API keys to access the Cloudflare API, these keys have [several limitations](/keys#limitations) that make them less secure than API tokens.
+
+</Aside>

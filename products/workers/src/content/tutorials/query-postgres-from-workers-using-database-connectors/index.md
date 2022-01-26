@@ -11,7 +11,7 @@ pcx-content-type: tutorial
 
 ## Overview
 
-In this tutorial you learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
+In this tutorial, you will learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
 
 <Aside type="note">
 
@@ -159,7 +159,7 @@ In `wrangler.toml`, enter your Cloudflare account ID in the line containing `acc
 
 <Aside type="note">
 
-[Refer to our Quick Start guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you do not know where to find your Cloudflare Account ID.
+[Refer to Get started](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you need help finding your Cloudflare account ID.
 
 </Aside>
 
@@ -211,3 +211,11 @@ $ docker compose down
 
 # Stop and remove containers, networks
 ```
+
+## Related resources
+
+If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
+
+- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+- [Build a Slackbot](/tutorials/build-a-slackbot)
+- [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)

@@ -13,6 +13,8 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 For a high-level introduction to Durable Objects, [see the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
 
+For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/runtime-apis/durable-objects).
+
 ## Using Durable Objects
 
 Durable Objects are named instances of a class you define.  Just like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
@@ -38,7 +40,7 @@ export class DurableObjectExample {
 }
 ```
 
-Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
 Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
@@ -241,7 +243,35 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current environment's script.
+  - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
+
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example an environment named `staging`:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
+]
+```
+
+Because Wrangler [appends the environment name to the top-level name](/platform/environments#naming) when publishing, for a worker named `worker-name` the above example is equivalent to:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
+]
+```
+
+Note that EXAMPLE_CLASS in the staging environment is bound to a different script name compared to the top-level EXAMPLE_CLASS binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+
+```toml
+[env.another]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
+]
+```
+
 
 ### Configuring Durable Object classes with migrations
 
@@ -259,7 +289,7 @@ The destination class (the class that stored objects are being transferred to) f
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
 
-After a migration, any existing bindings to the original Durable Object class (e.g., from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 
@@ -445,16 +475,23 @@ export class Counter {
 }
 ```
 
+## Related resources
+
+- [Durable Objects runtime API](/runtime-apis/durable-objects)
+
 ## Troubleshooting
 
 ### Debugging
 
-- [`wrangler dev`](/cli-wrangler/commands#dev) now supports Durable Objects.
+[`wrangler dev`](/cli-wrangler/commands#dev) and [`wrangler tail`](/cli-wrangler/commands#tail) are both available to help you debug your Durable Objects.
 
-Wrangler dev opens up a tunnel from your local development environment to Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+`wrangler dev` opens up a tunnel from your local development environment to a preview instance of your script at Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
 
+`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
-To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+### GraphQL Analytics
+
+Durable Object metrics are powered by GraphQL, just like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema).
 
 ### Common errors
 #### Error: `No event handlers were registered. This script does nothing.`

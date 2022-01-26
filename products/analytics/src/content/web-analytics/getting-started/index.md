@@ -17,7 +17,7 @@ pcx-content-type: how-to
 1. Click **Done**.
 1. Wait for the redirect to the Web Analytics page or click **View Analytics**. It may take a few minutes for Web Analytics data to appear.
 
-Repeat steps 4-8 for all of the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from the Web Analytics Sites page. Adjust Web Analytics for your site at any time by clicking **Manage site**.
+Repeat steps 4-8 for all of the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from the Web Analytics Sites page. From this page you can also click **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
 
 For more information on how many sites you can track, refer to [Limits](../understanding-web-analytics/limits/).
 

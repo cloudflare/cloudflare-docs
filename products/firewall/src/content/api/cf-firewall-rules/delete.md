@@ -6,63 +6,71 @@ order: 435
 
 # DELETE examples
 
-- [Delete multiple rules](#delete-multiple-rules)
-- [Delete a single rule](#delete-a-single-rule)
-
-## Delete multiple rules
-
-```bash
-DELETE zones/{zone_id}/firewall/rules
-```
-
-### Request
-
-```bash
-curl -X DELETE \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules?id=cbf4b7a5a2a24e59a03044d6d44ceb09"
-```
-
 <Aside type='note' header='Note'>
 
-`DELETE` does not delete any filter related to the firewall rule. To delete the filter, it's necessary to call the `/filters` API.
+The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/api/cf-filters).
 
 </Aside>
 
-### Response
+## Delete multiple rules
+
+This example deletes Firewall Rules with IDs `<RULE_ID_1>` and `<RULE_ID_2>`.
+
+```bash
+---
+header: Request
+---
+curl -X DELETE \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules?id=<RULE_ID_1>&id=<RULE_ID_2>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
+```
 
 ```json
+---
+header: Response
+---
 {
-  "result": [],
+  "result": [
+    {
+      "id": "<RULE_ID_1>"
+    },
+    {
+      "id": "<RULE_ID_2>"
+    }
+  ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 
 ## Delete a single rule
 
-```bash
-DELETE zones/{zone_id}/firewall/rules/{id}
-```
-
-### Request
+This example deletes the rule with ID `<RULE_ID>`.
 
 ```bash
+---
+header: Request
+---
 curl -X DELETE \
-     -H "X-Auth-Email: user@cloudflare.com" \
-     -H "X-Auth-Key: REDACTED" \
-     "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/firewall/rules/cbf4b7a5a2a24e59a03044d6d44ceb09"
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules/<RULE_ID>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
-### Response
-
-```bash
+```json
+---
+header: Response
+---
 {
-  "result": null,
+  "result": [
+    {
+      "id": "<RULE_ID>"
+    }
+  ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```

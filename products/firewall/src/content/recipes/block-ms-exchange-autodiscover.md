@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 In some cases, Microsoft Exchange Autodiscover service requests can be “noisy,” triggering large numbers of HTTP 404 (Page Not Found) errors.
 
-This example uses the `matches` [comparison operator](/cf-firewall-language/operators/#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests:
+This example uses the `matches` [comparison operator](https://developers.cloudflare.com/ruleset-engine/rules-language/operators/#comparison-operators) and a regular expression to block `autodiscover.xml` and `autodiscover.src` requests:
 
 <table>
   <thead>

@@ -31,7 +31,7 @@ The session cookie is secure when [Always Use HTTPS](https://developers.cloudfla
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
-Enable Session Affinity when you [create  or edit a load balancer](/create-load-balancer-ui), during the **Hostname** step.
+Enable Session Affinity when you [create  or edit a load balancer](/how-to/create-load-balancer), during the **Hostname** step.
 
 If you enable Session Affinity, choose one of the following options:
 - **By Cloudflare cookie only**: Sets a `CFLib` cookie to track the associated origin web server
@@ -64,4 +64,4 @@ Session affinity is a property of load balancers, which you can set with the fol
 
 Customize the behavior of session affinity by using the `session_affinity`, `session_affinity_ttl`, and `session_affinity_attributes` parameters.
 
-For more details on API commands in context, refer to [Create a load balancer with the API](/create-load-balancer-api/).
+For more details on API commands in context, refer to [Create a load balancer with the API](/how-to/create-load-balancer).

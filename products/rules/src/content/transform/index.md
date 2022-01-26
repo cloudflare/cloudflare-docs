@@ -56,4 +56,4 @@ You can also create Transform Rules via API:
 * [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api)
 * [Create an HTTP Response Header Modification Rule via API](/transform/response-header-modification/create-api)
 
-Check [Firewall Rules language](https://developers.cloudflare.com/firewall/cf-firewall-language) for more information on building expressions for Transform Rules, since the language is the same as the Firewall Rules language.
+Refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language) for more information on building expressions for Transform Rules.

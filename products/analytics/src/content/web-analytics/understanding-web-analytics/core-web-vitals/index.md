@@ -19,7 +19,7 @@ Vitals Explorer enables you to easily pinpoint which elements in a web page are 
 To find Vitals Explorer:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**. 
-1. Select your website and go to **Core Web Vitals**. 
+1. Select your website and click **Core Web Vitals**. 
 
 Vitals Explorer is divided into three main sections, each one with information about a specific feature that affects user experience:
 

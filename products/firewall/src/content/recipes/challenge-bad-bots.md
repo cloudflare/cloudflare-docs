@@ -15,7 +15,7 @@ Cloudflare’s Bot Management feature scores the likelihood that a request origi
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
-- `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots
+- `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
 - `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
 - `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint)
 
@@ -123,10 +123,10 @@ If your domain saw mobile, browser, and API traffic, you would want to arrange t
 
 Static resources are protected by default when you create **Firewall Rules** using `cf.bot_management.score`.
 
-To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, see [Static resource protection](https://developers.cloudflare.com/bots/about/static-resources).
+To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, refer to [Static resource protection](https://developers.cloudflare.com/bots/about/static-resources).
 
 ### Additional considerations
 
-From there, you could customize your Firewall Rules based on specific request paths(`/login` or `/signup`), common traffic patterns, or many other characteristics.
+From there, you could customize your Firewall Rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
-Just make sure to set aside time to review [Bot Analytics](https://developers.cloudflare.com/bots/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to see if your rules need additional tuning.
+Just make sure to set aside time to review [Bot Analytics](https://developers.cloudflare.com/bots/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to check if your rules need additional tuning.

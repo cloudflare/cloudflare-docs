@@ -9,13 +9,13 @@ pcx-content-type: interim
 
 The basic access pattern is *give me all the logs for zone Z for minute M* where the minute *M* refers to the time the log entries were written to disk in Cloudflare's log aggregation system.
 
-Try running your query every minute to start. If responses are too small, go up to 5 minutes as this will be appropriate for most zones. If the responses are too large, trying going down to 15 seconds.
+To start, try running your query every minute. If responses are too small, go up to 5 minutes as this will be appropriate for most zones. If the responses are too large, try going down to 15 seconds.
 
 If your zone has so many logs that it takes longer than 1 minute to read 1 minute worth of logs, run 2 workers staggered, each requesting 1 minute worth of logs every 2 minutes.
 
-Data returned by the API will not change on repeat calls. The order of messages in the response may be different, but the number and content of the messages will always be the same for a given query as long as the response code is 200 and there is no error reading the response body.
+Data returned by the API will not change on repeat calls. The order of messages in the response may be different, but the number and content of the messages will always be the same for a given query as long as the response code is `200` and there is no error reading the response body.
 
-Because our log processing system ingests data in batches, most zones with less than 1 million requests per minute will have "empty" minutes. Queries for such a minute result in responses with status 200 but no data in the body. This does not mean that there were no requests proxied by Cloudflare for that minute. It just means that our system did not process a batch of logs for that zone in that minute.
+Because our log processing system ingests data in batches, most zones with less than 1 million requests per minute will have "empty" minutes. Queries for such a minute result in responses with status `200` but no data in the body. This does not mean that there were no requests proxied by Cloudflare for that minute. It just means that our system did not process a batch of logs for that zone in that minute.
 
 ## Order of the data returned
 
@@ -33,7 +33,7 @@ To turn the resulting log data into a JSON array with one array element per log 
 
 `<API request data> | jq -s`
 
-Below is a sample log with default fields:
+The following is a sample log with default fields:
 
 ```bash
 {
@@ -51,4 +51,4 @@ Below is a sample log with default fields:
 
 ## Data retention period
 
-You can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and going back at least 3 days and up to 7 days.
+You can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and go back at least 3 days and up to 7 days.

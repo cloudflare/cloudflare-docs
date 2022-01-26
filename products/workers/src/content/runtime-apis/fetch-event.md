@@ -15,7 +15,7 @@ Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-mo
 
 In the Service Worker format, events are handled by using `addEventListener` to assign a handler to an event name. Additionally, the Service Worker specification assigns network requests to the `"fetch"` event, using the [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) interface.
 
-Incoming HTTP requests can be handled by assigning a "fetch" event handler:
+Incoming HTTP requests can be handled by assigning a `"fetch"` event handler:
 
 ```js
 addEventListener("fetch", event => {
@@ -37,15 +37,15 @@ addEventListener("fetch", event => {
 
 -  <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
 
-    - See [`respondWith`](#respondwith).
+    - Refer to [`respondWith`](#respondwith).
 
 - <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - See [`waitUntil`](#waituntil).
+    - Refer to [`waitUntil`](#waituntil).
 
 - <Code>event.passThroughOnException()</Code> <Type>void</Type>
 
-    - See [`passThroughOnException`](#passthroughonexception).
+    - Refer to [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 
@@ -80,17 +80,17 @@ export default {
 
 - <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - See [`waitUntil`](#waituntil).
+    - Refer to [`waitUntil`](#waituntil).
 
 - <Code>context.passThroughOnException()</Code> <Type>void</Type>
 
-    - See [`passThroughOnException`](#passthroughonexception).
+    - Refer to [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 
 ### Bindings
 
-When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env`.
+When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
 
 
 ## Lifecycle methods
@@ -99,7 +99,9 @@ When responding to a HTTP request, the fetch handler may use any of the followin
 
 ### `respondWith`
 
-<Aside type="warning" header="Service Worker Only">
+Intercepts the request and allows the Worker to send a custom response.
+
+<Aside type="warning" header="Service Worker format only">
 
 The `respondWith` method is only applicable to the Service Worker format.
 
@@ -107,11 +109,9 @@ With the Module Worker format, return a `Response` from the handler directly.
 
 </Aside>
 
-Intercepts the request and allows the Worker to send a custom response.
-
 If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `"fetch"` event handlers within a Worker.
 
-If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
+If no `fetch` event handler calls `respondWith`, then the runtime forwards the request to the origin as if the Worker did not. However, if there is no origin – or the Worker itself is your origin server, which is always true for `*.workers.dev` domains – then you must call `respondWith` for a valid response.
 
 ```js
 // Format: Service Worker
@@ -202,7 +202,7 @@ export default {
 
 ### `passThroughOnException`
 
-The `passThroughOnException` command prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will ["fail open"](https://community.microfocus.com/t5/Security-Blog/Security-Fundamentals-Part-1-Fail-Open-vs-Fail-Closed/ba-p/283747), which will proxy the request to the origin server as though the Worker was never invoked.
+The `passThroughOnException` command prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/t5/Security-Blog/Security-Fundamentals-Part-1-Fail-Open-vs-Fail-Closed/ba-p/283747), which will proxy the request to the origin server as though the Worker was never invoked.
 
 To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
 

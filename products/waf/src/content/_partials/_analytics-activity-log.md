@@ -14,7 +14,7 @@ For example, if you are diagnosing a bot-related issue, you may want to see the 
 
 ### Event actions
 
-For a description of the actions that may appear in the **Activity Log**, refer to [Actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions).
+For a description of the actions that may appear in the **Activity Log**, refer to [Actions](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
 
 When the _Connection Close_ action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
 

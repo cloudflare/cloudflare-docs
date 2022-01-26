@@ -57,7 +57,7 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 - `releaseLock()` <Type>void</Type>
 
-  - Releases the writer’s lock on the stream. Once released, the writer is no longer active. You can call this method _before_ all pending `write(chunk)` calls are resolved. This allows you to queue a `write` operation, release the lock, and begin piping into the writable stream from another source, as shown in the example below.
+  - Releases the writer’s lock on the stream. Once released, the writer is no longer active. You can call this method before all pending `write(chunk)` calls are resolved. This allows you to queue a `write` operation, release the lock, and begin piping into the writable stream from another source, as shown in the example below.
 
     ```js
     let writer = writable.getWriter()
@@ -74,7 +74,7 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 </Definitions>
 
-## See also
+## Related resources
 
-- [Using Streams.](/learning/using-streams)
-- [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)
+- [Using Streams](/learning/using-streams)
+- [Writable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#ws-model)

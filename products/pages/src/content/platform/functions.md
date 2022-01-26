@@ -3,7 +3,13 @@ order: 6
 pcx-content-type: concept
 ---
 
-# Functions
+# Functions (beta)
+
+<Aside type="note" header="Functions is currently in beta">
+
+You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+
+</Aside>
 
 With Pages, you can now build full-stack applications by executing code on the Cloudflare network with help from [Cloudflare Workers](https://workers.cloudflare.com/). Functions enable you to run server-side code to enable dynamic functionality without running a dedicated server. With Functions, you can introduce application aspects such as authenticating, querying databases, handling form submissions, or working with middleware.
 
@@ -111,6 +117,23 @@ export async function onRequestPost(request) {
   return new Response(`Hello world`);
 }
 ```
+Another helpful example for handling single path segments can be querying an API for data, for example, [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
+
+```js
+---
+filename:function/character/[id].js
+---
+export async function onRequestGet({ params }) {
+  const res = await fetch(
+    `https://rickandmortyapi.com/api/character/${params.id}`
+  );
+  const data = await res.json();
+  const info = JSON.stringify(data);
+  return new Response(info, null, 2);
+}
+
+```
+The above will return each character at `/character/{id}` ID being associated with the character.
 
 ### Handling multiple requests in a single function
 
@@ -241,6 +264,31 @@ async function errorHandler(context) {
 export const onRequest = errorHandler;
 ```
 
+Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example: 
+
+```js
+// Attach multiple handlers
+export const onRequest = [
+  async ({ request,next }) => {
+    try {
+      // Call the next handler in the stack
+      const response = await next()
+      const responseText = await response.text()
+      //~> "Hello from next base middleware"
+      return new Response(responseText + " from middleware")
+    } catch (thrown) {
+      return new Response(`Error ${thrown}`, {
+        status: 500,
+        statusText: "Internal Server Error"
+      })
+    }
+  },
+  ({ request, next }) => {
+    return new Response("Hello from next base middleware");
+  }
+];
+```
+
 ### Middleware data
 
 Handler functions have the ability to pass data between one another. This is done through the `context.data` property, which is accessible and mutable by all handlers throughout a request's execution.
@@ -269,13 +317,24 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project.
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally). 
 
 ### KV namespace
 
-Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
+Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to  **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![KV-Binding](KV-functions.png)
+
+## KV namespace locally
+
+While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
+
+```js
+export async function onRequest({ env }) {
+  const task = await env.TodoList.get("Task:123");
+  return new Response(task);
+}
+```
 
 ### Durable Object namespace
 
@@ -283,7 +342,12 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
+
 ![DO-Binding](DO-functions.png)
+
+## Durable Objects locally
+
+Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class. 
 
 ### Environment variable
 
@@ -292,6 +356,40 @@ An [environment variable](https://developers.cloudflare.com/workers/platform/env
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
 ![ENV-Binding](ENV-functions.png)
+
+## Adding environment variables locally
+
+When developing locally, you can access environment variables by adding a binding to your Wrangler commands like `npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE"`. This allows you to then access the environment value in your component by using `env.ENV_NAME`.
+
+For example, you can run `npx wrangler pages dev dist --binding COLOR=\"BLUE"` and then:
+
+```js
+export async function onRequest({ env }) {
+  return new Response(env.COLOR);
+}
+```
+
+Here is a real-world example of using environment variables inside a middleware function. To connect [Sentry](https://www.sentry.io/) to a Cloudflare Worker, you can use [Toucan js](https://github.com/robertcepa/toucan-js) and access your Sentry Data Source Name (DSN) in your function.
+
+```js
+const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
+  const sentry = new Toucan({
+    dsn: env.SENTRY_DSN,
+    context: { waitUntil, request },
+  });
+  try {
+    return await next();
+  } catch (thrown) {
+    sentry.captureException(thrown);
+    return new Response(`Error ${thrown}`, {
+      status: 500,
+    });
+  }
+};
+export const onRequest = [
+  SentryMiddleware,
+];
+```
 
 ## Advanced mode
 
@@ -347,8 +445,17 @@ $ npx wrangler pages dev --help
 # Serve a folder of static assets
 $ npx wrangler pages dev ./dist
 
+# Bind to a KV store
+$ npx wrangler pages dev ./dist --kv KV_NAMESPACE
+
+# Bind to a Durable Object
+$ npx wrangler pages dev ./dist --do ENV_NAME=CLASS_NAME
+
 # Or automatically proxy your existing tools
 $ npx wrangler pages dev -- npx react-scripts start
+
+# Bind variable/secret (KEY=VALUE)
+$ npx wrangler pages dev dist --binding ENV_NAME=\"ENV_VALUE\"
 ```
 
 Developing locally does not deploy your changes. It is only a means to preview and test. To deploy your changes to your Pages site, you will need to `git commit` and `git push` as normal.

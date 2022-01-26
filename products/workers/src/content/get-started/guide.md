@@ -34,7 +34,7 @@ The signup process will guide you through choosing a `*.workers.dev` subdomain a
 
 Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/cli-wrangler/commands#generate), [`configure`](/cli-wrangler/commands#configure), [`build`](/cli-wrangler/commands#build), [`preview`](/cli-wrangler/commands#preview), and [`publish`](/cli-wrangler/commands#publish) your Workers projects from the comfort of your development environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
@@ -180,8 +180,8 @@ async function handleRequest(request) {
 
 It is common to route requests based on:
 
-- `request.method` — e.g. `GET` or `POST`.
-- `request.url` — e.g. filter based on query parameters or the pathname.
+- `request.method` — for example, `GET` or `POST`.
+- `request.url` — for example, filter based on query parameters or the pathname.
 - `request.headers` — filter based on specific headers.
 
 Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
@@ -293,7 +293,7 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
+By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (for example, `my-worker.my-subdomain.workers.dev`).
 
 ### (Optional) Configure for deploying to a registered domain
 

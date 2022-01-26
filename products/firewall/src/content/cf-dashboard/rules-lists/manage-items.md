@@ -1,4 +1,4 @@
----
+--
 pcx-content-type: how-to
 order: 360
 ---
@@ -35,10 +35,10 @@ You can combine individual addresses and CIDR ranges in the same list.
 
 To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
 
-For example, instead of `2001:8a0:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
+For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
-* `2001:8a0:6a0b:1a01:0000:0000:0000:0000/64`
-* `2001:8a0:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+* `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
+* `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
 </Aside>
 
@@ -46,7 +46,7 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1. [Access the Lists interface](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1. [Access the Lists interface](/cf-dashboard/rules-lists) available at **Configurations** > **Lists**.
 
 1. Click the **Edit** button associated with the list that you want to edit.
 
@@ -82,7 +82,7 @@ The updated list displays.
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/api/cf-lists/endpoints).
+If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/api/cf-lists/endpoints).
 
 </Aside>
 

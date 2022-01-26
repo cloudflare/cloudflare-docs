@@ -32,6 +32,4 @@ order: 1
             </th>
         </tr>
     </thead>
-    <tbody>
-    </tbody>
-</table></TableWrap>
+    </table></TableWrap>
