@@ -1,5 +1,5 @@
 ---
-order: 2
+order:
 pcx-content-type: reference
 ---
 
