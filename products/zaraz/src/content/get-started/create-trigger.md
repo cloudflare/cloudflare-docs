@@ -11,9 +11,9 @@ These site actions can be passed to Cloudflare Zaraz in a number of ways. You ca
 
 You can also use complex triggers to listen for these site actions, with different types of rules like Click Listeners or Form Submissions.
 
-For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, just [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
+For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
 
-A valid trigger has a structure as follows:
+A valid trigger has the following structure:
 
 ```txt
 <rule type> <variable name> <comparison operator> <string to match>
@@ -29,7 +29,7 @@ _Match rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
 
 </TableWrap>
 
-Refer to [Rule types](#rule-types) for more information on the types of rules available, and [Zaraz event and system properties](/properties-reference), for more information on the variables you can use to create triggers. 
+Refer to [Rule types](#rule-types) for more information on the types of rules available, and [Zaraz event and system properties](/properties-reference) for more information on the variables you can use to create triggers. 
 
 ## Create a trigger
 
@@ -43,11 +43,11 @@ Refer to [Rule types](#rule-types) for more information on the types of rules av
 
 1. In **Rule type**, choose from the actions available in the drop-down menu to start building your rule.
 
-1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the variable you should employ when [`zaraz.track()` is used in your website](/events-api).
+1. In **Variable name**, input the variable you want as the trigger. For example, use the `{{ client.__zarazTrack }}` variable if you are [using `zaraz.track()` in your website](/events-api).
 
 1. Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in **Variable name** and **Match string** must satisfy the comparison operator.
 
-1. In **Match string** input the string that completes the rule.
+1. In **Match string**, input the string that completes the rule.
 
 1. You can add more than one rule to your trigger. Click **Add rule** and repeat steps 5-8 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when all conditions are true.
 
@@ -57,7 +57,7 @@ Your trigger is now complete. If you go back to the main page you will see it li
 
 ## Rule types
 
-The rule type determines the kind of conditions Zaraz should listen for in your web page. Zaraz supports different rule types which allow for the creation of complex rules.
+The rule type determines the kind of conditions Zaraz should listen for in your web page. Zaraz supports different rule types which allow you to create complex rules.
 
 <details>
 <summary>Match rule</summary>
@@ -188,12 +188,12 @@ _Match rule_ | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) for details on adding more than one condition to a trigger.
 
 </div>
 </details>
 
-## Blocking Triggers
+## Create a Blocking Trigger
 
 You may need to block one or more events in a tool from firing when a specific condition arises. For these cases, you can set Blocking Triggers.
 
