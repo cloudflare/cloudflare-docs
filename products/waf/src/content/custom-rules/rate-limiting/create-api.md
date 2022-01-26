@@ -48,8 +48,7 @@ curl -X PUT \
         ],
         "period": 60,
         "requests_per_period": 100,
-        "mitigation_timeout": 600,
-        "mitigation_expression": ""
+        "mitigation_timeout": 600
       }
     }
   ]
@@ -80,8 +79,7 @@ header: Response
           ],
           "period": 60,
           "requests_per_period": 100,
-          "mitigation_timeout": 600,
-          "mitigation_expression": ""
+          "mitigation_timeout": 600
         },
         "expression": "(http.request.uri.path matches \"^/api/\")",
         "description": "My rate limiting rule",
