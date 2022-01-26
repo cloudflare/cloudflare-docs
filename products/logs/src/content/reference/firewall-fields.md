@@ -13,25 +13,25 @@ The Firewall fields contain rules to block requests that contain specific types 
 
 | Value | Action | Description |
 |---|---|---|
-| `unknown` | `Unknown` | Take no other action. |
-| `allow` | `Allow` | Bypass all subsequent rules. |
-| `block` | `Drop` | Block with an HTTP 403 response. |
-| `challenge` | `Challenge` `Drop` | Issue a CAPTCHA challenge. |
-| `jschallenge` | `Challenge` `Drop` | Issue a JS challenge. |
-| `log` | `Log` | Take no action other than logging the event. |
-| `connectionClose` | `Close` | Close connection. |
-| `challengeSolved` | `Allow` | Allow once CAPTCHA challenge solved. |
-| `challengeFailed` | `Drop` | Block following invalid CAPTCHA solve attempt. |
-| `challengeBypassed` | `Allow` | CAPTCHA challenge not issued because visitor had previously passed a CAPTCHA challenge.|
-| `jschallengeSolved` | `Allow` | Allow once JS challenge solved. |
-| `jschallengeFailed` | `Drop` | Drop if JS challenge failed. |
-| `jschallengeBypassed` | `Allow` | JS challenge not issued because the visitor had previously passed a JS or CAPTCHA challenge.  |
-| `bypass` | `Allow` | Bypass all subsequent firewall rules. |
-| `managedChallenge` | `Challenge` `Drop` | Issue managed challenge. |
-| `managedChallengeSkipped` | `Allow` | Skip managed challenge and allow. |
-| `managedChallengeNonInteractiveSolved` | `Allow` | Allow once the managed challenge is solved via non-interactive interstitial page. |
-| `managedChallengeInteractiveSolved` | `Allow` | Allow once the managed challenged is solved via interactive interstitial page. |
-| `managedChallengeBypassed` | `Allow` | Challenge was not presented because visitor had clearance from previous challenge. |
+| `unknown` | Unknown | Take no other action. |
+| `allow` | Allow | Bypass all subsequent rules. |
+| `block` | Drop | Block with an HTTP 403 response. |
+| `challenge` | Challenge Drop | Issue a CAPTCHA challenge. |
+| `jschallenge` | Challenge Drop | Issue a JS challenge. |
+| `log` | Log | Take no action other than logging the event. |
+| `connectionClose` | Close | Close connection. |
+| `challengeSolved` | Allow | Allow once CAPTCHA challenge solved. |
+| `challengeFailed` | Drop | Block following invalid CAPTCHA solve attempt. |
+| `challengeBypassed` | Allow | CAPTCHA challenge not issued because visitor had previously passed a CAPTCHA challenge.|
+| `jschallengeSolved` | Allow | Allow once JS challenge solved. |
+| `jschallengeFailed` | Drop | Drop if JS challenge failed. |
+| `jschallengeBypassed` | Allow | JS challenge not issued because the visitor had previously passed a JS or CAPTCHA challenge.  |
+| `bypass` | Allow | Bypass all subsequent firewall rules. |
+| `managedChallenge` | Challenge Drop | Issue managed challenge. |
+| `managedChallengeSkipped` | Allow | Skip managed challenge and allow. |
+| `managedChallengeNonInteractiveSolved` | Allow | Allow once the managed challenge is solved via non-interactive interstitial page. |
+| `managedChallengeInteractiveSolved` | Allow | Allow once the managed challenged is solved via interactive interstitial page. |
+| `managedChallengeBypassed` | Allow | Challenge was not presented because visitor had clearance from previous challenge. |
 
 </TableWrap>
 
