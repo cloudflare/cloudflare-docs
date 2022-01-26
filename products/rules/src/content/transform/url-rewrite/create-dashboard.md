@@ -32,11 +32,11 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 1. To define the action for your URL Rewrite Rule, select one of the available options displayed as radio buttons and then a value from the drop-down list, depending on the action.
 
-    In this example, the _Static_ action tells Cloudflare to rewrite the original path to the provided path, `/welcome-gb.html`.
+    If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 
-    ![Static path rewrite for GB users](../../images/transform/rewrite-path-static-gb.png)
+    If you select **Rewrite to** > _Dynamic_, enter a [rewrite expression](/transform/url-rewrite/reference/fields-functions#rewrite-expressions) that defines the dynamic URL rewrite to perform.
 
-    If you do not want to change the value of a component of the original request (for example, the URL query string), choose _Preserve_ as the action for that component.
+    If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the _Preserve_ action for that component.
 
 1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 
