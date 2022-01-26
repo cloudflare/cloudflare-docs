@@ -224,11 +224,11 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Script size
 
-A Workers script can be up to 1 MB in size after compression.
+A Workers script can be up to 1 MB in size after compression. If needed, you can [request a larger script size](https://www.cloudflare.com/larger-scripts-on-workers-early-access/).
 
 ### Number of scripts
 
-Unless otherwise negotiated as a part of an enterprise level contract, all Workers accounts are limited to a maximum of 30 scripts at any given time.
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 scripts at any given time. Free Workers accounts are limited to a maximum of 30 scripts at any given time.
 
 <Aside type="note">
 
