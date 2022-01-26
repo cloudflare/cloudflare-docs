@@ -1,5 +1,14 @@
 # Changelog
 
+## 2022-01-20
+
+- Updated V8: 9.7 → 9.8.
+
+## 2022-01-17
+
+- `HTMLRewriter` now supports inspecting and modifying end tags, not just start tags.
+- Fixed bug where Durable Objects experiencing a transient CPU overload condition would cause in-progress requests to be unable to return a response (appearing as an indefinite hang from the client side), even after the overload condition clears.
+
 ## 2022-01-07
 
 - The `workers_api_getters_setters_on_prototype` configuration flag corrects the way Workers attaches property getters and setters to API objects so that they can be properly subclassed.
