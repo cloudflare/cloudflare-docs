@@ -52,7 +52,7 @@ $ wrangler generate serve-cdn-assets
 $ cd serve-cdn-assets
 ```
 
-By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are just git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/examples), there is a variety of options to help you get started.
+By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/examples), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `serve-cdn-assets` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -89,7 +89,7 @@ Because the asset will go through your Workers function, and Cloudflare’s netw
 
 ### Handling requests
 
-Currently, the Workers function receives requests, and returns a simple response with the text `"Hello worker!"`. Begin configuring the function by adding an additional check — requests coming in to the function should only be `GET` requests. If it receives other requests, like `POST`s or `DELETE`s, it should return an error response, with a status code of [`405`](https://httpstatuses.com/405). Using `event.request.method`, the resulting code is:
+Currently, the Workers function receives requests and returns a simple response with the text `"Hello worker!"`. Begin configuring the function by adding an additional check — requests coming in to the function should only be `GET` requests. If it receives other requests, like `POST`s or `DELETE`s, it should return an error response, with a status code of [`405`](https://httpstatuses.com/405). Using `event.request.method`, the resulting code is:
 
 ```js
 ---
@@ -105,7 +105,7 @@ async function handleRequest(event) {
 }
 ```
 
-Given that the incoming request to the function is a `GET`, it should be clear that the majority of your implementation will happen inside of that conditional, replacing the `"Hello worker!"` response. Create a separate function, `serveAsset`, which will house the majority of the implementation for the remainder of the tutorial:
+Given that the incoming request to the function is a `GET`, the majority of your implementation will happen inside of that conditional, replacing the `"Hello worker!"` response. Create a separate function, `serveAsset`, which will house the majority of the implementation for the remainder of the tutorial:
 
 ```js
 ---
