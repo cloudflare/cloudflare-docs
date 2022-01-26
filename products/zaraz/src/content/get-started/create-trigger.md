@@ -9,7 +9,7 @@ Triggers are a set of conditions that determine if and when Cloudflare Zaraz sho
 
 These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/events-api) and [Data layer compatibility mode](/datalayer-compatibility) for more information on how to implement these options.
 
-You can also use behavioral triggers with different types of rules, like Click Listeners or Form Submissions to listen for these site actions.
+You can also use complex triggers to listen for these site actions, with different types of rules like Click Listeners or Form Submissions.
 
 For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, just [add and configure the tool to your account](/get-started/add-tool) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
 
@@ -45,11 +45,11 @@ Refer to [Rule types](#rule-types) for more information on the types of rules av
 
 1. In **Variable name**, input the variable you want as the trigger. For example, `{{ client.__zarazTrack }}` is the variable you should employ when [`zaraz.track()` is used in your website](/events-api).
 
-1. Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in `Variable name` and `Match string` must satisfy the comparison operator.
+1. Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in **Variable name** and **Match string** must satisfy the comparison operator.
 
 1. In **Match string** input the string that completes the rule.
 
-1. To add another rule to your trigger, click **Add rule** and repeat steps 5-8 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when all conditions are true.
+1. You can add more than one rule to your trigger. Click **Add rule** and repeat steps 5-8 to add another set of rules and conditions. If you add more than one rule, your trigger will only be valid when all conditions are true.
 
 1. Click **Save**. 
 
@@ -82,7 +82,7 @@ _Match rule_ | `{{ client.__zarazTrack }}` | _Contains_ | `purchase`
 <summary>Click listener</summary>
 <div>
 
-Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for events** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by this trigger to reach their destination.
+Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for events** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by the click listener to reach their destination.
 
 **Trigger example for CSS selector:**
 
@@ -107,7 +107,7 @@ _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
 
 ---
 
@@ -153,7 +153,7 @@ _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_ | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
 
 </div>
 </details>
@@ -163,7 +163,7 @@ Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a t
 <summary>Timer</summary>
 <div>
 
-Set up an interval of time in milliseconds before activating the trigger in **Interval**. In **Limit** specify the number of times the trigger will fire before stopping. If you do not specify a limit the timer will run every ten seconds.
+Set up an interval of time in milliseconds before activating the trigger in **Interval**. In **Limit** specify the number of times the trigger will fire before stopping. If you do not specify a limit, the timer will run every ten seconds.
 
 **Trigger example:**
 
@@ -188,7 +188,7 @@ _Match rule_ | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
 
 </TableWrap>
 
-Refer to [**Add rule**](#create-a-trigger) to add more than one condition to a trigger.
+Refer to [**Create a trigger**](#create-a-trigger) to add more than one condition to a trigger.
 
 </div>
 </details>
