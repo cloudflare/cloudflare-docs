@@ -35,11 +35,11 @@ A partial (CNAME) setup is only available to customers on a Business or Enterpri
 
 ---
 
-### Verify your domain at authoritative DNS
+### Verify ownership for your domain
 
-Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. After a few hours, Cloudflare will verify the TXT record and send a confirmation email.
+Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
-That record must remain in place for as long as your are using Cloudflare.
+That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
 ---
 
@@ -51,10 +51,10 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
 
 ### Add DNS records
 
-1. In Cloudflare, [add an **A** or **CNAME** record](/manage-dns-records#create-dns-records).
+1. In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/manage-dns-records#create-dns-records).
 1. At your authoritative DNS provider:
     
-    1. Remove any existing **A** records for your domain.
+    1. Remove any existing **A**, **AAAA**, or **CNAME** records on the hostname you want to proxy to Cloudflare.
     1. Add a **CNAME** record for `{your-hostname}.cdn.cloudflare.net`.
         
         <details>
@@ -76,6 +76,6 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
 
 ## Limitations
 
-Since a partial (CNAME) setup involves only a subdomain, your root domain (`example.com`) cannot use Cloudflare services (DDoS protection, caching, etc.) without additional setup.
+A partial (CNAME) setup requires the proxied hostname to be pointed to Cloudflare via a CNAME record. Since [CNAME records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [CNAME Flattening](/additional-options/cname-flattening).
 
-To enable protection on your root domain, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare.
+If your authoritative DNS provider does not support CNAME Flattening, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare.
