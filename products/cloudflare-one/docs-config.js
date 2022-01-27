@@ -1,4 +1,4 @@
-const productIconKey = "cloudflare-zero-trust";
+const productIconKey = "cloudflare-one";
 
 module.exports = {
   product: "Cloudflare Zero Trust",
