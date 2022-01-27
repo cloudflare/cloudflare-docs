@@ -57,7 +57,7 @@ In a traditional application that is attached to a database, the authorization t
 
 [![Auth0 Flow](./media/auth0-flow.png)](https://auth0.com/docs/flows/concepts/auth-code)
 
-<small>Auth0 Flow Diagram courtesy of <a href="https://auth0.com/docs/flows/concepts/auth-code">Auth0</a></small>
+<small>Auth0 Sequence Diagram courtesy of <a href="https://auth0.com/docs/flows/concepts/auth-code">Auth0</a></small>
 
 ### Authenticating a user
 
