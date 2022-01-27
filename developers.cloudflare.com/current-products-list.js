@@ -43,9 +43,9 @@ const products = [
     icon: "cache",
   },
   {
-    title: "Cloudflare for Teams",
+    title: "Cloudflare Zero Trust",
     path: "cloudflare-one",
-    icon: "cloudflare-one",
+    icon: "cloudflare-zero-trust",
     wrap: true,
   },
   {
