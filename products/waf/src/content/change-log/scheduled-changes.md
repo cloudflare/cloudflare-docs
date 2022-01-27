@@ -1,4 +1,4 @@
----
+https://www.cloudflare.com/en-gb/learning/serverless/glossary/what-is-edge-computing/https://dash.cloudflare.com/173ac08b4d94833c7fea3c205addd678/domains/register---
 type: table
 order: 1
 ---
