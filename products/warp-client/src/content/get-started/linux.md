@@ -56,6 +56,19 @@ The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-
 - **Malware protection:** `warp-cli set-families-mode malware`
 - **Malware and adult content:** `warp-cli set-families-mode full`
 
+### Connect to Cloudflare Teams
+
+1. Open your [Cloudflare Dashboard](https://dash.teams.cloudflare.com/)
+2. Navigate to *Access* and create a new *Service Token* and note the Access and Secret Token
+3. Create a new Device Enrollment Policy by navigating to *Settings* > *Devices* and click *Manage* Device enrollment permissions
+4. *Add a rule*, enter a Name for the rule and select *Service Auth* as *Rule Action*
+5. Create a new Rule to *Include* *Service Tokens* and select your generated token from the dropdown menu
+6. Save the Enrollment Policies and run the following command on your system:
+
+```
+warp-cli teams-enroll <TEAM-NAME> --access-client-id acme.access --access-client-secret superSecretKey
+```
+
 ### Additional commands
 
 A complete list of all supported commands can be found by running:
