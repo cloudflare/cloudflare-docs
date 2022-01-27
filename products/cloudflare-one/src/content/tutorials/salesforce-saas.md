@@ -8,7 +8,7 @@ pcx-content-type: tutorial
 # Salesforce with Access for SaaS configuration
 
 **🗺️ This tutorial covers how to:**
-* Configure Salesforce as a SaaS application in Teams
+* Configure Salesforce as a SaaS application in Cloudflare Zero Trust
 * Force logins to Salesforce through Cloudflare's Zero Trust rules
 
 **⏲️ Time to complete:**
@@ -20,9 +20,9 @@ pcx-content-type: tutorial
 
 ---
 
-## Set up Salesforce as a SaaS application in Teams
+## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 1. Select the SaaS application type. 
 1. Next, select *Salesforce* from the **Application** drop-down menu.
 1. Fill the remaining fields as follows:
@@ -66,7 +66,7 @@ Configure as follows:
   * **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step. 
   * **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
   * **SAML Identity type:** Assertion contains the Federation ID from the User object
-  * **Identity Provider Login URL**: This is the SSO endpoint provided in the Teams dashboard for that application.
+  * **Identity Provider Login URL**: This is the SSO endpoint provided in the Zero Trust dashboard for that application.
 
 1. Click **Save**.  
 1. From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.

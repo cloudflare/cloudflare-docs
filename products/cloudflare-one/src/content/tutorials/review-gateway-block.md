@@ -31,7 +31,7 @@ In this example, a Cloudflare Gateway DNS filtering rule has been applied to all
 
 ![Policies](../static/secure-web-gateway/review-gateway-block/block-social.png)
 
-Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in the Cloudflare for Teams dashboard.
+Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in the Zero Trust dashboard.
 
 Navigate to the `Logs` section of the sidebar and choose `Gateway`.
 
@@ -41,7 +41,7 @@ Click the **Filter** action to filter by date range, user, action, and policy. I
 
 ![Blocked](../static/secure-web-gateway/review-gateway-block/blocked.png)
 
-You can expand the record to identify more information about the event, including user identity if you have deployed the [Cloudflare for Teams agent](/connections/connect-devices).
+You can expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/connections/connect-devices).
 
 ![Blocked Expand](../static/secure-web-gateway/review-gateway-block/blocked-expand.png)
 

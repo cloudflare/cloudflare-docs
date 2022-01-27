@@ -18,10 +18,10 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 ## Configure Cloudflare Access
 
-1. On the Teams Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+1. On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 1. Set the **Application type** to *Hubspot*.
 
-    ![Add fields to Teams application](../static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
+    ![Add fields to the Zero Trust application](../static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
 
 1. Use the following Hubspot field mappings:
 
@@ -49,7 +49,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
     | Entity ID | Identity Provider Identifier |
     | Public key | Certificate |
 
-    ![Add fields to Teams application](../static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
+    ![Add fields to the Zero Trust application](../static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
 
 1. Select **Verify** to validate the integration.
 

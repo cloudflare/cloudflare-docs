@@ -22,7 +22,7 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 **🗺️ This walkthrough covers how to:**
 
 * Upload a CSV of hostnames into a list
-* Manage the list in the Teams dashboard
+* Manage the list in the Zero Trust dashboard
 * Use the list in a Gateway policy
 
 **⏲️ Time to complete:**
@@ -31,9 +31,9 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 
 ## Upload a CSV
 
-You can manually create a list or upload a CSV to Cloudflare for Teams.
+You can manually create a list or upload a CSV to Cloudflare Zero Trust.
 
-1. To begin, navigate to the [Teams Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
+1. To begin, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
 
 ![List Create](../static/secure-web-gateway/gateway-list/lists.png)
 
