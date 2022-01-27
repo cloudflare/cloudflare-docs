@@ -10,5 +10,5 @@ To enable Cache Deception Armor, create a Page Rule. Keep in mind that Cache Dec
 1. Click **Rules**.
 1. From the **Page Rules** tab, click **Create Page Rule**.
 1. Enter the URL information and choose the **Cache Deception Armor** setting.
-1. Toggle button to **enabled**.
+1. Toggle the button to **enabled**.
 1. Click **Save and Deploy** when you are done.
