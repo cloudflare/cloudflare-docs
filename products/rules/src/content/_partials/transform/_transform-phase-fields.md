@@ -1,6 +1,3 @@
-* `cf.bot_management.*`
-* `cf.client.bot`
-* `cf.threat_score`
 * `cf.colo.id`
 * `cf.edge.server_ip`
 * `cf.edge.server_port`
@@ -13,6 +10,7 @@
 * `http.host`
 * `http.referer`
 * `http.request.headers`
+* `http.request.headers.*`
 * `http.request.accepted_languages`
 * `http.request.method`
 * `http.request.timestamp.sec`
@@ -23,6 +21,7 @@
 * `http.request.version`
 * `raw.http.request.full_uri`
 * `raw.http.request.uri`
+* `raw.http.request.uri.*`
 * `http.user_agent`
 * `http.x_forwarded_for`
 * `ip.src`
@@ -38,6 +37,6 @@ Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-languag
 
 * To obtain the value of an HTTP request header using the [`http.request.headers`](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#field-http-request-headers) field, specify the header name in **lowercase**. For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
 
-* Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
+* Use the `to_string()` function to get the string representation of a non-string value like an Integer value.
 
 </Aside>
