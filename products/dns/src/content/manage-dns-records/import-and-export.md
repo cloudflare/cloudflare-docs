@@ -7,21 +7,21 @@ pcx-content-type: how-to
 
 ## Import records
 
-When you add a new domain to Cloudflare, Cloudflare automatically scans for common records and adds them to your account's **DNS** page.
+When you add a new domain to Cloudflare, Cloudflare automatically scans for common records and adds them to your account's **DNS** page. This scan is not guaranteed to find all existing DNS records, so make sure that all DNS records are added in the Cloudflare **DNS** page before changing your nameservers to Cloudflare nameservers.
 
 If you want more control over which records are imported and how, use the bulk import functionality.
 
-### Format your file
+### Format your zone file
     
-Create a [BIND zone file](https://help.dyn.com/how-to-format-a-zone-file/) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
+Create a [BIND zone file](https://en.wikipedia.org/wiki/Zone_file) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
 Make sure to remove all comments from your import file that start with a semicolon (;).
 
-### Import records to Cloudflare
+### Import zone file to Cloudflare
 
 #### Using the dashboard
 
-To import records using the dashboard:
+To import a zone file using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. Go to **DNS**.
@@ -44,7 +44,6 @@ To export records using the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. Go to **DNS**.
 1. Click **Advanced**.
-1. Update the options in **Include records from:**.
 1. Click **Export**.
 
 ### Using the API
