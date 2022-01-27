@@ -55,7 +55,7 @@ All values are per account.
 | Number of HTTP policies per account | 500 |
 | Number of DNS policies per account | 500 |
 | Number of network policies per account | 500 |
-| Service Tokens count | 500 |
+| Service Tokens count | 100 |
 | IdP count | 50 |
 | Rules count per application | 1000 |
 | Rules count per group | 1000 |
