@@ -14,7 +14,7 @@ This scenario becomes problematic when your website is configured to be flexible
 
 For example, an attacker could send a user a link to `http://www.example.com/newsfeed/foo.jpg` so that the user could be taken to their newsfeed. When the request passes through Cloudflare, the request would be cached because the path ends in `.jpg`. The attacker can then visit the same URL themselves, and their request will be served from Cloudflare's cache, exposing your user's sensitive content.
 
-## Cache Deception Armor to protect against attacks
+## Cache Deception Armor protects against attacks
 
 You can protect users from Web Cache Deception attacks by adding a Cache Deception Armor Page Rule. With this rule, you can continue to cache static assets, but the rule will verify a URL's extension matches the returned `Content-Type`. 
 
