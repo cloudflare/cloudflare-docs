@@ -19,11 +19,11 @@ Requests served from the origin server.
 
 #### Cached requests
 
-The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_. This does not include _revalidated_ since the request had to be sent to the origin server.
+The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals `hit`, `stale`, `updating`, `ignored`. This does not include `revalidated` since the request had to be sent to the origin server.
 
 #### Uncached requests
 
-The number of requests that are not cached and therefore, are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** does not equal to _hit_, _stale_, _updating_, or _ignored_.
+The number of requests that are not cached and therefore, are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** does not equal to `hit`, `stale`, `updating`, or `ignored`.
 
 ### Bandwidth
 
@@ -33,11 +33,11 @@ The amount of data transferred from Cloudflare to end users within a certain per
 
 #### Origin bandwidth (Origin egress bandwidth)
 
-The amount of data transferred from the origin server to Cloudflare within a certain period of time. **Origin bandwidth** is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** does not equal _0_.
+The amount of data transferred from the origin server to Cloudflare within a certain period of time. **Origin bandwidth** is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** does not equal `0`.
 
 #### Cached bandwidth (Cached egress bandwidth)
 
-The amount of bandwidth served from Cloudflare without hitting the origin server. **Cached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
+The amount of bandwidth served from Cloudflare without hitting the origin server. **Cached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** equals `hit`, `stale`, `updating`, `ignored`, or `revalidated`.
 
 #### Saved bandwidth (Saved egress bandwidth)
 
@@ -45,7 +45,7 @@ The percentage of bandwidth saved by caching on the Cloudflare network.
 
 #### Uncached bandwidth (Uncached egress bandwidth)
 
-The amount of bandwidth that is not cached and therefore, is served from the origin. **Uncached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** does not equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
+The amount of bandwidth that is not cached and therefore, is served from the origin. **Uncached bandwidth** is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** does not equal `hit`, `stale`, `updating`, `ignored`, or `revalidated`.
 
 ### Website content
 
@@ -81,10 +81,10 @@ Any event that can potentially cause serious damage and lead to site attacks. In
 
 The security levels and the challenge display criteria are:
 
-- _High_ - for scores greater than 0
-- _Medium_ - for scores greater than 14
-- _Low_ - for scores greater than 24
-- _Essentially off_ - for scores greater than 49
+- **High** - for scores greater than 0
+- **Medium** - for scores greater than 14
+- **Low** - for scores greater than 24
+- **Essentially off** - for scores greater than 49
 
 #### Total Threats Stopped
 
@@ -92,7 +92,7 @@ Indicates the number of suspicious and bad requests aimed at your site.
 
 #### Bad browser
 
-This value results from the Cloudflare **Browser Integrity Check (BIC)** feature. It indicates that the source of the request was not legitimate or that the request itself was malicious. Users would see a Cloudflare error _1010_ page in their browser. Cloudflare's **Browser Integrity Check** looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
+This value results from the Cloudflare **Browser Integrity Check (BIC)** feature. It indicates that the source of the request was not legitimate or that the request itself was malicious. Users would see a Cloudflare error `1010` page in their browser. Cloudflare's **Browser Integrity Check** looks for common HTTP headers used most often by spammers, and blocks access to your page. It also challenges visitors that do not have a user agent or use a non-standard user agent (commonly used by bots, crawlers, or visitors).
 
 #### Blocked hotlink
 
