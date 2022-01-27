@@ -139,7 +139,7 @@ The Durable Objects storage API is only accessible from within Durable Objects.
 
 |                                               | Paid plan                   |
 | --------------------------------------------- | --------------------------- |
-| Read request units<sup>1,2</sup>              | 10 million, + $0.20/million |
+| Read request units<sup>1,2</sup>              | 1 million, + $0.20/million |
 | Write request units<sup>1</sup>               | 1 million, + $1.00/million  |
 | Delete requests<sup>3</sup>                   | 1 million, + $1.00/million  |
 | Stored data<sup>4</sup>                       | 1 GB, + $0.20/ GB-month     |
