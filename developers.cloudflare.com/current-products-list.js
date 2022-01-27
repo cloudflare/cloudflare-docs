@@ -45,7 +45,7 @@ const products = [
   {
     title: "Cloudflare Zero Trust",
     path: "cloudflare-one",
-    icon: "cloudflare-zero-trust",
+    icon: "cloudflare-one",
     wrap: true,
   },
   {
