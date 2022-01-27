@@ -47,7 +47,7 @@ Ensure that your rule definition complies with the following:
 * Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
 * You must set the rule expression to `true`.
 
-The example below defines a rule at the zone level, but you can also define this configuration at the account level. To do that, you must use a different endpoint and set the ruleset `kind` to `root`.
+The example below defines a zone ruleset, but you can also define this configuration using an account ruleset. To do that, you must use a different endpoint and set the ruleset `kind` to `root`.
 
 Perform the following steps to create the rule:
 
