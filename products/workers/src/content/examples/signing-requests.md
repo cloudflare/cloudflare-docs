@@ -114,7 +114,7 @@ For request URLs beginning with `/generate/`, we replace `/generate/` with `/ver
 
 ```js
 async function generateSignedUrl(url) {
-  // We"ll need some super-secret data to use as a symmetric key.
+  // We will need some super-secret data to use as a symmetric key.
   const encoder = new TextEncoder()
   const secretKeyData = encoder.encode("my secret symmetric key")
   const key = await crypto.subtle.importKey(
