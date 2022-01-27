@@ -14,7 +14,7 @@ If you want to use Cloudflare as your primary DNS provider and manage your DNS r
 <summary>Yes</summary>
 <div>
 
-If you do already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
+If you already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
 
 </div>
 </details>
