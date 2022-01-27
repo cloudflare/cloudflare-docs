@@ -12,7 +12,7 @@ Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets
 When creating a URL Rewrite Rule via API, make sure you:
 
 * Set the rule action to `rewrite`
-* Define the [URL rewrite parameters](/transform/url-rewrite/parameters) in the `action_parameters` field according to the type of URL rewrite (static or dynamic)
+* Define the [URL rewrite parameters](/transform/url-rewrite/reference/parameters) in the `action_parameters` field according to the type of URL rewrite (static or dynamic)
 * Deploy the rule to the `http_request_transform` phase at the zone level
 
 ---
