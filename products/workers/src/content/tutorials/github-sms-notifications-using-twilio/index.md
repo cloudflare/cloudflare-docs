@@ -16,9 +16,9 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
 You will learn how to:
-- Build Webhooks using Workers
-- Integrate Workers with GitHub and Twilio
-- Use Worker secrets with Wrangler
+- Build webhooks using Workers.
+- Integrate Workers with GitHub and Twilio.
+- Use Worker secrets with Wrangler.
 
 ![Video of receiving a text after pushing to a repo](media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
@@ -40,15 +40,15 @@ Inside of your new `github-sms-notifications` directory, `index.js` represents t
 
 You will also need a GitHub account and a repository for this tutorial. If you do not have either setup, [create a new GitHub account](https://github.com/join) and [create a new repository](https://docs.github.com/en/github/getting-started-with-github/create-a-repo) to continue with this tutorial.
 
-First, create a Webhook for your repository to post updates to your Worker. Inside of your Worker, you will then parse the updates. Finally, you will send a POST request to Twilio to send a text message to you.
+First, create a webhook for your repository to post updates to your Worker. Inside of your Worker, you will then parse the updates. Finally, you will send a `POST` request to Twilio to send a text message to you.
 
-You can reference the finished code on this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
+You can reference the finished code at this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
 
 --------------------------------
 
 ## Configure GitHub
 
-To start, you will need to configure a GitHub Webhook to post to your Worker when there is an update to the repository:
+To start, configure a GitHub webhook to post to your Worker when there is an update to the repository:
 
 1. Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
 
@@ -68,9 +68,9 @@ To start, you will need to configure a GitHub Webhook to post to your Worker whe
 
 ## Parsing the response
 
-With your local environment set up, you will now parse the repository update with your Worker. If you experience any difficulty, refer to the finished [index.js](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
+With your local environment set up, parse the repository update with your Worker. If you experience any difficulty, refer to the finished [`index.js`](https://github.com/davidtsong/GitHub-twilio-notifications/blob/master/index.js).
 
-Your generated `index.js` should look like this below:
+Your generated `index.js` should look like this:
 
 ```js
 ---
@@ -91,7 +91,7 @@ async function handleRequest(request) {
 }
 ```
 
-Begin by modifying the starter code to handle a `POST` response and renaming the request handler. You can use the `request.method` property of [request](/runtime-apis/request) to check if the request is a `POST` request, and send an error response if the request is not a `POST` request. The `simpleResponse` function is an easy wrapper for you to respond with requests using your Worker.
+Begin by modifying the starter code to handle a `POST` response and renaming the request handler. Use the `request.method` property of [`Request`](/runtime-apis/request) to check if the request is a `POST` request, and send an error response if the request is not a `POST` request. The `simpleResponse` function is an easy wrapper for you to respond with requests using your Worker.
 
 ```js
 ---
@@ -123,7 +123,7 @@ async function githubWebhookHandler(request) {
 }
 ```
 
-Next, you will validate that the request is sent with the right secret key. GitHub attaches a hash signature for [each payload using the secret key](https://developer.github.com/webhooks/securing/). You can use a helper function called `checkSignature` on the request to ensure the hash is correct. Then, you can access data from the Webhook by parsing the request as JSON.
+Next, validate that the request is sent with the right secret key. GitHub attaches a hash signature for [each payload using the secret key](https://developer.github.com/webhooks/securing/). Use a helper function called `checkSignature` on the request to ensure the hash is correct. Then, you can access data from the webhook by parsing the request as JSON.
 
 ```js
 ---
@@ -182,7 +182,7 @@ async function checkSignature(formData, headers) {
 
 Since our project relies on importing a library, use [webpack](/cli-wrangler/webpack/) and update your `wrangler.toml` file to set `type = "webpack"`.
 
-Your `wrangler.toml` should look something like this:
+Your `wrangler.toml` file should look like this:
 
 ```toml
 ---
@@ -200,11 +200,11 @@ zone_id = ""
 
 ## Sending a text with Twilio
 
-Finally, you will send a text message to you about your repository activity using Twilio. You will need a Twilio account and a phone number that can receive text messages. [Refer to the Twilio guide to get set up](https://www.twilio.com/sms/api). (If you are new to Twilio, they have [an interactive game](https://www.twilio.com/quest) where you can learn how to use their platform and get some free credits for beginners to the service.)
+You will send a text message to you about your repository activity using Twilio. You need a Twilio account and a phone number that can receive text messages. [Refer to the Twilio guide to get set up](https://www.twilio.com/sms/api). (If you are new to Twilio, they have [an interactive game](https://www.twilio.com/quest) where you can learn how to use their platform and get some free credits for beginners to the service.)
 
-You can then create a helper function to send text messages by sending a POST request to the Twilio API endpoint. [Refer to the Twilio reference](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource) to learn more about this endpoint.
+You can then create a helper function to send text messages by sending a `POST` request to the Twilio API endpoint. [Refer to the Twilio reference](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource) to learn more about this endpoint.
 
-You construct your headers and body in the format shown in the Twilio reference page. Change the `from` value to your Twilio phone number.
+Construct your headers and body in the format shown in the Twilio reference page. Change the `from` value to your Twilio phone number.
 
 ```js
 ---
@@ -235,15 +235,15 @@ async function sendText(message){
   return new Response(JSON.stringify(result), request)
 }
 ```
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with `wrangler secret put` in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/cli-wrangler/commands#put) in your command line.
 
 ```sh
 $ wrangler secret put ACCOUNT_SID
 ```
 
-Use wrangler to set your Twilio `ACCOUNT_SID`, `RECIPIENT`(your number), Twilio `AUTH_TOKEN`, and `SECRET_TOKEN` (for GitHub) secrets to the respective values.
+Use Wrangler to set your Twilio `ACCOUNT_SID`, `RECIPIENT`(your number), Twilio `AUTH_TOKEN`, and `SECRET_TOKEN` (for GitHub) secrets to the respective values.
 
-Finally, modify your `githubWebhookHandler` to send a text at the end using the `sendText` function you just made.
+Modify your `githubWebhookHandler` to send a text message using the `sendText` function you just made.
 
 ```js
 async function githubWebhookHandler(request) {
@@ -275,7 +275,7 @@ async function githubWebhookHandler(request) {
 }
 ```
 
-Now, run the `wrangler punlish` command to deploy your Workers script:
+Run the `wrangler publish` command to deploy your Workers script:
 
 ```sh
 $ wrangler publish
@@ -283,9 +283,9 @@ $ wrangler publish
 
 ![Video of receiving a text after pushing to a repo](media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-Now, when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
+Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
 
-You can reference the finished code on this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
+You can reference the finished code [on GitHub](https://github.com/davidtsong/github-twilio-notifications/).
 
 By completing this tutorial, you have learned how to build webhooks using Workers, integrate Workers with GitHub and Twilio, and use Worker secrets with Wrangler.
 
