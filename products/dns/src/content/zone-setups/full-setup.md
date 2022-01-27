@@ -1,47 +1,68 @@
 ---
+title: Full setup
 order: 0
 pcx-content-type: tutorial
 ---
 
-# Full setup
+# Use Cloudflare nameservers (Full setup)
 
-To use Cloudflare's authoritative nameservers for your domain, add the nameserver pair provided by Cloudflare at your registrar. 
+If you want to use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare, your domain should use Cloudflare for your authoritative nameservers.
 
-<Aside type="note" header="Note:">
+## Step 1 — Do you have an existing domain name?
 
-If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar), you do not need to update your authoritative nameservers. Registrar uses Cloudflare for authoritative DNS by default.
+<details>
+<summary>Yes</summary>
+<div>
 
-</Aside>
+If you already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
 
----
+</div>
+</details>
 
-## Change your domain nameservers
+<details>
+<summary>No</summary>
+<div>
 
+If you do not already have a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](https://developers.cloudflare.com/registrar/get-started/register-domain). 
 
-### Prerequisites
+Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
-- **Tasks**: Create an account and [add your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare.
-- **Concepts**: If you are new to Cloudflare or Internet concepts more generally, you might want to review the following concepts:
+</div>
+</details>
 
-    - [Registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/)
-    - [Content Delivery Network](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
-    - [Nameservers](https://www.cloudflare.com/learning/dns/dns-server-types)
-    - [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/)
-    - [DNS Security (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/)
+## Step 2 — Complete prerequisites
 
+### Create an account
 
-### Update your nameservers
+Before you can complete your domain setup, you need to create an account and [add your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare.
+
+### Disable DNSSEC
+
+If you are onboarding an existing domain to Cloudflare — as opposed to purchasing a new domain through [Cloudflare Registrar](https://developers.cloudflare.com/registrar/) — make sure DNSSEC **is disabled** at your registrar (where you purchased your domain name). Otherwise, your domain will experience connectivity errors when you change your nameservers.
+
+<details>
+<summary>Why do I have to disable DNSSEC</summary>
+<div>
+
+When your domain has [DNSSEC enabled](https://www.cloudflare.com/learning/dns/dns-security/#what-is-dnssec), your DNS provider digitally signs all your DNS records. This action prevents anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain.
+
+However, having a single set of signed records also prevents Cloudflare from issuing new DNS records on your behalf (which is part of using Cloudflare for your authoritative nameservers). So if you change your nameservers without disabling DNSSEC, DNSSEC will prevent Cloudflare's DNS records from resolving properly.
+
+</div>
+</details>
+
+## Step 3 — Update your nameservers
 
 Once you have added a domain (also known as a *zone*) to Cloudflare, that domain will receive two assigned authoritative nameservers.
 
-#### Get nameserver names
+### Get nameserver names
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. On **Overview**, copy the information from **Replace with Cloudflare's nameservers**.
 
     ![get nameserver names from the Overview page of your domain](../static/nameserver-names.png)
 
-#### Update your registrar
+### Update your registrar
 
 1. Log into the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 1. Disable **DNSSEC** for your domain. 
@@ -96,15 +117,13 @@ Once you have added a domain (also known as a *zone*) to Cloudflare, that domain
 
 1. Wait 24 hours while your registrar updates your nameservers. You will receive an email when your site is active on Cloudflare.
 
-#### Verify changes
+### Verify changes
 
 To check whether you correctly changed your nameservers, you can log in to the [Cloudflare dashboard](https://dash.cloudflare.com) or use a [third-party tool](https://www.whatsmydns.net/).
 
 If you see unexpected results, refer to [Nameserver FAQs](/zone-setups/troubleshooting#nameservers).
 
----
-
-### Re-enable DNSSEC
+## Step 4 — Re-enable DNSSEC using Cloudflare
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar. 
 
