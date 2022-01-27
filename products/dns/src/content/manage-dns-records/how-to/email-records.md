@@ -1,9 +1,41 @@
 ---
 order: 4
-pcx-content-type: concept
+pcx-content-type: how-to
 ---
 
-# Email security
+# Set up email records
+
+There are two reasons to set up email records for your domain: to make sure email [reaches your mail server](#add-mx-records) and to prevent other email senders from [spoofing your domain](#prevent-domain-spoofing).
+
+---
+
+## Add MX records
+
+To route emails to your mail server, you need to [create two DNS records](../create-dns-records) within Cloudflare:
+
+1. An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
+
+    <Example>
+
+    | **Type** | **Name** | **IPv4 address** | **Proxy status** |
+    | --- | --- | --- | --- |
+    | A | `mail` | `192.0.2.1`| Proxied |
+
+    </Example>
+
+1. An **MX** record that points to that subdomain.
+
+    <Example>
+
+    | **Type** | **Name** | **Mail server** | **TTL** |
+    | --- | --- | --- | --- |
+    | MX | `@` | `mail.example.com`| Auto |
+
+    </Example>
+
+---
+
+## Prevent domain spoofing
 
 There are several DNS mechanisms to prevent others from sending emails on behalf of your domain. These all work as TXT records that need to be added on your domain:
 
@@ -17,7 +49,7 @@ For additional background on email security records, refer to the [introductory 
 
 </Aside>
 
-## Configure email security records
+### Configure email security records
 
 To set up email security records:
 

@@ -1,9 +1,9 @@
 ---
 order:
-pcx-content-type: reference
+pcx-content-type: concept
 ---
 
-# Proxied DNS records
+# Proxy status
 
 
 For more information about proxied DNS records, refer to [Identifying subdomains compatible with Cloudflare's proxy](https://support.cloudflare.com/hc/articles/200169626).
