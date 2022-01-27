@@ -140,7 +140,7 @@ Do not set up the Image Resizing worker for the entire zone (`/*`). This will bl
 
 </Aside>
 
-It is best to keep the path handled by the Worker separate from the path to original (unresized) images to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the Worker from creating an infinite loop.
+It is best to keep the path handled by the Worker separate from the path to original (unresized) images, to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the Worker from creating an infinite loop.
 
 ### Prevent request loops
 
@@ -172,7 +172,7 @@ The script preview of the Worker editor ignores `fetch()` options, and will alwa
 
 ## Error handling
 
-When an image cannot be resized — for example, because the image does not exist or the resizing parameters were invalid — the response will have an HTTP status indicating an error (for example, 400, 404, or 502).
+When an image cannot be resized — for example, because the image does not exist or the resizing parameters were invalid — the response will have an HTTP status indicating an error (for example, `400`, `404`, or `502`).
 
 By default, the error will be forwarded to the browser, but you can decide how to handle errors. For example, you can redirect the browser to the original, unresized image instead:
 
@@ -269,4 +269,4 @@ async function handleRequest(request) {
 }
 ```
 
-When testing image resizing, please deploy the script first. Resizing won’t be active in the on-line editor in the Dashboard.
+When testing image resizing, please deploy the script first. Resizing will not be active in the on-line editor in the dashboard.
