@@ -1,7 +1,7 @@
 const productIconKey = "cloudflare-zero-trust";
 
 module.exports = {
-  product: "Cloudflare for Teams",
+  product: "Cloudflare Zero Trust",
   pathPrefix: "/cloudflare-one",
   productIconKey,
   contentRepo: "cloudflare/cloudflare-docs",
@@ -27,7 +27,7 @@ module.exports = {
     algoliaOptions: { facetFilters: '["project:cloudflare-one"]' },
   },
   siteMetadata: {
-    title: "Cloudflare for Teams docs",
+    title: "Cloudflare Zero Trust docs",
     description: "Cloudflare One™ is the culmination of engineering and technical development guided by conversations with thousands of customers about the future of the corporate network. It provides secure, fast, reliable, cost-effective network services, integrated with leading identity management and endpoint security providers. These docs contain step-by-step, use case driven, tutorials to use Cloudflare One products.",
     author: "@cloudflare",
     url: "https://developers.cloudflare.com/cloudflare-one",
