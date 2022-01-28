@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: how-to
 ---
 
-# DNSSEC
+# Set up DNSSEC
 
 DNS Security Extensions (DNSSEC) adds an extra layer of authentication to DNS, ensuring requests are not routed to a spoofed domain.
 

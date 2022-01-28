@@ -27,7 +27,7 @@ To import a zone file using the dashboard:
 1. Go to **DNS**.
 1. Click **Advanced**.
 1. For **Import DNS records**, select your [formatted file](#format-your-file).
-1. If you do not want [applicable records](/reference/proxied-dns-records) proxied, unselect **Proxy imported DNS records**.
+1. If you do not want [applicable records](/manage-dns-records/reference/proxied-dns-records) proxied, unselect **Proxy imported DNS records**.
 
 #### Using the API
 
