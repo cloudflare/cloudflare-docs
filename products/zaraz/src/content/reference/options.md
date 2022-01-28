@@ -10,7 +10,7 @@ Configure Zaraz's general options for a website from its [main dashboard](https:
 
 ## Data layer compatibility mode 
 
-Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. You can toggle this option off if you do not need it. Refer to [Data layer compatibility mode](/datalayer-compatibility) for more information.
+Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. You can toggle this option off if you do not need it. Refer to [Data layer compatibility mode](/advanced/datalayer-compatibility) for more information.
 
 ## Single Page Application support
 
@@ -18,13 +18,6 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 ## Auto-inject script
 
-This option automatically injects the script needed for Zaraz to work in your website. It is turned on by default.
+This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default. 
 
-If you turn this option off, you will have to proxy a subdomain for your website through Cloudflare, and manually add a JavaScript snippet to your HTML for Zaraz to work:
-
-  1. Create a new subdomain like `newsub.example.com` and proxy it through Cloudflare. Refer to [Enabling the Orange Cloud](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) for more information.
-  1. Add the following script to your website:
-
-  ```html
-  <script src="https://<YOUR_SUBDOMAIN>/cdn-cgi/zaraz/i.js"></script>
-  ```
+If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually. Refer to [Loading Zaraz manually](/advanced/loading-zaraz-manually) for more information.

@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 Triggers are a set of conditions that determine if and when Cloudflare Zaraz should [send events to third-party tools](/get-started/send-events). In most cases, your objective will be to capture specific site actions that are relevant to your business. A trigger will usually be based on an action the end user has taken on your website, like clicking a button.
 
-These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/api/events-api) and [Data layer compatibility mode](/api/datalayer-compatibility) for more information on how to implement these options.
+These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Events API or the `dataLayer` to send them to specific events and tools. Refer to [Events API](/web-api/events-api) and [Data layer compatibility mode](/advanced/datalayer-compatibility) for more information on how to implement these options.
 
 You can also use complex triggers to listen for these site actions, with different types of rules like Click Listeners or Form Submissions.
 
@@ -40,7 +40,7 @@ The rule type determines the kind of conditions Zaraz should listen for in your 
 <summary>Match rule</summary>
 <div>
 
-Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/properties-reference).
+Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/reference/properties-reference).
 
 **Trigger example:**
 
