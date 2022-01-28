@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Gateway responds to any blocked domain with 0.0.0.0, and does not return that blocked domain's IP address. As a result, the browser will show a default error page, and users will not be able to reach that website. This may cause confusion and lead some users to think that their Internet is not working.
 
-Configuring a **block page** on the Teams dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and whom in the organizations users should contact for support.
+Configuring a **block page** on the Zero Trust dashboard helps avoid this confusion. Your block page will display information such as the rule ID of the policy blocking the website, a policy-specific block message, your organization's name, and a global message you may want to show — for example, a message explaining that the website has been blocked by Gateway, and whom in the organizations users should contact for support.
 
 To configure a block page:
 
@@ -18,7 +18,7 @@ To configure a block page:
 
 ## Download the Cloudflare certificate
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Devices**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Devices**.
 
 1. Scroll down to the **Certificates** card.
 
@@ -66,7 +66,7 @@ The block page is automatically enabled for all HTTP policies. When a user is bl
 
 For DNS policies:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Policies > DNS**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies > DNS**.
 1. Find the policy for which you would like to set up a block page.
 1. Click **Edit**.
 1. Scroll down to find the **Configure policy settings** step.
