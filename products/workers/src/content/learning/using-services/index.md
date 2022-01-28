@@ -11,7 +11,7 @@ Unlike a script, a Workers Service is composable, which allows services to talk 
 
 <Aside type="note">
 
-To enable a seamless transition to Services, all scripts have been automatically migrated to Services with one production environment. No action on the user's part is required.
+To enable a seamless transition to Services, all scripts have been automatically migrated to Services with one production environment. No action is needed from the user. 
 
 </Aside>
 
