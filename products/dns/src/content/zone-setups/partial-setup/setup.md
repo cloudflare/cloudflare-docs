@@ -1,26 +1,24 @@
 ---
-order: 1
+title: Setup
+order: 0
 pcx-content-type: tutorial
 ---
 
-# Partial (CNAME) setup
+import PartialSetupDefinition from "../../_partials/_partial-setup-definition.md"
 
-A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
+# Set up a partial (CNAME) zone
 
-Use this option to proxy only individual subdomains through Cloudflare's global edge network when you cannot change your authoritative DNS provider.
+<PartialSetupDefinition/>
 
+<Aside type="note">
 
-## Set up a partial domain
+A partial setup is only available to customers on a Business or Enterprise plan.
 
----
-
-### Prerequisites
-
-A partial (CNAME) setup is only available to customers on a Business or Enterprise plan.
+</Aside>
 
 ---
 
-### Add your domain to Cloudflare
+## Step 1 — Add your domain to Cloudflare
 
 1. Create a Cloudflare account and [add your domain](https://support.cloudflare.com/hc/articles/201720164).
 1. For your **Plan**, choose **Business** or **Enterprise**.
@@ -28,14 +26,12 @@ A partial (CNAME) setup is only available to customers on a Business or Enterpri
 1. Ignore the instructions to change your nameservers.
 1. For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
 
-    ![On your domain's overview page, click Convert to CNAME DNS Setup](../static/dns_cname_setup.png)
+    ![On your domain's overview page, click Convert to CNAME DNS Setup](../../static/dns_cname_setup.png)
 
 1. Click **Convert**.
 1. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Verification TXT Record**.
 
----
-
-### Verify ownership for your domain
+## Step 2 — Verify ownership for your domain
 
 Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
@@ -43,13 +39,13 @@ That record must remain in place for as long as your domain is active on the par
 
 ---
 
-### Provision an SSL certificate (optional)
+## Optional — Provision an SSL certificate
 
 To provision a Universal SSL certificate through Cloudflare, follow [these instructions](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains).
 
 ---
 
-### Add DNS records
+## Step 3 — Add DNS records
 
 1. In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/manage-dns-records#create-dns-records).
 1. At your authoritative DNS provider:
@@ -71,11 +67,3 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
         </details>
 
     1. Repeat this process for each subdomain proxied to Cloudflare.
-
----
-
-## Limitations
-
-A partial (CNAME) setup requires the proxied hostname to be pointed to Cloudflare via a CNAME record. Since [CNAME records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [CNAME Flattening](/additional-options/cname-flattening).
-
-If your authoritative DNS provider does not support CNAME Flattening, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare.
