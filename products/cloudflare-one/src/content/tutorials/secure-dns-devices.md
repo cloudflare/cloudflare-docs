@@ -89,7 +89,7 @@ Once installed, click the logo in the toolbar and select the gear icon in the to
 
 ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-Under the `Account` tab, click `Login with Cloudflare Zero Trust`.
+Under the `Account` tab, click **Login with Cloudflare for Teams**.
 
 ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
