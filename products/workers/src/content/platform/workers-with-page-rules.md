@@ -29,7 +29,7 @@ If you are experiencing Page Rule errors when running Workers, contact your Clou
 
 When implementing the Email Obfuscation Page Rule be aware that Email Obfuscation will run on subrequests, but not on parent requests. If the subrequest is going to an external site and the subrequest URL does not match the Page Rule URL configured for your site, the Email Obfuscation Page Rule will not execute. 
 
-For example, if the subrequest is going to an external object storage bucket with the URL being something like `yoursite.cloudprovider.com`, which does not match the Page Rule configured for your site, the Page Rule will remain disabled.
+For example, if the subrequest is going to an external object storage bucket with the URL being something like `yoursite.cloudprovider.com`, which does not match the Page Rule configured for your site, the Email Obfuscation Page Rule will be skipped.
 
 </div>
 </details>
