@@ -17,7 +17,7 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 ## Using Durable Objects
 
-Durable Objects are named instances of a class you define.  Just like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
+Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
 To start, enable Durable Objects for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”. 
 
@@ -491,7 +491,7 @@ export class Counter {
 
 ### GraphQL Analytics
 
-Durable Object metrics are powered by GraphQL, just like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema).
+Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema).
 
 ### Common errors
 #### Error: `No event handlers were registered. This script does nothing.`
