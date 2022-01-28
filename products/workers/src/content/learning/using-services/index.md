@@ -81,7 +81,7 @@ export default {
 
 ![service binding diagram](./media/app-workers-dev.png)
 
-Workers Service bindings use the standard [Fetch API](/runtime-apis/fetch). You can continue to use your existing utilities and libraries - a Service binding will trigger a `FetchEvent`. You can also change the environment of a Service binding, so you can test a new version of a Service. 
+Workers Service bindings use the standard [Fetch API](/runtime-apis/fetch). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service. 
 
 In the next example, 1% of requests are routed to a `CANARY` deployment of a Worker. If a request to the `CANARY` fails, it is sent to the production deployment for another chance.
 
@@ -136,7 +136,7 @@ This authentication Workers Service does not need to have `*.workers.dev` or cus
 
 ### Gateway Worker and Service bindings usage
 
-In order to bind and call the [authentication Service above](/#authentication-service), the application Workers Service needs to set up a Workers Service binding. You can manage Workers Service bindings in **Workers** > select your **Worker** > **Settings**> **Variables** > **Service Bindings** > **Edit variables**.
+In order to bind and call the [authentication Workers Service above](/#authentication-service), the application Workers Service needs to set up a Workers Service binding. You can manage Workers Service bindings in **Workers** > select your **Worker** > **Settings**> **Variables** > **Service Bindings** > **Edit variables**.
 
 ![Workers service bindings](./media/service-bindings.png)
 
