@@ -79,7 +79,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
     ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-1. Under the **Account** tab, click **Login with Cloudflare Zero Trust**.
+1. Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
