@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 <Aside type='note'>
  
-This procedure is only required to enable specific Cloudflare for Teams features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
+This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
  
 </Aside>
 

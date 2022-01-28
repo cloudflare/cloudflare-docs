@@ -139,7 +139,7 @@ For a description of each argument and what it means, see [deployment parameters
 
 1. Navigate to **Configuration Profiles**.
 1. Click **New**.
-1. Enter a name for your new profile, such as *Cloudflare for Teams*.
+1. Enter a name for your new profile, such as *Cloudflare Zero Trust*.
 1. Scroll through the options list and click on **Application & Custom Settings**.
 1. Click **Configure**.
 1. In *Preference Domain*, enter `com.cloudflare.warp`.

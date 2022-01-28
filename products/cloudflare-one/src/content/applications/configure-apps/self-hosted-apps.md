@@ -18,11 +18,11 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](../../static/documentation/applications/network-diagram.png)
 
-Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use [Cloudflare Tunnel](/glossary#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use [Cloudflare Tunnel](/glossary#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 

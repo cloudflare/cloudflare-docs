@@ -5,9 +5,9 @@ pcx-content-type: how-to
 
 # Add locations
 
-To add a location to Teams:
+To add a location to Cloudflare Zero Trust:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Locations**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Locations**.
 
 1. Click **Add a location**.
 

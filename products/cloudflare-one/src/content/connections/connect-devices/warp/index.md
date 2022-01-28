@@ -8,7 +8,7 @@ title: WARP
 
 The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's edge, where Cloudflare Gateway can apply advanced web filtering. The WARP client also makes it possible to apply advanced Zero Trust policies that check for a device's health before it connects to corporate applications.
 
-Downloading and deploying the WARP client to your devices enhances the protection Cloudflare for Teams can provide to your users and data, wherever they are.
+Downloading and deploying the WARP client to your devices enhances the protection Cloudflare Zero Trust can provide to your users and data, wherever they are.
 
 Here are a few ways in which the WARP client provides in-depth protection for your organization:
 
@@ -19,7 +19,7 @@ Here are a few ways in which the WARP client provides in-depth protection for yo
     Download and install the WARP client to enable Gateway features such as [Anti-Virus scanning](/policies/filtering/http-policies/antivirus-scanning), [HTTP filtering](/policies/filtering/http-policies), [Browser Isolation](/policies/filtering/http-policies#isolate), and [identity-based policies](/policies/filtering/network-policies).
 
 * **WARP lets you have in-depth, application-specific insights**.  
-    With WARP installed on your corporate devices, you can populate the [Teams Shadow IT Discovery](/analytics/access) page with visibility down to the application and user level. This makes it easy to discover, analyze, and take action on any shadow IT your users may be using every day. 
+    With WARP installed on your corporate devices, you can populate the [Zero Trust Shadow IT Discovery](/analytics/access) page with visibility down to the application and user level. This makes it easy to discover, analyze, and take action on any shadow IT your users may be using every day. 
 
 * **WARP allows you to build rich device posture rules.**  
     The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/identity/devices). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.

@@ -8,7 +8,7 @@ title: "Private networks"
 
 You can connect private networks and the services running in those networks to Cloudflare using [Cloudflare Tunnel](/glossary#cloudflare-tunnel). End users can then connect to those resources using the [WARP client](/connections/connect-devices/warp). When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network to the corresponding tunnel.
 
-Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections. Administrators define the IPs available in that environment and associate them with the tunnel. Users in your organization can then reach the service by [enrolling](/connections/connect-devices/warp/deployment) into your organization's Cloudflare for Teams account and using the WARP client.
+Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections. Administrators define the IPs available in that environment and associate them with the tunnel. Users in your organization can then reach the service by [enrolling](/connections/connect-devices/warp/deployment) into your organization's Cloudflare Zero Trust account and using the WARP client.
 
 To connect a private network to Cloudflare's edge, follow the guide below. You can also check out our [tutorial](/tutorials/warp-to-tunnel).
 
@@ -16,9 +16,9 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 * [Install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
 * [Enable HTTP filtering](/policies/filtering/http-policies) by turning on the **Proxy** switch under **Settings** > **Network** > **L7 Firewall**.
-* [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Teams organization.
+* [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
 * [Install the WARP client](/connections/connect-devices/warp) on the devices you want to allow into your network.
-* (optional) [Integrate your preferred identity provider](/identity/idp-integration) with Cloudflare for Teams. 
+* (optional) [Integrate your preferred identity provider](/identity/idp-integration) with Cloudflare Zero Trust. 
 
 ## Create a tunnel to connect your network
 
@@ -62,9 +62,9 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 ## (optional) Ensure that traffic can reach your network
 
-By default, Cloudflare for Teams [excludes traffic](/connections/connect-devices/warp/exclude-traffic/split-tunnels) to a specific set of destinations from WARP encryption. If you have not changed your default Split Tunnel settings, you can skip this step. If you have altered this configuration, for example by adding or removing entries to the Exclude list or by setting Split Tunnels mode to **Include**, make sure that traffic to the IP/CIDR you are associating with your private network is set to be encrypted by WARP.
+By default, Cloudflare Zero Trust [excludes traffic](/connections/connect-devices/warp/exclude-traffic/split-tunnels) to a specific set of destinations from WARP encryption. If you have not changed your default Split Tunnel settings, you can skip this step. If you have altered this configuration, for example by adding or removing entries to the Exclude list or by setting Split Tunnels mode to **Include**, make sure that traffic to the IP/CIDR you are associating with your private network is set to be encrypted by WARP.
 
-To check that, navigate to **Settings** > **Network** > **Split Tunnels** on the Teams Dashboard, and click **Manage**.
+To check that, navigate to **Settings** > **Network** > **Split Tunnels** on the Zero Trust Dashboard, and click **Manage**.
 
 * If you are using the feature in **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption by default. If your network's IP/CIDR range is listed on this page, delete it.
 * If you are using the feature in **Include** mode, the IP ranges you see listed are the only one Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.

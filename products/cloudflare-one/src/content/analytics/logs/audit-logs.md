@@ -19,7 +19,7 @@ Access retains authentication logs for 6 months.
 
 ### Where to find Access Audit Logs
 
-Access audit logs are available in the Logs section of the Cloudflare for Teams dashboard. 
+Access audit logs are available in the Logs section of the Zero Trust dashboard. 
 Access provides the following view types of the logs:
 
 * **User**: all unique users with at least one successful login during the current calendar month.

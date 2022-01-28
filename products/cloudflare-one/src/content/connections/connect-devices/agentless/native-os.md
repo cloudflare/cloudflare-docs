@@ -12,7 +12,7 @@ Enrolling devices using static IP addresses may prevent users from connecting to
 1. Connect to the Wi-Fi network.
 1. Once the connection has been established, add the static IP addresses back.
 
-Alternatively, you can look into using the [WARP client](/connections/connect-devices) to connect your devices to Teams.
+Alternatively, you can look into using the [WARP client](/connections/connect-devices) to connect your devices to Cloudflare Zero Trust.
 
 </Aside>
 
@@ -69,7 +69,7 @@ Remove any IP addresses that may already be listed.
 
 ### IPv6
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to the **Locations** tab.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **Locations** tab.
 2. Expand your location by clicking on it.
 3. Note the **IPv6 address**.
 4. On your computer, go to **System Preferences** > **Network**.
