@@ -9,7 +9,7 @@ hideChildren: true
 
 <ContentColumn>
 
-Below you'll find answers to the most commonly asked questions on Cloudflare for Teams, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
+Below you'll find answers to the most commonly asked questions on Cloudflare Zero Trust, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
 
 If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there. 
 
@@ -17,21 +17,21 @@ If you can't find the answer you're looking for, feel free to head over to our [
 
 ---------------
 
-## Getting started with Teams
+## Getting started with Cloudflare Zero Trust
 
-For extra guidance on experiencing Teams for the first time.
+For extra guidance on experiencing Cloudflare Zero Trust for the first time.
 
 <Button type="primary" href="/faq/teams-getting-started-faq/">Getting started  ❯</Button>
 
 ## General
 
-For general questions on Cloudflare for Teams and how it works.
+For general questions on Cloudflare Zero Trust and how it works.
 
 <Button type="primary"  href="/faq/teams-general-faq/">General  ❯</Button>
 
 ## Identity
 
-For questions on identity providers and accessing applications behind Teams.
+For questions on identity providers and accessing applications behind Cloudflare Zero Trust.
 
 <Button type="primary" href="/faq/teams-authentication-faq/">Identity ❯</Button>
 
