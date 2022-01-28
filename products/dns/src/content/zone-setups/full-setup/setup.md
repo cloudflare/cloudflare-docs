@@ -1,12 +1,14 @@
 ---
-title: Full setup
+title: Setup
 order: 0
 pcx-content-type: tutorial
 ---
 
-# Use Cloudflare nameservers (Full setup)
+import FullSetupDefinition from "../../_partials/_full-setup-definition.md"
 
-If you want to use Cloudflare as your primary DNS provider and manage your DNS records on Cloudflare, your domain should use Cloudflare for your authoritative nameservers.
+# Change your authoritative nameservers (Full setup)
+
+<FullSetupDefinition/>
 
 ## Step 1 — Do you have an existing domain name?
 
