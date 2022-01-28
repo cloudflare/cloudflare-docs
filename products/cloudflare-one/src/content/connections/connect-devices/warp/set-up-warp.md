@@ -14,7 +14,7 @@ This is a high-level, step-by-step walkthrough on how to get started with WARP i
 
 The Cloudflare Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization. 
 
-As you complete the [Cloudflare Zero Trust onboarding](/setup), you will be asked to create a [team name](/glossary#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's CCloudflare Zero Trust instance.
+As you complete the [Cloudflare Zero Trust onboarding](/setup), you will be asked to create a [team name](/glossary#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
 ### 2. Set up a login method.
 
