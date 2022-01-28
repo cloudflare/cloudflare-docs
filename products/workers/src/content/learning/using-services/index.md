@@ -57,7 +57,7 @@ Workers Service bindings are in closed beta as of January 2022. Go to the [Worke
 
 ![service bindings settings](./media/service-bindings.png)
 
-A Workers Service binding allows you to send HTTP requests to another Worker without those HTTP requests going over the Internet. Because the request does not leave the Cloudflare edge network, latency is reduced and performance improves. You can invoke other Workers directly from your code because Service bindings allow more composability. In the example below, requests are validated by an authentication Service.
+A Workers Service binding allows you to send HTTP requests to another Worker without those HTTP requests going over the Internet. Because the request does not leave the Cloudflare edge network, latency is reduced and performance improves. You can invoke other Workers directly from your code because Service bindings allow more composability. In the example below, requests are validated by an authentication Workers Service.
 
 
 ```js
