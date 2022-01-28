@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 JumpCloud provides [Directory-as-a-Service®](https://jumpcloud.com/daas-product/) to securely connect user identities to systems, apps, files, and networks. Cloudflare Access integrates with JumpCloud using the SAML protocol. [This documentation from JumpCloud](https://support.jumpcloud.com/customer/en/portal/topics/924865-applications-saml-sso-/articles) can help you configure applications within your JumpCloud deployment.
 
-These steps focus on requirements specific to Teams.
+These steps focus on requirements specific to Cloudflare Zero Trust.
 
 ## Set up Jumpcloud SAML
 
@@ -78,7 +78,7 @@ To set up JumpCloud SAML as your identity provider:
 
     ![JumpCloud Application dialog](../../static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 

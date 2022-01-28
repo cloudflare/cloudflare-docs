@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Generic SAML 2.0
 
-Cloudflare for Teams integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on the Teams Dashboard, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
+Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on the Zero Trust Dashboard, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
 Most identity providers allow users to create an **application**. In this context, an application is a set of parameters that the identity provider will then pass on to Cloudflare to establish an integration. 
 
@@ -21,15 +21,15 @@ Depending on the identity provider you would like to integrate, the following st
 The typical setup requirements are:
 
 1. Create a new integration in the identity provider with the type set as **SAML**.
-1. Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare for Teams [team name](/glossary#team-name).
-1. Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare for Teams [team name](/glossary#team-name).
+1. Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
+1. Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
 1. Set the Name ID/Email format to `emailAddress`.
 1. [Optional] Set the signature policy to *Always Sign*.
 1. [Optional] If your identity provider supports metadata file configuration, use the endpoint:  `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
 
-## Add a SAML identity provider to the Teams Dashboard
+## Add a SAML identity provider to the Zero Trust Dashboard
 
-1. On the Teams Dashboard, navigate to **Settings** > **Authentication**.
+1. On the Zero Trust Dashboard, navigate to **Settings** > **Authentication**.
 1. In the Login methods card, click **Add new** and select *SAML*.
 1. Choose a descriptive name for your identity provider.
 1. Enter the Single Sign on URL, IdP Entity ID or Issuer URL, and Signing certificate.

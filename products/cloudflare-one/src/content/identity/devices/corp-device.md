@@ -9,16 +9,16 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | WARP with Gateway | All plans | 
 
 </div>
 </details>
 
-Cloudflare for Teams allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
+Cloudflare Zero Trust allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
-To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/policies/lists) functionality in the Teams Dashboard.
+To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/policies/lists) functionality in the Zero Trust Dashboard.
 
 <Aside header='Important'>
 
@@ -28,7 +28,7 @@ In order for your users to be able to authenticate, you must [deploy the WARP ag
 
 </Aside>
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
 
 1. Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
 

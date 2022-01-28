@@ -5,18 +5,18 @@ pcx-content-type: how-to
 
 # SSO integration
 
-Cloudflare for Teams allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
+Cloudflare Zero Trust allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
 
-Adding an identity provider as a login method requires configuration both on the [Teams dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
+Adding an identity provider as a login method requires configuration both on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
 <Aside>
 
 Cloudflare Access supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
 </Aside>
 
-## Set up IdPs on the Teams dashboard
+## Set up IdPs on the Zero Trust dashboard
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
 
 1. In the **Login methods** card, click **Add new**.
 
@@ -32,7 +32,7 @@ If you do not see your identity provider listed, but they support SAML or OAuth,
 
 Your IdP will now be listed in the **Login methods** card.
 
-## Test IdPs on the Teams dashboard
+## Test IdPs on the Zero Trust dashboard
 
 To test if an IdP is correctly configured, navigate to **Settings** > **Authentication**. Next, click **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
