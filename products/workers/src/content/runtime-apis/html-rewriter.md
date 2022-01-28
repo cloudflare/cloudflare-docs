@@ -42,7 +42,7 @@ Throughout the HTMLRewriter API, there are a few consistent types that many prop
 
 ## Handlers
 
-There are two handler types that can be used with `HTMLRewriter`: _element handlers_ and _document handlers_.
+There are two handler types that can be used with `HTMLRewriter`: element handlers and document handlers.
 
 ### Element Handlers
 
@@ -73,7 +73,7 @@ async function handleRequest(req) {
 
 ### Document Handlers
 
-A document handler represents the incoming HTML document. A number of functions can be defined on a document handler to query and manipulate a document’s `doctype`, `comments`, `text`, and `end`. Unlike an element handler, a document handler’s `doctype`, `comments`, `text`, and `end` functions are not scoped by a particular selector and called for all the content on the page including the content _outside_ of the top-level HTML tag:
+A document handler represents the incoming HTML document. A number of functions can be defined on a document handler to query and manipulate a document’s `doctype`, `comments`, `text`, and `end`. Unlike an element handler, a document handler’s `doctype`, `comments`, `text`, and `end` functions are not scoped by a particular selector. A document handler's functions are called for all the content on the page including the content outside of the top-level HTML tag:
 
 ```js
 class DocumentHandler {
@@ -97,7 +97,7 @@ class DocumentHandler {
 
 #### Async Handlers
 
-All functions defined on both Element and Document handlers can return either `void` or a `Promise<void>`. Making your handler function `async` allows you to access external resources such as an API via fetch, Workers KV, Durable Objects, or the cache.
+All functions defined on both element and document handlers can return either `void` or a `Promise<void>`. Making your handler function `async` allows you to access external resources such as an API via fetch, Workers KV, Durable Objects, or the cache.
 
 ```js
 class UserElementHandler {
@@ -143,7 +143,7 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 - <Code>getAttribute(name<ParamType>string</ParamType>)</Code> <Type>string | null</Type>
 
-  - Returns the value for a given attribute name on the element, or `null` if it isn’t found.
+  - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
 - <Code>hasAttribute(name<ParamType>string</ParamType>)</Code> <Type>boolean</Type>
 
@@ -151,7 +151,7 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 - <Code>setAttribute(name<ParamType>string</ParamType>, value<ParamType>string</ParamType>)</Code> <Type>Element</Type>
 
-  - Sets an attribute to a provided value, creating the attribute if it doesn’t exist.
+  - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
 - <Code>removeAttribute(name<ParamType>string</ParamType>)</Code> <Type>Element</Type>
 
@@ -187,15 +187,15 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 - <Code>removeAndKeepContent()</Code> <Type>Element</Type>
 
-  - Removes the start tag and end tag of the element, but keeps its inner content intact.
+  - Removes the start tag and end tag of the element but keeps its inner content intact.
 
 </Definitions>
 
 ### Text chunks
 
-Since we perform zero-copy streaming parsing, text chunks are not the same thing as text nodes in the lexical tree. A lexical tree text node can be represented by multiple chunks, as they arrive over the wire from the origin.
+Since Cloudflare performs zero-copy streaming parsing, text chunks are not the same thing as text nodes in the lexical tree. A lexical tree text node can be represented by multiple chunks, as they arrive over the wire from the origin.
 
-Consider the following markup: `<div>Hey. How are you?</div>`. It’s possible that the Workers script won’t receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with “Hey. How ”, then “are you?”. When the last chunk arrives, the text’s `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
+Consider the following markup: `<div>Hey. How are you?</div>`. It is possible that the Workers script will not receive the entire text node from the origin at once; instead, the `text` element handler will be invoked for each received part of the text node. For example, the handler might be invoked with `“Hey. How ”,` then `“are you?”`. When the last chunk arrives, the text’s `lastInTextNode` property will be set to `true`. Developers should make sure to concatenate these chunks together.
 
 #### Properties
 
@@ -339,65 +339,65 @@ This is what selectors are and what they are used for.
 <Definitions>
 
   - `*`
-    - any element
+    - Any element.
 
   - `E`
-    - any element of type E
+    - Any element of type E.
 
   - `E:nth-child(n)`
-    - an E element, the n-th child of its parent
+    - An E element, the n-th child of its parent.
 
   - `E:first-child`
-    - an E element, first child of its parent
+    - An E element, first child of its parent.
 
   - `E:nth-of-type(n)`
-    - an E element, the n-th sibling of its type
+    - An E element, the n-th sibling of its type.
 
   - `E:first-of-type`
-    - an E element, first sibling of its type
+    - An E element, first sibling of its type.
 
   - `E:not(s)`
-    - an E element that does not match either compound selectors
+    - An E element that does not match either compound selectors.
 
   - `E.warning`
-    - an E element belonging to the class warning
+    - An E element belonging to the class warning.
 
   - `E#myid`
-    - an E element with ID equal to myid.
+    - An E element with ID equal to myid.
 
   - `E[foo]`
-    - an E element with a foo attribute
+    - An E element with a foo attribute.
 
   - `E[foo="bar"]`
-    - an E element whose foo attribute value is exactly equal to bar
+    - An E element whose foo attribute value is exactly equal to bar.
 
   - `E[foo="bar" i]`
-    - an E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar
+    - An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
 
   - `E[foo="bar" s]`
-    - an E element whose foo attribute value is exactly and case-sensitively equal to bar
+    - An E element whose foo attribute value is exactly and case-sensitively equal to bar.
 
   - `E[foo~="bar"]`
-    - an E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar
+    - An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
 
   - `E[foo^="bar"]`
-    -  an E element whose foo attribute value begins exactly with the string bar
+    -  An E element whose foo attribute value begins exactly with the string bar.
 
   - `E[foo$="bar"]`
-    - an E element whose foo attribute value ends exactly with the string bar
+    - An E element whose foo attribute value ends exactly with the string bar.
 
   - `E[foo*="bar"]`
-    - an E element whose foo attribute value contains the substring bar
+    - An E element whose foo attribute value contains the substring bar.
 
   - <Code>E[foo&#124;="en"]</Code>
 
-    - an E element whose foo attribute value is a hyphen-separated list of values beginning with en
+    - An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
 
   - `E F`
-    - an F element descendant of an E element
+    - An F element descendant of an E element.
 
   - `E > F`
-    - an F element child of an E element
+    - An F element child of an E element.
 
 </Definitions>
 
@@ -430,7 +430,7 @@ async function handle(request) {
 
 --------------------------------
 
-## See also
+## Related resources
 
 - [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
 - [Tutorial: Localize a Website](/tutorials/localize-a-website)
