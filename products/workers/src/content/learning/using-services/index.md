@@ -5,9 +5,15 @@ pcx-content-type: concept
 
 # Workers Services
 
-Services are the new building block for deploying applications on Cloudflare Workers. Workers Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects, or even other services, as well as environment variables and secrets. Workers Services can have multiple environments and can set up pipelines for promoting a Service from one environment to another.
+Workers Services are the new building blocks for deploying applications on Cloudflare Workers. Workers Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects, or even other services, as well as environment variables and secrets. Workers Services can have multiple environments and can set up pipelines for promoting a Service from one environment to another.
 
-Unlike a script, a Workers Service is composable, which allows Workers services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Workers Services also support multiple environments, allowing you to test changes in a preview environment, then promote those changes to production when you are ready.
+<Aside type="note" header="Workers versus Workers Services?">
+
+Workers Services are synonymous with Workers. In the legacy Workers legacy model, Workers were created by writing scripts and Workers scripts could not communicate with each other. In the Workers Services model, Workers Services are made up of environments that are created by Worker scripts. The introduction of Workers Services adds Worker-to-Worker communication functionality.
+
+</Aside>
+
+Unlike a traditional Workers script, a Workers Service is composable, which allows Workers services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, or traffic gateways. Workers Services also support multiple environments, allowing you to test changes in a preview environment, then promote those changes to production when you are ready.
 
 <Aside type="note">
 
