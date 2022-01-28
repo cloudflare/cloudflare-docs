@@ -18,13 +18,27 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 ## Auto-inject script
 
-This option automatically injects the script needed for Zaraz to work in your website. It is turned on by default.
+This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default.
 
-If you turn this option off, you will have to proxy a subdomain for your website through Cloudflare, and manually add a JavaScript snippet to your HTML for Zaraz to work:
+If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually.
 
-  1. Create a new subdomain like `newsub.example.com` and proxy it through Cloudflare. Refer to [Enabling the Orange Cloud](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) for more information.
-  1. Add the following script to your website:
+To load Zaraz manually, you need to include the Zaraz script in your HTML, immediately before the `</head>` tag closes. The path to your script would be `/cdn-cgi/zaraz/i.js` on your domain. Your script tag should look like this:
 
-  ```html
-  <script src="https://<YOUR_SUBDOMAIN>/cdn-cgi/zaraz/i.js"></script>
-  ```
+```html
+<script src="/cdn-cgi/zaraz/i.js"></script>
+```
+
+With this script, your page HTML should be similar to the following:
+
+```html
+
+<html>
+<head>
+…
+<script src="/cdn-cgi/zaraz/i.js"></script>
+</head>
+<body>
+…
+</body>
+</html>
+```
