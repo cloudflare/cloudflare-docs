@@ -199,7 +199,7 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 You can set the environment variable `HUGO_VERSION` under Settings to use a specific version of Hugo.
 
-For example, `HUGO_VERSION`: `0.81.0`
+For example, `HUGO_VERSION`: `0.92.1`
 
 ## Learn more
 
