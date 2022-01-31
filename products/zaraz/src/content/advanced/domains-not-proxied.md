@@ -1,5 +1,5 @@
 ---
-order:
+order: 7
 pcx-content-type: reference
 title: Domains not proxied by Cloudflare
 ---
