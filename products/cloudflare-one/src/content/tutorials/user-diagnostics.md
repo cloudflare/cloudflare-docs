@@ -23,7 +23,7 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 ## Configure the App Launcher
 
-1. On the Teams Dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust Dashboard, navigate to **Settings > Authentication**.
 
 1. Under **App Launcher**, click the **Manage**.
 

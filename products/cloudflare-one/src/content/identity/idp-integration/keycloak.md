@@ -41,7 +41,7 @@ To set up Keycloak (SAML) as your identity provider:
 
    Next, you will need to integrate with Cloudflare Access.
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 

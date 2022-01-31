@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # SAML | Citrix ADC
 
-Cloudflare for Teams can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Teams.
+Cloudflare Zero Trust can integrate with Citrix ADC (formerly Citrix NetScaler ADC) as a SAML IdP. Documentation from Citrix shows you [how to configure Citrix ADC as a SAML IdP](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/saml-authentication/citrix-adc-saml-idp.html). These steps are specific to Cloudflare Zero Trust.
 
 ## Set up Citrix ADC (SAML)
 
@@ -73,7 +73,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     ```
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 
 1. Configure the fields as follows:

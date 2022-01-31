@@ -10,9 +10,9 @@ title: OS Version
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| Windows, Mac | WARP with Gateway | All plans | 
+| Windows, Mac | WARP with Gateway | All plans |
 
 </div>
 </details>
@@ -21,7 +21,7 @@ The OS Version device posture attribute checks whether the version of a deviceâ€
 
 To enable the OS version check:
 
-1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 1. Click **+Add**.
 1. Select **OS version**.
 1. Enter a descriptive name for the check.

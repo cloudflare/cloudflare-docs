@@ -16,7 +16,7 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 ## 2. **Generate a short-lived certificate public key**.
 
-1. On the Teams dashboard, navigate to **Access > Service Auth**.
+1. On the Zero Trust dashboard, navigate to **Access > Service Auth**.
 
 2. In the drop-down, choose the application that represents the resource you secured in Step 1.
 

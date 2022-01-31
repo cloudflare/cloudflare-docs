@@ -10,7 +10,7 @@ title: Firewall
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --- | ----------------- | --------- | ---- |
 | Beta | macOS, Windows | WARP with Gateway | All plans | 
 
@@ -21,7 +21,7 @@ The Firewall device posture attribute ensures that a firewall is running on a de
 
 To enable the Firewall check:
 
-1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 1. Click **+Add**.
 1. Select **Firewall**.
 1. Enter a descriptive name for the check.

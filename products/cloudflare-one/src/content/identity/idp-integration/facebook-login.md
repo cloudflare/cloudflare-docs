@@ -31,7 +31,7 @@ Use these steps to set up Facebook as your identity provider.
 
     ![Facebook Settings](../../static/documentation/identity/facebook/fb6.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 1. Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
 1. Click **Save**.
@@ -43,7 +43,7 @@ Use these steps to set up Facebook as your identity provider.
     ```
     
 1. Click **Save Changes**.
-1. On the Teams dashboard, click **Save**.
+1. On the Zero Trust dashboard, click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Facebook.
 

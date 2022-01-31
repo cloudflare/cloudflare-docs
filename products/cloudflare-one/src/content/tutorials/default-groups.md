@@ -22,13 +22,13 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 
 ## Create a default group
 
-Navigate to the `Groups` page in the `My Teams` section of the Cloudflare for Teams dashboard.
+Navigate to the `Groups` page in the `My Teams` section of the Zero Trust dashboard.
 
 Groups contain criteria that you can reuse in your [Zero Trust policies](/policies/zero-trust). Additionally, groups allow you to nest certain operators within rules in the Access policy.
 
 For example, `Include` rules work like `OR` operators - anything in the list will meet the criteria. However, if you include values in the Require field, these work like `AND` operators.
 
-You can set a group to be the default for your Cloudflare for Teams account. Any new policy that you create will, by default, include that group as its basic rule. To make an existing group the default, click **Edit**. To create a new group as the default, click **Add a Group**.
+You can set a group to be the default for your Zero Trust account. Any new policy that you create will, by default, include that group as its basic rule. To make an existing group the default, click **Edit**. To create a new group as the default, click **Add a Group**.
 
 ![Add Group](../static/zero-trust-security/default-groups/add-group.png)
 
@@ -40,7 +40,7 @@ The page will tag the default group as `Default`. You can quickly see the rule c
 
 ## Use a default group
 
-You can now use this group in any new or existing application. To add to a new application, navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+You can now use this group in any new or existing application. To add to a new application, navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
 1. Click **Add an application**.
 
