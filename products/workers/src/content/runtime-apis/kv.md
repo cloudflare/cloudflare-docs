@@ -203,7 +203,7 @@ The `list` method has this signature (in TypeScript):
 All arguments are optional:
 
 * `prefix` is a string that represents a prefix you can use to filter all keys.
-* `limit` is the maximum number of keys returned. The default is 1000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
+* `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
 * `cursor` is a string used for paginating responses.
 
 The `.list` method returns a promise which resolves with an object that looks like this:
