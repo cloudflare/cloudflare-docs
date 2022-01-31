@@ -5,7 +5,7 @@ type: overview
 pcx-content-type: landing-page
 ---
 
-# Zero Trust documentation
+# Cloudflare Zero Trust documentation
 
 <ContentColumn>
 
