@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Browser Isolation is enabled through Secure Web Gateway HTTP policies. By default, no traffic is isolated until an Isolation policy has been added within HTTP policies. To start isolating your traffic, you need to:
 
-1. Create a [Cloudflare for Teams account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Teams Standard or your Teams Enterprise plan.
+1. Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
 
 1. Download the latest version of the [WARP client](/connections/connect-devices/warp/download-warp).
 

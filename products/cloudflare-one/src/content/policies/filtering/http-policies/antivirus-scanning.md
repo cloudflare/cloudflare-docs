@@ -15,7 +15,7 @@ AV scanning of files requires organizations to enable Proxy mode under **Setting
 
 To enable AV scanning:
 
-1. On the [Teams Dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
+1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
 
 1. In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 

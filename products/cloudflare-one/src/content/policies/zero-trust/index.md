@@ -18,7 +18,7 @@ The elements that make up a Zero Trust policy are:
 
 Actions let you define which *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
-The action is the first element you'll be asked to configure when you create a Zero Trust policy in the Teams Dash. You can set only one action per policy.
+The action is the first element you'll be asked to configure when you create an Access policy in the Zero Trust Dash. You can set only one action per policy.
 
 These are the action types you can choose from:
 
