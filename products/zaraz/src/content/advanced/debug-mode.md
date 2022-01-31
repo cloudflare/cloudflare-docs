@@ -22,4 +22,9 @@ Zaraz offers a debug mode to troubleshoot the events and triggers systems. To ac
 
 Zaraz’s debug mode is now enabled. However, due to the temporary nature of the Console pane in web browsers, you need to activate the **Preserve Log** option for the Console pane. If you do not activate this option, you will lose the previous debug information whenever the Console refreshes.
 
-To activate the **Preserve Log** option in Google Chrome, click the **settings** cog > **Preserve logs**.
+To activate the **Preserve Log** option in Google Chrome:
+
+1. With the Developer tools opened, make sure you are in the **Console** pane.  
+1. Click the **Console settings** cog > **Preserve logs**.
+
+![Console pane](../static/console-settings.png)
