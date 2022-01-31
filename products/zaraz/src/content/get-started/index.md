@@ -9,7 +9,7 @@ Before being able to use Zaraz, your website has to be proxied through Cloudflar
 
 If your website is already proxied through Cloudflare, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website. Then, add the third-party tool or service you need to Zaraz.
 
-## Triggers, events, tools?
+## Triggers, events, or tools?
 
 Zaraz relies on events and triggers to automatically load and activate a tool of your choice in your website. The way you configure Zaraz depends on the tool you wish to use. For example, if the tool just needs a `pageview` event as a trigger to be activated, refer to [Add a third-party tool](/get-started/add-tool) to get started. If you need a different kind of trigger or set of triggers, refer to [Create a trigger](/get-started/create-trigger).
 
