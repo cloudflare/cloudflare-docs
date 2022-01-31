@@ -16,6 +16,8 @@ On this table, you have information about which protocols are available per plan
 | SSH        | | &#10004; | &#10004; | &#10004; | 
 | RDP        | | | &#10004; | &#10004; | &#10004; |
 
+please add that RDP is also available thorugh tunnel ! : https://developers.cloudflare.com/cloudflare-one/tutorials/rdp
+
 
 *Minecraft Java Edition is supported but Minecraft Bedrock Edition is not supported.
 
