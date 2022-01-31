@@ -5,7 +5,7 @@ pcx-content-type: navigation
 
 # Get started
 
-Before being able to use Zaraz, your website has to be proxied through Cloudflare. Refer to [Creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/articles/201720164) for more information. If you do not want to proxy your website thhrough Cloudflare, refer to [Loading Zaraz manually](/advanced/loading-zaraz-manually). 
+Before being able to use Zaraz, your website has to be proxied through Cloudflare. Refer to [Creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/articles/201720164) for more information. If you do not want to proxy your website through Cloudflare, refer to [Use Zaraz on non Cloudflare domains](/advanced/zaraz-non-cloudflare-domains). 
 
 If your website is already proxied through Cloudflare, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and website. Then, add the third-party tool or service you need to Zaraz.
 
