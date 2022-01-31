@@ -19,7 +19,7 @@ On the client side, your end users need to be able to easily connect to Cloudfla
 
 ![Network diagram](../../../static/documentation/connections/private-ips-diagram.png)
 
-Follow the steps below to define your internal DNS resolver with Cloudflare for Teams and to resolve requests to your private network using Cloudflare Tunnel.
+Follow the steps below to define your internal DNS resolver with Cloudflare Zero Trust and to resolve requests to your private network using Cloudflare Tunnel.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ Follow the steps below to define your internal DNS resolver with Cloudflare for 
 
 ## Enable UDP support
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
 
     ![Network Settings](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/network-settings.png)
 
@@ -87,7 +87,7 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-* Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Cloudflare for Teams dashboard.
+* Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
 
 * Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 

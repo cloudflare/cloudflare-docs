@@ -39,6 +39,6 @@ You may still be required to run WARP alongside a legacy VPN product, and we are
 
 <Aside type='note'>
 
- Every time the Split Tunnel configuration is changed in the Teams Dashboard, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN and you may need to restart it manually.
+ Every time the Split Tunnel configuration is changed in the Zero Trust Dashboard, the WARP client re-builds all routes to ensure it properly reflects the new configuration. This may cause connection issues with your VPN and you may need to restart it manually.
  
 </Aside>

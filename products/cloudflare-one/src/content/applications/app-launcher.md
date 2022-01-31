@@ -23,7 +23,7 @@ The App Launcher policy defines which users can access the portal. It does not i
 
 To enable the App Launcher:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
 
 1. Under the **App Launcher** card, click **Manage**.
 

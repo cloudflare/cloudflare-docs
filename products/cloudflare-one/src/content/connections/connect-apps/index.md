@@ -15,7 +15,7 @@ Cloudflared establishes outbound connections (tunnels) between your resources an
 
 ## Working with Cloudflare Tunnel
 
-Most interactions with Cloudflare Tunnel require the use of the command line — for example, creating and configuring tunnels, and running a tunnel or routing traffic through it. To get started, visit the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. When visiting the page for the first time, a step-by-step tutorial will help you create your first tunnel.
+Most interactions with Cloudflare Tunnel require the use of the command line — for example, creating and configuring tunnels, and running a tunnel or routing traffic through it. To get started, visit the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. When visiting the page for the first time, a step-by-step tutorial will help you create your first tunnel.
 
 Once your first tunnel is connected to Cloudflare, use this page to check your [tunnel status](#tunnel-status) and view a comprehensive list of active or inactive tunnels. You’ll also be able to filter tunnels by name, status, uptime, or creation date, and use the search bar to retrieve tunnels by name. 
 

@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # User logs
 
-Teams allows you to consult a comprehensive list of users who have authenticated to Teams. For each user that logged in, you can see their name, their email address, and whether they’re actively utilizing a seat in both Access and Gateway. 
+Cloudflare Zero Trust allows you to consult a comprehensive list of users who have authenticated to Cloudflare Zero Trust. For each user that logged in, you can see their name, their email address, and whether they’re actively utilizing a seat in both Access and Gateway. 
 
 ![User list](../static/documentation/logs/user-list.png)
 
@@ -19,7 +19,7 @@ Clicking the **Revoke** button will terminate all currently active sessions for 
 Clicking the View button for any user will show you details for that user, such as:
 * Their user details
  ![User details](../static/documentation/logs/user-summary.png)
-* Devices they have connected to Teams
+* Devices they have connected to Cloudflare Zero Trust
 * Their recent logins
 
 Click on **View all activity** to see a full list of the user’s login events.

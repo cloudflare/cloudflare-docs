@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 <Aside type="Warning" header="Warning">
 
-Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/connections/connect-devices/warp) to connect your devices to Teams.
+Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/connections/connect-devices/warp) to connect your devices to Cloudflare Zero Trust.
 
 </Aside>
 
@@ -49,9 +49,9 @@ Changing the source IPv4 address of a location is an Enterprise feature. See our
 
 </Aside>
 
-Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. When creating a location, the Teams dashboard automatically identifies the public source IP address.
+Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. When creating a location, the Zero Trust dashboard automatically identifies the public source IP address.
 
-Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Teams dashboard. 
+Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Zero Trust dashboard. 
 
 ![Editable IP address](../../../static/documentation/policies/editable-ip-address.png)
 
@@ -93,7 +93,7 @@ Cloudflare Gateway will identify your location based on the DNS over HTTPS hostn
 
 #### DoH subdomain
 
-Each location in Teams has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings. 
+Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings. 
 
 In the example below, the DoH subdomain is: `9y65g5srsm`.
 
