@@ -11,7 +11,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 ## Creating rules with applications and app types
 
-1. On the [Teams dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
+1. On the [Zero Trust dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
 
 1. Navigate to the **HTTP tab**.
 
