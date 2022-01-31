@@ -60,7 +60,7 @@ Follow the instructions below to finish configuring the block page:
 
 The block page is automatically enabled for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed. As you configure a policy with a Block action, you can specify a policy-specific block message.
 
- ![Enable HTTP block page](../../static/documentation/policies/http-block-page.png)
+ ![Enable HTTP block page](../../static/documentation/policies/http-block.png)
 
 ## Enable the block page for DNS policies
 
@@ -72,7 +72,7 @@ For DNS policies:
 1. Scroll down to find the **Configure policy settings** step.
 1. Toggle the **Display block page** switch.
 
- ![Enable block page](../../static/documentation/policies/display-block-page.png)
+ ![Enable block page](../../static/documentation/policies/block-page-toggle.png)
 
 1. Click **Save**.
 

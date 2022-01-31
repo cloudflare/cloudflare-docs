@@ -322,5 +322,3 @@ To do so, add the desired attributes in the SAML attributes section of the ident
 ## Support Additional OIDC Claims with your JWT
 
 Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under Optional Configurations.
-
-![jwt and oidc](../../static/documentation/identity/users/jwt-oidc.png)
