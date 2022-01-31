@@ -115,8 +115,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
 <TableWrap>
 
-|Name | Description |
-|-----|-------------|
+| Name | Description |
+|------|-------------|
 | Access: Apps and Policies Read | Grants read access to Cloudflare Access zone resources. |
 | Access: Apps and Policies Revoke | Grants ability to revoke all tokens to Cloudflare Access zone resources. |
 | Access: Apps and Policies Write | Grants write access to Cloudflare Access zone resources. |
