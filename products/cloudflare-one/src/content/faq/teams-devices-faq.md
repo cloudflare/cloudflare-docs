@@ -68,4 +68,4 @@ The most common places we see interference with WARP from these products are:
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 
-To eliminate issues related to a particular Cloudflare for Teams configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
+To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
