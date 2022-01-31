@@ -27,7 +27,7 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 4. Save the key or keep it somewhere convenient for configuring your server.
     You can return to copy this public key any time in the Service Auth dashboard.
 
-    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-detail.png)
+    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-key.png)
 
 ## 3. **Ensure Unix usernames match user SSO identities**
 
