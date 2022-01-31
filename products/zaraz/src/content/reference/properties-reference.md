@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 7
 pcx-content-type: reference
 type: overview
 title: Properties reference
@@ -61,7 +61,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `{{ client.__zarazTrack }}`| `string` | Returns the name of the event sent using the Events API. Refer to [Events API](/events-api) for more information. |
-| `{{ client.PARAMETER }}`| `string` | Returns a specific parameter value sent using the Events API. Replace `PARAMETER` with the name of your parameter. Refer to [Events API](/events-api) for more information. |
+| `{{ client.__zarazTrack }}`| `string` | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/web-api/zaraz-track) for more information. |
+| `{{ client.PARAMETER }}`| `string` | Returns a specific parameter value sent using the Set method of the Web API. Replace `PARAMETER` with the name of your parameter. Refer to [Zaraz Set](/web-api/zaraz-set) for more information. |
 
 </TableWrap>

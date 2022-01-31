@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 4
 pcx-content-type: how-to
 title: Block Zaraz
 ---
