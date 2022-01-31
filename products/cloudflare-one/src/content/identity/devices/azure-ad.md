@@ -9,7 +9,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | Windows | WARP with Gateway | All plans | 
 
@@ -39,7 +39,7 @@ Apply that policy to the integration with Cloudflare Access.
 
 ## Cloudflare Access Configuration
 
-In the Cloudflare for Teams dashboard, you can configure which applications require connections from a managed device and which do not.
+In the Cloudflare for Zero Trust dashboard, you can configure which applications require connections from a managed device and which do not.
 1. Navigate to an application that requires managed device connections.
 
 2. Open the **Authentication** tab.

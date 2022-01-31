@@ -31,11 +31,11 @@ To retrieve those values:
 1. Retrieve the correct Region-Specific Token URL from the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
 1. Obtain your REST API URL by going to the WS1 dashboard and navigating to **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
 
-## Configure the provider on the Teams dashboard
+## Configure the provider on the Zero Trust dashboard
 
 1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
 1. Enter the Client ID and Client Secret you noted down above.
-1. Select a **polling frequency** for how often Cloudflare for Teams should query Workspace ONE for information.
+1. Select a **polling frequency** for how often Cloudflare Zero Trust should query Workspace ONE for information.
 1. Enter the Region-specific token URL and REST API URL you noted down above.
 1. Click **Save**.
 1. Click **Test Provider** to ensure the values have been entered correctly.

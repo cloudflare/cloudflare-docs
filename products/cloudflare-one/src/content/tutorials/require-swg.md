@@ -11,7 +11,7 @@ You can build rules in Cloudflare Access that require users to connect through y
 
 **🗺️ This tutorial covers how to:**
 
-* Add Cloudflare Gateway to your Cloudflare for Teams account
+* Add Cloudflare Gateway to your Zero Trust account
 * Enroll devices in Cloudflare Gateway
 * View enrolled devices
 * Build a rule in Access to require Cloudflare Gateway
@@ -29,9 +29,9 @@ Cloudflare Gateway operates in two modes:
 * DNS filtering
 * Proxy (HTTP filtering)
 
-The proxy mode in Gateway requires a Gateway Standard or Cloudflare for Teams Standard [plan](https://www.cloudflare.com/teams-pricing/).
+The proxy mode in Gateway requires a Gateway Standard or Cloudflare Zero Trust Standard [plan](https://www.cloudflare.com/teams-pricing/).
 
-To filter all Internet-bound traffic in the proxy mode, devices must install and enroll the Cloudflare for Teams WARP client. The WARP client will send all Internet traffic to a Cloudflare data center near the user where it can be filtered and logged before reaching the rest of the Internet.
+To filter all Internet-bound traffic in the proxy mode, devices must install and enroll the Zero Trust WARP client. The WARP client will send all Internet traffic to a Cloudflare data center near the user where it can be filtered and logged before reaching the rest of the Internet.
 
 Building a rule in Access to enforce Gateway connections requires the use of the WARP client and its configuration to proxy Internet traffic to Cloudflare.
 
@@ -61,7 +61,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 * Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
+* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -83,7 +83,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Teams Dashboard under **Settings > General**.
+1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

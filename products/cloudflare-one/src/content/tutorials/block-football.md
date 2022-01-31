@@ -29,7 +29,7 @@ In this mode, the Cloudflare WARP client runs on user devices and proxies all In
 
 ## Build a hostname policy
 
-To begin, navigate to the `Gateway` section of the Cloudflare for Teams dashboard and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/policies/filtering/http-policies#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
+To begin, navigate to the `Gateway` section of the Zero Trust dashboard and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/policies/filtering/http-policies#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
 
 Click **Create a policy** to add a new HTTP policy. Give the policy a name and description.
 
@@ -84,7 +84,7 @@ You can click the arrow in the policy list to expand a policy and quickly view i
 
 The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Cloudflare for Teams dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
+Navigate to the `Settings` section of the Zero Trust dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
 
 ## Determine which devices can enroll
 
@@ -112,7 +112,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 * Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
+* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -134,7 +134,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Teams Dashboard under **Settings > General**.
+1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 
@@ -146,6 +146,6 @@ The user will be prompted to login with the identity provider configured in Clou
 
 When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
 
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Cloudflare for Teams dashboard. Filter for `Block` as the decision type.
+You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Zero Trust dashboard. Filter for `Block` as the decision type.
 
 ![Block Log](../static/secure-web-gateway/block-football/block-log.png)

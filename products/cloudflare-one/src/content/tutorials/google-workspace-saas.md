@@ -19,15 +19,15 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
 1. Select **Setup SSO with a third party identity provider**.
 
-## Create an application on the Teams Dashboard
+## Create an application on the Zero Trust Dashboard
 
-1. On the Teams Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
+1. On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 1. Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
     * Entity ID: `google.com`
     * Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
     * Name ID: `Email`
 
-    ![Add fields to Teams application](../static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
+    ![Add fields to the Zero Trust application](../static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
 
 1. Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 

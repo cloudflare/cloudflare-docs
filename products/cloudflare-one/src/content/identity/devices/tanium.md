@@ -9,7 +9,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | Any OS supported by Tanium | WARP with Gateway | All plans | 
 
@@ -24,7 +24,7 @@ Tanium's Endpoint Identity feature can share information about a device that is 
 
 First, configure your Tanium deployment using the [step-by-step documentation](https://docs.tanium.com/endpoint_identity/endpoint_identity/userguide.html) provided.
 
-Once complete, return to the Cloudflare for Teams dashboard to integrate with your Cloudflare Access account.
+Once complete, return to the Zero Trust dashboard to integrate with your Cloudflare Access account.
 
 ## Cloudflare Access Configuration
 
@@ -47,7 +47,7 @@ The integration does not currently support Safari.
 
 Integrate your Tanium deployment with Cloudflare Access using public keys generated in the Tanium step-by-step documentation linked above.
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices**.
 
 2. Select the **Device posture** tab.
 
@@ -79,7 +79,7 @@ With Tanium integrated, you can build policies that enforce decisions using sign
 |--|--|--|
 | Managed | Boolean | Validates that the device is managed in your organization's Tanium account. |
 
-1. On the Teams dashboard, navigate to **Access > Applications**.
+1. On the Zero Trust dashboard, navigate to **Access > Applications**.
 
 2. [Create a new application](/applications/) or edit an existing application.
 

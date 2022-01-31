@@ -50,7 +50,7 @@ The authentication process involves Cloudflare Access issuing a signed JSON Web 
 
 To immediately terminate all active sessions for a specific application:
 
-1. On the Teams dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
+1. On the Zero Trust dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
 
 1. Click **Edit** for that application.
 
@@ -68,7 +68,7 @@ If you want to permanently revoke a user's access:
 
 1. Disable their account in your IdP so that they cannot authenticate, then revoke their Access user session.
 
-2. On the Teams dashboard, navigate to **My Team** > **Users**.
+2. On the Zero Trust dashboard, navigate to **My Team** > **Users**.
 
  Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
@@ -94,7 +94,7 @@ All three settings can be enabled in an Application’s settings menu.
 
 To reach the settings menu:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Locate the application for which you would like to enable these settings.
 

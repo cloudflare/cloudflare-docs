@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # GitHub
 
-Cloudflare for Teams allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
+Cloudflare Zero Trust allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
 
-To configure GitHub access in both GitHub and Cloudflare for Teams:
+To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1. Log into GitHub.
 
@@ -39,7 +39,7 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 
 1. Choose **GitHub** on the next page. 
