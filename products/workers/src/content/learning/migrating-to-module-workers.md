@@ -1,5 +1,5 @@
 ---
-order: 15
+order:
 pcx-content-type: concept
 ---
 
