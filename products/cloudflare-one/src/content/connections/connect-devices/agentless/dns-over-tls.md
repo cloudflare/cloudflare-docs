@@ -17,13 +17,7 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 
 1. Visit your [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
 1. Navigate to the **Locations** page to visualize your location.
-
- ![Go to teams dash](../../../static/documentation/connections/go-to-teams-dashboard.png)
-
 1. If you have more than one location set up, you will see a list of all your locations.
-
- ![Go to locations page](../../../static/documentation/connections/go-to-locations-page.png)
-
 3. Expand the location card for the location whose DoT hostname you'd like to retrieve.
 
  ![Expand location card](../../../static/documentation/connections/expand-locations-card.png)

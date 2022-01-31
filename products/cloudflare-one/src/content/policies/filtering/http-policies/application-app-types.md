@@ -23,9 +23,9 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 1. In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
-  ![Applications](../../../static/documentation/policies/http-applications-operator-value.png)
+  ![Applications](../../../static/documentation/policies/http-applications-operator.png)
 
-1. Next, select an **[Action](#supported-actions-for-applications)** for your rule.
+1. Next, select an [**Action**](#supported-actions-for-applications) for your rule.
 
 1. Click **Create rule** to finalize your changes.
 

@@ -20,10 +20,8 @@ Split Tunnels mode can be configured to exclude or include IP addresses or domai
  
 You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
 
-Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Please make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switchin modes. 
+Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Please make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes. 
  
-![Settings End](../../../../static/secure-web-gateway/split-tunnel/settings-end.png)
-
 To set up Split Tunnels:
 
 1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
