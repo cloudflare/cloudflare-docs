@@ -37,9 +37,20 @@ As of January 2022, the dashboard is the only way to interact with Workers Servi
 
 Wrangler supports an older version of environments. With Wrangler environments, you create custom contexts for your code to run in by adding keys to your `wrangler.toml` file. Wrangler will then generate a separate Workers Service for each Wrangler environment. If you make a staging and production environment, for example, Wrangler will generate `my-worker-staging` and `my-worker-prod`. 
 
-Workers Service environments take a cleaner approach. You can create and edit environments directly in the dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) > select your **Account** > **Workers** > select your **Workers Service** > **Quick edit**.
+Workers Service environments take a cleaner approach. You can create and edit environments directly in the dashboard:
 
-Unlike Wrangler environments, Workers Service environments do not create extra Workers Services. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the dashboard via the quick editor, by going to **Account Home** > **Workers** > **choose your Worker** > **Quick edit**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select your **Account**.
+3. Go to **Workers**. 
+4. Select your **Workers Service**.
+5. Select  **Quick edit**.
+
+Unlike Wrangler environments, Workers Service environments do not create extra Workers Services. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the dashboard via the quick editor:
+
+1.  Go to **Account Home**.
+2. Go to **Workers**. 
+3. hoose your **Worker**.
+4. Select **Quick edit**.
 
 ![Quick edit](./media/quick-edit.png)
 
