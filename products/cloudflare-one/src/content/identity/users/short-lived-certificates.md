@@ -18,7 +18,7 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 1. On the Zero Trust dashboard, navigate to **Access > Service Auth**.
 
-2. In the drop-down, choose the application that represents the resource you secured in Step 1.
+2. In the dropdown, choose the application that represents the resource you secured in Step 1.
 
     ![New Cert](../../static/documentation/applications/non-http/slc-dropdown.png)
 

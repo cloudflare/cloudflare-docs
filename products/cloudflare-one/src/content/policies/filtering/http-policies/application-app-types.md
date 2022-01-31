@@ -25,7 +25,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
   ![Applications](../../../static/documentation/policies/http-applications-operator.png)
 
-1. Next, select an **[Action](#supported-actions-for-applications)** for your rule.
+1. Next, select an [**Action**](#supported-actions-for-applications) for your rule.
 
 1. Click **Create rule** to finalize your changes.
 
