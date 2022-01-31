@@ -19,8 +19,6 @@ Most interactions with Cloudflare Tunnel require the use of the command line —
 
 Once your first tunnel is connected to Cloudflare, use this page to check your [tunnel status](#tunnel-status) and view a comprehensive list of active or inactive tunnels. You’ll also be able to filter tunnels by name, status, uptime, or creation date, and use the search bar to retrieve tunnels by name. 
 
-![Tunnel UI](../../static/documentation/connections/connect-apps/tunnel-blog.png)
-
 ### Tunnel status
 
 A tunnel's status depends on the health of its connections:

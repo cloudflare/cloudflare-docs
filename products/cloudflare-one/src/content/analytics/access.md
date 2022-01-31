@@ -11,13 +11,13 @@ On the Shadow IT Discovery page, you can gather information on the [application 
  
 Shadow IT Discovery can be found under **Analytics > Access**.
 
-![Shadow IT Discovery](../static/documentation/shadow-it-discovery.png)
+![Shadow IT Discovery](../static/documentation/shadow-it.png)
 
 ## Shadow IT view
  
 To see an in-depth breakdown of SaaS applications your users have visited, click on **Review all** in the **Shadow IT Discovery** chart. From this page, you can search for a specific application, or you can click **View** to see a full profile for that application.
 
-![Shadow IT view](../static/documentation/shadow-it-view.png)
+![Shadow IT view](../static/documentation/shadow-it-review.png)
 
 * **Application**. This field shows each SaaS application's name and logo.
 * **Application type**. This field shows the [application type](/policies/filtering/http-policies/application-app-types#app-types) Cloudflare Zero Trust has assigned to each application.
@@ -46,7 +46,7 @@ You may need to update an application's status based on your organization's pref
 
 1. From the **Application profile** view, click the status button under the application name.
 
-    ![Shadow IT application status](../static/documentation/shadow-it-app-profile.png)
+    ![Shadow IT application status](../static/documentation/shadow-it-profile.png)
 
 1. Select the status you want to assign to your application.
 

@@ -58,17 +58,11 @@ To do that:
 
 1. Click **Edit**.
 
-   ![App List](../../static/zero-trust-security/corp-device/app-list.png)
-
 1. Select the **Rules** tab and edit an existing rule. To add a new rule, click **Add a Rule**.
 
-   ![Edit App](../../static/zero-trust-security/corp-device/edit-app.png)
-
-1. Add a `Require` rule and choose `Device Posture - Serial Number List` from the drop-down menu.
+1. Add a **Require** rule and choose *Device Posture - Serial Number List* from the drop-down menu.
 
 1. Choose the list of devices to require and click **Save rule**.
-
-  ![Add Require](../../static/zero-trust-security/corp-device/add-require.png)
 
 Once saved, any device attempting to reach the application will need to connect from a device that uses Cloudflare WARP and presents a serial number in the list created.
 

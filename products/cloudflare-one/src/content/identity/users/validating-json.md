@@ -319,8 +319,6 @@ The response will be structured as JSON:
 Alternatively, organizations using SAML providers can specify attributes to be included directly inside of the Application Token sent to the origin.
 To do so, add the desired attributes in the SAML attributes section of the identity provider configuration. Cloudflare Access will attempt to add as many attributes as possible before capping the list to avoid size issues. Access attempts to add attributes in the order they are listed.
 
-## Support Additional OIDC Claims with your JWT
+## Support additional OIDC claims with your JWT
 
-Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under Optional Configurations.
-
-![jwt and oidc](../../static/documentation/identity/users/jwt-oidc.png)
+Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under **Optional configurations**.

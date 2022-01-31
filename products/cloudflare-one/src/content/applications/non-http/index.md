@@ -49,10 +49,10 @@ This should only be enabled if a [service token](/identity/service-auth/service-
 When you log into Access through `cloudflared`, your browser prompts you to allow access by 
 displaying this page:
 
-![Access browser page](../static/documentation/applications/non-http/access-page.png)
+![Access browser page](../../static/documentation/applications/non-http/access-screen.png)
 
 To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
 
-![Auto Auth](../static/documentation/applications/auto-cfd-auth.png)
+![Auto Auth](../../static/documentation/applications/non-http/cloudflared-app-settings.png)
 
 This option will still prompt a browser window in the background, but the authentication will be automatic.
