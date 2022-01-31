@@ -1,9 +1,10 @@
 ---
 order:
 pcx-content-type: reference
+title: Domains not proxied by Cloudflare
 ---
 
-# Use Zaraz on non Cloudflare domains
+# Use Zaraz on domains not proxied by Cloudflare
 
 You can load Zaraz on domains that are not proxied through Cloudflare. However, you will need to create a separate domain, or sub-domain, proxied by Cloudflare (also [known as orange-clouded](https://community.cloudflare.com/t/step-3-enabling-the-orange-cloud/52715) domains), and load the script from it:
 
