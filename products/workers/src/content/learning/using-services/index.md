@@ -9,7 +9,7 @@ Workers Services are the new building blocks for deploying applications on Cloud
 
 <Aside type="note" header="Workers versus Workers Services?">
 
-Workers Services are synonymous with Workers. In the legacy Workers legacy model, Workers were created by writing scripts. Workers scripts could not communicate with each other. In the Workers Services model, Workers Services are made up of Workers Environments that are a collection of bindings, environment variables, secrets, and script deployments. The introduction of Workers Services also adds Worker-to-Worker communication functionality via Workers Service bindings.
+Workers Services are synonymous with Workers. In the legacy Workers model, Workers were created by writing scripts. Workers scripts could not communicate with each other. In the Workers Services model, Workers Services are made up of Workers Environments that are a collection of bindings, environment variables, secrets, and script deployments. The introduction of Workers Services also adds Worker-to-Worker communication functionality via Workers Service bindings.
 
 </Aside>
 
