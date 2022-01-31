@@ -7,4 +7,4 @@ pcx-content-type: navigation
 
 Here you will find information related to advanced Zaraz features.
 
-<DirectoryListing path="/reference"/>
+<DirectoryListing path="/advanced"/>
