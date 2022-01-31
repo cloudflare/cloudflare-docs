@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Add non-HTTP applications
 
-You can connect applications to Cloudflare for Teams over a number of different protocols.
+You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
 * [Connect through Access using a CLI](/tutorials/cli)
 * [Connect through Access over RDP](/tutorials/rdp)
@@ -23,7 +23,7 @@ You can connect applications to Cloudflare for Teams over a number of different 
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
 
-To enable this setting, follow the instructions [here](/tutorials/ssh) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable this setting, follow the instructions [here](/tutorials/ssh) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
 
 ![Auto Auth](../../static/documentation/applications/ssh-browser-rendering.png)
 
@@ -51,7 +51,7 @@ displaying this page:
 
 ![Access browser page](../static/documentation/applications/non-http/access-page.png)
 
-To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Cloudflare for Teams dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
+To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
 
 ![Auto Auth](../static/documentation/applications/auto-cfd-auth.png)
 

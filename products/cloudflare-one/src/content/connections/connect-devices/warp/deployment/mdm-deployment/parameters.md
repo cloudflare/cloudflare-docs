@@ -9,7 +9,7 @@ Each client supports the following set of parameters as part of their deployment
 
 ## Required for full Cloudflare One features
 
-For the vast majority of Cloudflare for Teams features to work, you need to specify a team name. Examples of Teams features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/connections/connect-browsers), and [device posture](/identity/devices).
+For the vast majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/connections/connect-browsers), and [device posture](/identity/devices).
 
 ### `organization`
 
@@ -111,7 +111,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 ## Authentication with service tokens
 
 <Aside> 
-  Devices that connect to Cloudflare for Teams with Service Token authentication are not subject to identity based rules.
+  Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity based rules.
 </Aside>
 
 Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/identity/service-auth/service-tokens).

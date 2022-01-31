@@ -3,17 +3,17 @@ order: 5
 pcx-content-type: navigation
 ---
 
-# Teams logs
+# Zero Trust logs
 
-The Logs section of the [Teams dashboard](https://dash.teams.cloudflare.com/) allows you to take a look at analytics on your network traffic.
+The Logs section of the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) allows you to take a look at analytics on your network traffic.
 
 <DirectoryListing path="/analytics/logs"/>
 
-## How long are logs stored by Cloudflare for Teams?
+## How long are logs stored by Cloudflare Zero Trust?
 
-Cloudflare for Teams logs are stored for a varying period of time based on the service used:
+Cloudflare Zero Trust logs are stored for a varying period of time based on the service used:
 
-| Teams plan | DNS logs | Network logs | HTTP logs |
+| Zero Trust plan | DNS logs | Network logs | HTTP logs |
 | --- | --- | --- | --- |
 | **Free** | 24 hours | 24 hours | 24 hours |
 | **Standard** | 30 days | 30 days | 30 days |

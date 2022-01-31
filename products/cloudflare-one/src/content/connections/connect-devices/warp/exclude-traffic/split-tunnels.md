@@ -9,7 +9,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans | 
 
@@ -26,7 +26,7 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 To set up Split Tunnels:
 
-1. On the Teams Dashboard, navigate to **Settings** > **Network**.
+1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
  
 1. Under **Split Tunnels**, select the mode you want to choose.
 
@@ -35,7 +35,7 @@ To set up Split Tunnels:
 
 1. If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
 
-    On this page, you will find a list of the IPs and domains Cloudflare for Teams excludes or includes, depending on the mode you have selected. Add or remove any desired items and click **Save**.
+    On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. Add or remove any desired items and click **Save**.
 
 ### Add an IP address
  
