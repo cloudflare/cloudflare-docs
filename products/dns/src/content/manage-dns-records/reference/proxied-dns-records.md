@@ -25,7 +25,7 @@ Beyond the performance and caching benefits, proxying your records hides your or
 
 In some circumstances, you should not proxy your DNS records.
 
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or destined for an [unsupported port](https://developers.cloudflare.com/fundamentals/get-started/network-ports), either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum).
+If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](https://developers.cloudflare.com/fundamentals/get-started/network-ports) at the origin,, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum).
 
 Because Cloudflare only supports proxied **A**, **AAAA**, and **CNAME** records, you do not have the option to proxy other record types within the dashboard. 
 
