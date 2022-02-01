@@ -31,7 +31,6 @@ _Match rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
 
 Refer to Rule types below for more information on the types of rules available, and [Zaraz event and system properties](/reference/properties-reference) for more information on the variables you can use to create triggers. 
 
-
 ## Rule types
 
 The rule type determines the kind of conditions Zaraz should listen for in your web page. Zaraz supports different rule types which allow you to create complex rules.
@@ -42,7 +41,7 @@ The rule type determines the kind of conditions Zaraz should listen for in your 
 
 Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/reference/properties-reference).
 
-**Trigger example:**
+**Trigger example: Click listener**
 
 <TableWrap>
 
@@ -162,7 +161,7 @@ _Timer_ | `50` | `2`
 
 </TableWrap>
 
-To improve the performance of the web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
+To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
 <TableWrap>
 

@@ -24,7 +24,8 @@ Zaraz’s debug mode is now enabled. However, due to the temporary nature of the
 
 To activate the **Preserve Log** option in Google Chrome:
 
-1. With the Developer tools opened, make sure you are in the **Console** pane.  
-1. Click the **Console settings** cog > **Preserve logs**.
+1. Open **Developer Tools**.
+1. Go to **Console**.
+1. Select the **Console settings** cog > **Preserve logs**.
 
 ![Console pane](../static/console-settings.png)

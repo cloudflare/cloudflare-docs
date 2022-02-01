@@ -18,6 +18,6 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 
 ## Auto-inject script
 
-This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default. 
+This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default.
 
 If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually. Refer to [Load Zaraz manually](/advanced/load-zaraz-manually) for more information.
