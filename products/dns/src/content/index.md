@@ -7,6 +7,13 @@ pcx-content-type: landing-page
 
 Cloudflare's mission is to be the fastest, most resilient, and simplest managed DNS platform to meet our customer's and partner's DNS needs.
 
+<ButtonGroup>
+  <Button type="primary" href="/zone-setups">Get started</Button>
+  <Button type="secondary" href="/manage-dns-records/how-to">Common tasks</Button>
+</ButtonGroup>
+
+---
+
 ## Benefits
 
 When you use Cloudflare DNS, all DNS queries for your domain are answered by [Cloudflare's global Anycast network](https://www.cloudflare.com/network/). This network allows us to deliver excellent performance while guaranteeing global availability.
