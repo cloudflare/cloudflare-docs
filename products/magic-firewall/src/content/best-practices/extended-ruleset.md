@@ -143,5 +143,3 @@ Restrict the source based on whether the server is expecting traffic from the ge
 - IP Destination Address { non-web server } and TCP dst port in &lt;valid ports> — Permit
 - IP Destination Address { non-web server } and UDP dst port in &lt;valid ports> — Permit
 - IP Destination Address { web server } — Block
-
-## Magic Transit Egress
