@@ -42,7 +42,7 @@ The maximum size of a value is 25 MiB.
 
 You can also [write key-value pairs from the command line with Wrangler](/cli-wrangler/commands#kvkey) and [write data via the API](https://api.cloudflare.com/#workers-kv-namespace-write-key-value-pair).
 
-Due to the eventually consistent nature of Workers KV, concurrent writes from different edge locations can end up overwriting one another. It is a common pattern to write data via Wrangler or the API so that all writes initiate from the same location. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
+Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
 Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/learning/how-kv-works) for more information on this topic.
 
@@ -54,7 +54,7 @@ A `key` and `value` are required for each KV pair. The entire request size must 
 
 #### Expiring keys
 
-Many common uses of Workers KV involve writing keys that are only meant to be valid for a certain amount of time. Rather than requiring applications to remember to delete such data at the appropriate time, Workers KV offers the ability to create keys that automatically expire. Expiration can occur either at a particular point in time or after a certain amount of time has passed since the key was last modified.
+Many common uses of Workers KV involve writing keys that are only meant to be valid for a certain amount of time. Rather than requiring applications to remember to delete such data at the appropriate time, Workers KV offers the ability to create keys that automatically expire. You may configure expiration to occur either at a particular point in time or after a certain amount of time has passed since the key was last modified.
 
 Once the expiration time of an expiring key is reached, it will be deleted from the system. After its deletion, attempts to read it will behave as if the key does not exist. The deleted key will not count against the namespace’s storage usage for billing purposes.
 
