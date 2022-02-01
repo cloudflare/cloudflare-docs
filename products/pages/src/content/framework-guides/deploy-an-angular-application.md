@@ -6,7 +6,7 @@ import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md
 
 # Deploy an Angular application
 
-Angular is an incredibly popular framework for building reactive and powerful front-end applications.
+[Angular](https://angular.io/) is an incredibly popular framework for building reactive and powerful front-end applications.
 
 In this guide, you will create a new Angular application and deploy it using Cloudflare Pages. You will use the Angular CLI, a batteries-included tool for generating new Angular applications.
 
