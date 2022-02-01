@@ -6,7 +6,7 @@ import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md
 
 # Deploy a Next.js site
 
-Next.js is an open-source React framework for creating websites and apps. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
+[Next.js](https://nextjs.org/) is an open-source React framework for creating websites and apps. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
 
 ## Creating a new project
 
