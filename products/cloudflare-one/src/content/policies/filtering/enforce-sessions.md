@@ -16,6 +16,6 @@ You can configure a WARP session for any Allow policy. To configure a session:
 
 <Aside type='Warning'>
 
-Users must be on the latest beta version of the WARP client.
+Users must be on the latest beta version of the WARP client. Users on previous versions will be blocked.
 
 </Aside>
