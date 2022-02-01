@@ -6,9 +6,8 @@ order: 2
 
 # Extended suggested ruleset
 
-For the best protection, replicate your current perimeter security ingress policy within Magic Firewall. If you are unable to export your current perimeter firewall rules, contact your Implementation Manager for help translating the rules into Magic Firewall rules.
-
 If you are unable to export your current perimeter firewall rules, consider identifying categories of systems or user-groups that reside on your MT prefixes, for example:
+
 - [Endpoints (user devices)](#endpoints-user-devices)
 - [Internal routers](#internal-routerfirewall-ip-addresses)
 - [Web servers](#web-servers)
