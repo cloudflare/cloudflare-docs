@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-In this tutorial, you will integrate [Auth0](https://auth0.com), an identity management platform, into a Cloudflare Workers application. Adding authorization and authentication to an application is a common task for developers. By implementing it using Cloudflare Workers, you can take advantage of the Workers platform to simplify how and when your application needs user data. If you're here just to get authentication in your app then there're links to the repository and a package that's more suited to production.
+In this tutorial, you will integrate [Auth0](https://auth0.com), an identity management platform, into a Cloudflare Workers application. Adding authorization and authentication to an application is a common task for developers. By implementing it using Cloudflare Workers, you can take advantage of the Workers platform to simplify how and when your application needs user data. If you're here just to get authentication in your app then there're links to the repository and a package that's more suited to production at the very bottom of page.
 
 ### What you will learn
 
