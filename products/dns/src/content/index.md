@@ -23,4 +23,4 @@ Cloudflare's authoritative DNS is available to all customers for free. Other typ
 
 The products described in this section are intended for applications and help your visitors reach their destinations faster and more securely.
 
-If you are a consumer and want a more private way to browse the Internet, refer to our [1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1).
+If you are a consumer and want a more private way to browse the Internet, refer to our [1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1/).
