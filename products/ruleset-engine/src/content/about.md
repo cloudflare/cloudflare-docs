@@ -83,13 +83,14 @@ For example, consider the following ruleset with four rules (R1, R2, R3, and R4)
 
 Rules can have additional features through specific Cloudflare products. You may have more fields available for rule expressions, perform different actions, or configure additional behavior in a given phase.
 
-### Rule evaluation and immutable fields
+### Rule evaluation and field values
 
-All request and response [fields](/rules-language/fields) are immutable while evaluating rules for a given request/response.
+While evaluating rules for a given request/response, the values of all request and response [fields](/rules-language/fields) are immutable within each phase. However, they may change between phases.
 
 For example:
 * If a [URL Rewrite Rule](https://developers.cloudflare.com/rules/transform/url-rewrite) #1 updates the URI path or the query string of a request, URL Rewrite Rule #2 will not take these earlier changes into consideration.
 * If a [HTTP Request Header Modification Rule](https://developers.cloudflare.com/rules/transform/request-header-modification) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
+* If a URL Rewrite Rule updates the URI path or query string of a request, the `http.request.uri*` fields will have a different value in the phase after the `http_request_transform` phase (where URL Rewrite Rules are executed).
 
 ---
 
