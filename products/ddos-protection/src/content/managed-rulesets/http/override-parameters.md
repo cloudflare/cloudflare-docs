@@ -29,7 +29,7 @@ The action that will be performed for requests that match specific rules of Clou
     - API value: `"block"`.
     - Blocks HTTP requests that match the rule expression.
 
-- **Challenge (CAPTCHA)**
+- **Legacy CAPTCHA**
     - API value: `"challenge"`.
     - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
 
