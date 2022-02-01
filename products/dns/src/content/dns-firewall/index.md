@@ -34,10 +34,8 @@ DNS Firewall provides the following benefits while allowing organizations total 
 
 DNS Firewall is only available to customers on Enterprise plans.
 
-## Setup
+## Resources
 
-To get started with DNS Firewall, refer to [Setup](/dns-firewall/setup).
-
-## Questions
-
-For a list of common questions, see [FAQs](/dns-firewall/faq).
+- [Setup](setup)
+- [Analytics](analytics)
+- [FAQs](/faq)

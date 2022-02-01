@@ -129,4 +129,4 @@ If you see unexpected results, refer to [Nameserver FAQs](/zone-setups/troublesh
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar. 
 
-You should now enable DNSSEC within Cloudflare to protect from domain spoofing. For additional help, refer to [Set up DNSSEC](/manage-dns-records/how-to/dnssec).
+You should now [enable DNSSEC](/manage-dns-records/how-to/dnssec) within Cloudflare to protect from domain spoofing.

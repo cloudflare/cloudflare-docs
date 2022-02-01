@@ -8,7 +8,7 @@ pcx-content-type: reference
 
 ## Nameservers
 
-If you see unexpected results when changing your nameservers, review the following troubleshooting questions.
+If you see unexpected results when [changing your nameservers](/zone-setups/full-setup/setup), review the following troubleshooting questions.
 
 ### Is a **DS** record present at your registrar? 
 

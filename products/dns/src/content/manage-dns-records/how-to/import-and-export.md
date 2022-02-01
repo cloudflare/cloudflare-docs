@@ -3,13 +3,15 @@ order: 1
 pcx-content-type: how-to
 ---
 
+import ImportScanInfo from "../../_partials/_import-scan-info.md"
+
 # Import and export records
 
+<ImportScanInfo/>
+
+If you want more control over which DNS records are imported and how, use the bulk import functionality.
+
 ## Import records
-
-When you add a new domain to Cloudflare, Cloudflare automatically scans for common records and adds them to your account's **DNS** page. This scan is not guaranteed to find all existing DNS records, so make sure that all DNS records are added in the Cloudflare **DNS** page before changing your nameservers to Cloudflare nameservers.
-
-If you want more control over which records are imported and how, use the bulk import functionality.
 
 ### Format your zone file
     

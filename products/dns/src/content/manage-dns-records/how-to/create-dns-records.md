@@ -3,13 +3,17 @@ order: 0
 pcx-content-type: how-to
 ---
 
+import ImportScanInfo from "../../_partials/_import-scan-info.md"
+
 # Manage DNS records
 
-When you add a new domain to Cloudflare, Cloudflare automatically scans for common records and adds them to your account's **DNS** page. If you want to bulk import your own records, refer to [import DNS records](../import-and-export).
+<ImportScanInfo/>
+
+If you want more control over which DNS records are imported and how, use the [bulk imports](../import-and-export#import-records).
 
 <Aside type="note">
 
-If your domain is added to Cloudflare by a hosting partners, manage your DNS records via the hosting partner.
+If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
 
 </Aside>
 
@@ -20,7 +24,7 @@ If your domain is added to Cloudflare by a hosting partners, manage your DNS rec
 To create a DNS record in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-1. Navigate to **DNS**.
+1. Go to **DNS**.
 1. Click **Add record**.
 1. Choose a record **Type**.
     
@@ -45,7 +49,7 @@ To create records with the API, use a [POST request](https://api.cloudflare.com/
 To edit DNS records in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-1. Navigate to **DNS**.
+1. Go to **DNS**.
 1. On a specific record, click **Edit**.
 1. Make any necessary changes.
 1. Click **Save**.
@@ -63,7 +67,7 @@ To update part of a record with the API, use a [PATCH request](https://api.cloud
 To delete DNS records in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
-1. Navigate to **DNS**.
+1. Go to **DNS**.
 1. On a specific record, click **Edit**.
 1. Click **Delete**.
 1. Click **Delete** again to confirm.
