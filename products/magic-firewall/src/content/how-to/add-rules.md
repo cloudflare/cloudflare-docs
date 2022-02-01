@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://api.cloudflare.com/#account-rulesets-properties). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
-By default, you can create a maximum of 100 rules, and you can create lists of IP addresses for referencing within rules to minimize the number of rules you need to configure.
+By default, you can create a maximum of 100 rules. We recommend you create lists of IP addresses to reference within rules to streamline rule management.
 
 ## Add a rule
 

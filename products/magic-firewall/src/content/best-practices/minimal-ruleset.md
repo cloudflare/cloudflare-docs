@@ -8,7 +8,7 @@ order: 1
 
 The suggested minimal ruleset blocks some known common vectors for DDoS attacks and permits all other ESP, TCP, UDP, GRE and ICMP traffic.
 
-Note that this is a suggested list and not an exhaustive list. Please check what fits for your environment and add more rules as necessary.
+This is a suggested list and not an exhaustive list. Review your environment and add more rules as necessary.
 
 ## Recommended rules
 
