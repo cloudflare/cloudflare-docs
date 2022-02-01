@@ -1,7 +1,7 @@
---
+---
 pcx-content-type: how-to
 order: 360
---
+---
 
 # Manage IP List items
 
