@@ -13,7 +13,7 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 
 ## Overview
 
-In this tutorial, you will integrate [Auth0](https://auth0.com), an identity management platform, into a Cloudflare Workers application. Adding authorization and authentication to an application is a common task for developers. By implementing it using Cloudflare Workers, you can take advantage of the Workers platform to simplify how and when your application needs user data.
+In this tutorial, you will integrate [Auth0](https://auth0.com), an identity management platform, into a Cloudflare Workers application. Adding authorization and authentication to an application is a common task for developers. By implementing it using Cloudflare Workers, you can take advantage of the Workers platform to simplify how and when your application needs user data. If you're here just to get authentication in your app then there're links to the repository and a package that's more suited to production.
 
 ### What you will learn
 
@@ -992,12 +992,13 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 
 ## Conclusion
 
-By completing this tutorial, you have successfully built an application that authorizes and authenticates users on the edge using Cloudflare Workers. To see the final version of the project you built in this tutorial, refer to the example GitHub repository: [signalnerve/workers-auth0-example](https://github.com/signalnerve/workers-auth0-example/).
+By completing this tutorial, you have successfully built an application that authorizes and authenticates users on the edge using Cloudflare Workers. To see the final version of the project you built in this tutorial, refer to the example GitHub repository: [signalnerve/workers-auth0-example](https://github.com/signalnerve/workers-auth0-example/). If you'd like to use this in production you better use the package [auth0-fetch](https://www.npmjs.com/package/auth0-fetch).
 
 ## Related resources
 
 You can build a lot more with Workers, such as serving static and JAMstack-style applications using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
 
+- [Packaged version of this](https://www.npmjs.com/package/auth0-fetch)
 - [Build a Slack bot](/tutorials/build-a-slackbot)
 - [Deploy a React app using Workers Sites](/tutorials/deploy-a-react-app-with-create-react-app)
 - [Localize a website using HTMLRewriter](/tutorials/localize-a-website)
