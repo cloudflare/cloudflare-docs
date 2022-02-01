@@ -15,7 +15,7 @@ pcx-content-type: configuration
 
 ```js
 /**
- * Example someHost at url is set up to respond with HTML
+ * Example someHost at URL is set up to respond with HTML
  * Replace url with the host you wish to send requests to
  */
 const someHost = "https://examples.cloudflareworkers.com/demos"

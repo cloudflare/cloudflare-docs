@@ -26,7 +26,7 @@ const someUrl = "https://foo.example.com/api.js"
 async function handleRequest(request) {
   /**
    * The best practice is to only assign new properties on the request
-   * object (i.e. RequestInit props) using either a method or the constructor
+   * object (that is, RequestInit props) using either a method or the constructor
    */
   const newRequestInit = {
     // Change method
