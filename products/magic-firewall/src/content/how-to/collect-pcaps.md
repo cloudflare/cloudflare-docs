@@ -59,7 +59,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
 }'
 ```
 
-`filter_v1` uses Wirefilter expressions to filter the PCAP. This field can be left empty to collect all packets without any filtering. 
+Leaving the `filter_v1` object empty will collect all packets without any filtering. 
 
 ### Example response
 
