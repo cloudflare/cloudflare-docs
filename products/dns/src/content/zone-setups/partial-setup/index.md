@@ -11,9 +11,8 @@ import PartialSetupDefinition from "../../_partials/_partial-setup-definition.md
 
 ## How to
 
-For details on initial setup, refer to [Set up a partial domain](setup).
-
-For help transitioning to a full setup, refer to [Converting a partial domain to a full domain](convert-partial-to-full).
+- [Set up a partial domain](setup)
+- [Convert a partial domain to a full domain](convert-partial-to-full)
 
 ## Availability
 

@@ -62,7 +62,7 @@ Once you have added a domain (also known as a *zone*) to Cloudflare, that domain
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 1. On **Overview**, copy the information from **Replace with Cloudflare's nameservers**.
 
-    ![get nameserver names from the Overview page of your domain](../static/nameserver-names.png)
+    ![get nameserver names from the Overview page of your domain](../../static/nameserver-names.png)
 
 ### Update your registrar
 
@@ -129,4 +129,4 @@ If you see unexpected results, refer to [Nameserver FAQs](/zone-setups/troublesh
 
 When you updated your nameservers, you should have also disabled DNSSEC at your registrar. 
 
-You should now enable DNSSEC within Cloudflare to protect from domain spoofing. For additional help, refer to [Configuring DNSSEC](https://support.cloudflare.com/hc/articles/360006660072).
+You should now [enable DNSSEC](/manage-dns-records/how-to/dnssec) within Cloudflare to protect from domain spoofing.

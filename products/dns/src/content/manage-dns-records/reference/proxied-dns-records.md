@@ -19,15 +19,15 @@ Because requests to proxied hostnames go through Cloudflare before reaching your
 
 In most cases, you should proxy your **A**, **AAAA**, and **CNAME** records. These are the only records that can be proxied.
 
-Beyond the performance and caching benefits, proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+Beyond the [performance and caching benefits](https://developers.cloudflare.com/fundamentals/get-started/how-cloudflare-works), proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
 ## When to use unproxied records
 
 In some circumstances, you should not proxy your DNS records.
 
-If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](https://developers.cloudflare.com/fundamentals/get-started/network-ports) at the origin,, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum).
+### A, AAAA, and CNAME records
 
-Because Cloudflare only supports proxied **A**, **AAAA**, and **CNAME** records, you do not have the option to proxy other record types within the dashboard. 
+If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP) or the traffic targets an [unsupported port](https://developers.cloudflare.com/fundamentals/get-started/network-ports) at the origin, either leave your records unproxied (DNS-only) or use [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum). 
 
 Additionally, you cannot proxy wildcard DNS records unless your domain is on an Enterprise plan.
 
@@ -37,3 +37,6 @@ If you encounter a **CNAME** record that you cannot proxy — usually associated
 
 </Aside>
 
+### Other record types
+
+Because Cloudflare only supports proxied **A**, **AAAA**, and **CNAME** records, you do not have the option to proxy other record types.
