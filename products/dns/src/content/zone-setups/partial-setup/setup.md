@@ -33,7 +33,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 ## Step 2 — Verify ownership for your domain
 
-Once you [add your domain to Cloudflare](#add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
+Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
 That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
@@ -47,7 +47,7 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
 
 ## Step 3 — Add DNS records
 
-1. In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/manage-dns-records#create-dns-records).
+1. In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/manage-dns-records/how-to/create-dns-records).
 1. At your authoritative DNS provider:
     
     1. Remove any existing **A**, **AAAA**, or **CNAME** records on the hostname you want to proxy to Cloudflare.
