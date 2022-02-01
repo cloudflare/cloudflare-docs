@@ -1,6 +1,6 @@
 ---
 title: Extended ruleset
-pcx-content-type: tutorial
+pcx-content-type: configuration
 order: 2
 ---
 
@@ -43,7 +43,7 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 
 **Rule ID**: 1 <br/> 
 **Description**: Endpoints (clients) will receive traffic destined for ephemeral ports. Blocks inbound SYN-only traffic. (meaning SYN-ACKs are permitted) <br/> 
-**Match**: `ip.proto eq "tcp" and ip.dst in $endpoints and tcp.dstport in {32768..60999} and not (tcp.flags.syn and not tcp.flags.ack` <br/>
+**Match**: `ip.proto eq "tcp" and ip.dst in $endpoints and tcp.dstport in {32768..60999} and not (tcp.flags.syn and not tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 
 **Rule ID**: 2 <br/> 
@@ -76,7 +76,7 @@ Follow the best practices for internal routers or firewall interface IP addresse
 ### Suggested rules
 
 **Rule ID**: 1 <br/> 
-**Description**: Permit limited ICMP traffic inbound: examples here are 
+**Description**: Permit limited ICMP traffic inbound, including:
 - Type 0 - Echo Reply
 - Type 3 - Destination Unreachable
 - Type 8 - Echo 

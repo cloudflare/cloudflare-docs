@@ -11,7 +11,9 @@ Magic Firewall does not have implicit deny logic, and all traffic is permitted u
 
 ## Security policy
 
-You have two options for configuring a security policy: enforce a positive security model and only permit required traffic and block everything else or begin with a minimal ruleset to block specific traffic and, by default, everything else is permitted.
+You have two options for configuring a security policy: 
+- Enforce a positive security model and only permit required traffic and block everything else.
+- Begin with a minimal ruleset to block specific traffic and, by default, everything else is permitted.
 
 Traffic is matched in order of the configured rules. As soon as traffic is matched by a rule, it is no longer validated against the later rules. For example, permitting all TCP traffic in a rule #4 would mean all TCP traffic is permitted. A rule #5 to block traffic for IP address `x.x.x.x` would not be checked. 
 
