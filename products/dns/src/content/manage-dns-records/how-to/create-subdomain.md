@@ -23,7 +23,7 @@ Then, you would create a corresponding [A, AAAA, or CNAME record](/manage-dns-re
 
 ## Subdomain redirects
 
-For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Subdomain redirects](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/manage-subdomains#set-up-redirects).
+For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/manage-subdomains#set-up-redirects).
 
 ## SSL/TLS for subdomains
 
