@@ -29,7 +29,7 @@ The available actions depend on the [phase](/about#phases) where you are configu
   </thead>
   <tbody>
     <tr>
-      <td><strong>Challenge (CAPTCHA)</strong><br/><br/>API value:<br/><code class="InlineCode">challenge</code></td>
+      <td><strong>Legacy CAPTCHA</strong><br/><br/>API value:<br/><code class="InlineCode">challenge</code></td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
         <p>The client that made the request must pass a CAPTCHA challenge.</p>

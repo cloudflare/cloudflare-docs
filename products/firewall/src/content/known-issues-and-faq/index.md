@@ -47,7 +47,7 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 ### Caution about potentially blocking bots
 
-When you create a Firewall rule with a _Block_, _Challenge (Captcha)_, _JS Challenge_, or _Managed Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a Firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
@@ -371,13 +371,13 @@ In this case, Cloudflare considers the client details, including its IP address,
 
 ## Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The _Challenge (Captcha)_ and _JS Challenge_ actions only support HTML requests.
+No. The _Legacy CAPTCHA_ and _JS Challenge_ actions only support HTML requests.
 
 Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX.
 
-When an XHR or AJAX request triggers one of the _Challenge_ actions, the resulting request will have the following status code:
+When an XHR or AJAX request triggers one of the _Legacy CAPTCHA_ actions, the resulting request will have the following status code:
 
-* HTTP status code 403 for _Challenge (Captcha)_
+* HTTP status code 403 for _Legacy CAPTCHA_
 * HTTP status code 503 for _JS Challenge_
 
 Your application can use these status codes to handle unexpected challenges.
@@ -406,4 +406,4 @@ Make sure you are looking at the correct request.
 
 Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Challenge (Captcha)_ or _JS Challenge_ and now that challenge was answered".
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Legacy CAPTCHA_ or _JS Challenge_ and now that challenge was answered".
