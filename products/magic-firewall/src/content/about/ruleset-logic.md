@@ -23,6 +23,6 @@ For best practices when configuring your security policy, refer to [Best practic
 
 ## Magic Firewall rules and Magic Transit endpoint health checks
 
-Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure.  If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. To restrict the inbound ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule. 
+Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure.  If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule. 
 
 For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudflare.com/ips/).
