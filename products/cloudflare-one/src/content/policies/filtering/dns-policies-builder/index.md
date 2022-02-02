@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-# DNS policies (New)
+# DNS policies
 
 When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection. 
 
@@ -121,7 +121,6 @@ Use this selector to match against the IP address of the authoritative name serv
 | UI name | API example |
 | -- | -- |
 | Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` |
-
 
 ### Operators
 
