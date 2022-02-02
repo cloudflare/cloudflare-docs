@@ -4,7 +4,6 @@ pcx-content-type: tutorial
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"
 import Restrictions from "../_partials/_restrictions.md"
-import EmailForward from "../_partials/_email-forward.md"
 
 # Transfer your domain to Cloudflare
 
@@ -17,8 +16,6 @@ This section contains generic instructions on how to transfer your domain to Clo
 <BeforeYouBegin/>
 
 <Restrictions />
-
-<EmailForward/>
 
 ---
 
