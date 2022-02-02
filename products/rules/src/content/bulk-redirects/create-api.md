@@ -115,7 +115,7 @@ If the operation already completed successfully, the response will be similar to
 
 Since Bulk Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Bulk Redirect Rule.
 
-Add Bulk Redirect Rules to the ruleset entry point of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
+Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
 
 A Bulk Redirect Rule must have:
 
