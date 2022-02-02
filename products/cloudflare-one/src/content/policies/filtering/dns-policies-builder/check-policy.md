@@ -51,7 +51,7 @@ NAME_OF_CATEGORY.testcategory.com
 
 #### Multi-word categories
 
-If the category has multiple words in the name (e.g. *Parked & For Sale Domains*) then the test domain uses the following format:
+If the category has multiple words in the name (for example, *Parked & For Sale Domains*) then the test domain uses the following format:
 
 * Remove any spaces between the words
 * Replace `&` with `and`
