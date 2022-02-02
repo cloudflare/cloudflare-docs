@@ -95,7 +95,9 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 ### PTR
 
-A pointer (PTR) record specifies the allowed hosts for a given IP address. They are used for reverse DNS lookups and should preferably be added to [reverse zones](/additional-options/reverse-zones).
+A [pointer (PTR) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ptr-record/) specifies the allowed hosts for a given IP address. 
+
+Within Cloudflare, PTR records are used for reverse DNS lookups and should preferably be added to [reverse zones](/additional-options/reverse-zones).
 
 ### SOA
 
