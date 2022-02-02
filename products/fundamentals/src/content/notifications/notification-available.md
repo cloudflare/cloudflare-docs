@@ -135,11 +135,11 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Success alerts require no further action. Actions for notifications regarding failures will depend on the type of failure. Possible actions include: 
+Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include: 
 
-1. Checking the Access Control List (ACL) on your primary nameserver
-1. Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration)
-1. Checking logs on primary nameservers for other errors.
+* Checking the Access Control List (ACL) on your primary nameserver.
+* Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
+* Checking logs on primary nameservers for other errors.
 
 </div>
 </details>
@@ -188,7 +188,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **Who is it for?**
 
-Customers who want to be warned about the enable/disable status of their pools.
+Customers who want to be warned about status changes (enabled/disabled) in their pools.
 
 **Included with**
 
@@ -443,11 +443,11 @@ Investigate to confirm it is an expected change.
 
 **Who is it for?**
 
-Customers who are using Stream and want to receive webhooks with status of their videos.
+Customers who are using Stream and want to receive webhooks with the status of their videos.
 
 **Included with**
 
-Stream Subscription.
+Stream subscription.
 
 **What should you do if you receive one?**
 
@@ -509,7 +509,7 @@ Developers using Workers, especially those on the Unbound usage model.
 
 **Included with**
 
-Workers Subscription (free or paid).
+Workers subscription (free or paid).
 
 **What should you do if you receive one?**
 
@@ -528,11 +528,11 @@ Developers using Workers.
 
 **Included with**
 
-Workers Subscription (free or paid).
+Workers subscription (free or paid).
 
 **What should you do if you receive one?**
 
-No action is usually required. This notification gives users a high-level overview of their key workers’ metrics without checking the dashboard. Possible metrics include account usage and per-worker usage.
+No action is usually required. This notification gives users a high-level overview of their key Workers’ metrics without having to check the dashboard. Possible metrics include account usage and per-worker usage.
 
 </div>
 </details>
