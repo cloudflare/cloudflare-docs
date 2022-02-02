@@ -121,8 +121,28 @@ No action needed. Everything is working correctly.
 </div>
 </details>
 
+<details>
+<summary>Secondary DNSSEC Validation Warning</summary>
+<div>
 
-# Secondary DNSSEC Validation Warning MISSING
+**Who is it for?**
+
+Customers who are using Cloudflare for Secondary DNS and want to receive notifications about failure or success of zone transfers from their primary nameservers.
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+Success alerts require no further action. Actions for notifications regarding failures will depend on the type of failure. Possible actions include: 
+
+1. Checking the Access Control List (ACL) on your primary nameserver
+1. Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration)
+1. Checking logs on primary nameservers for other errors.
+
+</div>
+</details>
 
 <details>
 <summary>HTTP DDoS Attack Alerter</summary>
@@ -162,7 +182,25 @@ Purchase of Magic Transit and/or BYOIP.
 </div>
 </details>
 
-# Pool Enablement MISSING
+<details>
+<summary>Pool Enablement</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about the enable/disable status of their pools.
+
+**Included with**
+
+All Cloudflare plans with Load Balancing purchase.
+
+**What should you do if you receive one?**
+
+No direct call to action.
+
+
+</div>
+</details>
 
 <details>
 <summary>Flow-based Monitoring: Volumetric Attack</summary>
@@ -399,9 +437,25 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
-# Sentinel Alert MISSING
+<details>
+<summary>Stream Live Notifications</summary>
+<div>
 
-# Stream Live Notifications MISSING
+**Who is it for?**
+
+Customers who are using Stream and want to receive webhooks with status of their videos.
+
+**Included with**
+
+Stream Subscription.
+
+**What should you do if you receive one?**
+
+Stream notifications are entirely customizable by the customer. Action will depend on the customizations enabled.
+ 
+
+</div>
+</details>
 
 <details>
 <summary>Advanced Security Events Alert</summary>
@@ -445,6 +499,40 @@ Review the information in [Firewall Analytics](https://developers.cloudflare.com
 </div>
 </details>
 
-# Workers Usage Report MISSING
+<details>
+<summary>Workers Usage Report</summary>
+<div>
 
-# Workers Weekly Summary MISSING
+**Who is it for?**
+
+Developers using Workers, especially those on the Unbound usage model.
+
+**Included with**
+
+Workers Subscription (free or paid).
+
+**What should you do if you receive one?**
+
+Check any recent changes to your script or its external dependencies. Usage reports inform users of a sharp increase (25% or more) in key metrics like CPU time.
+
+</div>
+</details>
+
+<details>
+<summary>Workers Weekly Summary</summary>
+<div>
+
+**Who is it for?**
+
+Developers using Workers.
+
+**Included with**
+
+Workers Subscription (free or paid).
+
+**What should you do if you receive one?**
+
+No action is usually required. This notification gives users a high-level overview of their key workers’ metrics without checking the dashboard. Possible metrics include account usage and per-worker usage.
+
+</div>
+</details>
