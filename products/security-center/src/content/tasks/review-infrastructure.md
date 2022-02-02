@@ -13,7 +13,3 @@ You can perform the following actions:
 
 * Filter the displayed information
 * Print or download a PDF report
-
-## Export inventory
-
-In the same tab, the **Inventory** card displays a list of domains and their current security-related status. To export the displayed inventory items (according to your current filters), click **Export**.
