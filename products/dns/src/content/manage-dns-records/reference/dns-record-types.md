@@ -55,28 +55,28 @@ These records are recommended regardless of whether your domain sends email mess
 
 ### MX
 
-MX records are necessary for delivery of email to a mail server:
+A mail exchange (MX) record is required to deliver email to a mail server.
 
 - [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
 - [Create an MX record](/manage-dns-records/how-to/email-records#add-mx-records)
 
 ### DKIM
 
-DKIM records ensure email authenticity by cryptographically signing emails:
+A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptographically signing emails:
 
 - [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
 - [Create a DKIM record](/manage-dns-records/how-to/email-records#configure-email-security-records)
 
 ### SPF
 
-SPF records list authorized IP addresses and domains that can send email on behalf of your domain.
+A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
 
 - [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
 - [Create an SPF record](/manage-dns-records/how-to/email-records#configure-email-security-records)
 
 ### DMARC
 
-DMARC records receive aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
+A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
 - [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
 - [Create a DMARC record](/manage-dns-records/how-to/email-records#configure-email-security-records)
