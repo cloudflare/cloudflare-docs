@@ -36,9 +36,12 @@ Once you have configured your Gateway policy to block the category, the test dom
 ### Test domains
 
 #### One-word categories
+
 Test domains use the following format for categories with one-word names:
 
-```NAME_OF_CATEGORY.testcategory.com```
+```txt
+NAME_OF_CATEGORY.testcategory.com
+```
 
 | Category | Test domain |
 | -------- | ----------- |
@@ -47,6 +50,7 @@ Test domains use the following format for categories with one-word names:
 | *Cryptomining* | `cryptomining.testcategory.com` |
 
 #### Multi-word categories
+
 If the category has multiple words in the name (e.g. *Parked & For Sale Domains*) then the test domain uses the following format:
 
 * Remove any spaces between the words
