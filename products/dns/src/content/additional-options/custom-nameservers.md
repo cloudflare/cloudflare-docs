@@ -65,7 +65,7 @@ When you choose the names for your zone-level nameservers, each hostname must be
 
 ### Prerequisites
 
-Before you can add custom nameservers to a zone, that zone has to be activated on a [full setup](/zone-setups/full-setup).
+Before you can add custom nameservers to a zone, that zone has to be activated on a [full setup](/zone-setups/full-setup) while using its Cloudflare-assigned nameservers.
 
 ### Using the dashboard
 
