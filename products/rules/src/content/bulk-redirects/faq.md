@@ -14,7 +14,7 @@ In this situation, Cloudflare will use the URL Redirect of the first rule that t
 
 ## How many URL Redirects can I have in a single Bulk Redirect List?
 
-Each account has a maximum number of URL Redirects across all lists which depends on your Cloudflare plan. If you wish, you can use all the URL Redirects available in your plan in a single Bulk Redirect List. Refer to [Availability](/bulk-redirects#availability) for details.
+Each account has a maximum number of URL Redirects across all lists which depends on your Cloudflare plan. If you wish, you can use all the URL Redirects available in your plan in a single Bulk Redirect List, but you will not be able to create any other URL Redirects in a different list. Refer to [Availability](/bulk-redirects#availability) for more information.
 
 ## How can I redirect based on the non-normalized version of a URL?
 
