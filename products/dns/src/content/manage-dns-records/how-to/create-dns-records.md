@@ -26,12 +26,7 @@ To create a DNS record in the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
 1. Go to **DNS**.
 1. Click **Add record**.
-1. Choose a record **Type**.
-    
-    - To learn more about different record types, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/dns-records/).
-    - For record information specific to Cloudflare, refer to [DNS records](/manage-dns-records/reference/dns-record-types).
-    - For help deciding which records to proxy, refer to [Proxied DNS records](/manage-dns-records/reference/proxied-dns-records).
-
+1. Choose a record [**Type**](/manage-dns-records/reference/dns-record-types).
 1. Complete the required fields. 
 1. Click **Save**.
 
