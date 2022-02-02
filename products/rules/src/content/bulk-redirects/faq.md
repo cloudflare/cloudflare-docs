@@ -18,7 +18,7 @@ Each account has a maximum number of URL Redirects across all lists which depend
 
 ## How can I redirect based on the non-normalized version of a URL?
 
-Use the `raw.http.request.full_uri` field in the rule expression and key instead of the default field `http.request.full_uri`. This will take the raw version of the URL into account, that is, the URL that Cloudflare received at the edge before applying normalization. Refer to [Concepts: Bulk Redirect Rules](/bulk-redirects/concepts#bulk-redirect-rules) for more information on using a custom rule expression and a custom key.
+Use the `raw.http.request.full_uri` field both in the rule expression and in the key, instead of the default field `http.request.full_uri`. This will take the raw version of the URL into account, that is, the URL that Cloudflare received at the edge before applying normalization. Refer to [Concepts: Bulk Redirect Rules](/bulk-redirects/concepts#bulk-redirect-rules) for more information on using a custom rule expression and a custom key.
 
 ## Do Bulk Redirects take precedence over Page Rules?
 
