@@ -17,6 +17,14 @@ To view examples for root rulesets, review the the [Magic Firewall Terraform doc
 1. Fill out the information for your new rule.
 1. When you are done, click **Add new rule**.
 
+## Create a disabled rule
+
+When you add a new rule, the rule is **Enabled** by default. 
+
+To create a **Disabled** rule, follow the steps in [Add a rule](#add-a-rule) above and toggle **Enabled** to off. When a rule is in the disabled state, the rule will not perform the action until is set to **Enabled**.
+
+To disable an existing rule, from the **Magic Firewall Rules** page, set the **Enabled** toggle to off.
+
 ## Update a rule
 
 1. From your dashboard, click **Firewall Rulesets**.
