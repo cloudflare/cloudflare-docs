@@ -148,7 +148,7 @@ If you cannot use the `<img srcset>` markup, and have to hardcode specific maxim
 Here is an example of markup to configure a maximum size for your image:
 
 ```txt
-/cdn-cgi/image/fit=scale-down,width=1920/your-image.jpg
+/cdn-cgi/image/fit=scale-down,width=1920/<YOUR-IMAGE>
 ```
 
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.

@@ -6,7 +6,10 @@ pcx-content-type: how-to
 
 Images in the [cache must be purged](https://developers.cloudflare.com/cache/how-to/purge-cache) or expired before seeing any changes in Polish settings.
 
+<Aside type="warning">
 Do not activate Polish and Image Resizing simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
+
+</Aside>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select the account and domain where you want to activate Polish.
 1. Click **Speed** > **Optimization**.
