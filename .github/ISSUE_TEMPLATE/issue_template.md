@@ -1,5 +1,5 @@
 ---
-name: Improve existing docs
+name: ISSUE_TEMPLATE
 about: Submit this issue to help us improve documentation
 title: ''
 labels: documentation
