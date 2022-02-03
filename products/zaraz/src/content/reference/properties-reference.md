@@ -1,5 +1,5 @@
 ---
-order: 7
+order:
 pcx-content-type: reference
 type: overview
 title: Properties reference
