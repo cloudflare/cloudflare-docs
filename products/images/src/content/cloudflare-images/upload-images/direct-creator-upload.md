@@ -11,7 +11,7 @@ To request a one-time upload URL, simply have your back-end (or Worker script) c
 
 ```bash
 curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/:account_id/images/v1/direct_upload \
+  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID/images/v1/direct_upload \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer :token'
 ```
