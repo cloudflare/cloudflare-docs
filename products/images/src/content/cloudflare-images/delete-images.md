@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 You can delete an image from the Cloudflare Images storage using the dashboard or the API.
 
-## Delete an image using the dash
+## Delete an image using the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 1. Click **Images**.

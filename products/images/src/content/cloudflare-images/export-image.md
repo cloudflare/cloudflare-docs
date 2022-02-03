@@ -22,7 +22,7 @@ To download an image via API, the syntax is as follows:
 
 ```txt
 GET accounts/<ACCOUNT_IDENTIFIER>/images/v1/<IDENTIFIER>/blob
-````
+```
 
 Example:
 
