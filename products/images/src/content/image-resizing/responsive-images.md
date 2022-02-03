@@ -16,9 +16,9 @@ There are two different scenarios where it is useful to use `srcset`:
 
 ## `srcset` for high-DPI displays
 
-For high-DPI display you need two versions of every image. One for `1x` density, suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops), and one for `2x` high-density displays used by almost all mobile phones, high-end laptops and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while the jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
+For high-DPI display you need two versions of every image. One for `1x` density, suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops), and one for `2x` high-density displays used by almost all mobile phones, high-end laptops, and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while the jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
 
-Assuming you have an image `product.jpg` in the `assets` folder, and you want to display it at a size of `960px`, the code is as follows:
+Assuming you have an image `product.jpg` in the `assets` folder and you want to display it at a size of `960px`, the code is as follows:
 
 ```html
 <img src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
@@ -29,7 +29,7 @@ In the URL path used in this example, the `src` attribute is for images with the
 
 The `srcset` attribute adds another, high-DPI image. The browser will automatically select between the images in the `src` and `srcset`. In this case, specifying `width=1920` (two times 960 pixels) and adding `2x` at the end, informs the browser that this is a double-density image. It will be displayed at the same size as a 960 pixel image, but with double the number of pixels which will make it look twice as sharp on high-DPI displays.
 
-Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for "1x" displays, and displayed as-is or also scaled down for "2x" displays.
+Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for `1x` displays, and displayed as-is or also scaled down for `2x` displays.
 
 ## `srcset` for responsive images
 
@@ -61,7 +61,7 @@ If the image takes 50% of the screen (or window) width:
 
 ```html
 <img style="width: 50vw"
-  srcset="<SAME_AS_BEFORE"
+  srcset="<SAME_AS_BEFORE>"
   sizes="50vw">
 ```
 
@@ -84,10 +84,10 @@ In this example, `sizes` says that for screens smaller than 640 pixels the image
 
 `srcset` is useful for pixel-based formats such as PNG, JPEG, and WebP. It is unnecessary for vector-based SVG images.
 
-HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto,` URLs in `src` or `srcset`.
+HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto` URLs in `src` or `srcset`.
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
 * You can enable the automatic [WebP conversion in Polish](/polish/activate-polish). This will convert all images on the site.
 
-* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. Example: `https://example.com/assets/hero.jpg`to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`
+* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.

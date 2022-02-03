@@ -7,6 +7,7 @@ pcx-content-type: how-to
 Images in the [cache must be purged](https://developers.cloudflare.com/cache/how-to/purge-cache) or expired before seeing any changes in Polish settings.
 
 <Aside type="warning">
+
 Do not activate Polish and Image Resizing simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
 
 </Aside>

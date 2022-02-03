@@ -269,4 +269,4 @@ async function handleRequest(request) {
 }
 ```
 
-When testing image resizing, please deploy the script first. Resizing will not be active in the on-line editor in the dashboard.
+When testing image resizing, please deploy the script first. Resizing will not be active in the online editor in the dashboard.

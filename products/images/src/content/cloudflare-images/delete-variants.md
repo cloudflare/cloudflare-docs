@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Delete variants
 
-You can delete variants via API with a simple cURL command, or via the Images dash.
+You can delete variants via the Images dashboard or via API.
 
 <Aside type="warning" header="Warning">
 
@@ -29,10 +29,10 @@ You cannot delete the public variant.
 
 For detailed information on using the API, refer to the [API endpoint](https://api.cloudflare.com/#cloudflare-images-variants-delete-a-variant) documentation.
 
-Here is an example of how to delete a variant through an API call:
+The following example deletes a variant through an API call:
 
 ```bash
-curl -X DELETE api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/images/v1/variants/<VARIANT_NAME>
+curl -X DELETE https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/images/v1/variants/<VARIANT_NAME> \
 --header 'Authorization: Bearer :token'
 ```
 

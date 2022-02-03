@@ -16,7 +16,7 @@ Here is a breakdown of each part of the URL:
 <Definitions>
 
 - `<ZONE>`
-  - Your domain name on Cloudflare. Unlike other third-party image resizing services, Image Resizing dooes not use a separate domain name for an API. Every Cloudflare zone with Image Resizing enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
+  - Your domain name on Cloudflare. Unlike other third-party image resizing services, Image Resizing does not use a separate domain name for an API. Every Cloudflare zone with Image Resizing enabled can handle resizing itself. In URLs used on your website this part can be omitted, so that URLs start with `/cdn-cgi/image/`.
 
 - `/cdn-cgi/image/`
   - A fixed prefix that identifies that this is a special path handled by Cloudflare's built-in Worker.
@@ -25,7 +25,7 @@ Here is a breakdown of each part of the URL:
   - A comma-separated list of options such as `width`, `height`, and `quality`.
 
 - `<SOURCE-IMAGE>`
-  - An absolute path on the origin server, or an absolute URL (starting with `https://` or `http://`), pointing to an image to resize. The path is not URL-encoded, so the resizing URL can be safely constructed by concatenating `/cdn-cgi/image/options` and the original image URL. Example: `/cdn-cgi/image/width=100/https://s3.example.com/bucket/image.png`.
+  - An absolute path on the origin server, or an absolute URL (starting with `https://` or `http://`), pointing to an image to resize. The path is not URL-encoded, so the resizing URL can be safely constructed by concatenating `/cdn-cgi/image/options` and the original image URL. For example: `/cdn-cgi/image/width=100/https://s3.example.com/bucket/image.png`.
 
 </Definitions>
 
@@ -98,10 +98,10 @@ At least one option must be specified. Options are comma-separated (spaces are n
   - Specifies strength of sharpening filter. The value is a floating-point number between `0` (no sharpening) and `10` (maximum). `1` is a recommended value.
 
 - **`blur=x`**
-  - Blur radius between `1` (slight blur) and `250` (maximum). Please be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
+  - Blur radius between `1` (slight blur) and `250` (maximum). Be aware that you cannot use this option to reliably obscure image content, because savvy users can modify an image's URL and remove the blur option. Use Workers to control which options can be set.
 
 - **`onerror=redirect`**
-  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source images is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
+  - In case of a fatal error that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
 
 - **`metadata`**
   - Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
@@ -127,7 +127,7 @@ At least one option must be specified. Options are comma-separated (spaces are n
 
 Cloudflare Image resizing can:
 
-* Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported (this format is inherently scalable, and does not need resizing).
+* Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported, since this format is inherently scalable and does not need resizing.
 * Generate JPEG and PNG images, and optionally AVIF or WebP.
 * Save animations as GIF or animated WebP.
 * Support ICC color profiles in JPEG and PNG images. 
