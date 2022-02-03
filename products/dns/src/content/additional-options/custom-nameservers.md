@@ -63,6 +63,10 @@ To make this custom nameserver the default for all new zones added to your accou
 
 When you choose the names for your zone-level nameservers, each hostname must be a subdomain of the zone this is configured for.
 
+### Prerequisites
+
+Before you can add custom nameservers to a zone, that zone has to be activated on a [full setup](/zone-setups/full-setup) while using its Cloudflare-assigned nameservers.
+
 ### Using the dashboard
 
 To add custom nameservers to a specific zone:
@@ -78,7 +82,8 @@ To add custom nameservers to a specific zone:
 ### Using the API
 
 To add zone-level custom nameservers via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and specify the custom nameservers in the payload:
-```
+
+```txt
 "vanity_name_servers": ["ns1.example.com","ns2.example.com"]
 ```
 
