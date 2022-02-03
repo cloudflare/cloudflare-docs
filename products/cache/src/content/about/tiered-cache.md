@@ -12,3 +12,7 @@ Tiered Cache works by dividing Cloudflare’s data centers into a hierarchy of l
 Additionally, Tiered Cache concentrates connections to origin servers so they come from a small number of data centers rather than the full set of network locations. This results in fewer open connections using server resources.
 
 To enable Tiered Cache, refer to [Enable Tiered Cache](/how-to/enable-tiered-cache).
+
+## Bandwidth Alliance
+
+For Enterprise users, any Tiered Cache option you enable takes precedence over the Bandwidth Alliance. For all other users, the Bandwidth Alliance takes precedence. Tiered Cache is still a valuable option to enable because the Bandwidth Alliance may not always be an available option, and in those instances, the Tiered Cache configuration will be used.
