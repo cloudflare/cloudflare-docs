@@ -33,7 +33,9 @@ Create a session by sending a `POST` request to our Instant Logs job endpoint wi
 
 * **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
-Note: Instant Logs has a maximum data rate supported. For high volume domains, we sample server side as indicated in the `"sampleInterval"` parameter returned in the logs.
+<Aside type='note'>
+Instant Logs has a maximum data rate supported. For high volume domains, we sample server side as indicated in the `"sampleInterval"` parameter returned in the logs.
+</Aside>
 
 * **Filters** - Use filters to drill down into specific events. Filters consist of 3 parts: key, operator and value. The keys we support are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**.
 
