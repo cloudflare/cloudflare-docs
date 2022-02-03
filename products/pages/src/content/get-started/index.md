@@ -53,6 +53,12 @@ Your **project name** will be used to generate your project's hostname. By defau
 
 **Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
 
+<Aside type="note">
+If you have created a new repository, make sure you have created and pushed the `main` or `master` branch to it. The branch can be empty.
+
+</Aside>
+
+
 ![Configuration](./images/configuration.png)
 
 #### Build settings
