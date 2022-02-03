@@ -11,6 +11,11 @@ To create Bulk Redirects via API, you must:
 1. Add items (URL Redirects) to the list created in step 1.
 1. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
+The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
+
+* Account Rulesets: Edit
+* Account Filter Lists: Edit
+
 ## 1. Create a Bulk Redirect List via API
 
 Use the [Create list](https://api.cloudflare.com/#rules-lists-create-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.

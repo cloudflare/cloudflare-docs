@@ -28,7 +28,14 @@ Follow this workflow to create an HTTP Request Header Modification Rule for a gi
 
 1. Use the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method to add an HTTP Request Header Modification Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) request mentioned in the previous step.
 
-### Examples
+## Required API token permissions
+
+The API token used in API requests to manage HTTP Request Header Modification Rules must have at least the following permissions:
+
+* Transform Rules: Edit
+* Account Rulesets: Read
+
+## Examples
 
 <details>
 <summary>Example: Add an HTTP request header with a static value</summary>

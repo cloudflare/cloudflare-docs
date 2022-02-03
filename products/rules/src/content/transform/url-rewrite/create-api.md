@@ -28,7 +28,14 @@ Follow this workflow to create a URL Rewrite Rule for a given zone via API:
 
 1. Use the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method to add a URL Rewrite Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) request mentioned in the previous step.
 
-### Examples
+## Required API token permissions
+
+The API token used in API requests to manage URL Rewrite Rules must have at least the following permissions:
+
+* Transform Rules: Edit
+* Account Rulesets: Read
+
+## Examples
 
 <details>
 <summary>Example: Add a rule that performs a static URL rewrite</summary>
