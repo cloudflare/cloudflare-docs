@@ -101,7 +101,7 @@ For GitLab, start by building two policies. Users will connect to GitLab in a co
 
 Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the `Applications` page in the Cloudflare for Teams Dashboard. Click `Add an application`.
+Once enabled, navigate to the `Applications` page in the Zero Trust Dashboard. Click `Add an application`.
 
 ![Applications Page](../static/secure-origin-connections/share-new-site/applications.png)
 
@@ -290,6 +290,6 @@ Cloudflare Tunnel will continue to run outbound-only connections and I can avoid
 
 ## View logs
 
-You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Cloudflare for Teams Dashboard.
+You can also view logs of the events that are allowed and blocked. Open the `Access` page of the `Logs` section in the Zero Trust Dashboard.
 
 ![View Logs](../static/zero-trust-security/gitlab/view-logs.png)

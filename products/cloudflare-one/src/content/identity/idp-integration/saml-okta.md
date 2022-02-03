@@ -37,7 +37,7 @@ To set up SAML with Okta as your identity provider:
 1. Click **Assign** and assign individuals or groups you want to grant access to.
 1. Click **Done**. The assignments display on the Applications page.
 1. Navigate to the **General** tab to retrieve the SAML provider information.
-1. On the Teams dashboard, navigate to **Settings** > **Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings** > **Authentication**.
 1. Click **Add new** under **Login Methods**, and select *SAML*.
 1. Fill in the following information:
     * **Name**: Name your identity provider.

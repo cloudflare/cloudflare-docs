@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 <Aside>
 
-This feature is only available if you're using the Teams Standard plan or the Teams Enterprise plan. For more information, see our [plans page](https://www.cloudflare.com/teams-pricing/).
+This feature is only available if you're using the Zero Trust Standard plan or the Zero Trust Enterprise plan. For more information, see our [plans page](https://www.cloudflare.com/teams-pricing/).
 </Aside>
 
 You can provide automated systems with service tokens to authenticate against Cloudflare's Zero Trust policies. Cloudflare for teams will generate service tokens that consist of an ID and Secret. Automated systems or applications can then use these values to reach an application protected by Access. 
@@ -16,7 +16,7 @@ This section covers how to create, renew, and revoke a service token.
 
 ## Create a service token
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth**.
 
 1. Go to the **Service Tokens** tab.
 

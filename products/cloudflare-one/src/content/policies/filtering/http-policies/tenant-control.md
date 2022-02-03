@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Tenant control
 
-Cloudflare for Teams offers IT administrators a way to ensure users have access to SaaS applications for corporate use, while at the same time blocking access to their personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
+Cloudflare Zero Trust offers IT administrators a way to ensure users have access to SaaS applications for corporate use, while at the same time blocking access to their personal accounts. This helps prevent the loss of sensitive or confidential data from a corporate network.
 
 You can create Gateway HTTP policies to control access to your corporate SaaS applications. When creating an HTTP policy with an Allow action, you will have the option to configure **custom headers**. The policy will use these headers to grant access to an application if a user’s request is headed to your organization’s account for the SaaS application, and to deny access if the request is headed to an account that does not match the information in the header.
 
@@ -20,7 +20,7 @@ Not all SaaS applications support tenant control. Examples of common application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1. On the [Teams Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
+1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
 1. Create a policy with the following values:
     * Action: `Allow`
     * Selector: `Application`
@@ -82,7 +82,7 @@ This section covers policy configurations for common SaaS applications.
 
 Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
 
-You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Cloudflare for Teams dashboard.
+You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Zero Trust dashboard.
 
 ### Example: Implementing a custom request header for a domain
 

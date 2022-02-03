@@ -6,7 +6,7 @@ import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md
 
 # Deploy a Hugo site
 
-Hugo is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
+[Hugo](https://gohugo.io/) is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
 
 In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
@@ -199,7 +199,7 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 You can set the environment variable `HUGO_VERSION` under Settings to use a specific version of Hugo.
 
-For example, `HUGO_VERSION`: `0.81.0`
+For example, `HUGO_VERSION`: `0.92.1`
 
 ## Learn more
 

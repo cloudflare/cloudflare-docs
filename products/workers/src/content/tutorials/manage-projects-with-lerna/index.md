@@ -144,4 +144,6 @@ lerna success - public-api
 lerna success - private-api
 ```
 
+## Related resources
+
 If you would like to review an example repository, refer to the accompanying [open-source codebase on GitHub](https://github.com/signalnerve/lerna-wrangler-monorepo-example) for this tutorial.

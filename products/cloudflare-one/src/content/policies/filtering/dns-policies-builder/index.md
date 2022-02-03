@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-# DNS policies (New)
+# DNS policies
 
 When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection. 
 
@@ -32,7 +32,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 #### Identity-based selectors
 
-You can build DNS policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+You can build DNS policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
 
 #### DOH Subdomain
 
@@ -121,7 +121,6 @@ Use this selector to match against the IP address of the authoritative name serv
 | UI name | API example |
 | -- | -- |
 | Authoritative Nameserver IP | `dns.authoritative_ns_ips == 198.51.100.0` |
-
 
 ### Operators
 

@@ -18,7 +18,7 @@ Administrators can set up an Access policy to require approval before a user is 
 
 ## Set up temporary authentication
 
-1. On the Teams Dashboard, navigate to **Access** > **Applications**.
+1. On the Zero Trust Dashboard, navigate to **Access** > **Applications**.
 1. Select an application and click **Edit**.
 1. Select the policy you want to configure with purpose justification.
 1. Open **Optional configurations**.

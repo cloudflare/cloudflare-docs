@@ -30,8 +30,8 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 ## Before you start
 
 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-1. [Enable Cloudflare for Teams on your account](/setup)
-1. [Connect your identity provider to Cloudflare for Teams](/identity/idp-integration)
+1. [Enable Cloudflare Zero Trust on your account](/setup)
+1. [Connect your identity provider to Cloudflare Zero Trust](/identity/idp-integration)
 
 ## Configure VNC on your virtual machine
 
@@ -160,7 +160,7 @@ At this point you have a running VNC server and a Cloudflare Tunnel on your mach
 
 The last step is to create a Zero Trust application to run your VNC server in the Browser.
 
-1. Open your [Teams Dashboard](https://dash.teams.cloudflare.com) and go to the **Access > Applications** tab.
+1. Open your [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to the **Access > Applications** tab.
 
 1. Click **Add an application**.
 

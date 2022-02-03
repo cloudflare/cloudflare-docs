@@ -34,7 +34,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 
 ### Block security risk categories
 
-1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
+1. Navigate to the **Policies** tab in the [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com/).
 2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
 3. Navigate to the **Security risks** tab.
 
@@ -80,7 +80,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 
 ### Blocking content categories
 
-1. Navigate to the **Policies** tab in the [Teams dashboard](https://dash.teams.cloudflare.com/).
+1. Navigate to the **Policies** tab in the [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com/).
 2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
 3. Navigate to the **Content categories** tab.
 

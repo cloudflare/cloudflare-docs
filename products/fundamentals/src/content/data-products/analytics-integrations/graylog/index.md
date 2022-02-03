@@ -185,7 +185,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 <Aside type="note" header="Note">
 
-To get bot requests identified correctly, use only one Cloudflare Firewall Rule, configured with the action _Challenge (Captcha)_. To learn more, refer to the [Cloudflare Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one Cloudflare Firewall Rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/).
 
 </Aside>
 

@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # Add bookmarks
 
-Cloudflare for Teams allows admins to show applications on their user’s [App Launcher](/applications/app-launcher) even if those applications are not secured behind Access. This way, users can access all the applications they need to work, all in one place — regardless of whether those applications are protected by Access.
+Cloudflare Zero Trust allows admins to show applications on their user’s [App Launcher](/applications/app-launcher) even if those applications are not secured behind Access. This way, users can access all the applications they need to work, all in one place — regardless of whether those applications are protected by Access.
 
 Links to applications not protected by Access can be added as **bookmarks**. To add a bookmark:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 

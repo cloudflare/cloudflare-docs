@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Challenge Solve Rate (CSR)
 
-The Challenge Solve Rate (CSR) is the percentage of issued challenges — Challenge (Captcha) or JS Challenge actions — that were solved. You can find the CSR of a rule by going to **Firewall** > **Firewall Rules**.
+The Challenge Solve Rate (CSR) is the percentage of issued challenges — Legacy CAPTCHA or JS Challenge actions — that were solved. You can find the CSR of a rule by going to **Firewall** > **Firewall Rules**.
 
 ```sql
 CSR = number of challenges solved / number of challenges issued
@@ -25,6 +25,6 @@ The CSR provides an indication of automated traffic:
 
 Currently, Cloudflare does not calculate the CSR of Managed Challenges.
 
-For customers on a Free plan, any rules configured with the _Challenge (Captcha)_ action now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action now use Managed Challenges. For more information, see [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
 </Aside>

@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Deploy `cloudflared` replicas
 
-Cloudflare for Teams allows you to deploy many `cloudflared` instances through the same tunnel. The same tunnel can represent multiple, redundant instances of `cloudflared`, giving your team the ability to scale instances dynamically.
+Cloudflare Zero Trust allows you to deploy many `cloudflared` instances through the same tunnel. The same tunnel can represent multiple, redundant instances of `cloudflared`, giving your team the ability to scale instances dynamically.
 
 To deploy multiple instances in this replica model, you can create and configure an instance of `cloudflared` once and run it as multiple different processes. DNS records and Cloudflare Load Balancers can still point to the Tunnel and its unique ID while that tunnel sends traffic to the multiple instances of `cloudflared` that run through it.
 

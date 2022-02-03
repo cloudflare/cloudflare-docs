@@ -142,11 +142,11 @@ To ensure that ADFS signs the full response when communicating with Cloudflare, 
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
-## Configure Cloudflare for Teams
+## Configure Cloudflare Zero Trust
 
-To enable Cloudflare for Teams to accept the claims and assertions sent from ADFS, follow these steps:
+To enable Cloudflare Zero Trust to accept the claims and assertions sent from ADFS, follow these steps:
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 1. The **Add a SAML identity provider** card displays.
 1. Enter an IdP **Name**.
