@@ -28,4 +28,4 @@ To activate the **Preserve Log** option in Google Chrome:
 1. Go to **Console**.
 1. Select the **Console settings** cog > **Preserve logs**.
 
-![Console pane](../static/console-settings.png)
+![Chrome's console panel to access preserve logs](../static/console-settings.png)
