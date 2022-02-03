@@ -11,15 +11,19 @@ To create Bulk Redirects via API, you must:
 1. Add items (URL Redirects) to the list created in step 1.
 1. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
+The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
+
+* Account Rulesets: Edit
+* Account Filter Lists: Edit
+
 ## 1. Create a Bulk Redirect List via API
 
 Use the [Create list](https://api.cloudflare.com/#rules-lists-create-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
 
 ```json
-curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "name": "my_redirect_list",
   "description": "My redirect list.",
@@ -54,10 +58,9 @@ For more information on list operations, refer to the [Rules Lists API](https://
 Use the [Create list items](https://api.cloudflare.com/#rules-lists-create-list-items) operation to add URL Redirect items to the list:
 
 ```json
-curl -X POST \
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/f848b6ccb07647749411f504d6f88794/items" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/f848b6ccb07647749411f504d6f88794/items" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '[
   {
     "redirect": {
@@ -92,8 +95,7 @@ This is an asynchronous operation. The response will contain an `operation_id` w
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/bulk_operations/92558f8b296d4dbe9d0419e0e53f6622" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <KEY>"
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 If the operation already completed successfully, the response will be similar to the following:
@@ -125,9 +127,9 @@ A Bulk Redirect Rule must have:
 The following request of the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 
 ```json
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
--H "X-Auth-Key: <KEY>" \
--H "X-Auth-Email: <EMAIL>" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "name": "My redirect ruleset",
   "kind": "root",
@@ -185,9 +187,10 @@ The response will be similar to the following:
 If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://api.cloudflare.com/#account-rulesets-update-account-ruleset) operation instead, like in the following example:
 
 ```json
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
--H "X-Auth-Key: <KEY>" \
--H "X-Auth-Email: <EMAIL>" \
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "name": "My redirect ruleset",
   "kind": "root",
