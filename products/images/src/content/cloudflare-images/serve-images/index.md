@@ -21,7 +21,7 @@ A typical Image Delivery URL looks like this:
 https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
 ```
 
-In this example, you need to replace `<Account_Hash>` with your Images account hash, and the `<IMAGE_ID>` and `<VARIANT_NAME>` to begin serving images. To find this information, click the **Preview** button next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
+In this example, you need to replace `<ACCOUNT_HASH>` with your Images account hash, and the `<IMAGE_ID>` and `<VARIANT_NAME>` to begin serving images. To find this information, click the **Preview** button next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
 
 ```txt
 https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
@@ -40,7 +40,7 @@ When a client requests an image, Cloudflare Images will pick the optimal format 
 Image delivery is supported from all customer domains under the same Cloudflare account. To serve images through custom domains, an image URL should be adjusted to the following format:
 
 ```txt
-https://somecustomdomain.com/cdn-cgi/imagedelivery/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
+https://example.com/cdn-cgi/imagedelivery/<IMAGES_ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
 ```
 
 Example with a custom domain:
@@ -49,10 +49,10 @@ Example with a custom domain:
 https://example.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
 ```
 
-In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different: 
+In this example, `<IMAGES_ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different: 
 
 - `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
-- `/cdn-cgi/imagedelivery`: Path to trigger cdn-cgi image proxy.
+- `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
 - `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
-- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image id.
+- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
 - `public`: The variant name.
