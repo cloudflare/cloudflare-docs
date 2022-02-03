@@ -37,7 +37,7 @@ Create a session by sending a `POST` request to our Instant Logs job endpoint wi
 Instant Logs has a maximum data rate supported. For high volume domains, we sample server side as indicated in the `"sampleInterval"` parameter returned in the logs.
 </Aside>
 
-* **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**.
+* **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **FirewallMatchesAction**, and **FirewallMatchesRuleIDs**.
 
 This is the list of the supported operators that we have available:
 
@@ -54,18 +54,18 @@ This is the list of the supported operators that we have available:
 | Contains      | `"contains"`         |
 | Is in  | `"In"`            |
 
-Below we have three examples of requests:
+Below we have three examples of filters:
 
 ```bash
-"filter":"{"where":{"and":[{"key":"ClientCountry","operator":"neq","value":"ca"}]}}"
+"filter":"{\"where\":{\"and\":[{\"key\":\"ClientCountry\",\"operator\":\"neq\",\"value\":\"ca\"}]}}"
 ```
 
 ```bash
-"filter":"{"where":{"and":[{"key":"EdgeResponseStatus","operator":"in","value":"200,201"}]}}"
+"filter":"{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":\"200,201\"}]}}"
 ```
 
 ```bash
-"filter":"{"where":{"and":[{"key":"ClientRequestPath","operator":"contains","value":"/static"},{"key":"ClientRequestHost","operator":"eq","value":"theburritobot.com"}]}}"
+"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"}, {\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"theburritobot.com\"}]}}"
 ```
 
 Example request using cURL:
@@ -75,12 +75,12 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge
 -H 'X-Auth-Key: <KEY>' \
 -H 'X-Auth-Email: <EMAIL>' \
 -H 'Content-Type: application/json' \
-- '{
+-d '{
     "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
     "sample": 1,
     "filter": "",
     "kind": "instant-logs"
-}'
+}' | jq . 
 ```
 
 Response:
@@ -105,7 +105,7 @@ The response will include a new field called **destination_conf**. The value of 
 
 ### 2. Connect to WebSocket
 
-Using a CLI utility like Websocat, you can connect to the WebSocket and start immediately receiving logs.
+Using a CLI utility like [Websocat](https://github.com/vi/websocat), you can connect to the WebSocket and start immediately receiving logs.
 
 ```bash
 websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2
@@ -123,7 +123,7 @@ Now that you have a connection to Cloudflare's websocket and are receiving logs 
 websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2 | agrind '* | json | sum(sampleInterval) by ClientCountry'
 ```
 
-Here are a few examples of **ClientCountry** codes:
+Response:
 
 | **ClientCountry**    | **_sum**      |
 | ----------- | ----------- |
@@ -164,6 +164,9 @@ If either of these limits are reached, the logs stream will automatically stop.
     -  First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
     - If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
     - Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
+
+- There was an error fetching your data.
+    - Make sure you have the correct permissions. In order to use Instant Logs you need Super Administrator, Administrator, Log Share or Log Share Reader permissions.
 
 ## Connect with us
 
