@@ -17,8 +17,8 @@ Refer to [Creating API tokens](https://developers.cloudflare.com/api/tokens/crea
 1. In **API token**, paste your API token.
 1. Input the name of the image you want to use in **Image File Name**.
 
-The **cURL command** message box will show you the complete command you can use. Below, is an example for a PNG image: 
+The **cURL command** message box will show you the complete command you can use: 
 
 ```bash
-curl -X POST -F file=@./<YOUR_IMAGE>.png -H "Authorization: Bearer <API_TOKEN>" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1
+curl -X POST -F file=@./MY_IMAGE -H "Authorization: Bearer MY_TOKEN" https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/images/v1
 ```
