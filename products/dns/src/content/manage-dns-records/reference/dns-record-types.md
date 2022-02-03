@@ -49,7 +49,7 @@ You can use CNAME records to point to other CNAME records (`www.example2.com` --
 
 ---
 
-## Email authentication and domain validation
+## Email authentication
 
 These records are recommended regardless of whether your domain sends email messages. Creating [negative email records](https://blog.cloudflare.com/tackling-email-spoofing/) can help protect your domain against email spoofing.
 
@@ -84,6 +84,20 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 ---
 
 ## Specialized records
+
+### TXT
+
+A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
+
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](https://developers.cloudflare.com/ssl/edge-certificates/changing-dcv-method) or an [SSL for SaaS domain](https://developers.cloudflare.com/ssl/ssl-for-saas/common-tasks/certificate-validation-methods).
+
+You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/manage-dns-records/how-to/email-records#prevent-domain-spoofing) instead.
+
+<Aside type="note">
+
+The **Content** for TXT records at Cloudflare must be 2048 characters or less.
+
+</Aside>
 
 ### CAA
 
