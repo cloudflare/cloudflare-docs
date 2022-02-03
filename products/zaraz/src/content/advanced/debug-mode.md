@@ -1,5 +1,5 @@
 ---
-order: 5
+order:
 pcx-content-type: how-to
 ---
 
