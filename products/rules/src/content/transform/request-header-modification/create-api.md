@@ -34,16 +34,16 @@ Follow this workflow to create an HTTP Request Header Modification Rule for a gi
 <summary>Example: Add an HTTP request header with a static value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a static value — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -71,14 +71,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level Late Transform Ruleset",
     "description": "Zone-level ruleset that will execute Late Transform Rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "rewrite",
         "action_parameters": {
@@ -92,7 +92,7 @@ header: Response
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
         "description": "My first HTTP Request Header Modification Rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "{rule-ref}"
+        "ref": "<RULE_REF>"
       }
     ],
     "last_updated": "2021-04-14T14:42:04.219025Z",
@@ -111,16 +111,16 @@ header: Response
 <summary>Example: Add an HTTP request header with a dynamic value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — adding an HTTP request header with a dynamic value — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -148,14 +148,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level Late Transform Ruleset",
     "description": "Zone-level ruleset that will execute Late Transform Rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "rewrite",
         "action_parameters": {
@@ -169,7 +169,7 @@ header: Response
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
         "description": "My first HTTP Request Header Modification Rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "{rule-ref}"
+        "ref": "<RULE_REF>"
       }
     ],
     "last_updated": "2021-04-14T14:42:04.219025Z",
@@ -188,16 +188,16 @@ header: Response
 <summary>Example: Remove an HTTP request header</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Request Header Modification Rule — removing an HTTP request header — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -224,14 +224,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level Late Transform Ruleset",
     "description": "Zone-level ruleset that will execute Late Transform Rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "rewrite",
         "action_parameters": {
@@ -244,7 +244,7 @@ header: Response
         "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
         "description": "My first HTTP Request Header Modification Rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "{rule-ref}"
+        "ref": "<RULE_REF>"
       }
     ],
     "last_updated": "2021-04-14T14:42:04.219025Z",

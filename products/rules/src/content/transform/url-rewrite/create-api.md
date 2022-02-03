@@ -34,16 +34,16 @@ Follow this workflow to create a URL Rewrite Rule for a given zone via API:
 <summary>Example: Add a rule that performs a static URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a static rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single URL Rewrite Rule — performing a static rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -70,14 +70,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level Transform Ruleset",
     "description": "Zone-level ruleset that will execute Transform Rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "rewrite",
         "action_parameters": {
@@ -90,7 +90,7 @@ header: Response
         "expression": "(http.request.uri.query contains \"eu\")",
         "description": "My first static URL Rewrite Rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "{rule-ref}"
+        "ref": "<RULE_REF>"
       }
     ],
     "last_updated": "2021-04-14T14:42:04.219025Z",
@@ -109,16 +109,16 @@ header: Response
 <summary>Example: Add a rule that performs a dynamic URL rewrite</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`{ruleset-id}`) to a single URL Rewrite Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single URL Rewrite Rule — performing a dynamic rewrite of the URI path — using the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method:
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -145,14 +145,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level Transform Ruleset",
     "description": "Zone-level ruleset that will execute Transform Rules.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "rewrite",
         "action_parameters": {
@@ -165,7 +165,7 @@ header: Response
         "expression": "starts_with(http.request.uri.path, \"/news/2012/\")",
         "description": "My first dynamic URL Rewrite Rule",
         "last_updated": "2021-04-14T14:42:04.219025Z",
-        "ref": "{rule-ref}"
+        "ref": "<RULE_REF>"
       }
     ],
     "last_updated": "2021-04-14T14:42:04.219025Z",
