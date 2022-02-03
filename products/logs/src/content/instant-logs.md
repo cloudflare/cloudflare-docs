@@ -117,7 +117,7 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 
 ### Angle Grinder
 
-Now that you have a connection to our websocket and are now receiving logs from the edge, you can start slicing and dicing the logs. A handy tool to use for this is https://github.com/rcoh/angle-grinder. **Angle Grinder** lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country we can sum the number of events by the `ClientCountry` field.
+Now that you have a connection to Cloudflare's websocket and are receiving logs from the edge, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
 ```bash
 websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c91b186a349d2 | agrind '* | json | sum(sampleInterval) by ClientCountry'
