@@ -85,7 +85,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge
 
 Response:
 
-The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from the Edge.
+The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's edge.
 
 ```bash
 {
