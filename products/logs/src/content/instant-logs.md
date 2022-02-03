@@ -37,7 +37,7 @@ Create a session by sending a `POST` request to our Instant Logs job endpoint wi
 Instant Logs has a maximum data rate supported. For high volume domains, we sample server side as indicated in the `"sampleInterval"` parameter returned in the logs.
 </Aside>
 
-* **Filters** - Use filters to drill down into specific events. Filters consist of 3 parts: key, operator and value. The keys we support are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**.
+* **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **ASN**, **Cache status**, **Country**, **Client IP**, **Host**, **HTTP method**, **Path**, **Status code**, **Firewall action matches**, and **Firewall rule ID matches**.
 
 This is the list of the supported operators that we have available:
 
