@@ -148,7 +148,7 @@ Instant Logs has three limits set in place:
 
 * Only one active Instant Logs session per zone.
 * Maximum session time is 60 minutes.
-* If you stop listening to a socket for > 5 mins.
+* If you stop listening to a socket for more than five minutes.
 
 If either of these limits are reached, the logs stream will automatically stop.
 
