@@ -13,10 +13,9 @@ Cloudflare Image Resizing lets you:
 
 - Integrate [image processing with Workers](/image-resizing/resize-with-workers), which enables advanced integrations such as custom URL schemes, content negotiation, and responsive images based on Client Hints.
 
+You can use Cloudflare Image Resizing with either a [pre-defined URL format](/image-resizing/url-format) or, for advanced use cases, with [Cloudflare Workers](/image-resizing/resize-with-workers).
+
+
 ## Availability
 
-Image Resizing is currently available for Pro, Business, and Enterprise customers. To begin, ensure you have [enabled Image Resizing](/image-resizing/enable-image-resizing) in the Cloudflare dashboard.
-
-## Two ways to use
-
-You can use Cloudflare Image Resizing with either a pre-defined URL format or, for advanced use cases, with Cloudflare Workers.
+Image Resizing is currently available for Pro, Business, and Enterprise customers. To get started, make sure you have [enabled Image Resizing](/image-resizing/enable-image-resizing) in the Cloudflare dashboard.
