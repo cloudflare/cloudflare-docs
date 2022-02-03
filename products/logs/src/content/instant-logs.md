@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 Instant Logs allows Cloudflare Enterprise customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
 
-## Instant Logs on the Cloudflare Dashboard
+## Instant Logs on the Cloudflare dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
