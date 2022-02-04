@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 | Before you start |
 |---|
-| Follow the [Tunnel guide](/connect-apps/install-and-setup/tunnel-guide) to create a tunnel, route traffic to a tunnel, and run it. |
+| Follow the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide) to create a tunnel, route traffic to a tunnel, and run it. |
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
