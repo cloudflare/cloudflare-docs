@@ -78,21 +78,4 @@ In the event that your local development no longer works with your new `.npmrc` 
 
 2. Restore your previous `.npmrc` file – the version that was previously working for you and your teammates.
 
-3. Create a new `is-pages.js` file in your project's root directory:
-
-    ```js
-    // Pages always has `CF_PAGES` defined
-    if (!process.env.CF_PAGES) process.exit(1);
-    ```
-
-4. In your `package.json` file, create a new `"preinstall"` script, which will rename the `.npmrc.pages` file to `.npmrc` only during the Pages build process:
-
-    ```js
-    // package.json
-    {
-      "scripts": {
-        "preinstall": "node is-pages && mv .npmrc.pages .npmrc || echo \"Not Pages\"",
-        // your existing scripts
-      }
-    }
-    ```
+3. In your Pages project's **Settings** > **Environment variables**, add a new [environment variable](/platform/build-configuration#environment-variables) named [`NPM_CONFIG_USERCONFIG`](https://docs.npmjs.com/cli/v6/using-npm/config#npmrc-files) and set its value to `/opt/buildhome/repo/.npmrc.pages`. If your `.npmrc.pages` file is not in your project's root directory, adjust this path accordingly.
