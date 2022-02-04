@@ -16,8 +16,8 @@ Follow these steps to configure 1.1.1.1 for Families:
 
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.
 1. Click **Network** > **Advanced**.
-1. Select the **DNS** tab. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
+1. Select the **DNS** tab. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replaced them with:
 
     ```txt
     1.1.1.2
@@ -30,8 +30,8 @@ Follow these steps to configure 1.1.1.1 for Families:
 
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.
 1. Click **Network** > **Advanced**.
-1. Select the **DNS** tab. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the IPv6 addresses listed below:
+1. Select the **DNS** tab. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replace them with:
 
     ```txt
     2606:4700:4700::1112
@@ -46,8 +46,8 @@ Follow these steps to configure 1.1.1.1 for Families:
 
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.
 1. Click **Network** > **Advanced**.
-1. Select the **DNS** tab. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
+1. Select the **DNS** tab. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replace them with:
 
     ```txt
     1.1.1.3
@@ -60,8 +60,8 @@ Follow these steps to configure 1.1.1.1 for Families:
 
 1. Go to **System Preferences**. You can find it by pressing <kbd>Command</kbd> + <kbd>Space</kbd> on your keyboard and typing `System Preferences`.
 1. Click **Network** > **Advanced**.
-1. Select the **DNS** tab. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the IPv6 addresses we listed below:
+1. Select the **DNS** tab. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replace them with:
 
     ```txt
     2606:4700:4700::1113
