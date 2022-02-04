@@ -133,7 +133,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `ad-url`
 
-  - The Stream Player supports VAST Tags to insert ads such as prerolls. If you have a VAST tag URI, you can pass it to the Stream Player by setting the `ad-url` parameter. Note: the URI must be encoded us using a function like JavaScript's `encodeURIComponent()`
+  - The Stream Player supports VAST Tags to insert ads such as prerolls. If you have a VAST tag URI, you can pass it to the Stream Player by setting the `ad-url` parameter. The URI must be encoded using a function like JavaScript's `encodeURIComponent()`.
 
 </Definitions>
 
