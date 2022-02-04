@@ -16,7 +16,7 @@ Follow these steps to configure 1.1.1.1:
 
 1. Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
 1. In the admin console, find the place where **DNS settings** are set. This may be contained within categories such as **WAN** and **IPv6** (Asus Routers) or **Internet** (Netgear Routers). Consult your router's documentation for details.
-1. Take note of any IP addresses that are currently set and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses that are currently set and save them in a safe place in case you need to use them later.
 1. For **IPv4**, replace the existing addresses with:
 
     ```txt

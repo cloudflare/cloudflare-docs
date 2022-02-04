@@ -131,6 +131,10 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
   - A timestamp that specifies the time when playback begins. If a plain number is used such as `?startTime=123`, it will be interpreted as `123` seconds. More human readable timestamps can also be used, such as `?startTime=1h12m27s` for `1 hour, 12 minutes, and 27 seconds`.
 
+- `ad-url`
+
+  - The Stream Player supports VAST Tags to insert ads such as prerolls. If you have a VAST tag URI, you can pass it to the Stream Player by setting the `ad-url` parameter. The URI must be encoded using a function like JavaScript's `encodeURIComponent()`.
+
 </Definitions>
 
 ## Debug Info

@@ -15,4 +15,4 @@ To enable Tiered Cache, refer to [Enable Tiered Cache](/how-to/enable-tiered-cac
 
 ## Bandwidth Alliance
 
-For Enterprise users, any Tiered Cache option you enable takes precedence over the Bandwidth Alliance, and for all other users, the Bandwidth Alliance takes precedence. Tiered Cache is still a valuable option to enable because the Bandwidth Alliance may not always be an available option, and in those instances, the Tiered Cache configuration will be used.
+For Enterprise users, any Tiered Cache option you enable takes precedence over the Bandwidth Alliance. For all other users, the Bandwidth Alliance takes precedence. Tiered Cache is still a valuable option to enable because the Bandwidth Alliance may not always be an available option, and in those instances, the Tiered Cache configuration will be used.

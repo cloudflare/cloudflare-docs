@@ -21,6 +21,12 @@ In most cases, you should proxy your **A**, **AAAA**, and **CNAME** records. The
 
 Beyond the [performance and caching benefits](https://developers.cloudflare.com/fundamentals/get-started/how-cloudflare-works), proxying your records hides your origin server's IP address and protects your application from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
+### Limitations for Pending domains
+
+When your [domain status](/zone-setups/reference/domain-status) is **Pending Nameserver Update**, that domain's DNS records cannot yet be proxied. 
+
+This means that pending domains cannot take advantage of Cloudflare caching and other settings — even if their DNS records are designed as **Proxied** — and any requests to your DNS records will return your origin server's IP address and not Cloudflare IP addresses.
+
 ## When to use unproxied records
 
 In some circumstances, you should not proxy your DNS records.
