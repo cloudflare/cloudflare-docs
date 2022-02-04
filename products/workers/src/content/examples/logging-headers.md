@@ -65,13 +65,13 @@ console.log(`Request headers: ${JSON.stringify(request.headers)}`)
 
 Both attempts result in what appears to be an empty object — the string `"{}"` — even though calling `request.headers.has("Your-Header-Name")` might return true. This is the same behavior that browsers implement.
 
-The reason this happens is because [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) objects do not store headers in enumerable JavaScript properties, so the developer console and JSON stringifier do not know how to read the names and values of the headers. It is not literally an empty object, but rather an opaque object.
+The reason this happens is because [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) objects do not store headers in enumerable JavaScript properties, so the developer console and JSON stringifier do not know how to read the names and values of the headers. It is not actually an empty object, but rather an opaque object.
 
 `Headers` objects are iterable, which you can take advantage of to develop a couple of quick one-liners for debug-printing headers.
 
 ### Pass headers through a Map
 
-The first common idiom for making Headers `console.log()`-friendly is to construct a `Map` object from the `Headers` object, and log the `Map` object.
+The first common idiom for making Headers `console.log()`-friendly is to construct a `Map` object from the `Headers` object and log the `Map` object.
 
 ```js
 console.log(new Map(request.headers))
