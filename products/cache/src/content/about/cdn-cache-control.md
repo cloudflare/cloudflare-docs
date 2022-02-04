@@ -9,7 +9,7 @@ pcx-content-type: concept
 
 ## Header precedence
 
-You have several options available to determine how `CDN-Cache-Control` directives interact with `Cache-Control directives`. 
+You have several options available to determine how `CDN-Cache-Control` directives interact with `Cache-Control` directives. 
 
 An origin can:
 
