@@ -31,8 +31,8 @@ If you value simplicity and your customers can tolerate a few minutes of downtim
 
 <CreateHostname/>
 
-- [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): `txt_name` and `txt_value`
-- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**
+- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
+- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 
 Ask your customer to create a TXT record named the **name** and containing the **value** at their authoritative DNS provider. Once this TXT record is in place, validation and certificate issuance will automatically complete.
 
@@ -44,8 +44,8 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 <CreateHostname/>
 
-- [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): `emails`
-- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
+- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
+- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
 
 <EmailValidationProcess/>
 
@@ -57,7 +57,7 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 Since this method is only available using the API, you need to make a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) and set a `"method":"cname"` parameter.
 
-In the response, you will see two properties inside of the `ssl` object: `cname` and `cname_target` (you can also see these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
+Within the `ssl` object in the response, refer to the values present in the `validation_records` array. Each record will contain a property for `cname` and `cname_target` (you can also access these values in the dashboard by clicking that specific hostname certificate). Provide these values to your customer so they can add a CNAME record at their authoritative DNS provider.
 
 <ValidatePatch/>
 
@@ -75,10 +75,10 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 
 <CreateHostname/>
 
-- [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): `http_url` and `http_body`
-- Dashboard: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
+- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
+- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
 
-At your origin, make this token available at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.
+At your origin, make the `http_body` available in a TXT record at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.
 
 Here is an example NGINX configuration that would return a token:
 
