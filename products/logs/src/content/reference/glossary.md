@@ -1,6 +1,6 @@
 ---
 order: 121
-pcx-content-type: interim
+pcx-content-type: glossary
 ---
 
 # Glossary
