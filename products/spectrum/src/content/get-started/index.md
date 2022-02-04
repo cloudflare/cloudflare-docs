@@ -1,6 +1,6 @@
 ---
 order: 
-pcx-content-type: tutorial
+pcx-content-type: get-started
 ---
 
 # Get started

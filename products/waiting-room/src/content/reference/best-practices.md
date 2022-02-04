@@ -1,6 +1,6 @@
 ---
 order: 
-pcx-content-type: best-practices
+pcx-content-type: reference
 ---
 
 import ChangeQueueMethod from "../_partials/_change-queueing-method.md"

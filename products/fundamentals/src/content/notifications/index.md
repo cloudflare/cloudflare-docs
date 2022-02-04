@@ -1,7 +1,7 @@
 ---
 order: 4
 type: overview
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 <ContentColumn>

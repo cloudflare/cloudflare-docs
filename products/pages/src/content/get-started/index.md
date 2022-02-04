@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: configuration
+pcx-content-type: get-started
 ---
 
 # Get started

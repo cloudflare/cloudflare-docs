@@ -1,7 +1,7 @@
 ---
 order: 2
 title: Get started
-pcx-content-type: how-to
+pcx-content-type: get-started
 ---
 
 # Get started

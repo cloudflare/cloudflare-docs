@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: tutorial
+pcx-content-type: get-started
 ---
 
 import QueueAll from "../_partials/_queue-all.md"

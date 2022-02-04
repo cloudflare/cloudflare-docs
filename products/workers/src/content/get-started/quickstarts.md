@@ -1,7 +1,7 @@
 ---
 type: overview
 order: 2
-pcx-content-type: getting-started
+pcx-content-type: get-started
 ---
 
 import WorkerStarter from "../../components/worker-starter"
