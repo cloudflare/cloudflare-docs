@@ -15,7 +15,7 @@ Follow these steps to configure 1.1.1.1 in Ubuntu and Debian:
 1. Click **System** > **Preferences** > **Network Connections**.
 1. Select the **Wireless tab**, then choose the WiFi network you are currently connected to.
 1. Click **Edit** > **IPv4**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Change the DNS servers listed to:
 
     ```txt
@@ -44,7 +44,7 @@ Follow these steps to configure 1.1.1.1 in Ubuntu and Debian:
   ```
 
 1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Replace the `nameserver` lines with:
 
   For IPv4:
