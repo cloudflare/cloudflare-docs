@@ -87,7 +87,7 @@ There are many different event types that can be enabled for your webhook. Selec
 
 ![Create a GitHub Webhook](./media/new-github-webhook.png)
 
-When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is.  You will later return to your repository to create, edit, and close some issues to ensure that the the webhook is working once your application is deployed.
+When your webhook is created, it will attempt to send a test payload to your application. Since your application is not actually deployed yet, leave the configuration as it is.  You will later return to your repository to create, edit, and close some issues to ensure that the webhook is working once your application is deployed.
 
 ## Generate
 
@@ -107,7 +107,7 @@ Wrangler templates are just Git repositories, so if you want to create your own 
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `slack-bot` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
-All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully-featured applications.
+All Cloudflare Workers applications start by listening for `fetch` events, which are triggered when a client makes a request to a Workers route. After a request is received by the Worker, the response your application constructs will be returned to the user. This tutorial will guide you through understanding how the request/response pattern works and how you can use it to build fully featured applications.
 
 ```js
 ---
@@ -634,7 +634,7 @@ export const constructGhIssueSlackMessage = (
 }
 ```
 
-Back in `src/handlers/webhook.js`, the `blocks` that are returned from `constructGhIssueSlackMessage` become the body in a new `fetch` request, an HTTP POST request to a Slack webhook URL. Once that request completes, return a simple response with status code 200, and the body text “OK”:
+Back in `src/handlers/webhook.js`, the `blocks` that are returned from `constructGhIssueSlackMessage` become the body in a new `fetch` request, an HTTP POST request to a Slack webhook URL. Once that request completes, return a response with status code `200`, and the body text `"OK"`:
 
 ```js
 ---
@@ -668,7 +668,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 </Aside>
 
-To use this constant inside of your codebase, you can use Wrangler’s [Secrets](/cli-wrangler/commands#secret) feature:
+To use this constant inside of your codebase, use the [`wrangler secret`](/cli-wrangler/commands#secret) command:
 
 ```sh
 ---
@@ -729,7 +729,7 @@ Publishing your Workers application should now cause issue updates to start appe
 
 ![Create New Issue](./media/create-new-issue.gif)
 
-## Resources
+## Related resources
 
 In this tutorial, you built and published a Cloudflare Workers application that can respond to GitHub webhook events, and allow GitHub API lookups within Slack. If you would like to review the full source code for this application, you can find the repository [on GitHub](https://github.com/signalnerve/workers-slack-bot).
 

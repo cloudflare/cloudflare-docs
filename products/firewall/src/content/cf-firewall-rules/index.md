@@ -34,7 +34,7 @@ The **Rules List** gives you a snapshot of recent activity and allows you to man
 
 #### Challenge Solve Rate (CSR)
 
-The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with _Challenge (Captcha)_ or _JS Challenge_ actions, and it is calculated as follows:
+The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with _Legacy CAPTCHA_ or _JS Challenge_ actions, and it is calculated as follows:
 
 <p><var>CSR</var> = <var>number of challenges solved</var> / <var>number of challenges issued</var></p>
 
@@ -53,7 +53,7 @@ You should aim for a low Challenge Solve Rate. Review the CSR of your CAPTCHA ru
 
 Currently, Cloudflare does not calculate the CSR of Managed Challenges.
 
-For customers on a Free plan, any rules configured with the _Challenge (Captcha)_ action will use Managed Challenges. For more information, refer to [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action will use Managed Challenges. For more information, refer to [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
 </Aside>
 

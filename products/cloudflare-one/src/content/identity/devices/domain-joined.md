@@ -10,7 +10,7 @@ title: Domain Joined
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --- | ----------------- | --------- | ---- |
 | Beta | Windows | WARP with Gateway | All plans | 
 
@@ -21,7 +21,7 @@ The Domain Joined device posture attribute ensures that a user is a member of a 
 
 To enable the Domain Joined check:
 
-1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 1. Click **+Add**.
 1. Select **Domain Joined**.
 1. Enter a descriptive name for the check.

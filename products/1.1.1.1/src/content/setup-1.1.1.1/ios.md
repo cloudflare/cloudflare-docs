@@ -43,8 +43,8 @@ If you configure 1.1.1.1 manually, you will have to do it for every WiFi network
 1. Scroll down until you see the section called **Configure DNS**.
 1. Change the configuration from **Automatic** to **Manual**.
 1. Select **Add Server**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add:
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and in their place add:
 
     ```txt
     1.1.1.1

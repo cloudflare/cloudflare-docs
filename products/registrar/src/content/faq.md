@@ -1,5 +1,4 @@
 ---
-title: Frequently asked questions
 order: 4
 pcx-content-type: faq
 ---
@@ -57,6 +56,10 @@ If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1
 ### What happens if I enter the wrong auth code?
 
 If you enter an incorrect auth code (also referred to as authentication code or authorization code), return to the **Domain Registration** page or the **Overview** for your site. You can use the available input field to reenter your authentication code.
+
+### I registered my domain for 10 years at another registrar. If I transfer it to Cloudflare will I gain another year?
+
+No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
 
 ---
 

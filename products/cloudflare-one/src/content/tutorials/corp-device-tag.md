@@ -21,7 +21,7 @@ You can use Cloudflare Access to require team members to connect to self-hosted 
 
 ## Create or upload a list of devices
 
-1. Navigate to the [Teams Dashboard](dash.teams.cloudflare.com).
+1. Navigate to the [Zero Trust Dashboard](dash.teams.cloudflare.com).
 1. Go to **My Team > Lists**.
 1. Click **Create manual list**. You can also upload a CSV list.
 1. Give your list a name and choose `Serial numbers` from the List type field.
@@ -36,15 +36,15 @@ Once saved, the serial number list will appear in your list view.
 
 ## Deploy Cloudflare WARP
 
-Cloudflare Access relies on the Cloudflare for Teams client, WARP, to gather the serial number of a device attempting to reach a policy.
+Cloudflare Access relies on the Zero Trust client, WARP, to gather the serial number of a device attempting to reach a policy.
 
-In order to allow users to authenticate, you must [deploy the WARP agent](/tutorials/gw-rollout-guide#configure-device-policies) in proxy mode and [users must enroll](/tutorials/gw-rollout-guide#enroll-the-cloudflare-for-teams-agent-for-dns-filtering) into your Cloudflare for Teams account.
+In order to allow users to authenticate, you must [deploy the WARP agent](/tutorials/gw-rollout-guide#configure-device-policies) in proxy mode and [users must enroll](/tutorials/gw-rollout-guide#enroll-the-cloudflare-for-teams-agent-for-dns-filtering) into your Zero Trust account.
 
 ## Build a Zero Trust policy
 
 You can now add this corporate device requirement to existing or new applications.
 
-1. Navigate to the [Teams Dashboard](dash.teams.cloudflare.com) to begin.
+1. Navigate to the [Zero Trust Dashboard](dash.teams.cloudflare.com) to begin.
 
 1. To add to an existing application, choose the specific resource from the **Applications** page in the Access section of the sidebar. Click **Edit**.
 

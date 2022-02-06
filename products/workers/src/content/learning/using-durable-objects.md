@@ -1,5 +1,5 @@
 ---
-order: 10
+order:
 pcx-content-type: concept
 ---
 
@@ -17,7 +17,7 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 ## Using Durable Objects
 
-Durable Objects are named instances of a class you define.  Just like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
+Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
 To start, enable Durable Objects for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”. 
 
@@ -243,7 +243,35 @@ The `[durable_objects]` section has 1 subsection:
 - `bindings` - An array of tables, each table can contain the below fields.
   - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current environment's script.
+  - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
+
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example an environment named `staging`:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
+]
+```
+
+Because Wrangler [appends the environment name to the top-level name](/platform/environments#naming) when publishing, for a worker named `worker-name` the above example is equivalent to:
+
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
+]
+```
+
+Note that EXAMPLE_CLASS in the staging environment is bound to a different script name compared to the top-level EXAMPLE_CLASS binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+
+```toml
+[env.another]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
+]
+```
+
 
 ### Configuring Durable Object classes with migrations
 
@@ -455,12 +483,15 @@ export class Counter {
 
 ### Debugging
 
-- [`wrangler dev`](/cli-wrangler/commands#dev) now supports Durable Objects.
+[`wrangler dev`](/cli-wrangler/commands#dev) and [`wrangler tail`](/cli-wrangler/commands#tail) are both available to help you debug your Durable Objects.
 
-Wrangler dev opens up a tunnel from your local development environment to Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+`wrangler dev` opens up a tunnel from your local development environment to a preview instance of your script at Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
 
+`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
-To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+### GraphQL Analytics
+
+Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema).
 
 ### Common errors
 #### Error: `No event handlers were registered. This script does nothing.`

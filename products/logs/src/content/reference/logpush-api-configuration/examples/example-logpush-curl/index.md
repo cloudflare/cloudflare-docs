@@ -29,7 +29,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 ```
 
 ### Parameters
-* *destination_conf* - see [Destination](/reference/logpush-api-configuration/#destination) for details
+* **destination_conf** - See [Destination](/reference/logpush-api-configuration/#destination) for details.
 
 ### Response
 
@@ -65,15 +65,15 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 
 ### Parameters
 
-* *name* (optional) - we suggest using your domain name as the job name; cannot be changed after the job is created
-* *destination_conf* - see [Destination](/reference/logpush-api-configuration/#destination) for details
-* *dataset* - the category of logs you want to receive; either  `http_requests` (default), `spectrum_events`, or `firewall_events`; cannot be changed after the job is created
-* *logpull_options* (optional) - see [Options](/reference/logpush-api-configuration/#options)
-    * Typically includes the desired fields and timestamp format
-    * Set the timestamp format to RFC 3339 (`&timestamps=rfc3339`) for:
-      * Google BigQuery usage
-      * Automated timestamp parsing within Sumo Logic; *see [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details*
-* *ownership_challenge* - challenge token required to prove destination ownership
+* **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
+* **destination_conf** - Refer to [Destination](/reference/logpush-api-configuration/#destination) for details.
+* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets; this parameter cannot be changed after the job is created.
+* **logpull_options** (optional) - Refer to [Options](/reference/logpush-api-configuration/#options).
+    * Typically includes the desired fields and timestamp format.
+    * Set the timestamp format to `RFC 3339` (`&timestamps=rfc3339`) for:
+      * Google BigQuery usage.
+      * Automated timestamp parsing within Sumo Logic; refer to [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details.
+* **ownership_challenge** - Challenge token required to prove destination ownership.
 
 ### Response
 
@@ -98,7 +98,7 @@ In the response, you get a newly-created job ID. For example:
 }
 ```
 
-Note that you can validate the `logpull_options` parameter before including it in your job configuration:
+Note that you can validate the **logpull_options** parameter before including it in your job configuration:
 
 ```bash
 curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options": "fields=ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID&timestamps=rfc3339", "dataset": "http_requests"}' | jq .
@@ -150,7 +150,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 
 Note that by default a job is not enabled (`"enabled": false`).
 
-If you don't remember your job ID, you can retrieve it using your zone ID:
+If you do not remember your job ID, you can retrieve it using your zone ID:
 
 ```bash
 curl -s -X GET \
@@ -187,11 +187,11 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 -d'{"enabl
 
 Once the job is enabled, you will start receiving logs within a few minutes and then in batches as soon as possible until you disable the job. For zones with very high request volume, it may take several hours before you start receiving logs for the first time.
 
-In addition to modifying *enabled*, you can also update the value for *logpull_options*. To modify *destination_conf*, you will need to request an ownership challenge and provide the associated token with your update request. You can also delete your current job and create a new one.
+In addition to modifying `enabled`, you can also update the value for **logpull_options**. To modify **destination_conf**, you will need to request an ownership challenge and provide the associated token with your update request. You can also delete your current job and create a new one.
 
-Once a job has been enabled and has started executing, the *last_complete* field will show the time when the last batch of logs was successfully sent to the destination:
+Once a job has been enabled and has started executing, the **last_complete** field will show the time when the last batch of logs was successfully sent to the destination:
 
-### Request to get job by ID and see *last_complete* info
+### Request to get job by ID and see **last_complete** info
 
 ```bash
 curl -s -X GET \
@@ -308,9 +308,9 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 }
 ```
 
-## Step 6 - Updating `logpull_options`
+## Step 6 - Updating **logpull_options**
 
-If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current `logpull_options` for your zone.
+If you want to add (or remove) fields, change the timestamp format, or enable protection against the `Log4j - CVE-2021-44228` vulnerability, first retrieve the current **logpull_options** for your zone.
 
 ```bash
 curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
@@ -342,7 +342,7 @@ curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 }
 ```
 
-Next, edit the `logpull_options` as desired and create a `PUT` request. The following example enables the `CVE-2021-44228` redaction option.
+Next, edit the **logpull_options** as desired and create a `PUT` request. The following example enables the **CVE-2021-44228** redaction option.
 
 ```bash
 curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>' \
@@ -353,7 +353,7 @@ curl -s -X PUT 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/job
 }'
 ```
   
-Note that at this time, the `CVE-2021-44228` option is not available through the UI, and updating your Logpush job through the UI will remove this option.
+Note that at this time, the **CVE-2021-44228** option is not available through the UI, and updating your Logpush job through the UI will remove this option.
 
 ### Response 
 

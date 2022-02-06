@@ -10,7 +10,7 @@ title: Disk Encryption
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --- | ----------------- | --------- | ---- |
 | Beta | macOS, Windows, Linux | WARP with Gateway | All plans | 
 
@@ -21,7 +21,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 To enable the Disk Encryption check:
 
-1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 1. Click **+Add**.
 1. Select **Disk Encryption**.
 1. Enter a descriptive name for the check.

@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration will allow any user with a Google account to login (if the [Zero Trust policy](/policies/zero-trust) allows them to reach the resource). Unlike the instructions for [Google Workspace](/identity/idp-integration/gsuite), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
-Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare for Teams. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
+Please note that you don't need to be a Google Cloud Platform user to integrate Google Suite as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to access settings for your OIDC identity provider.
 
 1. Visit the Google Cloud Platform console. Create a new project.
 
@@ -63,7 +63,7 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
  ![Secret Field](../../static/documentation/identity/google/oauth-created.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 

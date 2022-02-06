@@ -50,7 +50,7 @@ To set up OneLogin as your identity provider:
 
 1. Copy both the **Client ID** and **Client Secret**.
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 

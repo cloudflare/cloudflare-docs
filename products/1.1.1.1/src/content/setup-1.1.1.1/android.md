@@ -49,8 +49,8 @@ Android Pie and later supports DNS over TLS to secure your queries through encry
 1. Click **Modify Network**.
 1. Select the check box **Show Advanced Options**.
 1. Change the IP Settings to **Static**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add:
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and in their place add:
 
     ```txt
     1.1.1.1

@@ -9,7 +9,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP not required | Enterprise plans | 
 
@@ -41,7 +41,7 @@ mTLS is checked on a per host basis. Access sets a flag for when a client certif
 
 </Aside>
 
-To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
+To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.teams.cloudflare.com):
 
 1. Navigate to **Access > Service Auth > Mutual TLS**.
 

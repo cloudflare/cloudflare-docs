@@ -8,7 +8,7 @@ order: 490
 
 ## List object structure and properties
 
-A JSON response for the [Rules Lists API](https://api.cloudflare.com/#filters-properties) has this structure:
+A JSON response for the [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) has this structure:
 
 ```json
 {

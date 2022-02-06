@@ -36,7 +36,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 <Definitions>
 
 - **`url`**
-  - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing of watermarks or non-rectangular overlays we recommend using PNG or WebP images.
+  - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
 
 - **`width`** and **`height`**
   - Maximum size of the overlay image, in pixels. It must be an integer.
@@ -55,7 +55,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 - **`top`**, **`left`**, **`bottom`**, **`right`**
   - Position of the overlay image relative to a given edge. Each property is an offset in pixels. `0` aligns exactly to the edge. For example, `left: 10` positions left side of the overlay 10 pixels from the left edge of the image it is drawn over. `bottom: 0` aligns bottom of the overlay with bottom of the background image.
 
-    Setting both `left` & `right`, or both `top` & `bottom` is an error.
+    Setting both `left` and `right`, or both `top` and `bottom` is an error.
 
     If no position is specified, the image will be centered.
 

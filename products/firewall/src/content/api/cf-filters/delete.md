@@ -6,51 +6,65 @@ order: 475
 
 # DELETE examples
 
-- [Delete multiple filters](#delete-multiple-filters)
-- [Delete a single filter](#delete-a-single-filter)
-
 ## Delete multiple filters
 
-```bash
-DELETE zones/{zone_id}/filters
-```
-
-### Request
+This example deletes filters with IDs `<FILTER_ID_1>` and `<FILTER_ID_2>`.
 
 ```bash
-curl -X DELETE -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters?id=60ee852f9cbb4802978d15600c7f3110"
+---
+header: Request
+---
+curl -X DELETE \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters?id=<FILTER_ID_1>&id=<FILTER_ID_2>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
-
-### Response
 
 ```json
+---
+header: Response
+---
 {
-  "result": [],
+  "result": [
+    {
+      "id": "<FILTER_ID_1>"
+    },
+    {
+      "id": "<FILTER_ID_2>"
+    }
+  ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```
 
 ## Delete a single filter
 
-```bash
-DELETE zones/{zone_id}/filters/{id}
-```
-
-### Request
+This example deletes a single filter with ID `<FILTER_ID>`.
 
 ```bash
-curl -X DELETE -H "X-Auth-Email: user@cloudflare.com" -H "X-Auth-Key: REDACTED" "https://api.cloudflare.com/client/v4/zones/d56084adb405e0b7e32c52321bf07be6/filters/60ee852f9cbb4802978d15600c7f3110"
+---
+header: Request
+---
+curl -X DELETE \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/filters/<FILTER_ID>"
+-H "X-Auth-Email: <EMAIL>"
+-H "X-Auth-Key: <API_KEY>"
 ```
-
-### Response
 
 ```json
+---
+header: Response
+---
 {
-  "result": null,
+  "result": [
+    {
+      "id": "<FILTER_ID>"
+    }
+  ],
   "success": true,
-  "errors": null,
-  "messages": null
+  "errors": [],
+  "messages": []
 }
 ```

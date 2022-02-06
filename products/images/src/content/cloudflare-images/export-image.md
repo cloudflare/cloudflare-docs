@@ -1,5 +1,5 @@
 ---
-order:
+order: 8
 pcx-content-type: how-to
 title: Export image
 ---
@@ -21,8 +21,8 @@ Your image will be downloaded to your computer.
 To download an image via API, the syntax is as follows:
 
 ```txt
-GET accounts/:account_identifier/images/v1/:identifier/blob
-````
+GET accounts/<ACCOUNT_IDENTIFIER>/images/v1/<IDENTIFIER>/blob
+```
 
 Example:
 

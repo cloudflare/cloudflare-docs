@@ -6,11 +6,11 @@ title: Device posture
 
 # Device posture attributes
 
-With Teams, you can configure Zero Trust policies that rely on additional signals from endpoint security providers to allow or deny connections to your applications. 
+With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from endpoint security providers to allow or deny connections to your applications. 
 
-When device posture checks are configured, users can only connect to a protected application if they have a managed or healthy device, as determined by the endpoint security provider associated to the Zero Trust policy regulating access to the protected application.
+When device posture checks are configured, users can only connect to a protected application if they have a managed or healthy device, as determined by the endpoint security provider associated to the Access policy regulating access to the protected application.
 
-To enable one or more device posture attributes, navigate to **My Team** > **Devices** > **Device posture** on the [Teams Dashboard](https://dash.teams.cloudflare.com) and click **+Add**.
+To enable one or more device posture attributes, navigate to **My Team** > **Devices** > **Device posture** on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and click **+Add**.
 
 <Aside>
 

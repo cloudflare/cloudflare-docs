@@ -78,6 +78,7 @@ pcx-content-type: reference
          Example value:
          <code class="InlineCode">GB</code>
          <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         This field matches on both source and destination IP addresses.
         </td>
     </tr>
     <tr>

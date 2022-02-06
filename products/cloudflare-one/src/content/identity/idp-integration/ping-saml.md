@@ -36,7 +36,7 @@ To set up PingIdentity (SAML) as your identity provider:
 
     This file shares several fields with Cloudflare Access so you do not have to input this data.
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 

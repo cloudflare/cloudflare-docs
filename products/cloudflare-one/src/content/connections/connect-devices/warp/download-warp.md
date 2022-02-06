@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Download WARP
 
-You can download the WARP client from the Teams Dashboard. To do that, navigate to **Settings** > **Devices** and scroll down to **Download the WARP client**.
+You can download the WARP client from the Zero Trust dashboard. To do that, navigate to **Settings** > **Devices** and scroll down to **Download the WARP client**.
 
 Alternatively, download the client from one of the following links after checking requirements:
 
@@ -19,6 +19,10 @@ Alternatively, download the client from one of the following links after checkin
     <tr>
       <td><strong>OS Type</strong></td>
       <td>64bit only</td>
+    </tr>
+     <tr>
+      <td><strong>.NET Framework Min version</strong></td>
+      <td>4.7.2 or later</td>
     </tr>
     <tr>
       <td><strong>HD Space</strong></td>

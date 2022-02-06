@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Policies are properties of applications. Creating the first policy for an application is part of the setup process for that application.
 
-You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Teams Dashboard.
+You can then choose to edit or delete that first policy after completing the application setup, or you can decide to add new policies to the application, all from the Applications section of the Cloudflare Zero Trust Dashboard.
 
 You can create up to 1,000 policies per application.
 
@@ -15,7 +15,7 @@ You can create up to 1,000 policies per application.
 
 To create a Zero Trust policy for an existing application:
 
-1. On the Teams Dashboard, navigate to the **Access > Applications** page.
+1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
 1. Locate the application for which you want to create the policy.
 
@@ -37,7 +37,7 @@ Your policy has now been added to the application.
 
 To make any changes to an application’s policies:
 
-1. On the Teams Dashboard, navigate to the **Access > Applications** page.
+1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
 1. Locate the application for which you want to change the policies.
 
@@ -53,7 +53,7 @@ To make any changes to an application’s policies:
 
 To delete a Zero Trust policy:
 
-1. On the Teams Dashboard, navigate to the **Access > Applications** page.
+1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
 1. Locate the application for which you want to delete the policy.
 

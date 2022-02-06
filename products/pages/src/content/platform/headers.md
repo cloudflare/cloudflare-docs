@@ -28,6 +28,7 @@ You can define as many `[name]: [value]` pairs as you require on subsequent line
 ---
 filename: _headers
 ---
+# This is a comment
 /secure/page
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

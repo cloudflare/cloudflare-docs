@@ -32,32 +32,4 @@ order: 1
             </th>
         </tr>
     </thead>
-    <tbody>   
-        <tr>
-            <td>
-                2022-01-17
-            </td>
-            <td>
-                2022-01-24
-            </td>
-            <td>
-                Cloudflare Specials
-            </td>
-            <td>
-                ...69fe1e0d
-            </td>
-            <td>
-                100700
-            </td>
-            <td>
-                Apache SSRF vulnerability CVE-2021-40438
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-     </tbody>
-</table></TableWrap>
+    </table></TableWrap>

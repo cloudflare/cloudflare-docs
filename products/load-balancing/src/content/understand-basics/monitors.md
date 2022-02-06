@@ -70,34 +70,39 @@ The Cloudflare API supports the following commands for monitors. Examples are gi
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-create-monitor">Create Monitor</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor">Create Monitor</a></td>
       <td><Code>POST</Code></td>
-      <td><Code>user/load_balancers/monitors</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors</Code></td>
     </tr>
     <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-delete-monitor">Delete Monitor</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-delete-monitor">Delete Monitor</a></td>
       <td><Code>DELETE</Code></td>
-      <td><Code>user/load_balancers/monitors</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors/:id</Code></td>
     </tr>
     <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-list-monitors">List Monitors</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-list-monitors">List Monitors</a></td>
       <td><Code>GET</Code></td>
-      <td><Code>user/load_balancers/monitors</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors</Code></td>
     </tr>
     <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-monitor-details">Monitor Details</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-monitor-details">Monitor Details</a></td>
       <td><Code>GET</Code></td>
-      <td><Code>user/load_balancers/monitors/:identifier</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors/:id</Code></td>
     </tr>
     <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-update-monitor">Update Monitor</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-patch-monitor">Overwrite specific properties</a></td>
+      <td><Code>PATCH</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors/:id</Code></td>
+    </tr>
+    <tr>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor">Overwrite existing monitor</a></td>
       <td><Code>PUT</Code></td>
-      <td><Code>user/load_balancers/monitors</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors/:id</Code></td>
     </tr>
      <tr>
-      <td><a href="https://api.cloudflare.com/#load-balancer-monitors-preview-monitor">Preview Monitor</a></td>
+      <td><a href="https://api.cloudflare.com/#account-load-balancer-monitors-preview-monitor">Preview Monitor</a></td>
       <td><Code>POST</Code></td>
-      <td><Code>user/load_balancers/monitors/:identifier/preview</Code></td>
+      <td><Code>accounts/:account_id/load_balancers/monitors/:id/preview</Code></td>
     </tr>
   </tbody>
 </table>

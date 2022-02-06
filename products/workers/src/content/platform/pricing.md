@@ -1,5 +1,4 @@
 ---
-order: 3
 pcx-content-type: concept
 ---
 
@@ -134,13 +133,13 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 ## Durable Objects storage API
 
-The Durable Objects storage API is only accessible from within Durable Objects.
+The [Durable Objects storage API](/runtime-apis/durable-objects#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
 <TableWrap>
 
 |                                               | Paid plan                   |
 | --------------------------------------------- | --------------------------- |
-| Read request units<sup>1,2</sup>              | 10 million, + $0.20/million |
+| Read request units<sup>1,2</sup>              | 1 million, + $0.20/million |
 | Write request units<sup>1</sup>               | 1 million, + $1.00/million  |
 | Delete requests<sup>3</sup>                   | 1 million, + $1.00/million  |
 | Stored data<sup>4</sup>                       | 1 GB, + $0.20/ GB-month     |

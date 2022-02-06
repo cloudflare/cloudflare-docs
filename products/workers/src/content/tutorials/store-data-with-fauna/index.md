@@ -25,7 +25,7 @@ Building with Fauna, Workers, and Worktop enables you to create a globally distr
 
 ![fauna-cf-workers-diagram](./media/fauna-cf-workers-diagram.jpg)
 
-Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you build a product inventory, where each `product` document must contain the following properties:
+Fauna is a document-based database with a flexible schema. This allows you to define the structure of your data – whatever it may be – and store documents that adhere to that structure. In this tutorial, you will build a product inventory, where each `product` document must contain the following properties:
 
 *   **title** - A human-friendly string that represents the title or name of a product.
 *   **serialNumber** - A machine-friendly string that uniquely identifies the product.
@@ -34,7 +34,7 @@ Fauna is a document-based database with a flexible schema. This allows you to de
 
 Documents are stored in the **Products** [collection][fauna-collections]. Collections in document databases are groups of related documents.
 
-For this tutorial all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna][fauna-choosing-authentication-strategy] for more information on authenticating users to your applications with Fauna.
+For this tutorial, all API endpoints are public. However, Fauna also offers multiple avenues for securing endpoints and collections. Refer to [Choosing an authentication strategy with Fauna][fauna-choosing-authentication-strategy] for more information on authenticating users to your applications with Fauna.
 
 ## Setting up Fauna
 
@@ -58,7 +58,7 @@ In the Fauna dashboard:
 
 ### Creating the products catalog
 
-Next, select **New Collection** to create the **Products** collection that stores your inventory documents.
+Select **New Collection** to create the **Products** collection that stores your inventory documents.
 
 ![Creating your "Products" collection](./media/create-collection.png)
 
@@ -66,7 +66,7 @@ Next, select **New Collection** to create the **Products** collection that store
 
 You must create a key to connect to the database from your Worker.
 
-Navigate to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
+Go to the **Security** tab in the Fauna dashboard and create a new key with the **Server** role:
 
 ![New Key](./media/new-server-key.png)
 
@@ -98,7 +98,7 @@ You must publish a version of your project before storing your server secret in 
 
 ### Adding your Fauna secret as an environment variable
 
-After creating and deploying your Worker, you can store your Fauna client secret safely in Cloudflare with the following command:
+After creating and deploying your Worker, store your Fauna client [secret](/cli-wrangler/commands#put) safely with the following command:
 
 ```sh
 ---
@@ -109,7 +109,7 @@ $ wrangler secret put FAUNA_SECRET
 
 When prompted, paste the Fauna server secret you obtained earlier.
 
-The **FAUNA_SECRET** environment variable is now injected automatically into your Worker code at runtime.
+The `FAUNA_SECRET` environment variable is now injected automatically into your Worker code at runtime.
 
 ### Installing dependencies
 
@@ -132,7 +132,7 @@ $ npm install worktop@0.7
 $ npm install worktop.build --save-dev
 ```
 
-Worktop solves common needs such as routing, path parameters, and  HTTP methods.
+Worktop solves common needs such as routing, path parameters, and HTTP methods.
 
 Edit `package.json` and add the `build` script:
 
@@ -238,7 +238,7 @@ const faunaClient = new faunadb.Client({
 });
 ```
 
-The **FAUNA_SECRET** environment variable is injected into your application automatically at runtime. Workers run on a custom JavaScript runtime instead of Node.js, so you do not need to use `process.env` to access your environment variables.
+The `FAUNA_SECRET` environment variable is injected into your application automatically at runtime. Workers run on a custom JavaScript runtime instead of Node.js, so you do not need to use `process.env` to access your environment variables.
 
 ### Creating product documents
 
@@ -295,7 +295,7 @@ Create(
 )
 ```
 
-To see what a document looks like, navigate to the **Shell** tab in the Fauna dashboard and run the following query:
+To review what a document looks like, navigate to the **Shell** tab in the Fauna dashboard and run the following query:
 
 ```js
 ---
@@ -444,7 +444,7 @@ header: Testing your Worker locally
 wrangler dev
 ```
 
-Once the development server is up and running, we can start making HTTP requests to our Worker.
+Once the development server is up and running, you can start making HTTP requests to your Worker.
 
 First, create a new product:
 
@@ -522,7 +522,7 @@ As the last step, implement a route to update the quantity of a product in your 
 
 This will present a problem. To calculate the total quantity of a product, you first need to determine how many items there currently are in your inventory. If you solve this in two queries, first reading the quantity and then updating it, the original data might change.
 
-Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It's important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
+Fauna solves this by reading and updating the quantity of a product in a single FQL transaction. It is important to mention that all FQL queries are, in fact, transactions. If anything fails, all changes are reverted back thanks to Fauna's ACID properties.
 
 Add the following route to your `index.js` file. This route responds to HTTP `PATCH` requests on the `/products/:productId/add-quantity` URL endpoint:
 
@@ -640,7 +640,7 @@ $ curl \
     http://127.0.0.1:8787/products/<document_id>/add-quantity
 ```
 
-The response should be the entire full updated document with five additional items in the quantity:
+The response should be the entire updated document with five additional items in the quantity:
 
 ```json
 ---
@@ -864,13 +864,13 @@ Finally, delete your Fauna database from its settings in the Fauna dashboard:
 
 ![Delete Database](./media/delete-database.png)
 
-## Next steps
+## Related resources
 
 In this tutorial, you learned how to use Fauna with Cloudflare Workers to create a globally distributed, strongly consistent, next-generation serverless REST API that serves data quickly to a worldwide audience.
 
 To build your own production-ready applications, refer to the [Fauna Workers quickstart](https://github.com/fauna-labs/fauna-workers). The quickstart implements suggested practices like a least-privilege security model and business logic encapsulation in user-defined functions.
 
-If you'd like to speak directly with a Fauna expert about building your applications on Cloudflare Workers with Fauna, please [contact][fauna-contact] us.
+If you would like to speak directly with a Fauna expert about building your applications on Cloudflare Workers with Fauna, [contact][fauna-contact] Fauna.
 
 [fauna]: https://fauna.com/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
 [fauna-blog-consistency-without-clocks]: https://fauna.com/blog/consistency-without-clocks-faunadb-transaction-protocol?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021

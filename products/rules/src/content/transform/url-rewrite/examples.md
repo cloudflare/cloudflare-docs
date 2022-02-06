@@ -165,11 +165,3 @@ regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$",
 </Example>
 
 The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
-
-<Aside type="warning" header="Notes">
-
-Use only the fields [`http.request.uri.*`](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#uri-argument-and-value-fields), [`http.request.headers.*`](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#http-request-header-fields), and [`http.request.accepted_languages`](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#field-http-request-accepted_languages) in rewrite expressions.
-
-The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, refer to [Transformation functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#transformation-functions).
-
-</Aside>

@@ -72,7 +72,7 @@ For deeper subdomains (`dev.blog.example.com`), use a [different type of certifi
 
 ## Customize subdomain behavior
 
-If you want custom Cloudflare settings for individual subdomains, your approach will vary depending on your plan.
+If you want to customize Cloudflare settings for individual subdomains, your approach will vary depending on your plan.
 
 Enterprise customers can set up custom settings and access for a specific subdomain within Cloudflare with [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
 

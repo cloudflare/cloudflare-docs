@@ -30,7 +30,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 1. Follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-1. Navigate to the `Applications` page in the `Access` section of the Cloudflare for Teams dashboard.
+1. Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
 1. Click **Add an application** and choose `Self-hosted`.
 

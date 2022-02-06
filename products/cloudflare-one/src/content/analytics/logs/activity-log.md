@@ -101,11 +101,11 @@ Since the request is generated in an isolated browser, the result is rendered in
 
 <Aside>
 
-This feature is only available on the Teams Enterprise plan.
+This feature is only available on the Zero Trust Enterprise plan.
 
 </Aside>
 
-You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed. This feature builds on Cloudflare's Logpush Service. To enable this feature on the Teams dashboard:
+You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed. This feature builds on Cloudflare's Logpush Service. To enable this feature on the Zero Trust dashboard:
 
 1. Navigate to **Logs > Logpush**.
 1. Click **Connect a service**.
@@ -115,7 +115,7 @@ You can configure the automatic export of logs from Cloudflare Gateway to third-
 1. In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
 1. Click **Next**.
 1. Select the service you want to export your Gateway logs to. 
-1. Next, follow the service-specific instructions on the Teams UI to validate your destination.
+1. Next, follow the service-specific instructions on the Zero Trust UI to validate your destination.
 
 The setup of your logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination. 
 

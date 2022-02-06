@@ -10,13 +10,13 @@ The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [M
 
 <Aside type="note">
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a FetchEvent handler such as [`respondWith`](/runtime-apis/fetch-event#methods). Learn more about [the Request context](/runtime-apis/request#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/runtime-apis/fetch-event#methods). Learn more about [the Request context](/runtime-apis/request#the-request-context).
 
 </Aside>
 
-<Aside type="warning" header="Warning">
+<Aside type="warning" header="Worker to Worker">
 
-It is not currently possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal. 
+It is not currently (January 2022) possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal. 
 
 </Aside>
 

@@ -11,7 +11,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
