@@ -135,6 +135,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
   repo="fauna-labs/fauna-workers"
 />
+  
+<WorkerStarter
+  title="Firebase App Check"
+  description="Authenticate requests to Cloudflare Workers and prevent API fraud/abuse using Firebase App Check's device attestation."
+  repo="chocolatkey/worker-appcheck-template"
+/>
 
 --------------------------------
 
