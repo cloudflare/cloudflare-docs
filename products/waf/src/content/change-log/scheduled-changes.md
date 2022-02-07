@@ -32,4 +32,32 @@ order: 1
             </th>
         </tr>
     </thead>
-    </table></TableWrap>
+<tbody>   
+        <tr>
+            <td>
+                2022-02-07
+            </td>
+            <td>
+                2022-02-14
+            </td>
+            <td>
+                Cloudflare Php
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                PHP100001
+            </td>
+            <td>
+                PHP - Command Injection - CVE:CVE-2012-2336, CVE:CVE-2012-2311, CVE:CVE-2012-1823
+            </td>
+            <td>
+                Deny
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
+</tbody>
+</table></TableWrap>
