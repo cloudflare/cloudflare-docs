@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 <Aside type="note">
 
-You can only use environments with [wrangler](/cli-wrangler).
+You can only use environments with [Wrangler](/cli-wrangler).
 
 </Aside>
 

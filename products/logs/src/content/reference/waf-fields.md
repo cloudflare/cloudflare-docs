@@ -13,12 +13,12 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 
 | Value | Action | Description |
 |---|---|---|
-| <em><span style="font-weight: 400;">0</span></em> | Unknown | Take no other action |
-| <em><span style="font-weight: 400;">1</span></em> | Allow | Bypass all subsequent WAF rules |
-| <em><span style="font-weight: 400;">2</span></em> | Drop | Block with an HTTP 403 response |
-| <em><span style="font-weight: 400;">3</span></em> | Challenge Allow | Issue a CAPTCHA challenge |
-| <em><span style="font-weight: 400;">4</span></em> | Challenge Drop | Unused |
-| <em><span style="font-weight: 400;">5</span></em> | Simulate | Take no action other than logging the event |
+| <span style="font-weight: 400;">`0`</span> | Unknown | Take no other action. |
+| <span style="font-weight: 400;">`1`</span> | Allow | Bypass all subsequent WAF rules. |
+| <span style="font-weight: 400;">`2`</span> | Drop | Block with an HTTP 403 response. |
+| <span style="font-weight: 400;">`3`</span> | Challenge Allow | Issue a CAPTCHA challenge. |
+| <span style="font-weight: 400;">`4`</span> | Challenge Drop | Unused. |
+| <span style="font-weight: 400;">`5`</span> | Simulate | Take no action other than logging the event. |
 
 </TableWrap>
 

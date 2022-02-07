@@ -1,10 +1,10 @@
 ---
-title: Configure BGP and GRE
+title: Configure BGP
 order: 5
 pcx-content-type: tutorial
 ---
 
-# Configure the BGP and GRE
+# Configure the BGP
 
 After establishing your connection, the next steps include provisioning the Generic Route Encapsulation (GRE) IPs and configuring the Border Gateway Protocol (BGP) peering information. This process takes approximately one week.
 

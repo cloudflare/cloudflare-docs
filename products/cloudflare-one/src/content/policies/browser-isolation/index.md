@@ -7,17 +7,17 @@ pcx-content-type: concept
 
 <Aside type="note">
 
-Browser Isolation is available as an add-on to Teams Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
+Browser Isolation is available as an add-on to Zero Trust Standard and Enterprise plans. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
 
 </Aside>
 
-Cloudflare Browser Isolation complements the Teams Secure Web Gateway and Zero Trust Network Access solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications.
+Cloudflare Browser Isolation complements the Secure Web Gateway and Zero Trust Network Access solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications.
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
 
 ![Diagram of how Browser Isolation integrates with WARP and Gateway](../../static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
 
-Just like Gateway allows you to define policies to filter traffic based on content categories or security threats, with Browser Isolation you can define policies to dynamically isolate websites based on identity, security threats, or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Teams Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
+Just like Gateway allows you to define policies to filter traffic based on content categories or security threats, with Browser Isolation you can define policies to dynamically isolate websites based on identity, security threats, or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Zero Trust Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
 
 ![Browser isolation policy](../../static/documentation/policies/bi-policy.png)
 
@@ -25,7 +25,7 @@ Just like Gateway allows you to define policies to filter traffic based on conte
 
 To start protecting your users through remote browsing, you need:
 
-* A Cloudflare for Teams Standard or Enterprise plan, and a Browser Isolation add-on subscription
+* A Zero Trust Standard or Enterprise plan, and a Browser Isolation add-on subscription
 * The [WARP client](/connections/connect-devices/warp) installed on your devices
 
 ## Isolate policies

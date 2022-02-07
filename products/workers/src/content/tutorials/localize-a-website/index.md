@@ -38,7 +38,7 @@ theme: dark
 ~/i18n-example $
 ```
 
-The `--site` flag tells Wrangler that you want to build a [Workers Sites](/platform/sites) project. This means that there will be both a Workers script and a static site component, which includes any HTML and page assets that you want to serve to the user. Inside the Workers script, you can customize the HTML response using `HTMLRewriter`.
+The `--site` flag tells Wrangler that you want to build a [Workers Sites](/platform/sites) project. This means that there will be both a Workers script and a static site component, which includes any HTML and page assets that you want to serve to the user. Inside the Worker, you can customize the HTML response using `HTMLRewriter`.
 
 The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `workers-site`:
 
@@ -77,7 +77,7 @@ filename: public/index.html
 
 Using `HTMLRewriter`, you will parse the HTML within the `./public/index.html` page. When a `data-i18n-key` attribute is found, you should use the attribute's value to retrieve a matching translation from the `strings` object. With `HTMLRewriter`, it is easy to query elements to accomplish tasks like finding a data attribute. However, as the name suggests, you can also rewrite elements by taking a translated string and directly inserting it into the HTML.
 
-Another feature of this project is based on the `Accept-Language` header, which exists on incoming requests. You can set the translation language per-request, allowing users from around the world to see a locally-relevant and translated page.
+Another feature of this project is based on the `Accept-Language` header, which exists on incoming requests. You can set the translation language per request, allowing users from around the world to see a locally relevant and translated page.
 
 ## Using the HTML Rewriter API
 

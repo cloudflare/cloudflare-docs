@@ -99,8 +99,8 @@ The Cloudflare Rules language supports these standard fields:
       <td>
          <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
          </p>
-         <p>Cookie values are not pre-processed and retain the case used in the request.</p>
-         <p><em>Decoding:</em> Cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
+         <p>The cookie values are not pre-processed and retain the original case used in the request.</p>
+         <p><em>Decoding:</em> The cookie names are URL decoded. If two cookies have the same name after decoding, their value arrays are merged.
          </p>
          <p>Example:
          <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
@@ -702,7 +702,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
         </p>
         <p>When an argument repeats, then the array contains multiple items in the order they appear in the request.
         </p>
-        <p>Values are not pre-processed and retain the case used in the request.</p>
+        <p>The values are not pre-processed and retain the original case used in the request.</p>
         <p><em>Decoding:</em> no decoding performed
         <br /><em>Non-ASCII:</em> preserved
         </p>
@@ -717,7 +717,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
     <tr id="field-http-request-uri-args-names">
       <td valign="top"><code>http.request.uri.args.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
-        <p>Represents the names of the arguments in the HTTP URI query string. Names are not pre-processed and retain the case used in the request.
+        <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
         </p>
         <p>When a name repeats, the array contains multiple items in the order that they appear in the request.
         </p>
@@ -735,7 +735,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
     <tr id="field-http-request-uri-args-values">
       <td valign="top"><code>http.request.uri.args.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
-        <p>Represents the values of arguments in the HTTP URI query string. Values are not pre-processed and retain the case used in the request. They are in the same order as in the request.
+        <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
         </p>
         <p>Duplicated values are listed multiple times.
         </p>
@@ -788,9 +788,9 @@ The Cloudflare Rules language supports these HTTP header fields:
    <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
-         <p>Represents HTTP request headers as a Map (or associative array).
-         </p>
-         <p>When there are repeating headers, the array includes them in the order they appear in the request. The keys convert to lowercase.</p>
+         <p>Represents HTTP request headers as a Map (or associative array).</p>
+         <p>The keys of the associative array are the names of HTTP request headers <strong>converted to lowercase</strong>.</p>
+         <p>When there are repeating headers, the array includes them in the order they appear in the request.</p>
          <p><em><em>Decoding:</em></em> no decoding performed
          <br /><em>Whitespace:</em> preserved
          <br /><em>Non-ASCII:</em> preserved
@@ -806,7 +806,9 @@ The Cloudflare Rules language supports these HTTP header fields:
    <tr>
       <td valign="top"><code>http.request.headers.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
-         <p>Represents the names of the headers in the HTTP request. The names are not pre-processed and retain the case used in the request.
+         <p>Represents the names of the headers in the HTTP request.</p>
+         <p>The names are not pre-processed and retain the original case used in the request.</p>
+         <p><strong>Note:</strong> In HTTP/2 the names of HTTP headers are always in lowercase. Recent versions of the <code class="InlineCode">curl</code> tool <a href="https://curl.se/docs/http2.html#curl-tool">enable HTTP/2 by default</a> for HTTPS connections.
          </p>
          <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.request.headers.values</code>.
          </p>
@@ -828,7 +830,7 @@ The Cloudflare Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.headers.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the values of the headers in the HTTP request.</p>
-         <p>Values are not pre-processed and retain the case used in the request.</p>
+         <p>The values are not pre-processed and retain the original case used in the request.</p>
          <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.request.headers.names</code>.
          </p>
          <p>Duplicate headers are listed multiple times.
@@ -941,7 +943,8 @@ The Cloudflare Rules language supports these HTTP body fields:
       <td>
          <p>Represents the HTTP request body of a form as a Map (or associative array). Populated when the <code class="InlineCode">Content-Type</code> header is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
-         <p>Values are not pre-processed and retain the case used in the request. When a field repeats, then the array contains multiple items in the order they are in the request.
+         <p>The values are not pre-processed and retain the original case used in the request.</p>
+         <p> When a field repeats, then the array contains multiple items in the order they are in the request.
          </p>
          <p>The return value may be truncated if <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
          </p>
@@ -962,7 +965,9 @@ The Cloudflare Rules language supports these HTTP body fields:
       <td>
          <p>Represents the names of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
-         <p>Names are not pre-processed and retain the case found in the request. They are listed in the same order as in the request. Duplicate names are listed multiple times.
+         <p>The names are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
+         </p>
+         <p>Duplicate names are listed multiple times.
          </p>
          <p>The return value may be truncated if <code class="InlineCode">http.request.body.truncated</code> is <code class="InlineCode">true</code>.
          </p>
@@ -983,7 +988,7 @@ The Cloudflare Rules language supports these HTTP body fields:
       <td>
          <p>Represents the values of the form fields in an HTTP request where the content type is <code class="InlineCode">application/x-www-form-urlencoded</code>.
          </p>
-         <p>Values are not pre-processed and retain the case used in the request. They are in the same order as in the request.
+         <p>The values are not pre-processed and retain the original case used in the request. They are listed in the same order as in the request.
          </p>
          <p>Duplicated values are listed multiple times.
          </p>
@@ -1042,7 +1047,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
    <tr>
       <td valign="top"><code>http.response.headers.names</code><br /><Type>Array&lt;String></Type></td>
       <td>
-         <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the case used in the response.
+         <p>Represents the names of the headers in the HTTP response. The names are not pre-processed and retain the original case used in the response.
          </p>
          <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.response.headers.values</code>.
          </p>
@@ -1064,7 +1069,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
       <td valign="top"><code>http.response.headers.values</code><br /><Type>Array&lt;String></Type></td>
       <td>
          <p>Represents the values of the headers in the HTTP response.</p>
-         <p>Values are not pre-processed and retain the case used in the response.</p>
+         <p>The values are not pre-processed and retain the original case used in the response.</p>
          <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.response.headers.names</code>.
          </p>
          <p>Duplicate headers are listed multiple times.

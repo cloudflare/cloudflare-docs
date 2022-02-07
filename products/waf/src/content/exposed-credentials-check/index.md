@@ -31,7 +31,7 @@ The WAF can perform one of the following actions when it detects exposed credent
 * _Log_ — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare Logs. Recommended for validating a rule before committing to a more severe action.
 * _Block_ — Blocks HTTP requests containing exposed credentials.
 * _JS Challenge_ — Presents a Cloudflare JavaScript Captcha challenge to the clients making HTTP requests with exposed credentials.
-* _Challenge (Captcha)_ — Presents a Captcha challenge to the clients making HTTP requests with exposed credentials.
+* _Legacy CAPTCHA_ — Presents a Captcha challenge to the clients making HTTP requests with exposed credentials.
 
 <Aside type='warning' header='Important'>
 

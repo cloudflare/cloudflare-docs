@@ -5,11 +5,11 @@ type: overview
 pcx-content-type: landing-page
 ---
 
-# Cloudflare for Teams documentation
+# Cloudflare Zero Trust documentation
 
 <ContentColumn>
 
-Cloudflare for Teams replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
+Cloudflare Zero Trust replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
 **Zero Trust access for all of your applications.**
 
@@ -29,6 +29,6 @@ Cloudflare for Teams replaces legacy security perimeters with our global edge, m
 * Mitigate the impact of attacks
 * Seamless, lightning-fast end user experience
 
-![Teams illustration](/static/documentation/teams-no-background.png)
+![Cloudflare Zero Trust illustration](/static/documentation/teams-no-background.png)
 
 </ContentColumn> 

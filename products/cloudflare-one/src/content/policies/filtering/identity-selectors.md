@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Create identity-based policies
 
-With Cloudflare for Teams, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Cloudflare for Teams WARP client, and the user to be enrolled in the organization via the WARP client:
+With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in the organization via the WARP client:
 
 ## User Email
 

@@ -9,7 +9,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | WARP with Gateway | All plans | 
 
@@ -26,7 +26,7 @@ The File Check device posture attribute checks for the presence of a file on a d
 
 To enable File Check:
 
-1. On the Teams Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
+1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 1. Click **+Add**.
 1. Select **File Check**.
 1. Enter a descriptive name for the check.

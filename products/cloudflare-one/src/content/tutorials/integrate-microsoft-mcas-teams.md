@@ -4,9 +4,9 @@ category: 🔐 Zero Trust
 pcx-content-type: tutorial
 ---
 
-# Integrate Microsoft MCAS with Teams
+# Integrate Microsoft MCAS with Cloudflare Zero Trust
 
-Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare for Teams, and create Gateway HTTP policies to ensure visibility and control over data.
+Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Microsoft's CASB solution, to identify and block threats on the Internet, as well as allow or block access to cloud applications. This tutorial covers how to integrate MCAS with Cloudflare Zero Trust, and create Gateway HTTP policies to ensure visibility and control over data.
 
 Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With an MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 
@@ -34,7 +34,7 @@ This will return a list of banned hostnames. In this case, Angie's List is the b
 
 ### Processing the output
 
-As you can see, the banned hostnames are preceded by a `.`. To use this output for a Teams List, we need to do some text processing.
+As you can see, the banned hostnames are preceded by a `.`. To use this output for a Zero Trust List, we need to do some text processing.
 
 1. Run the curl API call and direct the output to a file, in this case `mcas.txt`:
 
@@ -50,7 +50,7 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
 
 1. This will give you the list of hostnames without leading `.`.
 
-1. Replace the file's `.txt` extension with `.csv`. The file can now be imported into Teams as a Hostname list.
+1. Replace the file's `.txt` extension with `.csv`. The file can now be imported into Cloudflare Zero Trust as a Hostname list.
 
 
 ## Using the API to query allowed applications
@@ -61,9 +61,9 @@ If you would like to get a list of all of the MCAS allowed applications, you can
 curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
 ```
 
-## Adding a hostname list in the Teams Dashboard
+## Adding a hostname list in the Zero Trust Dashboard
 
-1. In the Teams Dashboard, navigate to **My Team** > **Lists**
+1. In the Zero Trust Dashboard, navigate to **My Team** > **Lists**
 1. Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues. 
 1. Add a name for the list, specify "Hostnames" as the list type, and give it a description.
 1. Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.

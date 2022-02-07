@@ -9,16 +9,16 @@ The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HT
 
 `srcset` requires providing multiple resized versions of every image, and with Cloudflare’s Image Resizing this is an easy task to accomplish.
 
-There are two different ways to use `srcset`:
+There are two different scenarios where it is useful to use `srcset`:
 
-* For an image with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
-* Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for "hero" images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
+* Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
+* Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
 ## `srcset` for high-DPI displays
 
-For high-DPI display you need two versions of every image. One for `1x` density suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops) and one for `2x` high-density displays used by almost all mobile phones, high-end laptops and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
+For high-DPI display you need two versions of every image. One for `1x` density, suitable for typical desktop displays (such as HD/1080p monitors or low-end laptops), and one for `2x` high-density displays used by almost all mobile phones, high-end laptops, and 4K desktop displays. Some mobile phones have very high-DPI displays and could use even a `3x` resolution. However, while the jump from `1x` to `2x` is a clear improvement, there are diminishing returns from increasing the resolution further. The difference between `2x` and `3x` is visually insignificant, but `3x` files are two times larger than `2x` files.
 
-Assuming you have an image `product.jpg` in the `assets` folder, and you want to display it at size of `960px`, the code is as follows:
+Assuming you have an image `product.jpg` in the `assets` folder and you want to display it at a size of `960px`, the code is as follows:
 
 ```html
 <img src="/cdn-cgi/image/fit=contain,width=960/assets/product.jpg"
@@ -29,11 +29,11 @@ In the URL path used in this example, the `src` attribute is for images with the
 
 The `srcset` attribute adds another, high-DPI image. The browser will automatically select between the images in the `src` and `srcset`. In this case, specifying `width=1920` (two times 960 pixels) and adding `2x` at the end, informs the browser that this is a double-density image. It will be displayed at the same size as a 960 pixel image, but with double the number of pixels which will make it look twice as sharp on high-DPI displays.
 
-Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for "1x" displays and displayed as-is or also scaled down for "2x" displays.
+Note that it does not make sense to scale images up for use in `srcset`. That would only increase file sizes without improving visual quality. The source images you should use with `srcset` must be high resolution, so that they are only scaled down for `1x` displays, and displayed as-is or also scaled down for `2x` displays.
 
 ## `srcset` for responsive images
 
-When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset sizes>` you can offer the browser several possible sizes and let the it choose the most appropriate size automatically.
+When you want to display an image that takes a certain percentage of the window or screen width, the image should have dimensions that are appropriate for a visitor’s screen size. Screen sizes vary a lot, typically from 320 pixels to 3840 pixels, so there is not a single image size that fits all cases. With `<img srcset>` you can offer the browser several possible sizes and let it choose the most appropriate size automatically.
 
 By default, the browser assumes the image will be stretched to the full width of the screen, and will pick a size that is closest to a visitor’s screen size. In the `src` attribute the browser will pick any size that is a good fallback for older browsers that do not understand `srcset`.
 
@@ -61,7 +61,7 @@ If the image takes 50% of the screen (or window) width:
 
 ```html
 <img style="width: 50vw"
-  srcset=" …same as before… "
+  srcset="<SAME_AS_BEFORE>"
   sizes="50vw">
 ```
 
@@ -78,16 +78,16 @@ The `vw` unit is a percentage of the viewport (screen or window) width. If the i
   sizes="(max-width: 640px) 100vw, 640px">
 ```
 
-In this example, `sizes` says that for screens smaller than 640 pixels the image is displayed at full viewport width; on all larger screens the image stays at 640px. Note that one of the options in `srcset` is 1280 pixels large, because an image displayed at 640 CSS pixels may need twice as many image pixels on a high-dpi ("2x") display.
+In this example, `sizes` says that for screens smaller than 640 pixels the image is displayed at full viewport width; on all larger screens the image stays at 640px. Note that one of the options in `srcset` is 1280 pixels, because an image displayed at 640 CSS pixels may need twice as many image pixels on a high-dpi (`2x`) display.
 
 ## What about other formats?
 
 `srcset` is useful for pixel-based formats such as PNG, JPEG, and WebP. It is unnecessary for vector-based SVG images.
 
-HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto,…` URLs in `src` or `srcset`.
+HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) that can optionally request an image in the WebP format, but you do not need it. Cloudflare can serve WebP images automatically whenever you use `/cdn-cgi/image/format=auto` URLs in `src` or `srcset`.
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
-* You can enable the Polish feature with automatic WebP conversion. This will convert all images on the site.
+* You can enable the automatic [WebP conversion in Polish](/polish/activate-polish). This will convert all images on the site.
 
-* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. E.g. `https://example.com/assets/hero.jpg`to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`
+* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.

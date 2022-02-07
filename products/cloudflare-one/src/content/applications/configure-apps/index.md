@@ -6,7 +6,7 @@ pcx-content-type: navigation
 
 # Add web applications
 
-With Teams, you can protect two types of web applications: SaaS and self-hosted.
+With Cloudflare Zero Trust, you can protect two types of web applications: SaaS and self-hosted.
 
 **SaaS applications** consist of applications your team relies on that are not hosted by your organization. Examples include Salesforce and Workday. To secure SaaS applications, you must integrate Cloudflare Access with the SaaS application's SSO configuration.
 

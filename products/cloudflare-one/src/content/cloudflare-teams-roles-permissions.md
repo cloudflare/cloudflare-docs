@@ -22,9 +22,11 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 
 </TableWrap>
 
-## Cloudflare for Teams + PII
+## Protecting Personally Identifiable Information (PII)
 
-The Cloudflare for Teams + PII role should be considered add-on role to be combined with any other roles from the table above. If you assign this role to a user in your account, that user will not be able to visualize any PII. For example, you may decide to assign the Cloudflare Gateway Admin role to a user, and add the Cloudflare for Teams + PII role to prevent that user from seeing any PII in the Gateway logs.
+By default, Super Administrators can access end users' PII, such as Device IDs, Source IPs, or usernames. No other roles will have the ability to read PII unless Super Administrators explicitly assign the **Cloudflare for Teams PII** role to them. 
+
+The Cloudflare for Teams + PII role should be considered add-on role to be combined with any other roles from the table above. For example, Super Administrators may decide to assign the Cloudflare Gateway Admin role to a user, and add the Cloudflare for Teams + PII role to allow that user to access PII in the Gateway logs.
 
 ## Assigning or removing a role
 

@@ -11,7 +11,7 @@ pcx-content-type: tutorial
 
 ## Overview
 
-In this tutorial you learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
+In this tutorial, you will learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
 
 <Aside type="note">
 

@@ -16,7 +16,7 @@ Creating custom cache keys is limited to Enterprise users only.
 1. Click the **Rules** > **Page Rules**.
 1. Click **Create Page Rule**.
 1. Under **If the URL matches**, enter the URL to match.
-1. Under **Then the settings are**, choose **Custom Cache Ke**y from the dropdown.
+1. Under **Then the settings are**, choose **Custom Cache Key** from the dropdown.
 1. Click the appropriate *Query String* setting.
 1. (Optional) Click Advanced and enter appropriate settings for:
     - `Headers`

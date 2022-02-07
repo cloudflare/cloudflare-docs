@@ -10,4 +10,4 @@ Take your WordPress site’s performance to the next level with Automatic Platfo
 
 Automatic Platform Optimization is the result of using the power of Cloudflare Workers to intelligently cache dynamic content. By caching dynamic content, Cloudflare can serve the entire website from our edge network to make a site's time to first byte (TTFB) both fast and consistent.
 
-To read more about the benefits of using APO with your site, see [The Benefits of Automatic Platform Optimization blog](https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/#the-benefits-of-automatic-platform-optimization).
+To read more about the benefits of using APO with your site, see [The Benefits of Automatic Platform Optimization blog](https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/#the-benefits-of-automatic-platform-optimization). You must use the Cloudflare for Wordpress plugin to begin using APO.

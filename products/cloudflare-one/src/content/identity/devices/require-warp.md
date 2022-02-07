@@ -10,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans | 
 
@@ -23,7 +23,7 @@ This device posture attribute will check for all versions of WARP, including the
 
 </Aside>
 
-Cloudflare for Teams enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Teams.
+Cloudflare Zero Trust enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare Zero Trust.
 
 The process involves two steps:
 
@@ -32,7 +32,7 @@ The process involves two steps:
 
 ## Set up a device posture check
 
-1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
+1. On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 
     ![Device Posture](../../static/documentation/identity/devices/device-posture.png)
 
@@ -44,7 +44,7 @@ You are now ready to start requiring WARP for your Access applications.
 
 ## Add the check to a Zero Trust policy
 
-1. On the Teams dashboard, navigate to **Access > Applications**.
+1. On the Zero Trust dashboard, navigate to **Access > Applications**.
 
 1. Locate the application for which you want to require WARP.
 
