@@ -1,6 +1,6 @@
 ---
 pcx-content-type: tutorial
-order:
+order: 4
 ---
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"

@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-order:
+order: 6
 ---
 
 # Troubleshoot a stalled transfer

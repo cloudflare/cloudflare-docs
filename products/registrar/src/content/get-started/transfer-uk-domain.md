@@ -1,9 +1,9 @@
 ---
 pcx-content-type: how-to
-order:
+order: 5
 ---
 
-# Transferring .UK domain to Cloudflare
+# Transfer a .UK domain to Cloudflare
 
 ## Prerequisites for transferring a .UK domain:
 

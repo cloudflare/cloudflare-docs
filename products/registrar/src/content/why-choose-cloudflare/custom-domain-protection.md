@@ -1,6 +1,5 @@
 ---
 pcx-content-type: reference
-order:
 ---
 
 # Cloudflare Custom Domain Protection

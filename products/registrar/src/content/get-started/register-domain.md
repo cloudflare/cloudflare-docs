@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-order:
+order: 3
 ---
 
 # Register a new domain
