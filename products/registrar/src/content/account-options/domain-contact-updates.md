@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+order:
 ---
 
 # Registrant contact updates
