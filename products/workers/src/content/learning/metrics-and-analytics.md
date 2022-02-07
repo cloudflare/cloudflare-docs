@@ -35,7 +35,7 @@ Worker invocation statuses indicate whether a Worker script executed successfull
 | Invocation status      | Definition                                                               | Workers error code | GraphQL field          |
 | ---------------------- | ------------------------------------------------------------------------ | ------------------ | ---------------------- |
 | Success                | Worker script executed successfully                                      |                    | `success`              |
-| Client disconnected    | HTTP client (i.e. the browser) disconnected before the request completed |                    | `clientDisconnected`   |
+| Client disconnected    | HTTP client (that is, the browser) disconnected before the request completed |                    | `clientDisconnected`   |
 | Script threw exception | Worker script threw an unhandled JavaScript exception                    | 1101               | `scriptThrewException` |
 | Exceeded resources¹    | Worker script exceeded runtime limits                                    | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                     |                    | `internalError`        |
