@@ -32,8 +32,6 @@ WHOIS redaction is not the same as WHOIS privacy. WHOIS privacy replaces your in
 
 </Aside>
 
-Some registries do not allow domains to be registered with WHOIS Redaction or WHOIS Privacy. Many of these are country TLDs (ccTLDs), like `.uk`. Cloudflare does not yet support TLDs that prohibit WHOIS redaction, but will in the near future.
-
 ## What is RDAP?
 
 RDAP (Registration Data Access Protocol) is a new standard for querying domain contact and nameserver information for all registered domains. This new protocol offers some advantages over WHOIS, including standardized data access, support for internationalization, and secure access controls. RDAP is intended to eventually replace WHOIS. However, Cloudflare currently provides both WHOIS and RDAP search capability.
