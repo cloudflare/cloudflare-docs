@@ -41,15 +41,15 @@ async function handleRequest(event) {
       )
     }
   } catch (err) {
-    // Without event.waitUntil(), our fetch() to our logging service may
-    // or may not complete.
+    // Without event.waitUntil(), your fetch() to Cloudflare's
+    // logging service may or may not complete
     event.waitUntil(postLog(err.toString()))
     const stack = JSON.stringify(err.stack) || err
 
     // Copy the response and initialize body to the stack trace
     response = new Response(stack, response)
 
-    // Shove our rewritten URL into a header to find out what it was.
+    // Add the error stack into a header to find out what happened
     response.headers.set("X-Debug-stack", stack)
     response.headers.set("X-Debug-err", err)
   }

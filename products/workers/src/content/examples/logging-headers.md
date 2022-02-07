@@ -31,13 +31,13 @@ addEventListener("fetch", event => {
 
 ## Console-logging headers
 
-**TL;DR:** Use a Map if you just need to log a Headers object to the console:
+Use a `Map` if you need to log a `Headers` object to the console:
 
 ```js
 console.log(new Map(request.headers))
 ```
 
-Use the spread operator if you need to quickly stringify a Headers object:
+Use the `spread` operator if you need to quickly stringify a `Headers` object:
 
 ```js
 let requestHeaders = JSON.stringify([...request.headers])
@@ -51,7 +51,7 @@ let requestHeaders = Object.fromEntries(request.headers)
 
 ### The problem
 
-When debugging Worker scripts, we often want to examine the headers on a request or response. A common pitfall is to try to log headers to the developer console via code like this:
+When debugging Workers, examine the headers on a request or response. A common mistake is to try to log headers to the developer console via code like this:
 
 ```js
 console.log(request.headers)
@@ -63,15 +63,15 @@ Or this:
 console.log(`Request headers: ${JSON.stringify(request.headers)}`)
 ```
 
-Both result in what appears to be an empty object — the string `"{}"` — even though calling `request.headers.has("Your-Header-Name")` might return true. This is the same behavior that browsers implement.
+Both attempts result in what appears to be an empty object — the string `"{}"` — even though calling `request.headers.has("Your-Header-Name")` might return true. This is the same behavior that browsers implement.
 
-The reason this happens is because [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) objects do not store headers in enumerable JavaScript properties, so the developer console and JSON stringifier do not know how to read the names and values of the headers. It’s not an empty object _per se_, but rather an opaque object.
+The reason this happens is because [Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers) objects do not store headers in enumerable JavaScript properties, so the developer console and JSON stringifier do not know how to read the names and values of the headers. It is not actually an empty object, but rather an opaque object.
 
-Headers objects are iterable, however, which we can take advantage of to develop a couple quick one-liners for debug-printing headers.
+`Headers` objects are iterable, which you can take advantage of to develop a couple of quick one-liners for debug-printing headers.
 
 ### Pass headers through a Map
 
-The first common idiom for making Headers `console.log()`-friendly is to construct a Map object from the Headers object, and log the Map object.
+The first common idiom for making Headers `console.log()`-friendly is to construct a `Map` object from the `Headers` object and log the `Map` object.
 
 ```js
 console.log(new Map(request.headers))
@@ -79,17 +79,17 @@ console.log(new Map(request.headers))
 
 This works because:
 
-- Map objects can be constructed from iterables, like Headers.
+- `Map` objects can be constructed from iterables, like `Headers`.
 
-- The Map object _does_ store its entries in an enumerable JavaScript property, so the developer console can see into it.
+- The `Map` object does store its entries in enumerable JavaScript properties, so the developer console can see into it.
 
 ### Spread headers into an array
 
-The Map trick works great for simple calls to `console.log()`, but if we need to actually stringify our headers, we quickly find out that stringifying a Map yields nothing more than `[object Map]`, which isn’t very helpful.
+The `Map` approach works for simple calls to `console.log()`. If you need to stringify your headers, you will discover that stringifying a `Map` yields nothing more than `[object Map]`.
 
-The JSON stringifier can’t help us, either: even though our Map stores its data in an enumerable property, that property is [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed, and `JSON.stringify()` [ignores Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#symbols_and_json.stringify) — we end up with an empty `{}` again.
+Even though a `Map` stores its data in enumerable properties, those properties are [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed. Because of this, `JSON.stringify()` will [ignore Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#symbols_and_json.stringify) and you will receive an empty `{}`.
 
-Instead, we can take advantage of the iterability of the Headers object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) (`...`) to it.
+Instead, you can take advantage of the iterability of the `Headers` object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) (`...`) to it.
 
 ```js
 let requestHeaders = JSON.stringify([...request.headers], null, 2)
@@ -98,10 +98,11 @@ console.log(`Request headers: ${requestHeaders}`)
 
 ### Convert headers into an object with Object.fromEntries (ES2019)
 
-[ES2019 provides `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), so it's just a simple call to convert the headers into an object:
+[ES2019 provides `Object.fromEntries`](https://github.com/tc39/proposal-object-from-entries), so it is a simple call to convert the headers into an object:
 
 ```js
-let requestHeaders = JSON.stringify(Object.fromEntries(request.headers), null, 2)
+let headersObject = Object.fromEntries(request.headers)
+let requestHeaders = JSON.stringify(headersObject, null, 2)
 console.log(`Request headers: ${requestHeaders}`)
 ```
 
