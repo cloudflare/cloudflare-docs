@@ -23,7 +23,11 @@ To enable a seamless transition to Workers Services, all scripts have been autom
 
 Each Workers Service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and resource bindings, like KV namespaces and Durable Objects. 
 
-You can create and switch between environments in the dashboard, go to **Account Home** > **Workers** > **choose your Worker** > **production** > **Create environment**.
+You can create and switch between environments in the dashboard:
+
+1. Go to **Workers**.
+2. Choose your **Worker**.
+3. Select **production** > **Create environment**.
 
 ![production-button](./media/create-environment.png)
 
@@ -47,9 +51,9 @@ Workers Service environments take a cleaner approach. You can create and edit en
 
 Unlike Wrangler environments, Workers Service environments do not create extra Workers Services. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the dashboard via the quick editor:
 
-1.  Go to **Account Home**.
+1. Go to **Account Home**.
 2. Go to **Workers**. 
-3. hoose your **Worker**.
+3. Choose your **Worker**.
 4. Select **Quick edit**.
 
 ![Quick edit](./media/quick-edit.png)

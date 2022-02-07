@@ -26,6 +26,7 @@ async function triggerEvent(scheduledTime) {
 ```
 
 ## Setting Cron Triggers in Wrangler
+
 If you are deploying with Wrangler, set the cron syntax (once per hour as shown below) by adding this to your `wrangler.toml` file:
 
 ```toml
