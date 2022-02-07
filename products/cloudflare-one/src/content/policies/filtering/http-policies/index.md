@@ -39,6 +39,12 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 You can build HTTP policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
 
+#### Application
+
+| UI name | API example |
+| -- | -- |
+| Application | `http.request.host == ".*example\.com"` |
+
 #### Host
 
 | UI name | API example |
