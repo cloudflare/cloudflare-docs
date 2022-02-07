@@ -17,9 +17,10 @@ The available Notification features vary according to your plan:
 
 ## Where to find the Notifications section
 
-Notifications are available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging in to your account, click **Notifications** on the top right of the menu in your account home page. Here you can create notifications for different scenarios, edit notifications previously set up, and enable or disable notifications.
+Cloudflare Notifications is available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging in and choosing your account:
 
-![Where to find the Notifications section](../static/images/notifications/where-to-find.png)
+* If you are using the new navigation interface, click **Manage Account** > **Notifications**. 
+* If you are using the classic interface, you will find a link to Cloudflare Notifications on the top of your account's dashboard.
 
 ## What to do when receiving Notifications
 
