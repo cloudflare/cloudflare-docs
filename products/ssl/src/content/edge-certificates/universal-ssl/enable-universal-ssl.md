@@ -41,7 +41,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 - **Enabled features**:
 
-    - [HTTP Strict Transport Security (HSTS)](../../http-strict-transport-security)
+    - [HTTP Strict Transport Security (HSTS)](/edge-certificates/additional-options/http-strict-transport-security)
     - [Always Use HTTPS](/edge-certificates/additional-options/always-use-https)
     - [Opportunistic Encryption](/edge-certificates/additional-options/opportunistic-encryption)
 
