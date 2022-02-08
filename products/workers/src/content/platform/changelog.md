@@ -1,3 +1,7 @@
+---
+pcx-content-type: changelog
+---
+
 # Changelog
 
 ## 2022-01-20

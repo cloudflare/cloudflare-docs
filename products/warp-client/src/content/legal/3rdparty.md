@@ -1,6 +1,7 @@
 ---
 title: Third party licenses
 hidden: true
+pcx-content-type: reference
 ---
 # Third party licenses
 Following is the third party license information for our desktop applications. License information for our iOS and Android clients can be found in-app.
