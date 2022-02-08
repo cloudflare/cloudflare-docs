@@ -32,10 +32,10 @@ In the Cloudflare dashboard:
 
 ## Step 4 — Activate full setup
 
-Using values from the Cloudflare dashboard, log into your authoritative DNS provider and [update your nameservers](/zone-setups/full-setup/setup).
+Using values from the Cloudflare dashboard, go to your registrar and [update your nameservers](/zone-setups/full-setup/setup).
 
 In the Cloudflare dashboard, we recommend that you also [enable DNSSEC](/manage-dns-records/how-to/dnssec) and add the DS record to your registrar.
 
-Once all the DNS TTLs expire and Cloudflare completes DNS propagation, all your DNS queries will be answered by Cloudflare's global edge network.
+Once all the DNS TTLs expire, all your DNS queries will be answered by Cloudflare's global edge network.
 
 Start proxying additional hostnames by enabling the [proxy status](/manage-dns-records/reference/proxied-dns-records) (also known as orange-clouding) for specific DNS records. Previously proxied subdomains will continue to be proxied without any interruption.
