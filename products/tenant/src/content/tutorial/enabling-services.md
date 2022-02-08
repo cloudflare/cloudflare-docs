@@ -10,7 +10,7 @@ In order for your customers to get the most out of Cloudflare, it is important t
 
 ## Creating a zone
 
-Creating a zone is similar to creating an API Client, but be sure to specify the customer's account when creating the zone.
+Creating a zone is similar to creating an API Client, you need to specify the customer's account when creating the zone.
 
 Refer to [Create Zone](https://api.cloudflare.com/#zone-create-zone) for more information.
 
