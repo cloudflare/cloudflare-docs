@@ -54,9 +54,9 @@ async function verifyAndFetch(request) {
 
   // Extract the query parameters we need and run the HMAC algorithm on the
   // parts of the request we are authenticating: the path and the expiration
-  // timestamp. It is crucial to pad the input data, e.g., by adding a symbol
-  // in-between the two fields that can never occur on the right side. Inthis
-  // case, we use the @ symbol to separate the fields.
+  // timestamp. It is crucial to pad the input data, for example, by adding a symbol
+  // in-between the two fields that can never occur on the right side. In this
+  // case, use the @ symbol to separate the fields.
   const expiry = Number(url.searchParams.get("expiry"))
   const dataToAuthenticate = `${url.pathname}@${expiry}`
 
@@ -136,7 +136,7 @@ async function generateSignedUrl(url) {
   // The two fields must be separated or padded to ensure that an attacker
   // will not be able to use the same signature for other pathname/expiry pairs.
   // The @ symbol is guaranteed not to appear in expiry, which is a (decimal)
-  // number, so we can safely use it as a separator here. When combining more
+  // number, so you can safely use it as a separator here. When combining more
   // fields, consider JSON.stringify-ing an array of the fields instead of
   // concatenating the values.
   const dataToAuthenticate = `${url.pathname}@${expiry}`
