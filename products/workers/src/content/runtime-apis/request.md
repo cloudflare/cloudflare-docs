@@ -81,8 +81,7 @@ let request = new Request(input [, init])
 
 - `headers` <Type>Headers</Type> <PropMeta>optional</PropMeta>
 
-  - A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers). Headers explicitly added to `fetch(url)` will always be sent, even in the case that a redirect is followed. Workers does not implement Cross-Origin Resource Sharing (CORS), as this feature is designed for browsers to decide when to implicitly send credentials like `Cookie` and `Authorization` to a origin that allows them in its CORS policy. Since Workers does not store nor implicitly add credential headers, explicitly defined `Cookie` and `Authorization` headers will be forwarded when a redirect occurs, even in a cross-origin context.
-
+  - A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers). <Aside type="warning"> Headers explicitly added to `fetch(url)` will always be sent, even in the case that a redirect is followed. Since Workers does not store nor implicitly add credential headers, explicitly defined `Cookie` and `Authorization` headers will be forwarded when a redirect occurs, even in a cross-origin context.</Aside>
 
 - `body` <Type>string | ReadableStream | FormData | URLSearchParams</Type> <PropMeta>optional</PropMeta>
 
@@ -90,7 +89,7 @@ let request = new Request(input [, init])
 
 - `redirect` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - The redirect mode to use: `follow`, `error`, or `manual`. The `fetch` method only attempts to follow redirects if the redirect mode is set to `follow` rather than `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
+  - The redirect mode to use: `follow`, `error`, or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the 3xx redirect response will be returned to the caller as-is. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
 </Definitions>
 
