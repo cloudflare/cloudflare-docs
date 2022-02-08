@@ -3,10 +3,10 @@ order: 1
 pcx-content-type: interim
 ---
 
-# Getting started
+# Get started
 
-To use Cloudflare’s Provisioning API capabilities requires enablement by Cloudflare. Reach out to partners@cloudflare.com for more information.
+To use Cloudflare’s provisioning API capabilities requires enablement by Cloudflare. Reach out to partners@cloudflare.com for more information.
 
-Once setup, one of your existing Cloudflare users will be enabled to use the provisioning capabilities outlined in these docs.
+Your Cloudflare user must be active, verified, and enabled by Cloudflare to use the provisioning capabilities outlined in the following tutorial.
 
 <p><Button type="primary" href="/tutorial">Take the tutorial</Button></p>
