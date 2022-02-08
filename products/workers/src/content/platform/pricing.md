@@ -16,7 +16,7 @@ All included usage is on a monthly basis.
 
 |                      | Free plan                    | Paid Plan - Bundled                                          | Paid plan - Unbound                              |
 | -------------------- | ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
-| Requests             | 100,000 / day                | 10 million, +$0.50/million                                  | 1 million, + $0.15/million                        |
+| Requests             | 100,000 / day                | 10 million / month, +$0.50/million                                  | 1 million / month, + $0.15/million                        |
 | Duration             | 10ms CPU time / invocation   | 50 ms CPU time / invocation                                  | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>|
   
 </TableWrap>
