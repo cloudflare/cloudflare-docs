@@ -61,10 +61,10 @@ order: 1
         </tr>
         <tr>
             <td>
-                2022-02-08
+                2022-02-07
             </td>
             <td>
-                2022-02-21
+                2022-02-14
             </td>
             <td>
                 Cloudflare Specials
