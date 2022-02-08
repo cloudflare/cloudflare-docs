@@ -29,11 +29,11 @@ ICANN requires that any transfer also extends the expiration date of your domain
 
 Whenever a domain is first registered, the registrant purchases control of that domain for some number of years — up to 10 years. For example, a domain registered on October 8, 2020 will have an expiration date of October 8th in some year between 2021 and 2030, depending on the amount of years originally purchased.
 
-Transferring a domain adds time to the current expiration date. Time purchased is never lost. When you transfer your domain to Cloudflare, you are purchasing an additional year of registration on top of your current expiration.
+Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#i-registered-my-domain-for-10-years-at-another-registrar-if-i-transfer-it-to-cloudflare-will-i-gain-another-year).
 
-### What happens to my name servers when I transfer my domain to Cloudflare?
+### What happens to my nameservers when I transfer my domain to Cloudflare?
 
-Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use name servers assigned by Cloudflare. When you transfer your registration, your name servers will not be modified.
+Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use nameservers assigned by Cloudflare. When you transfer your registration, your nameservers will not be modified.
 
 ### How can I see the status of my domain transfer?
 

@@ -8,7 +8,7 @@ tags:
 pcx-content-type: configuration
 ---
 
-# Geolocation: Weather App
+# Geolocation: Weather application
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>

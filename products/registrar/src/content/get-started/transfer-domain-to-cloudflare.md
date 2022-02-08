@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+order: 4
 ---
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"
@@ -36,7 +37,7 @@ Log in to the registrar account where the domain is currently registered.
 
 ### 2. Unlock the domain
 
-Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers: registrar lock. You might also see it written as "domain lock." In WHOIS, it may appear as `clientTransferProhibited`. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
+Registrars include a lightweight safeguard to prevent unauthorized users from starting domain transfers. This is known as registrar lock, but you might also see it referred to as domain lock. In WHOIS, it may appear as `clientTransferProhibited`. When enabled, the lock prevents any other registrar from attempting to initiate a transfer.
 
 Only the registrant can enable or disable this lock, typically through the administration interface of the registrar. To proceed with a transfer, remove this lock if it is enabled.
 
@@ -60,7 +61,7 @@ This code is often referred to as an authorization code, auth code, authinfo cod
 
 Go to the **Account Home** > [**Registrar**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
 
-You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
+You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by clicking **x**.
 
 If you do not have a payment method on file, add one at this step before proceeding.
 
@@ -70,7 +71,7 @@ Sites can be unavailable for a few reasons, including:
 
 * The site was registered in the last 60 days.
 * Cloudflare does not yet support the TLD.
-* The domain is designated as a “premium” domain by the registry.
+* The domain is designated as a premium domain by the registry.
 * The domain has a status that does not allow for a transfer.
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
@@ -84,12 +85,6 @@ If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1
 ### 6. Input your authorization code
 
 In the next page, input the authorization code for each domain you are transferring. You also need to unlock each domain so that Cloudflare can process your request. For more information, refer to the instructions provided by your [current registrar on how to transfer your domain](/get-started/transfer-domain-to-cloudflare#set-up-a-domain-transfer).
-
-<div class="medium-img">
-
-![Authorization input screenshot](../static/input-field.png)
-
-</div>
 
 ### 7. Confirm or input your contact information
 
@@ -117,7 +112,7 @@ Registrants transferring a `.us` domain will always receive a FOA email.
 
 ## Transfer statuses
 
-You can check on the status of your transfer in **Account Home** > **Overview** > **Domain Registration** for your domain. Below, you can find a list of the possible transfer statuses.
+You can check the status of your transfer in **Account Home** > **Overview** > **Domain Registration** for your domain. Below, you can find a list of the possible transfer statuses.
 
 * **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
 

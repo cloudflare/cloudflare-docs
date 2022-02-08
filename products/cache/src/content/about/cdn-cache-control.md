@@ -5,11 +5,11 @@ pcx-content-type: concept
 
 # CDN-Cache-Control
 
-`CDN-Cache-Control` is a response header field set on the origin to separately control the behavior of CDN caches from other intermediaries that might handle a response. You can set the `CDN-Cache-Control` or `Cloudflare-CDN-Cache-Control` response header using the same directives used with the [Cache-Control](/about/cache-control)
-.
+`CDN-Cache-Control` is a response header field set on the origin to separately control the behavior of CDN caches from other intermediaries that might handle a response. You can set the `CDN-Cache-Control` or `Cloudflare-CDN-Cache-Control` response header using the same directives used with the [Cache-Control](/about/cache-control).
+
 ## Header precedence
 
-You have several options available to determine how `CDN-Cache-Control` directives interact with `Cache-Control directives`. 
+You have several options available to determine how `CDN-Cache-Control` directives interact with `Cache-Control` directives. 
 
 An origin can:
 
@@ -18,6 +18,8 @@ An origin can:
 - Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it’s a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control` or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
 
 - Return both `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` response headers. In this case, Cloudflare only looks at `Cloudflare-CDN-Cache-Control` when making caching decisions because it is the most specific version of `CDN-Cache-Control` and proxies `CDN-Cache-Control` downstream. Only forwarding `CDN-Cache-Control` in this situation is beneficial if you want Cloudflare to have a different caching behavior than other CDNs downstream.
+
+Additionally, surrogates will not honor `Cache-Control` headers in the response from an origin. For example, if the `Surrogate-Control` header is present within the response, Cloudflare ignores any `Cache-Control` directives, even if the `Surrogate-Control` header does not contain directives.
 
 ## Interaction with other Cloudflare features
 
