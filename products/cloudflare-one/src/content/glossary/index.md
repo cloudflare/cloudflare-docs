@@ -5,8 +5,8 @@ pcx-content-type: reference
 
 # Glossary
 
-## [Cloudflare for Teams](https://www.cloudflare.com/teams-home/)
-Cloudflare for Teams brings the power of Cloudflare’s global network to your internal teams and infrastructure. Teams empowers users with secure, fast and seamless access to any device on the Internet.
+## [Cloudflare Zero Trust](https://www.cloudflare.com/teams-home/)
+Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
 
 ## [Cloudflare Access](https://www.cloudflare.com/en-gb/teams/access/)
 Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, customers deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
@@ -18,19 +18,19 @@ Cloudflare Gateway is a modern next generation firewall between your user, devic
 Cloudflare Tunnel (formerly *Argo Tunnel*) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
-Teams customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, with security filtering available to the connection.
+Cloudflare Zero Trust customers can use the Cloudflare WARP application to connect corporate desktops to Cloudflare Gateway for advanced web filtering. The Gateway features rely on the same performance and security benefits of the underlying WARP technology, with security filtering available to the connection.
 
 ---------------
 
 ## [App Launcher](/applications/app-launcher)
-The App Launcher portal provides end users with a single dashboard from which they can open applications secured by Teams.
+The App Launcher portal provides end users with a single dashboard from which they can open applications secured by Cloudflare Zero Trust.
 
 ## active zone
 A DNS zone is a portion of the DNS namespace that is managed by a specific organization or administrator. For a domain to be active on Cloudflare, its nameservers need to be changed to Cloudflare's.
 
 ## [application](/applications/)
 
-The resource being protected by Cloudflare for Teams. An application can be a subdomain, a path, or a SaaS application.
+The resource being protected by Cloudflare Zero Trust. An application can be a subdomain, a path, or a SaaS application.
 
 ## Authenticated Origin Pulls
 
@@ -67,7 +67,7 @@ DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS req
 
 ## DoH subdomain
 
-Each location in Teams has a unique DoH subdomain (previously known as a *unique id*). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **Locations**, expand the location card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
+Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a *unique id*). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **Locations**, expand the location card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
 
 | DNS over HTTPS hostname | DoH subdomain |
 | ----------------------- | ------------- |
@@ -162,10 +162,10 @@ A technology which combines several different application login screens into one
 
 ## team domain
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them. 
 
 ## team name
-The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under **Settings** > **General**. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
+The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Cloudflare Zero Trust dashboard, under **Settings** > **General**. However, changing your team name may disrupt integrations with identity providers and other applications. If you change the team name, you may need to update these configurations to reflect your new team name.
 
 | team domain | team name |
 |-------------|-----------|

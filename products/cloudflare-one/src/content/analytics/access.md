@@ -5,22 +5,22 @@ pcx-content-type: concept
  
 # Shadow IT Discovery
  
-The Teams Shadow IT Discovery page gives you visibility over which SaaS applications your end users are visiting. This information enables you to create the appropriate Zero Trust or Secure Web Gateway policies in Cloudflare for Teams, so that you can have control over the security of your users and data.
+The Zero Trust Shadow IT Discovery page gives you visibility over which SaaS applications your end users are visiting. This information enables you to create the appropriate Zero Trust or Secure Web Gateway policies in Cloudflare Zero Trust, so that you can have control over the security of your users and data.
 
 On the Shadow IT Discovery page, you can gather information on the [application status](#application-status) and [application type](#application-type) of the applications visited by your users. You can also change an application's status according to your organization's preferences. The page also gives you an overview of metrics such as who your top connected users are, how many applications have been accessed, or how many application logins have failed over a certain period of time.
  
 Shadow IT Discovery can be found under **Analytics > Access**.
 
-![Shadow IT Discovery](../static/documentation/shadow-it-discovery.png)
+![Shadow IT Discovery](../static/documentation/shadow-it.png)
 
 ## Shadow IT view
  
 To see an in-depth breakdown of SaaS applications your users have visited, click on **Review all** in the **Shadow IT Discovery** chart. From this page, you can search for a specific application, or you can click **View** to see a full profile for that application.
 
-![Shadow IT view](../static/documentation/shadow-it-view.png)
+![Shadow IT view](../static/documentation/shadow-it-review.png)
 
 * **Application**. This field shows each SaaS application's name and logo.
-* **Application type**. This field shows the [application type](/policies/filtering/http-policies/application-app-types#app-types) Teams has assigned to each application.
+* **Application type**. This field shows the [application type](/policies/filtering/http-policies/application-app-types#app-types) Cloudflare Zero Trust has assigned to each application.
 * **Application status**. This field shows an [application's status](#application-status).
 * **Secured**. This field shows whether the application is currently secured behind Access.
 * **Users**. This field shows how many users have connected to the application over the period of time you have specified in the Shadow IT Discovery overview page. 
@@ -46,7 +46,7 @@ You may need to update an application's status based on your organization's pref
 
 1. From the **Application profile** view, click the status button under the application name.
 
-    ![Shadow IT application status](../static/documentation/shadow-it-app-profile.png)
+    ![Shadow IT application status](../static/documentation/shadow-it-profile.png)
 
 1. Select the status you want to assign to your application.
 

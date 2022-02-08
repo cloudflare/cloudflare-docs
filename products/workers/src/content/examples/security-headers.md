@@ -82,7 +82,7 @@ async function addHeaders(req) {
         newHeaders.delete(name)
     })
 
-    if (tlsVersion != "TLSv1.2" && tlsVersion != "TLSv1.3") {
+    if (tlsVersion !== "TLSv1.2" && tlsVersion !== "TLSv1.3") {
         return new Response("You need to use TLS version 1.2 or higher.", { status: 400 })
     } else {
         return new Response(response.body, {

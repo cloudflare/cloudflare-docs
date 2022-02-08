@@ -9,7 +9,7 @@ pcx-content-type: tutorial
 
 You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and services to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
-You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Cloudflare Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Cloudflare for Teams account and using the WARP agent.
+You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). You can also use Cloudflare Tunnel to connect any service that relies on a TCP-based protocol to Cloudflare's network. Users in your organization can then reach the service by enrolling into your organization's Zero Trust account and using the WARP agent.
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
@@ -113,11 +113,11 @@ Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your
 
 </Aside>
 
-Users can reach this private service by logging into their Cloudflare for Teams account and the WARP agent.
+Users can reach this private service by logging into their Zero Trust account and the WARP agent.
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/tutorials/split-tunnel). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
-1. On the Teams Dashboard, navigate to **Settings > Network**.
+1. On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
 1. Click **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
@@ -129,7 +129,7 @@ Users can now connect over this private network by [enrolling their devices into
 
 You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Cloudflare for Teams dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
+Navigate to the `Settings` section of the Zero Trust dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
 
 ## Determine which devices can enroll
 
@@ -157,7 +157,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 * Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
+* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -179,7 +179,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Teams Dashboard under **Settings > General**.
+1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

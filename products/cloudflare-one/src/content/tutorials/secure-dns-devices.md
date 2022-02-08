@@ -37,7 +37,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 ![Block Threats](../static/secure-web-gateway/secure-dns-devices/block-threats.png)
 
-The policy will block security threats for any location or device in your Cloudflare for Teams deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/tutorials/identity-dns).
+The policy will block security threats for any location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/tutorials/identity-dns).
 
 Choose `Block` as the action. You can optionally [enable a block page](/policies/filtering/configuring-block-page) that will be presented to users if they have the [Cloudflare certificate](/connections/connect-devices/warp/install-cloudflare-cert) on their devices. Click **Save policy** to conclude.
 
@@ -51,7 +51,7 @@ The policy will now appear in your DNS policies list.
 
 The DNS filtering policy created will apply to any DNS queries sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Cloudflare for Teams Dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
+Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
 
 ## Determine which devices can enroll
 
@@ -73,7 +73,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
 ## Collect your Team domain
 
-When you first created your Cloudflare for Teams account, the dashboard prompted you to choose a [team domain](/glossary#team-domain). The domain will be in the format `team.cloudflareaccess.com` where `team` is replaced with the [team name](/glossary#team-name) you selected.
+When you first created your Zero Trust account, the dashboard prompted you to choose a [team domain](/glossary#team-domain). The domain will be in the format `team.cloudflareaccess.com` where `team` is replaced with the [team name](/glossary#team-name) you selected.
 
 You will need this name to enroll devices. You can confirm the team name selected by visiting the `Settings` section of the dashboard and selecting `General`.
 
@@ -89,11 +89,11 @@ Once installed, click the logo in the toolbar and select the gear icon in the to
 
 ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-Under the `Account` tab, click `Login with Cloudflare for Teams`.
+Under the `Account` tab, click **Login with Cloudflare for Teams**.
 
 ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-Input the Cloudflare for Teams [team name](/glossary#team-name).
+Input the Cloudflare Zero Trust [team name](/glossary#team-name).
 
 ![Org Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

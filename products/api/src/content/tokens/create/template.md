@@ -1,13 +1,13 @@
 ---
 order: 5
-type: table
+type: overview
 ---
 
 # API token templates
 
 <ContentColumn>
 
-Below is a table of the currently available API Token Templates and access they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
+Below is a table of the currently available API token templates and the default [token permissions](/tokens/create/permissions) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
 </ContentColumn>
 
@@ -22,20 +22,20 @@ Below is a table of the currently available API Token Templates and access they 
     </tr>
     <tr>
       <td>Edit Zone DNS</td>
-      <td>DNS Edit</td>
+      <td>DNS Write</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td rowspan="2">Read Billing Info</td>
-      <td>Read Billing</td>
+      <td rowspan="2">Read billing info</td>
+      <td>Billing Read</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Read Accounts</td>
-      <td>Account</td>
+      <td>Account resources: Include all accounts</td>
+      <td></td>
     </tr>
     <tr>
-      <td rowspan="2">Read Analytics and Logs</td>
+      <td rowspan="2">Read analytics and logs</td>
       <td>Analytics Read</td>
       <td>Zone</td>
     </tr>
@@ -44,69 +44,93 @@ Below is a table of the currently available API Token Templates and access they 
       <td>Zone</td>
     </tr>
     <tr>
-      <td rowspan="5">Edit Cloudflare Workers</td>
-      <td>Edit Workers Routes</td>
+      <td rowspan="7">Edit Cloudflare Workers</td>
+      <td>Workers Routes Write</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td>Edit Workers Scripts</td>
+      <td>Workers Scripts Write</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Edit Workers KV</td>
+      <td>Workers KV Storage Write</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Read Account Settings</td>
+      <td>Workers Tail Read</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Read User Profile</td>
+      <td>Workers R2 Storage Write</td>
+      <td>Account</td>
+    </tr>
+    <tr>
+      <td>Account Settings Read</td>
+      <td>Account</td>
+    </tr>
+    <tr>
+      <td>User Details Read</td>
       <td>User</td>
     </tr>
     <tr>
       <td rowspan="2">Edit load balancing configuration</td>
-      <td>Edit Load Balancing: Monitors and Pools</td>
+      <td>Load Balancing: Monitors and Pools Write</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Edit Load Balancers</td>
+      <td>Load Balancers Write</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td rowspan="6">WordPress</td>
-      <td>Read Analytics</td>
+      <td rowspan="8">WordPress</td>
+      <td>Analytics Read</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td>Read Zones</td>
+      <td>Zone Read</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td>Edit Zone Settings</td>
+      <td>Zone Settings Write</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td>Read Account Settings</td>
+      <td>Account Settings Read</td>
       <td>Account</td>
     </tr>
     <tr>
-      <td>Read DNS</td>
+      <td>DNS Read</td>
       <td>Zone</td>
     </tr>
     <tr>
-      <td>Purge Cache</td>
+      <td>Cache Purge</td>
       <td>Zone</td>
+    </tr>
+    <tr>
+      <td>Account resources: Include all accounts</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Zone resources: Include all zones</td>
+      <td></td>
     </tr>
     <tr>
       <td>Create Additional Tokens</td>
-      <td>Edit API Tokens</td>
+      <td>API Tokens Write</td>
       <td>User</td>
     </tr>
     <tr>
-      <td>Read all resources</td>
-      <td><em>All Read Permissions</em></td>
-      <td><em>Account & Zone</em></td>
+      <td rowspan="3">Read All Resources</td>
+      <td><em>(All read permissions)</em></td>
+      <td>Account, Zone, User</td>
+    </tr>
+    <tr>
+      <td>Account resources: Include all accounts</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Zone resources: Include all zones</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

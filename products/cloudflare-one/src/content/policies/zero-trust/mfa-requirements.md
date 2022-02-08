@@ -14,7 +14,7 @@ This feature is only available if you are using the following identity providers
 
 To enforce an MFA requirement to an application:
 
-1. On the Teams dashboard, navigate to **Access > Applications**.
+1. On the Zero Trust dashboard, navigate to **Access > Applications**.
 
 1. Find the application for which you want to enforce MFA and click **Edit**. Alternatively, [create a new application](/applications/configure-apps/).
 

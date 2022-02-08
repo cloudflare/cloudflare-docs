@@ -32,7 +32,7 @@ Once you have this information, you are ready to upload your first image to Clou
 curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1" \
 -H 'Authorization: Bearer <API_TOKEN>' \
--F file=@./<YOUR_IMAGE>.jpg
+-F file=@./<YOUR_IMAGE>
 ```
 
 A successful response will look similar to this:

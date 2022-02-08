@@ -1,6 +1,7 @@
 ---
 title: How to
 pcx-content-type: navigation
+order: 3
 ---
 
 # How to

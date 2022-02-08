@@ -6,7 +6,9 @@ title: Send events
 
 # Send events to a third-party tool
 
-Events are bundles of information Zaraz sends to a third-party tool when a particular trigger is matched. To start using them, first create a trigger that determines the condition for which the event is sent. If you have already [set up a trigger](/get-started/create-trigger), follow these steps to create an event.
+Events are bundles of information Zaraz sends to a third-party tool when a particular trigger is matched. For example, you might want to track purchases in your website, and create a trigger that sends information about this to your Google Analytics account. Refer to [Zaraz Track](/web-api/zaraz-track) for more information.
+
+To start using events, first create a trigger to determine when this bundle of information is sent to a third-party tool. If you have already [set up a trigger](/get-started/create-trigger), follow these steps to create an event.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website. 
 

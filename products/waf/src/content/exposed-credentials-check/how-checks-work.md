@@ -22,7 +22,7 @@ Exposed credentials check with the following configuration:
 * Username expression: `http.request.body.form["user_id"]`
 * Password expression: `http.request.body.form["password"]`
 
-Action: _Challenge (Captcha)_
+Action: _Legacy CAPTCHA_
 
 </Example>
 

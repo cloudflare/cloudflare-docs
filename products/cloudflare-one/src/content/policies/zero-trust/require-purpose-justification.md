@@ -12,7 +12,7 @@ The purpose justification screen will show for any new sessions of an applicatio
 
 Configuring a purpose justification screen is done as part of configuring an Access policy.
 
-1. On the Teams Dashboard, navigate to **Access** > **Applications**.
+1. On the Zero Trust Dashboard, navigate to **Access** > **Applications**.
 1. Select an application and click **Edit**.
 1. Select the policy you want to configure with purpose justification.
 1. Open **Optional Configurations**.

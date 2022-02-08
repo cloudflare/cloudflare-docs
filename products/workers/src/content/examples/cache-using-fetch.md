@@ -56,24 +56,24 @@ addEventListener("fetch", event => {
 // Force Cloudflare to cache an asset
 fetch(event.request, { cf: { cacheEverything: true } })
 ```
-Setting the cache level to Cache Everything will override the default "cacheability" of the asset. For TTL, Cloudflare will still rely on headers set by the origin.
+Setting the cache level to **Cache Everything** will override the default cacheability of the asset. For time-to-live (TTL), Cloudflare will still rely on headers set by the origin.
 
 ## Custom cache keys
 
-<Aside>
+<Aside type="note">
 
-__Note:__ This feature is available only to enterprise customers.
+This feature is available only to Enterprise customers.
 
 </Aside>
 
-A request's cache key is what determines if two requests are "the same" for caching purposes. If a request has the same cache key as some previous request, then we can serve the same cached response for both. For more about cache keys see Using Custom Cache Keys support article.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](https://developers.cloudflare.com/cache/how-to/create-cache-keys/index.d425772ab3.html) documentation.
 
 ```js
 // Set cache key for this request to "some-string".
 fetch(event.request, { cf: { cacheKey: "some-string" } })
 ```
 
-Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you may like different URLs to be treated as if they were the same for caching purposes. For example, say your web site content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you use a Worker to randomly balance between the two. However, you do not want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
+Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you may like different URLs to be treated as if they were the same for caching purposes. For example, if your website content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you can use a Worker to randomly balance between the two. However, you do not want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
 
 ```js
 addEventListener("fetch", (event) => {
@@ -98,9 +98,9 @@ Workers operating on behalf of different zones cannot affect each other's cache.
 
 ## Override based on origin response code
 
-<Aside>
+<Aside type="note">
 
-__Note:__ This feature is available only to enterprise customers.
+This feature is available only to Enterprise customers.
 
 </Aside>
 

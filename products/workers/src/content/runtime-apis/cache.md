@@ -111,6 +111,10 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
   - the `response` passed has a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
   - the `response` passed contains the header `Vary: *` (required by the Cache API specification).
 
+#### Errors
+
+`cache.put` returns a `413` error if `Cache-Control` instructs not to cache or if the response is too large.
+
 ### `Match`
 
 ```js
@@ -163,6 +167,10 @@ Our implementation of the Cache API respects the following HTTP headers on the r
     - Never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
 
 </Definitions>
+
+#### Errors
+
+`cache.match` returns a `504` error when the content is stale.
 
 ### `Delete`
 

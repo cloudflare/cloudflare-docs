@@ -6,7 +6,7 @@ import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md
 
 # Deploy a Jekyll site
 
-Jekyll is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
+[Jekyll](https://jekyllrb.com/) is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
 
 <Aside type="note">
 

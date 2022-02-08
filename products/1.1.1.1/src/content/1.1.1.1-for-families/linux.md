@@ -19,8 +19,8 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
 1. Click **System** > **Preferences** > **Network Connections**.
 1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
 1. Click **Edit** > **IPv4**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replace them with:
 
     ```txt
     1.1.1.2
@@ -54,7 +54,7 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
     ```
 
 1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Replace the nameserver lines with:
 
     ```txt
@@ -76,7 +76,7 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
     sudo vim /etc/resolv.conf
     ```
 
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Add the IPv6 address listed below:
 
     ```txt
@@ -99,8 +99,8 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
 1. Click **System** > **Preferences** > **Network Connections**.
 1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
 1. Click **Edit** > **IPv4**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any IP addresses that may be already listed and in their place add the following IP addresses:
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
+1. Remove any DNS addresses that may be already listed and replace them with:
 
     ```txt
     1.1.1.3
@@ -113,7 +113,7 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
 1. Click **System** > **Preferences** > **Network Connections**.
 1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
 1. Go to **IPv6**.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Add the IPv6 addresses listed below:
 
     ```txt
@@ -134,7 +134,7 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
     ```
 
 1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Replace the nameserver lines with:
 
     ```txt
@@ -156,7 +156,7 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
     sudo vim /etc/resolv.conf
     ```
 
-1. Take note of any IP addresses you might have and save them in a safe place in case you need to use them later.
+1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
 1. Add the IPv6 addresses listed below:
 
     ```txt

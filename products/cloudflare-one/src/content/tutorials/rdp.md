@@ -24,7 +24,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-1. Navigate to the Teams Dashboard to create a new application.
+1. Navigate to the Zero Trust Dashboard to create a new application.
 
 1. Select the `Applications` page from the sidebar.
 

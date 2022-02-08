@@ -15,7 +15,7 @@ pcx-content-type: configuration
 </ContentColumn>
 
 ```js
-// We support the GET, POST, HEAD, and OPTIONS methods from any origin,
+// Cloudflare supports the GET, POST, HEAD, and OPTIONS methods from any origin,
 // and allow any header on requests. These headers must be present
 // on all responses to all CORS preflight requests. In practice, this means
 // all responses to OPTIONS requests.
@@ -99,14 +99,14 @@ async function handleRequest(request) {
     apiUrl = API_URL
   }
 
-  // Rewrite request to point to API url. This also makes the request mutable
-  // so we can add the correct Origin header to make the API server think
-  // that this request isn't cross-site.
+  // Rewrite request to point to API URL. This also makes the request mutable
+  // so you can add the correct Origin header to make the API server think
+  // that this request is not cross-site.
   request = new Request(apiUrl, request)
   request.headers.set("Origin", new URL(apiUrl).origin)
   let response = await fetch(request)
 
-  // Recreate the response so we can modify the headers
+  // Recreate the response so you can modify the headers
   response = new Response(response.body, response)
 
   // Set CORS headers

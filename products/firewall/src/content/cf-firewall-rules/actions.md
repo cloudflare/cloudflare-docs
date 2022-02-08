@@ -103,7 +103,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>3</td>
       </tr>
       <tr>
-        <td><em>Challenge (Captcha)</em></td>
+        <td><em>Legacy CAPTCHA</em></td>
         <td>
           <ul>
             <li>

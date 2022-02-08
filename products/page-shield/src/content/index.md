@@ -1,7 +1,7 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+order: 0
 ---
 
 # Cloudflare Page Shield
@@ -23,13 +23,17 @@ Page Shield includes the following features:
 
 ## Availability
 
-Feature | Free | Pro | Business | Enterprise | Enterprise w/ paid add-on
-----------|------|-----|----------|----------|----------------------------
-Script Monitor                               |     | Yes | Yes | Yes | Yes
-New Script Alerts and New Domain Alerts      |     |     | Yes | Yes | Yes
-Page attribution                             |     |     | Yes | Yes | Yes
-Malicious code detection and alerting        |     |     |     |     | Yes
-Code change detection and alerting           |     |     |     |     | Yes
+<TableWrap>
+
+Feature | Free | Pro | Business | Enterprise | Enterprise<br/> w/ add-on
+--------|------|-----|----------|------------|----------------------------
+Script Monitor                               | –   | Yes | Yes | Yes | Yes
+New Script Alerts<br/> and New Domain Alerts | –   | –   | Yes | Yes | Yes
+Page attribution                             | –   | –   | Yes | Yes | Yes
+Malicious code detection<br/> and alerting   | –   | –   | –   | –   | Yes
+Code change detection<br/> and alerting      | –   | –   | –   | –   | Yes
+
+</TableWrap>
 
 ## Get started
 
