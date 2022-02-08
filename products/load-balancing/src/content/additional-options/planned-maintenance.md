@@ -57,7 +57,7 @@ To direct traffic away from an origin server immediately:
     - On the origin's [monitor](/understand-basics/monitors), update the monitor settings so the origin will fail health checks, such as putting an incorrect value for the **Response Body** or **Response Code**.
     - On the pool, disable the origin.
     - On the pool, set the [origin weight](/understand-basics/traffic-steering/origin-level-steering#weights) to `0` (though traffic may still reach the origin if it is included in multiple pools).
-1. Monitor [Load Balancing Analytics](/load-balancing-analytics) to make sure no requests are reaching the pool.
+1. Monitor [Load Balancing Analytics](/reference/load-balancing-analytics) to make sure no requests are reaching the pool.
     - If you are using [DNS-only load balancing (gray-clouded)](/understand-basics/proxy-modes), changes may be delayed due to DNS resolver caching.
 1. Perform your required maintenance or upgrades.
 1. Undo the changes you made in **Step 1**.
