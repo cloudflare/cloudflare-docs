@@ -125,7 +125,7 @@ export class Counter {
 
 <Aside type="note" header="Built-in Caching">
 
-The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. So, instead of writing initialization code like above, you could simply `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 </Aside>
 
@@ -460,10 +460,10 @@ export class Counter {
       return new Response("Not found", {status: 404});
     }
 
-    // We don't have to worry about a concurrent request having modified the
+    // You do not have to worry about a concurrent request having modified the
     // value in storage because "input gates" will automatically protect against
     // unwanted concurrency. So, read-modify-write is safe. For more details,
-    // see: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
+    // refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
     await this.state.storage.put("value", value);
 
     return new Response(value);
