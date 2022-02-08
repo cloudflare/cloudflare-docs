@@ -23,6 +23,7 @@ The required values are:
 **Type** (enum): Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
 
 Example:
+
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' \
 -d '{ "name": "<Account Name>", \
@@ -120,12 +121,12 @@ A successful request will return the id to confirm the operation:
 }
 ```
 
-Now that we have created an account and learned how to delete an account, in the next step we will give another person access to the account.
+Now that we have created an account, visualized existing accounts and learned how to delete an account, in the next step we will give another person access to the account.
 
 --------------------------------
 
 ## Continue the tutorial
 
-Learn how to manage how external customers access Cloudflare.
+Learn how to manage external customers access to Cloudflare.
 
 <p><Button type="primary" href="/tutorial/user-access">Step 2: User access</Button></p>

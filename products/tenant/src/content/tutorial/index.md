@@ -13,8 +13,9 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ## [Step 1: Provisioning resources](/tutorial/provisioning-resources)
 
-- Creating accounts
-- Creating zones
+- Creating an account
+- Fetching accounts
+- Deleting an account
 
 ## [Step 2: User access](/tutorial/user-access)
 
@@ -24,9 +25,9 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ## [Step 3: Enabling services](/tutorial/enabling-services)
 
-- Creating services
-- Modifying an account’s service
-- Removing services
+- Creating a zone
+- Creating a zone subscription
+- Creating account subscriptions
 
 ## [Step 4: Service configuration](/tutorial/service-configuration)
 
