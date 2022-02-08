@@ -59,5 +59,31 @@ order: 1
                 Block
             </td>
         </tr>
+              <tr>
+            <td>
+                2022-02-08
+            </td>
+            <td>
+                2022-02-15
+            </td>
+            <td>
+                Cloudflare Specials
+            </td>
+            <td>
+                ...11ca7c21
+            </td>
+            <td>
+                100515B
+            </td>
+            <td>
+                Log4j Body Obfuscation
+            </td>
+            <td>
+                N/A
+            </td>
+            <td>
+                Block
+            </td>
+        </tr>
 </tbody>
 </table></TableWrap>
