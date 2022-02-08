@@ -1,7 +1,7 @@
 ---
 title: Dynamic advertisement
 order: 2
-pcx-content-type: best-practices
+pcx-content-type: reference
 ---
 
 # Best practices for dynamic advertisement

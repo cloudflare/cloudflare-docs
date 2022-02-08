@@ -2,7 +2,7 @@
 title: Overview
 order: 0
 type: overview
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Cloudflare Zero Trust documentation

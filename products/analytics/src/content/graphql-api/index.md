@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: interim
+pcx-content-type: overview
 ---
 
 # GraphQL Analytics API

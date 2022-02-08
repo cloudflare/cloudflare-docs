@@ -1,7 +1,7 @@
 ---
 title: Getting started
 order: 10
-pcx-content-type: navigation
+pcx-content-type: get-started
 ---
 
 # Get started

@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: how-to
+pcx-content-type: get-started
 ---
 
 # Get started
