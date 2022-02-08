@@ -118,3 +118,11 @@ A new spec-compliant implementation of the URL class can be enabled using the `u
 If you would like to use another URL implementation, you can [shim the URL class using webpack](/cli-wrangler/webpack/#shimming-globals).
 
 {{</Aside>}}
+
+--------------------------------
+
+## URLPattern API
+
+The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)
