@@ -51,11 +51,13 @@ async function verifyAndFetch(request) {
     ["verify"],
   )
 
-  // Extract the query parameters you need and run the HMAC algorithm on the
-  // parts of the request you are authenticating: the path and the expiration
-  // timestamp.
+  // Extract the query parameters we need and run the HMAC algorithm on the
+  // parts of the request we are authenticating: the path and the expiration
+  // timestamp. It is crucial to pad the input data, for example, by adding a symbol
+  // in-between the two fields that can never occur on the right side. In this
+  // case, use the @ symbol to separate the fields.
   const expiry = Number(url.searchParams.get("expiry"))
-  const dataToAuthenticate = url.pathname + expiry
+  const dataToAuthenticate = `${url.pathname}@${expiry}`
 
   // The received MAC is Base64-encoded, so you have to go to some trouble to
   // get it into a buffer type that crypto.subtle.verify() can read.
@@ -130,7 +132,14 @@ async function generateSignedUrl(url) {
   // parameter.
   const expirationMs = 60000
   const expiry = Date.now() + expirationMs
-  const dataToAuthenticate = url.pathname + expiry
+  // The signature will be computed for the pathname and the expiry timestamp.
+  // The two fields must be separated or padded to ensure that an attacker
+  // will not be able to use the same signature for other pathname/expiry pairs.
+  // The @ symbol is guaranteed not to appear in expiry, which is a (decimal)
+  // number, so you can safely use it as a separator here. When combining more
+  // fields, consider JSON.stringify-ing an array of the fields instead of
+  // concatenating the values.
+  const dataToAuthenticate = `${url.pathname}@${expiry}`
 
   const mac = await crypto.subtle.sign("HMAC", key, encoder.encode(dataToAuthenticate))
 
