@@ -46,19 +46,17 @@ let grads = [
   [{color:"00000c",position:80},{color:"150800",position:100}],
 ];
 
-function toCSSGradient(hour)
-{ 
-  var css = "linear-gradient(to bottom, ";
-  var data = grads[hour]
-  var len = data.length;
-   
-  for (var i=0;i<len;i++)
-  { 
-     var item = data[i];
-     css+= " #" + item.color + " " + item.position + "%";
-     if ( i<len-1 ) css += ",";
+function toCSSGradient(hour) {
+  let css = "linear-gradient(to bottom,"
+  const data = grads[hour]
+  const len = data.length
+
+  for (let i = 0; i < len; i++) {
+    const item = data[i]
+    css += ` #${item.color} ${item.position}%`
+    if (i < len - 1) css += ","
   }
-  return css + ")"; 
+  return css + ")"
 }
 
 async function handleRequest(request) {
