@@ -18,7 +18,7 @@ If a domain is flagged by the CA, you need to contact Support before validation 
 
 ### Certificate Authority Authorization (CAA) records
 
-CAA is a new DNS resource record type defined in [RFC 6844](https://tools.ietf.org/html/rfc6844) that allows a domain owner to indicate which CAs are allowed to issue certificates for them. If your customer has CAA records set on their domain, they will either need to add the following (or remove CAA entirely):
+CAA is a new DNS resource record type defined in [RFC 6844](https://datatracker.ietf.org/doc/html/rfc6844) that allows a domain owner to indicate which CAs are allowed to issue certificates for them. If your customer has CAA records set on their domain, they will either need to add the following (or remove CAA entirely):
 
 ```txt
 example.com. IN CAA 0 issue "digicert.com"
@@ -69,7 +69,7 @@ Cloudflare returns a 1016 error when the custom hostname cannot be routed or pro
 
 There are two main causes of error 1016:
 
-1. Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](https://developers.cloudflare.com/ssl/ssl-for-saas/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
+1. Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](/ssl-for-saas/reference/common-api-calls) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
 1. Fallback Origin is not [correctly set](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
 
 --------
