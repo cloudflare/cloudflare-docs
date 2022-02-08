@@ -1,5 +1,6 @@
 ---
 order: 10
+pcx-content-type: navigation
 ---
 
 # Legal

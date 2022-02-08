@@ -1,6 +1,6 @@
 ---
 order: 0
-pcx-content-type: interim
+pcx-content-type: concept
 ---
 
 # Setup Phase

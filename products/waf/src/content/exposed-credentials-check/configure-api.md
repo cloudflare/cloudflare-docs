@@ -1,5 +1,5 @@
 ---
-pcx-content-type: interim
+pcx-content-type: how-to
 order: 3
 ---
 
