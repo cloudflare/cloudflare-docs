@@ -59,7 +59,6 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 
 </Aside>
 
-
 ![Configuration](./images/configuration.png)
 
 #### Build settings
