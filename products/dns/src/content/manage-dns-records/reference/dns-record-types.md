@@ -24,7 +24,7 @@ These records include the following fields:
     - Start with a letter and end with a letter or digit
     - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
 - **IPv4/IPv6 address**: Your origin web server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
-- **TTL**: Time to live, which controls how often the record needs to be revalidated.
+- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
     - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
     - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
@@ -40,18 +40,20 @@ These records include the following fields:
     - Start with a letter and end with a letter or digit
     - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
 - **Target**: The hostname where traffic should be directed (`example.com`).
-- **TTL**: Time to live, which controls how often the record needs to be revalidated.
+- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
     - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
     - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
 
-You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record).
+You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record) if this hostname is meant to proxy traffic.
 
 ---
 
 ## Email authentication
 
-These records are recommended regardless of whether your domain sends email messages. Creating [negative email records](https://blog.cloudflare.com/tackling-email-spoofing/) can help protect your domain against email spoofing.
+These records are recommended regardless of whether your domain sends email messages. Creating [secure email records](https://blog.cloudflare.com/tackling-email-spoofing/) can help protect your domain against email spoofing.
+
+If your domain is not used to send email messages, learn more about creating recommended [restrictive records](https://www.cloudflare.com/learning/dns/dns-records/protect-domains-without-email/). 
 
 ### MX
 
