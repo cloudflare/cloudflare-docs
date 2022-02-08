@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Step 3: Enabling services
 
-In order for your customers to get the most out of Cloudflare, it is important that you can easily provision paid services so that customer's services are as fast and secure as possible. To do that, we are going to create some subscriptions for our customer, but first the customer needs a zone.
+In order for your customers to get the most out of Cloudflare, it is important that you can easily provision paid services so that your customer's services are as fast and secure as possible. To do that, we are going to create some subscriptions for our customer, but first the customer needs a zone.
 
 ## Creating a zone
 
