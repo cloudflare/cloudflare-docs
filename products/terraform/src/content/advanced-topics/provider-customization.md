@@ -1,5 +1,5 @@
 ---
-pcx-content-type: best-practices
+pcx-content-type: reference
 ---
 
 # Provider customization

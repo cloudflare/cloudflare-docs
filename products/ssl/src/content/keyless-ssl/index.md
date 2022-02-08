@@ -1,6 +1,6 @@
 ---
 order: 5
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 import KeylessSSLDefinition from "../_partials/_keyless-ssl-definition.md"

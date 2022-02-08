@@ -1,6 +1,6 @@
 ---
 order: 8
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # DNS Firewall

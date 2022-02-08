@@ -1,6 +1,6 @@
 ---
 title: Welcome
-pcx-content-type: landing-page
+pcx-content-type: overview
 order: 0
 type: overview
 ---

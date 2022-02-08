@@ -1,7 +1,7 @@
 ---
 title: CNI Setup
 order: 2
-pcx-content-type: navigation
+pcx-content-type: get-started
 ---
 
 # Cloudflare Network Interconnect Setup

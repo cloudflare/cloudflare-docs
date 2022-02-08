@@ -1,7 +1,7 @@
 ---
 title: Get started
 order: 1
-pcx-content-type: tutorial
+pcx-content-type: get-started
 ---
 
 import UniversalSSLDefinition from "../_partials/_universal-ssl-definition.md"

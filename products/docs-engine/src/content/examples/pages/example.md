@@ -5,7 +5,7 @@ tags:
   - Tag1
   - Tag2
   - Tag3
-pcx-content-type: interim
+pcx-content-type: configuration
 ---
 
 # Example

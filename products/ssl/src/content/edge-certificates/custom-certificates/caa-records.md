@@ -1,6 +1,6 @@
 ---
 order: 6
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 import CAADefinition from "../../_partials/_caa-records-definition.md"

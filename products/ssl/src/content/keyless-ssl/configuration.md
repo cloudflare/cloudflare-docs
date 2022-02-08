@@ -1,7 +1,7 @@
 ---
 title: Get started
 order: 0
-pcx-content-type: tutorial
+pcx-content-type: get-started
 ---
 
 # Get started with Keyless SSL
