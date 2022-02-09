@@ -53,7 +53,7 @@ order: 1
                 PHP - Command Injection - CVE:CVE-2012-2336, CVE:CVE-2012-2311, CVE:CVE-2012-1823
             </td>
             <td>
-                Deny
+                Challenge
             </td>
             <td>
                 Block
