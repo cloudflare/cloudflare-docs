@@ -1,6 +1,7 @@
 ---
 order: 10
 type: overview
+pcx-content-type: reference
 ---
 
 # API token permissions
