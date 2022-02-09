@@ -119,3 +119,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 * WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 * Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
 * Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
+
+## Connections are timing out after 270 seconds
+
+We have a 270 second idle timeout on TCP connections that go through our gateway. If no data is sent, the connection is dropped. This is not mitigated by Keep-Alive packets because we're terminating TCP in the gateway and then making a new connection to the upstream. The proxy process drops the connection if there's no new data to send in either direction in 270 seconds.
