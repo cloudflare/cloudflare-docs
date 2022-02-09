@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type:  interim
+pcx-content-type: concept
 ---
 
 import PlanLimitation from "../../_partials/_ssl-for-saas-plan-limitation.md"

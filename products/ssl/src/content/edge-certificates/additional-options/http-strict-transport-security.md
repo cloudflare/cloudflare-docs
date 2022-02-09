@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: interim
+pcx-content-type: how-to
 type: overview
 ---
 

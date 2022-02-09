@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: interim
+pcx-content-type: overview
 ---
 
 # How it works

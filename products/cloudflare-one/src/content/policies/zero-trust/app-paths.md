@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: common-configurations
+pcx-content-type: configuration
 ---
 
 # Application paths

@@ -1,7 +1,7 @@
 ---
 order: 0
 title: Overview
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Client IP Geolocation

@@ -1,7 +1,7 @@
 ---
 title: Accessibility
 order: 3
-pcx-content-type: best-practices
+pcx-content-type: reference
 ---
 
 # Writing accessible content
