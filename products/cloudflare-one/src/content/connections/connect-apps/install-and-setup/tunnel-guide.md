@@ -186,7 +186,7 @@ $ cloudflared tunnel run <UUID or NAME>
 If you want to run the tunnel with a configuration file that is not in the [default directory](/connections/connect-apps/configuration/configuration-file#storing-a-configuration-file), you can use the `--config` flag and specify a path.
 
 ```bash
-$ cloudflared tunnel --config path/config.yaml run
+$ cloudflared tunnel --config path/config.yml run
 ```
 
 <Aside>
