@@ -12,7 +12,6 @@ To request a one-time upload URL, simply have your back-end (or Worker script) c
 ```bash
 curl --request POST \
  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v2/direct_upload \
- --header 'Content-Type: application/json' \
  --header 'Authorization: Bearer :token' \
  --form 'requireSignedURLs=true' \
  --form 'metadata={"key":"value"}'
@@ -22,14 +21,14 @@ You will receive a response similar to this:
 
 ```json
 {
- "result": {
-   "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
-   "uploadURL": "https://upload.imagedelivery.net/2cdc28f0-017a-49c4-9ed7-87056c83901"
- },
- "result_info": null,
- "success": true,
- "errors": [],
- "messages": []
+  "result": {
+    "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
+    "uploadURL": "https://upload.imagedelivery.net/2cdc28f0-017a-49c4-9ed7-87056c83901"
+  },
+  "result_info": null,
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -53,22 +52,22 @@ You will receive a response similar to this:
 
 ```json
 {
- "result": {
-   "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
-   "metadata": {
-     "key": "value":
-   },
-   "uploaded": "2022-01-31T16:39:28.458Z",
-   "requiredSignedURLs": true,
-   "variants": [
-     "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
-     "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail" 
-   ],
-   "draft": true
- },
- "success": true,
- "errors": [],
- "messages": []
+  "result": {
+    "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
+    "metadata": {
+      "key": "value":
+    },
+    "uploaded": "2022-01-31T16:39:28.458Z",
+    "requiredSignedURLs": true,
+    "variants": [
+      "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/public",
+      "https://imagedelivery.net/Vi7wi5KSItxGFsWRG2Us6Q/2cdc28f0-017a-49c4-9ed7-87056c83901/thumbnail" 
+    ],
+    "draft": true
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
