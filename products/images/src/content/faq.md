@@ -102,7 +102,7 @@ Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date info
 
 ### Is there a limit on image size or file size for Image Resizing?
 
-Yes. Maximum image size is 100 megapixels (example: 10,000×10,000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+Yes. Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
 
 ### Resizing failed and I received an error response with a code. What does it mean?
 

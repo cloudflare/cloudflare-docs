@@ -72,9 +72,9 @@ You will receive a response similar to this:
 }
 ```
 
-Once the image data is uploaded, the draft property is false and will not be in a response anymore.
+Once the image data is uploaded, the `draft` property will change to `false` and will not be part of the response anymore.
 
-Your back-end endpoint should return the `uploadURL` property to the client, enabling it to upload the image without needing to pass any authentication information with it. Here is an example of a simple HTML page that takes a one-time upload URL and uploads any selected image:
+Your back-end endpoint should return the `uploadURL` property to the client, enabling it to upload the image without needing to pass any authentication information with it. Here is an example of a simple HTML page that takes a one-time upload URL and uploads any image the user selects:
 
 ```html
 <html>
@@ -93,7 +93,7 @@ Your back-end endpoint should return the `uploadURL` property to the client, ena
 
 By default, the `uploadURL` will expire after 30 minutes if unused.
 
-If you want to override this option, add the following argument to the cURL command:
+To override this option, add the following argument to the cURL command:
 
 ```bash
 --data '{"expiry":"2021-09-14T16:00:00Z"}'
