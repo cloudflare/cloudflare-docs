@@ -43,6 +43,15 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 
 Newest changes are listed first.
 
+### New URL parser implementation
+
+<table><tbody>
+  <tr><td><strong>Flag to enable</strong></td><td><code>url_standard</code></td></tr>
+  <tr><td><strong>Flag to disable</strong></td><td><code>url_original/code></td></tr>
+</tbody></table>
+
+The original Workers `URL` API implementation is not fully compliant with the [WHATWG URL Standard](https://url.spec.whatwg.org/). We have added a new implementation that is fully compliant. However, since the new implementation is not completely backwards compatible it is disabled by default. Use the `url_standard` flag to enable the new implementation.
+
 ### Streams BYOB reader detaches buffer
 
 <table><tbody>
