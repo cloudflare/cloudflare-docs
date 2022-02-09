@@ -34,7 +34,7 @@ To prevent this situation, Cloudflare recommends that you perform these steps to
 
 You must have one of the following:
 
-* [A zone onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) but without updated DNS records
+* [A zone onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) but without updated DNS records
 * [An IP application onboarded to Spectrum](https://developers.cloudflare.com/spectrum/get-started)
 * [An IP Prefix onboarded to Magic Transit](https://developers.cloudflare.com/magic-transit/get-started)
 
