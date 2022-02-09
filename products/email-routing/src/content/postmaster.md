@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Postmaster
 
-In this page you can find technical information about Email Routing, as well as best practices, rules, guidelines and troubleshooting tools related to Email Routing.
+In this page you will find technical information about Email Routing, as well as best practices, rules, guidelines and troubleshooting tools related to Email Routing.
 
 ## Limits
 
@@ -29,7 +29,7 @@ _Ranges last updated: December 7, 2021_
 
 ## IPv6 support
 
-Cloudflare is one of the leading proponents of IPv6 adoption. Cloudflare designs all of its products with IPv6 support in mind, and Email Routing is no exception. Currently, Email Routing will connect to the upstream SMTP servers using IPv6 if they provide AAAA records for their MX servers, and fall back to IPv4 if that is not possible.
+Cloudflare is one of the leading proponents of [IPv6 adoption](https://blog.cloudflare.com/98-percent-ipv6/). Cloudflare designs all of its products with IPv6 support in mind, and Email Routing is no exception. Currently, Email Routing will connect to the upstream SMTP servers using IPv6 if they provide AAAA records for their MX servers, and fall back to IPv4 if that is not possible.
 
 Below is an example of a popular provider that supports IPv6:
 
@@ -92,7 +92,7 @@ In the example above:
 
 * `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
 * `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
-* `~all`: Otherwise `SoftFail` on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as bad if it came from IP addresses outside of those defined in the SPF records.
+* `~all`: Otherwise `SoftFail` on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as bad if it came from any IP addresses outside of those defined in the SPF records.
 
 If we do a TXT query to `_spf.mx.cloudflare.net`, we get:
 
@@ -131,14 +131,14 @@ For example, when receiving an email at `mycfdomain.com` with a sender address o
 
 This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
 
-## How we handle spam and abusive traffic
+## How Email Routing handles spam and abusive traffic
 
-Handling spam and abusive traffic is essential to any email provider. Below is a list of what Email Routing is doing currently, regarding this:
+Handling spam and abusive traffic is essential to any email provider. Below is a list of what Email Routing is currently doing regarding this issue:
 
 * We provide reverse DNS PTR records to all of our SMTP egress ranges. PTR records are often used as a reputation parameter.
 * We reject emails whose SPF validation fails.
 * We refuse to send email to poorly configured SMTP servers - for example, servers with broken TLS certificates.
-* New destination addresses used to forward emails require an ownership confirmation. Email Routing sends an initial email to the new address with a verification link. The destination is added once the customer clicks the verification link.
+* Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
 ## SMTP errors
 
