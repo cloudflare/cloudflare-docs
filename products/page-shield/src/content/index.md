@@ -1,7 +1,7 @@
 ---
 title: Overview
-pcx-content-type: overview
 order: 0
+pcx-content-type: overview
 ---
 
 # Cloudflare Page Shield
@@ -17,7 +17,7 @@ Page Shield includes the following features:
 * **Alerts**: Receive notifications about newly detected scripts, scripts loaded from unknown domains, new scripts considered malicious, or code changes in your existing scripts.
 
 <ButtonGroup>
-  <Button type="primary" href="/get-started">Set up Page Shield</Button>
+  <Button type="primary" href="/get-started">Get started</Button>
   <Button type="secondary" href="/about">Learn more</Button>
 </ButtonGroup>
 
@@ -34,9 +34,3 @@ Malicious code detection<br/> and alerting   | –   | –   | –   | –   | Y
 Code change detection<br/> and alerting      | –   | –   | –   | –   | Yes
 
 </TableWrap>
-
-## Get started
-
-To get started with Page Shield, refer to the Page Shield [setup guide](/get-started).
-
-To manage Page Shield using an API, refer to the [Script Monitor API](/reference/script-monitor-api).
