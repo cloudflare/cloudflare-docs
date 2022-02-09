@@ -5,7 +5,7 @@ pcx-content-type: tutorial
 
 # Configure your mobile app or IoT device
 
-This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/firewall/cf-firewall-rules/api-shield).
+This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield™](https://developers.cloudflare.com/api-shield/).
 
 ## Scenario details
 
@@ -13,7 +13,7 @@ This walkthrough uses the example of a device that captures temperature readings
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)).
 
-Temperatures are stored in [Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works) using the source IP address as a key, but you can easily use a [value from the client certificate](https://developers.cloudflare.com/access/service-auth/mtls-headers/), such as the fingerprint.
+Temperatures are stored in [Workers KV](https://developers.cloudflare.com/workers/learning/how-kv-works) using the source IP address as a key, but you can easily use a [value from the client certificate](https://developers.cloudflare.com/cloudflare-one/identity/devices/mutual-tls-authentication), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 

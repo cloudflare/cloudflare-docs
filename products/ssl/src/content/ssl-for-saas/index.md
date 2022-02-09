@@ -1,6 +1,6 @@
 ---
 order: 8
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 import SSLforSaaSDefinition from "../_partials/_ssl-for-saas-definition.md"

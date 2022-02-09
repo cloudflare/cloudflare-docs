@@ -6,7 +6,7 @@ pcx-content-type: reference
 
 # DNS records for load balancing
 
-When you [create a load balancer](/create-load-balancer-ui), we automatically create an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record (A, AAAA, CNAME).
+When you [create a load balancer](/how-to/create-load-balancer), we automatically create an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record (A, AAAA, CNAME).
 
 ## Priority order
 

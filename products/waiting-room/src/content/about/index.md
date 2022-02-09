@@ -37,7 +37,7 @@ The following customers have access to Cloudflare Waiting Room:
 - Those qualified under [Project Fair Shot](https://www.cloudflare.com/fair-shot/)
 - Business customers
 
-Access to certain features depends on a customer's [plan type](plans).
+Access to certain features depends on a customer's [plan type](/plans).
 
 ## Prerequisites
 

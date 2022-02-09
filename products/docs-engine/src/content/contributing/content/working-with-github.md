@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: best-practices
+pcx-content-type: how-to
 ---
 
 # Working with GitHub

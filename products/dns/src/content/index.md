@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Overview

@@ -1,7 +1,7 @@
 ---
 title: Get started
 order: 4
-pcx-content-type: navigation
+pcx-content-type: get-started
 ---
 
 # Get started with APO

@@ -2,7 +2,7 @@
 title: Overview
 order: 0
 type: overview
-pcx-content: landing-page
+pcx-content-type: overview
 ---
 
 # Cloudflare Distributed Web docs

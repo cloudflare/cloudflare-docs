@@ -39,10 +39,16 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
 <Definitions>
 
-- <Code>crypto.getRandomValues(buffer<ParamType>ArrayBuffer</ParamType>)</Code>
-  <Type>ArrayBuffer</Type>
+- <Code>crypto.getRandomValues(buffer<ParamType>ArrayBufferView</ParamType>)</Code>
+  <Type>ArrayBufferView</Type>
 
-  - Fills the passed ArrayBuffer with cryptographically sound random values.
+  - Fills the passed <Code>ArrayBufferView</Code> with cryptographically sound random values and returns the <Code>buffer</Code>.
+
+    __Parameters:__
+
+    - <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
+
+      - Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array</Type></Code>.
 
 - <Code>crypto.randomUUID()</Code>
   <Type>string</Type>

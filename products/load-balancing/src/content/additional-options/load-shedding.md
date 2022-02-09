@@ -82,7 +82,7 @@ For more guidance on choosing a shedding policy, see [Shedding policies](#sheddi
 
 ## Step 3 — Monitor traffic
 
-Once you have started shedding default traffic, evaluate the effects by reviewing the [**Overview** metrics](/load-balancing-analytics#overview-metrics) in Load Balancing analytics. Based on these numbers and your internal metrics, you will know whether you need to divert additional traffic from the pool.
+Once you have started shedding default traffic, evaluate the effects by reviewing the [**Overview** metrics](/reference/load-balancing-analytics) in Load Balancing analytics. Based on these numbers and your internal metrics, you will know whether you need to divert additional traffic from the pool.
 
 If you see increased traffic to a pool, you may need to shed additional traffic. Pools shed a percentage of total traffic, so any increase in total traffic will also increase the traffic reaching your pool.
 

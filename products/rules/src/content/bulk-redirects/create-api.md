@@ -176,7 +176,7 @@ The response will be similar to the following:
       }
     ],
     "last_updated": "2021-10-28T09:20:42Z",
-    "phase": "http_request_transform"
+    "phase": "http_request_redirect"
   },
   "success": true,
   "errors": [],

@@ -103,8 +103,6 @@ For more discussion about these features, refer to the [Durable Objects: Easy, F
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory.  A common pattern is to initialize an object from persistent storage and set class variables the first time it is accessed.  Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
 
-This is shown in the [Counter example](#example---counter) below, which is partially shown here.
-
 ```js
 export class Counter {
     constructor(state, env) {
@@ -127,7 +125,7 @@ export class Counter {
 
 <Aside type="note" header="Built-in Caching">
 
-The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. So, instead of writing initialization code like above, you could simply `get("value")` whenever you need it, and rely on the built-in cache to make this fast. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 </Aside>
 
@@ -417,61 +415,59 @@ We've included complete example code for both the Worker and the Durable Object 
 // Worker
 
 export default {
-    fetch(request, env) {
-        return handleRequest(request, env);
-    }
+  async fetch(request, env) {
+    return await handleRequest(request, env);
+  }
 }
 
 async function handleRequest(request, env) {
-    let id = env.Counter.idFromName("A");
-    let obj = env.Counter.get(id);
-    let resp = await obj.fetch(request.url);
-    let count = await resp.text();
+  let id = env.COUNTER.idFromName("A");
+  let obj = env.COUNTER.get(id);
+  let resp = await obj.fetch(request.url);
+  let count = await resp.text();
 
-    return new Response("Durable Object 'A' count: " + count);
+  return new Response("Durable Object 'A' count: " + count);
 }
 
 // Durable Object
 
 export class Counter {
-    constructor(state, env) {
-        this.state = state;
-        // `blockConcurrencyWhile()` ensures no requests are delivered until
-        // initialization completes.
-        this.state.blockConcurrencyWhile(async () => {
-            let stored = await this.state.storage.get("value");
-            this.value = stored || 0;
-        })
+  constructor(state, env) {
+    this.state = state;
+  }
+
+  // Handle HTTP requests from clients.
+  async fetch(request) {
+    // Apply requested action.
+    let url = new URL(request.url);
+
+    // Durable Object storage is automatically cached in-memory, so reading the
+    // same key every request is fast. (That said, you could also store the
+    // value in a class member if you prefer.)
+    let value = await this.state.storage.get("value") || 0;
+
+    switch (url.pathname) {
+    case "/increment":
+      ++value;
+      break;
+    case "/decrement":
+      --value;
+      break;
+    case "/":
+      // Just serve the current value.
+      break;
+    default:
+      return new Response("Not found", {status: 404});
     }
 
-    // Handle HTTP requests from clients.
-    async fetch(request) {
-        // Apply requested action.
-        let url = new URL(request.url);
-        let currentValue = this.value;
-        switch (url.pathname) {
-        case "/increment":
-            currentValue = ++this.value;
-            await this.state.storage.put("value", this.value);
-            break;
-        case "/decrement":
-            currentValue = --this.value;
-            await this.state.storage.put("value", this.value);
-            break;
-        case "/":
-            // Just serve the current value. No storage calls needed!
-            break;
-        default:
-            return new Response("Not found", {status: 404});
-        }
+    // You do not have to worry about a concurrent request having modified the
+    // value in storage because "input gates" will automatically protect against
+    // unwanted concurrency. So, read-modify-write is safe. For more details,
+    // refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
+    await this.state.storage.put("value", value);
 
-        // Return `currentValue`. Note that `this.value` may have been
-        // incremented or decremented by a concurrent request when we
-        // yielded the event loop to `await` the `storage.put` above!
-        // That's why we stored the counter value created by this
-        // request in `currentValue` before we used `await`.
-        return new Response(currentValue);
-    }
+    return new Response(value);
+  }
 }
 ```
 
