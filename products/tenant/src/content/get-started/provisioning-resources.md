@@ -1,35 +1,36 @@
 ---
 title: "1: Provisioning resources"
-order: 0
-pcx-content-type: tutorial
+order: 1
+pcx-content-type: get-started
 ---
 
 # Step 1: Provisioning resources
 
-All the API calls described in this tutorial use the Cloudflare client v4 interface at `https://api.cloudflare.com/client/v4`. API requests are authenticated in the same manner using a Cloudflare user's email and API key as the `x-auth-email` and `x-auth-key` headers. Your Cloudflare user must be active, verified, and enabled by Cloudflare to use these provisioning specific endpoints.
+All the API calls described in this tutorial use the Cloudflare client v4 interface at `https://api.cloudflare.com/client/v4`. API requests are authenticated in the same manner, using a Cloudflare user's email and API key as the `x-auth-email` and `x-auth-key` headers. Your Cloudflare user must be active, verified, and enabled by Cloudflare to use these provisioning specific endpoints.
 
-More details about making Cloudflare API calls can be found in our general api docs [here](https://api.cloudflare.com/#getting-started-endpoints).
+More details about making Cloudflare API calls can be found in our [general api docs](https://api.cloudflare.com/#getting-started-endpoints).
 
 ## Creating an account
 
-Each customer or team that uses Cloudflare should have their own account. This ensures proper security and access of resources. Each account acts as a container of zones and other resources. Depending on your needs you may even provision multiple accounts for a single customer or team.
+Each customer or team that uses Cloudflare should have their own account. This ensures proper security and access of resources. Each account acts as a container of zones and other resources. Depending on your needs, you may even provision multiple accounts for a single customer or team.
 
 To create an account, make a `POST` API request to the `/accounts` endpoint.
 
-Required values:
+The required values are:
 
-Name (string): The name of the account that is displayed in the Cloudflare dashboard
+**Name** (string): The name of the account that is displayed in the Cloudflare dashboard.
 
-Type (enum): Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
+**Type** (enum): Valid values are `standard` (default) and `enterprise`. For self-serve customers, use `standard`. For enterprise customers, use `enterprise`.
 
 Example:
+
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' \
 -d '{ "name": "<Account Name>", \
       "type": "standard" }'
 ```
 
-A successful request will return with an HTTP status of 200 and the following response body:
+A successful request will return an HTTP status of `200` and the following response body:
 
 ```json
 {
@@ -56,7 +57,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-a
 ```
 <Aside type="note">
 
-__Note:__ This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
+This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
 
 </Aside>
 
@@ -93,13 +94,15 @@ You will get back a list of all the accounts you have created plus any accounts 
 }
 ```
 
-Now that we have created an account, in the next step we will give another person access to the account.
+### (Optional) Deleting an account
 
-### (Optional) Deleting accounts
+If for any reason you need to delete an account you created, call `DELETE /accounts/:account_id`.
 
-If for any reason you need to delete an account you created, then call `DELETE /accounts/:account_id`.
+<Aside type="warning">
 
-**WARNING:** Account deletion is permanent and will delete any zones or other resources under the account.
+Account deletion is permanent and will delete any zones or other resources under the account.
+
+</Aside>
 
 ```bash
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<account_id> -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
@@ -118,10 +121,12 @@ A successful request will return the id to confirm the operation:
 }
 ```
 
+Now that we have created an account, visualized existing accounts and learned how to delete an account, in the next step we will give another person access to the account.
+
 --------------------------------
 
-## Continue the tutorial
+## Next step
 
-Learn how to manage how external customers access Cloudflare.
+Learn how to manage external customers access to Cloudflare.
 
-<p><Button type="primary" href="/tutorial/user-access">Step 2: User access</Button></p>
+<p><Button type="primary" href="/get-started/user-access">Step 2: User access</Button></p>
