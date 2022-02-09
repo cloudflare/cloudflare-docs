@@ -29,4 +29,4 @@ Available as a paid add-on for Cloudflare customers on an Enterprise plan.
 
 * **Script Monitor New Malicious Domain Alert**: Triggered immediately by JavaScript dependencies loaded from domains known to be malicious according to threat intelligence feeds.
 * **Script Monitor New Malicious URL Alert**: Triggered immediately by JavaScript dependencies loaded from URLs known to be malicious according to threat intelligence feeds.
-* **Script Monitor New Malicious Script Alert**: Triggered immediately by JavaScript code that Cloudflare's internal systems considered as malicious.
+* **Script Monitor New Malicious Script Alert**: Triggered immediately by JavaScript code that Cloudflare's internal systems considered malicious.
