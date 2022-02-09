@@ -49,7 +49,7 @@ curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1
  --header 'Authorization: Bearer :token'
 ```
 
-Response:
+You will receive a response similar to this:
 
 ```json
 {
@@ -74,7 +74,7 @@ Response:
 
 Once the image data is uploaded, the draft property is false and will not be in a response anymore.
 
-Your back-end endpoint should return the `uploadURL` property to the client enabling it to upload the image without needing to pass any authentication information with it. Here is a simple HTML page that takes a one-time upload URL and uploads any selected image:
+Your back-end endpoint should return the `uploadURL` property to the client, enabling it to upload the image without needing to pass any authentication information with it. Here is an example of a simple HTML page that takes a one-time upload URL and uploads any selected image:
 
 ```html
 <html>
