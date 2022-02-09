@@ -43,6 +43,38 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 
 Newest changes are listed first.
 
+### Setters/getters on API object prototypes
+
+<table><tbody>
+  <tr><td><strong>Default as of</strong></td><td>2022-01-31</td></tr>
+  <tr><td><strong>Flag to enable</strong></td><td><code>workers_api_getters_setters_on_prototype</code></td></tr>
+  <tr><td><strong>Flag to disable</strong></td><td><code>workers_api_getters_setters_on_instance</code></td></tr>
+</tbody></table>
+
+Originally, properties on Workers API objects were defined as *instance* properties as opposed to *prototype* properties. This broke subclassing at the JavaScript layer, preventing a subclass from correctly overriding the superclass getters/setters. This flag controls the breaking change made to set those getters/setters on the prototype template instead.
+
+This changes applies to:
+
+* `AbortSignal`
+* `AbortController`
+* `Blob`
+* `Body`
+* `DigestStream`
+* `Event`
+* `File`
+* `Request`
+* `ReadableStream`
+* `ReadableStreamDefaultReader`
+* `ReadableStreamBYOBReader`
+* `Response`
+* `TextDecoder`
+* `TextEncoder`
+* `TransformStream`
+* `URL`
+* `WebSocket`
+* `WritableStream`
+* `WritableStreamDefaultWriter`
+
 ### New URL parser implementation
 
 <table><tbody>
@@ -100,7 +132,7 @@ Originally, when making a request to a Durable Object by calling `stub.fetch(url
 
 Originally, if the `fetch()` function was passed a URL specifying any protocol other than `http:` or `https:`, it would silently treat it as if it were `http:`. For example, `fetch()` would appear to accept `ftp:` URLs, but it was actually making HTTP requests instead.
 
-Note that Cloudflare Workers supports a non-standard extension to `fetch()` to make it support WebSockets. However, when making an HTTP request that is intended to initiate a WebSocket handshake, you should still use `http:` or `https:` as the protocol, not `ws:` nor `wss:`. 
+Note that Cloudflare Workers supports a non-standard extension to `fetch()` to make it support WebSockets. However, when making an HTTP request that is intended to initiate a WebSocket handshake, you should still use `http:` or `https:` as the protocol, not `ws:` nor `wss:`.
 
 The `ws:` and `wss:` URL schemes are intended to be used together with the `new WebSocket()` constructor, which exclusively supports WebSocket. The extension to `fetch()` is designed to support HTTP and WebSocket in the same request (the response may or may not choose to initiate a WebSocket), and so all requests are considered to be HTTP.
 
