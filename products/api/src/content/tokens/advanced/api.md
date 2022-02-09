@@ -1,6 +1,7 @@
 ---
 title: Creating tokens via API
 order: 10
+pcx-content-type: tutorial
 ---
 
 # Creating API tokens via the API

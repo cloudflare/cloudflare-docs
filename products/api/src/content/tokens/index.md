@@ -1,6 +1,7 @@
 ---
 title: API tokens
 order: 6
+pcx-content-type: overview
 ---
 
 # API tokens and keys
