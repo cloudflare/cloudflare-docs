@@ -51,7 +51,7 @@ The example below defines a zone ruleset, but you can also define this configura
 
 Perform the following steps to create the rule:
 
-1. Use the [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view#list-existing-rulesets) operation to check if there is already a ruleset for the `log_custom_fields` phase at the zone level:
+1. Use the [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view#list-existing-rulesets) operation to check if there is already a ruleset for the `log_custom_fields` phase at the zone level (you can only have one zone ruleset per phase):
 
     ```bash
     curl -X GET \
@@ -186,7 +186,7 @@ curl -X POST \
 
 <Aside type="note" header="Note for Cloudflare Access users">
 
-If you are a Cloudflare Access user, as of January 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a new ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
+If you are a Cloudflare Access user, as of February 2022 you have to manually add the `cf-access-user` user identity header to your logs by creating a new ruleset or adding the `cf-access-user` HTTP request header to your custom fields configuration. Additionally, make sure that you include the `RequestHeaders` field in your Logpush job.
 
 </Aside>
 
