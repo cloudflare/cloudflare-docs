@@ -36,11 +36,11 @@ In the example above, `id` is a future image identifier that will be uploaded by
 
 <Aside type="note" header="Note">
 
-Previously, with `direct_upload` v1, the ID was an identifier of a request, not an image itself. Therefore, there was no way to know if an image had been really uploaded.
+Previously, in version 1 of the `direct_upload` endpoint, the ID was an identifier of a request, not an image. Therefore, there was no way to know if an image had been really uploaded.
 
 </Aside>
 
-With `direct_upload` v2, a new draft image record is created. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images ), but  it is possible to fetch an image record with the provided ID to see its current status: 
+With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images ), but  it is possible to fetch an image record with the provided ID to check its current status: 
 
 ```bash
 curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/2cdc28f0-017a-49c4-9ed7-87056c83901 \
