@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 You can change the Page Shield status and fetch information about the currently monitored scripts using the [Script Monitor API](https://api.cloudflare.com/#script-monitor-properties).
 
-For authentication instructions, refer to [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
 ## Endpoints
 
@@ -19,18 +19,18 @@ The Cloudflare API base URL is:
 https://api.cloudflare.com/client/v4
 ```
 
-The `{:zone_id}` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
+The `<ZONE_ID>` argument is the zone ID (a hexadecimal string). You can find this value in the Cloudflare dashboard or using the Cloudflare API's [`/zones` endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 
-The `{:script_id}` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Script Monitor scripts](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts) operation for every monitored script.
+The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value is included in the response of the [List Script Monitor scripts](https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts) operation for every monitored script.
 
 The following table summarizes the available operations:
 
 | Operation | Method + URL stub | Notes |
 |-----------|-------------------|-------|
-| [Get Page Shield settings][1] | `GET zones/{:zone_id}/script_monitor` | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield settings][2] | `PUT zones/{:zone_id}/script_monitor` | Updates the Page Shield status (enabled/disabled). |
-| [List Page Shield scripts][3] | `GET zones/{:zone_id}/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
-| [Get a script][4] | `GET zones/{:zone_id}/script_monitor/scripts/{:script_id}` | Fetch the details of a currently monitored script.
+| [Get Page Shield settings][1] | `GET zones/<ZONE_ID>/script_monitor` | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield settings][2] | `PUT zones/<ZONE_ID>/script_monitor` | Updates the Page Shield status (enabled/disabled). |
+| [List Page Shield scripts][3] | `GET zones/<ZONE_ID>/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
+| [Get a script][4] | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.
 
 [1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
 [2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
@@ -51,10 +51,8 @@ This example obtains the current status of Page Shield (enabled/disabled).
 ---
 header: Request
 ---
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{:zone_id}/script_monitor" \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  -H "Content-Type: application/json"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/script_monitor" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -80,11 +78,11 @@ This example enables Page Shield in the specified zone.
 ---
 header: Request
 ---
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/{:zone_id}/script_monitor" \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  -H "Content-Type: application/json" \
-  -d '{ "enabled": true }'
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/script_monitor" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{ "enabled": true }'
 ```
 
 ```json
@@ -110,10 +108,8 @@ This example fetches a list of scripts monitored by Script Monitor on hostname `
 ---
 header: Request
 ---
-curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_id}/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  -H "Content-Type: application/json"
+curl "https://dash.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -177,10 +173,8 @@ This example obtains the details of a script monitored by Page Shield with scrip
 ---
 header: Request
 ---
-curl -X GET "https://dash.cloudflare.com/api/v4/zones/{:zone_id}/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
- -H "X-Auth-Email: user@example.com" \
- -H "X-Auth-Key: REDACTED" \
- -H "Content-Type: application/json"
+curl "https://dash.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
