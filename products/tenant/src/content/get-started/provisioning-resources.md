@@ -1,7 +1,7 @@
 ---
 title: "1: Provisioning resources"
-order: 0
-pcx-content-type: tutorial
+order: 1
+pcx-content-type: get-started
 ---
 
 # Step 1: Provisioning resources
@@ -125,8 +125,8 @@ Now that we have created an account, visualized existing accounts and learned ho
 
 --------------------------------
 
-## Continue the tutorial
+## Next step
 
 Learn how to manage external customers access to Cloudflare.
 
-<p><Button type="primary" href="/tutorial/user-access">Step 2: User access</Button></p>
+<p><Button type="primary" href="/get-started/user-access">Step 2: User access</Button></p>

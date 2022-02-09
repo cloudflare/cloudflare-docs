@@ -1,7 +1,7 @@
 ---
 title: "2: User access"
-order: 1
-pcx-content-type: tutorial
+order: 2
+pcx-content-type: get-started
 ---
 
 # Step 2: User access
@@ -15,7 +15,16 @@ The first method gives customers control over all aspects of Cloudflare, while t
 
 ## 1. Direct Cloudflare dashboard access
 
-If you want to give customers access to their individual accounts, it is not different than if you were inviting a teammate to help manage your account. This can be done via dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Click **Manage Account** > **Members**. In the **Invite Members** panel, enter the email address requiring account access.
+### Grant access using the dashboard
+
+If you want to give customers access to their individual accounts, it is not different than if you were inviting a teammate to help manage your account. This can be done via dashboard. 
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Select your account.
+1. Click **Manage Account** > **Members**.
+1. In the **Invite Members** panel, enter the email address requiring account access.
+
+### Grant access using the API
 
 Another way to grant access is by making the below API call.
 
@@ -23,7 +32,7 @@ Another way to grant access is by making the below API call.
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<customer_account_id>/members' -H 'Content-Type: application/json' -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>' -d '{ "email": "<customer-email>", "roles": ["<user-role>"] }'
 ```
 
-In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles`. Only ENT customers have access to our full set of user roles.
+In most cases, the user role to use is that of `Administrator` which has the id `05784afa30c1afe1440e79d9351c7430`. A full list of available roles can be fetched by making a call to `GET https://api.cloudflare.com/client/v4/accounts/<account_id>/roles`. Only ENT customers have access to our full set of user roles. For more details about roles, please refer to [Managing Cloudflare account access](https://support.cloudflare.com/hc/articles/200167946).
 
 Once the invite is sent, the user will receive an invitation to gain access to the account. If they do not already have a Cloudflare user, we will take them through the process of creating one. Once created, they will be given access to the account and any zones already created.
 
@@ -75,8 +84,8 @@ An example response for a successful creation:
 
 --------------------------------
 
-## Continue the tutorial
+## Next step
 
 Now that the customer has access to the account, in the next step we will look at how to enable paid services for customers.
 
-<p><Button type="primary" href="/tutorial/enabling-services">Step 3: Enabling services</Button></p>
+<p><Button type="primary" href="/get-started/enabling-services">Step 3: Enabling services</Button></p>

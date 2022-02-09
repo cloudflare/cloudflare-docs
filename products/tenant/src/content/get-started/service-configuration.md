@@ -1,7 +1,7 @@
 ---
 title: "4: Service configuration"
-weight: 40
-pcx-content-type: reference
+weight: 4
+pcx-content-type: get-started
 ---
 
 # Step 4: Service configuration

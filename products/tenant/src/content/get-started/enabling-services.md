@@ -1,7 +1,7 @@
 ---
 title: "3: Enabling services"
-order: 2
-pcx-content-type: tutorial
+order: 3
+pcx-content-type: get-started
 ---
 
 # Step 3: Enabling services
@@ -55,7 +55,7 @@ Allowed rate plans are:
 * PARTNERS_BIZ
 * PARTNERS_ENT
 
-These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select including **dedicated_certificates**, **dedicated_certificates_custom**, **page_rules**, etc. These are specified as `component_values` in the subscriptions creation request.
+These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select including `dedicated_certificates`, `dedicated_certificates_custom`, `page_rules`, etc. These are specified as `component_values` in the subscriptions creation request.
 
 An example of a `POST` for such a request may look like this:
 
@@ -97,8 +97,8 @@ Once you have added the necessary features, you or your customer can move on to 
 
 --------------------------------
 
-## Continue the tutorial
+## Next step
 
 Learn how to modify zone settings and other services.
 
-<p><Button type="primary" href="/tutorial/service-configuration">Step 4: Service configuration</Button></p>
+<p><Button type="primary" href="/get-started/service-configuration">Step 4: Service configuration</Button></p>
