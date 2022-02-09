@@ -36,30 +36,39 @@ When you choose the names for your account-level nameservers, each hostname must
 
 ### Cloudflare Registrar
 
-If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers:
+If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers, you have a simpler setup process.
+
+#### Add account nameservers
 
 1. Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
 1. Cloudflare creates the [glue records](https://www.ietf.org/rfc/rfc1912.txt) automatically.
-1. To enable the custom nameservers on existing zones:
-    1. Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone.
-    1. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
-    1. Modify the zone's registrar to use the custom nameserver names.
+1. To enable the custom nameservers on existing zones, use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
 
 To make this custom nameserver the default for all new zones, use a [PUT command](https://api.cloudflare.com/#accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.
 
+#### Remove account nameservers
+
+To remove account-level nameservers and their associated DNS records from a zone, use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata).
+
 ### Non-Cloudflare Registrar
 
-If you are **not** using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers:
+If you are **not** using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
+
+#### Add account nameservers
 
 1. Create between two and five account-level nameservers with a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-add-account-custom-nameserver).
 1. Add the [glue records](https://www.ietf.org/rfc/rfc1912.txt) for each entry at your DNS provider.
 1. Use a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
 1. To enable the custom nameservers on existing zones:
-    1. Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone.
-    1. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
+    1. Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
+
     1. Modify the zone's registrar to use the custom nameserver names.
 
 To make this custom nameserver the default for all new zones added to your account from now on, use a [PUT command](https://api.cloudflare.com/#accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.
+
+#### Remove account nameservers
+
+To remove account-level nameservers and their associated DNS records from a zone, modify the zone's registrar to use your regular Cloudflare nameservers and then send a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to the Cloudflare API.
 
 ---
 
