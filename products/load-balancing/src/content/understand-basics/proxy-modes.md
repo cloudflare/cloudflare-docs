@@ -63,6 +63,6 @@ Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare
 
 <Aside type="note">
 
-Since Spectrum operates at the TCP level, it does not have the information to support features like [session affinity](/understand-basics/session-affinity), [custom rules](/understand-basics/load-balancing-rules), or caching.
+Since Spectrum operates at the TCP level, it does not have the information to support features like [session affinity](/understand-basics/session-affinity), [custom rules](/additional-options/load-balancing-rules), or caching.
 
 </Aside>

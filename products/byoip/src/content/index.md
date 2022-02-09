@@ -1,7 +1,7 @@
 ---
 title: Overview
 order: 0
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Bringing Your Own IPs to Cloudflare

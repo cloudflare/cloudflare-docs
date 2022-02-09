@@ -2,16 +2,14 @@
 title: Create Load Balancer & Spectrum application
 nav:
 order:
-pcx-content-type: how to
+pcx-content-type: how-to
 ---
 
 # Create a Load Balancer and Spectrum Application
 
 ## Create a Load Balancer
 
-To create a Load Balancer from the dashboard, follow the [Create a load balancer](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui#workflow) workflow.
-
-To create a load balancer using the API, follow the [Create a Cloudflare load balancer via the API](https://developers.cloudflare.com/load-balancing/create-load-balancer-api) workflow.
+For help creating a Load Balancer from the dashboard or using the API, follow the [Create a load balancer](https://developers.cloudflare.com/load-balancing/how-to/create-load-balancer) workflow.
 
 ## Create a Spectrum application
 
