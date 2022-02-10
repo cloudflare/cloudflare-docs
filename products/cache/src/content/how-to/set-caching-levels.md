@@ -18,3 +18,13 @@ You can adjust the caching level from the dashboard under **Caching** > **Config
 Ignore Query String only disregards the query string for static file extensions. For example, Cloudflare serves the `style.css resource` to requests for either `style.css?this` or `style.css?that`.
 
 </Aside>
+
+## API Caching level values
+
+If you are using the API to change the cache level, the values will differ from those shown in the dashboard. Refer to the table below to see how the API values map to the values shown in the dashboard.
+
+| Dashboard       | API |
+|-----------------|------| 
+| No Query String | Basic|
+| Ignore Query String | Simplified |
+| Standard (Default) | Aggressive |
