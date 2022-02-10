@@ -122,4 +122,4 @@ There are a few different possible root causes behind the `websocket: bad handsh
 
 ## Connections are timing out after 270 seconds
 
-We have a 270 second idle timeout on TCP connections that go through our gateway. If no data is sent, the connection is dropped. This is not mitigated by Keep-Alive packets because we're terminating TCP in the gateway and then making a new connection to the upstream. The proxy process drops the connection if there's no new data to send in either direction in 270 seconds.
+We enforce a 270 second idle timeout on TCP connections that go through Cloudflare's gateway. If no data is sent, the connection is dropped. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever. The proxy process drops the connection if there is no new data to send in either direction after 270 seconds.
