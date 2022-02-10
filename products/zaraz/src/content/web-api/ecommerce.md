@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 `zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. 
 
-To start using `zaraz-ecommerce()` you first need to enable it in your Zaraz account, and on the tool you plan to send ecommerce data to. Then, you need to add `zaraz.ecommerce()` to the `<body>` element of your website.
+To start using `zaraz.ecommerce()` you first need to enable it in your Zaraz account, and on the tool you plan to send ecommerce data to. Then, you need to add `zaraz.ecommerce()` to the `<body>` element of your website.
 
 ## Enable ecommerce tracking
 
