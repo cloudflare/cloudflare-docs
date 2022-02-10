@@ -11,7 +11,7 @@ If you are running [quick tunnels](/connections/connect-apps/install-and-setup/t
 
 </Aside>
 
-Configuring tunnels through a YAML file (what we refer to as a [configuration file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#configuration-file)) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/connect-apps/configuration/configuration-file/ingress) and adding parameters to them.
+Configuring tunnels through a YAML file (what we refer to as a [configuration file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/connections/connect-apps/configuration/configuration-file/ingress) and adding parameters to them.
 
 In the absence of a configuration file, `cloudflared` will proxy outbound traffic through port 8080.  
 
@@ -48,7 +48,7 @@ Refer to the [ingress rules page](/connections/connect-apps/configuration/config
 You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#storing-a-configuration-file) with vim:
 
 1. `cd` into your system's default directory for `cloudflared`.
-1. Open vim and type in the necessary [keys and values](#keys-and-values).
+1. Open vim and type in the necessary [keys and values](/connections/connect-apps/configuration/configuration-file/ingress#origin-configuration).
 1. Name and save your file by typing `:wq file-name.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
