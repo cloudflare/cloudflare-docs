@@ -1,6 +1,6 @@
 ---
-title: Google Cloud
 order: 100
+pcx-content-type: how-to
 ---
 
 # Google Cloud
