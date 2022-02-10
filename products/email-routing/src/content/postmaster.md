@@ -13,7 +13,7 @@ Currently Email Routing does not support messages bigger than 25 MiB.
 
 ## Outbound prefixes
 
-Cloudflare sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
+Email Routing sends its traffic using both IPv4 and IPv6 prefixes, when supported by the upstream SMTP server.
 
 If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
 
@@ -46,11 +46,12 @@ $ dig AAAA gmail-smtp-in.l.google.com
  
 gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 ```
+
 Cloudflare is also working to support IPv6 in Email Routing's own inbound MX servers.
 
 ## Outbound hostnames
 
-In addition to the outbound prefixes, Cloudflare will use the domain `email.cloudflare.net` for the `HELO/EHLO` command.
+In addition to the outbound prefixes, Email Routing will use the domain `email.cloudflare.net` for the `HELO/EHLO` command.
 
 PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
 
@@ -64,7 +65,7 @@ a0-7.email.cloudflare.net.
 
 ## MX, SPF and DKIM records
 
-Cloudflare automatically adds a few DNS records to the zone when our customers enable Email Routing. If we take `example.com` as an example:
+Email Routing automatically adds a few DNS records to the zone when our customers enable Email Routing. If we take `example.com` as an example:
 
 ```txt
 exmaple.com. 300 IN MX 13 amir.mx.cloudflare.net.
@@ -74,7 +75,7 @@ exmaple.com. 300 IN MX 24 isaac.mx.cloudflare.net.
 exmaple.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```
 
-[The MX (mail exchanger) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com`, can use the `amir`, `linda` or `isaac.mx.cloudflare.net` SMTP servers.
+[The MX (mail exchanger) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com`, can use the `amir.mx.cloudflare.net`, `linda.mx.cloudflare.net` or `isaac.mx.cloudflare.net` SMTP servers.
 
 ## SPF record
 
@@ -111,9 +112,9 @@ You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and
 
 DKIM (DomainKeys Identified Mail) ensures that email messages are not altered in transit between the sending and recipient SMTP servers through public-key cryptography.
 
-Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in trasit.
+Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
 
-Cloudflare Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did not sign the email, the receiver will likely use Cloudflare's signature for authentication.
+Email Routing signs email on behalf of `email.cloudflare.net`. If the sender did not sign the email, the receiver will likely use Cloudflare's signature for authentication.
 
 Below is the DKIM key for `email.cloudflare.net`:
 
@@ -131,13 +132,13 @@ For example, when receiving an email at `mycfdomain.com` with a sender address o
 
 This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
 
-## How Email Routing handles spam and abusive traffic
+## Spam and abusive traffic
 
-Handling spam and abusive traffic is essential to any email provider. Below is a list of what Email Routing is currently doing regarding this issue:
+Handling spam and abusive traffic is essential to any email provider. Below is a list of how Email Routing tackles this issue:
 
-* We provide reverse DNS PTR records to all of our SMTP egress ranges. PTR records are often used as a reputation parameter.
-* We reject emails whose SPF validation fails.
-* We refuse to send email to poorly configured SMTP servers - for example, servers with broken TLS certificates.
+* Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
+* Email Routing rejects emails whose SPF validation fails.
+* Email Routing refuses to send email to poorly configured SMTP servers - for example, servers with broken TLS certificates.
 * Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
 ## SMTP errors
