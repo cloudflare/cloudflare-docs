@@ -26,7 +26,7 @@ You do not need to map e-commerce events to triggers. Zaraz will automatically f
 After enabling e-commerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
 
 ```js
-zaraz.ecommerce('event', {parameters})
+zaraz.ecommerce('Event Name', {parameters})
 ```
 
 Below you will find a list of events and parameters Zaraz supports.
@@ -52,3 +52,14 @@ Below you will find a list of events and parameters Zaraz supports.
 * `Viewed Promotion`
 
 ## List of supported parameters:
+
+Parameter | Type | Description
+--- | --- | ---
+`product_id` | `string` | Product ID.
+`sku` | `string` | Product SKU number.
+`category` | `string` | Product category.
+
+
+
+
+
