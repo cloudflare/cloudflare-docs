@@ -337,12 +337,31 @@ All Cloudflare plans.
 </details>
 
 <details>
+<summary>Script Monitor New Code Change Detection Alert</summary>
+<div>
+
+**Who is it for?**
+
+Page Shield customers who want to receive a notification when JavaScript dependencies change in the pages of their domain.
+
+**Included with**
+
+Enterprise plans with paid add-on.
+
+**What should you do if you receive one?**
+
+Investigate to confirm it is an expected change.
+
+</div>
+</details>
+
+<details>
 <summary>Script Monitor New Domain Alert</summary>
 <div>
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their zone.
+Page Shield customers who want to receive a notification when JavaScript dependencies from new host domains appear in their domain.
 
 **Included with**
 
@@ -361,7 +380,7 @@ Investigate to confirm it is an expected change.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their zone.
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their domain.
 
 <PageShieldDetectMaliciousScripts/>
 
@@ -382,7 +401,7 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their zone as malicious.
+Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
 <PageShieldDetectMaliciousScripts/>
 
@@ -403,7 +422,7 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their zone.
+Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their domain.
 
 <PageShieldDetectMaliciousScripts/>
 
@@ -424,7 +443,7 @@ Enterprise plans with paid add-on.
 
 **Who is it for?**
 
-Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their zone.
+Page Shield customers who want to receive a notification when new JavaScript dependencies appear in their domain.
 
 **Included with**
 
