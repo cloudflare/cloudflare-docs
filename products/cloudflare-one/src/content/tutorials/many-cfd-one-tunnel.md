@@ -57,7 +57,7 @@ $ kubectl create secret generic tunnel-credentials \
 ## Associate your Tunnel with a DNS record
 
 1. Go to the Cloudflare dashboard.
-2. Navigate to the [DNS tab](https://dash.cloudflare.com/dns).
+2. Navigate to the DNS tab.
 3. Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
 
 You can also create multiple CNAME records targeting the same Tunnel, if desired.
@@ -104,4 +104,4 @@ At this point, you'll see the httpbin welcome page.
 
 In this tutorial, we've covered how the same Tunnel can be run in many `cloudflared` processes. You can also use this knowledge to support elastic scaling, graceful `cloudflared` restarts, and rolling upgrades in the future.
 
-We love to hear your feedback! Join the discussion in our [community](https://community.cloudflare.com/c/performance/argo-tunnel).
+We love to hear your feedback! Join the discussion in our [community](https://community.cloudflare.com/).

@@ -24,7 +24,7 @@ To create rules based on device serial numbers you'll need to create a list of n
 
 Cloudflare Access relies on the WARP client to gather the serial number of a device attempting to reach an application.
 
-In order for your users to be able to authenticate, you must [deploy the WARP agent](/tutorials/gw-rollout-guide#configure-device-policies) in proxy mode to your company devices. Users also [must enroll](/tutorials/gw-rollout-guide#enroll-the-cloudflare-for-teams-agent-for-dns-filtering) into your organization's Cloudflare for Teams account.
+In order for your users to be able to authenticate, you must [deploy the WARP client](/connections/connect-devices/warp/deployment) in proxy mode to your company devices. Users also must enroll into your organization's Cloudflare Zero Trust account.
 
 </Aside>
 

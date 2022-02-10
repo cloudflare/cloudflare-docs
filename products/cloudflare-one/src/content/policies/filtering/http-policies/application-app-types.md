@@ -15,7 +15,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 1. Navigate to the **HTTP tab**.
 
-1. [Create a new rule](/policies/filtering/http-policies/policy-management#create-your-first-http-policy), or edit an existing one.
+1. [Create a new rule](/policies/filtering/http-policies), or edit an existing one.
 
 1. In the **Selector** drop-down menu, select the *Application* option. 
 
