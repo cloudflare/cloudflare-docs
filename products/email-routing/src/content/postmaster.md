@@ -5,7 +5,9 @@ pcx-content-type: reference
 
 # Postmaster
 
-In this page you will find technical information about Email Routing, as well as best practices, rules, guidelines and troubleshooting tools related to Email Routing.
+On this page, you will find technical information about Email Routing and best practices, rules, guidelines, and troubleshooting tools related to Email Routing.
+
+This Postmaster page is especially helpful to the technical community and other Email providers.
 
 ## Limits
 
@@ -93,7 +95,7 @@ In the example above:
 
 * `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
 * `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
-* `~all`: Otherwise `SoftFail` on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as bad if it came from any IP addresses outside of those defined in the SPF records.
+* `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as bad if it came from any IP addresses outside of those defined in the SPF records.
 
 If we do a TXT query to `_spf.mx.cloudflare.net`, we get:
 
@@ -147,4 +149,4 @@ In most cases, Email Routing simply forwards the upstream SMTP errors back to th
 
 ## Contact information
 
-The best to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
