@@ -1,6 +1,6 @@
 ---
 order: 85
-pcx-content-type: interim
+pcx-content-type: tutorial
 ---
 
 # Parse Cloudflare Logs JSON data

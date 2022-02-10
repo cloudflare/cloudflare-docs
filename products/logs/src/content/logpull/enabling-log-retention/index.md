@@ -1,6 +1,6 @@
 ---
 order: 12
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Enabling log retention

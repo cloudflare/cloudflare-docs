@@ -1,6 +1,6 @@
 ---
 order: 14
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Requesting logs
