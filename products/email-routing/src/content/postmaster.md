@@ -7,11 +7,11 @@ pcx-content-type: reference
 
 On this page, you will find technical information about Email Routing and best practices, rules, guidelines, and troubleshooting tools related to Email Routing.
 
-This Postmaster page is especially helpful to the technical community and other Email providers.
+This Postmaster page is especially helpful to the technical community and other email providers.
 
 ## Limits
 
-Currently Email Routing does not support messages bigger than 25 MiB.
+Currently, Email Routing does not support messages bigger than 25 MiB.
 
 ## Outbound prefixes
 
@@ -57,7 +57,7 @@ In addition to the outbound prefixes, Email Routing will use the domain `email.c
 
 PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For example:
 
-```bash
+```sh
 $ dig a0-7.email.cloudflare.net +short
 104.30.0.7
  
