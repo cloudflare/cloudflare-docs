@@ -47,7 +47,7 @@ The available actions depend on the [phase](/about#phases) where you are configu
       <td>Yes</td>
     </tr>
     <tr>
-      <td><strong>Managed Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">managed_challenge</code></td>
+      <td><strong>Managed Challenge (Recommended)</strong><br/><br/>API value:<br/><code class="InlineCode">managed_challenge</code></td>
       <td>
         <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
         <p>Depending on the characteristics of a request, Cloudflare will perform the following actions:</p>
