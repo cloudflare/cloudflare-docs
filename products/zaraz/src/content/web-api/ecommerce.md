@@ -15,11 +15,11 @@ You do not need to map ecommerce events to triggers. Zaraz will automatically fo
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 1. Click **Zaraz** > **Settings**.
-1. Enable **E-commerce tracking**.
+1. Enable **Ecommerce tracking**.
 1. Click **Save**.
 1. Locate the tool you want to use with ecommerce tracking, and click **Edit**.
 1. Click **Settings**.
-1. Under **Advanced**, enable **E-commerce tracking**.
+1. Under **Advanced**, enable **Ecommerce tracking**.
 1. Click **Save**.
 
 ## Add ecommerce tracking to your website
