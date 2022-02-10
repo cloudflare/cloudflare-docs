@@ -27,7 +27,7 @@ Available as a paid add-on for Cloudflare customers on an Enterprise plan.
 
 </Aside>
 
-* **Script Monitor Code Change Detection Alert**: Triggered daily by any changed JavaScript dependencies detected in your pages.
+* **Script Monitor New Code Change Detection Alert**: Triggered daily by any changed JavaScript dependencies detected in your pages.
 
 ## Malicious code alerts
 
