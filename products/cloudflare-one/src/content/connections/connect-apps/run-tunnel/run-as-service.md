@@ -15,7 +15,6 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 |Argument|Description|
 |---|---|
-|`url`|The destination for proxied traffic in your environment if your origin is not listening on `localhost:8080`|
 |`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
 
