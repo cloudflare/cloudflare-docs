@@ -1,6 +1,6 @@
 ---
 order: 97
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Datadog
