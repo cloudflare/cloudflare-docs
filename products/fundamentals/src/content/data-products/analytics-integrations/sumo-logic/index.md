@@ -1,6 +1,6 @@
 ---
 order: 105
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Sumo Logic
