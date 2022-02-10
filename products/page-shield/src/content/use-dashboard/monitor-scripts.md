@@ -14,6 +14,7 @@ Depending on your Cloudflare plan, you may also be able to:
 
 * [View the details of each script](#view-script-details)
 * [Review scripts marked as malicious](/use-dashboard/review-malicious-scripts)
+* [Review changed scripts](/use-dashboard/review-changed-scripts)
 
 ## Use the Script Monitor dashboard
 

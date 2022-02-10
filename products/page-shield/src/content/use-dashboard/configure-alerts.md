@@ -1,6 +1,6 @@
 ---
 title: Configure alerts
-order: 3
+order: 2
 pcx-content-type: how-to
 ---
 
