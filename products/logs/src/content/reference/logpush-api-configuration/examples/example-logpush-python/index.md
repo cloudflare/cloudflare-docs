@@ -1,6 +1,6 @@
 ---
 order: 88
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Manage Logpush with Python
