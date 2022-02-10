@@ -5,9 +5,9 @@ pcx-content-type: reference
 
 # Postmaster
 
-On this page, you will find technical information about Email Routing and best practices, rules, guidelines, and troubleshooting tools related to Email Routing.
+This page contains technical information about Email Routing, along with best practices, rules, guidelines, and troubleshooting tools.
 
-This Postmaster page is especially helpful to the technical community and other email providers.
+This information is especially helpful to the technical community and other email providers.
 
 ## Limits
 
@@ -37,19 +37,19 @@ $ dig -x 104.30.0.7 +short
 a0-7.email.cloudflare.net.
 ```
 
-## MX, SPF and DKIM records
+## MX, SPF, and DKIM records
 
 Email Routing automatically adds a few DNS records to the zone when our customers enable Email Routing. If we take `example.com` as an example:
 
 ```txt
-exmaple.com. 300 IN MX 13 amir.mx.cloudflare.net.
-exmaple.com. 300 IN MX 86 linda.mx.cloudflare.net.
-exmaple.com. 300 IN MX 24 isaac.mx.cloudflare.net.
+example.com. 300 IN MX 13 amir.mx.cloudflare.net.
+example.com. 300 IN MX 86 linda.mx.cloudflare.net.
+example.com. 300 IN MX 24 isaac.mx.cloudflare.net.
  
-exmaple.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
+example.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```
 
-[The MX (mail exchanger) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com`, can use the `amir.mx.cloudflare.net`, `linda.mx.cloudflare.net` or `isaac.mx.cloudflare.net` SMTP servers.
+[The MX (mail exchange) records](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/) tell the Internet where the inbound servers receiving email messages for the zone are. In this case, anyone who wants to send an email to `example.com` can use the `amir.mx.cloudflare.net`, `linda.mx.cloudflare.net`, or `isaac.mx.cloudflare.net` SMTP servers.
 
 ## SPF record
 
@@ -57,7 +57,7 @@ A SPF DNS record is an anti-spoofing mechanism that is used to specify which IP 
 
 The Internet Engineering Task Force (IETF) tracks the SPFv1 specification [in RFC 7208](https://datatracker.ietf.org/doc/html/rfc7208). Refer to the [SPF Record Syntax](http://www.open-spf.org/SPF_Record_Syntax/) to learn the SPF syntax.
 
-Email Routing's SPF record shows:
+Email Routing's SPF record contains the following:
 
 ```txt
 v=spf1 include:_spf.mx.cloudflare.net ~all
@@ -112,7 +112,7 @@ Handling spam and abusive traffic is essential to any email provider. Below is a
 
 * Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
 * Email Routing rejects emails whose SPF validation fails.
-* Email Routing refuses to send email to poorly configured SMTP servers - for example, servers with broken TLS certificates.
+* Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
 * Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
 ## SMTP errors
