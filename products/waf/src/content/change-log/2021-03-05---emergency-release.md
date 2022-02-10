@@ -2,6 +2,7 @@
 title: "2021-03-05 – Emergency"
 type: table
 order: 946
+pcx-content-type: changelog
 ---
 
 # 2021-03-05 – Emergency release
