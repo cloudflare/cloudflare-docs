@@ -18,7 +18,7 @@ https://user:password@www.example.com:443/search?q=term#results
 
 URL component | Supported in source URL | Supported in target URL
 ---|---|---
-**Scheme**<br/>(for example, `https`) | Yes (`http` or `https` only) | Yes
+**Scheme**<br/>(for example, `https`) | Yes, `http` or `https` only<br/>(optional) | Yes
 **User information**<br/>(for example, `user:password`) | No | Yes (optional)
 **Host**<br/>(for example, `www.example.com`) | Yes | Yes (optional)
 **Port**<br/>(for example, `443`) | No | Yes (optional)
