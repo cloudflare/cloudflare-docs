@@ -26,4 +26,4 @@ To start using events, first create a trigger to determine when this bundle of i
 
 1. Click **Save**.
 
-The new event will appear under **Tracking Events**. To edit an event, refer to [Edit tools and events](/get-started/edit-tools-and-events)
+The new event will appear under **Tracking Events**. To edit an event, refer to [Edit tools and events](/get-started/edit-tools-and-events).

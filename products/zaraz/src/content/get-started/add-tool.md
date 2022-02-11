@@ -17,13 +17,13 @@ You can add new third-party tools and load them into your website through the Cl
 
 1. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose. 
 
-1. Optional: Click **Add field** to add additional fields to your tool. Refer to [Custom fields](/get-started/custom-fields) for more information.
+1. (Optional) Click **Add field** to add extra fields to your tool. Refer to [Custom fields](/get-started/custom-fields) for more information.
 
 1. Click **Save**.
 
 Your tool is now configured. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` event. Refer to [Send events to a third-party tool](/get-started/send-events) to learn more.
 
-On this page you can configure the tool's **Settings**, add additional events by clicking **Create event**, and click the events listed to edit them.
+On this page you can configure the tool's **Settings**, add extra events by clicking **Create event**, and edit events by clicking on them.
 
 <div class="full-img">
 
