@@ -22,7 +22,7 @@ To start using events, first create a trigger to determine when this bundle of i
 
 1. In the **Firing triggers** field, choose the relevant trigger you [previously created](/get-started/create-trigger). You may choose more than one trigger for your event. If you choose more than one trigger, the event will be sent to the third-party tool only when all the selected triggers are matched.
 
-1. Depending on the tool, you may also choose an **Event type** — either **Page View** or **Event**. The options you can fill out in **Event** will depend on the tool you are configuring.
+1. Depending on the tool, you may also choose an **Event type** — either **Pageview** or **Event**. The options you can fill out in **Event** will depend on the tool you are configuring.
 
 1. Click **Save**.
 
