@@ -14,7 +14,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 <TableWrap>
 
-| Language   | Example project                                                                                                         |
+| Language   | Template                                                                                                                |
 |------------|-------------------------------------------------------------------------------------------------------------------------|
 | JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                                             |
 | TypeScript | [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template)                       |
@@ -34,7 +34,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 <TableWrap>
 
-| Language | Example project                                                                                   |
+| Language | Template                                                                                          |
 |----------|---------------------------------------------------------------------------------------------------|
 | Rust     | [cloudflare/rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)     |
 | C        | [cloudflare/worker-emscripten-template](https://github.com/cloudflare/worker-emscripten-template) |
