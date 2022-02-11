@@ -5,16 +5,19 @@ pcx-content-type: get-started
 ---
 
 # R2 (beta) get started guide
-<!--
+
 <Aside type="note" header="Beta registration>
 
 As of February 2022, R2 is currently under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
 
 </Aside>
 
+<!--
 R2 product and bucket description
 
 // User creates buckets and decides how to access (HTTP/Worker/CLI).
+
+-->
 ## 1. Install Wrangler
 
 To create your R2 bucket, install [Wrangler](/get-started/guide#2-install-the-workers-cli), the Workers CLI.
@@ -55,7 +58,7 @@ Open the browser, log into your account, and select **Allow**. This will send an
 
 ## 3. Create your bucket
 
-Use Wrangler to create your bucket by running `wrangler r2 bucket create <your-bucket-name>`:
+Create your bucket by running `wrangler r2 bucket create <your-bucket-name>`:
 
 ```sh
 wrangler r2 bucket create <your-bucket-name>
@@ -66,18 +69,23 @@ To check that your bucket was created, run:
 ```sh
 wrangler r2 bucket list
 ```
-
+<!--
 // User binds buckets to a Worker.
 ## 4. Bind your bucket to a Worker
+
+
 
 // Buckets API 
 // User downloads a file.
 
 ## 5. Buckets API
 
+
+
 // User decides whether to make the bucket public.
 
 ## 6. Bucket access and privacy
+
 
 
 ## 7. Deploy your Worker/Bucket
