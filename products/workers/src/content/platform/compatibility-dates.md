@@ -51,7 +51,7 @@ Newest changes are listed first.
   <tr><td><strong>Flag to disable</strong></td><td><code>workers_api_getters_setters_on_instance</code></td></tr>
 </tbody></table>
 
-Originally, properties on Workers API objects were defined as *instance* properties as opposed to *prototype* properties. This broke subclassing at the JavaScript layer, preventing a subclass from correctly overriding the superclass getters/setters. This flag controls the breaking change made to set those getters/setters on the prototype template instead.
+Originally, properties on Workers API objects were defined as instance properties as opposed to prototype properties. This broke subclassing at the JavaScript layer, preventing a subclass from correctly overriding the superclass getters/setters. This flag controls the breaking change made to set those getters/setters on the prototype template instead.
 
 This changes applies to:
 
@@ -79,10 +79,10 @@ This changes applies to:
 
 <table><tbody>
   <tr><td><strong>Flag to enable</strong></td><td><code>url_standard</code></td></tr>
-  <tr><td><strong>Flag to disable</strong></td><td><code>url_original/code></td></tr>
+  <tr><td><strong>Flag to disable</strong></td><td><code>url_original</code></td></tr>
 </tbody></table>
 
-The original Workers `URL` API implementation is not fully compliant with the [WHATWG URL Standard](https://url.spec.whatwg.org/). We have added a new implementation that is fully compliant. However, since the new implementation is not completely backwards compatible it is disabled by default. Use the `url_standard` flag to enable the new implementation.
+The original Workers `URL` API implementation is not fully compliant with the [WHATWG URL Standard](https://url.spec.whatwg.org/). Cloudflare has added a new implementation that is fully compliant. However, since the new implementation is not completely backwards compatible, it is disabled by default. Use the `url_standard` flag to enable the new implementation.
 
 ### Streams BYOB reader detaches buffer
 
