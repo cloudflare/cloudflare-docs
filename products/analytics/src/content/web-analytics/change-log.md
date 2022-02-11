@@ -1,6 +1,6 @@
 ---
 title: Change log
-order: 40
+order: 6
 pcx-content-type: changelog
 ---
 

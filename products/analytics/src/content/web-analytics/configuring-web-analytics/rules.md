@@ -1,5 +1,4 @@
 ---
-order: 41
 pcx-content-type: how-to
 ---
 

@@ -1,5 +1,4 @@
 ---
-order: 42
 pcx-content-type: reference
 ---
 
