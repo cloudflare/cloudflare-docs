@@ -20,10 +20,10 @@ To start using events, first create a trigger to determine when this bundle of i
 
 1. Give the event a descriptive name.
 
-1. In the **Firing triggers** field, choose the relevant trigger you [previously created](/get-started/create-trigger). You may choose more than one trigger for your event. If you choose more than one trigger, the event will be sent to the third-party tool only when all the selected triggers are matched.
+1. In the **Firing Triggers** field, choose the relevant trigger or triggers you [previously created](/get-started/create-trigger). If you choose more than one trigger, the event will only be sent to the third-party tool when all the selected triggers are matched.
 
-1. Depending on the tool, you may also choose an **Event type** — either **Pageview** or **Event**. The options you can fill out in **Event** will depend on the tool you are configuring.
+1. Depending on the tool you are adding, you might also have the option to choose an **Event type**.
 
 1. Click **Save**.
 
-The new event you created will appear in the third-party tool, in the **Events** tab, under **Tracking Events**. 
+The new event will appear under **Tracking Events**. To edit an event, refer to [Edit tools and events](/get-started/edit-tools-and-events).
