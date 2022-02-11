@@ -6,7 +6,7 @@ pcx-content-type: get-started
 
 # R2 (beta) get started guide
 
-<Aside type="note" header="Beta registration>
+<Aside type="note" header="Beta registration">
 
 As of February 2022, R2 is currently under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
 
