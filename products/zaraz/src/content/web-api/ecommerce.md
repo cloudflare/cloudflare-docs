@@ -3,7 +3,7 @@ order: 5
 pcx-content-type: how-to
 ---
 
-# Zaraz ecommerce
+# Zaraz Ecommerce
 
 `zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. 
 
