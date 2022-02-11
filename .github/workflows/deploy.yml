@@ -42,6 +42,7 @@ jobs:
       pages: ${{ steps.filter.outputs.pages }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
       partners: ${{ steps.filter.outputs.partners }}
+      r2: ${{ steps.filter.outputs.r2 }}
       railgun: ${{ steps.filter.outputs.railgun }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
@@ -129,6 +130,8 @@ jobs:
             - 'products/page-shield/**'
             partners:
             - 'products/partners/**'
+            r2:
+            - 'products/r2/**'
             railgun:
             - 'products/railgun/**'
             randomness-beacon:
@@ -1250,6 +1253,38 @@ jobs:
           workingDirectory: "products/partners"
           environment: "production"
           wranglerVersion: "1.13.0"
+        
+  deploy-r2:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.r2 == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/r2
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          npm install
+          mkdir .docs
+          npm run ghactionsbootstrap
+          npm run build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/r2"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/r2"
+          environment: "production"
 
   deploy-railgun:
     runs-on: ubuntu-latest
