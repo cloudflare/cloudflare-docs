@@ -7,17 +7,17 @@ pcx-content-type: how-to
 
 `zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. 
 
-To start using `zaraz.ecommerce()` you first need to enable it in your Zaraz account, and on the tool you plan to send ecommerce data to. Then, you need to add `zaraz.ecommerce()` to the `<body>` element of your website.
+To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
 ## Enable ecommerce tracking
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
 1. Click **Zaraz** > **Settings**.
 1. Enable **Ecommerce tracking**.
 1. Click **Save**.
-1. Locate the tool you want to use with ecommerce tracking, and click **Edit**.
+1. Locate the tool you want to use with ecommerce tracking and click **Edit**.
 1. Click **Settings**.
 1. Under **Advanced**, enable **Ecommerce tracking**.
 1. Click **Save**.
@@ -99,7 +99,7 @@ Parameter | Type | Description
 ### Product viewed
 ```js
 zaraz.ecommerce('Product Viewed', {
-  product_id: ‘999555321’,
+  product_id: '999555321',
   sku: '2671033',
   category: 'T-shirts',
   name: 'V-neck T-shirt',
@@ -114,7 +114,7 @@ zaraz.ecommerce('Product Viewed', {
 ### Product added
 ```js
 zaraz.ecommerce('Product Added', {
-  product_id: ‘999555321’,
+  product_id: '999555321',
   sku: '2671033',
   category: 'T-shirts',
   name: 'V-neck T-shirt',
@@ -127,7 +127,6 @@ zaraz.ecommerce('Product Added', {
   position: 2
 });
 ```
-
 
 ### Order completed
 ```js
