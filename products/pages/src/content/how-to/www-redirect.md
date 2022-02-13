@@ -6,6 +6,10 @@ pcx-content-type: how-to
 
 In this tutorial, you will learn how to redirect the `www` subdomain to your apex domain (`example.com`). This is a common question and can be achieved by using [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427).
 
+<Aside type= "note">
+It is recommended to use [Bulk Redirects](https://developers.cloudflare.com/pages/how-to/use-bulk-redirects.md) instead of Page Rules for redirecting domains. However using Pages Rules will work as expected.
+</Aside>
+
 To do this, create a DNS record for the `www` subdomain. It must either be an `A` record with the `192.0.2.1` value or an `AAAA` record with the `100::` value. The new DNS record must also have Cloudflare's proxy enabled (orange-clouded) so that it can enact the Page Rule behavior that you will create next.
 
 ![www record](./media/www_subdomain.png)
