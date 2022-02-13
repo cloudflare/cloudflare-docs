@@ -112,7 +112,7 @@ To remove zone-level nameservers (and their associated, read-only DNS records) u
 
 #### Using the API
 
-To add zone-level custom nameservers via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and include an empty array in the payload:
+To remove zone-level custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and include an empty array in the payload:
 
 ```txt
 "vanity_name_servers": []
