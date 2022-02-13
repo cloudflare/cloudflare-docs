@@ -21,13 +21,14 @@ Prior to setting up DNS Firewall, you need:
 #### Using the dashboard
 
 1. Log in to the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
-1. On the account homepage, click **Configurations**.
+1. On the account homepage, expand the **Manage Account** section and click **Configurations**.
 1. Click **DNS Firewall**.
 1. Click **Add Firewall Cluster**.
 1. Fill out the required fields, including:
+    - **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
     - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
     - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
-    - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks.
+    - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
 1. Click **Continue**.
 1. On the following screen, save the values for **Your new DNS Firewall IP Addresses**.
 
@@ -43,11 +44,11 @@ You can also create a Firewall Cluster by sending a [POST request](https://api.c
 
 ### Update registrar settings
 
-After waiting **an hour**, update the domain NS glue records at your registrar with your DNS Firewall IP Addresses.
+Update the A/AAAA glue records for your nameserver hostnames at your registrar with your DNS Firewall cluster IP addresses.
 
 ### Update DNS servers
 
-At your DNS servers, update your nameserver A records in your DNS zone file with your DNS Firewall IP Addresses.
+At your DNS servers, update the A/AAAA records for your nameserver hostnames in your DNS zone file with your DNS Firewall cluster IP addresses.
 
 ### Test DNS resolution
 
