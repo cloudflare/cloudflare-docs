@@ -55,7 +55,7 @@ Cloudflare determines this priority in the following order (assuming each record
 
     1. [New Custom Hostname](/ssl-for-saas/getting-started) (Belonging to a SaaS Provider)
     1. [Legacy Custom Hostname](/ssl-for-saas/reference/versioning) (Belonging to a SaaS Provider)
-    1. [DNS](https://support.cloudflare.com/hc/articles/200169626) (Belonging to the logical DNS zone)
+    1. [DNS](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) (Belonging to the logical DNS zone)
 
 1. **Wildcard hostname match**:
     

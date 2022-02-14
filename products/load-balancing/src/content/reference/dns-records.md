@@ -49,6 +49,6 @@ In both cases, disabling your load balancer prevents traffic from going to any a
 
 Due to internal limitations, Cloudflare [Universal SSL certificates](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
-As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](https://support.cloudflare.com/hc/articles/360019093151) for that hostname. 
+As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that hostname. 
 
 To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager).

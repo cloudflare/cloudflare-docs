@@ -23,7 +23,7 @@ Cloudflare does not offer web hosting for most websites, though you can deploy a
 
 For help adding a domain to Cloudflare, refer to our [setup guide](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2).
 
-Once you finish adding your domain, you likely will want to also [update your domain's nameservers](https://support.cloudflare.com/hc/articles/205195708) to get Cloudflare's performance and security benefits.
+Once you finish adding your domain, you likely will want to also [update your domain's nameservers](https://developers.cloudflare.com/dns/zone-setups/full-setup) to get Cloudflare's performance and security benefits.
 
 ## Remove a domain from Cloudflare
 
@@ -34,7 +34,7 @@ For help removing an active domain from Cloudflare, refer to [our Support guide]
 If you have an alias domain that simply forwards traffic to another domain, you can set up redirects directly within Cloudflare.
 
 1. [Add](#add-a-domain-to-Cloudflare) your alias domain (`previous.com`) to Cloudflare.
-1. Make sure that your alias domain has a proxied [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
+1. Make sure that your alias domain has a proxied [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
 
     <Example>
 

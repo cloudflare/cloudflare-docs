@@ -10,7 +10,7 @@ pcx-content-type: how-to
 <b>Before you start</b>
 
 * **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">Add a website to Cloudflare</a>**
-* **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**
+* **<a href="https://developers.cloudflare.com/dns/zone-setups/full-setup">Change your domain nameservers to Cloudflare</a>**
 
 </Aside>
 
