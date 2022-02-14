@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-order: 5
+order: 6
 ---
 
 # Defining WAF exceptions
