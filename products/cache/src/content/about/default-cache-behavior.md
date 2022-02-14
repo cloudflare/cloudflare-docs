@@ -46,7 +46,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 - 200MB Business
 - 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
-If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](https://support.cloudflare.com/hc/en-us/articles/200169626).
+If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
 
 ## Cloudflare cache responses
 
