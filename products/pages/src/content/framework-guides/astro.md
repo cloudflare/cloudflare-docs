@@ -12,7 +12,7 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 <Aside type="warning">
 
-**Note:** At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
+At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
 
 </Aside>
 
@@ -68,13 +68,13 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-<Aside type="warning">
+<Aside type="warning" header="Important">
 
-**Important:** Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
 </Aside>
 
-After completing configuration, click the **Save and Deploy** button.
+After completing configuration, select **Save and Deploy**.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
 

@@ -1,5 +1,6 @@
 ---
 order: 5
+pcx-content-type: reference
 ---
 
 # Categories
@@ -35,7 +36,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 ### Block security risk categories
 
 1. Navigate to the **Policies** tab in the [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
+2. [Create a new policy](/policies/filtering/dns-policies/), or edit an existing one.
 3. Navigate to the **Security risks** tab.
 
 ![Security risks page](../../../static/documentation/policies/security-risks.png)
@@ -81,7 +82,7 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 ### Blocking content categories
 
 1. Navigate to the **Policies** tab in the [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-2. [Create a new policy](/policies/filtering/dns-policies/policy-management), or edit an existing one.
+2. [Create a new policy](/policies/filtering/dns-policies), or edit an existing one.
 3. Navigate to the **Content categories** tab.
 
 ![Content categories page](../../../static/documentation/policies/content-categories.png)

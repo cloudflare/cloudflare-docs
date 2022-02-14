@@ -2,6 +2,7 @@
 title: "2019-11-25 – Emergency"
 type: table
 order: 988
+pcx-content-type: changelog
 ---
 
 # 2019-11-25 – Emergency release

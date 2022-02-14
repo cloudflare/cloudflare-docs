@@ -1,7 +1,7 @@
 ---
 title: Change log
 order: 40
-pcx-content-type: reference
+pcx-content-type: changelog
 ---
 
 # Change log for `beacon.min.js`

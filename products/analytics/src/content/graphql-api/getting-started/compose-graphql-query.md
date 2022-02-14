@@ -1,6 +1,6 @@
 ---
 order: 50
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Create a query in GraphiQL

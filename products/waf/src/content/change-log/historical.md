@@ -3,6 +3,7 @@ date: 2019-09-15
 type: table
 order: 1001
 summary: Changes that were completed before the change log was made publicly available.
+pcx-content-type: changelog
 ---
 
 # Historical

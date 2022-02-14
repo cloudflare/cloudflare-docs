@@ -103,7 +103,7 @@ You can install the Cloudflare certificate on your terminal, too.
 1. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
  ```bash
-sudo cat Cloudflare_CA.crt >> /usr/local/etc/openssl/cert.pem
+sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
  ```
 
 ### iOS

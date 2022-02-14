@@ -17,7 +17,7 @@ Build directories indicates where your project's build command outputs the built
 
 Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools. 
 
-If you are not using a framework, you may input `exit 0` into the **Build command** field.
+If you are not using a framework, leave the **Build command** field blank.
 
 <TableWrap>
 

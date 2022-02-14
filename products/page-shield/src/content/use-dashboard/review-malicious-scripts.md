@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 pcx-content-type: how-to
 ---
 
@@ -9,7 +9,7 @@ In the list of scripts displayed in the Script Monitor dashboard, the detected s
 
 <Aside type="note">
 
-This feature is only available to Enterprise customers with a paid add-on.
+Only available to Enterprise customers with a paid add-on.
 
 </Aside>
 

@@ -243,7 +243,7 @@ The `[durable_objects]` section has 1 subsection:
   - `class_name` - Required, The class name you wish to bind to.
   - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
 
-If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example an environment named `staging`:
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example, an environment named `staging`:
 
 ```toml
 [env.staging]

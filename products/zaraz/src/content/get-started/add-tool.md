@@ -15,18 +15,18 @@ You can add new third-party tools and load them into your website through the Cl
 
 1. Choose a tool from the tools library page and click **Continue** to confirm your selection.
 
-1. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose.
+1. In **Set up**, configure the settings for your new tool. The information you need to enter will depend on the tool you choose. 
+
+1. (Optional) Click **Add field** to add extra fields to your tool. Refer to [Custom fields](/get-started/custom-fields) for more information.
 
 1. Click **Save**.
 
-Your tool is now configured. Cloudflare Zaraz automatically creates the `Pageview` event that will load the tool into your website when the conditions you set are met. 
+Your tool is now configured. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` event. Refer to [Send events to a third-party tool](/get-started/send-events) to learn more.
 
-From this page you can configure the tool's **Settings** or add additional events by clicking **Create event**. You can also edit the events listed by clicking their names.
+On this page you can configure the tool's **Settings**, add extra events by clicking **Create event**, and edit events by clicking on them.
 
 <div class="full-img">
 
 ![An example of what adding a tool looks like in Zaraz dahsboard](../static/tool-settings.png)
 
 </div>
-
-Click **Third-party list** to go back to the main Cloudflare Zaraz page. Here you will see your tool listed under **Third-party tools**, and the name of the event associated with it. In this page you can also click the **Active** toggle to enable or disable your tool, **Edit** your tool, or **Delete** your tool.

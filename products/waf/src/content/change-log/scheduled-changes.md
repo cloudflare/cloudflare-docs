@@ -1,8 +1,11 @@
 ---
 type: table
 order: 1
+pcx-content-type: changelog
 ---
+
 # Scheduled changes
+
 <TableWrap><table style="width: 100%">
     <thead>
         <tr>
@@ -32,7 +35,7 @@ order: 1
             </th>
         </tr>
     </thead>
-<tbody>   
+    <tbody>
         <tr>
             <td>
                 2022-02-07
@@ -85,5 +88,5 @@ order: 1
                 Block
             </td>
         </tr>
-</tbody>
+    </tbody>
 </table></TableWrap>
