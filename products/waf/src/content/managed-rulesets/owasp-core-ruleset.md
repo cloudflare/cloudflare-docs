@@ -267,7 +267,7 @@ This example configures the Managed Ruleset score threshold and the performed ac
 
     ```json
     ---
-    highlight: [14]
+    highlight: [12]
     ---
     {
       "result": {
