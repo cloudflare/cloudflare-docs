@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing your API key or token to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
 
-To request a one-time upload URL, simply have your back-end (or Worker script) call the `direct_upload` endpoint:
+To request a one-time upload URL, call the [`direct_upload` endpoint](https://api.cloudflare.com/#cloudflare-images-create-authenticated-direct-upload-url-v2) in your back-end (or Worker script):
 
 ```bash
 curl --request POST \
