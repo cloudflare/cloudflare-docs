@@ -41,9 +41,9 @@ You can build HTTP policies using **identity-based selectors**. These selectors 
 
 #### Application
 
-| UI name | API example |
-| -- | -- |
-| Application | `http.request.host == ".*example\.com"` |
+| UI name |
+| -- |
+| Application |
 
 #### Host
 
