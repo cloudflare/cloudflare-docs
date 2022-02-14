@@ -28,6 +28,8 @@ For details on configuring a Managed Ruleset in the dashboard, refer to [Configu
 
 ## Configure via API
 
+To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/deploy-managed-ruleset).
+
 To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset) using the Rulesets API. You can perform the following configurations:
 
 * Enable all the rules up to a specific paranoia level.
