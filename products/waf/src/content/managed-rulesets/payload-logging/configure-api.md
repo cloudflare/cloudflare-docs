@@ -102,7 +102,7 @@ header: Response
 }
 ```
 
-For more information on deploying Managed Rulesets via API, see [Deploy a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/deploy-managed-ruleset) in the Ruleset Engine documentation.
+For more information on deploying Managed Rulesets via API, refer to [Deploy a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/deploy-managed-ruleset) in the Ruleset Engine documentation.
 
 ---
 

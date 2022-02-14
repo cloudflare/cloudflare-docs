@@ -28,14 +28,14 @@ Besides these two parameters, Rate Limiting rules require the following addition
 * **Requests per period** — The number of requests over the period of time that will trigger the Rate Limiting rule.
 * **Mitigation timeout** — Once the request rate is reached, the Rate Limiting rule blocks further requests for the period of time defined in this field.
 
-Check [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more details on these parameters.
+Refer to [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more details on these parameters.
 
-See [Determining the request rate](/custom-rules/rate-limiting/request-rate) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+Refer to [Determining the request rate](/custom-rules/rate-limiting/request-rate) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ---
 
 ## Getting started
 
-To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, see [Create Rate Limiting rules in the dashboard](/custom-rules/rate-limiting/create-dashboard).
+To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, refer to [Create Rate Limiting rules in the dashboard](/custom-rules/rate-limiting/create-dashboard).
 
-You can also configure Rate Limiting rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). See [Create Rate Limiting rules via API](/custom-rules/rate-limiting/create-api) for more information.
+You can also configure Rate Limiting rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). Refer to [Create Rate Limiting rules via API](/custom-rules/rate-limiting/create-api) for more information.
