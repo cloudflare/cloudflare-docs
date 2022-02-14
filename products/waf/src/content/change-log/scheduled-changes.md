@@ -53,8 +53,7 @@ pcx-content-type: changelog
                 100400
             </td>
             <td>
-                (Improve coverage.)
-                Atlassian Confluence - Code Injection - CVE:CVE-2021-26084
+                Atlassian Confluence - Code Injection - CVE:CVE-2021-26084 - Improve Rule Coverage
             </td>
             <td>
                 Block
