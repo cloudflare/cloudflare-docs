@@ -1,6 +1,5 @@
 ---
 title: Web Analytics for SPAs
-order: 12
 pcx-content-type: reference
 ---
 

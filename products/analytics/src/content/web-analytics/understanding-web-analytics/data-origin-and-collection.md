@@ -1,6 +1,6 @@
 ---
-order: 38
 pcx-content-type: concept
+order: 6
 ---
 
 # Data origin and collection
