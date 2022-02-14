@@ -22,22 +22,21 @@ To apply a rule to every request in a phase at the **zone** level, set the rule 
 
 ## Example
 
-The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`{zone-id}`) by adding a rule that executes the Managed Ruleset.
+The following example deploys a Managed Ruleset to the `http_request_firewall_managed` phase of a given zone (`<ZONE_ID>`) by adding a rule that executes the Managed Ruleset.
 
 ```json
 ---
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "action_parameters": {
-        "id": "{cloudflare-managed-ruleset-id}"
+        "id": "<CLOUDFLARE_MANAGED_RULESET_ID>"
       },
       "expression": "true",
       "description": "Execute Cloudflare Managed Ruleset on my zone ruleset"
@@ -52,24 +51,24 @@ header: Response
 ---
 {
   "result": {
-    "id": "{zone-level-phase-ruleset-id}",
+    "id": "<ZONE_PHASE_RULESET_ID>",
     "name": "Zone-level Ruleset 1",
     "description": "",
     "kind": "zone",
     "version": "latest",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{cloudflare-managed-ruleset-id}",
+          "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
           "version": "3"
         },
         "expression": "true",
         "description": "Execute Cloudflare Managed Ruleset on my zone ruleset",
         "last_updated": "2021-03-18T18:08:14.003361Z",
-        "ref": "{ruleset-ref}",
+        "ref": "<RULE_REF>",
         "enabled": true
       }
     ],

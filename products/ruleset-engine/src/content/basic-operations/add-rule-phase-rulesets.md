@@ -33,22 +33,21 @@ The following example sets the rules of a phase entry point ruleset at the zone 
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "action_parameters": {
-        "id": "{managed-ruleset-id-1}"
+        "id": "<MANAGED_RULESET_ID_1>"
       },
       "expression": "true"
     },
     {
       "action": "execute",
       "action_parameters": {
-        "id": "{managed-ruleset-id-2}"
+        "id": "<MANAGED_RULESET_ID_2>"
       },
       "expression": "true"
     }
@@ -62,29 +61,29 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Default",
     "description": "",
     "kind": "zone",
     "version": "1",
     "rules": [
       {
-        "id": "{rule-id-1}",
+        "id": "<RULE_ID_1>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id-1}"
+          "id": "<MANAGED_RULESET_ID_1>"
         },
         "last_updated": "2021-06-17T15:42:37.917815Z"
       },
       {
-        "id": "{rule-id-2}",
+        "id": "<RULE_ID_2>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id-2}"
+          "id": "<MANAGED_RULESET_ID_2>"
         },
         "last_updated": "2021-06-17T15:42:37.917815Z"
       }
@@ -105,20 +104,18 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset-id}`) at the zone level using the [Add rule to ruleset](/rulesets-api/add-rule) API method.
+The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Add rule to ruleset](/rulesets-api/add-rule) API method.
 
 ```json
 ---
 header: Request
 ---
-curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zone/{zone-id}/rulesets/{ruleset-id}/rules" \
+curl "https://api.cloudflare.com/client/v4/zone/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "execute",
   "action_parameters": {
-    "id": "{managed-ruleset-id}"
+    "id": "<MANAGED_RULESET_ID>"
   },
   "expression": "true"
 }'
@@ -130,29 +127,29 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point ruleset",
     "description": "",
     "kind": "root",
     "version": "2",
     "rules": [
       {
-        "id": "{existing-rule-id}",
+        "id": "<EXISTING_RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{another-managed-ruleset-id}"
+          "id": "<ANOTHER_MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       },
       {
-        "id": "{new-rule-id}",
+        "id": "<NEW_RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-06-30T15:42:37.917815Z"
       }

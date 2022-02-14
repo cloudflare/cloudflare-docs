@@ -23,16 +23,15 @@ The example below uses the [Update ruleset](/rulesets-api/update) operation to p
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "categories": [
             {
@@ -56,16 +55,15 @@ curl -X PUT \
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "categories": [
             {

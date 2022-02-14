@@ -27,9 +27,8 @@ The following request adds two rules to a custom ruleset. These will be the only
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{custom-ruleset-id}" \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<CUSTOM_RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
@@ -54,29 +53,29 @@ header: Response
 ---
 {
   "result": {
-    "id": "{custom-ruleset-id}",
+    "id": "<CUSTOM_RULESET_ID>",
     "name": "Custom Ruleset 1",
     "kind": "custom",
     "version": "2",
     "rules": [
       {
-        "id": "{custom-rule-id-1}",
+        "id": "<CUSTOM_RULE_ID_1>",
         "version": "1",
         "action": "challenge",
         "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
         "description": "challenge GB and FR or based on IP Reputation",
         "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "{custom-rule-ref-1}",
+        "ref": "<CUSTOM_RULE_REF_1>",
         "enabled": true
       },
       {
-        "id": "{custom-rule-id-2}",
+        "id": "<CUSTOM_RULE_ID_2>",
         "version": "1",
         "action": "challenge",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
         "description": "challenge not /api",
         "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "{custom-rule-ref-2}",
+        "ref": "<CUSTOM_RULE_REF_2>",
         "enabled": true
       }
     ],
@@ -100,19 +99,18 @@ The following request edits one rule in a custom ruleset and updates the executi
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
-      "id": "{custom-rule-id-2}",
+      "id": "<CUSTOM_RULE_ID_2>",
       "expression": "not http.request.uri.path matches \"^/api/.*$\"",
       "action": "js_challenge",
       "description": "js_challenge when not /api"
     },
     {
-      "id": "{custom-rule-id-1}"
+      "id": "<CUSTOM_RULE_ID_1>"
     }
   ]
 }'
@@ -126,29 +124,29 @@ header: Response
 ---
 {
   "result": {
-    "id": "{custom-ruleset-id}",
+    "id": "<CUSTOM_RULESET_ID>",
     "name": "Custom Ruleset 1",
     "kind": "custom",
     "version": "3",
     "rules": [
       {
-        "id": "{custom-rule-id-2}",
+        "id": "<CUSTOM_RULE_ID_2>",
         "version": "2",
         "action": "js_challenge",
         "expression": "not http.request.uri.path matches \"^/api/.*$\"",
         "description": "js_challenge when not /api",
         "last_updated": "2021-03-18T18:30:08.122758Z",
-        "ref": "{custom-rule-id-2}",
+        "ref": "<CUSTOM_RULE_ID_2>",
         "enabled": true
       },
       {
-        "id": "{custom-rule-id-1}",
+        "id": "<CUSTOM_RULE_ID_1>",
         "version": "1",
         "action": "challenge",
         "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") or cf.threat_score \u003e 0",
         "description": "challenge GB and FR or based on IP Reputation",
         "last_updated": "2021-03-18T18:25:08.122758Z",
-        "ref": "{custom-rule-id-1}",
+        "ref": "<CUSTOM_RULE_ID_1>",
         "enabled": true
       }
     ],

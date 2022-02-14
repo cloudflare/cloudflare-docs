@@ -12,10 +12,10 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Update account ruleset][ur-account] | `PUT /accounts/{account-id}/rulesets/{ruleset-id}` |
-| [Update zone ruleset][ur-zone] | `PUT /zones/{zone-id}/rulesets/{ruleset-id}` |
-| [Update account entry point ruleset][uep-account] | `PUT /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint` |
-| [Update zone entry point ruleset][uep-zone] | `PUT /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint` |
+| [Update account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Update zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
+| [Update account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
 [ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
 [ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
@@ -38,15 +38,14 @@ Use this API method to set the rules of a ruleset. You must include all the rule
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "action_parameters": {
-        "id": "{managed-ruleset-id}"
+        "id": "<MANAGED_RULESET_ID>"
       },
       "expression": "true"
     }
@@ -64,19 +63,19 @@ curl -X PUT \
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
     "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "4",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "2",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       }
@@ -97,7 +96,7 @@ curl -X PUT \
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`{zone-id}`).
+The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
 
 <details open>
 <summary>Request</summary>
@@ -105,15 +104,14 @@ The following example deploys a Managed Ruleset to the zone-level `http_request_
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "action_parameters": {
-        "id": "{managed-ruleset-id}"
+        "id": "<MANAGED_RULESET_ID>"
       },
       "expression": "true",
       "description": "Execute Cloudflare Managed Ruleset on my phase entry point"
@@ -132,24 +130,24 @@ curl -X PUT \
 ```json
 {
   "result": {
-    "id": "{phase-ruleset-id}",
+    "id": "<ZONE_PHASE_RULESET_ID>",
     "name": "Zone-level phase entry point",
     "description": "",
     "kind": "zone",
     "version": "4",
     "rules": [
       {
-        "id": "{rule-id-1}",
+        "id": "<RULE_ID_1>",
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{managed-ruleset-id}",
+          "id": "<MANAGED_RULESET_ID>",
           "version": "latest"
         },
         "expression": "true",
         "description": "Execute Cloudflare Managed Ruleset on my phase entry point",
         "last_updated": "2021-03-21T11:02:08.769537Z",
-        "ref": "{rule-ref-1}",
+        "ref": "<RULE_REF_1>",
         "enabled": true
       }
     ],
@@ -183,10 +181,9 @@ You cannot update the description or the rules in a Managed Ruleset. You can onl
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}" \
--d '{ 
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
   "description": "My updated phase entry point"
 }'
 ```
@@ -203,7 +200,7 @@ The response includes the complete ruleset definition, including all the rules.
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone entry point",
     "description": "My updated phase entry point",
     "kind": "zone",
