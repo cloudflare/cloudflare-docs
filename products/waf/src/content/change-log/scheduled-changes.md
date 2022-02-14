@@ -50,13 +50,14 @@ pcx-content-type: changelog
                 TBD
             </td>
             <td>
-                100400_BETA
+                100400
             </td>
             <td>
+                (Improve coverage.)
                 Atlassian Confluence - Code Injection - CVE:CVE-2021-26084
             </td>
             <td>
-                N/A
+                Block
             </td>
             <td>
                 Block
