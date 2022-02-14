@@ -5,23 +5,23 @@ pcx-content-type: how-to
 
 # Deploy `cloudflared` in GCP
 
-The purpose of this guide is to walk through some best practices for accessing private resources on GCP by deploying our lightweight connector, `cloudflared`.
+The purpose of this guide is to walk through some best practices for accessing private resources on Google Cloud Platform (GCP) by deploying Cloudflare's lightweight connector, `cloudflared`.
 
 
 # Prerequisites
 
-- If you haven’t created a Cloudflare Zero Trust account, navigate to the dashboard to get started.
-- If you haven’t enrolled an end-user device into your Cloudflare Zero Trust account, navigate to the Cloudflare WARP download to get started.
+- Create a Cloudflare Zero Trust account.
+- [Enroll an end-user device](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) into your Cloudflare Zero Trust account.
 
 
 # Create your environment
 
-To start, we’ll navigate to the Google Cloud Console and create a project. This project will contain all of our future Google Cloud resources, including our VM instances we’ll create in this guide.
+To start, you will need to navigate to the Google Cloud Console and create a project. This project will contain all of your future Google Cloud resources, including the VM instances you will create in this process.
 
-1. From the Cloud Console, navigate to**Compute Engine**
+1. From the Cloud Console, navigate to **Compute Engine**.
 
-   - Under Compute Engine, select**VM Instances**
-   - In the main window, select**Create Instance**
+1. Under Compute Engine, select **VM Instances**.
+1. In the main window, select **Create Instance**.
 
 1. Name your VM Instance. In this example, we will name it GCP-01.
 
