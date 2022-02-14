@@ -100,6 +100,10 @@ Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served 
 
 Refer to our [Plans](https://www.cloudflare.com/plans/) page for up-to-date information on pricing.
 
+### Is there a limit on image size or file size for Image Resizing?
+
+Yes. Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels large). Maximum file size is 70 MB. GIF animations are limited to 100 megapixels total (sum of sizes of all frames).
+
 ### Resizing failed and I received an error response with a code. What does it mean?
 
 Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.

@@ -1,6 +1,6 @@
 ---
 order: 11
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Understanding the basics

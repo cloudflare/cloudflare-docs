@@ -81,7 +81,7 @@ At least one option must be specified. Options are comma-separated (spaces are n
       - The point will be guessed by looking for areas that stand out the most from image background.
 
     - **`gravity=side`** and **`gravity=XxY`**
-      - If a side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from 0.0 (top or left) to 1.0 (bottom or right), 0.5 being the center. The X and Y coordinates are separated by lowercase x. For example, 0x1 means left and bottom, 0.5x0.5 is the center, 0.5x0.33 is a point in the top third of the image.
+      - A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from 0.0 (top or left) to 1.0 (bottom or right), 0.5 being the center. The X and Y coordinates are separated by lowercase x. For example, 0x1 means left and bottom, 0.5x0.5 is the center, 0.5x0.33 is a point in the top third of the image.
 
     </Definitions>
 

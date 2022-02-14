@@ -1,6 +1,6 @@
 ---
 order: 45
-pcx-content-type: interim
+pcx-content-type: tutorial
 ---
 
 # Use GraphQL to create widgets

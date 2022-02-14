@@ -1,6 +1,6 @@
 ---
 order: 87
-pcx-content-type: tutorial
+pcx-content-type: how-to
 ---
 
 # Manage Logpush with cURL

@@ -1,6 +1,6 @@
 ---
 order: 99
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Elastic

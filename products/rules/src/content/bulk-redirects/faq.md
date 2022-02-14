@@ -6,7 +6,9 @@ pcx-content-type: faq
 
 # FAQ — Bulk Redirects
 
-Below you will find answers to the most commonly asked questions regarding Bulk Redirects. 
+Below you will find answers to the most commonly asked questions regarding Bulk Redirects.
+
+To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshooting Cloudflare 10XXX Errors](https://support.cloudflare.com/hc/articles/4425107232525).
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 

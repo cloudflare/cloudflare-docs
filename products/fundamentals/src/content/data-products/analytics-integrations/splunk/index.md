@@ -1,6 +1,6 @@
 ---
 order: 103
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Splunk

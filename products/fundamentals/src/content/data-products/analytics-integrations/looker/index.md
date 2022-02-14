@@ -1,6 +1,6 @@
 ---
 order: 101
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Looker

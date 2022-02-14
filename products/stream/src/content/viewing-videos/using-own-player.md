@@ -93,7 +93,7 @@ If you need complete control over the video element's CSS you can use a third pa
   </head>
   <body>
     <script src="https://unpkg.com/hls.js/dist/hls.min.js"></script>
-    <video autoplay muted loop id="cover-video"></video>
+    <video playsinline autoplay muted loop id="cover-video"></video>
     <script>
       var hls = new Hls();
       hls.loadSource("https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/manifest/video.m3u8");

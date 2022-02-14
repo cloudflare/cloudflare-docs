@@ -2,6 +2,7 @@
 title: "2020-03-02 – Emergency"
 type: table
 order: 981
+pcx-content-type: changelog
 ---
 
 # 2020-03-02 – Emergency release
