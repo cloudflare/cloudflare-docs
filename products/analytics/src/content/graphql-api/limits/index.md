@@ -79,7 +79,7 @@ The example query below demonstrates how to retrieve account limits for the `bro
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
       settings {
-        browserPerf1mGroups {
+        firewallEventsAdaptive {
           maxDuration
           maxNumberOfFields
           maxPageSize
@@ -101,12 +101,12 @@ The example query below demonstrates how to retrieve account limits for the `bro
       "zones": [
         {
           "settings": {
-            "browserPerf1mGroups": {
+            "firewallEventsAdaptive": {
               "enabled": true,
-              "maxDuration": 2592000,
+              "maxDuration": 259200,
               "maxNumberOfFields": 30,
               "maxPageSize": 10000,
-              "notOlderThan": 2595600
+              "notOlderThan": 2678400
             }
           }
         }
