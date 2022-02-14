@@ -85,6 +85,12 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
 }
 ```
 
+## Directly access captions
+
+To directly access the captions for your video, use the following URI and add in your video's `videoID` and `languageTag`.
+
+`videodelivery.net/<videoID>/caption/<languageTag>`
+
 ## Delete the captions
 
 To remove a caption associated with your video:
