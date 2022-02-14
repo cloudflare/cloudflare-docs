@@ -10,7 +10,7 @@ pcx-content-type: faq
 <summary>How does DNS Firewall choose a backend nameserver to query upstream?</summary>
 <div>
 
-DNS Firewall alternates between a customer's nameservers. Additionally, DNS Firewall uses an algoritm that more likely sends queries to the faster upstream nameservers and less likely to the slower nameservers.
+DNS Firewall alternates between a customer's nameservers, using an algorithm is more likely to send queries to the faster upstream nameservers than slower nameservers.
 
 </div>
 </details>
@@ -54,7 +54,7 @@ EDNS limits the effectiveness of the DNS cache.
 
 </Aside>
 
-Some resolvers might not be sending any EDNS data. By setting the `ecs_fallback` parameter to `true` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster) DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
+Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
 
 </div>
 </details>
@@ -78,10 +78,10 @@ No. If the upstream nameserver responds with a `SERVFAIL`, DNS Firewall will try
 </details>
 
 <details>
-<summary>How to set PTR records for nameserver hostnames?</summary>
+<summary>How can I set PTR records for nameserver hostnames?</summary>
 <div>
 
-If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team or Cloudflare support.
+If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team.
   
 </div>
 </details>
