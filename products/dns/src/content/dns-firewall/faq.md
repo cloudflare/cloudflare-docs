@@ -10,13 +10,13 @@ pcx-content-type: faq
 <summary>How does DNS Firewall choose a backend nameserver to query upstream?</summary>
 <div>
 
-DNS Firewall alternates between a customer's nameservers. Additionally, the DNS Firewall determines the fastest server from the group of nameservers and factors in this information via an algorithm.
+DNS Firewall alternates between a customer's nameservers, using an algorithm is more likely to send queries to the faster upstream nameservers than slower nameservers.
 
 </div>
 </details>
 
 <details>
-<summary>How long does the DNS Firewall cache a stale object?</summary>
+<summary>How long does DNS Firewall cache a stale object?</summary>
 <div>
 
 DNS Firewall sets cache longevity according to allocated memory. 
@@ -36,10 +36,10 @@ No. If the customer's nameservers respond with a SERVFAIL, the DNS Firewall will
 </details>
 
 <details>
-<summary>Does the DNS Firewall support EDNS-Client-Subnet?</summary>
+<summary>Does DNS Firewall support EDNS-Client-Subnet?</summary>
 <div>
 
-Yes. Often, DNS providers want to see a client's IP via EDNS-Client-Subnet because they serve geographically specific DNS answers based on the client's IP. With EDNS-Client-Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the origin nameserver. 
+Yes. Often, DNS providers want to see a client's IP via [EDNS](https://datatracker.ietf.org/doc/html/rfc7871)-Client-Subnet because they serve geographically specific DNS answers based on the client's IP. With EDNS-Client-Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the origin nameserver. 
 
 When EDNS is enabled, the DNS Firewall gives out the geographically correct answer in cache based on the client IP subnet. To do this, the DNS Firewall segments its cache. For example:
 
@@ -53,5 +53,35 @@ When EDNS is enabled, the DNS Firewall gives out the geographically correct answ
 EDNS limits the effectiveness of the DNS cache.
 
 </Aside>
+
+Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
+
+</div>
+</details>
+
+<details>
+<summary>Does DNS Firewall cache negative answers?</summary>
+<div>
+
+Not by default, but you can set `negative_cache_ttl` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`. 
+
+</div>
+</details>
+
+<details>
+<summary>Does DNS Firewall cache responses with status SERVFAIL?</summary>
+<div>
+
+No. If the upstream nameserver responds with a `SERVFAIL`, DNS Firewall will try again on the next query and not cache that response.
+  
+</div>
+</details>
+
+<details>
+<summary>How can I set PTR records for nameserver hostnames?</summary>
+<div>
+
+If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team.
+  
 </div>
 </details>
