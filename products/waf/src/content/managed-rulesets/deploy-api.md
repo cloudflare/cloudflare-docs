@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-order: 23
+order: 4
 ---
 
 # Deploy rulesets via API
