@@ -9,3 +9,4 @@
 * Renew your domain if it is within 15 days of expiration.
 * Unlock your domain at your current registrar.
 * Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current registrar locking the domain for 60 days.
+* Make sure your account has a valid credit card on file.

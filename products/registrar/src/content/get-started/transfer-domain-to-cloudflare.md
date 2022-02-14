@@ -5,6 +5,7 @@ order: 4
 
 import BeforeYouBegin from "../_partials/_before-you-begin.md"
 import Restrictions from "../_partials/_restrictions.md"
+import VerifyEmail from "../_partials/_email-verification.md"
 
 # Transfer your domain to Cloudflare
 
@@ -76,11 +77,7 @@ Sites can be unavailable for a few reasons, including:
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 
-<Aside type="note">
-
-If you have an <a href='https://support.cloudflare.com/hc/articles/203471284#h_1l0KGygoBX9QYjNrhAcHjg'>unverified account email address</a>, you will not be able to transfer domains. Verify your account email address before proceeding.
-
-</Aside>
+<VerifyEmail />
 
 ### 6. Input your authorization code
 

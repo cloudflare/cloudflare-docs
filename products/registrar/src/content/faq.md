@@ -151,6 +151,10 @@ Refer to [Transfer your domain to Cloudflare](/get-started/transfer-domain-to-cl
 
 ## Billing
 
+### How much does Cloudflare Registrar charge?
+
+Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/) for more information regarding price.
+
 ### When will I be billed?
 
 You will be billed when you input your authorization code and initiate the transfer of your domain to Cloudflare. Make sure to copy and paste the code to avoid mistakes. The transfer will not initiate if the code is incorrect.
