@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+order: 5
 ---
 
 # Core Web Vitals
