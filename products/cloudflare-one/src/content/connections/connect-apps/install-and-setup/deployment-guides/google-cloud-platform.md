@@ -23,114 +23,120 @@ To start, we’ll navigate to the Google Cloud Console and create a project. Thi
    - Under Compute Engine, select**VM Instances**
    - In the main window, select**Create Instance**
 
-2. Name your VM Instance
+1. Name your VM Instance. In this example, we will name it GCP-01.
 
-   - In this example, I’ll name mine GCP-01
+1. Configure your VM Instance. The following settings are recommended to get started:
 
-3. Configure your VM Instance. We recommend the following to get started:
-
+   <Aside type='note'>
+   We support a number of operating systems and versions, so make a selection based on your requirements.
+   </Aside>
    - **Machine Family:** General Purpose
-
    - **Series:** E2
-
    - **Machine Type:** e2-micro
-
    - **Boot Disk:** Debian GNU/Linux 10
-
-     - Note: We support a number of OS/Version so make a selection based on your environmental requirements
-
    - **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
-
    - **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
-     - Add a startup script for testing access. Here is an example:
+1. Add a startup script for testing access. Here is an example:
 
-       - ```sh
-        #! /bin/bash
-        apt update
-        apt -y install apache2
-        cat <<EOF > /var/www/html/index.html
-        <html><body><h1>Hello Cloudflare!</h1>
-        <p>This page was created from a startup script for a Cloudflare demo.</p>
-        </body></html>
-        EOF
-        ```
+   ```sh
+   #! /bin/bash
+   apt update
+   apt -y install apache2
+   cat <<EOF > /var/www/html/index.html
+   <html><body><h1>Hello Cloudflare!</h1>
+   <p>This page was created from a startup script for a Cloudflare demo.</p>
+   </body></html>
+   EOF
+   ```
 
-4. Spin up your VM Instance by clicking**Create**
+4. Spin up your VM Instance by clicking **Create**.
 
 # Deploying `cloudflared`
 
-Now that we have our VM up and running in GCP we can login into our VM instance by selecting**SSH**in the Connect column of our VM Instance table
+Now that you have your Virtual Machine up and running in GCP, you can login into your VM instance by selecting **SSH** in the **Connect** column of our VM Instance table.
 
-1. Type sudo su to gain full admin rights to the Virtual Machine
+1. Run `sudo su` to gain full admin rights to the Virtual Machine.
 
-2. Install any relevant dependencies for our fresh Virtual Machine
+1. Run `apt install wget` to install any relevant dependencies for our fresh Virtual Machine.
 
-   - Run `apt install wget`
+1. Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
 
-3. Install `cloudflared` on our Virtual Machine
+   ```sh
+   wget <https://github.com/cloudflare/cloudflared/releases/download/2021.8.0/cloudflared-linux-amd64>
+   mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+   chmod a+x /usr/local/bin/cloudflared
+   ```
+   
+1. Run the following command to ensure you have the most updated `cloudflared` version. The command should auto-run after pasting.
 
-   - In this example, we are running a Debian-based VM Instance
+   ```sh
+   cloudflared update
+   ```
 
-     - Download the debian build of `cloudflared`
+1. Run the following command to authenticate `cloudflared` to with your Cloudflare account. You may have to open the provided link in a separate window to authenticate to your Cloudflare Zero Trust account.
 
-       - wget <https://github.com/cloudflare/cloudflared/releases/download/2021.8.0/cloudflared-linux-amd64>
+   ```sh
+   $ cloudflared tunnel login
+   ```
+   
+1. Create a tunnel.
 
-         - `mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared`
-         - `chmod a+x /usr/local/bin/cloudflared`
-         - `cloudflared update`
-         - Note: This should auto-run after pasting
-         - Note: Don't forget to hit enter when you see `cloudflared` update to get the latest version
+   ```sh
+   $ cloudflared tunnel create GCP-01`
+   ```
+   
+1. Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
 
-4. Authenticate `cloudflared` to with your Cloudflare account
+   ```sh
+   cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
+   ```
 
-   - `cloudflared tunnel login`
+1. Make a directory for your configuration file.
 
-     - You may have to open the link in a separate window to authenticate to your Cloudflare Zero Trust account
+   ```sh
+   mkdir /etc/cloudflared
+   ```
 
-5. Create your Tunnel
+   ```sh
+   cd cloudflared
+   ```
 
-   - `cloudflared tunnel create GCP-01`
+1. Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
 
-6. Route your Tunnel
+   ```sh
+   vim config.yml
+   ```
 
-   - `cloudflared tunnel route ip add 10.128.0.4/32 GCP-01`
+1. Hit `i` to begin editing the file and copy-paste the following settings in it.
 
-     - In this example, we will expose the smallest range available and later we can add more IP routes if necessary
+   ```text
+   tunnel: <Tunnel ID/name>
+   credentials-file: /root/.cloudflared/<Tunnel ID>.json
+   protocol: quic
+   warp-routing:
+   enabled: true
+   logfile: /var/log/cloudflared.log
+   #cloudflared to the origin debug
+   loglevel: debug
+   #cloudflared to cloudflare debug
+   transport-loglevel: debug
+   ```
 
-7. Make a directory for your configuration file
+1. Hit `space` and then type `:x` to save and exit.
 
-   - `mkdir /etc/cloudflared`
-   - `cd cloudflared`
+1. Run `cloudflared` as a service.
 
-8. Build our configuration file
+```sh
+cloudflared service install
+```
 
-   - Note: Before moving forward, copy your tunnel_id and credentials path to notepad before entering vim
+```sh
+systemctl start cloudflared
+```
 
-   - `vim config.yml`
+```sh
+systemctl status cloudflared
+```
 
-     - Hit `i` to begin editing in VIM
-
-       - ```text
-       tunnel: <Tunnel ID/name>
-       credentials-file: /root/.cloudflared/<Tunnel ID>.json
-       protocol: quic
-       warp-routing:
-         enabled: true
-       logfile: /var/log/cloudflared.log
-       #cloudflared to the origin debug
-       loglevel: debug
-       #cloudflared to cloudflare debug
-       transport-loglevel: debug
-       ```
-
-   - Hit `space` and then `:x` to save and exit
-
-9. Run `cloudflared` as a service
-
-   - `cloudflared service install`
-   - `systemctl start cloudflared`
-   - `systemctl status cloudflared`
-
-
-Next, visit the Zero Trust dashboard and ensure your new Tunnel shows as `active` and optionally begin creating Zero Trust policies to secure your private resources
+Next, visit the Zero Trust dashboard and ensure your new tunnel shows as `active`. Optionally, begin creating [Zero Trust policies](/policies/zero-trust) to secure your private resources.
