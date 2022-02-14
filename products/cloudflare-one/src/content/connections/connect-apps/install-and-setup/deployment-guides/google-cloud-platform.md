@@ -50,7 +50,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
    EOF
    ```
 
-4. Spin up your VM Instance by clicking **Create**.
+1. Spin up your VM Instance by clicking **Create**.
 
 # Deploying `cloudflared`
 
