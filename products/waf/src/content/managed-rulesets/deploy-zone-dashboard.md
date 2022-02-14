@@ -1,7 +1,7 @@
 ---
 title: Deploy Managed Rulesets for a zone
 pcx-content-type: how-to
-order: 21
+order: 4
 ---
 
 # Deploy Managed Rulesets for a zone in the dashboard
