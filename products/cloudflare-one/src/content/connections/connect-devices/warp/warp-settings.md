@@ -117,7 +117,50 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 
 1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
+1. Set the **Proxy** switch to Enabled.
+
+## TLS decryption
+
+This setting requires the Proxy switch to be enabled.
+
+1. Navigate to **Settings** > **Network**.
+1. Scroll down to **L7 Firewall**.
 1. Set the **Proxy** switch to *Enabled*.
+
+TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of cipher suites used when the switch is enabled.
+
+```txt
+CHACHA20-POLY1305-SHA256
+ECDHE-ECDSA-AES128-GCM-SHA256
+ECDHE-ECDSA-AES256-GCM-SHA384
+ECDHE-RSA-AES128-GCM-SHA256
+ECDHE-RSA-AES256-GCM-SHA384
+ECDHE-RSA-AES128-SHA
+ECDHE-RSA-AES256-SHA384
+AES128-GCM-SHA256
+AES256-GCM-SHA384
+AES128-SHA
+AES256-SHA
+```
+
+### FIPS compliance
+
+When enabling TLS decryption, you have the option to only enable cipher suites and TLS versions compliant with FIPS 140-2. FIPS compliance mode requires TLS version 1.2.
+
+ ![FIPS switch](../../../static/documentation/connections/fips.png)
+
+The following is a list of cipher suites used for TLS decryption when the **FIPS compliance** setting is enabled.
+
+```txt
+CHACHA20-POLY1305-SHA256
+ECDHE-ECDSA-AES128-GCM-SHA256
+ECDHE-ECDSA-AES256-GCM-SHA384
+ECDHE-RSA-AES128-GCM-SHA256
+ECDHE-RSA-AES256-GCM-SHA384
+ECDHE-RSA-AES256-SHA384
+AES128-GCM-SHA256
+AES256-GCM-SHA384
+```
 
 ## Integrated experiences
 
