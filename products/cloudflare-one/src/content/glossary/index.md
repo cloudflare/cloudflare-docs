@@ -5,16 +5,16 @@ pcx-content-type: reference
 
 # Glossary
 
-## [Cloudflare Zero Trust](https://www.cloudflare.com/teams-home/)
+## [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/)
 Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
 
-## [Cloudflare Access](https://www.cloudflare.com/en-gb/teams/access/)
+## [Cloudflare Access](https://www.cloudflare.com/products/zero-trust/access/)
 Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, customers deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
 
-## [Cloudflare Gateway](https://www.cloudflare.com/en-gb/teams/gateway/)
+## [Cloudflare Gateway](https://www.cloudflare.com/products/zero-trust/gateway/)
 Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## [Cloudflare Tunnel](https://www.cloudflare.com/en-gb/products/tunnel/)
+## [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/)
 Cloudflare Tunnel (formerly *Argo Tunnel*) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
@@ -122,7 +122,7 @@ A set of rules that regulate your network activity, such as who logs into your a
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/policies/filtering/dns-policies/safesearch)
+## [SafeSearch](/policies/filtering/dns-policies-builder)
 
 A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 

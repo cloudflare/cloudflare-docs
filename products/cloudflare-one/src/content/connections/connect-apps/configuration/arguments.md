@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Command-line options
 
-Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/ingress) in your configuration file.
+Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/configuration-file/ingress) in your configuration file.
 
 For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
 

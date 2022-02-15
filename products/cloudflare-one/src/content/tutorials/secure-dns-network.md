@@ -70,7 +70,7 @@ Instructions to change your router's DNS settings are available in the Zero Trus
 
 ![Expand Location](../static/secure-web-gateway/secure-dns-network/expand-location.png)
 
-The default toggle presented will be `Router`. Follow the instructions on the page to change your router settings. Additional instructions are available for routers from specific manufacturers in the [documentation here](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/router).
+The default toggle presented will be `Router`. Follow the instructions on the page to change your router settings. Additional instructions are available for routers from specific manufacturers in the [1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1/setup-1.1.1.1/router).
 
 ![Expand Location](../static/secure-web-gateway/secure-dns-network/router-instructions.png)
 
