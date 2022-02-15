@@ -32,7 +32,7 @@ import Encrypted from "../_partials/_encrypted.md"
 
 1. Click the **Start menu** > **Settings**.
 1. Select **Network and Internet**.
-1. Click the adapter you want to configure - like as your Ethernet adapter or Wi-Fi card.
+1. Click the adapter you want to configure - like your Ethernet adapter or Wi-Fi card.
 1. Scroll to **DNS server assignment** and click **Edit**.
 1. Click the **Automatic (DHCP)** drop-down menu and select **Manual**.
 1. Click the **IPv4** toggle to turn it on.
