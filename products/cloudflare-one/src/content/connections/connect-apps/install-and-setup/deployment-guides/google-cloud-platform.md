@@ -30,6 +30,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
    <Aside type='note'>
    We support a number of operating systems and versions, so make a selection based on your requirements.
    </Aside>
+   
    - **Machine Family:** General Purpose
    - **Series:** E2
    - **Machine Type:** e2-micro
@@ -40,7 +41,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
 1. Add a startup script for testing access. Here is an example:
 
    ```sh
-   #! /bin/bash
+   #!/bin/bash
    apt update
    apt -y install apache2
    cat <<EOF > /var/www/html/index.html
@@ -63,7 +64,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 1. Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
 
    ```sh
-   wget <https://github.com/cloudflare/cloudflared/releases/download/2021.8.0/cloudflared-linux-amd64>
+   wget <https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64>
    mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
    chmod a+x /usr/local/bin/cloudflared
    ```
@@ -74,7 +75,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
    cloudflared update
    ```
 
-1. Run the following command to authenticate `cloudflared` to with your Cloudflare account. You may have to open the provided link in a separate window to authenticate to your Cloudflare Zero Trust account.
+1. Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 
    ```sh
    $ cloudflared tunnel login
@@ -99,7 +100,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
    ```
 
    ```sh
-   cd cloudflared
+   cd /etc/cloudflared
    ```
 
 1. Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
@@ -115,12 +116,12 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
    credentials-file: /root/.cloudflared/<Tunnel ID>.json
    protocol: quic
    warp-routing:
-   enabled: true
+      enabled: true
    logfile: /var/log/cloudflared.log
    #cloudflared to the origin debug
    loglevel: debug
    #cloudflared to cloudflare debug
-   transport-loglevel: debug
+   transport-loglevel: info
    ```
 
 1. Hit `space` and then type `:x` to save and exit.
