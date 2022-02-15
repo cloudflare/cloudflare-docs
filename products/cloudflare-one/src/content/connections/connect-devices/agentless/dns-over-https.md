@@ -56,7 +56,7 @@ You should now be able to send queries through the DNS over HTTPS protocol.
 
 <Aside type="note">
 
-This setting may already be enabled by default.
+DoH may already be configured by default, but you must provide the browser with your specific DoH subdomain.
 
 </Aside>
 
