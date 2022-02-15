@@ -105,7 +105,9 @@ This feature is only available on the Zero Trust Enterprise plan.
 
 </Aside>
 
-You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed. This feature builds on Cloudflare's Logpush Service — check out the Logpush documentation to find a list of fields logged for [HTTP](https://developers.cloudflare.com/logs/reference/log-fields/account/gateway_http) and [DNS](https://developers.cloudflare.com/logs/reference/log-fields/account/gateway_dns).
+You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
+
+This feature builds on Cloudflare's Logpush Service — check out the Logpush documentation to find a list of fields logged for both [HTTP](https://developers.cloudflare.com/logs/reference/log-fields/account/gateway_http) and [DNS](https://developers.cloudflare.com/logs/reference/log-fields/account/gateway_dns) activity.
 
 To enable this feature on the Zero Trust dashboard:
 
@@ -122,5 +124,3 @@ To enable this feature on the Zero Trust dashboard:
 The setup of your logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination. 
 
 You can configure multiple destinations and monitor for any issues by returning to the Logpush page.
-
-  and  to help customers find the fields captured by logpush?
