@@ -54,12 +54,16 @@ You should now be able to send queries through the DNS over HTTPS protocol.
 
 ### Google Chrome / Microsoft Edge / Brave
 
+<Aside type="note">
+
+This setting may already be enabled by default.
+
+</Aside>
+
 1. Open **Settings**.
 2. In your address bar, type the following and hit **Enter**:
- `chrome://flags/#dns-over-https`. This will take you to Secure DNS lookups.
-4. Click on the **Secure DNS lookups** radio button to enable DoH.
-
-Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.
+ `chrome://settings/security`. This will take you to the Security page where you can enable DoH.
+3. Scroll down below the Advanced section and toggle **Use secure DNS** and choose **With Custom** and enter `https://YOUR_UNIQUE_SUBDOMAIN.cloudflare-gateway.com/dns-query` in the field.
 
 ### Safari
 
