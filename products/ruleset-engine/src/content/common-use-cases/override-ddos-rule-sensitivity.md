@@ -13,8 +13,8 @@ Follow the steps below to override the sensitivity of a specific rule of the Clo
 
 The example below uses the [Update ruleset](/rulesets-api/update) operation to execute the steps in a single `PUT` request.
 
-* Add a rule to the ruleset of the `ddos_l7` phase that applies the Cloudflare HTTP DDoS Managed Ruleset (with ID `{http-ddos-ruleset-id}`).
-* Create an override for the rule with ID `{rule-id}` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.
+* Add a rule to the ruleset of the `ddos_l7` phase that applies the Cloudflare HTTP DDoS Managed Ruleset (with ID `<HTTP_DDOS_RULESET_ID>`).
+* Create an override for the rule with ID `<RULE_ID>` and set the rule sensitivity to `low`. All other rules use the default sensitivity defined by Cloudflare.
 
 <details>
 <summary>Example: Use an override to set the sensitivity of an HTTP DDoS rule at the zone level</summary>
@@ -22,20 +22,19 @@ The example below uses the [Update ruleset](/rulesets-api/update) operation to e
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/ddos_l7/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/ddos_l7/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{http-ddos-ruleset-id}",
+        "id": "<HTTP_DDOS_RULESET_ID>",
         "overrides": {
           "rules": [
             {
-              "id": "{rule-id}",
+              "id": "<RULE_ID>",
               "sensitivity_level": "low"
             }
           ]

@@ -26,7 +26,7 @@ To apply an override for a Managed Ruleset:
 
 ```json
 "action_parameters": {
-  "id": "{ruleset-id}",
+  "id": "<RULESET_ID>",
   "overrides": {
     // ruleset overrides
     "property-to-modify": "value",
@@ -34,7 +34,7 @@ To apply an override for a Managed Ruleset:
     // tag overrides
     "categories": [
       {
-        "category": "{tag-name}",
+        "category": "<TAG_NAME>",
         "property-to-modify": "value",
         "property-to-modify": "value"
       }
@@ -42,7 +42,7 @@ To apply an override for a Managed Ruleset:
     // rule overrides
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "property-to-modify": "value",
         "property-to-modify": "value"
       }
@@ -74,9 +74,8 @@ The following request adds a rule that executes a Managed Ruleset in the `http_r
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "description": "Managed rule behavior set to log action",
   "rules": [
@@ -84,7 +83,7 @@ curl -X PUT \
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "action": "log",
           "enabled": true
@@ -104,9 +103,8 @@ curl -X PUT \
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "description": "Managed rule behavior set to log action",
   "rules": [
@@ -114,7 +112,7 @@ curl -X PUT \
       "action": "execute",
       "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "action": "log",
           "enabled": true

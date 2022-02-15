@@ -18,10 +18,8 @@ You can list the available rulesets for a zone, account, or phase.
 ---
 header: Request
 ---
-curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -37,7 +35,7 @@ header: Response
 {
   "result": [
     {
-      "id": "{zone-level-phase-ruleset-id}",
+      "id": "<ZONE_PHASE_RULESET_ID>",
       "name": "Zone-level Ruleset 1",
       "description": "Ruleset for http_request_firewall_managed phase at the zone level",
       "kind": "zone",
@@ -46,7 +44,7 @@ header: Response
       "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{cloudflare-managed-ruleset-id}",
+      "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
       "name": "Cloudflare Managed Ruleset",
       "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
       "kind": "managed",
@@ -55,7 +53,7 @@ header: Response
       "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{cloudflare-owasp-core-ruleset-id}",
+      "id": "<CLOUDFLARE_OWASP_CORE_RULESET_ID>",
       "name": "Cloudflare OWASP Core Ruleset",
       "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
       "kind": "managed",
@@ -81,10 +79,8 @@ header: Response
 ---
 header: Request
 ---
-curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 The response displays the following rulesets:
@@ -100,7 +96,7 @@ header: Response
 {
   "result": [
     {
-      "id": "{custom-ruleset-id}",
+      "id": "<CUSTOM_RULESET_ID>",
       "name": "Custom Ruleset 1",
       "description": "My custom ruleset",
       "kind": "custom",
@@ -109,7 +105,7 @@ header: Response
       "phase": "http_request_firewall_custom"
     },
     {
-      "id": "{account-level-phase-ruleset-id}",
+      "id": "<ACCOUNT_PHASE_RULESET_ID>",
       "name": "Account-level ruleset for http_request_firewall_managed phase",
       "description": "Account-level ruleset for executing one or more Managed Rulesets",
       "kind": "root",
@@ -118,7 +114,7 @@ header: Response
       "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{cloudflare-managed-ruleset-id}",
+      "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
       "name": "Cloudflare Managed Ruleset",
       "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
       "kind": "managed",
@@ -127,7 +123,7 @@ header: Response
       "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{cloudflare-owasp-core-ruleset-id}",
+      "id": "<CLOUDFLARE_OWASP_CORE_RULESET_ID>",
       "name": "Cloudflare OWASP Core Ruleset",
       "description": "Cloudflare's implementation of the Open Web Application Security Project (OWASP) ModSecurity Core Rule Set. We routinely monitor for updates from OWASP based on the latest version available from the official code repository",
       "kind": "managed",
@@ -159,10 +155,8 @@ The following example lists the rules in version `2` of the `http_request_firewa
 ---
 header: Request
 ---
-curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint/versions/2" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -171,19 +165,19 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point ruleset",
     "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       }
@@ -210,10 +204,8 @@ The following example lists the rules in version `2` of a Managed Ruleset (the m
 ---
 header: Request
 ---
-curl -X GET \
-  -H "X-Auth-Email: user@cloudflare.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{managed-ruleset-id}/versions/2"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/2" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -222,14 +214,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{managed-ruleset-id}",
+    "id": "<MANAGED_RULESET_ID>",
     "name": "Cloudflare Managed Ruleset",
     "description": "Created by the Cloudflare security team, this ruleset is designed to provide fast and effective protection for all your applications. It is frequently updated to cover new vulnerabilities and reduce false positives",
     "kind": "managed",
     "version": "2",
     "rules": [
       {
-        "id": "{rule-1-id}",
+        "id": "<RULE_1_ID>",
         "version": "1",
         "action": "log",
         "categories": [
@@ -242,11 +234,11 @@ header: Response
         ],
         "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2021-03-18T14:42:40.972022Z",
-        "ref": "{rule-1-ref}",
+        "ref": "<RULE_1_REF>",
         "enabled": true
       },
       {
-        "id": "{rule-2-id}",
+        "id": "<RULE_2_ID>",
         "version": "1",
         "action": "block",
         "categories": [
@@ -256,7 +248,7 @@ header: Response
         ],
         "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
         "last_updated": "2021-03-18T14:42:40.972022Z",
-        "ref": "{rule-2-ref}",
+        "ref": "<RULE_2_REF>",
         "enabled": true
       },
       // (...)
@@ -277,4 +269,4 @@ Each rule in a Managed Ruleset can have associated tags or categories, listed in
 
 ---
 
-For more information on the available API methods for viewing rulesets, check [List and view rulesets](/rulesets-api/view).
+For more information on the available API methods for viewing rulesets, refer to [List and view rulesets](/rulesets-api/view).
