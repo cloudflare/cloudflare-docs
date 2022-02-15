@@ -6,11 +6,17 @@ pcx-content-type: reference
 
 # DNS records for load balancing
 
-When you [create a load balancer](/how-to/create-load-balancer), we automatically create an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record (A, AAAA, CNAME).
+When you [create a load balancer](/how-to/create-load-balancer), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record.
+
+## Supported records
+
+For customers on non-Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, and **CNAME** records.
+
+For customers on Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, **CNAME**, **MX**, **SRV**, and **TXT** records.
 
 ## Priority order
 
-For hostnames with existing A, AAAA, or CNAME records, the LB record takes precedence when it is more or equally specific:
+For hostnames with existing DNS records, the LB record takes precedence when it is more or equally specific:
 
 - **Scenario 1**:
 
@@ -32,7 +38,7 @@ For hostnames with existing A, AAAA, or CNAME records, the LB record takes prece
 
 <Aside type="note">
 
-This behavior only applies to A, AAAA, or CNAME records. An LB record does not take precedence over other types of DNS records (MX, TXT, etc.).
+This behavior only applies to [supported records](#supported-records) (determined by your plan type).
 
 </Aside>
 
