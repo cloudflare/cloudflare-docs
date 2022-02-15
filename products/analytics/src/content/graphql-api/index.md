@@ -23,4 +23,4 @@ You can use `curl` to make requests to the GraphQL Analytics API. Alternatively,
 
 ## Clients
 
-We are using [_GraphiQL_](https://electronjs.org/apps/graphiql) for our example GraphQL queries. There are many other popular open-source clients that you can find online, such as [_Altair_](https://altair.sirmuel.design) and [_Insomnia_](https://insomnia.rest).
+We are using [GraphiQL](https://electronjs.org/apps/graphiql) for our example GraphQL queries. There are many other popular open-source clients that you can find online, such as [Altair](https://altair.sirmuel.design) and [Insomnia](https://insomnia.rest).

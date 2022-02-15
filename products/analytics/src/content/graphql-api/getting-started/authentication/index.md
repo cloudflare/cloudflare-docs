@@ -35,6 +35,6 @@ This table outlines the differences between Cloudflare API keys and tokens:
 
 </TableWrap>
 
-To create and configure GraphQL Analytics API tokens, see [_Configure an Analytics API token_](/graphql-api/getting-started/authentication/api-token-auth/).
+To create and configure GraphQL Analytics API tokens, refer to [Configure an Analytics API token](/graphql-api/getting-started/authentication/api-token-auth/).
 
-To find and retrieve API keys, as well as edit HTTP headers for authentication in GraphiQL, see [_Authenticate with a Cloudflare API key_](/graphql-api/getting-started/authentication/api-key-auth/).
+To find and retrieve API keys, as well as edit HTTP headers for authentication in GraphiQL, refer to [Authenticate with a Cloudflare API key](/graphql-api/getting-started/authentication/api-key-auth/).

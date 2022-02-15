@@ -79,7 +79,7 @@ The definition for the data set displays. This example shows the `firewallEvents
 
 ![firewallEventsAdaptive data set definition](../../static/images/graphiql-doc-explorer-firewallevents-definition.png)
 
-Refer to [_Data Sets (tables)_](/graphql-api/features/data-sets) for details on the nomenclature and behavior of these nodes.
+Refer to [Data Sets (tables)](/graphql-api/features/data-sets) for details on the nomenclature and behavior of these nodes.
 
 ## Find the fields available for a data set
 
@@ -93,4 +93,4 @@ The list of fields displays:
 
 ![ZoneFirewallEventsAdaptive type definition](../../static/images/graphiql-doc-explorer-firewall-fields.png)
 
-For more on working with the Analytics API in GraphiQL, see [Create a query in GraphiQL](/graphql-api/getting-started/compose-graphql-query).
+For more on working with the Analytics API in GraphiQL, refer to [Create a query in GraphiQL](/graphql-api/getting-started/compose-graphql-query).
