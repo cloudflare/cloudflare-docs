@@ -1,9 +1,10 @@
 ---
 order: 30
 pcx-content-type: how-to
+title: "Windows"
 ---
 
-# Run as a service
+# Run as a service on Windows
 
 | Before you start |
 |---|
@@ -19,8 +20,6 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 |`credentials-file`|The location of the credentials file for your Tunnel|
 
 You must [create the Tunnel](/connections/connect-apps/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
-
-If you do not want to create the tunnel in advance, you must install `cloudflared` with the `--legacy` flag.
 
 ## Windows
 
