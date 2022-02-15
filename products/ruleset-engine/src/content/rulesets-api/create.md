@@ -13,8 +13,8 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Create account ruleset][cr-account] | `POST /accounts/{account-id}/rulesets` |
-| [Create zone ruleset][cr-zone] | `POST /zones/{zone-id}/rulesets` |
+| [Create account ruleset][cr-account] | `POST /accounts/<ACCOUNT_ID>/rulesets` |
+| [Create zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
 
 [cr-account]: https://api.cloudflare.com/#account-rulesets-create-account-ruleset
 [cr-zone]: https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset
@@ -75,10 +75,8 @@ The following example request creates a custom ruleset in the `http_request_fire
 <div>
 
 ```json
-curl -X POST \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "name": "Example custom ruleset",
   "kind": "custom",
@@ -103,14 +101,14 @@ curl -X POST \
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Example custom ruleset",
     "description": "Example ruleset description",
     "kind": "custom",
     "version": "1",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "log",
         "expression": "cf.zone.name eq \"example.com\"",
@@ -144,10 +142,8 @@ You do not have to use this method to create a phase entry point ruleset — Clo
 <div>
 
 ```json
-curl -X POST \
--H "X-Auth-Email: user@example.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets" \
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "name": "Zone-level phase entry point",
   "kind": "zone",
@@ -157,7 +153,7 @@ curl -X POST \
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{managed-ruleset-id}"
+        "id": "<MANAGED_RULESET_ID>"
       }
     }
   ],
@@ -175,19 +171,19 @@ curl -X POST \
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
     "description": "This ruleset executes a Managed Ruleset.",
     "kind": "zone",
     "version": "1",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       }

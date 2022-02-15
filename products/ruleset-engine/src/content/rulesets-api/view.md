@@ -21,8 +21,8 @@ Use one of the following API endpoints:
 
 | Operation                           | Method + Endpoint                     |
 |-------------------------------------|---------------------------------------|
-| [List account rulesets][lr-account] | `GET /accounts/{account-id}/rulesets` |
-| [List zone rulesets][lr-zone]       | `GET /zones/{zone-id}/rulesets`       |
+| [List account rulesets][lr-account] | `GET /accounts/<ACCOUNT_ID>/rulesets` |
+| [List zone rulesets][lr-zone]       | `GET /zones/<ZONE_ID>/rulesets`       |
 
 [lr-account]: https://api.cloudflare.com/#account-rulesets-list-account-rulesets
 [lr-zone]: https://api.cloudflare.com/#zone-rulesets-list-zone-rulesets
@@ -46,10 +46,8 @@ The result does not include the list of rules in the ruleset. Check [View a spec
 <div>
 
 ```bash
-curl -X GET \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -63,7 +61,7 @@ curl -X GET \
 {
   "result": [
     {
-      "id": "{phase-ruleset-id}",
+      "id": "<PHASE_RULESET_ID>",
       "name": "Zone-level phase entry point",
       "description": "",
       "kind": "zone",
@@ -89,10 +87,10 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Get an account ruleset][gr-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}` |
-| [Get a zone ruleset][gr-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}` |
-| [Get account entry point ruleset][gep-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint` |
-| [Get zone entry point ruleset][gep-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint` |
+| [Get an account ruleset][gr-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Get a zone ruleset][gr-zone] | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
+| [Get account entry point ruleset][gep-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Get zone entry point ruleset][gep-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
 [gr-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset
 [gr-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset
@@ -117,10 +115,8 @@ The API returns a `404 Not Found` HTTP status code under these conditions:
 <div>
 
 ```bash
-curl -X GET \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -133,19 +129,19 @@ curl -X GET \
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
     "description": "Executes a Managed Ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       }
@@ -170,10 +166,10 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [List versions of an account ruleset][lv-account] | `GET /accounts/{account-id}/rulesets/{ruleset-id}/versions` |
-| List versions of a zone ruleset | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions` |
-| [List versions of an account entry point ruleset][lvep-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions`|
-| [List versions of a zone entry point ruleset][lvep-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions` |
+| [List versions of an account ruleset][lv-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions` |
+| List versions of a zone ruleset | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions` |
+| [List versions of an account entry point ruleset][lvep-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions`|
+| [List versions of a zone entry point ruleset][lvep-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions` |
 
 [lv-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-account-ruleset
 [lvep-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-entrypoint-ruleset
@@ -192,10 +188,8 @@ When the specified phase entry point ruleset does not exist, this API method ret
 <div>
 
 ```bash
-curl -X GET \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -209,7 +203,7 @@ curl -X GET \
 {
   "result": [
     {
-      "id": "{ruleset-id}",
+      "id": "<RULESET_ID>",
       "name": "Zone Ruleset 1",
       "description": "",
       "kind": "zone",
@@ -218,7 +212,7 @@ curl -X GET \
       "phase": "http_request_firewall_managed"
     },
     {
-      "id": "{ruleset-id}",
+      "id": "<RULESET_ID>",
       "name": "Zone Ruleset 1",
       "description": "",
       "kind": "zone",
@@ -244,10 +238,10 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Get an account ruleset version][grv-account] | `GET /account/{account-id}/rulesets/{ruleset-id}/versions/{version-number}` |
-| [Get a zone ruleset version][grv-zone] | `GET /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}`
-| [Get account entry point ruleset version][gepv-account] | `GET /accounts/{account-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}` |
-| [Get zone entry point ruleset version][gepv-zone] | `GET /zones/{zone-id}/rulesets/phases/{phase-name}/entrypoint/versions/{version-number}` |
+| [Get an account ruleset version][grv-account] | `GET /account/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
+| [Get a zone ruleset version][grv-zone] | `GET /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`
+| [Get account entry point ruleset version][gepv-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>` |
+| [Get zone entry point ruleset version][gepv-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>` |
 
 [grv-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset-version
 [grv-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset-version
@@ -265,10 +259,8 @@ When the specified phase entry point ruleset does not exist, this API method ret
 <div>
 
 ```bash
-curl -X GET \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}"
+curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -281,19 +273,19 @@ curl -X GET \
 ```json
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
     "description": "Executes a Managed Ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
       {
-        "id": "{rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "execute",
         "expression": "true",
         "action_parameters": {
-          "id": "{managed-ruleset-id}"
+          "id": "<MANAGED_RULESET_ID>"
         },
         "last_updated": "2021-03-17T15:42:37.917815Z"
       }
@@ -322,7 +314,7 @@ Returns a list of all the rules in a Managed Ruleset with a specific tag.
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| List rules in ruleset by tag | `GET /accounts/{account-id}/rulesets/{managed-ruleset-id}/{version-number}/by_tag/{tag-name}` |
+| List rules in ruleset by tag | `GET /accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/<VERSION_NUMBER>/by_tag/<TAG_NAME>` |
 
 ### Example
 
@@ -331,10 +323,8 @@ Returns a list of all the rules in a Managed Ruleset with a specific tag.
 <div>
 
 ```bash
-curl -X GET \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/2/by_tag/wordpress"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/2/by_tag/wordpress" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 </div>
@@ -347,14 +337,14 @@ curl -X GET \
 ```json
 {
   "result": {
-    "id": "{managed-ruleset-id}",
+    "id": "<MANAGED_RULESET_ID>",
     "name": "Cloudflare Managed Ruleset",
     "description": "Managed Ruleset created by Cloudflare",
     "kind": "managed",
     "version": "4",
     "rules": [
       {
-        "id": "{rule-id-1}",
+        "id": "<RULE_ID_1>",
         "version": "3",
         "action": "log",
         "categories": [
@@ -367,11 +357,11 @@ curl -X GET \
         ],
         "description": "Drupal, Wordpress - DoS - XMLRPC - CVE:CVE-2014-5265, CVE:CVE-2014-5266, CVE:CVE-2014-5267",
         "last_updated": "2021-03-19T16:54:32.942986Z",
-        "ref": "{rule-ref-1}",
+        "ref": "<RULE_REF_1>",
         "enabled": true
       },
       {
-        "id": "{rule-id-2}",
+        "id": "<RULE_ID_2>",
         "version": "3",
         "action": "block",
         "categories": [
@@ -381,7 +371,7 @@ curl -X GET \
         ],
         "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
         "last_updated": "2021-03-19T16:54:32.942986Z",
-        "ref": "{rule-ref-2}",
+        "ref": "<RULE_REF_2>",
         "enabled": true
       },
       // (...)
