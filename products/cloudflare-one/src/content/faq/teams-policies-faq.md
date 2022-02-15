@@ -15,7 +15,7 @@ Similarly, the L7 firewall will evaluate Do Not Inspect policies before any subs
 
 ## Can I secure applications with a second-level subdomain URL?
 
-Yes. Ensure that your SSL certificates cover the first- and second-level subdomain. Most certificates only cover the first-level subdomain and not the second. This is true for most Cloudflare certificates. To cover a second-level subdomain with a CF certificate, select the Custom Hostnames option for Dedicated SSL.
+Yes. Ensure that your SSL certificates cover the first- and second-level subdomain. Most certificates only cover the first-level subdomain and not the second. This is true for most Cloudflare certificates. To cover a second-level subdomain with a CF certificate, create an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/manage-certificates).
 Wildcard-based policies in Cloudflare Access only cover the level where they are applied. Add the wildcard policy to the left-most subdomain to be covered.
 
 ## Can I use regular expressions to build policies?
