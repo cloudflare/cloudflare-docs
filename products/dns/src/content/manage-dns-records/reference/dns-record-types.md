@@ -15,7 +15,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (A for IPv4 addresses and AAAA for IPv6 addressess).
+[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (A for IPv4 addresses and AAAA for IPv6 addresses).
 
 These records include the following fields:
 
