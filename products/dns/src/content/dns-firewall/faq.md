@@ -69,15 +69,6 @@ Not by default, but you can set `negative_cache_ttl` via the [API](https://api.c
 </details>
 
 <details>
-<summary>Does DNS Firewall cache responses with status SERVFAIL?</summary>
-<div>
-
-No. If the upstream nameserver responds with a `SERVFAIL`, DNS Firewall will try again on the next query and not cache that response.
-  
-</div>
-</details>
-
-<details>
 <summary>How can I set PTR records for nameserver hostnames?</summary>
 <div>
 
