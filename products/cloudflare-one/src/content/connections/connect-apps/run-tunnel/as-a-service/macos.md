@@ -1,9 +1,10 @@
 ---
 order: 30
 pcx-content-type: how-to
+title: "MacOS"
 ---
 
-# Run as a service
+# Run as a service on macOS
 
 | Before you start |
 |---|
@@ -11,7 +12,7 @@ pcx-content-type: how-to
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `.cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/ingress), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `$HOME/.cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/ingress), but at a minimum you must specify the following arguments to run as a service:
 
 |Argument|Description|
 |---|---|
@@ -20,13 +21,11 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 You must [create the Tunnel](/connections/connect-apps/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
 
-If you do not want to create the tunnel in advance, you must install `cloudflared` with the `--legacy` flag.
-
 ## MacOS
 
 ### Run at login
 
-Open a Terminal and run the following command:
+Open a terminal window and run the following command:
 
 ```sh
 $ cloudflared service install
