@@ -9,13 +9,13 @@ You can use a GraphQL client to build and execute queries to the GraphQL API end
 
 ## Prerequisites
 
-This article assumes that you are already familiar with [_Querying basics_](/graphql-api/getting-started/querying-basics).
+This article assumes that you are already familiar with [Querying basics](/graphql-api/getting-started/querying-basics).
 
 Before you begin, [configure the API endpoint and HTTP headers](/graphql-api/getting-started/authentication/graphql-client-headers) in the GraphiQL client.
 
-<Aside type='tip' header='Tip'>
+<Aside type='note' header='Note'>
 
-To explore the documentation for the data sets and fields in the Cloudflare GraphQL schema, click **Docs** to open the _Documentation Explorer_ pane.
+To explore the documentation for the data sets and fields in the Cloudflare GraphQL schema, click **Docs** to open the **Documentation Explorer** pane.
 
 For an introduction, see [Explore the GraphQL schema](/graphql-api/getting-started/explore-graphql-schema).
 
@@ -27,7 +27,7 @@ Click on the editing pane of GraphiQL and add this base query, replacing `zone-i
 
 ![GraphiQL base query](../../static/images/graphiql-base-query.png)
 
-<Aside type='tip' header='Tip'>
+<Aside type='note' header='Note'>
 
 To find the ID for a zone, log in to your Cloudflare account and click the site for which you want to obtain the zone ID. In the Cloudflare dashboard **Overview** page, scroll to the **API** section in the right sidebar, which displays your zone ID and account ID.
 
