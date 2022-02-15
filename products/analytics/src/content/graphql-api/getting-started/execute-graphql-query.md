@@ -9,9 +9,9 @@ You can submit a [query built with the GraphiQL client](/graphql-api/getting-sta
 
 The advantage of executing a request with [curl](https://curl.se/) is that you can redirect the response to a file and execute other post processing methods.
 
-The GraphQL endpoint requires valid JSON, so you must pass the query as the _value_ part of a JSON _key:value_ pair with a key named `query`.
+The GraphQL endpoint requires valid JSON, so you must pass the query as the `value` part of a JSON `key:value` pair with a key named `query`.
 
-Pass the list of variables in another JSON _key:value_ pair with a key named `variables`.
+Pass the list of variables in another JSON `key:value` pair with a key named `variables`.
 
 The script below returns the firewall events in one zone over the last 24 hours:
 
