@@ -21,9 +21,9 @@ Cloudflare Access provides a mechanism for end users to authenticate with their 
 
 ### 1. Install the Cloudflare daemon on the host machine
 
-The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://www.cloudflare.com/products/argo-tunnel/).
+The Cloudflare daemon, `cloudflared`, will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. Arbitrary TCP traffic will be proxied over this connection using [Cloudflare Argo Tunnel](https://www.cloudflare.com/products/tunnel/).
 
-Follow [these instructions](https://developers.cloudflare.com/argo-tunnel/downloads/) to download and install `cloudflared` on the machine hosting the resource.
+Follow [these instructions](/connections/connect-apps/install-and-setup/installation) to download and install `cloudflared` on the machine hosting the resource.
 
 ### 2. Authenticate the Cloudflare daemon
 

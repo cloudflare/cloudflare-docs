@@ -9,7 +9,7 @@ pcx-content-type: how-to
 |---|
 | 1. [Create a Tunnel](/connections/connect-apps/create-tunnel) |
 | 2. [Configure the Tunnel](/connections/connect-apps/configuration) |
-| 3. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui) |
+| 3. [Create a Load Balancer pool in Cloudflare](https://developers.cloudflare.com/load-balancing/how-to/create-load-balancer) |
 
 ## Route traffic from the dashboard
 

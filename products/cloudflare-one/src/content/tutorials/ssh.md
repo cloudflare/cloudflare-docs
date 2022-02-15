@@ -50,7 +50,7 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find instructions for installing `cloudflared` on other operating systems [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation). The release history can be found [here](https://github.com/cloudflare/cloudflared/releases).
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find instructions for installing `cloudflared` on other operating systems [here](/connections/connect-apps/install-and-setup/installation). The release history can be found [here](https://github.com/cloudflare/cloudflared/releases).
 
 For example, `cloudflared` can be installed on Debian and its derivatives with these commands:
 
@@ -113,7 +113,7 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/ingress).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/configuration-file/ingress).
 
 Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
