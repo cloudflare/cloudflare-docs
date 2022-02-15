@@ -7,24 +7,19 @@ pcx-content-type: how-to
 
 The purpose of this guide is to walk through some best practices for accessing private resources on Google Cloud Platform (GCP) by deploying Cloudflare's lightweight connector, `cloudflared`.
 
-
 # Prerequisites
 
-- Create a Cloudflare Zero Trust account.
+- Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
 - [Enroll an end-user device](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) into your Cloudflare Zero Trust account.
-
 
 # Create your environment
 
 To start, you will need to navigate to the Google Cloud Console and create a project. This project will contain all of your future Google Cloud resources, including the VM instances you will create in this process.
 
 1. From the Cloud Console, navigate to **Compute Engine**.
-
 1. Under Compute Engine, select **VM Instances**.
 1. In the main window, select **Create Instance**.
-
 1. Name your VM Instance. In this example, we will name it GCP-01.
-
 1. Configure your VM Instance. The following settings are recommended to get started:
 
    <Aside type='note'>
@@ -58,9 +53,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
 Now that you have your Virtual Machine up and running in GCP, you can login into your VM instance by selecting **SSH** in the **Connect** column of our VM Instance table.
 
 1. Run `sudo su` to gain full admin rights to the Virtual Machine.
-
 1. Run `apt install wget` to install any relevant dependencies for our fresh Virtual Machine.
-
 1. Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
 
    ```sh
@@ -125,7 +118,6 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
    ```
 
 1. Hit `space` and then type `:x` to save and exit.
-
 1. Run `cloudflared` as a service.
 
 ```sh
@@ -140,4 +132,4 @@ systemctl start cloudflared
 systemctl status cloudflared
 ```
 
-Next, visit the Zero Trust dashboard and ensure your new tunnel shows as `active`. Optionally, begin creating [Zero Trust policies](/policies/zero-trust) to secure your private resources.
+Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Zero Trust policies](/policies/zero-trust) to secure your private resources.
