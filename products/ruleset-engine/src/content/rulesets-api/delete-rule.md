@@ -27,7 +27,7 @@ The following example deletes rule `<RULE_ID_1>` belonging to ruleset `<RULESET_
 <summary>Request</summary>
 <div>
 
-```json
+```bash
 curl -X DELETE \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID_1>" \
 -H "Authorization: Bearer <API_TOKEN>"

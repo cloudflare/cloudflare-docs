@@ -39,7 +39,7 @@ To delete the ruleset, update or delete any rules that reference the ruleset and
 
 The following example request deletes an existing ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
@@ -78,7 +78,7 @@ To delete the ruleset version, update or delete any rules that reference the rul
 
 The following example request deletes a version of an existing ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
