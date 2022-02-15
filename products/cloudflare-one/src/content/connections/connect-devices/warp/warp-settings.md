@@ -117,7 +117,7 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 
 1. Navigate to **Settings** > **Network**.
 1. Scroll down to **L7 Firewall**.
-1. Set the **Proxy** switch to *Enabled*.
+1. Set the **Proxy** switch to Enabled.
 
 ## TLS decryption
 
