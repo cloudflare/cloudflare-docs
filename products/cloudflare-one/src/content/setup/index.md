@@ -17,7 +17,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 1. On the onboarding screen, choose a [team name](/glossary#team-name).
 
-1. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Zero Trust Free plan**, please note this step is still needed, but you won’t be charged.
+1. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Zero Trust Free plan**, please note this step is still needed, but you will not be charged.
 
 1. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
