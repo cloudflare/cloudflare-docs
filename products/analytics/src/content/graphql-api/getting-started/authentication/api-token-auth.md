@@ -70,7 +70,7 @@ To configure a custom token, follow these steps:
 
 1. Click **Continue to summary**.
 
-The next section of this walkthrough shows you how to review and test your API token.
+The next section of this walkthrough covers how to review and test your API token.
 
 ## Review and create your API token
 
