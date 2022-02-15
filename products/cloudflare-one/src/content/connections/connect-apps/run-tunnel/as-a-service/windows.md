@@ -1,9 +1,10 @@
 ---
 order: 30
 pcx-content-type: how-to
+title: "Windows"
 ---
 
-# Run as a service
+# Run as a service on Windows
 
 | Before you start |
 |---|
@@ -20,84 +21,12 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 You must [create the Tunnel](/connections/connect-apps/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
 
-If you do not want to create the tunnel in advance, you must install `cloudflared` with the `--legacy` flag.
-
-## Linux
-
-Run the following command:
-
-```sh
-$ sudo cloudflared service install
-```
-
-If you have already logged in and have a configuration file in `~/.cloudflared/`, these will be copied to `/etc/cloudflared/`.
-
-If you do not have a configuration file, you will need to create a config.yml file with fields listed above. You can pass a custom file by running `cloudflared --config CONFIG-FILE service install`.
-
-<Aside>
-
-The above arguments are required for pre-configured Cloudflare Tunnel deployments. If you are using legacy Tunnels, without names, you can append the `--legacy` flag when running `cloudflared` tunnel install command.
-
-</Aside>
-
-Then, start the system service with the following command:
-```sh
-$ sudo systemctl start cloudflared
-``` 
-
-Or start on boot with:
-```sh
-$ sudo systemctl enable cloudflared
-```
-
-## macOS
-
-### Run at login
-
-Open a Terminal and run the following command:
-
-```sh
-$ cloudflared service install
-```
-
-Cloudflare Tunnel will be installed as a launch agent, and start whenever you log in, using your local user configuration found in `~/.cloudflared/`.
-
-#### Manually start the service
-
-Run the following command:
-
-```sh
-$ launchctl start com.cloudflare.cloudflared
-```
-
-Output will be logged to `~/Library/Logs/com.cloudflare.cloudflared.err.log` and `~/Library/Logs/com.cloudflare.cloudflared.out.log`.
-
-### Run at boot
-
-Run the following command:
-
-```sh
-$ sudo cloudflared service install
-```
-
-Cloudflare Tunnel will be installed as a launch daemon, and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
-
-#### Manually start the service
-
-Run the following command:
-
-```sh
-$ sudo launchctl start com.cloudflare.cloudflared
-```
-
-Output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and `/Library/Logs/com.cloudflare.cloudflared.out.log`.
-
 ## Windows
 
 1. [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
 
 1. Create a new directory:
-    
+
     ```bash
     C:\Cloudflared\bin
     ```
@@ -123,18 +52,18 @@ Output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and 
     cloudflared.exe login
     ```
 
-1. The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command: 
+1. The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command:
 
     ```bash
     copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
     ```
 
 1. Next, create a tunnel:
-    
+
     ```bash
     cloudflared.exe tunnel create <Tunnel Name>
     ```
-    
+
     This will generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file) in `.json` format.
 
 1. [Create a configuration file](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file) with the following content:
@@ -152,7 +81,7 @@ Output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and 
     logfile:  C:\Cloudflared\cloudflared.log
     ```
 
-1. Copy the credentials file and the configuration file to the folder created in step 6: 
+1. Copy the credentials file and the configuration file to the folder created in step 6:
 
     ```bash
     C:\Windows\System32\config\systemprofile\.cloudflared
