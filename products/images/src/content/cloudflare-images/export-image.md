@@ -21,7 +21,7 @@ Your image will be downloaded to your computer.
 To download an image via API, the syntax is as follows:
 
 ```txt
-GET accounts/<ACCOUNT_IDENTIFIER>/images/v1/<IDENTIFIER>/blob
+GET accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID>/blob
 ```
 
 Example:
