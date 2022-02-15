@@ -30,7 +30,7 @@ Before getting started, ensure the `cloudflared` will be able to create an [outb
 Open a Terminal and run the following command:
 
 ```sh
-$ wget https://github.com/cloudflare/cloudflared/releases/download/2021.8.0/cloudflared-linux-amd64
+$ wget https://github.com/cloudflare/cloudflared/releases/download/latest/cloudflared-linux-amd64
 mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
 chmod a+x /usr/local/bin/cloudflared
 cloudflared update
