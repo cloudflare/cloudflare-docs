@@ -66,7 +66,7 @@ header: Response
         },
         "expression": "cf.zone.name == \"example.com\"",
         "last_updated": "2021-03-18T18:35:14.135697Z",
-        "ref": "<PHASE_RULE_ID>",
+        "ref": "<PHASE_RULE_REF>",
         "enabled": true
       },
       {
