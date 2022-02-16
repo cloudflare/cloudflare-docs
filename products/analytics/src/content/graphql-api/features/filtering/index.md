@@ -15,7 +15,7 @@ You can use filters as an argument on the following resources:
 
 - zones
 - accounts
-- tables (data sets)
+- tables (datasets)
 
 #### Zone filter
 
@@ -48,12 +48,13 @@ The account filter uses the same structure and rules as the zone filter, except 
 
 You must specify an account filter when making an account-scoped query, and you cannot query multiple accounts simultaneously.
 
-<Aside type="info" header="Info">
+<Aside type="note" header="Note">
 
 Network Analytics queries require an Account ID (`accountTag`) filter.
+
 </Aside>
 
-#### Table (data set) filter
+#### Table (dataset) filter
 
 Table filters require that you query at least one node. Use the `AND` operator to create and combine multi-node filters. Table filters also support the `OR` operator, which you must specify explicitly.
 
@@ -132,7 +133,7 @@ WHERE datetime="2018-01-01T10:00:00Z"
 
 #### Filter on multiple fields
 
-The following GraphQL example shows how to apply a filter to a multiple fields, in this case 2 datetime fields. The SQL equivalent follows.
+The following GraphQL example shows how to apply a filter to multiple fields, in this case two datetime fields. The SQL equivalent follows.
 
 ##### GraphQL {#003}
 
