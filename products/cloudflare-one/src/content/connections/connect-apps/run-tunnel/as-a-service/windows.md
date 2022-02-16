@@ -6,22 +6,18 @@ title: "Windows"
 
 # Run as a service on Windows
 
-| Before you start |
-|---|
-| Follow the [Tunnel guide](/connect-apps/install-and-setup/tunnel-guide) to create a tunnel, route traffic to a tunnel, and run it. |
+You can install `cloudflared` as a system service on Windows.
 
-Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS.
+## Configuring `cloudflared` as a service
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `.cloudflared/config.yml` configuration file. The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/ingress), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#configuration-file). The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/ingress), but at a minimum you must specify the following arguments to run as a service:
 
-|Argument|Description|
+| Argument | Description |
 |---|---|
 |`tunnel`|The UUID of your Tunnel
 |`credentials-file`|The location of the credentials file for your Tunnel|
 
-You must [create the Tunnel](/connections/connect-apps/create-tunnel), and its credentials file, prior to installing it as a service. Creating the Tunnel in advance will generate the `credentials` file.
-
-## Windows
+## Running `cloudflared` as a service
 
 1. [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
 
