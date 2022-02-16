@@ -10,7 +10,11 @@ Configure payload logging for a ruleset in the ruleset configuration page.
 
 1. Open **Firewall** > **WAF**.
 
-1. Click **Configure** next to the Managed Ruleset you want to configure.
+    ![Displays the content of the WAF tab in the Firewall app](../../images/waf-managed-rules-tab.png)
+
+1. To configure payload logging for a ruleset you had already deployed in the WAF, click **Edit** next to the Managed Ruleset name under **Web Application Firewall (WAF)**.
+
+    To deploy a Managed Ruleset and configure payload logging, click **Configure** next to the Managed Ruleset under **Deploy Managed Rulesets**.
 
 1. At the bottom of the page, click **Configure payload logging**.
 
@@ -25,3 +29,5 @@ Configure payload logging for a ruleset in the ruleset configuration page.
 1. If you generated a key pair in the browser, copy the displayed private key and **store it safely**. You will use this private key later to [view the decrypted payload content](/managed-rulesets/payload-logging/view).
 
 1. Click **Done**.
+
+1. If you are deploying the Managed Ruleset where you configured payload logging, click **Deploy**. If you configured payload logging for a ruleset you had already deployed, click **Save**.
