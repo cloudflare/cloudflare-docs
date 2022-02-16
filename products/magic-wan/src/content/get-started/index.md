@@ -24,6 +24,6 @@ After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, t
 
 ## 4. Go live
 
-During this step, provide Cloudflare with the exchange GRE tunnel information. You should also [review your Firewall configuration](https://developers.cloudflare.com/magic-firewall/) at this time.
+During this step, provide Cloudflare with the exchange Anycast GRE or IPsec tunnel information. You should also [review your Firewall configuration](https://developers.cloudflare.com/magic-firewall/) at this time.
 
 ## 5. Monitor and tune configuration
