@@ -6,7 +6,7 @@ pcx-content-type: reference
 
 # Network Analytics v1 to Network Analytics v2
 
-In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version was made available on September 13, 2021. Users should only use the newer version, Network Analytics v2 (NAv2). Network Analytics v1 (NAv1) is planned to be deprecated on March 31, 2022.
+In early 2020, Cloudflare released the first version of the Network Analytics dashboard and its corresponding API. The second version was made available on September 13th, 2021. Users should only use the newer version, Network Analytics v2 (NAv2). Network Analytics v1 (NAv1) is planned to be deprecated on March 31st, 2022.
 
 ## Before you start
 
@@ -20,7 +20,7 @@ The following table compares the features of NAv1 and NAv2:
 
 | Feature | NAv1 | NAv2 |
 |---------|------|------|
-| Sampling rate | 1/8,192 packets | Varies between 1/100 and 1/10,000 packets,<br/> depending on the mitigation service |
+| Sampling rate | 1/8,192 packets | Varies between 1/100 and 1/10,000 packets,<br/> depending on the mitigation service. |
 | Sampling method | Core Sample Enrichment | [Edge Sample Enrichment](/graphql-api/migration-guides/network-analytics-v2/about#edge-sample-enrichment) |
 | Historical data retention method | Aggregated roll-ups | [Adaptive Bitrate](/graphql-api/migration-guides/network-analytics-v2/about#adaptive-bitrate-sampling) |
 | Retention period | 1-min roll-ups: 30 days<br/>1-hour roll-ups: 6 months<br/>1-day roll-ups: 1 year<br/>Attack roll-ups: 1 year | All nodes: 90 days |
@@ -29,9 +29,9 @@ The following table compares the features of NAv1 and NAv2:
 
 </TableWrap>
 
-_* Applicable only for Magic Transit customers._
+\* Applicable only for Magic Transit customers.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 The `attackId` field value may be different between NAv1 and NAv2 for the same attack.
 
