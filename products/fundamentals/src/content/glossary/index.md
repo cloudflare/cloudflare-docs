@@ -254,7 +254,7 @@ A unique user who authenticates to connect to an application protected by Cloudf
 SSL was a widely used cryptographic protocol for providing data security for Internet communications. SSL was superseded by TLS; however, most people still refer to Internet cryptographic protocols as SSL.
 
 ## Server Name Indication (SNI)
-SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. Cloudflare uses SNI for Dedicated SSL certificates and all Universal SSL certificates.
+SNI allows a server to host multiple TLS Certificates for multiple websites using a single IP address. SNI adds the website hostname in the TLS handshake to inform the server which website to present when using shared IPs. Cloudflare uses SNI for all Universal SSL certificates.
 
 ## Service Level Agreement (SLA)
 An SLA is a contractual obligation for Cloudflare to maintain a specific level of service. Read the [Service Level Agreement (SLA) for the Cloudflare Business plan](https://www.cloudflare.com/business-sla/). Enterprise customers refer to the Enterprise SLA provided by their Subscription Agreement.
@@ -276,7 +276,7 @@ Subscriptions are a monthly fee in addition to standard plan costs that are visi
 - Plan Extensions (Enterprise), or
 - Active Subscriptions (Free, Pro, and Business)
 
-Some examples include products and services such as Cloudflare Dedicated SSL Certificates, Argo, Access, Load Balancing, Stream, and more.
+Some examples include products and services such as Argo, Access, Load Balancing, Stream, and more.
 
 ## team domain
 Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the App Launcher — and will be able to make login requests to them.
@@ -327,7 +327,7 @@ Uncached requests are requests that are not cached, and therefore are served fro
 **Related terms:** requests, cached requests
 
 ## usage-based billing
-Within subscriptions, certain products are charged based on usage. This is referred to as usage-based billing. The bill can vary month by month based on usage. This is in contrast to monthly flat fees such as for [plans](https://www.cloudflare.com/plans/), additional [Page Rules](https://support.cloudflare.com/hc/articles/218411427), and [Dedicated SSL Certificates](https://support.cloudflare.com/hc/articles/228009108). 
+Within subscriptions, certain products are charged based on usage. This is referred to as usage-based billing. The bill can vary month by month based on usage. This is in contrast to monthly flat fees such as for [plans](https://www.cloudflare.com/plans/) or additional [Page Rules](https://support.cloudflare.com/hc/articles/218411427). 
 
 ## web application firewall (WAF)
 A WAF is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the Internet.

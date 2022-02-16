@@ -22,7 +22,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 1 | [Custom Legacy](/edge-certificates/custom-certificates/)|
     | 2 | [Custom SNI-Only](/edge-certificates/custom-certificates/)|
     | 3 | [Custom Hostname (SSL for SaaS)](/ssl-for-saas/)|
-    | 4 | [Advanced](/edge-certificates/advanced-certificate-manager) or [Dedicated](https://support.cloudflare.com/hc/articles/228009108)|
+    | 4 | [Advanced](/edge-certificates/advanced-certificate-manager)|
     | 5 | [Universal](/edge-certificates/universal-ssl/)|
 
 4. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
