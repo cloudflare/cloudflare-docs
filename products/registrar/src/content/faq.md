@@ -151,9 +151,9 @@ Refer to [Transfer your domain to Cloudflare](/get-started/transfer-domain-to-cl
 
 ## Billing
 
-### How much does Cloudflare Registrar charge?
+### How much does Cloudflare Registrar cost?
 
-Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/) for more information regarding price.
+Refer to [What is Cloudflare Registrar](https://www.cloudflare.com/learning/dns/what-is-cloudflare-registrar/) for more information on pricing.
 
 ### When will I be billed?
 
