@@ -4,7 +4,7 @@ pcx-content-type: tutorial
 
 # IPsec
 
-Use Anycast [IPSec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. 
+Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
 Before you begin, make sure you already have an Account ID and API Key.
 

@@ -5,12 +5,12 @@ pcx-content-type: reference
 
 # Configuration examples
 
-## Anycast GRE configuration example
+## Anycast GRE or IPsec tunnel configuration example
 
 <table>
   <thead>
     <tr>
-      <th style='min-width:70px'>Anycast GRE</th>
+      <th style='min-width:70px'>Anycast GRE or IPsec tunnel</th>
       <th style='min-width:125px'>Customer edge IP</th>
       <th style='min-width:100px'>Anycast IP</th>
       <th style='min-width:130px'>Private subnet</th>
@@ -56,12 +56,12 @@ pcx-content-type: reference
 
 ## Scoping configuration data example
 
-The table below lists Anycast GRE and their associated Cloudflare region codes.
+The table below lists Anycast GRE or IPsec tunnel and their associated Cloudflare region codes.
 
 <table>
  <thead>
   <tr>
-   <th>Anycast GRE</th>
+   <th>Anycast GRE or IPsec tunnel</th>
    <th>Region code</th>
    </tr>
   </thead>
