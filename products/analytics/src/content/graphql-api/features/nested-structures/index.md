@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Nested Structures
 
-Two kinds of nested structures that behave in special ways are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they're part part of query result, which is already an array of objects, they become nested arrays.
+Two kinds of nested structures that behave in special ways are supported: **arrays** and **maps**. Fields of either of these types are arrays; when they are part part of query result, which is already an array of objects, they become nested arrays.
 
 ## Arrays
 
@@ -59,7 +59,7 @@ The results would be:
 
 ## Maps
 
-Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated data sets, such as `httpRequest1dGroups`.
+Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated datasets, such as `httpRequest1dGroups`.
 
 Example maps:
 ````javascript
@@ -124,7 +124,7 @@ Response:
 
 ## Examples
 
-Query array fields in raw data sets:
+Query array fields in raw datasets:
 ````javascript
 query NestedFields($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
       viewer {
@@ -172,7 +172,7 @@ Example response:
 }
 ````
 
-Query maps fields in aggregated data sets:
+Query maps fields in aggregated datasets:
 ````javascript
 query MapCapacity($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
     viewer {
