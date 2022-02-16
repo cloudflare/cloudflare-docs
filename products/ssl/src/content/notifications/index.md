@@ -7,7 +7,6 @@ pcx-content-type: reference
 
 In your [account notifications](https://dash.cloudflare.com/?to=/:account/notifications), set up alerts for the following SSL areas:
 - Universal SSL
-- Dedicated SSL
 - SSL for SaaS Custom Hostnames
 
 These alerts cover certificate validation status, issuance, deployment, renewal, and expiration notices.

@@ -91,4 +91,4 @@ If someone is attempting to impersonate you online, you should absolutely take a
 
 Certificate Transparency Monitoring addresses the same problems as HTTP Public Key Pinning (HPKP), but with [fewer technical issues](https://scotthelme.co.uk/im-giving-up-on-hpkp/).
 
-Cloudflare does not offer or support HPKP and advises against using it with Dedicated & Universal SSL.
+Cloudflare does not offer or support HPKP and advises against using it with Universal SSL.

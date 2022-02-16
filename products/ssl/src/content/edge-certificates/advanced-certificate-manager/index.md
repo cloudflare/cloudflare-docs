@@ -11,12 +11,6 @@ Advanced certificates offers a flexible and customizable way to issue and manage
 
 <ACMDefinition/>
 
-<Aside type="note" header="Note">
-
-Advanced certificates supersede legacy [Dedicated SSL certificates](https://support.cloudflare.com/hc/articles/228009108).
-
-</Aside>
-
 ## Features
 
 Advanced certificates allow you multiple customization options:
