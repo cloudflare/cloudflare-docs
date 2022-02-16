@@ -6,7 +6,7 @@ title: "Linux"
 
 # Run as a service on Linux
 
-You can install `cloudflared` as a system service on Linux. Before you install Cloudflare Tunnel as a service, follow the [Tunnel guide](/connect-apps/install-and-setup/tunnel-guide) to install `cloudflared` on your machine, create a tunnel, route traffic to your tunnel, and then run it.
+You can install `cloudflared` as a system service on Linux. Before you install Cloudflare Tunnel as a service, follow the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide) to install `cloudflared` on your machine, create a tunnel, route traffic to your tunnel, and then run it.
 
 ## Configuring `cloudflared` as a service
 
@@ -19,16 +19,13 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Running `cloudflared` as a service
 
-Open a terminal window and run the following command to install the latest version of `cloudflared`:
+1. Update `cloudflared` to the latest version:
 
-```sh
-$ wget https://github.com/cloudflare/cloudflared/releases/download/latest/cloudflared-linux-amd64
-mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
-chmod a+x /usr/local/bin/cloudflared
-cloudflared update
-```
+  ```sh
+  $ cloudflared update
+  ```
 
-Next, run the following three commands to run `cloudflared` as a service:
+1. Next, run the following three commands to run `cloudflared` as a service:
 
 ```sh
 $ cloudflared service install
