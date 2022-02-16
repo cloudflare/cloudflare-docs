@@ -9,11 +9,11 @@ Spectrum logs the entire lifecycle of every client that connects through it. The
 
 For each connection, Spectrum logs a connect event and either a disconnect or error event. Details on status codes can be found below.
 
-### Configuring Logpush
+## Configuring Logpush
 
 Spectrum [log events](https://developers.cloudflare.com/logs/log-fields/) can be configured through the [dashboard](https://developers.cloudflare.com/logs/logpush/logpush-dashboard/) and [API](https://developers.cloudflare.com/logs/logpush/logpush-configuration-api/).
 
-### Status Codes
+## Status Codes
 
 <TableWrap>
 

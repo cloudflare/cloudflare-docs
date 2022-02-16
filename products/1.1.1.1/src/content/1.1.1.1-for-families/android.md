@@ -14,7 +14,7 @@ The app also allows you to enable encryption for DNS queries or enable [WARP mod
 
 You can select between these two options in 1.1.1.1: Faster & Safer Internet's settings. By default, 1.1.1.1: Faster & Safer Internet is configured to WARP mode. 
 
-### Set up 1.1.1.1: Faster & Safer Internet
+## Set up 1.1.1.1: Faster & Safer Internet
 
 1. Download [1.1.1.1: Faster Internet from Google Play](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) for free.
 1. Launch 1.1.1.1: Faster & Safer Internet and accept the Terms of Service.
