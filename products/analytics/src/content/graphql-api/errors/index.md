@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Error responses
 
-The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON responses and will return familiar HTTP status codes (for example, `404`, `500`, `504`). However, in contrast to the common REST approach, a `200` response can contain an error, conforming to the [GraphQL specification](https://graphql.github.io/graphql-spec/June2018/#sec-Errors).
+The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON responses, and will return familiar HTTP status codes (for example, `404`, `500`, `504`). However, in contrast to the common REST approach, a `200` response can contain an error, conforming to the [GraphQL specification](https://graphql.github.io/graphql-spec/June2018/#sec-Errors).
 
 All responses contain an `errors` array, which will be `null` if there are no errors, and include at least one error object if there was an error. Non-null error objects will contain the following fields:
 
