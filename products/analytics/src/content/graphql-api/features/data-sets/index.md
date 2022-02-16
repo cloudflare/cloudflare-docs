@@ -15,7 +15,7 @@ Cloudflare Analytics offers a range of datasets, including both general and prod
 
 - **Adaptive Sampling** - Nodes that represent data acquired using adaptive sampling incorporate the `Adaptive` suffix. (For details, refer to [Sampling](/graphql-api/sampling/)).
 
-Detailed descriptions of nodes, their structure, and supported queries are available directly from the GraphQL Analytics API via **introspection** (refer to [Get started](https://developers.cloudflare.com/analytics/graphql-api/getting-started/#querying-basics)). For more on using introspection to ask a GraphQL schema for information about the queries it supports, refet to the [GraphQL documentation](https://graphql.org/learn/introspection/).
+Detailed descriptions of nodes, their structure, and supported queries are available directly from the GraphQL Analytics API via **introspection** (refer to [Get started](/getting-started/#querying-basics)). For more on using introspection to ask a GraphQL schema for information about the queries it supports, refer to the [GraphQL documentation](https://graphql.org/learn/introspection/).
 
 ## Available datasets
 
