@@ -20,7 +20,7 @@ The available Notification features vary according to your plan:
 Cloudflare Notifications is available in your [Cloudflare dashboard](https://dash.cloudflare.com/login). After logging in and choosing your account:
 
 * If you are using the new navigation interface, Cloudflare Notifications is available from the menu bar.
-* If you are using the classic interface, Cloudflare Notifications is available on the top of your account's dashboard.
+* If you are using the original interface, Cloudflare Notifications is available on the top of your account's dashboard.
 
 ## What to do when receiving Notifications
 
