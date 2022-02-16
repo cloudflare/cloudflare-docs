@@ -51,6 +51,7 @@ You must specify an account filter when making an account-scoped query, and you 
 <Aside type="note" header="Note">
 
 Network Analytics queries require an Account ID (`accountTag`) filter.
+
 </Aside>
 
 #### Table (dataset) filter
