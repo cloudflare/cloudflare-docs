@@ -33,7 +33,7 @@ For questions about a specific plugin not shown in the list, create a thread in 
 - [Jetpack (Mobile Theme)](https://wordpress.org/plugins/jetpack/)
 - [wiziApp](https://wordpress.org/plugins/wiziapp-create-your-own-native-iphone-app)
 - [WPML](https://wpml.org/)
-- [Hummingbird] (https://wordpress.org/plugins/hummingbird-performance/)
+- [Hummingbird](https://wordpress.org/plugins/hummingbird-performance/)
 
 ## Plugins and services that may cause issues
 
