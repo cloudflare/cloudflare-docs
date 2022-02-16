@@ -76,11 +76,11 @@ filters
   filter, filters
 ```
 
-## Operators
+### Operators
 
 Operator support varies, depending on the node type and node name.
 
-### Common operators
+#### Common operators
 
 The following operators are supported for all types:
 
@@ -93,7 +93,7 @@ The following operators are supported for all types:
 | `neq`    | not equal           |
 | `in`     | in                  |
 
-### String operators
+#### String operators
 
 The `like` operator is available for string comparisons and supports the `%` character as a wildcard.
 
