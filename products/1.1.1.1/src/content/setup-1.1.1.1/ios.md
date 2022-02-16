@@ -14,7 +14,7 @@ The app also allows you to enable encryption for DNS queries or enable [WARP mod
 
 You can select between these two options in 1.1.1.1: Faster Internet's settings. By default, 1.1.1.1:Faster Internet is configured to WARP mode. 
 
-### Set up 1.1.1.1: Faster Internet
+## Set up 1.1.1.1: Faster Internet
 
 1. Download [1.1.1.1: Faster Internet from the App Store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) for free.
 1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
