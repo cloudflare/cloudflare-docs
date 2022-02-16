@@ -5,7 +5,7 @@ pcx-content-type: tutorial
 
 # Querying Workers Metrics with GraphQL
 
-In this example, we're going to use the GraphQL Analytics API to query for Workers Metrics over a specified time period. We can query up to one week of data for dates up to three months ago.
+In this example, we are going to use the GraphQL Analytics API to query for Workers Metrics over a specified time period. We can query up to one week of data for dates up to three months ago.
 
 The following API call will request a Worker script's metrics over a one day period, and output the requested fields. Be sure to replace `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetimeStart`, `datetimeEnd`, `accountTag`, and `scriptName` variables as needed.
 
@@ -58,7 +58,7 @@ curl \
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
-The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
+The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
 
 ```
 curl \
