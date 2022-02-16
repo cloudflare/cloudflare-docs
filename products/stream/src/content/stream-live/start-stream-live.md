@@ -83,12 +83,13 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 
 ### Requirements
 
+* Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream. 
 * Stream Live requires input GOP duration (keyframe interval) to be between 4 to 10 seconds.
 * Closed GOPs required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoder software such as OBS.
 * Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
 * Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
-### Known limitations (will be solved in coming weeks without any changes required from you):
+### Known limitations:
 
 * Watermarks cannot yet be used with live videos.
 * The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
