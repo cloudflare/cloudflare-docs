@@ -14,11 +14,7 @@ Create a POST request using the API to [Create IPsec tunnels](https://api.cloudf
 
 ## 2. Generate the PSK for the IPsec tunnels
 
-Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-generate-pre-shared-key-psk-for-ipsec-tunnels).
-
-## 3. Initiate IKE session
-
-Obtain your encryption key to use with Internet Key Exchange (IKE) and initiate your session.
+Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-generate-pre-shared-key-psk-for-ipsec-tunnels) and initiate your session.
 
 ## 4. Set up static routes
 
@@ -26,8 +22,8 @@ To set up your static routes, refer to [Create static routes](/get-started/confi
 
 ## Supported IPsec configuration parameters
 
-- Auth
-- Supported encryption
-- Remote port
-- Reauth time
-- Rekey time
+- Auth is PSK
+- Supported encryption proposal: aes256gcm16-prfsha512-modp2048
+- Remote Port of 500
+- 0s reauth time or no reauth
+- 4h rekey time
