@@ -14,7 +14,7 @@ But, more code brings greater security risks. Attackers can add or change existi
 
 Page Shield simplifies external script management by tracking existing dependencies and providing alerts when new ones are added or when malicious code is detected.
 
-When turned on, Page Shield uses a [content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) deployed with a [report-only directive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application.
+When turned on, Page Shield uses a [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) deployed with a [report-only directive](/reference/csp-header) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application.
 
 You can check the list of detected scripts in the Script Monitor dashboard. Since the scripts list is based on sampling, there may be a small delay between script deployment and appearance.
 
