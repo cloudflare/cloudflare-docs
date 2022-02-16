@@ -5,7 +5,7 @@ pcx-content-type: configuration
 
 # Load balance additional DNS records
 
-Besides just load balancing between DNS records used for IP resolution — **A**, **AAAA**, and **CNAME** records — Enterprise customers can also load balance between **MX**, **SRV**, and **TXT** records.
+In addition to load balancing between DNS records used for IP resolution — **A**, **AAAA**, and **CNAME** records — Enterprise customers can also load balance between **MX**, **SRV**, and **TXT** records.
 
 ## MX records
 
