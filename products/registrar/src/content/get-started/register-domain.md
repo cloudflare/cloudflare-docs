@@ -7,7 +7,7 @@ import VerifyEmail from "../_partials/_email-verification.md"
 
 # Register a new domain
 
-Cloudflare Registrar is only available for customers that use Cloudflare to manage their DNS records as their DNS provider. This is also known as a full setup. Refer to [Zone Setups](https://developers.cloudflare.com/dns/zone-setups) for more information.
+Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](https://developers.cloudflare.com/dns/zone-setups)).
 
 <VerifyEmail />
 
