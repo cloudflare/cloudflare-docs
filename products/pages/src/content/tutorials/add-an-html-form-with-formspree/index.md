@@ -11,7 +11,7 @@ Almost every website, whether it is a simple HTML portfolio page or a complex Ja
 
 In this tutorial, you will create a `<form>` using plain HTML and CSS and add it to a static HTML website hosted on Cloudflare Pages. Refer to the [Get started guide](/get-started) to familiarize yourself with the platform. You will use Formspree to collect the submitted data and send out email notifications when new submissions arrive, without requiring any JavaScript or back-end coding.
 
-### Setup
+## Setup
 
 To begin, create a [new GitHub repository](https://repo.new/). Then create a new local directory on your machine, initialize git, and attach the GitHub location as a remote destination:
 
@@ -30,7 +30,7 @@ $ git branch -M main
 
 You may now begin working in the `new-project` directory you created.
 
-### The website markup
+## The website markup
 
 You will only be using plain HTML for this example project. The home page will include a Contact Us form that accepts a name, email address, and message. 
 
@@ -105,7 +105,7 @@ The source code for this example is [available on GitHub](https://github.com/for
 
 </Aside>
 
-### The Formspree back end
+## The Formspree back end
 
 The HTML form is complete, however, when the user submits this form, the data will be sent in a `POST` request to the `/` URL. No server exists to process the data at that URL, so it will cause an error. To fix that, create a new Formspree form, and copy its unique URL into the form's `action`.  
 
@@ -140,7 +140,7 @@ For more help setting up Formspree, refer to the following resources:
 - For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
 - For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
 
-### Deployment
+## Deployment
 
 You are now ready to deploy your project.
 

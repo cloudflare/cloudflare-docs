@@ -9,7 +9,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 ![SaaS applications diagram](../../static/documentation/applications/diagram-saas.jpg)
 
-### 1. Add your application
+## 1. Add your application
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
@@ -47,7 +47,7 @@ SaaS applications store this information in different ways.
 
 1. Click **Next**.
 
-### 2. Add a policy
+## 2. Add a policy
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies](/policies/).
@@ -57,7 +57,7 @@ To learn more about how policies work, read our [Policies](/policies/).
 1. Specify one or more rules in the **Configure a rule** box. You can add as many include, exception, or require statements as needed.
 1. Click **Next** to add your application to Access.
 
-### 3. Integrate your SaaS application with Access
+## 3. Integrate your SaaS application with Access
 
 Before you begin using your application through Access, your last step is to integrate your SaaS application to Access.
 
