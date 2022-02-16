@@ -42,6 +42,10 @@ When a client visits your application, Cloudflare provides the address for a hea
 
 Cloudflare performs DNS-only load balancing when traffic to your hostname is **not proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with a gray cloud.
 
+### Benefits
+
+If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/additional-options/additional-dns-records) — and not an A, AAAA, or CNAME record — its proxy mode should be **DNS-only**.
+
 ### Limitations
 
 In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded), DNS-only load balancing:
