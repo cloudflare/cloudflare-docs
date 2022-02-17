@@ -11,7 +11,7 @@ There are several DoH clients you can use to connect to 1.1.1.1.
 
 Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-1. [Download the `cloudflared` daemon](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. Download and install the [`cloudflared` daemon](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 1. Verify that the `cloudflared` daemon is installed by entering the following command:
 
     ```sh
@@ -29,7 +29,7 @@ Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
     INFO[2020-12-04T19:58:57Z] Starting DNS over HTTPS proxy server on: dns://localhost:5553
     ```
 
-1. You can verify that it's running using a `dig`, `kdig`, `host`, or any other DNS client.
+1. You can verify that `cloudflared` is running using a `dig`, `kdig`, `host`, or any other DNS client.
 
     ```sh
     $ dig +short @127.0.0.1 -p5553 cloudflare.com AAAA
@@ -78,7 +78,7 @@ Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
 The [DNSCrypt-Proxy](https://dnscrypt.info) 2.0+ supports DoH out of the box. It supports both 1.1.1.1 and other services. It also includes more advanced features, such as load balancing and local filtering.
 
-1. Install DNSCrypt-Proxy. You can [find the instructions in GitHub](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
+1. Install [DNSCrypt-Proxy](https://github.com/jedisct1/dnscrypt-proxy/wiki/installation).
 1. Verify that `dnscrypt-proxy` is installed and the version is 2.0 or later:
 
     ```sh

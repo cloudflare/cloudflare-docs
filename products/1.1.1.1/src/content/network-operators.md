@@ -37,9 +37,9 @@ The publicly available endpoints for 1.1.1.1 are detailed in the following table
 
 Resolver                           | IP Addresses       | DNS over HTTPS endpoint                         | DNS over TLS endpoint
 -----------------------------------|--------------------|-------------------------------------------------|-------------------------------
-1.1.1.1 (unfiltered)               | 1.1.1.1 / 1.0.0.1  | `https://cloudflare-dns.com/dns-query`          | `cloudflare-dns.com`
-Families (Malware)                 | 1.1.1.2 / 1.0.0.2  | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
-Families (Adult Content + Malware) | 1.1.1.3 / 1.0.0.3  | `https://family.cloudflare-dns.com/dns-query`   | `family.cloudflare-dns.com`
+1.1.1.1 (unfiltered)               | `1.1.1.1` / `1.0.0.1`  | `https://cloudflare-dns.com/dns-query`          | `cloudflare-dns.com`
+Families (Malware)                 | `1.1.1.2` / `1.0.0.2`  | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
+Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3`  | `https://family.cloudflare-dns.com/dns-query`   | `family.cloudflare-dns.com`
 
 </TableWrap>
 
@@ -51,7 +51,7 @@ Operators using 1.1.1.1 for typical Internet-facing applications and/or users sh
 
 Best practices include:
 
-* Avoiding tunnelling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
-* A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoriative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
+* Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
+* A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
 
 If you're a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use-case and we'll be happy to discuss further.
