@@ -107,8 +107,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              Useful for ensuring that the visitor accessing the site is human,
-              not automated.
+              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues CAPTCHAs only when necessary.
             </li>
             <li>
               The client that made the request must pass a CAPTCHA challenge.
@@ -122,7 +121,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>4</td>
       </tr>
       <tr>
-        <td><em>Managed Challenge</em></td>
+        <td><em>Managed Challenge (Recommended)</em></td>
         <td>
           <ul>
             <li>
