@@ -15,9 +15,7 @@ Queries using DNS wireformat can be sent using `POST` or `GET`.
 
 When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (see below) is included in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
-Example request:
-
-The same DNS query for `www.example.com`, using the POST method would be:
+The following is an example request. The same DNS query for `www.example.com`, using the `POST` method would be:
 
 ```txt
 :method = POST
@@ -49,7 +47,7 @@ cache-control = max-age=128
 6d 00 00 01 00 01 00 00  00 80 00 04 C0 00 02 01
 ```
 
-To try using cURL you can do:
+To try this using cURL, write:
 
 ```sh
 $ echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 --decode | curl -H 'content-type: application/dns-message' --data-binary @- https://cloudflare-dns.com/dns-query -o - | hexdump
@@ -57,7 +55,7 @@ $ echo -n 'q80BAAABAAAAAAAAA3d3dwdleGFtcGxlA2NvbQAAAQAB' | base64 --decode | cur
 
 ## Using GET
 
-When making requests using GET, the DNS query is encoded into the URL. The `accept` header can be used to indicate the MIME type (default: `application/dns-message`).
+When making requests using `GET`, the DNS query is encoded into the URL. The `accept` header can be used to indicate the MIME type (default: `application/dns-message`).
 
 Example request:
 
