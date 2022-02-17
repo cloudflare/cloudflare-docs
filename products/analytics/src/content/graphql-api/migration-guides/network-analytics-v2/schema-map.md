@@ -285,4 +285,4 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
 
 </TableWrap>
 
-_* The `attackId` field value may be different between NAv1 and NAv2 for the same attack._
+\* The `attackId` field value may be different between NAv1 and NAv2 for the same attack.

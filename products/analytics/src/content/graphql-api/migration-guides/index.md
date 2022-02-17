@@ -7,7 +7,7 @@ pcx-content-type: navigation
 
 ## GraphQL migrations
 
-If you're currently using the deprecated `httpRequests1mByColoGroups` or `httpRequests1dByColoGroups` GraphQL API nodes, the [HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups](/graphql-api/migration-guides/graphql-api-analytics/) guide will help you migrate your queries to use the `httpRequestsAdaptiveGroups` node.
+If you are currently using the deprecated `httpRequests1mByColoGroups` or `httpRequests1dByColoGroups` GraphQL API nodes, the [HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups](/graphql-api/migration-guides/graphql-api-analytics/) guide will help you migrate your queries to use the `httpRequestsAdaptiveGroups` node.
 
 ## Zone Analytics migrations
 
