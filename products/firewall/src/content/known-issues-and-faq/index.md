@@ -47,7 +47,7 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 ### Caution about potentially blocking bots
 
-When you create a Firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a Firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
