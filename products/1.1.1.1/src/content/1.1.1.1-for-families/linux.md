@@ -8,33 +8,27 @@ import CaptivePortals from "../_partials/_captive-portals.md"
 
 # Set up 1.1.1.1 for Families - Linux
 
-Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
+Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
-## Block malware
+## Ubuntu
 
-### Ubuntu
+### Block malware
 
-#### IPv4
 
-1. Click **System** > **Preferences** > **Network Connections**.
-1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
-1. Click **Edit** > **IPv4**.
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any DNS addresses that may be already listed and replace them with:
+1. Go to **Show Applications** > **Settings** > **Network**.
+1. Select the adapter you want to configure - like your Ethernet adapter or Wi-Fi card - and click the **settings** button.
+1. Click the **IPv4** tab.
+1. In the **DNS** section, disable the **Automatic** toggle.
+1. Change the DNS servers to:
 
     ```txt
     1.1.1.2
     1.0.0.2
     ```
 
-1. Click **Apply**.
-
-#### IPv6
-
-1. Click **System** > **Preferences** > **Network Connections**.
-1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
-1. Go to **IPv6**.
-1. Add the IPv6 addresses listed below:
+1. Click the **IPv6** tab.
+1. In the **DNS** section, disable the **Automatic** toggle.
+1. Change the DNS servers to:
 
     ```txt
     2606:4700:4700::1112
@@ -43,78 +37,23 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
 
 1. Click **Apply**.
 
-### Debian
+### Block malware and adult content
 
-#### IPv4
 
-1. In the command line, type:
-
-    ```bash
-    sudo vim /etc/resolv.conf
-    ```
-
-1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Replace the nameserver lines with:
-
-    ```txt
-    1.1.1.2
-    1.0.0.2
-    ```
-
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
-
-    ```
-    :wq
-    ```
-
-#### IPv6
-
-1. In the command line, type:
-
-    ```bash
-    sudo vim /etc/resolv.conf
-    ```
-
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Add the IPv6 address listed below:
-
-    ```txt
-    2606:4700:4700::1112
-    2606:4700:4700::1002
-    ```
-
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
-
-    ```
-    :wq
-    ```
-
-## Block Malware and Adult Content
-
-### Ubuntu
-
-#### IPv4
-
-1. Click **System** > **Preferences** > **Network Connections**.
-1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
-1. Click **Edit** > **IPv4**.
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Remove any DNS addresses that may be already listed and replace them with:
+1. Go to **Show Applications** > **Settings** > **Network**.
+1. Select the adapter you want to configure - like your Ethernet adapter or Wi-Fi card - and click the **settings** button.
+1. Click the **IPv4** tab.
+1. In the **DNS** section, disable the **Automatic** toggle.
+1. Change the DNS servers to:
 
     ```txt
     1.1.1.3
     1.0.0.3
     ```
-1. Click **Apply**.
 
-#### IPv6
-
-1. Click **System** > **Preferences** > **Network Connections**.
-1. Select the **Wireless** tab, then choose the WiFi network you are currently connected to.
-1. Go to **IPv6**.
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Add the IPv6 addresses listed below:
+1. Click the **IPv6** tab.
+1. In the **DNS** section, disable the **Automatic** toggle.
+1. Change the DNS servers to:
 
     ```txt
     2606:4700:4700::1113
@@ -122,52 +61,5 @@ Follow these steps to configure 1.1.1.1 for Families in Ubuntu and Debian.
     ```
 
 1. Click **Apply**.
-
-### Debian
-
-#### IPv4
-
-1. In the command line, type:
-
-    ```bash
-    sudo vim /etc/resolv.conf
-    ```
-
-1. Press the <kbd>i</kbd> key on your keyboard to edit the document.
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Replace the nameserver lines with:
-
-    ```txt
-    1.1.1.3
-    1.0.0.3
-    ```
-
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
-
-    ```
-    :wq
-    ```
-
-#### IPv6
-
-1. In the command line, type:
-
-    ```bash
-    sudo vim /etc/resolv.conf
-    ```
-
-1. Take note of any DNS addresses you might have and save them in a safe place in case you need to use them later.
-1. Add the IPv6 addresses listed below:
-
-    ```txt
-    2606:4700:4700::1113
-    2606:4700:4700::1003
-    ```
-
-1. Press the <kbd>ESC</kbd> key on your keyboard to save and exit Vim. Then, type:
-
-    ```
-    :wq
-    ```
 
 <CaptivePortals/>

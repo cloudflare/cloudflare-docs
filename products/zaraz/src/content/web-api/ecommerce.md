@@ -40,6 +40,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 * `Product Added`
 * `Product Added to Wishlist`
 * `Product Removed`
+* `Product Viewed`
 * `Cart Viewed`
 * `Checkout Started`
 * `Checkout Step Viewed`

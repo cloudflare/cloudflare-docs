@@ -57,7 +57,7 @@ A successful response will return information about the live input:
     "name": "My Live Stream"
   },
   "status": null,
-  "live": {
+  "recording": {
     "mode": "automatic",
     "requireSignedURLs": false,
     "allowedOrigins": ["*.example.com"]
@@ -95,3 +95,4 @@ curl -X DELETE \ -H "Authorization: Bearer $TOKEN" \https://api.cloudflare.com/c
 * The live videos feature does not yet work on older iOS versions: iOS 10, launched in 2016, and below.
 * Hardware video encoding on Apple devices is not yet supported. When using encoder software such as OBS, x264 software encoding is required.
 * If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.
+
