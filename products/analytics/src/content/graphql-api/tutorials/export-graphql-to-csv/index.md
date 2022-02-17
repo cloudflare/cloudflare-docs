@@ -9,10 +9,10 @@ Network Analytics data and convert the response to comma-separated values (CSV).
 Produced CSV could be easily ingested by tools like [Splunk][6] for further
 visualization and usage.
 
-Therefore, this example queries the `ipFlows1mAttacksGroups` [data set][1],
+Therefore, this example queries the `ipFlows1mAttacksGroups` [dataset][1],
 which contains minutely aggregates of Network Analytics attack activity.
 
-<Aside type="warning">
+<Aside type="warning" header="Warning">
 
 This tutorial uses Network Analytics v1 (NAv1) nodes. These nodes are planned to
 be deprecated on March 31, 2022. For more information on migrating from Network
@@ -23,13 +23,13 @@ Analytics v1 to Network Analytics v2, refer to the [migration guide][5].
 ## Prerequisites
 
 The tutorial requires a valid Cloudflare API Token with `Account Analytics:read`
-permission. It also expects that account you're interested in is entitled to
+permission. It also expects that account you are interested in is entitled to
 access Network Analytics.
 
 Scripts in this tutorial requires Python version 3.6 or higher.
 
-If you're looking to configure a Cloudflare API Token for a specific account,
-please check [_this_][2] page. Make sure you have access to the account.
+If you are looking to configure a Cloudflare API Token for a specific account,
+please refer to [Configure an Analytics API token][2]. Make sure you have access to the account.
 
 ## Set up a script with authentication
 
@@ -96,7 +96,7 @@ list of the next fields for a given account and time range:
 * mitigation type
 * avg, max rate of packets per second
 
-To get started with GraphQL queries, please see [_Querying basics_][3].
+To get started with GraphQL queries, please refer to [Querying basics][3].
 
 The braces used in the GraphQL query are doubled to escape them in Python's
 f-string.
@@ -170,7 +170,7 @@ def get_cf_graphql(start_date, end_date):
 Use a tool such as the open-source [pandas][4] library (`pd`) to convert a
 response from the GraphQL API (JSON) to CSV.
 
-In this example, the `convert_to_csv()` function does a bit of JSON processing
+In this example, the `convert_to_csv()` function does some JSON processing
 before conversion — normalizing the data, selecting only the desired data, and
 renaming the columns so that they are user-friendly. The function also checks
 whether the API responded successfully or we got an error.

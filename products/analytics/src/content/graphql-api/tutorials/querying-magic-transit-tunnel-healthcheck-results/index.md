@@ -8,7 +8,7 @@ In this example, you are going to use the GraphQL Analytics API to query Magic T
 
 The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare colo, and outputs the requested fields. Be sure to replace `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetimeStart`, `datetimeEnd` and `accountTag` variables as needed.
 
-It will return the tunnel health check results by Cloudflare colo. The result for each colo is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](https://developers.cloudflare.com/magic-transit/about/health-checks/tunnel#health-state-and-prioritization). These states are used by Magic Transit for [routing](https://developers.cloudflare.com/magic-transit/about/health-checks/tunnel#failure). The value 0 for the tunnel state represents it being down, the value 0.5 being degraded and the value 1 as healthy.
+It will return the tunnel health check results by Cloudflare colo. The result for each colo is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](https://developers.cloudflare.com/magic-transit/about/health-checks#tunnel-health-checks). These states are used by Magic Transit for [routing](https://developers.cloudflare.com/magic-transit/about/health-checks#tunnel-health-checks). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
 
 ## API Call
 
@@ -55,7 +55,7 @@ curl \
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
-The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
+The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
 
 ```
 curl \

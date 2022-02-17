@@ -4,11 +4,11 @@ order: 10
 pcx-content-type: reference
 ---
 
-# httpRequests1mByColoGroups/httpRequests1dByColoGroups to httpRequestsAdaptiveGroups
+# `httpRequests1mByColoGroups/httpRequests1dByColoGroups` to `httpRequestsAdaptiveGroups`
 
 This guide shares considerations when migrating from the deprecated `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes to the `httpRequestsAdaptiveGroups` GraphQL API node.
 
-For example, if you wanted to see which five data centers had the most number of requests, the total number of those requests, and the total amount of data transfer, in the past you used the  `httpRequests1mByColoGroups` GraphQL API node as in the following example:
+For example, if you wanted to see which five data centers had the most number of requests, the total number of those requests, and the total amount of data transfer, in the past you used the `httpRequests1mByColoGroups` GraphQL API node as in the following example:
 
 ```graphql
 {
@@ -35,7 +35,10 @@ For example, if you wanted to see which five data centers had the most number of
 }
 ```
 
-**Example response**
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
 {
   "data": {
@@ -97,6 +100,9 @@ For example, if you wanted to see which five data centers had the most number of
 }
 ```
 
+</div>
+</details>
+
 ## `httpRequestsAdaptiveGroups` GraphQL API node
 With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByColoGroups` GraphQL API nodes, use the `httpRequestsAdaptiveGroups` GraphQL API node to access the same data (`count`, `sum(edgeResponseBytes)`, and `visits`).
 
@@ -131,7 +137,10 @@ With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByCo
 }
 ```
 
-**Example response**
+<details>
+<summary>Response</summary>
+<div>
+
 ```json
 {
   "data": {
@@ -213,9 +222,12 @@ With the deprecation of the `httpRequests1mByColoGroups` and `httpRequests1dByCo
 }
 ```
 
+</div>
+</details>
+
 This query says:
 
-- Given the indicated zones, `limit`, and time range,
+- Given the indicated `zones`, `limit`, and `time range`.
 - Fetch the total number of requests (as `count`), the total amount of data transfer (as `edgeResponseBytes` of `sum` object), and the total number of `visits` per data center.
 
 A few points to note:
