@@ -32,9 +32,9 @@ All values are per account.
 
 | Feature | Limit |
 | ------- | ----- |
-| Tunnels per Account | 1000 |
-| IP Routes per Account | 1000 |
-| Active Connections per Tunnel | 100 |
+| Tunnels per account | 1000 |
+| IP routes per account | 1000 |
+| Active `cloudflared` replicas per tunnel | 25 |
 
 </TableWrap>
 
