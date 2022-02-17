@@ -202,3 +202,8 @@ Your tunnel configuration is complete! If you want to get information on the tun
 ```bash
 $ cloudflared tunnel info
 ```
+******************************
+CLONCLUSON
+******************************
+
+No GUI are aviable, this is an Console Application so that this now work in root level because to mouch execptions occures in JenniNet (Herbrich Corporation)       
