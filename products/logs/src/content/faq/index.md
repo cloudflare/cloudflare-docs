@@ -10,6 +10,7 @@ Below you will find answers to the most commonly asked questions regarding Cloud
 * [General FAQ](#general-faq)
 * [Logpush](#logpush-faq)
 * [Logpull API](#logpull-api-faq)
+* [Common calculations](#common-calculations-faq)
 
 ## General FAQ
 
@@ -33,11 +34,7 @@ Yes. The time period for which you pull or receive logs is based on our processi
 
 Not at this time. Talk to your account manager or Cloudflare Support if you are interested in other formats and we will consider them for the future.
 
-### How can I calculate bytes served by the origin from Cloudflare Logs?
-
-The best way to calculate bytes served by the origin is to use the `CacheResponseBytes` field in Cloudflare Logs, and to filter only requests that come from origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
-
-## Logpush FAQ
+## Logpush
 
 ### What happens if my cloud storage destination is temporarily unavailable?
 
@@ -87,7 +84,7 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 
 Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
-## Logpull API FAQ
+## Logpull API
 
 ### How long are logs retained?
 
@@ -98,3 +95,13 @@ Cloudflare makes logs available for at least three days and up to seven days. If
 When you make a call for the time period of 16:10-16:13, you are actually asking for the logs that were received and processed by our system during that time (hence the endpoint name, `logs/received`). The received time is the time the logs are written to disk. There is some delay between the time the request hits the Cloudflare edge and the time it is received and processed. The **request time** is what you see in the log itself: **EdgeStartTimestamp** and **EdgeEndTimestamp** tell you when the edge started and stopped processing the request.
 
 The advantage of basing the responses on the **time received** rather than the request or edge time is not needing to worry about late-arriving logs. As long as you are calling our API for continuous time segments, you will always get all of your logs without making duplicate calls. If we based the response on request time, you could never be sure that all the logs for that request time had been processed.
+
+## Common calculations
+
+### How can I calculate bytes served by the origin from Cloudflare Logs?
+
+The best way to calculate bytes served by the origin is to use the `CacheResponseBytes` field in Cloudflare Logs, and to filter only requests that come from the origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
+
+### How do I calculate bandwidth usage for my zone?
+
+Bandwidth (or data transfer) can be calculated by adding the `EdgeResponseBytes` field in HTTP request logs. There are some types of requests that are not factored into bandwidth calculations. In order to only include relevant requests in calculations, add a filter `ClientRequestSource = 'eyeball'`.
