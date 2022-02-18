@@ -1,12 +1,11 @@
 ---
 order: 3
 pcx-content-type: how-to
-hidden: true
 ---
  
 # Workspace ONE
 
-Device posture with Workspace ONE requires that the Workspace ONE agent and the Cloudflare WARP client are deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the check.
+Device posture with Workspace ONE requires the Workspace ONE agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the posture check.
 
 ## Obtain Workspace ONE Settings
 
@@ -31,14 +30,16 @@ To retrieve those values:
 1. Retrieve the correct Region-Specific Token URL from the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
 1. Obtain your REST API URL by going to the WS1 dashboard and navigating to **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
 
-## Configure the provider on the Zero Trust dashboard
+## Configure the provider on the Zero Trust Dashboard
 
-1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-1. Enter the Client ID and Client Secret you noted down above.
-1. Select a **polling frequency** for how often Cloudflare Zero Trust should query Workspace ONE for information.
-1. Enter the Region-specific token URL and REST API URL you noted down above.
-1. Click **Save**.
-1. Click **Test Provider** to ensure the values have been entered correctly.
+1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+2. Select Workspace ONE.
+3. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
+4. Enter the Client ID and Client Secret you noted down above.
+5. Select a **polling frequency** for how often Cloudflare Zero Trust should query Workspace ONE for information.
+6. Enter the Region-specific token URL and REST API URL you noted down above.
+7. Click **Save**.
+8. Click **Test Provider** to ensure the values have been entered correctly.
 
 ## Configure compliance settings
 
