@@ -6,7 +6,7 @@ hidden: true
  
 # CrowdStrike
 
-Device posture with CrowdStrike requires that the CrowdStrike agent and the Cloudflare WARP client are deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up he integration.
+Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up he integration.
 
 ## Obtain CrowdStrike Settings
 
@@ -31,15 +31,16 @@ To retrieve those values:
 
 
 ## Configure the provider on the Zero Trust dashboard
-
-1. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
-1. Enter the Client ID and Client Secret you noted down above.
-1. Enter your Rest API URL
-1. Enter your Customer ID
-1. Select a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
-1. Click **Save**.
-1. Click **Test Provider** to ensure the values have been entered correctly.
+1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+2. Select **CrowdStrike**.
+3. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
+4. Enter the Client ID and Client Secret you noted down above.
+5. Enter your Rest API URL.
+6. Enter your Customer ID.
+7. Select a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
+8. Click **Save**.
+9. Click **Test Provider** to ensure the values have been entered correctly.
 
 ## ZTA Score
 
-This information is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis)
+This information is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
