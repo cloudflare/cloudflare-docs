@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 <Aside type="note">
 
-If you are deploying [WARP in Managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by local policy pushed down by management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
+If you are deploying [WARP in managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by the local policy deployed by your management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
 
 </Aside>
 
@@ -28,7 +28,7 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 
 <Aside type='note'>
   
-This feature needs the <b>Switch Locked</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Zero Trust dashboard.
+This feature needs the <b>Lock WARP switch</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Zero Trust Dashboard.
 
 </Aside>
 
