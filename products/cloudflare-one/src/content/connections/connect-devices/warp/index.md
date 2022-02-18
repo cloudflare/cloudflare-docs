@@ -58,4 +58,12 @@ This mode is best suited for organizations that want to filter traffic directed 
 | ------------- | -------------- | ---------------- | 
 | No | Yes | HTTP policies, Browser Isolation, identity-based policies, AV scanning, DLP for traffic sent through localhost proxy|
 
+### Posture only mode
+
+This mode allows Access administrators to build rules around the health of the device a user is connecting from, in addition to values identity providers typically verify (for example, password or one-time pin). This mode needs to be selected on the Zero Trust Dashboard under **Settings** > **Devices** > **Service mode** and cannot be configured via MDM.
+
+| DNS filtering | HTTP filtering | Features enabled |
+| ------------- | -------------- | ---------------- | 
+| No | No | [Device posture checks](/identity/devices) |
+
 Cloudflare WARP is [available](/connections/connect-devices/warp/download-warp) for iOS, Android, ChromeOS, Mac, Linux, and Windows.
