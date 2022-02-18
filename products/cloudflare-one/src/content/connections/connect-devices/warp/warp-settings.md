@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 <Aside type="note">
 
-If you are deploying [WARP in Managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by an MDM deployment. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from your MDM deployment.
+If you are deploying [WARP in Managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by local policy pushed down by management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
 
 </Aside>
 
@@ -98,67 +98,108 @@ When the toggle is enabled, the WARP client will automatically turn off when it 
 
 When the toggle is enabled, users have the option to turn off the [Gateway with WARP](/connections/connect-devices/warp#gateway-with-warp-default) mode and switch to [Gateway with DoH mode](/connections/connect-devices/warp#gateway-with-doh). When the toggle is disabled, end users will not be able to switch between WARP modes.
 
----
-
-## Enable Proxy
+## Lock WARP switch
 
 <details>
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| macOS, Windows, Linux | All plans | 
+| macOS, Windows, Linux | Any mode | All plans | 
 
 </div>
 </details>
 
-1. Navigate to **Settings** > **Network**.
-1. Scroll down to **L7 Firewall**.
-1. Set the **Proxy** switch to Enabled.
+When the toggle is enabled, users are prevented from turning off the connected state of the application (main toggle switch). 
 
-## TLS decryption
 
-This setting requires the Proxy switch to be enabled.
+## Allow device to leave organization
 
-1. Navigate to **Settings** > **Network**.
-1. Scroll down to **L7 Firewall**.
-1. Set the **Proxy** switch to *Enabled*.
+<details>
+<summary>Feature availability</summary>
+<div>
 
-TLS decryption can use both TLS version 1.2 and 1.3. The following is a list of cipher suites used when the switch is enabled.
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | Any mode | All plans | 
 
-```txt
-CHACHA20-POLY1305-SHA256
-ECDHE-ECDSA-AES128-GCM-SHA256
-ECDHE-ECDSA-AES256-GCM-SHA384
-ECDHE-RSA-AES128-GCM-SHA256
-ECDHE-RSA-AES256-GCM-SHA384
-ECDHE-RSA-AES128-SHA
-ECDHE-RSA-AES256-SHA384
-AES128-GCM-SHA256
-AES256-GCM-SHA384
-AES128-SHA
-AES256-SHA
-```
+</div>
+</details>
 
-### FIPS compliance
+When the toggle is enabled, users who manually joined their WARP Client to the organization are prevented from leaving. This disabled the Logout from Zero Trust and Reset All Settings button in the clients. If a client has been deployed with a management tool and a local policy exists then this switch is ignored and clients are always prevented from leaving.
 
-When enabling TLS decryption, you have the option to only enable cipher suites and TLS versions compliant with FIPS 140-2. FIPS compliance mode requires TLS version 1.2.
+## Allow updates
 
- ![FIPS switch](../../../static/documentation/connections/fips.png)
+<details>
+<summary>Feature availability</summary>
+<div>
 
-The following is a list of cipher suites used for TLS decryption when the **FIPS compliance** setting is enabled.
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | Any mode | All plans | 
 
-```txt
-CHACHA20-POLY1305-SHA256
-ECDHE-ECDSA-AES128-GCM-SHA256
-ECDHE-ECDSA-AES256-GCM-SHA384
-ECDHE-RSA-AES128-GCM-SHA256
-ECDHE-RSA-AES256-GCM-SHA384
-ECDHE-RSA-AES256-SHA384
-AES128-GCM-SHA256
-AES256-GCM-SHA384
-```
+</div>
+</details>
+
+When the toggle is enabled users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add/remove software from their device.
+
+## Auto Connect
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | Any mode | All plans | 
+
+</div>
+</details>
+
+When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with Switch Locked above where you need to allow users to disable the client temporarily but don't want to rely on user action to turn it back on.
+
+## Allow device to leave organization
+
+<details>
+<summary>Support URL</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | Any mode | All plans | 
+
+</div>
+</details>
+
+When the toggle is enabled, the Send Feedback button in the application appears and will launch the URL specified.
+
+Example values:
+
+* `https://support.example.com` Use an https:// link to open your companies internal help site.
+* `mailto:yoursupport@example.com` Use a mailto: link to open your default mail client.
+
+## Service Mode
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | --------- | ---- |
+| macOS, Windows, Linux | Any mode | All plans | 
+
+</div>
+</details>
+
+Allows you to choose the operational mode of the client. See [WARP Modes](/connections/connect-devices/warp#warp-client-modes) for a detailed description of each mode.
+
+* **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP. 
+* **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by your devices default mechanisms
+* **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
+
+
+---
 
 ## Integrated experiences
 
