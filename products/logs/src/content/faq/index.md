@@ -96,7 +96,7 @@ When you make a call for the time period of 16:10-16:13, you are actually asking
 
 The advantage of basing the responses on the **time received** rather than the request or edge time is not needing to worry about late-arriving logs. As long as you are calling our API for continuous time segments, you will always get all of your logs without making duplicate calls. If we based the response on request time, you could never be sure that all the logs for that request time had been processed.
 
-## Common calculations FAQ
+## Common calculations
 
 ### How can I calculate bytes served by the origin from Cloudflare Logs?
 
