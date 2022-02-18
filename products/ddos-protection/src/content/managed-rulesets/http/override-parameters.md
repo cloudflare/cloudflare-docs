@@ -25,6 +25,12 @@ The action that will be performed for requests that match specific rules of Clou
     - API value: `"log"`.
     - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
+    <Aside type="note">
+
+    The _Log_ action is not supported by rules with the `gatebot` tag.
+
+    </Aside>
+
 - **Block**
     - API value: `"block"`.
     - Blocks HTTP requests that match the rule expression.
