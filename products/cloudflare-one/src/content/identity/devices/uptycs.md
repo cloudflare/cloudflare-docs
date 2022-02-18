@@ -15,11 +15,10 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 - Client key
 - Client Secret
 - Customer ID
-To retrieve those values:
 
-1. Log in to your Uptycs dashboard.
-1. Step 2
+## Set up Uptycs
 
+We will update this section shortly.
 
 
 
