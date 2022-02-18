@@ -24,7 +24,7 @@ Here are a few ways in which the WARP client provides in-depth protection for yo
 * **WARP allows you to build rich device posture rules.**  
     The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/identity/devices). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.
 
-The WARP client can be configured in three modes.
+Cloudflare WARP is [available](/connections/connect-devices/warp/download-warp) for iOS, Android, ChromeOS, Mac, Linux, and Windows, and it can be configured in different modes depending on your needs.
 
 ## WARP client modes
 
@@ -60,10 +60,8 @@ This mode is best suited for organizations that want to filter traffic directed 
 
 ### Posture only mode
 
-This mode allows Access administrators to build rules around the health of the device a user is connecting from, in addition to values identity providers typically verify (for example, password or one-time pin). This mode needs to be selected on the Zero Trust Dashboard under **Settings** > **Devices** > **Service mode** and cannot be configured via MDM.
+This mode allows Access administrators to build rules around the health of the device a user is connecting from, in addition to values that identity providers typically verify (for example, password or one-time pin). This mode needs to be selected on the Zero Trust Dashboard under **Settings** > **Devices** > **Service mode** and cannot be configured via MDM.
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- | 
 | No | No | [Device posture checks](/identity/devices) |
-
-Cloudflare WARP is [available](/connections/connect-devices/warp/download-warp) for iOS, Android, ChromeOS, Mac, Linux, and Windows.
