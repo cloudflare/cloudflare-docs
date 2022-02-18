@@ -7,9 +7,11 @@ pcx-content-type: reference
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
-## A note on local policy vs network policy
-Almost all parameters listed below are also configurable in the Zero Trust dashboard. In the event of conflicting settings, the WARP Client will always prefer the setting that exists on the local device (ex. in your mdm.xml or com.cloudflare.warp.plist file)
+<Aside type='note'>
 
+Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your` mdm.xml` or `com.cloudflare.warp.plist` files).
+  
+  </Aside>
 
 ## Required for full Cloudflare One features
 
