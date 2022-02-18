@@ -34,7 +34,7 @@ Yes. The time period for which you pull or receive logs is based on our processi
 
 Not at this time. Talk to your account manager or Cloudflare Support if you are interested in other formats and we will consider them for the future.
 
-## Logpush FAQ
+## Logpush
 
 ### What happens if my cloud storage destination is temporarily unavailable?
 
@@ -84,7 +84,7 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 
 Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
-## Logpull API FAQ
+## Logpull API
 
 ### How long are logs retained?
 
