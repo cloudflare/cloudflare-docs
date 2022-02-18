@@ -59,8 +59,6 @@ If you encounter this error please [file feedback](/policies/browser-isolation/k
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-Safari is more susceptible to presenting this error. See [workaround](/cloudflare-one/policies/browser-isolation/known-limitations).
-
 ## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
 
 <div class="small-img"><img alt="Google Error 400" src="../static/documentation/faq/google-error-400.png"/></div>
