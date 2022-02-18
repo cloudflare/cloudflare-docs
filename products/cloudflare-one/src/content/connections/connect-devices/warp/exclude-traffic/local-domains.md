@@ -17,6 +17,8 @@ pcx-content-type: how-to
 </details>
 
 By default, Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processings. Excluded domains are listed on the Zero Trust dashboard under **Settings** > **Network** > **Local Domain Fallback** . All domains in that list rely on the local DNS resolver configured for the device on its primary interface or the DNS server specified when you add a new local domain. Domains added to this list are not subject to Gateway DNS policies or DNS logging. The WARP Client proxies these requests directly to the configured fallback servers.
+
+Traffic destined to domains entered here are still subject to split tunnel rules. If you want to prevent traffic from being sent to a domain or IP address, you must also enter that in the split tunnel configuration.
  
 You can add or remove domains from the Local Domains list at any time.
 

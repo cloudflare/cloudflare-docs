@@ -20,7 +20,9 @@ Split Tunnels mode can be configured to exclude or include IP addresses or domai
  
 You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
 
-Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Please make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes. 
+Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Please make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
+
+Domains included in your Split Tunnel configuration are still resolved by Gateway. If you want another DNS Server to handle domain name resolution you need to add that value to your Local Domain fallback configuration.
  
 To set up Split Tunnels:
 
