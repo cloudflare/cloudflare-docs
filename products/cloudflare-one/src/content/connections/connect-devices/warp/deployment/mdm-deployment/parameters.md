@@ -7,6 +7,12 @@ pcx-content-type: reference
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
+<Aside type='note'>
+
+Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your` mdm.xml` or `com.cloudflare.warp.plist` files).
+  
+  </Aside>
+
 ## Required for full Cloudflare One features
 
 For the vast majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/policies/browser-isolation), and [device posture](/identity/devices).
@@ -47,6 +53,8 @@ This field is only required to enforce DNS policies when deploying the client in
 **Value:**
 - `1dot1` Gateway enforcement of DNS policies only through [DoH](/glossary#doh). All other traffic is handled by your devices default mechanisms
 - `warp`  [default value] All traffic sent through [Cloudflare Gateway](/glossary#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, or device posture.
+
+New service modes such as Proxy only are not supported as a value and must be configured in the Zero Trust dashboard.
 
 ### `onboarding`
 

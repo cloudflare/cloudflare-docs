@@ -9,6 +9,12 @@ Bigger organizations can deploy WARP automatically to their fleet of devices in 
 
 Here is a list of generic instructions to deploy WARP on your organization's devices.
 
+<Aside type='warning'>
+
+Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in the Zero Trust Dashboard.
+
+</Aside>
+
 ---
 
 ## Generic instructions for desktop deployment
@@ -24,7 +30,7 @@ The WARP Client for Windows allows for an automated install via tools like Intun
 * Example command line to **install** the client:
 
  ```
- Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"
+ Cloudflare_WARP_Release-x64.msi /quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" SUPPORT_URL="http://support.example.com"
  ```
  See the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each argument.
 
@@ -44,8 +50,6 @@ The format of this file is as follows:
 <dict>
   <key>organization</key>
   <string>yourorganization</string>
-  <key>service_mode</key>
-  <string>warp</string>
 </dict>
 ```
 

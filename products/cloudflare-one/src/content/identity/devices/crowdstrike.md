@@ -1,40 +1,46 @@
 ---
-order: 4
+order: 3
 pcx-content-type: how-to
+hidden: true
 ---
-
+ 
 # CrowdStrike
 
-<details>
-<summary>Feature availability</summary>
-<div>
+Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up he integration.
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | Minimum WARP version required | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---------- | ---- |
-| macOS, Windows | WARP with Gateway | macOS: 1.4.27, Windows: 1.4.25.0 | All plans | 
+## Obtain CrowdStrike Settings
 
-</div>
-</details>
+The following CrowdStrike values are needed to set up the CrowdStrike posture check:
 
-Cloudflare Zero Trust can check if [CrowdStrike](https://www.crowdstrike.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
+- API ClientID
+- API Client Secret
+- Base API URL
+- Customer ID
 
-## Configuring the Cloudflare integration
+To retrieve those values:
 
-Before you start, make sure CrowdStrike installed on your machine.
+1. Log in to your Falcon Dashboard.
+1. Navigate to **Support** > **API Clients and Keys**.
+1. Add a new API client and ensure at least the Zero Trust Assessment API Scope is enabled.
+1. Copy the Client ID and Client Secret to a safe place.
+1. Navigate to **Hosts** > **Sensor Downloads** and note down your Customer ID.
+1. Determine your Cloud Environment API endpoint by following the instructions [here](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis). This becomes your Base API URL. As an example:
+   * US-1: `https://api.crowdstrike.com`
+   * US-2: `https://api.us-2.crowdstrike.com`
+   * etc.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices > Device posture**.
 
-1. Select **+Add**.
+## Configure the provider on the Zero Trust dashboard
+1. Go to **Settings** > **Devices** > **Device posture providers** and click **Add new**.
+2. Select **CrowdStrike**.
+3. Give your provider a name. This name will be used throughout the dashboard to reference this connection.
+4. Enter the Client ID and Client Secret you noted down above.
+5. Enter your Rest API URL.
+6. Enter your Customer ID.
+7. Select a **polling frequency** for how often Cloudflare Zero Trust should query CrowdStrike for information.
+8. Click **Save**.
+9. Click **Test Provider** to ensure the values have been entered correctly.
 
-   ![Device posture attributes](../../static/documentation/identity/devices/device-posture-partners.png)
+## ZTA Score
 
-1. Select **CrowdStrike**.
-
-1. You will be prompted for the following information:
-    * **Name:** A unique identifier for this CrowdStrike device posture check
-    * **Operating system:** You’ll need to configure one posture check per operating system (macOS and Windows currently supported)
-    * **Application Path:** Enter the full path to the CrowdStrike process to be checked (for example, `c:\program files\CrowdStrike\CrowdStrike.exe`)
-    * **Certificate thumbprint (optional):** The thumbprint of the publishing certificate used to sign the binary. This proves the binary came from CrowdStrike and is the recommended way to validate the process
-    * **SHA256 checksum (optional):** Used to validate the SHA256 signature of the binary. This verifies the binary exactly matches the one you expect to be there. Note: do not fill out this field unless you strictly control updates to CrowdStrike, as this will change between versions
-
-1. Once you have configured your CrowdStrike instance, you can then add CrowdStrike device posture checks to any application protected by Access.
+This information is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
