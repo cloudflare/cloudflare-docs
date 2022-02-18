@@ -113,7 +113,6 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 
 When the toggle is enabled, users are prevented from turning off the connected state of the application (main toggle switch). 
 
-
 ## Allow device to leave organization
 
 <details>
@@ -127,7 +126,7 @@ When the toggle is enabled, users are prevented from turning off the connected s
 </div>
 </details>
 
-When the toggle is enabled, users who manually joined their WARP Client to the organization are prevented from leaving. This disabled the Logout from Zero Trust and Reset All Settings button in the clients. If a client has been deployed with a management tool and a local policy exists then this switch is ignored and clients are always prevented from leaving.
+When the toggle is enabled, users who manually logged into their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
 
 ## Allow updates
 
@@ -142,7 +141,7 @@ When the toggle is enabled, users who manually joined their WARP Client to the o
 </div>
 </details>
 
-When the toggle is enabled users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add/remove software from their device.
+When the toggle is enabled, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add/remove software from their device.
 
 ## Auto Connect
 
@@ -157,7 +156,7 @@ When the toggle is enabled users will receive update notifications when a new ve
 </div>
 </details>
 
-When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with Switch Locked above where you need to allow users to disable the client temporarily but don't want to rely on user action to turn it back on.
+When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/connections/connect-devices/warp/warp-settings#lock-warp-switch) above.
 
 ## Allow device to leave organization
 
@@ -172,10 +171,7 @@ When the toggle is enabled, the client will automatically reconnect if it has be
 </div>
 </details>
 
-When the toggle is enabled, the Send Feedback button in the application appears and will launch the URL specified.
-
-Example values:
-
+When the toggle is enabled, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
 * `https://support.example.com` Use an https:// link to open your companies internal help site.
 * `mailto:yoursupport@example.com` Use a mailto: link to open your default mail client.
 
@@ -195,7 +191,7 @@ Example values:
 Allows you to choose the operational mode of the client. See [WARP Modes](/connections/connect-devices/warp#warp-client-modes) for a detailed description of each mode.
 
 * **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP. 
-* **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by your devices default mechanisms
+* **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
 * **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
 
 
