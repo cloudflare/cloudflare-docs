@@ -10,7 +10,7 @@ pcx-content-type: concept
 
 | Feature                                                                         | Free      | Paid      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
-| [Subrequests](#subrequests)                                                     | 50        | 50        |
+| [Subrequests](#subrequests)                                                     | 50/request| 50/request|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/worker | 64/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
