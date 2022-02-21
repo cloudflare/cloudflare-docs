@@ -115,6 +115,8 @@ The Cloudflare Rules language supports these standard fields:
       <td>
          <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
          </p>
+         <p>To obtain the timestamp milliseconds, use the <code class="InlineCode">http.request.timestamp.msec</code> field.
+         </p>
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
@@ -126,6 +128,8 @@ The Cloudflare Rules language supports these standard fields:
       <td valign="top"><code>http.request.timestamp.msec</code><br /><Type>Integer</Type></td>
       <td>
          <p>Represents the millisecond when Cloudflare received the request, between 0 and 999.
+         </p>
+         <p>To obtain the complete timestamp, use both <code class="InlineCode">http.request.timestamp.sec</code> and <code class="InlineCode">http.request.timestamp.msec</code> fields.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">857</code>
