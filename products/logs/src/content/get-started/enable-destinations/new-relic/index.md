@@ -18,7 +18,6 @@ To enable the Cloudflare Logpush service:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select the Enterprise domain you want to use with Logpush.
 
-1. Select the Enterprise domain you want to use with Logpush.
 
 1. Go to **Analytics** > **Logs**.
 
