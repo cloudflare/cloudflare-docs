@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # GitHub
 
-Cloudflare for Teams allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
+Cloudflare Zero Trust allows your to connect to your applications using their GitHub login. Administrators can build rules for specific individuals or using GitHub organizations. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
 
-To configure GitHub access in both GitHub and Cloudflare for Teams:
+To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 1. Log into GitHub.
 
@@ -21,7 +21,7 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
 
-1. Enter an **Application name**. You users willsee this name on the login page.
+1. Enter an **Application name**. Your users will see this name on the login page.
 
 1. Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
 
@@ -39,7 +39,7 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
     ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 
 1. Choose **GitHub** on the next page. 
@@ -48,11 +48,8 @@ To configure GitHub access in both GitHub and Cloudflare for Teams:
 
 1. Click **Save**.
 
-To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to GitHub.
-
-<Aside>
+To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to GitHub. 
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
-</Aside>
 
 ## Example API Configuration
 

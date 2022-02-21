@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Connect through Cloudflare Access to SMB file shares
 
-The Server Message Block (SMB) protocol allows users to access, read, and write to shared files. Cloudflare for Teams provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to shared files over SMB without being on a virtual private network (VPN).
+The Server Message Block (SMB) protocol allows users to access, read, and write to shared files. Cloudflare Zero Trust provides a mechanism for end users to authenticate with their single sign-on (SSO) provider and connect to shared files over SMB without being on a virtual private network (VPN).
 
 You can set up this connection by downloading and installing the Cloudflare daemon, `cloudflared`, on the machine hosting the file share and on the client machine. `cloudflared` will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. SMB traffic will then be proxied over this connection using [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/).
 
@@ -16,8 +16,8 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 ## Before you start
 1. Create a Cloudflare account
-1. [Add an active zone to Cloudflare](https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/installation) on the host and client machines
+1. Add an active zone to Cloudflare
+1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/tunnel-guide) on the host and client machines
 
 ---
 
@@ -25,7 +25,7 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 1. Make sure `cloudflared` is installed on the machine hosting the file share.
 
-1. Run the following command to [authenticate `cloudflared`](/connections/connect-apps/install-and-setup/setup) into your Cloudflare account.
+1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
 ```bash
 \cloudflared.exe tunnel login
@@ -60,7 +60,7 @@ Run the following command to connect the drive to Cloudflare, replacing the `smb
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
-## Connect the machine hosting the file share to Cloudflare
+## Connect a local machine to access the file share
 
 1. Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
 

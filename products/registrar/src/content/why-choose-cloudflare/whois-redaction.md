@@ -1,6 +1,5 @@
 ---
-order:
-pcx-content: reference
+pcx-content-type: reference
 ---
 
 # WHOIS redaction
@@ -15,10 +14,10 @@ Cloudflare’s WHOIS service can be found at https://rdap.cloudflare.com/. Selec
 
 ## What is WHOIS redaction?
 
-WHOIS redaction removes most contact information categorized as personal data (registrant name, email address, postal address) from the published WHOIS record for a domain. Fields will read “Data Redacted”. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS: 
+WHOIS redaction removes most contact information categorized as personal data (such as registrant name, email address, postal address) from the published WHOIS record for a domain. These fields will read `Data Redacted`. The nameserver, domain lock information, and date records for a domain are still available publicly. The following fields will continue to show in WHOIS, due to ICANN policy: 
 
-* Registrant State/Province 
-* Registrant Country.
+* Registrant state/province.
+* Registrant country.
 
 Cloudflare still maintains the authoritative, unredacted, record of your WHOIS data. You can modify this information at any time in. To access it:
 
@@ -26,13 +25,11 @@ Cloudflare still maintains the authoritative, unredacted, record of your WHOIS d
 1. Select **Registrar**.
 1. Under **Manage** > **Default Contact**, select **Edit** to update your information.
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
 WHOIS redaction is not the same as WHOIS privacy. WHOIS privacy replaces your information with proxy contact information, while redaction removes it altogether.
 
 </Aside>
-
-Some registries do not allow domains to be registered with WHOIS Redaction or WHOIS Privacy. Many of these are country TLDs (ccTLDs), like `.uk.` Cloudflare does not yet support TLDs that prohibit WHOIS redaction, but will in the near future.
 
 ## What is RDAP?
 
@@ -42,4 +39,4 @@ Cloudflare’s RDAP service can be found at https://rdap.cloudflare.com/. Select
 
 ## How can third parties reach registrants?
 
-As part of the ICANN guidelines, registrars must make available a method for third parties to reach the registrant without revealing the identity of that registrant. Cloudflare has made a [form available where third parties can submit a message for a given domain on Cloudflare Registrar](https://www.cloudflare.com/abuse/form). Cloudflare will forward the message to the registrant email on file for that domain.
+As part of the ICANN guidelines, registrars must have a method for third parties to reach the registrant without revealing their identity. Cloudflare has a form available where third parties can [submit a message for a given domain on Cloudflare Registrar](https://www.cloudflare.com/abuse/form). Cloudflare will forward the message to the registrant email on file for that domain.

@@ -9,7 +9,7 @@ pcx-content-type: how-to
 Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions. A CSV file containing a list of URLs or hostnames must be smaller than 2 MB. 
 </Aside>
 
-With Teams, you can create lists of URLs or hostnames to reference when creating [Secure Web Gateway policies](/policies/filtering). This allows you to quickly create rules that match and take actions against several items at once. 
+With Cloudflare Zero Trust, you can create lists of URLs or hostnames to reference when creating [Secure Web Gateway policies](/policies/filtering). This allows you to quickly create rules that match and take actions against several items at once. 
 
 You can create a list by:
 * [Uploading a list of entries](#creating-a-list-from-a-csv-file)
@@ -18,9 +18,9 @@ You can create a list by:
 
 ## Creating a list from a CSV file
 
-If you'd like to test how this feature works, here is a [sample CSV file](../static/documentation/list-test.csv). You can upload it to the Teams dashboard following the instructions below:
+If you'd like to test how this feature works, here is a [sample CSV file](../static/documentation/list-test.csv). You can upload it to the Zero Trust dashboard following the instructions below:
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Lists**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Lists**.
 1. Click **Upload CSV**.
 
   ![Upload CSV](../static/documentation/policies/upload-csv.png)
@@ -33,7 +33,7 @@ Your list will now appear in the Lists page.
 
 ## Creating a manual list
 
-1. On the Teams dashboard, navigate to **Gateway > Lists**.
+1. On the Zero Trust dashboard, navigate to **Gateway > Lists**.
 1. Click **Create manual list**.
 
   ![Manual list](../static/documentation/policies/upload-csv.png)

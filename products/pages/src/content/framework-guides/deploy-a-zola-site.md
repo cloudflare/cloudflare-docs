@@ -2,9 +2,11 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Zola site
 
-[Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you'll create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
+[Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you will create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
 
 ## Installing Zola
 
@@ -66,6 +68,8 @@ You can leave this one blank for now.
 3. Do you want to enable syntax highlighting? [y/N]: y
 4. Do you want to build a search index of the content? [y/N]: y
 
+<TutorialsBeforeYouStart/>
+
 ## Creating a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
@@ -92,7 +96,13 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`. 
 
-For example, `ZOLA_VERSION`: `0.13.0`.
+For example, `ZOLA_VERSION`: `0.14.0`.
+
+<Aside type="warning">
+
+Currently, Cloudflare Pages only supports `ZOLA_VERSION`: <=`0.14.0` in builds.
+
+</Aside>
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `zola`, your project dependencies, and building your site, before deploying it.
 

@@ -7,11 +7,10 @@ pcx-content-type: how-to
 
 Cloudflare recommends API tokens as the preferred authentication method with Cloudflare APIs. This article walks through creating API tokens for authentication to the GraphQL Analytics API.
 
-For more detail on API tokens and the full range of supported options, see [_Creating API tokens_](https://developers.cloudflare.com/api/tokens/create).
+For more details on API tokens and the full range of supported options, refer to [Creating API tokens](https://developers.cloudflare.com/api/tokens/create).
 
 To create an API token for authentication to the GraphQL Analytics API, use this workflow:
 
-- [Configure an Analytics API token](#configure-an-analytics-api-token)
   - [Access the Create API Token page](#access-the-create-api-token-page)
   - [Configure a custom API token](#configure-a-custom-api-token)
   - [Review and create your API token](#review-and-create-your-api-token)
@@ -35,7 +34,7 @@ To access the **Create Custom Token** page, follow these steps:
 
   ![Create API Token page](../../../static/images/create-api-token-page-display.png)
 
-The next section of this walkthrough shows you how to [configure a custom token](#configure-a-custom-token) for access to the GraphQL Analytics API.
+The next section of this walkthrough shows you how to configure a custom token for access to the GraphQL Analytics API.
 
 ## Configure a custom API token
 
@@ -57,7 +56,7 @@ To configure a custom token, follow these steps:
 
   ![Configure permissions](../../../static/images/create-custom-token-permissions.png)
 
-1. To configure the specific zones to which the token grants access, use the **Resources** drop-down lists. In this example, the token is set to grant access to all zones:
+1. To configure the specific zones to which the token grants access, use the **Zone Resources** drop-down lists. In this example, the token is set to grant access to all zones:
 
   ![Configure resources](../../../static/images/create-custom-token-zone-resources.png)
 
@@ -71,11 +70,11 @@ To configure a custom token, follow these steps:
 
 1. Click **Continue to summary**.
 
-The next section of this walkthrough shows you how to [review and test your API token](#review-and-test-your-api-token).
+The next section of this walkthrough covers how to review and test your API token.
 
 ## Review and create your API token
 
-Once you click _Continue to summary_, the **API Token Summary** page displays.
+Once you click **Continue to summary**, the **API Token Summary** page displays.
 
 Use the **API Token Summary** to confirm that you have scoped the API Token to the desired permissions and resources before creating it.
 

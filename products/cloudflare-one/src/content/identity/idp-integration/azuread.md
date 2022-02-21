@@ -5,19 +5,15 @@ pcx-content-type: how-to
 
 # Microsoft Azure AD®
 
-You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Teams and build rules based on user identity and group membership. Users will authenticate with their Azure AD credentials and connect to Teams.
+You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero Trust and build rules based on user identity and group membership. Users will authenticate with their Azure AD credentials and connect to Zero Trust.
 
 1. Sign in to [the Azure dashboard](https://portal.azure.com/).
-
- ![Azure AD Portal](../../static/documentation/identity/azure/azure-portal.png)
 
 1. Click **Azure Active Directory** in the Azure Services section.
 
  ![Azure AD Select AD](../../static/documentation/identity/azure/pick-azure-ad.png)
 
-1. On the **Azure AD** dashboard, click **App registrations** in the **Manage** section of the _Azure Active Directory_ pane.
-
- ![Azure AD App Registration](../../static/documentation/identity/azure/click-app-reg.png)
+1. In the left side menu, navigate to **Manage** > **App registrations**.
 
 1. Click **+ New registration**.
 
@@ -72,7 +68,7 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare for Te
 
  ![Azure AD API Permissions](../../static/documentation/identity/azure/configured-perms.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 
@@ -94,7 +90,7 @@ AzureAD exposes directory groups in a format that consists of random strings, th
 
 ![Azure AD Test Connection](../../static/documentation/identity/azure/object-id.png)
 
-To configure Access to use Azure groups, make sure you toggle on the **Support groups** switch as you set up Azure AD on your Teams dash.
+To configure Access to use Azure groups, make sure you toggle on the **Support groups** switch as you set up Azure AD on your Zero Trust dash.
 
 This will enable you to select **Azure AD groups** when creating or editing a group. When asked for the **Azure group ID**, you must input the `Object Id`. 
 

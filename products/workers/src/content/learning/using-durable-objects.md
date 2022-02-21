@@ -1,5 +1,5 @@
 ---
-order: 9
+order:
 pcx-content-type: concept
 ---
 
@@ -7,21 +7,19 @@ pcx-content-type: concept
 
 Durable Objects provide low-latency coordination and consistent storage for the Workers platform through two features: global uniqueness and a transactional storage API.
 
-* Global Uniqueness guarantees that there will be a single Durable Object with a given id running at once, across the whole world.  Requests for a Durable Object id are routed by the Workers runtime to the Cloudflare point-of-presence that owns the Durable Object.
+* Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given id running at once, across the whole world.  Requests for a Durable Object id are routed by the Workers runtime to the Cloudflare point-of-presence that owns the Durable Object.
 
-* The transactional storage API provides strongly-consistent key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may be processed out-of-order from how they arrived at the Object.
+* The transactional storage API provides strongly-consistent key-value storage to the Durable Object.  Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 For a high-level introduction to Durable Objects, [see the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
 
-<Aside type="warning" header="Beta">
-
-Durable Objects are currently in beta and are available to anyone with a Workers subscription. You can enable them for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”.
-
-</Aside>
+For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/runtime-apis/durable-objects).
 
 ## Using Durable Objects
 
-Durable Objects are named instances of a class you define.  Just like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
+Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
+
+To start, enable Durable Objects for your account in [the Cloudflare dashboard](https://dash.cloudflare.com/) by navigating to “Workers” and then “Durable Objects”. 
 
 There are three steps to creating and using a Durable Object:
 
@@ -42,9 +40,9 @@ export class DurableObjectExample {
 }
 ```
 
-Note this means bindings are no longer global variables. E.g. if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
+Note this means bindings are no longer global variables. For example, if you had a secret binding `MY_SECRET`, you must access it as `env.MY_SECRET`.
 
-Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The only difference is that for Durable Objects the fetch handler is defined as a method on the class.
+Workers communicate with a Durable Object via the fetch API.  Like a Worker, a Durable Object listens for incoming Fetch events by registering an event handler. The difference is that for Durable Objects the fetch handler is defined as a method on the class.
 
 ```js
 export class DurableObjectExample {
@@ -60,9 +58,9 @@ export class DurableObjectExample {
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
 
-<Aside>
+<Aside type="note">
 
-HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code -- possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
+HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
 
 </Aside>
 
@@ -87,78 +85,53 @@ export class DurableObjectExample {
 }
 ```
 
-Each individual storage operation behaves like a database transaction. More complex use cases can wrap multiple storage statements in a transaction. For example, this Durable Object puts a key if and only if its current value matches the provided "If-Match" header value:
+The Durable Objects storage API employs several techniques to help you avoid subtle-yet-common storage bugs:
 
-```js
-export class DurableObjectExample {
-    constructor(state, env) {
-        this.state = state;
-    }
+- Each individual storage operation is strictly ordered with respect to all others. Even if the operation completes asynchronously (requiring you to `await` a promise), the results will always be accurate as of the time the operation was invoked.
 
-    async fetch(request) {
-        let key = new URL(request.url).host
-        let ifMatch = request.headers.get('If-Match');
-        let newValue = await request.text();
-        let changedValue = false;
-        await this.state.storage.transaction(async txn => {
-            let currentValue = await txn.get(key);
-            if (currentValue != ifMatch && ifMatch != '*') {
-                txn.rollback();
-                return;
-            }
-            changedValue = true;
-            await txn.put(key, newValue);
-        });
-        return new Response("Changed: " + changedValue);
-    }
+- A Durable Object can process multiple concurrent requests. However, when a storage operation is in progress (such as, when you are `await`ing the result of a `get()`), delivery of concurrent events will be paused. This ensures that the state of the object cannot unexpectedly change while a read operation is in-flight, which would otherwise make it very hard to keep in-memory state properly synchronized with on-disk state. If desired, this behavior can be bypassed using the option [`allowConcurrency: true`](/runtime-apis/durable-objects#methods).
 
-}
-```
+- If multiple write operations are performed consecutively – without `await`ing anything in the meantime – then they will automatically be coalesced and applied atomically. This means that, even in the case of a machine failure, either all of the operations will have been stored to disk, or none of them will have been.
 
-Transactions operate at a [serializable isolation level](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Serializable).  This means transactions can fail if they conflict with a concurrent transaction being run by the same Durable Object.
+- Write operations are queued to a write buffer, allowing calls like `put()` and `delete()` to complete immediately from the application's point of view. However, when the application initiates an outgoing network message (such as responding to a request, or invoking `fetch()`), the network request will be held until all previous writes are confirmed to be durable. This ensures that an application cannot accidentally confirm a write prematurely. If desired, this behavior can be bypassed using the option [`allowUnconfirmed: true`](/runtime-apis/durable-objects#methods).
 
-Transactions are transparently and automatically retried once by rerunning the provided function before returning an error.  To avoid transaction conflicts, don't use transactions when you don't need them, don't hold transactions open any longer than necessary, and limit the number of key-value pairs operated on by each transaction.
+- The storage API implements an in-memory caching layer to improve performance. Reads that hit cache will return instantly, without even context-switching to another thread. When reading or writing a value where caching is not worthwhile, you may use the option [`noCache: true`](/runtime-apis/durable-objects#methods) to avoid it – but this option only affects performance, it will not change behavior.
 
-<Aside>
-
-Since each Durable Object is single-threaded, technically it is not necessary to use transactions to achieve transactional semantics. With careful use of promises, you could serialize operations in your live object so that there's no possibility of concurrent storage operations. We provide the transactional interface as a convenience for those who don't want to do their own synchronization.
-
-</Aside>
+For more discussion about these features, refer to the [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) blog post.
 
 ### In-memory state in a Durable Object
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory.  A common pattern is to initialize an object from persistent storage and set class variables the first time it is accessed.  Since future accesses are routed to the same object, it is then possible to return any initialized values without making further calls to persistent storage.
 
-This is shown in the [Counter example](#example---counter) below, which is partially shown here.
-
 ```js
 export class Counter {
     constructor(state, env) {
         this.state = state;
-    }
-
-    async initialize() {
-        let stored = await this.state.storage.get("value");
-        // after initialization, future reads don't need to access storage!
-        this.value = stored || 0;
+        // `blockConcurrencyWhile()` ensures no requests are delivered until
+        // initialization completes.
+        this.state.blockConcurrencyWhile(async () => {
+            let stored = await this.state.storage.get("value");
+            // After initialization, future reads do not need to access storage.
+            this.value = stored || 0;
+        })
     }
 
     // Handle HTTP requests from clients.
     async fetch(request) {
-        // Make sure we're fully initialized from storage.
-        if (!this.initializePromise) {
-            this.initializePromise = this.initialize();
-        }
-        await this.initializePromise;
-        // this.value will retain its state until this object is evicted from memory
         ...
     }
 }
 ```
 
+<Aside type="note" header="Built-in Caching">
+
+The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+
+</Aside>
+
 ### WebSockets in Durable Objects
 
-As part of Durable Objects, we've made it possible for Workers to act as WebSocket endpoints -- including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
+As part of Durable Objects, we've made it possible for Workers to act as WebSocket endpoints – including as a client or as a server. Previously, Workers could proxy WebSocket connections on to a back-end server, but could not speak the protocol directly.
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there's no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
@@ -198,7 +171,7 @@ export default {
 
     // Construct the stub for the Durable Object using the ID. A "stub" is a
     // client object used to send messages to the Durable Object.
-    let stub = await env.EXAMPLE_CLASS.get(id);
+    let stub = env.EXAMPLE_CLASS.get(id);
 
     // Forward the request to the Durable Object. Note that `stub.fetch()` has
     // the same signature as the global `fetch()` function, except that the
@@ -230,7 +203,7 @@ In the above example, we used a string-derived object ID by calling the `idFromN
 
 <Aside type="warning" header="Custom Wrangler installation instructions">
 
-You must use [Wrangler version 1.17 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](https://developers.cloudflare.com/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
 </Aside>
 
@@ -246,11 +219,7 @@ This will create a directory for your project with basic configuration and a sin
 * [Durable Objects TypeScript Rollup ES Modules template](https://github.com/cloudflare/durable-objects-typescript-rollup-esm)
 * [Durable Objects Webpack CommonJS template](https://github.com/cloudflare/durable-objects-webpack-commonjs)
 
-The following sections will cover how to customize the configuration, but if you'd like you can immediately publish the generated project using this command:
-
-```sh
-$ wrangler publish --new-class Counter
-```
+The following sections will cover how to customize the configuration, but you can also immediately publish the generated project using `wrangler publish`.
 
 ### Specifying the main module
 
@@ -266,39 +235,134 @@ bindings = [
   { name = "EXAMPLE_CLASS", class_name = "DurableObjectExample" } # Binding to our DurableObjectExample class
 ]
 ```
+
 The `[durable_objects]` section has 1 subsection:
 
 - `bindings` - An array of tables, each table can contain the below fields.
-  - `name` - Required, The binding name to use within your worker.
+  - `name` - Required, The binding name to use within your Worker.
   - `class_name` - Required, The class name you wish to bind to.
-  - `script_name` - Optional, Defaults to the current project's script.
+  - `script_name` - Optional, Defaults to the current [environment's](/platform/environments) script.
 
-### Publishing Durable Object classes
+If you are using Wrangler [environments](/platform/environments), you must specify any Durable Object bindings you wish to use on a per-environment basis, they are not inherited. For example, an environment named `staging`:
 
-Normally when you want to publish a Worker using Wrangler, you just run `wrangler publish`. However, when you export a new Durable Objects class from your script, you must tell the Workers platform about it
-before you can create and access Durable Objects associated with that class. This process is called a "migration", and is currently performed by providing extra options to `wrangler publish`.
-
-To allow creation of Durable Objects associated with an exported class, specify `--new-class`:
-
-```sh
-$ wrangler publish --new-class DurableObjectExample
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample"}
+]
 ```
 
-Note that after you've run `--new-class` for a given class name once, you do not need to include the migration on subsequent uploads of the Worker. You'd just run `wrangler publish` with no additional flags.
+Because Wrangler [appends the environment name to the top-level name](/platform/environments#naming) when publishing, for a worker named `worker-name` the above example is equivalent to:
 
-If you want to delete the Durable Objects associated with an exported class, remove the corresponding binding from wrangler.toml, then use `--delete-class`:
-
-```sh
-$ wrangler publish --delete-class DurableObjectExample
+```toml
+[env.staging]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name-staging"}
+]
 ```
+
+Note that EXAMPLE_CLASS in the staging environment is bound to a different script name compared to the top-level EXAMPLE_CLASS binding, and will therefore access different objects with different persistent storage. If you want an environment-specific binding that accesses the same objects as the top-level binding, specify the top-level script name explicitly:
+
+```toml
+[env.another]
+durable_objects.bindings = [
+  {name = "EXAMPLE_CLASS", class_name = "DurableObjectExample", script_name = "worker-name"}
+]
+```
+
+
+### Configuring Durable Object classes with migrations
+
+When you make changes to your list of Durable Objects classes, you must initiate a migration process. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
+
+The most common migration performed is a new class migration, which informs the system that a new Durable Object class is being uploaded.
+
+Migrations can also be used for transferring stored data between two Durable Object classes:
+* Rename migrations are used to transfer stored objects between two Durable Object classes in the same script.
+* Transfer migrations are used to transfer stored objects between two Durable Object classes in different scripts.
+
+The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the deployed script.
 
 <Aside type="warning" header="Important">
 
-Running a `--delete-class` migration will delete all Durable Objects associated with the deleted class, including all of their stored data. Don't do this without first ensuring that you aren't relying on the Durable Objects anymore and have copied any important data to some other location.
+After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data. 
+
+After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
 </Aside>
 
-These are basic examples -- you can use multiple of these options in a single `wrangler publish` call if you'd like, one class per option. Future versions of Wrangler will also include migration directives for renaming a class or transferring a class from one file to another.
+Migrations can also be used to delete a Durable Object class and its stored objects.
+
+<Aside type="warning" header="Important">
+
+Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting. 
+
+</Aside>
+
+### Durable Object migrations in `wrangler.toml`
+
+Migrations are performed through the `[[migrations]]` configurations key in your `wrangler.toml` file. Migrations require a migration tag, which is defined by the **tag** property in each migration entry. Migration tags are treated like unique names and are used to determine which migrations have already been applied. Once a given script has a migration tag set on it, all future script uploads must include a migration tag.
+
+The migration list is an ordered array of tables, specified as a top-level key in your `wrangler.toml`. The migration list is inherited by all environments and cannot be overridden by a specific environment. 
+
+All migrations are applied at deployment. Each migration can only be applied once per [environment](/platform/environments). 
+
+To illustrate an example migrations workflow, the `DurableObjectExample` class can be initially defined with:
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+```
+
+Each migration in the list can have multiple directives, and multiple migrations can be specified as your project grows in complexity. For example, you may want to rename the `DurableObjectExample` class to `UpdatedName` and delete an outdated `DeprecatedClass` entirely.
+
+```toml
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["DurableObjectExample"] # Array of new classes
+
+[[migrations]]
+tag = "v2"
+renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
+deleted_classes = ["DeprecatedClass"] # Array of deleted class names
+```
+
+<Aside type="note">
+
+Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks
+in the surrounding inline array are acceptable.
+
+</Aside>
+
+### Durable Object migrations through Wrangler CLI
+
+<Aside type="warning" header="Deprecation Notice">
+    
+While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release.
+
+</Aside>
+
+It is possible to define a migration purely through extra arguments to the `wrangler publish` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored. 
+    
+You should provide an `--old-tag` value whenever possible. This value should be the name of the migration tag that you believe to be most recently active. Your `wrangler publish` command will throw an error if your `--old-tag` expectation does not align with Cloudflare's value. 
+
+The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
+
+```sh
+--old-tag <tag name> # Optional if your script does not have a migration tag set yet.
+--new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
+
+# Each of the migration directives can be specified multiple times if you are
+# creating/deleting/renaming/transferring multiple classes at once.
+--new-class <class name>
+--delete-class <class name>
+--rename-class <from class> <to class>
+--transfer-class <from script> <from class> <to class>
+```
+
+
+### Test your Durable Objects project
 
 At this point, we're done! If you copy the `DurableObjectExample` and fetch handler code from above into a generated Wrangler project, publish it using a `--new-class` migration, and make a request to it, you'll see that your request was stored in a Durable Object:
 
@@ -309,19 +373,15 @@ $ curl -H "Content-Type: text/plain" https://<worker-name>.<your-namespace>.work
 
 As you write Durable Objects, you can find more helpful details in the [Durable Objects runtime API documentation](/runtime-apis/durable-objects).
 
+[Miniflare](https://github.com/cloudflare/miniflare) includes helpful tools for mocking and testing your Durable Objects.
+
 ## Limits
 
 See the [Durable Objects section of the Limits page](/platform/limits#durable-objects) for current relevant usage limits.
 
 ## Limitations
 
-Durable Objects is currently in early beta, and some planned features have not been enabled yet. Many of these limitations will be fixed before Durable Objects becomes generally available.
-
-### Risk of Data Loss
-
-At this time, we are not ready to guarantee that data won't be lost. We don't expect data loss and do maintain regular backups, but bugs are always possible.
-
-For now, if you are storing data in Durable Objects that you can't stand to lose, you must arrange to make backups of that data into some other storage system. Do not rely on Durable Objects for storing production data during the beta period. (This is, of course, always best practice anyway, but it is especially important in the beta.)
+Durable Objects is now generally available, however there are some known limitations.
 
 ### Global Uniqueness
 
@@ -329,29 +389,23 @@ Uniqueness is currently enforced upon starting a new event (such as receiving an
 
 In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself).
 
-### Enumerating objects
-
-There is currently no support for generating a list of all existing objects, nor any way to bulk export objects.
-
 ### Development tools
 
-[Wrangler dev](/cli-wrangler/commands#dev) does not currently work with Durable Objects.
+[Wrangler tail](/cli-wrangler/commands#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
 
-[Wrangler tail](/cli-wrangler/commands#tail) does work, but note that logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.
+[Wrangler dev](/cli-wrangler/commands#dev) establishes a tunnel from your local development environment to Cloudflare's edge, allowing you to test your Worker and Durable Objects as they are developed.
 
-The Workers dashboard does not yet support viewing or editing Workers that use modules syntax. It also does not yet display any information about your Durable Objects or allow you to create client bindings to Durable Objects in your Workers.
+The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
 ### Object Location
 
-Not all Cloudflare locations support Durable Objects yet, so objects may not be created in exactly the same point-of-presence where they are first requested.
+Not all Cloudflare locations host Durable Objects, so objects may not be created in the same point-of-presence where they are first requested.
 
-Currently, Durable Objects do not migrate between locations after initial creation. We will be enabling automatic migration in the future.
+Currently, Durable Objects do not migrate between locations after initial creation. We will be exploring automatic migration in the future.
 
 ### Performance
 
 Using Durable Objects will often add response latency, as the request must be forwarded to the point-of-presence where the object is located.
-
-While Durable Objects already perform well for many kinds of tasks, we have lots of performance tuning to do. Expect performance (latency, throughput, overhead, etc.) to improve over the beta period -- and if you observe a performance problem, please tell us about it!
 
 ## Example - Counter
 
@@ -361,91 +415,92 @@ We've included complete example code for both the Worker and the Durable Object 
 // Worker
 
 export default {
-    fetch(request, env) {
-        return handleRequest(request, env);
-    }
+  async fetch(request, env) {
+    return await handleRequest(request, env);
+  }
 }
 
 async function handleRequest(request, env) {
-    let id = env.Counter.idFromName("A");
-    let obj = env.Counter.get(id);
-    let resp = await obj.fetch(request.url);
-    let count = await resp.text();
+  let id = env.COUNTER.idFromName("A");
+  let obj = env.COUNTER.get(id);
+  let resp = await obj.fetch(request.url);
+  let count = await resp.text();
 
-    return new Response("Durable Object 'A' count: " + count);
+  return new Response("Durable Object 'A' count: " + count);
 }
 
 // Durable Object
 
 export class Counter {
-    constructor(state, env) {
-        this.state = state;
+  constructor(state, env) {
+    this.state = state;
+  }
+
+  // Handle HTTP requests from clients.
+  async fetch(request) {
+    // Apply requested action.
+    let url = new URL(request.url);
+
+    // Durable Object storage is automatically cached in-memory, so reading the
+    // same key every request is fast. (That said, you could also store the
+    // value in a class member if you prefer.)
+    let value = await this.state.storage.get("value") || 0;
+
+    switch (url.pathname) {
+    case "/increment":
+      ++value;
+      break;
+    case "/decrement":
+      --value;
+      break;
+    case "/":
+      // Just serve the current value.
+      break;
+    default:
+      return new Response("Not found", {status: 404});
     }
 
-    async initialize() {
-        let stored = await this.state.storage.get("value");
-        this.value = stored || 0;
-    }
+    // You do not have to worry about a concurrent request having modified the
+    // value in storage because "input gates" will automatically protect against
+    // unwanted concurrency. So, read-modify-write is safe. For more details,
+    // refer to: https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/
+    await this.state.storage.put("value", value);
 
-    // Handle HTTP requests from clients.
-    async fetch(request) {
-        // Make sure we're fully initialized from storage.
-        if (!this.initializePromise) {
-            this.initializePromise = this.initialize().catch((err) => {
-                // If anything throws during initialization then we need to be
-                // sure that a future request will retry initialize().
-                // Note that the concurrency involved in resetting this shared
-                // promise on an error can be tricky to get right -- we don't
-                // recommend customizing it.
-                this.initializePromise = undefined;
-                throw err
-            });
-        }
-        await this.initializePromise;
-
-        // Apply requested action.
-        let url = new URL(request.url);
-        let currentValue = this.value;
-        switch (url.pathname) {
-        case "/increment":
-            currentValue = ++this.value;
-            await this.state.storage.put("value", this.value);
-            break;
-        case "/decrement":
-            currentValue = --this.value;
-            await this.state.storage.put("value", this.value);
-            break;
-        case "/":
-            // Just serve the current value. No storage calls needed!
-            break;
-        default:
-            return new Response("Not found", {status: 404});
-        }
-
-        // Return `currentValue`. Note that `this.value` may have been
-        // incremented or decremented by a concurrent request when we
-        // yielded the event loop to `await` the `storage.put` above!
-        // That's why we stored the counter value created by this
-        // request in `currentValue` before we used `await`.
-        return new Response(currentValue);
-    }
+    return new Response(value);
+  }
 }
 ```
 
-## Configuration Script
+## Related resources
 
-While using Wrangler is strongly recommended, if you would really rather not use it for some reason we've included a [shell script](/publish-durable-object.sh) to automate the curl commands involved in uploading a Worker that implements and uses Durable Objects.
+- [Durable Objects runtime API](/runtime-apis/durable-objects)
 
 ## Troubleshooting
 
-### Debugging 
-`wrangler dev` does not currently support Durable Objects.
+### Debugging
 
-To help with debugging, you may use [`wrangler tail`](/cli-wrangler/commands#tail) to troubleshoot your Durable Object script. `wrangler tail` displays a live feed of console and exception logs for each request your Worker receives. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+[`wrangler dev`](/cli-wrangler/commands#dev) and [`wrangler tail`](/cli-wrangler/commands#tail) are both available to help you debug your Durable Objects.
+
+`wrangler dev` opens up a tunnel from your local development environment to a preview instance of your script at Cloudflare's edge, letting you test your Durable Objects code in the Workers environment as you write it.
+
+`wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
+
+### GraphQL Analytics
+
+Durable Object metrics are powered by GraphQL, like other Workers metrics. Learn more about querying Workers data sets in this [tutorial](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/). The data sets that include Durable Object metrics include `durableObjectsInvocationsAdaptiveGroups`, `durableObjectsPeriodicGroups`, `durableObjectsStorageGroups`, and `durableObjectsSubrequestsAdaptiveGroups`. You can [use GraphQL introspection to get information on the fields exposed by each](https://developers.cloudflare.com/analytics/graphql-api/getting-started/explore-graphql-schema).
 
 ### Common errors
 #### Error: `No event handlers were registered. This script does nothing.`
 In your `wrangler.toml` file, make sure the `dir` and `main` entries point to the correct file containing your Worker script, and that the file extension is `.mjs` instead of `.js` if using ES Modules Syntax.
 
 #### Error when deleting migration
-When deleting a migration using `wrangler --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+When deleting a migration using `wrangler publish --delete-class <ClassName>`, you may encounter this error: `"Cannot apply --delete-class migration to class <ClassName> without also removing the binding that references it"`. You should remove the corresponding binding under `[durable_objects]` in `wrangler.toml` before attempting to apply `--delete-class` again.
+
+#### Error: Durable Object is overloaded.
+A single instance of a Durable Object cannot do more work than is possible on a single thread. These errors mean the Durable Object has too much work to keep up with incoming requests:
+
+- `Error: Durable Object is overloaded. Too many requests queued.` The total count of queued requests is too high.
+- `Error: Durable Object is overloaded. Too much data queued.` The total size of data in queued requests is too high.
+- `Error: Durable Object is overloaded. Requests queued for too long.` The oldest request has been in the queue too long.
+
+To solve this you can either do less work per request, or send fewer requests, for instance by splitting the requests among more instances of the Durable Object.

@@ -22,13 +22,13 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 ## Build a policy to block by TLD
 
-Visit the Cloudflare for Teams dashboard. Open the `Policies` page in the Gateway section and select the `DNS` tab.
+Visit the Zero Trust dashboard. Open the `Policies` page in the Gateway section and select the `DNS` tab.
 
 ![Dashboard](../static/secure-web-gateway/block-tld/policies.png)
 
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
-Choose `DNS Domain` in the Selector, `matches regex`, in the Operator, and input the following value:
+Choose `Domain` in the Selector, `matches regex` in the Operator, and input the following value:
 
 ```
 [.]fail
@@ -46,9 +46,15 @@ Finish the policy by clicking **Create policy**.
 
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
 
+<Aside type="note">
+
+For more information on how policies work with regular expressions, refer to [Can I use regular expressions to build policies?](/faq/teams-policies-faq#can-i-use-regular-expressions-to-build-policies)
+
+</Aside>
+
 ## Review logs
 
-You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of the Cloudflare for Teams dashboard, select `Gateway`, and choose the `DNS` tab.
+You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of the Zero Trust dashboard, select `Gateway`, and choose the `DNS` tab.
 
 ![Logs](../static/secure-web-gateway/block-tld/review-logs-start.png)
 

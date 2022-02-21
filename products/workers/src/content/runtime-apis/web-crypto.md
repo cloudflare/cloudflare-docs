@@ -31,7 +31,7 @@ Some common uses include:
 
 <Aside type="warning" header="Warning">
 
-The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript that relies on Node’s Crypto API, you’ll need to invest in translating it to use Web Crypto primitives.
+The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 
 </Aside>
 
@@ -39,10 +39,21 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
 <Definitions>
 
-- <Code>crypto.getRandomValues(buffer<ParamType>ArrayBuffer</ParamType>)</Code>
-  <Type>ArrayBuffer</Type>
+- <Code>crypto.getRandomValues(buffer<ParamType>ArrayBufferView</ParamType>)</Code>
+  <Type>ArrayBufferView</Type>
 
-  - Fills the passed ArrayBuffer with cryptographically sound random values.
+  - Fills the passed <Code>ArrayBufferView</Code> with cryptographically sound random values and returns the <Code>buffer</Code>.
+
+    __Parameters:__
+
+    - <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
+
+      - Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array</Type></Code>.
+
+- <Code>crypto.randomUUID()</Code>
+  <Type>string</Type>
+
+  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt)
 
 </Definitions>
 
@@ -129,7 +140,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
     example, to generate a new AES-GCM key:
 
     ```js
-    let keyPair = crypto.subtle.generateKey(
+    let keyPair = await crypto.subtle.generateKey(
       {
         name: "AES-GCM",
         length: "256"
@@ -272,7 +283,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 ### Supported algorithms
 
 Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI), as shown in the following table.
-We are happy to add support for more algorithms — [let us know about your use case](https://community.cloudflare.com/c/developers/workers).
+The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
 
 A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.
 [//]: #  An x (✘) indicates that this feature is part of the specification but not implemented.
@@ -307,14 +318,14 @@ __Footnotes:__
 
 1. <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
 * Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
-* Unlike NodeJS, we will not support "raw" import of private keys.
-* Since this algorithm is non-standard, the implementation may change over time. While we cannot guarantee it at this time, we will strive to maintain backward compatabilityand compatability with NodeJS's behavior.
-Any notable compatability notes will be communicated in release notes and via this developer document.
-2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard, but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm. Do not rely upon MD5 for security.
+* Unlike NodeJS, Cloudflare will not support raw import of private keys.
+* The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
+Any notable compatibility notes will be communicated in release notes and via this developer document.
+2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
 
 --------------------------------
 
-## See also
+## Related resources
 
 - [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
 - [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)

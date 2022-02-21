@@ -10,7 +10,7 @@ pcx-content-type: how-to
 <b>Before you start</b>
 
 * **<a href="https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website">Add a website to Cloudflare</a>**
-* **<a href="https://support.cloudflare.com/hc/articles/205195708">Change your domain nameservers to Cloudflare</a>**
+* **<a href="https://developers.cloudflare.com/dns/zone-setups/full-setup">Change your domain nameservers to Cloudflare</a>**
 
 </Aside>
 
@@ -18,11 +18,11 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 ![Self-hosted applications diagram](../../static/documentation/applications/network-diagram.png)
 
-Make sure you create [Zero Trust policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use [Cloudflare Tunnel](/glossary#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/policies/zero-trust) before connecting your application to Cloudflare. To [connect your origin](/connections/connect-apps) to Cloudflare, you can use [Cloudflare Tunnel](/glossary#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/identity/users/validating-json/) issued by Cloudflare on your origin.
 
 ### 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
@@ -46,14 +46,14 @@ Make sure you create [Zero Trust policies](/policies/zero-trust) before connecti
   When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the <a href="/policies/zero-trust/app-paths">Application paths</a> page.
   </Aside>
 
-1. Scroll down to the **Application logo** card to configure your application logo.
-To add a custom logo, click **Custom** and input a link to your desired image.
+1. Scroll down to the **Application visibility** card.
 
-  ![Set application logo](../../static/documentation/applications/app-logo-sh.png)
+    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link. 
+    * [Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
-  <Aside>
-  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
-  </Aside>
+    <Aside>
+    If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+    </Aside>
 
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 

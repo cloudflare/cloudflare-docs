@@ -11,11 +11,11 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 ## Creating rules with applications and app types
 
-1. On the [Teams dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
+1. On the [Zero Trust dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
 
 1. Navigate to the **HTTP tab**.
 
-1. [Create a new rule](/policies/filtering/http-policies/policy-management#create-your-first-http-policy), or edit an existing one.
+1. [Create a new rule](/policies/filtering/http-policies), or edit an existing one.
 
 1. In the **Selector** drop-down menu, select the *Application* option. 
 
@@ -23,9 +23,9 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 1. In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
-  ![Applications](../../../static/documentation/policies/http-applications-operator-value.png)
+  ![Applications](../../../static/documentation/policies/http-applications-operator.png)
 
-1. Next, select an **[Action](#supported-actions-for-applications)** for your rule.
+1. Next, select an [**Action**](#supported-actions-for-applications) for your rule.
 
 1. Click **Create rule** to finalize your changes.
 
@@ -67,7 +67,7 @@ A full list of supported applications and their respective app types are availab
 
 Some applications are incompatible with TLS decryption for a variety of reasons, one of which is **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
 
-This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in oder to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
+This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
 Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/policies/filtering/http-policies/application-app-types), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action to *Do Not Inspect*.
 

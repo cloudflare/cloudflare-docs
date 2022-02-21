@@ -1,14 +1,13 @@
 ---
 order: 103
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Splunk
 
 This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/).
 
-
-### Prerequisites
+## Prerequisites
 
 Before sending your Cloudflare log data to Splunk, ensure that you:
 

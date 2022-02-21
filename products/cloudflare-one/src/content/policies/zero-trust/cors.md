@@ -17,8 +17,6 @@ This has implications for CORS configurations, including:
 
 To handle CORS headers for the policy protecting the path that requires CORS, navigate to the bottom of the _Create Access Policy_ window and expand the **Advanced settings** section and configure the settings.
 
-![Advanced Settings CORS section](../../static/documentation/policies/cors-config.png "Create Policy window Advanced Settings CORS Settings")
-
 ## Access and CORS
 
 <Aside type='Warning' header='Important'>

@@ -16,24 +16,26 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 ## 2. **Generate a short-lived certificate public key**.
 
-1. On the Teams dashboard, navigate to **Access > Service Auth**.
+1. On the Zero Trust dashboard, navigate to **Access > Service Auth**.
 
-2. In the drop-down, choose the application that represents the resource you secured in Step 1.
+2. In the dropdown, choose the application that represents the resource you secured in Step 1.
 
-    ![New Cert](../../static/documentation/applications/non-http/slc-create.png)
+    ![New Cert](../../static/documentation/applications/non-http/slc-dropdown.png)
 
 3. Click **Generate certificate**. A row will appear with a public key scoped to your application.
 
 4. Save the key or keep it somewhere convenient for configuring your server.
     You can return to copy this public key any time in the Service Auth dashboard.
 
-    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-detail.png)
+    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-key.png)
 
 ## 3. **Ensure Unix usernames match user SSO identities**
 
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure. Access matches based on the identity that precedes an email domain. **Unix usernames must match the identity preceding the email domain**.
 
 For example, if the user's identity in your Okta or GSuite provider is `jdoe@example.com` then Access will look to match that identity to the Unix user `jdoe`.
+
+You can create a user entry with duplicate `uid`, `gid`, and home directory to link an identity to an existing user with a different username. You will need to create a password for it separately and add it to the same groups to replicate permissions.
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
 
@@ -42,15 +44,15 @@ $ sudo adduser jdoe
 ```
 ## 4. **Save your public key**
 
-1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file in your system.
+1. Save the public key generated from the dashboard in Step 2 as a new `.pub` file to your local system.
 
-2. Use the following command to change directories to the SSH configuration directory on the machine:
+2. Use the following command to change directories to the SSH configuration directory on the remote target machine:
 
 ```sh
 $ cd /etc/ssh
 ```
 
-3. Once there, you can use the following command to both generate the file and open a text editor to input the public key.
+3. Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
 
 ```sh
 $ vim ca.pub
@@ -65,11 +67,11 @@ $ vim ca.pub
 
 ## 5. Modify your SSHD config
 
-Cloudflare Access requires two changes to the `sshd_config` file used on the target machine.
+Cloudflare Access requires two changes to the `sshd_config` file used on the remote target machine.
 
 The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
 
-1. While staying within the `/etc/ssh` directory, open the `sshd_config` file.
+1. While staying within the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
 
 ```sh
 $ vim /etc/ssh/sshd_config
@@ -97,7 +99,7 @@ The change above will tell your SSH configuration to use the public key saved in
 
 ## 6. Restart your SSH server
 
-Once you have modified your SSHD configuration, you still need to restart the SSH service on the machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
+Once you have modified your SSHD configuration, you still need to restart the SSH service on the remote machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
 ### Debian/Ubuntu
 

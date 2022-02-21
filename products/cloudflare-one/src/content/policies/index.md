@@ -5,10 +5,11 @@ pcx-content-type: navigation
 
 # Policies
 
-With Cloudflare for Teams, you can create: 
+With Cloudflare Zero Trust, you can create: 
 
-* [**Secure Web Gateway**](/policies/filtering) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/glossary#cloudflare-gateway)
-* [**Zero Trust**](/policies/zero-trust) policies to secure inbound traffic to your applications with [Cloudflare Access](/glossary#cloudflare-access)
+* [**Secure Web Gateway**](/policies/filtering) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/glossary#cloudflare-gateway).
+* [**Zero Trust**](/policies/zero-trust) policies to secure inbound traffic to your applications with [Cloudflare Access](/glossary#cloudflare-access).
+* [**Browser Isolation**](/policies/browser-isolation) policies to protect your organization's devices from threats on the Internet, and to prevent data loss.
 
 
 ## Related tutorials

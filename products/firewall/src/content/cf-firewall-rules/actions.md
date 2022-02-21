@@ -1,21 +1,28 @@
 ---
+title: Actions
 pcx-content-type: reference
 order: 220
 ---
 
-# Actions
+# Firewall Rules actions
 
 ## Overview
 
-Actions tell Cloudflare how to handle HTTP requests that have matched a firewall rule expression.
+The action of a Firewall Rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
-## Supported Actions
+## Supported actions
 
 The table below lists the actions available in Firewall Rules. These actions are listed in order of precedence. If the same request matches two different rules which have the same priority, precedence determines the action to take.
 
 For example, the _Allow_ action takes precedence over the _Block_ action. In a case where a request matches a rule with the _Allow_ action and another with the _Block_ action, precedence resolves the tie, and Cloudflare allows the request.
 
-The only exception to this behavior involves the _Log_ action. Unlike the other actions, _Log_ does not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ action, the second action will be triggered instead, even though _Log_ has precedence. Although Firewall Rules would not trigger the _Log_ action in this case, Firewall Analytics would still record the hit as an “additional match.”
+There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlike other actions, _Log_ and _Bypass_ do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the _Log_ or _Bypass_ action, the second action will be triggered instead, even though _Log_/_Bypass_ has precedence.
+
+<Aside type="note">
+
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
+
+</Aside>
 
 <TableWrap>
   <table style="width: 100%">
@@ -96,15 +103,14 @@ The only exception to this behavior involves the _Log_ action. Unlike the other 
         <td>3</td>
       </tr>
       <tr>
-        <td><em>Challenge (Captcha)</em></td>
+        <td><em>Legacy CAPTCHA</em></td>
         <td>
           <ul>
             <li>
-              Useful for ensuring that the visitor accessing the site is human,
-              not automated
+              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues CAPTCHAs only when necessary.
             </li>
             <li>
-              The client that made the request must pass a Captcha Challenge.
+              The client that made the request must pass a CAPTCHA challenge.
             </li>
             <li>
               If successful, Cloudflare accepts the matched request; otherwise,
@@ -113,6 +119,28 @@ The only exception to this behavior involves the _Log_ action. Unlike the other 
           </ul>
         </td>
         <td>4</td>
+      </tr>
+      <tr>
+        <td><em>Managed Challenge (Recommended)</em></td>
+        <td>
+          <ul>
+            <li>
+              Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
+            </li>
+            <li>
+              Depending on the characteristics of a request, Cloudflare will perform the following actions:
+              <ul>
+                <li>
+                  Show a non-interactive challenge page (similar to the current JS Challenge).
+                </li>
+                <li>
+                  Show a CAPTCHA challenge.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+        <td>5</td>
       </tr>
       <tr>
         <td><em>JS Challenge</em></td>
@@ -133,22 +161,14 @@ The only exception to this behavior involves the _Log_ action. Unlike the other 
             </li>
           </ul>
         </td>
-        <td>5</td>
+        <td>6</td>
       </tr>
       <tr>
         <td><em>Block</em></td>
         <td>Matching requests are denied access to the site.</td>
-        <td>6</td>
+        <td>7</td>
       </tr>
     </tbody>
 
   </table>
 </TableWrap>
-
-## Choosing Actions in the Rule Builder
-
-Choosing an action in the Cloudflare Expression Builder is simple. After naming a rule and building your expression, pick the appropriate option from the **Choose an action** drop-down list. In this example, the chosen action is _Block_:
-
-![Create Firewall Rule page](../images/firewall-rules-actions-1.png)
-
-For more on building firewall rules in the Firewall App, see [_Create, edit, and delete rules_](/cf-dashboard/create-edit-delete-rules/).

@@ -1,6 +1,6 @@
 ---
 order: 101
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Graylog
@@ -185,15 +185,13 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 <Aside type="note" header="Note">
 
-To get bot requests identified correctly, use only one Cloudflare
-Firewall Rule, configured with the action _Challenge (Captcha)_. To lear more, consult the [Cloudflare Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one Cloudflare Firewall Rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/).
+
 </Aside>
 
 Use this dashboard to:
 
-- Investigate bot activity on your website and prevent content scraping,
-  checkout fraud, spam registration, and other malicious activities
-- Use insight to tune Cloudflare to prevent bots from excessive usage and
-  abuse across websites, applications, and API endpoints
+- Investigate bot activity on your website and prevent content scraping, checkout fraud, spam registration, and other malicious activities.
+- Use insight to tune Cloudflare to prevent bots from excessive usage and abuse across websites, applications, and API endpoints.
 
 ![Graylog dashboard Cloudflare Bot Management](../../../static/images/graylog/dashboards/bot-management-cloudflare-dashboard-graylog.png)

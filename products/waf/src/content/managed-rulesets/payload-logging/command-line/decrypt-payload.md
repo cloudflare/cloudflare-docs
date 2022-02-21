@@ -19,37 +19,37 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
     ~ $ cd matched-data-cli
     ```
 
-1. Define two environment variables: one with your private key and another one with the encrypted payload:
+1. Create two files: one with your private key and another one with the encrypted payload:
 
     ```sh
-    ~/matched-data-cli $ PRIVATE_KEY=<PRIVATE_KEY>
+    ~/matched-data-cli $ printf "<PRIVATE_KEY>" > private_key.txt && chmod 400 private_key.txt
 
-    ~/matched-data-cli $ ENCRYPTED_PAYLOAD=<ENCRYPTED_PAYLOAD>
+    ~/matched-data-cli $ printf "<ENCRYPTED_PAYLOAD>" > encrypted_payload.txt
     ```
 
     Replace `<PRIVATE_KEY>` with your private key and `<ENCRYPTED_PAYLOAD>` with the encrypted payload.
 
+    Note: The first `printf` command will make your private key visible in your command history.
+
 1. Run the following command to decrypt the payload:
 
     ```sh
-    ~/matched-data-cli $ ./matched-data-cli decrypt -d $ENCRYPTED_PAYLOAD -k $PRIVATE_KEY
+    ~/matched-data-cli $ ./matched-data-cli decrypt -k private_key.txt encrypted_payload.txt
     ```
-
-    Do not replace any text in this command, since it uses the environment variables you defined.
 
 ## Example
 
-The following example defines two environment variables and runs the `matched-data-cli` tool to decrypt the payload in the `ENCRYPTED_PAYLOAD` environment variable:
+The following example creates two files — one with the private key and another one with the encrypted payload — and runs the `matched-data-cli` tool to decrypt the payload in the `encrypted_payload.txt` file:
 
 ```sh
 ~ $ cd matched-data-cli
 
-~/matched-data-cli $ PRIVATE_KEY=uBS5eBttHrqkdY41kbZPdvYnNz8Vj0TvKIUpjB1y/GA=
+~/matched-data-cli $ printf "uBS5eBttHrqkdY41kbZPdvYnNz8Vj0TvKIUpjB1y/GA=" > private_key.txt && chmod 400 private_key.txt
 
-~/matched-data-cli $ ENCRYPTED_PAYLOAD=A2nf3cy4G3XwychG1p/G/kpoYFtZ9pXi4R4NfJ8DrwJbTgAAAAAAAABqpfZoJeu5+nHnFLj8WdzFUglb5Ba+PNHcwq0Q7ATwmyX3WN8vRIxWyylFJ0SHcyVl0Dl03K8zjAd43MNTpWSu2UQ5MW7aFjn7w5DYbL0wiEOsmDQD9SDIbA80eAI7
+~/matched-data-cli $ printf "AzTY6FHajXYXuDMUte82wrd+1n5CEHPoydYiyd3FMg5IEQAAAAAAAAA0lOhGXBclw8pWU5jbbYuepSIJN5JohTtZekLliJBlVWk=" > encrypted_payload.txt
 
-~/matched-data-cli $ ./matched-data-cli decrypt -d $ENCRYPTED_PAYLOAD -k $PRIVATE_KEY
-{"http.request.version": "HTTP/1.1", "http.request.uri.path": "/cms/%0Aadmin"}
+~/matched-data-cli $ ./matched-data-cli decrypt -k private_key.txt encrypted_payload.txt
+test matched data
 ```
 
 <Aside type='note' header='Encryption formats'>

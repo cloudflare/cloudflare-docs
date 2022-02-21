@@ -2,14 +2,14 @@
 title: Overview
 order: 0
 type: overview
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 <ContentColumn>
 
 # Cloudflare Pages documentation
 
-Deploy your dynamic frontend applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
+Deploy your dynamic front-end applications using Cloudflare Pages. Pages are super fast, always up-to-date, and deployed directly from your GitHub account.
 
 Get started deploying your first site using our **Get started** guide below, or refer to our **Framework guides** page to explore the vast ecosystem of tools and frameworks that Pages supports.
 

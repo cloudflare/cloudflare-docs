@@ -6,11 +6,17 @@ pcx-content-type: reference
 
 # DNS records for load balancing
 
-When you [create a load balancer](/create-load-balancer-ui), we automatically create an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record (A, AAAA, CNAME).
+When you [create a load balancer](/how-to/create-load-balancer), Cloudflare automatically creates an LB DNS record for the specified **Hostname**. This functionality allows you to use a hostname with or without an existing DNS record.
+
+## Supported records
+
+For customers on non-Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, and **CNAME** records.
+
+For customers on Enterprise plans, Cloudflare supports load balancing for **A**, **AAAA**, **CNAME**, **MX**, **SRV**, and **TXT** records.
 
 ## Priority order
 
-For hostnames with existing A, AAAA, or CNAME records, the LB record takes precedence when it is more or equally specific:
+For hostnames with existing DNS records, the LB record takes precedence when it is more or equally specific:
 
 - **Scenario 1**:
 
@@ -32,7 +38,7 @@ For hostnames with existing A, AAAA, or CNAME records, the LB record takes prece
 
 <Aside type="note">
 
-This behavior only applies to A, AAAA, or CNAME records. An LB record does not take precedence over other types of DNS records (MX, TXT, etc.).
+This behavior only applies to [supported records](#supported-records) (determined by your plan type).
 
 </Aside>
 
@@ -45,14 +51,10 @@ When you disable a load balancer, requests to a specific hostname depend on your
 
 In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
 
-## Universal SSL
+## SSL/TLS coverage
 
-### Proxied domains
+Due to internal limitations, Cloudflare [Universal SSL certificates](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
 
-If you [changed your nameservers](https://support.cloudflare.com/hc/articles/205195708) to point to Cloudflare, you get an SSL certificate by default. Cloudflare has already issued an [SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) covering your root domain and up to one level of subdomain (`subdomain.example.com`).
+As a current workaround for a domain or first-level subdomain (`lb.example.com`), create a [proxied CNAME/A/AAAA record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that hostname. 
 
-### Non-proxied domains
-
-If your domain is using a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832) where traffic is not proxied through Cloudflare, you need to take additional actions to get an SSL certificate.
-
-To get an SSL certificate, [create a proxied DNS record](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) for the hostname associated with the load balancer. You may also want to add [Domain Control Validation (DCV)](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/changing-dcv-method) records to prevent any downtime.
+To get coverage for any deeper subdomain (`lb.dev.example.com`), purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager).

@@ -1,9 +1,15 @@
 ---
 order: 88
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Manage Logpush with Python
+
+<Aside type="note">
+
+The examples below are for zone-scoped data sets. Account-scoped data sets should use `<ACCOUNT_ID>` instead of `<ZONE_ID>`.
+
+</Aside>
 
 ```python
 import json
@@ -11,17 +17,17 @@ import requests
 
 url = "https://api.cloudflare.com/client/v4/"
 
-x_auth_email = "EMAIL_REDACTED"
-x_auth_key = "KEY_REDACTED"
+x_auth_email = "<EMAIL>"
+x_auth_key = "<API_KEY>"
 
-zone_id = "ZONE_REDACTED"
-destination_conf = "s3://BUCKET_REDACTED/logs?region=us-west-1"
+zone_id = "<ZONE_ID>"
+destination_conf = "s3://<BUCKET_NAME>/logs?region=us-west-1"
 
 logpush_url = url + "/zones/%s/logpush" % zone_id
 
 headers = {
-  'X-Auth-Email': x_auth_email,
-  'X-Auth-Key': x_auth_key,
+  'X-Auth-Email': <EMAIL>,
+  'X-Auth-Key': <API_KEY>,
   'Content-Type': 'application/json'
 }
 

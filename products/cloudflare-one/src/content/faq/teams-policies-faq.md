@@ -15,18 +15,18 @@ Similarly, the L7 firewall will evaluate Do Not Inspect policies before any subs
 
 ## Can I secure applications with a second-level subdomain URL?
 
-Yes. Ensure that your SSL certificates cover the first- and second-level subdomain. Most certificates only cover the first-level subdomain and not the second. This is true for most Cloudflare certificates. To cover a second-level subdomain with a CF certificate, select the Custom Hostnames option for Dedicated SSL.
+Yes. Ensure that your SSL certificates cover the first- and second-level subdomain. Most certificates only cover the first-level subdomain and not the second. This is true for most Cloudflare certificates. To cover a second-level subdomain with a CF certificate, create an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager/manage-certificates).
 Wildcard-based policies in Cloudflare Access only cover the level where they are applied. Add the wildcard policy to the left-most subdomain to be covered.
 
 ## Can I use regular expressions to build policies?
 
-You can use wildcards when setting up Zero Trust policies. Wildcards are useful when specifying application paths you want to protect. For more information, see our guide for [Using wildcards in subdomains and path](/applications/configure-apps/app-paths#using-wildcards-in-subdomains-and-paths).
+You can use wildcards when setting up Zero Trust policies. Wildcards are useful when specifying application paths you want to protect. For more information, see our guide for [Using wildcards in subdomains and paths](/policies/zero-trust/app-paths#using-wildcards-in-subdomains-and-paths).
 
 Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. For example, if you want to match multiple domains, you could use the pipe symbol (`|`) as an OR operator. In Gateway, you do not need to use an escape character (`\`) before the pipe symbol. Let's say you want to block requests to two hosts if either appears in a request header. A regex for such a rule would look like this:
 
 | Selector | Operator | Value | Action |
 | - | - | - | - | 
-| Host | Matches regex | `.*whispersystems.org | .*signal.org` | Block |
+| Host | Matches regex | <Code>.\*whispersystems.org &#124; .\*signal.org</Code> | Block |
 
 To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
 

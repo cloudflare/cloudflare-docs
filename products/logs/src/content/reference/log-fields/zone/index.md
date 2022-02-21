@@ -1,9 +1,9 @@
 ---
-title: Zone-scoped data sets
+title: Zone-scoped datasets
 order: 10
 pcx-content-type: navigation
 ---
 
-# Zone-scoped data sets
+# Zone-scoped datasets
 
 <DirectoryListing path="/reference/log-fields/zone"/>

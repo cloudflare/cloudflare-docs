@@ -100,7 +100,7 @@ Once saved, you can share the subdomain created and visitors can reach your loca
 
 Alternatively, you can create a DNS record from `cloudflared` directly. To do so, run the following command, replacing the `UUID` value and DNS record with your own equivalents.
 
-`$ cloudflared tunnel route 5157d321-5933-4b30-938b-d889ca87e11b new-website.mopacthedog.com`
+`$ cloudflared tunnel route dns 5157d321-5933-4b30-938b-d889ca87e11b new-website.mopacthedog.com`
 
 ## Optional: Add a Zero Trust policy
 
@@ -108,21 +108,19 @@ When you create the DNS record, any visitor will be able to view that new site. 
 
 Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-Once enabled, navigate to the `Applications` page in the Cloudflare for Teams dashboard. Click `Add an application`.
+1. Once enabled, navigate to the `Applications` page in the Zero Trust dashboard.
 
-![Applications Page](../static/secure-origin-connections/share-new-site/applications.png)
+1. Click **Add an application**.
 
-Choose self-hosted from the options presented.
+1. Choose **self-hosted** from the options presented.
 
-![App Picker](../static/secure-origin-connections/share-new-site/self-hosted.png)
+1. In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
-In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
+    ![App Picker](../static/secure-origin-connections/share-new-site/configure-app.png)
 
-![App Picker](../static/secure-origin-connections/share-new-site/configure-app.png)
+    You can then add rules to determine who can reach the site.
 
-You can then add rules to determine who can reach the site.
-
-![App Picker](../static/secure-origin-connections/share-new-site/add-rules.png)
+    ![App Picker](../static/secure-origin-connections/share-new-site/add-rules.png)
 
 ## Additional Materials
 

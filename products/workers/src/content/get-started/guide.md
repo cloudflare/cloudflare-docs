@@ -1,7 +1,7 @@
 ---
 order: 0
 title: "Guide"
-pcx-content-type: how-to
+pcx-content-type: get-started
 ---
 
 # Get started guide
@@ -34,7 +34,7 @@ The signup process will guide you through choosing a `*.workers.dev` subdomain a
 
 Installing `wrangler`, the Workers CLI, gives you the freedom to [`generate`](/cli-wrangler/commands#generate), [`configure`](/cli-wrangler/commands#configure), [`build`](/cli-wrangler/commands#build), [`preview`](/cli-wrangler/commands#preview), and [`publish`](/cli-wrangler/commands#publish) your Workers projects from the comfort of your development environment.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g @cloudflare/wrangler
@@ -49,14 +49,14 @@ Then run `wrangler --version` to confirm that the installation was successful:
 
 ```sh
 $ wrangler --version
-👷 ✨  wrangler 1.12.2
+👷 ✨  wrangler 1.19.4
 ```
 
 --------------------------------
 
 ## 3. Configure the Workers CLI
 
-With installation complete, `wrangler` will need access to a Cloudflare API token to manage Workers resources on your behalf.
+With installation complete, `wrangler` will need access to a Cloudflare OAuth token to manage Workers resources on your behalf.
 
 Run the command `wrangler login`, which will automate this process.
 
@@ -66,10 +66,10 @@ Wrangler will attempt to automatically open your web browser to complete the log
 $ wrangler login
 Allow Wrangler to open a page in your browser? [y/n]
 y
-💁  Opened a link in your default browser: https://dash.cloudflare.com/wrangler?key=girjeanvioajsdn...
+💁  Opened a link in your default browser: https://dash.cloudflare.com/oauth2/...
 ```
 
-Open the browser, log into your account, and select **Authorize Wrangler**. This will send an API Token to Wrangler so it can deploy your scripts to Cloudflare.
+Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
 --------------------------------
 
@@ -103,7 +103,7 @@ Refer to the [Quick Starts](/get-started/quickstarts) page to see a complete lis
 For example, to build a Workers project in TypeScript, run:
 
 ```sh
-~/ $ wrangler generate my-typescript-worker https://github.com/EverlastingBugstopper/worker-typescript-template
+~/ $ wrangler generate my-typescript-worker https://github.com/cloudflare/worker-typescript-template
 ```
 
 To start a project from your own code — rather than a starter — use [`wrangler init`](/cli-wrangler/commands#init).
@@ -121,7 +121,7 @@ Fundamentally, a Workers application consists of two parts:
 1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
 2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
-When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This [dispatches a `FetchEvent`](/learning/fetch-event-lifecycle) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
+When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/runtime-apis/fetch-event) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
 ```js
 ---
@@ -180,8 +180,8 @@ async function handleRequest(request) {
 
 It is common to route requests based on:
 
-- `request.method` — e.g. `GET` or `POST`.
-- `request.url` — e.g. filter based on query parameters or the pathname.
+- `request.method` — for example, `GET` or `POST`.
+- `request.url` — for example, filter based on query parameters or the pathname.
 - `request.headers` — filter based on specific headers.
 
 Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
@@ -293,9 +293,9 @@ account_id = "$yourAccountId"
 type = "webpack"
 ```
 
-By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (e.g., `my-worker.my-subdomain.workers.dev`).
+By default, this project will deploy to your `*.workers.dev` subdomain because the `workers_dev` value is set to `true`. When deploying to a `*.workers.dev` subdomain, the `name` field will be used as the secondary subdomain for the deployed script (for example, `my-worker.my-subdomain.workers.dev`).
 
-#### (Optional) Configure for deploying to a registered domain
+### (Optional) Configure for deploying to a registered domain
 
 To publish your application on a zone you own, and not a `*.workers.dev` subdomain, you can add a `route` key to your `wrangler.toml` file.
 
@@ -330,7 +330,7 @@ route = "example.com/*"
 
 The `route` key here is a [route pattern](/platform/routes), which can contain wildcards.
 
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (i.e., the request terminates in a Worker), you must add a DNS record. 
+If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record. 
 
 You may enter a placeholder `AAAA` record pointing to `100::`, which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666) but is not the only value allowed. For example, you may also use an `A` record pointed to `192.0.2.1` or a `CNAME` pointed to any resolvable target. 
 
@@ -351,13 +351,13 @@ header: Publish to workers.dev
 ~/my-worker $ wrangler publish
 ```
 
-<Aside type="note">
+<Aside type="note" header="Note">
 
-__Note:__ When pushing to your `*.workers.dev`subdomain for the first time, you may initially see [523 errors](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#523error) while DNS is propagating. It should work after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
 
 </Aside>
 
-#### (Optional) Publish your project to a registered domain
+### (Optional) Publish your project to a registered domain
 
 To deploy the production environment set in your `wrangler.toml` file in the [optional configuration step](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain), pass the `--env` flag to the command:
 
@@ -371,6 +371,38 @@ header: Publish to example.com
 For more information on environments, refer to the [Wrangler documentation](/cli-wrangler/configuration#environments).
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+
+--------------------------------
+
+## 9. Turn on/off usage notifications
+
+Cloudflare provides two kinds of usage notifications: Workers Weekly Summary and Workers Usage Report. They are automatically enabled when you create a new free account with Workers.
+
+Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
+
+![workers-weekly-summary](./media/workers-weekly-summary.png)
+
+Workers Usage Report is an on-demand usage notification that is triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
+
+<Aside type ="note" header="Workers Unbound">
+
+If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/learning/metrics-and-analytics#egress-data).
+
+</Aside>
+
+![workers-usage-report](./media/workers-usage-report.png)
+
+You can turn usage notifications on or off by going to **Account Home** > **Notifications**.
+
+![notifications-tab](./media/notifications-tab.png)
+
+Select **Add** and scroll down to Workers.
+
+![notifications-tab](./media/add-workers-notifications.png)
+
+After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
+
+![notifications-tab](./media/workers-overview-notifications.png)
 
 --------------------------------
 

@@ -15,8 +15,9 @@ Cloudflare’s Bot Management feature scores the likelihood that a request origi
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
-- `cf.bot_management.score` [dynamic field](/cf-firewall-language/fields/#dynamic-fields) to target requests from bots
+- `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
 - `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
+- `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint)
 
 ## Suggested rules
 
@@ -69,9 +70,26 @@ This example offers the same protection as the browser-only rule, but allows aut
 
 ### Adjust for mobile traffic
 
-Since Bot Management can be more sensitive to mobile traffic, you might want to set lower thresholds if your domain has a high volume of mobile traffic.
+Since Bot Management can be more sensitive to mobile traffic, you may want to add in additional logic to avoid blocking legitimate requests.
 
-The following rules would block definitely automated mobile traffic, but only challenge likely automated traffic.
+If you are handling requests from your own mobile application, you could potentially allow it based on its specific [JA3 fingerprint](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint).
+
+<table style='table-layout:fixed; width:100%'>
+  <thead>
+  <tr>
+    <th>Expression</th>
+    <th style='width:20%'>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+      <td><code>(cf.bot_management.ja3_hash eq df669e7ea913f1ac0c0cce9a201a2ec1)</code></td>
+      <td><em>Allow</em></td>
+    </tr>
+  </tbody>
+</table>
+
+Otherwise, you could set lower thresholds for mobile traffic. The following rules would block definitely automated mobile traffic and challenge likely automated traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -96,18 +114,19 @@ The following rules would block definitely automated mobile traffic, but only ch
 
 If your domain saw mobile, browser, and API traffic, you would want to arrange these example rules in the following order:
 - API
-- Mobile - Block
-- Mobile - Challenge
+- Mobile:
+  - If consistent JA3 fingerprint, set *Allow* rule.
+  - If not, put the *Block* rule first and then the *Challenge* rule.
 - Browser - Block
 
 ### Static resource protection
 
 Static resources are protected by default when you create **Firewall Rules** using `cf.bot_management.score`.
 
-To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, see [Static resource protection](https://developers.cloudflare.com/bots/about/static-resources).
+To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, refer to [Static resource protection](https://developers.cloudflare.com/bots/about/static-resources).
 
 ### Additional considerations
 
-From there, you could customize your Firewall Rules based on specific request paths(`/login` or `/signup`), common traffic patterns, or many other characteristics.
+From there, you could customize your Firewall Rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
-Just make sure to set aside time to review [Bot Analytics](https://developers.cloudflare.com/bots/bot-analytics/bm-subscription) and [Firewall Events](https://support.cloudflare.com/hc/articles/360024520152) to see if your rules need additional tuning.
+Just make sure to set aside time to review [Bot Analytics](https://developers.cloudflare.com/bots/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to check if your rules need additional tuning.

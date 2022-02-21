@@ -13,9 +13,6 @@ To set up OneLogin (SAML) as your identity provider:
 
 1. Log in to your OneLogin admin portal.
 1. Select  **Apps > Add Apps**.
-
-    ![OneLogin SAML Add Apps](../../static/documentation/identity/onelogin/onelogin-saml-1.png)
-
 1. Under **Find Applications**, search for **Cloudflare Access**.
 1. Select the result sponsored by **Cloudflare, Inc**.
 
@@ -23,17 +20,9 @@ To set up OneLogin (SAML) as your identity provider:
 
     You can customize the name or logo.
 
-1. Select **Save**.
-
-    You can change this information at any time.
-
-    ![OneLogin SAML Add Cloudflare Access app](../../static/documentation/identity/onelogin/onelogin-saml-3.png)
-
+1. Select **Save**. You can change this information at any time.
 1. Select the **Configuration** tab.
 1. In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/glossary#team-domain).
-
-    ![OneLogin SAML Application Configuration](../../static/documentation/identity/onelogin/onelogin-saml-4.png)
-
 1. Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
     ![OneLogin SAML Application Parameters](../../static/documentation/identity/onelogin/onelogin-saml-5.png)
@@ -50,20 +39,15 @@ To set up OneLogin (SAML) as your identity provider:
 
     ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
 1. Under **Login methods**, click **Add new**.
 
 1. Select SAML.
 
-1. Input the details from your OneLogin account in the fields.
+1. Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
 
     If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
-
-    <Aside>
-    We suggest that you name the attributes the same in both OneLogin and Cloudflare.
-
-    </Aside>
 
 1. Click **Save**.
 

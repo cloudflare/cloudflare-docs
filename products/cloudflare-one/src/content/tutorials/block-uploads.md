@@ -12,7 +12,7 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 **🗺️ This tutorial covers how to:**
 
 * Create a Gateway policy to block file uploads to a specific provider
-* Enroll devices into a Cloudflare for Teams account where this rule will be enforced
+* Enroll devices into a Zero Trust account where this rule will be enforced
 * Log file type upload attempts
 
 **⏲️ Time to complete:**
@@ -29,7 +29,7 @@ Name the policy and provide an optional description.
 
 ![Add Policy](../static/secure-web-gateway/block-uploads/name-policy.png)
 
-Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list containst the destinations used by Google Drive.
+Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list contains the destinations used by Google Drive.
 
 In the rule builder, select "Application" in the **Selector** field, "in" in the **Operator** field, and under "File Sharing" select "Google Drive" in the **Value** field.
 
@@ -67,15 +67,13 @@ Drag the `Allow` rule higher than the `Block` rule.
 
 The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/connections/connect-devices/warp/deployment) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Cloudflare for Teams Dashboard and select `Authentication`. Cloudflare for Teams will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
+Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/identity/idp-integration).
 
 ## Determine which devices can enroll
 
 Next, build a rule to decide which devices can enroll in your account. 
 
 1. Navigate to **Settings > Devices > Device enrollment**.
-
-    ![Device settings](../static/secure-web-gateway/block-football/device-enrollment-settings.png)
 
 1. Click **Manage**.
 
@@ -97,7 +95,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 * Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Teams Dashboard, by navigating to **Settings > Devices > Certificates**.
+* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -119,7 +117,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Teams Dashboard under **Settings > General**.
+1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

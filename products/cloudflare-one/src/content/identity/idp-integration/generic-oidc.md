@@ -7,6 +7,8 @@ pcx-content-type: how-to
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
+At the moment, Access does not support sending custom parameters to identity providers. If you need to send custom parameters to your identity provider, consider setting it up through [SAML](/identity/idp-integration/generic-saml).
+
 ## Setting up a generic OIDC
 
 To set up a generic OIDC:
@@ -28,7 +30,7 @@ To set up a generic OIDC:
 
     You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
 
-1. On the Teams dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 1. Under **Login methods**, click **Add new**.
 
 1. Choose **OpenID Connect** on the next page.

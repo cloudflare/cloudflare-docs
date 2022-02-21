@@ -1,7 +1,7 @@
 ---
 title: Origin CA certificates
 order: 3
-pcx-content-type: interim
+pcx-content-type: how-to
 ---
 
 # Managing Cloudflare Origin CA certificates

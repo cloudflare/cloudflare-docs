@@ -37,7 +37,7 @@ Start by [downloading and installing](/connections/connect-apps/install-and-setu
 Once installed, you can use the `access login` command in `cloudflared` to generate the JWT for a given application.
 
 ```sh
-$ cloudflare access login https://jira.company.com
+$ cloudflared access login https://jira.company.com
 ```
 
 `cloudflared` will print a URL that you can visit in a browser to authenticate to Cloudflare Access. If you are using a headless system, you can visit the URL in a different machine with a browser and the login will still return the JWT to `cloudflared`.

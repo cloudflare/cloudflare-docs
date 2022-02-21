@@ -12,37 +12,43 @@ jobs:
     outputs:
       developers-site: ${{ steps.filter.outputs.developers-site }}
       onedot: ${{ steps.filter.outputs.onedot }}
-      access: ${{ steps.filter.outputs.access }}
       analytics: ${{ steps.filter.outputs.analytics }}
       api: ${{ steps.filter.outputs.api }}
-      api-security: ${{ steps.filter.outputs.api-security }}
+      api-shield: ${{ steps.filter.outputs.api-shield }}
       automatic-platform-optimization: ${{ steps.filter.outputs.automatic-platform-optimization }}
       bots: ${{ steps.filter.outputs.bots }}
       byoip: ${{ steps.filter.outputs.byoip }}
       cache: ${{ steps.filter.outputs.cache }}
       client-ip-geolocation: ${{ steps.filter.outputs.client-ip-geolocation }}
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
+      ddos-protection: ${{ steps.filter.outputs.ddos-protection }}
+      dns: ${{ steps.filter.outputs.dns }}
       distributed-web: ${{ steps.filter.outputs.distributed-web }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
+      email-routing: ${{ steps.filter.outputs.email-routing }}
       events: ${{ steps.filter.outputs.events }}
       firewall: ${{ steps.filter.outputs.firewall }}
       fundamentals: ${{ steps.filter.outputs.fundamentals }}
       browser-isolation: ${{ steps.filter.outputs.browser-isolation }}
       http3: ${{ steps.filter.outputs.http3 }}
-      image-resizing: ${{ steps.filter.outputs.image-resizing }}
+      images: ${{ steps.filter.outputs.images }}
       load-balancing: ${{ steps.filter.outputs.load-balancing }}
       logs: ${{ steps.filter.outputs.logs }}
       magic-firewall: ${{ steps.filter.outputs.magic-firewall }}
       magic-transit: ${{ steps.filter.outputs.magic-transit }}
       magic-wan: ${{ steps.filter.outputs.magic-wan }}
+      network-error-logging: ${{ steps.filter.outputs.network-error-logging }}
       network-interconnect: ${{ steps.filter.outputs.network-interconnect }}
       pages: ${{ steps.filter.outputs.pages }}
       page-shield: ${{ steps.filter.outputs.page-shield }}
       partners: ${{ steps.filter.outputs.partners }}
+      r2: ${{ steps.filter.outputs.r2 }}
       railgun: ${{ steps.filter.outputs.railgun }}
       randomness-beacon: ${{ steps.filter.outputs.randomness-beacon }}
       registrar: ${{ steps.filter.outputs.registrar }}
       rules: ${{ steps.filter.outputs.rules }}
+      ruleset-engine: ${{ steps.filter.outputs.ruleset-engine }}
+      security-center: ${{ steps.filter.outputs.security-center }}
       spectrum: ${{ steps.filter.outputs.spectrum }}
       ssl: ${{ steps.filter.outputs.ssl }}
       stream: ${{ steps.filter.outputs.stream }}
@@ -53,6 +59,7 @@ jobs:
       waf: ${{ steps.filter.outputs.waf }}
       waiting-room: ${{ steps.filter.outputs.waiting-room }}
       workers: ${{ steps.filter.outputs.workers }}
+      zaraz: ${{ steps.filter.outputs.zaraz }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2.4.2
@@ -63,14 +70,12 @@ jobs:
               - 'developers.cloudflare.com/**'
             onedot:
               - 'products/1.1.1.1/**'
-            access:
-              - 'products/access/**'
             analytics:
               - 'products/analytics/**'
             api:
               - 'products/api/**'
-            api-security:
-              - 'products/api-security/**'
+            api-shield:
+              - 'products/api-shield/**'
             automatic-platform-optimization:
               - 'products/automatic-platform-optimization/**'
             bots:
@@ -83,10 +88,16 @@ jobs:
               - 'products/client-ip-geolocation/**'
             cloudflare-one:
               - 'products/cloudflare-one/**'
+            ddos-protection:
+              - 'products/ddos-protection/**'
+            dns:
+              - 'products/dns/**'
             distributed-web:
               - 'products/distributed-web/**'
             docs-engine:
               - 'products/docs-engine/**'
+            email-routing:
+              - 'products/email-routing/**'
             events:
               - 'products/events/**'
             firewall:
@@ -96,9 +107,9 @@ jobs:
             browser-isolation:
               - 'products/browser-isolation/**'
             http3:
-              - 'products/http3/**'
-            image-resizing:
-              - 'products/image-resizing/**'
+              - 'products/http3/**'            
+            images:
+              - 'products/images/**'
             load-balancing:
               - 'products/load-balancing/**'
             logs:
@@ -109,6 +120,8 @@ jobs:
               - 'products/magic-transit/**'
             magic-wan:
               - 'products/magic-wan/**'
+            network-error-logging:
+              - 'products/network-error-logging/**'  
             network-interconnect:
               - 'products/network-interconnect/**'
             pages:
@@ -117,6 +130,8 @@ jobs:
             - 'products/page-shield/**'
             partners:
             - 'products/partners/**'
+            r2:
+            - 'products/r2/**'
             railgun:
             - 'products/railgun/**'
             randomness-beacon:
@@ -125,6 +140,10 @@ jobs:
               - 'products/registrar/**'
             rules:
               - 'products/rules/**'
+            ruleset-engine:
+              - 'products/ruleset-engine/**'
+            security-center:
+              - 'products/security-center/**'
             spectrum:
               - 'products/spectrum/**'
             ssl:
@@ -145,6 +164,8 @@ jobs:
               - 'products/warp-client/**'
             workers:
               - 'products/workers/**'
+            zaraz:
+              - 'products/zaraz/**'
 
   deploy-developers-site:
     runs-on: ubuntu-latest
@@ -160,8 +181,8 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
-          npm run build
+          yarn install --pure-lockfile
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -169,14 +190,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "developers.cloudflare.com"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "developers.cloudflare.com"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-1-1-1-1:
     runs-on: ubuntu-latest
@@ -192,10 +213,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -203,46 +224,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/1.1.1.1"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/1.1.1.1"
           environment: "production"
-
-  deploy-access:
-    runs-on: ubuntu-latest
-    needs: changes
-    if: ${{ needs.changes.outputs.access == 'true' }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: products/access
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.2.0
-      - run: |
-          npm install
-          mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
-        env:
-          WORKERS_ENV: development
-      - name: Publish staging
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/access"
-          wranglerVersion: '1.13.0'
-      - name: Publish production
-        uses: cloudflare/wrangler-action@1.2.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/access"
-          environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-analytics:
     runs-on: ubuntu-latest
@@ -258,10 +247,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -269,14 +258,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/analytics"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-api:
     runs-on: ubuntu-latest
@@ -292,10 +281,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -303,48 +292,48 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/api"
           environment: "production"
-          wranglerVersion: '1.13.0'
-          
-  deploy-api-security:
+          wranglerVersion: "1.13.0"
+
+  deploy-api-shield:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.api-security == 'true' }}
+    if: ${{ needs.changes.outputs.api-shield == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/api-security
+        working-directory: products/api-shield
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/api-shield"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/api-security"
+          workingDirectory: "products/api-shield"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-automatic-platform-optimization:
     runs-on: ubuntu-latest
@@ -360,10 +349,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -371,14 +360,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/automatic-platform-optimization"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/automatic-platform-optimization"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-bots:
     runs-on: ubuntu-latest
@@ -394,10 +383,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -405,14 +394,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/bots"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/bots"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-byoip:
     runs-on: ubuntu-latest
@@ -428,10 +417,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -445,7 +434,7 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/byoip"
           environment: "production"
-          
+
   deploy-client-ip-geolocation:
     runs-on: ubuntu-latest
     needs: changes
@@ -460,10 +449,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -492,10 +481,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -524,10 +513,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -535,14 +524,82 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/cloudflare-one"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/cloudflare-one"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
+
+  deploy-dns:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.dns == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/dns
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/dns"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/dns"
+          environment: "production"
+          wranglerVersion: "1.13.0"
+
+  deploy-ddos-protection:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ddos-protection == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/ddos-protection
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/ddos-protection"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/ddos-protection"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-distributed-web:
     runs-on: ubuntu-latest
@@ -558,10 +615,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -569,14 +626,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/distributed-web"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-docs-engine:
     runs-on: ubuntu-latest
@@ -592,10 +649,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -603,14 +660,48 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/docs-engine"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
+
+  deploy-email-routing:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.email-routing == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/email-routing
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/email-routing"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/email-routing"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-events:
     runs-on: ubuntu-latest
@@ -626,10 +717,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -637,14 +728,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/events"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-firewall:
     runs-on: ubuntu-latest
@@ -660,10 +751,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -671,15 +762,15 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/firewall"
           environment: "production"
-          wranglerVersion: '1.13.0'
-  
+          wranglerVersion: "1.13.0"
+
   deploy-fundamentals:
     runs-on: ubuntu-latest
     needs: changes
@@ -694,10 +785,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -705,14 +796,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/fundamentals"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/fundamentals"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-browser-isolation:
     runs-on: ubuntu-latest
@@ -728,10 +819,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -739,14 +830,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/browser-isolation"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/browser-isolation"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-http3:
     runs-on: ubuntu-latest
@@ -762,10 +853,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -773,48 +864,48 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/http3"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
-  deploy-image-resizing:
+  deploy-images:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.image-resizing == 'true' }}
+    if: ${{ needs.changes.outputs.images == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/image-resizing
+        working-directory: products/images
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/image-resizing"
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/images"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/image-resizing"
+          workingDirectory: "products/images"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-load-balancing:
     runs-on: ubuntu-latest
@@ -830,10 +921,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -841,14 +932,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/load-balancing"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/load-balancing"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-logs:
     runs-on: ubuntu-latest
@@ -864,10 +955,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -875,14 +966,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/logs"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-magic-firewall:
     runs-on: ubuntu-latest
@@ -898,10 +989,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -909,14 +1000,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-firewall"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-firewall"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-magic-transit:
     runs-on: ubuntu-latest
@@ -932,10 +1023,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -943,14 +1034,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-transit"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-magic-wan:
     runs-on: ubuntu-latest
@@ -966,10 +1057,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -977,14 +1068,48 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-wan"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/magic-wan"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
+
+  deploy-network-error-logging:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.network-error-logging == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/network-error-logging
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/network-error-logging"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/network-error-logging"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-network-interconnect:
     runs-on: ubuntu-latest
@@ -1000,10 +1125,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1011,14 +1136,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/network-interconnect"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-pages:
     runs-on: ubuntu-latest
@@ -1034,25 +1159,25 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/pages'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/pages"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/pages'
-          environment: 'production'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/pages"
+          environment: "production"
+          wranglerVersion: "1.13.0"
       - name: Google Chat Notification
         uses: signalnerve/google-chat-notification@master
         with:
@@ -1060,7 +1185,7 @@ jobs:
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
-  
+
   deploy-page-shield:
     runs-on: ubuntu-latest
     needs: changes
@@ -1075,25 +1200,25 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/page-shield'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/page-shield"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/page-shield'
-          environment: 'production'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/page-shield"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-partners:
     runs-on: ubuntu-latest
@@ -1109,25 +1234,57 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/partners'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/partners"
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: 'products/partners'
-          environment: 'production'
-          wranglerVersion: '1.13.0'
+          workingDirectory: "products/partners"
+          environment: "production"
+          wranglerVersion: "1.13.0"
+        
+  deploy-r2:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.r2 == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/r2
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/r2"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/r2"
+          environment: "production"
 
   deploy-railgun:
     runs-on: ubuntu-latest
@@ -1143,10 +1300,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1175,10 +1332,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1186,14 +1343,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/randomness-beacon"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-registrar:
     runs-on: ubuntu-latest
@@ -1209,10 +1366,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1220,14 +1377,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/registrar"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-rules:
     runs-on: ubuntu-latest
@@ -1243,10 +1400,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1260,6 +1417,72 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/rules"
           environment: "production"
+
+  deploy-ruleset-engine:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.ruleset-engine == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/ruleset-engine
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install --pure-lockfile
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/ruleset-engine"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/ruleset-engine"
+          environment: "production"
+
+  deploy-security-center:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.security-center == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/security-center
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/security-center"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/security-center"
+          environment: "production"
+          wranglerVersion: "1.13.0"
 
   deploy-spectrum:
     runs-on: ubuntu-latest
@@ -1275,10 +1498,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1286,14 +1509,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/spectrum"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-ssl:
     runs-on: ubuntu-latest
@@ -1309,10 +1532,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1320,14 +1543,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ssl"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/ssl"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-stream:
     runs-on: ubuntu-latest
@@ -1343,10 +1566,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1354,14 +1577,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/stream"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-tenant:
     runs-on: ubuntu-latest
@@ -1377,10 +1600,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1388,14 +1611,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/tenant"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-terraform:
     runs-on: ubuntu-latest
@@ -1411,10 +1634,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1422,14 +1645,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/terraform"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-time-services:
     runs-on: ubuntu-latest
@@ -1445,10 +1668,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1456,14 +1679,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/time-services"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-waf:
     runs-on: ubuntu-latest
@@ -1479,10 +1702,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1490,14 +1713,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waf"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-waiting-room:
     runs-on: ubuntu-latest
@@ -1513,10 +1736,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1524,14 +1747,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waiting-room"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/waiting-room"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-warp-client:
     runs-on: ubuntu-latest
@@ -1547,10 +1770,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1558,14 +1781,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/warp-client"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
 
   deploy-workers:
     runs-on: ubuntu-latest
@@ -1581,10 +1804,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
         env:
           WORKERS_ENV: development
       - name: Publish staging
@@ -1592,14 +1815,14 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: "products/workers"
           environment: "production"
-          wranglerVersion: '1.13.0'
+          wranglerVersion: "1.13.0"
       - name: Google Chat Notification
         uses: signalnerve/google-chat-notification@master
         with:
@@ -1607,3 +1830,37 @@ jobs:
           url: ${{ secrets.WDC_TEAM_GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
+
+  deploy-zaraz:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.zaraz == 'true' }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: products/zaraz
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.2.0
+      - run: |
+          yarn install
+          mkdir .docs
+          yarn ghactionsbootstrap
+          yarn build
+        env:
+          WORKERS_ENV: development
+      - name: Publish staging
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          wranglerVersion: "1.13.0"
+      - name: Publish production
+        uses: cloudflare/wrangler-action@1.2.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: "products/zaraz"
+          environment: "production"
+          wranglerVersion: "1.13.0"

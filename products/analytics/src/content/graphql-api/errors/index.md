@@ -5,13 +5,13 @@ pcx-content-type: reference
 
 # Error responses
 
-The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON responses and will return familiar HTTP status codes (e.g., `404`, `500`, `504`). However, in contrast to the common REST approach, a `200` response can contain an error, conforming to the [GraphQL specification](https://graphql.github.io/graphql-spec/June2018/#sec-Errors).
+The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON responses, and will return familiar HTTP status codes (for example, `404`, `500`, `504`). However, in contrast to the common REST approach, a `200` response can contain an error, conforming to the [GraphQL specification](https://graphql.github.io/graphql-spec/June2018/#sec-Errors).
 
 All responses contain an `errors` array, which will be `null` if there are no errors, and include at least one error object if there was an error. Non-null error objects will contain the following fields:
 
-- `message`: a string describing the error
-- `path`: the nodes associated with the error, starting from the root. Note that the number included in the path array, e.g., `0` or `1`, specifies to which zone the error applies; `0` indicates the first zone in the list (or only zone, if only one is being queried).
-- `timestamp`: UTC datetime when the error occurred
+- `message`: a string describing the error.
+- `path`: the nodes associated with the error, starting from the root. Note that the number included in the path array, for example, `0` or `1`, specifies to which zone the error applies; `0` indicates the first zone in the list (or only zone, if only one is being queried).
+- `timestamp`: UTC datetime when the error occurred.
 
 ## Example
 ```json
@@ -36,14 +36,14 @@ All responses contain an `errors` array, which will be `null` if there are no er
 
 ## Common error types
 
-### Data set accessibility limits (entitlements) exceeded
+### Dataset accessibility limits (entitlements) exceeded
 
 Sample error messages:
 
 - "cannot request data older than..."
-- "number of fields can't be more than..."
+- "number of fields cannot be more than..."
 
-Indicate that the query exceeds what's allowed for the particular data set under your plan. _See [Data set accessibility](/graphql-api/limits/#data-set-accessibility)_ for details.
+These messages indicate that the query exceeds what is allowed for the particular dataset under your plan. Refer to [Data accessibility](/graphql-api/limits/#data-accessibility) for details.
 
 ### Parsing issues
 
@@ -52,7 +52,7 @@ Sample error messages:
 - "error parsing args..."
 - "scalar fields must have not selections"
 
-Indicate that the query can't be processed because it's malformed.
+These messages indicate that the query cannot be processed because it is malformed.
 
 ### Rate limits exceeded
 

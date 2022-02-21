@@ -7,38 +7,37 @@ pcx-content-type: concept
 
 ## Endpoints
 
-The table below summarizes the job operations available.
+The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/reference/log-fields) page.
 
-The `<zone_id>` argument is the zone id (hexadecimal string), which can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
-The `<job>` argument is the numeric job id. The `<dataset>` argument indicates the log category (such as `http_requests`, `spectrum_events`, or `firewall_events`).
+The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
+The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 <TableWrap>
 
 | Operation | Description | URL |
 |---|---|---|
-| POST | Create job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
-| GET | Retrieve job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| GET | Retrieve all jobs for all data sets | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs</em> |
-| GET | Retrieve all jobs for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/jobs</em> |
-| GET | Retrieve all available fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields</em> |
-| GET | Retrieve all default fields for a data set  | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/datasets/&lt;dataset&gt;/fields/default</em> |
-| PUT | Update job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| DELETE | Delete job | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/jobs/&lt;job&gt;</em> |
-| POST | Check whether destination exists | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/destination/exists</em> |
-| POST | Get ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership</em> |
-| POST | Validate ownership challenge | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/ownership/validate</em> |
-| POST | Validate log options | <em>https://api.cloudflare.com/client/v4/zones/&lt;zone_id&gt;/logpush/validate/origin</em> |
+| POST | Create job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-create-logpush-job) |
+| GET | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-logpush-job-details) |
+| GET | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs) |
+| GET | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs-for-a-dataset) |
+| GET | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields`](https://api.cloudflare.com/#logpush-jobs-fields) |
+| PUT | Update job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-update-logpush-job) |
+| DELETE | Delete job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-delete-logpush-job) |
+| POST | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/destination/exists`](https://api.cloudflare.com/#logpush-jobs-check-destination-exists) |
+| POST | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership`](https://api.cloudflare.com/#logpush-jobs-get-ownership-challenge) |
+| POST | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
+| POST | Validate log options | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
 
 </TableWrap>
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/get-started/logpush-configuration-api/examples/example-logpush-curl/).
+For concrete examples, see the tutorial [Manage Logpush with cURL](/reference/logpush-api-configuration/examples/example-logpush-curl).
 
 ## Connecting
 
 The Logpush API requires credentials like any other Cloudflare API.
 
 ```bash
-$ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" \
+$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" \
     'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
 ```
 
@@ -49,14 +48,14 @@ Before creating a new job, ownership of the destination must be proven.
 To issue an ownership challenge token to your destination:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
--H "X-Auth-Email: user@example.com" \ 
--H "X-Auth-Key: api_key" \
+$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
+-H "X-Auth-Email: <EMAIL>" \ 
+-H "X-Auth-Key: <API_KEY>" \
 -H "Content-Type: application/json" \ 
 --data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
 ```
 
-A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path if appropriate for your destination):
+A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
 
 ```bash
 {
@@ -80,13 +79,13 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 
 ## Destination
 
-You can specify your cloud service provider destination via the required `destination_conf` parameter.
+You can specify your cloud service provider destination via the required **destination_conf** parameter.
 
-* **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<region>[&sse=AES256]`
-* **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG-ENDPOINT-URL>?header_DD-API_KEY=<DATADOG-API-KEY>&service=<SERVICE>&host=<HOST>&ddsource=<SOURCE>`
+* **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
+* **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 * **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
 * **Microsoft Azure**: service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://<BlobContainerPath>/[dir]?<QueryString>`
-* **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK-ENDPOINT-URL>?channel=<SPLUNK-CHANNEL-ID>&insecure-skip-verify=<INSECURE-SKIP-VERIFY>&sourcetype=<SOURCE-TYPE>&header_Authorization=<SPLUNK-AUTH-TOKEN>`
+* **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
 * **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SumoEndpoint>/receiver/v1/http/<UniqueHTTPCollectorCode>`
 
 For S3, Google Cloud Storage, and Azure, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
@@ -104,7 +103,7 @@ To check if a destination is already in use:
 $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
 ```
 
-### Response
+Response
 
 ```bash
 {
@@ -117,45 +116,48 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
 }
 ```
 
-There can be only 1 job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
+There can be only one job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
 
 ## Job object
 
 <Aside type="info" header="Info">
 
-See a detailed description of the [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
+For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
 </Aside>
 
 ## Options
 
 Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
-Log options, such as fields or sampling rate, are configured in the `logpull_options` job parameter (*see [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)*). For example, the following query gets data from the Logpull API:
+Log options, such as fields or sampling rate, are configured in the **logpull_options** job parameter (refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)). For example, the following query gets data from the Logpull API:
 
 ```bash
 curl -sv \
-    -H'X-Auth-Email: <REDACTED>' \
-    -H'X-Auth-Key: <REDACTED>' \
+    -H'X-Auth-Email: <EMAIL>' \
+    -H'X-Auth-Key: <API_KEY>' \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 
-In Logpush, the *Logpull options* would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. *See [Logpull API parameters](/logpull/requesting-logs/#parameters)* for more info.
+In Logpush, the Logpull options would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. Refer to [Logpull API parameters](/logpull/requesting-logs/#parameters) for more info.
 
-If you don't change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
+If you do not change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
 
-The three options that you can customize are:
+The four options that you can customize are:
 
-1. Fields: See *[Log fields](../../../reference/log-fields/)* for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<zone_id>/logpush/datasets/<dataset>/fields/default`.
-1. Sampling rate: Value can range from 0.001 to 1.0 (inclusive). `sample=0.1` means return 10% (1 in 10) of all records.
-1. Timestamp format: The format in which timestamp fields will be returned. Value options: unixnano (default), unix, rfc3339.
+1. **Fields**: Refer to [Log fields](/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
+1. **Sampling rate**: Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`.
+1. **Timestamp format**: The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
+1. **Optional redaction for CVE-2021-44228**: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 
-To check if `logpull_options` is valid:
+**Note**: The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
+
+To check if **logpull_options** are valid:
 
 ```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339","dataset": "http_requests"}' | jq .
+$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true","dataset": "http_requests"}' | jq .
 ```
 
-### Response
+Response
 
 ```bash
 {

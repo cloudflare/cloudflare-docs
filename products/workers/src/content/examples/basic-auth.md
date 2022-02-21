@@ -1,7 +1,7 @@
 ---
 order: 1000
 type: example
-summary: Shows how to restrict access using the HTTP "Basic" schema.
+summary: Shows how to restrict access using the HTTP Basic schema.
 tags:
   - Security
   - Originless
@@ -9,7 +9,7 @@ tags:
 pcx-content-type: configuration
 ---
 
-# HTTP "Basic" Authentication
+# HTTP Basic Authentication
 
 <ContentColumn>
   <p>{props.frontmatter.summary}</p>
@@ -17,7 +17,7 @@ pcx-content-type: configuration
 
 ```js
 /**
- * Shows how to restrict access using the HTTP "Basic" schema.
+ * Shows how to restrict access using the HTTP Basic schema.
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
  * @see https://tools.ietf.org/html/rfc7617
  *
@@ -35,7 +35,7 @@ const BASIC_PASS = 'admin'
 async function handleRequest(request) {
   const { protocol, pathname } = new URL(request.url)
 
-  // In the case of a "Basic" authentication, the exchange 
+  // In the case of a Basic authentication, the exchange 
   // MUST happen over an HTTPS (TLS) connection to be secure.
   if ('https:' !== protocol || 'https' !== request.headers.get('x-forwarded-proto')) {
     throw new BadRequestException('Please use a HTTPS connection.')
@@ -112,7 +112,7 @@ function basicAuthentication(request) {
 
   const [scheme, encoded] = Authorization.split(' ')
 
-  // The Authorization header must start with "Basic", followed by a space.
+  // The Authorization header must start with Basic, followed by a space.
   if (!encoded || scheme !== 'Basic') {
     throw new BadRequestException('Malformed authorization header.')
   }
@@ -120,7 +120,8 @@ function basicAuthentication(request) {
   // Decodes the base64 value and performs unicode normalization.
   // @see https://datatracker.ietf.org/doc/html/rfc7613#section-3.3.2 (and #section-4.2.2)
   // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-  const decoded = atob(encoded).normalize()
+  const buffer = Uint8Array.from(atob(encoded), character => character.charCodeAt(0))
+  const decoded =  new TextDecoder().decode(buffer).normalize()
   
   // The username & password are split by the first colon.
   //=> example: "username:password"

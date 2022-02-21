@@ -12,6 +12,7 @@ The transfer of an expired domain may result in an additional year NOT being add
 </Aside>
 
 * Cloudflare does not currently support premium domains. Some registries designate a domain name as “premium” and charge higher wholesale rates for these domains.
+* Cloudflare does not currently support internationalized domain names (IDNs).
 * Domains that have a status of `serverHold`, `serverTransferProhibited`, `pendingDelete`, `pendingTransfer`, or `RedemptionPeriod` may not be transferred.
 * Domains that have a status of `clientTransferProhibited` (Transfer Lock) will show as available for transfer. However, the Transfer Lock must be removed at your current registrar before the transfer can begin.
 

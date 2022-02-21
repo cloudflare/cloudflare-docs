@@ -2,9 +2,11 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a React application
 
-React is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
+[React](https://reactjs.org/) is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
 In this guide, you will create a new React application and deploy it using Cloudflare Pages. You will use `create-react-app`, a batteries-included tool for generating new React applications.
 
@@ -15,6 +17,8 @@ Create a new project using `npx`, giving it the title `my-react-app` in your ter
 ```sh
 $ npx create-react-app my-react-app
 ```
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 

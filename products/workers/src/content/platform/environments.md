@@ -1,13 +1,12 @@
 ---
-order: 6
 pcx-content-type: concept
 ---
 
 # Environments
 
-<Aside>
+<Aside type="note">
 
-__Note__: You can only use environments with [wrangler](/cli-wrangler).
+You can only use environments with [Wrangler](/cli-wrangler).
 
 </Aside>
 
@@ -50,21 +49,6 @@ routes = ["example.com/*"]
 You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker and the behavior would not be clear.
 
 For this reason, Wrangler appends the environment name to the top-level name to publish a Worker script. For example, a Worker project named `my-worker` with an environment `[env.dev]` would become `my-worker-dev`.
-
-The layout of an example `[env.dev]` environment is displayed below:
-
-```toml
----
-filename: wrangler.toml
----
-name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
-
-[env.dev]
-name = "your-worker-dev"
-route = "your-custom-route"
-```
 
 The layout of an example `[env.dev]` environment is displayed below:
 
@@ -149,7 +133,7 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/cli-wrangler/configuration#keys) for each environment if you are deploying to a custom domain.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/cli-wrangler/configuration#keys) for each environment.
 
 ```toml
 ---
@@ -284,6 +268,12 @@ With this configuration, deploy each environment by attaching a `--env` or `-e` 
 
 --------------------------------
 
+<Aside type="note">
+
+When you create a Service or Environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information i.e `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
+
+</Aside>
+
 ## Custom webpack configurations
 
 You can specify different webpack configurations for different environments.
@@ -333,7 +323,7 @@ workers_dev = true
 type = "rust"
 ```
 
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env production` setting.
+With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
 
 ### Same name for multiple environments
 

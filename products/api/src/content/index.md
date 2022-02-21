@@ -1,6 +1,7 @@
 ---
 title: Quickstart
 order: 0
+pcx-content-type: tutorial
 ---
 
 # Getting access to the Cloudflare API

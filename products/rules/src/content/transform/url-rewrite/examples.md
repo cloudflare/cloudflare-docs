@@ -76,7 +76,7 @@ sort-by=date
 
 Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path does not change.
 
-![Rule configuration for query rewrite in the blog example](../../static/transform/use-case-blog.png)
+![Rule configuration for query rewrite in the blog example](../../images/transform/use-case-blog.png)
 
 ### Rewrite path of archived blog posts
 
@@ -165,11 +165,3 @@ regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$",
 </Example>
 
 The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
-
-<Aside type="warning" header="Notes">
-
-Use only the fields under [`http.request.uri`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#uri-argument-and-value-fields) and [`http.request.headers`](https://developers.cloudflare.com/firewall/cf-firewall-language/fields#http-header-fields) in rewrite expressions.
-
-The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, see [Transformation functions](https://developers.cloudflare.com/firewall/cf-firewall-language/functions#transformation-functions).
-
-</Aside>

@@ -1,6 +1,5 @@
 ---
 title: Purge cache
-order: 12
 pcx-content-type: concept
 ---
 
@@ -20,10 +19,10 @@ With purge by single-file, cached resources are immediately removed from the sto
 
 The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
 
-A single-file purge performed through your Cloudflare dashboard does not clear objects that contain:
+A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 - [Custom cache keys](/about/cache-keys)
 - [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
-- Any of these response headers:
+- Any of these request headers:
   - `X-Forwarded-Host`
   - `X-Host`
   - `X-Forwarded-Scheme`
@@ -67,7 +66,7 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 ### General workflow for cache-tags
 
 1. Add tags to the `Cache-Tag HTTP` response header from your origin web server for your web content, such as pages, static assets, etc.
-1. [Ensure your web traffic is proxied](https://support.cloudflare.com/hc/articles/205195708#h_815d1b1e-74cf-4a5f-b477-e441a76ac3fd) through Cloudflare.
+1. [Ensure your web traffic is proxied](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) through Cloudflare.
 1. Cloudflare associates the tags in the `Cache-Tag HTTP` header with the content being cached.
 1. Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host).
 1. Cloudflare forces a [cache miss](/about/default-cache-behavior#cloudflare-cache-responses) on content with the purged cache-tag.
@@ -148,7 +147,7 @@ There are several limitations regarding purge by prefix:
 - [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
 - URI query strings & fragments cannot purge by prefix: 
   - `www.example.com/foo?a=b` (query string)
-  - `www.exmaple.com/foo#bar` (fragment)
+  - `www.example.com/foo#bar` (fragment)
 
 <Aside type="warning" header="Warning">
 
@@ -185,3 +184,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
 -H "X-Auth-Email: user@example.com" 
 -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```
+
+## Purge varied images
+
+Purging varied images purges all content variants for that URL. This behavior occurs so that if an image changes, you can easily update the cache with a single purge request instead of trying to determine the potential number of out-of-date variants. The behavior is true regardless of purge type used, such as single file, tag, or hostname.

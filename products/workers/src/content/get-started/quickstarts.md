@@ -1,7 +1,7 @@
 ---
 type: overview
 order: 2
-pcx-content-type: getting-started
+pcx-content-type: get-started
 ---
 
 import WorkerStarter from "../../components/worker-starter"
@@ -57,9 +57,15 @@ $ wrangler generate <new-project-name> <github-repo-url>
 />
 
 <WorkerStarter
+  title="Miniflare Example Project"
+  description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment."
+  repo="mrbbot/miniflare-typescript-esbuild-jest"
+/>
+
+<WorkerStarter
   title="Sunder Starter (Typescript)"
-  description="A complete starter template using Sunder, TypeScript, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
-  repo="gzuidhof/sunder-worker-template"
+  description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
+  repo="sunderjs/sunder-worker-template"
 />
 
 --------------------------------
@@ -122,6 +128,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   title="Edge-side rendering - Vitedge"
   description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more."
   repo="frandiox/vitessedge-template"
+/>
+
+<WorkerStarter
+  title="REST API with Fauna"
+  description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
+  repo="fauna-labs/fauna-workers"
 />
 
 --------------------------------

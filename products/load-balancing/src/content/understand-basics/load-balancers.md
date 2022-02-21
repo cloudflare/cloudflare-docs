@@ -1,13 +1,13 @@
 ---
-order: 11
+order: 2
 pcx-content-type: concept
 ---
 
+import LBDefinition from "../_partials/_load-balancer-definition.md"
+
 # Load balancers
 
-## Overview
-
-A Cloudflare load balancer is identified by the DNS hostname whose traffic you want to balance (`www.example.com`). The load balancer defines which origin server pools to use, the order in which they should be used, and how to geographically distribute traffic among pools.
+<LBDefinition/>
 
 <Aside type="note">
 
@@ -19,38 +19,7 @@ For more background information on what load balancers are and how they work, ch
 
 ## Common configurations
 
-### Active - Passive Failover
-
-An **active-passive failover** sends traffic to the servers in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then redirects traffic to the passive pool.
-
-This setup ensures uninterrupted service and helps with planned outtages, but it might lead to slower traffic overall.
-
-To set up a load balancer with **active-passive failover**:
-1. Create a load balancer with two origin pools (`primary` and `secondary`).
-1. In the list of origin pools, set the following order:
-    1. `primary`
-    1. `secondary`
-1. For **Traffic Steering**, select [**Off**](/understand-basics/traffic-steering#off---standard-failover).
-
-With this setup, your load balancer will direct all traffic to `primary` until `primary` has fewer available origins than specified in its **Health Threshold**. Only then will your load balancer direct traffic to `secondary`.
-
-In the event that all pools are marked down, Cloudflare uses the **fallback pool**, which is the option of last resort for successfully sending traffic to an origin. Since the fallback pool is a last resort, its health is not taken into account, and Cloudflare reports  its status as **No Health**. You can select the fallback pool via the API or in the Cloudflare dashboard. For more on working with fallback pools, see [_Traffic steering_](/understand-basics/traffic-steering).
-
-### Active - Active Failover
-
-An **active-active failover** distributes traffic to servers in the same pool until the pool reaches its failure threshold (configurable). At the point of failure, your load balancer would then re-direct traffic to the **fallback pool**.
-
-This setup speeds up overall requests, but is more vulnerable to planned or unplanned outtages.
-
-To set up a load balancer with **active-active failover**, either:
-- Create a load balancer with a single origin pool (`primary`) with multiple origins (`origin-1` and `origin-2`) and set the same [**Weight**](/understand-basics/weighted-load-balancing) for each origin.
-- Create a load balancer with two origin pools (`primary` and `secondary`) and — for [**Traffic Steering**](/understand-basics/traffic-steering) — select any option except for **Off**. 
-
-<Aside type='note'>
-
-For more background reading on server failover and common configurations, see our <a href="https://www.cloudflare.com/learning/performance/what-is-server-failover/">Learning Center</a>.
-
-</Aside>
+For suggestions, refer to [Common load balancer configurations](/reference/common-configurations).  
 
 ## Load balancing and existing DNS records
 
@@ -70,9 +39,15 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ---
 
+## Create load balancers
+
+For step-by-step guidance, refer to [Create a load balancer](/how-to/create-load-balancer).
+
+---
+
 ## Properties
 
-For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in our API documentation.
+For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in the Cloudflare API documentation.
 
 ---
 
@@ -99,7 +74,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>GET</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers</Code>
+   <td><Code>/zones/:zone_id/load_balancers</Code>
    </td>
   </tr>
   <tr>
@@ -107,7 +82,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>DELETE</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   <tr>
@@ -115,7 +90,7 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>GET</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers</Code>
+   <td><Code>/zones/:zone_id/load_balancers</Code>
    </td>
   </tr>
   <tr>
@@ -123,15 +98,23 @@ The Cloudflare API supports the following commands for load balancers.
    </td>
    <td><Code>POST</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   <tr>
-   <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Update Load Balancer</a>
+   <td><a href="https://api.cloudflare.com/#load-balancers-patch-load-balancer">Overwrite specific properties</a>
+   </td>
+   <td><Code>PATCH</Code>
+   </td>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   </td>
+  </tr>
+  <tr>
+   <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Overwrite entire Load Balancer</a>
    </td>
    <td><Code>PUT</Code>
    </td>
-   <td><Code>/zones/:identifier/load_balancers/:identifier</Code>
+   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
    </td>
   </tr>
   </tbody>

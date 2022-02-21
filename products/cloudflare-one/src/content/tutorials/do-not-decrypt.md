@@ -7,11 +7,11 @@ pcx-content-type: tutorial
 
 # Skip inspection for groups of applications
 
-You can configure Cloudflare for Teams to skip inspection for certain groups of applications.
+You can configure Cloudflare Zero Trust to skip inspection for certain groups of applications.
 
-By default, Cloudflare Gateway creates a rule that includes the hostnames used by certain client applications, like Zoom or Apple's services, that rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gatway will cause errors when users visit those applications.
+By default, Cloudflare Gateway creates a rule that includes the hostnames used by certain client applications, like Zoom or Apple's services, that rely on certificate pinning. The TLS inspection performed by a service like Cloudflare Gateway will cause errors when users visit those applications.
 
-This tutorial skips inspection for additional appilcations beyond those in the list curated by Cloudflare.
+This tutorial skips inspection for additional applications beyond those in the list curated by Cloudflare.
 
 **🗺️ This walkthrough covers how to:**
 
@@ -29,21 +29,19 @@ This tutorial skips inspection for additional appilcations beyond those in the l
 
 ## Build the policy
 
-Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click **Add a rule**.
+1. Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click **Add a rule**.
 
-![Starter List](../static/secure-web-gateway/exempt-cert-pinning/starter-list.png)
+1. Name the policy and, optionally, provide a description.
 
-Name the policy and, optionally, provide a description.
+    ![Name Policy](../static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
 
-![Name Policy](../static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
+1. Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
 
-Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
+    ![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
 
-![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
+1. Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
 
-Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
-
-![Action](../static/secure-web-gateway/exempt-cert-pinning/select-action.png)
+    ![Action](../static/secure-web-gateway/exempt-cert-pinning/select-action.png)
 
 ## Change rule precedence
 

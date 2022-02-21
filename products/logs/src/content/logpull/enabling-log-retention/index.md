@@ -1,11 +1,11 @@
 ---
 order: 12
-pcx-content-type: interim
+pcx-content-type: reference
 ---
 
 # Enabling log retention
 
-By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (_see [Data retention period](/logpull/understanding-the-basics/#data-retention-period)_).
+By default, your HTTP request logs are not retained. When using the Logpull API for the first time, you will need to enable retention. You can also turn off retention at any time. Note that after retention is turned off, previously saved logs will be available until the retention period expires (refer to [Data retention period](/logpull/understanding-the-basics/#data-retention-period)).
 
 ## Endpoints
 
@@ -16,7 +16,7 @@ There are two endpoints for managing log retention:
 
 <Aside type="note" header="Note">
 
-To make a `POST` call, you must have a Cloudflare account role with "edit" permissions, such as Super Administrator, Administrator, or Log Share.
+To make a `POST` call, you must have a Cloudflare account role with `edit` permissions, such as Super Administrator, Administrator, or Log Share.
 </Aside>
 
 ## Example API requests using cURL
@@ -24,10 +24,10 @@ To make a `POST` call, you must have a Cloudflare account role with "edit" permi
 ### Check whether log retention is turned on:
 
 ```bash
-curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
 ```
 
-#### Response
+#### Response:
 
 ```json
 {
@@ -43,13 +43,13 @@ curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" GET "https://a
 ### Turn on log retention:
 
 ```bash
-curl -s -H "X-Auth-Email: <REDACTED>" -H "X-Auth-Key: <REDACTED>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
+curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}' | jq .
 ```
 
 #### Parameters
 * *flag* - can be either `true` or `false`
 
-#### Response
+#### Response:
 
 ```bash
 {

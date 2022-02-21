@@ -1,6 +1,6 @@
 ---
 order: 4
-pcx-content-type: interim
+pcx-content-type: how to
 ---
 
 # Adding captions
@@ -84,6 +84,12 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
   "messages": []
 }
 ```
+
+## Directly access captions
+
+To directly access the captions for your video, use the following URI and add in your video's `videoID` and `languageTag`.
+
+`videodelivery.net/<videoID>/caption/<languageTag>`
 
 ## Delete the captions
 

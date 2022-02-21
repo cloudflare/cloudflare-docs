@@ -13,7 +13,7 @@ In this tutorial we will configure AWS SSO with Access for SaaS. Cloudflare Acce
 
 For this tutorial, you will need:
     
-* A Cloudflare for Teams account
+* A Zero Trust account
 * An integrated IdP
 * Admin access to an AWS account
 
@@ -43,11 +43,11 @@ For this tutorial, you will need:
 
 ## Configure Cloudflare
 
-1. In a separate tab or window, open the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
+1. In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
 
 1. Select *SaaS* as the application type to begin creating a SaaS application.
 
-1. Copy the following fields from your AWS account and input them in the Cloudflare for Teams application configuration:
+1. Copy the following fields from your AWS account and input them in the Zero Trust application configuration:
 
     | AWS value | Cloudflare value |
     | ----- | ---- |

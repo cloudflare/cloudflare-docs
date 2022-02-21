@@ -10,19 +10,11 @@ Before you can begin using Magic WAN, verify that you meet Cloudflare's onboardi
 
 ## Use compatible tunnel endpoint routers
 
-Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic WAN, the routers at your GRE tunnel endpoints must:
+Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic WAN, the routers at your Anycast GRE or IPsec tunnel endpoints must:
 
-- Support GRE tunneling
+- Support Anycast GRE or IPsec tunnels
 - Allow configuration of at least one tunnel per Internet service provider (ISP)
 - Support maximum segment size (MSS) clamping
-
-## Draft Letter of Authorization
-
-Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa). The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. For an example, see the [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template).
-
-## Verify Internet Routing Registry entries
-
-To ensure that Magic WAN routes traffic to the correct autonomous systems (AS), verify that your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs). For guidance, see [_Verify IRR entries_](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
 
 ## Set maximum segment size
 
@@ -30,9 +22,9 @@ To ensure that Magic WAN routes traffic to the correct autonomous systems (AS), 
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare uses GRE tunnels to deliver packets from our edge to your locations, while Cloudflare Magic WAN encapsulates these packets, adding a new IP header and GRE protocol header.
+Cloudflare uses Anycast GRE or IPsec tunnels to deliver packets from our edge to your locations, while Cloudflare Magic WAN encapsulates these packets, adding a new IP header and GRE protocol header.
 
-To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your physical egress interfaces** (not the GRE tunnel interfaces):
+To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your physical egress interfaces** (not the Anycast GRE or IPsec tunnel interfaces):
 
 <table>
   <thead>

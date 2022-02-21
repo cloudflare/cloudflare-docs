@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 1
 pcx-content-type: reference
 ---
 
@@ -7,9 +7,15 @@ pcx-content-type: reference
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
+<Aside type='note'>
+
+Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your` mdm.xml` or `com.cloudflare.warp.plist` files).
+  
+  </Aside>
+
 ## Required for full Cloudflare One features
 
-For the vast majority of Cloudflare for Teams features to work, you need to specify a team name. Examples of Teams features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/connections/connect-browsers), and [device posture](/identity/devices).
+For the vast majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features depending on the team name are [HTTP policies](/policies/filtering/http-policies), [Browser Isolation](/policies/browser-isolation), and [device posture](/identity/devices).
 
 ### `organization`
 
@@ -42,11 +48,13 @@ This field is only required to enforce DNS policies when deploying the client in
 | ----- | -------- |
 | `service_mode` | string |
 
-**Description.** 	Allows you to choose the opertional mode of the client.
+**Description.** 	Allows you to choose the operational mode of the client.
 
 **Value:**
 - `1dot1` Gateway enforcement of DNS policies only through [DoH](/glossary#doh). All other traffic is handled by your devices default mechanisms
 - `warp`  [default value] All traffic sent through [Cloudflare Gateway](/glossary#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, or device posture.
+
+New service modes such as Proxy only are not supported as a value and must be configured in the Zero Trust dashboard.
 
 ### `onboarding`
 
@@ -111,7 +119,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 ## Authentication with service tokens
 
 <Aside> 
-  Devices that connect to Cloudflare for Teams with Service Token authentication are not subject to identity based rules.
+  Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity based rules.
 </Aside>
 
 Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/identity/service-auth/service-tokens).
@@ -125,7 +133,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | ----- | -------- |
 | `auth_client_id` | string |
 
-**Description.** The automatically genereated ID when you created your [Service Token](/identity/service-auth/service-tokens).
+**Description.** The automatically generated ID when you created your [Service Token](/identity/service-auth/service-tokens).
 
 **Value:** `Client ID` from your service token. 
 
@@ -135,7 +143,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 | ----- | -------- |
 | `auth_client_secret` | string |
 
-**Description.** The automatically genereated secret when you created your [Service Token](/identity/service-auth/service-tokens).
+**Description.** The automatically generated secret when you created your [Service Token](/identity/service-auth/service-tokens).
 
 **Value:** `Client Secret` from your service token. 
 

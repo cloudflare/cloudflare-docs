@@ -1,23 +1,22 @@
 ---
-title: About
-order: 1
+order: 2
 pcx-content-type: concept
 ---
 
-# About Cloudflare Waiting Room
+# About
 
 Cloudflare Waiting Room protects websites from surges in legitimate traffic that may otherwise bring an application down.
 
 ## Benefits
 
-Cloudflare Waiting Room benefits **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Waiting rooms protect **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
 Waiting Rooms also benefit **your visitors** by:
 - Keeping your application online and preventing them from reaching error pages.
 - Showing estimated wait times that are continuously updated.
 - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/reference/configuration-settings#session-duration).
 - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-- Appearing in your own [branding and style](../how-to/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
+- Appearing in your own [branding and style](/additional-options/customize-waiting-room), which enhances trust and lets you provide additional information as needed.
 
 ## How it works
 
@@ -38,16 +37,16 @@ The following customers have access to Cloudflare Waiting Room:
 - Those qualified under [Project Fair Shot](https://www.cloudflare.com/fair-shot/)
 - Business customers
 
-Access to certain features depends on a customer's [plan type](plans).
+Access to certain features depends on a customer's [plan type](/plans).
 
 ## Prerequisites
 
 * Cloudflare’s CDN is required to use the waiting room feature.
-* Configure a [proxied DNS record](https://support.cloudflare.com/hc/articles/360019093151) or a [proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
+* Configure a [proxied DNS record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) or a [proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
 * Visitors must enable cookies. Refer to [Waiting room cookie](/reference/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
 
 ## Get started
 
 To learn how to use Cloudflare Waiting Rooms, check out:
-- The [setup guide](../get-started)
-- Various [how-to guides](../how-to)
+- The [setup guide](/get-started)
+- Various [how-to guides](/how-to)

@@ -1,10 +1,9 @@
 ---
-title: Basics
-order: 10
+order: 3
 pcx-content-type: navigation
 ---
 
-# Basics of Cloudflare load balancers
+# Concepts
 
 Review the following topics to learn more about the basic concepts and components involved in Cloudflare Load Balancing.
 

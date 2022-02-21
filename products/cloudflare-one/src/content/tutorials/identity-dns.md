@@ -23,13 +23,13 @@ To apply these types of rules, you will need to deploy Cloudflare's agent on the
 
 1. [Add Gateway to your account](/setup)
 1. [Integrate your identity provider](/identity/idp-integration)
-1. [Enroll users in the Cloudflare for Teams agent](/connections/connect-devices/warp)
+1. [Enroll users in the Zero Trust agent](/connections/connect-devices/warp)
 
 ---
 
 ## Allow a team to reach social media
 
-Navigate to the Gateway section of the Cloudflare for Teams Dashboard and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
+Navigate to the Gateway section of the Zero Trust Dashboard and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
 
 ![Start Process](../static/secure-web-gateway/id-dns/start-policy.png)
 

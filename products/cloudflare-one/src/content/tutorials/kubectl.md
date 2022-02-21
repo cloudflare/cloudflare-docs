@@ -26,7 +26,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 ## Create a Zero Trust policy
 
-First, navigate to the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
+First, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) to create a new application. Select the `Applications` page from the sidebar. Click **Add application**.
 
 ![App List](../static/zero-trust-security/ssh/app-list.png)
 
@@ -113,7 +113,7 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/ingress).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/configuration-file/ingress).
 
 Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 

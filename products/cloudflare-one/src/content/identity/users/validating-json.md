@@ -50,17 +50,23 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 ## Programmatic verification
 
-<Aside>
+Before you start, click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
 
-<b>Before you start</b>
+* Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
 
-Click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
+* JWT Issuer: `https://<Your Team Domain>`
 
- Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
+    
+### Updating your Access signing keys
+    
+Cloudflare Access uses a certificate to sign responses between your identity provider, Cloudflare and the Access JWT. The signing key can be used to validate the Access JWT. If you want your identity provider to verify signed responses, you will need to provide the public key from your Access account. The public key can be found at [your team domain](/glossary#team-domain).
 
- JWT Issuer: `https://<Your Team Domain>`
+By default, the signing key used by Access rotates every 6 weeks. This means you will need to programmatically or manually update keys as they rotate. Previous keys are valid for 7 days after rotation to allow time for rotation.
 
-</Aside>
+For security or testing purposes, keys can be manually rotated using the [following API](https://api.cloudflare.com/#access-keys-configuration-update-access-keys-configuration).
+
+Keys can also be manually rotated using the [following API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
+
 
 ### Golang example
 
@@ -313,8 +319,6 @@ The response will be structured as JSON:
 Alternatively, organizations using SAML providers can specify attributes to be included directly inside of the Application Token sent to the origin.
 To do so, add the desired attributes in the SAML attributes section of the identity provider configuration. Cloudflare Access will attempt to add as many attributes as possible before capping the list to avoid size issues. Access attempts to add attributes in the order they are listed.
 
-## Support Additional OIDC Claims with your JWT
+## Support additional OIDC claims with your JWT
 
-Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under Optional Configurations.
-
-![jwt and oidc](../../static/documentation/identity/users/jwt-oidc.png)
+Access allows you to add additional OIDC claims (if supported by your IdP) to your JWT for enhanced verification. This can be configured for the OpenID authentication option under **Optional configurations**.

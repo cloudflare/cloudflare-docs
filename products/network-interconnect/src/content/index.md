@@ -1,7 +1,7 @@
 ---
-title: About
+title: Overview
 order: 0
-pcx-content-type: landing-page
+pcx-content-type: overview
 ---
 
 # Cloudflare Network Interconnect
@@ -26,7 +26,7 @@ Use CNI with other products in Cloudflare's suite for additional benefits.
   </thead>
   <tbody>
     <tr>
-      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/teams-access/">Access</a></span></td>
+      <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/teams/access/">Access</a></span></td>
       <td><p>Replaces corporate VPNs with the Cloudflare network.</p></td>
       <td><p>Securely connects your employees to your network no matter where they are when you bring your Multiprotocol Label Switching (MPLS) network to meet Cloudflare's.</p></td>
     </tr>

@@ -6,7 +6,7 @@ pcx-content-type: concept
 
 # Custom rules
 
-Use load balancing rules to customize the behavior of your [load balancer](/understand-basics/load-balancers). For example, create a rule that selects an [origin pool](/understand-basics/pools) based on the URI path of an HTTP request.
+Use load balancing rules to customize the behavior of your load balancer. For example, create a rule that selects an origin pool based on the URI path of an HTTP request.
 
 ## More details
 
@@ -22,4 +22,4 @@ By default, non-Enterprise customers have **one** Load Balancing rule **per doma
 
 ## Limitations
 
-At the moment, you cannot use load balancing rules with [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/load-balancer).
+At the moment, you cannot use load balancing rules with [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/about/load-balancer).

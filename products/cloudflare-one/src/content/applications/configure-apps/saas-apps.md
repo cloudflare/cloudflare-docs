@@ -9,9 +9,9 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 ![SaaS applications diagram](../../static/documentation/applications/diagram-saas.jpg)
 
-### 1. Add your application
+## 1. Add your application
 
-1. On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1. Click **Add an application**.
 
@@ -30,14 +30,14 @@ SaaS applications store this information in different ways.
 
   ![Custom SaaS statements](../../static/documentation/applications/custom-saas-statements.png)
 
+1. Scroll down to the **Application visibility** card.
 
-1. Scroll down to the **Application logo** card to choose a logo that will represent the application in the App Launcher and in the Applications page.
+    * Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link. 
+    * [Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
-  <Aside>
-  
-  If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
-
-  </Aside>
+    <Aside>
+    If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+    </Aside>
 
 1. Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
@@ -47,7 +47,7 @@ SaaS applications store this information in different ways.
 
 1. Click **Next**.
 
-### 2. Add a policy
+## 2. Add a policy
 You can now configure a policy to control who can access your app.
 
 To learn more about how policies work, read our [Policies](/policies/).
@@ -57,7 +57,7 @@ To learn more about how policies work, read our [Policies](/policies/).
 1. Specify one or more rules in the **Configure a rule** box. You can add as many include, exception, or require statements as needed.
 1. Click **Next** to add your application to Access.
 
-### 3. Integrate your SaaS application with Access
+## 3. Integrate your SaaS application with Access
 
 Before you begin using your application through Access, your last step is to integrate your SaaS application to Access.
 

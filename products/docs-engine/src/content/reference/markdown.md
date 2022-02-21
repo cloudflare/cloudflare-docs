@@ -1,6 +1,6 @@
 ---
 order: 2
-pcx-content-type: best-practices
+pcx-content-type: reference
 ---
 
 # Markdown

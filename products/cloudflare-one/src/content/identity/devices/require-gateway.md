@@ -10,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans | 
 
@@ -26,7 +26,7 @@ The process involves two steps:
 
 ## Set up a device posture check
 
-1. On your [Teams dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
+1. On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 
     ![Device Posture](../../static/documentation/identity/devices/device-posture.png)
 
@@ -39,7 +39,7 @@ You are now ready to start requiring Gateway for your Access applications.
 
 ## Add the check to a Zero Trust policy
 
-1. On the Teams dashboard, navigate to **Access > Applications**.
+1. On the Zero Trust dashboard, navigate to **Access > Applications**.
 
 1. Locate the application for which you want to require Gateway.
 

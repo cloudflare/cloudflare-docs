@@ -2,6 +2,8 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy an Astro site
 
 [Astro](https://astro.build) is a new static-site generator that allows you to build faster, SEO-friendly websites that use less client-side JavaScript code. By default, Astro builds websites that have zero JavaScript runtime code.
@@ -10,13 +12,13 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 <Aside type="warning">
 
-**Note:** At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
+At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
 
 </Aside>
 
 ## Setting up a new project
 
-Create a new project directory (e.g., `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
+Create a new project directory (for example, `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
 
 ```sh
 $ mkdir astro-site && cd astro-site
@@ -24,6 +26,8 @@ $ npm init astro
 ```
 
 During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
 
@@ -64,13 +68,13 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-<Aside type="warning">
+<Aside type="warning" header="Important">
 
-**Important:** Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
 </Aside>
 
-After completing configuration, click the **Save and Deploy** button.
+After completing configuration, select **Save and Deploy**.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
 

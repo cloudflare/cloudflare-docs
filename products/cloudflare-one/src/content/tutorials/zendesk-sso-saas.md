@@ -12,7 +12,7 @@ This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 <Aside>
 
 For this tutorial, you will need:
-* A Cloudflare for Teams Account
+* A Zero Trust Account
 * An integrated identity provider (IdP)
 * Admin access to your Zendesk account
 
@@ -26,11 +26,11 @@ For this tutorial, you will need:
 
 1. To begin, navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
-1. In a separate tab or window, open the [Cloudflare for Teams Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
+1. In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
 
 1. Select *SaaS* as the application type to begin creating a SaaS application.
 
-1. Copy the following fields from your Zendesk account and input them in the Cloudflare for Teams application configuration:
+1. Copy the following fields from your Zendesk account and input them in the Zero Trust application configuration:
     * **Assertion Consumer Service URL**. This URL appears as `SAML SSO URL` in your Zendesk account.
     * **Entity ID**: `https://yoursubdomain.zendesk.com`
     * **NameID**: Email
@@ -40,9 +40,7 @@ For this tutorial, you will need:
     * `<Cloudflare Firstname attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`
     * `<Cloudflare Last name attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
 
-    [Additional Attributes](http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname) can also be synchronized with Zendesk.
-
-    <Aside>
+    <Aside type='note'>
     This step is optional. If the name is not provided, Zendesk will [use the user’s email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v))
     </Aside>
 

@@ -1,24 +1,24 @@
 ---
-title: Frequently asked questions
+title: FAQ
 pcx-content-type: faq
 weight: 700
 ---
 
-# Frequently asked questions (FAQ)
+# Firewall Rules FAQ
 
 ## How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. See [_Entitlements_](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Entitlements](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
 
 ## Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. See [_Entitlements_](/cf-firewall-rules/#entitlements).
+No. The number of active rules is fixed based on customer plan. Refer to [Entitlements](/cf-firewall-rules/#entitlements).
 
 ## How are certain special and escaped characters handled?
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the **Visual Expression Editor** in the **Firewall Rules** UI does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the **Visual Expression Editor** does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
 
@@ -28,7 +28,7 @@ The following image illustrates how double quotes are automatically escaped to `
 
 If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
-Also, note that _http.request.method_ fields requires all-caps for method names.
+Also, note that `http.request.method` fields requires all-caps for method names.
 
 ## How can I use the Threat Score effectively?
 
@@ -47,19 +47,13 @@ Enabling a high threat score for sensitive areas, like comment form pages or log
 
 ### Caution about potentially blocking bots
 
-When you create a Firewall rule with a _Block_, _Challenge (Captcha)_, or _JS Challenge_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a Firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
-See [_How do I create an exception to exclude certain requests from being blocked or challenged?_](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged)
+Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
 ### Bots currently detected
 
-The table below lists known bots that Firewall Rules currently detects. When traffic comes from any of these bots, the _cf.client.bot_ field is set to true.
-
-<Aside type='note' header='Note'>
-
-Cloudflare plans to expand its list of known bots in the near future.
-
-</Aside>
+The table below lists a **sample** of known bots that Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
 
 <TableWrap>
 <table style="width: 100%">
@@ -279,7 +273,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>
         <em
           >(http.host eq "example.com" and cf.threat_score &gt; 5) and not
-          (ip.src in {'{1.2.3.4 4.3.2.110.20.30.0/24}'})</em
+          (ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'})</em
         >
       </td>
     </tr>
@@ -292,7 +286,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>Rule 1</td>
       <td>
         Action: <em>allow</em><br />
-        Expression: <em>ip.src in {'{1.2.3.4 4.3.2.110.20.30.0/24}'}</em>
+        Expression: <em>ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'}</em>
       </td>
     </tr>
     <tr>
@@ -377,13 +371,13 @@ In this case, Cloudflare considers the client details, including its IP address,
 
 ## Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The _Challenge (Captcha)_ and _JS Challenge_ actions only support HTML requests.
+No. The _Legacy CAPTCHA_ and _JS Challenge_ actions only support HTML requests.
 
 Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX.
 
-When an XHR or AJAX request triggers one of the _Challenge_ actions, the resulting request will have the following status code:
+When an XHR or AJAX request triggers one of the _Legacy CAPTCHA_ actions, the resulting request will have the following status code:
 
-* HTTP status code 403 for _Challenge (Captcha)_
+* HTTP status code 403 for _Legacy CAPTCHA_
 * HTTP status code 503 for _JS Challenge_
 
 Your application can use these status codes to handle unexpected challenges.
@@ -394,7 +388,7 @@ No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for o
 
 Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/cf-firewall-rules#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
-## Why would I not see any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+## Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 
 Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
 
@@ -406,10 +400,10 @@ There are multiple reasons for this:
 * Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 * Cloudflare receives a malformed challenge answer.
 
-## Why do I see matches for a Firewall Rule that was not supposed to match the request?
+## Why do I have matches for a Firewall Rule that was not supposed to match the request?
 
 Make sure you are looking at the correct request.
 
 Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Challenge (Captcha)_ or _JS Challenge_ and now that challenge was answered".
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Legacy CAPTCHA_ or _JS Challenge_ and now that challenge was answered".

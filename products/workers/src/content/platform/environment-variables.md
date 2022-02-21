@@ -1,5 +1,4 @@
 ---
-order: 7
 pcx-content-type: concept
 ---
 
@@ -7,11 +6,15 @@ pcx-content-type: concept
 
 In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
 
+## Environmental variables with module workers
+
+When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/runtime-apis/fetch-event#bindings-1).
+
 ## Environment variables via wrangler
 
 ### Adding environment variables via wrangler
 
-Environment variables are defined via the `[vars]` configuration in your `wranger.toml` file and are always plaintext values.
+Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
 
 ```toml
 ---
@@ -55,21 +58,21 @@ console.log(STRIPE_TOKEN);
 
 Secrets are defined by running [`wrangler secret put <NAME>`](/cli-wrangler/commands#secret) in your terminal, where `<NAME>` is the name of your binding. You may assign environment-specific secrets by re-running the command `wrangler secret put <NAME> -e` or `wrangler secret put <NAME> --env`. Keep a list of the secrets used in your code in your `wrangler.toml` file, like the example under `[secrets]`:
 
-    ```toml
-    ---
-    filename: wrangler.toml
-    ---
-    name = "my-worker-dev"
-    type = "javascript"
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+type = "javascript"
 
-    account_id = "<YOUR ACCOUNTID>"
-    workers_dev = true
+account_id = "<YOUR ACCOUNTID>"
+workers_dev = true
 
-    # [secrets]
-    # SPARKPOST_KEY
-    # GTOKEN_PRIVKEY
-    # GTOKEN_KID
-    ```
+# [secrets]
+# SPARKPOST_KEY
+# GTOKEN_PRIVKEY
+# GTOKEN_KID
+```
 
 <Aside type="warning">
 
@@ -117,7 +120,7 @@ To add environment variables, such as `vars` and `secret`:
 3. (Optional) To add multiple environment variables, select **Add variable**. 
 5. Select **Save** to implement your changes.
 
-![env variables dash](env_variables_dash.png)
+![env variables dash](./media/env_variables_dash.png)
 
 <Aside type="warning" header="Plaintext strings and secrets">
 
@@ -135,11 +138,11 @@ To add KV namespace bindings:
 4. Select **Add binding** to add multiple bindings. 
 5. When you are finished, select **Save** to implement your changes.
 
-![kv namespace bindings](kv_namespace_bindings.png)
+![kv namespace bindings](./media/kv_namespace_bindings.png)
 
 Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference. 
 
-![env vars secret](envvarssecret-detail-page.jpeg)
+![env vars secret](./media/envvarssecret-detail-page.jpeg)
 
 ## Comparing secrets and environment variables
 

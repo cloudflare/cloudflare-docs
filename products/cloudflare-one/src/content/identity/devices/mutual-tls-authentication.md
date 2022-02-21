@@ -9,16 +9,16 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Teams plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| All sytems | WARP not required | Enterprise plans | 
+| All systems | WARP not required | Enterprise plans | 
 
 </div>
 </details>
 
-<Aside type='warning' header='Important'>
+<Aside type='warning'>
 
-Adding mTLS to your application is only available on the [**Cloudflare enterprise plan**](https://www.cloudflare.com/en-gb/plans/enterprise/). For more information, please contact your Cloudflare customer success manager.
+Adding mTLS to your application using your own certificate authority (CA) is only available on the Cloudflare enterprise plan.
 
 </Aside>
 
@@ -35,11 +35,13 @@ Currently, mTLS does not work with HTTP3 traffic.
 
 <Aside type='warning' header='Important'>
 
-The mTLS certificate is used **only** to verify the client certificate. It does **not** control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
+The mTLS certificate is used only to verify the client certificate. It does not control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). 
+ 
+mTLS is checked on a per host basis. Access sets a flag for when a client certificate was presented and successfully completed mTLS authentication. However, to actually enforce mTLS, you need an Access policy in place, and Access policies are both host and path specific. If you want to enforce mTLS on a specific path, you need to make sure your Access policies are configured accordingly.
 
 </Aside>
 
-To enforce mTLS authentication from the [Teams dashboard](https://dash.teams.cloudflare.com):
+To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.teams.cloudflare.com):
 
 1. Navigate to **Access > Service Auth > Mutual TLS**.
 
@@ -235,7 +237,9 @@ You can use the Cloudflare PKI toolkit to generate a certificate revocation list
 1. Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
 
 2. Create the CRL with the following command.
+
 ```bash
 cfssl gencrl serials.txt ../mtls-test/ca.pem ../mtls-test/ca-key.pem | base64 -D > ca.crl
-You will need to add this to your server or enforce the revocation in a Cloudflare Worker.
 ```
+
+You will need to add this to your server or enforce the revocation in a Cloudflare Worker. An example Worker Script can be [found on the Cloudflare GitHub repository](https://github.com/cloudflare/access-crl-worker-template)

@@ -1,6 +1,5 @@
 ---
 title: Avoid web cache poisoning
-order: 18
 pcx-content-type: concept
 ---
 

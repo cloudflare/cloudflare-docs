@@ -24,7 +24,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 ## Create a Zero Trust policy
 
-1. Navigate to the Teams Dashboard to create a new application.
+1. Navigate to the Zero Trust Dashboard to create a new application.
 
 1. Select the `Applications` page from the sidebar.
 
@@ -156,7 +156,7 @@ You can now [configure the Tunnel](/connections/connect-apps/configuration) to s
 
 </Aside>
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/ingress).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/configuration-file/ingress).
 
 1. Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
@@ -184,8 +184,7 @@ We recommend that you run `cloudflared` [as a service](/connections/connect-apps
 
 ### Install `cloudflared` on the client machine
 
-Follow steps 1 through 3 above to download and install `cloudflared` on the client desktop that will connect to the remote desktop.
-`cloudflared` will need to be installed on each user device that will connect.
+[Download and install](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
 
 ### Connect to the remote desktop
 

@@ -1,21 +1,21 @@
 ---
 order: 40
-pcx-content-type: interim
+pcx-content-type: tutorial
 ---
 
 # Build your own Analytics dashboard
 
-In this example, we're going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone using a bit of HTML, JavaScript, AJAX, and chart.js.
+In this example, we are going to see how to use the GraphQL Analytics API to build your own dashboard. This tutorial walks you through building a simple line chart for your Cloudflare zone using HTML, JavaScript, AJAX, and chart.js.
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 
-The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You'll just need to enter your email address, API token, and your zone ID, and then push the `Fetch analytics` button.
+The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You will just need to enter your email address, API token, and your zone ID, and then click the **Fetch analytics** button. To download an example of a `CSS` file, you can click [here](../../../static/downloads/main.css).
 
 ## Code
 
 <Aside type='note' header='Note'>
 
-Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) does not set any CORS headers. Add an endpoint that can proxy the requests back to the API to avoid encountering CORS errors. In the following example, this hostname is referred to as **api.yourdomain.com**.
+Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) does not set any CORS headers. Add an endpoint that can proxy the requests back to the API to avoid encountering CORS errors. In the following example, this hostname is referred to as `api.yourdomain.com`.
 </Aside>
 
 ```html
@@ -24,10 +24,10 @@ Cloudflare's [GraphQL endpoint](https://api.cloudflare.com/client/v4/graphql) do
 
 <head>
     <title>Line Chart</title>
-    <script src="../../../../dist/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha512-60KwWtZOhzgr840mc57MV8JqDZHAws3w61mhK45KsYHmhyNFJKmfg4M7/s2Jsn4PgtQ4Uhr9xItS+HCbGTIRYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/dist/main.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>

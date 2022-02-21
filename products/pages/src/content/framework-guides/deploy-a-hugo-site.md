@@ -2,9 +2,11 @@
 pcx-content-type: how-to
 ---
 
+import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
 # Deploy a Hugo site
 
-Hugo is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
+[Hugo](https://gohugo.io/) is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
 
 In this guide, you will create a new Hugo application and deploy it using Cloudflare Pages. You will use the `hugo` CLI to create a new Hugo site.
 
@@ -37,12 +39,22 @@ If you use the package manager [Chocolatey](https://chocolatey.org/), run the `c
 ```sh
 $ choco install hugo --confirm
 ```
+### Windows (Scoop)
+
+If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
+
+```sh
+$ scoop install hugo 
+```
 
 ### Manual installation
 
 The Hugo GitHub repository contains pre-built versions of the Hugo command-line tool for various operating systems, which can be found on [the Releases page](https://github.com/gohugoio/hugo/releases).
 
 For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
+
+
+<TutorialsBeforeYouStart/>
 
 ## Creating a new project
 
@@ -187,7 +199,7 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 You can set the environment variable `HUGO_VERSION` under Settings to use a specific version of Hugo.
 
-For example, `HUGO_VERSION`: `0.81.0`
+For example, `HUGO_VERSION`: `0.92.1`
 
 ## Learn more
 

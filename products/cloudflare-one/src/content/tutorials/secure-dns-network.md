@@ -27,9 +27,8 @@ You can use Cloudflare Gateway to filter and log DNS queries from any device in 
 
 Before you begin, you'll need to follow [these instructions](/setup) to set up Cloudflare Gateway in your account. To perform DNS filtering, you need one of the following subscriptions:
 
-* Teams Free
-* Teams Standard
-* Gateway
+* Zero Trust Free
+* Zero Trust Standard
 
 ## Add a location
 
@@ -51,7 +50,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 ![Block Threats](../static/secure-web-gateway/secure-dns-network/block-threats.png)
 
-The policy will block security threats for any location in your Cloudflare for Teams deployment. If you want to only block the security risks selected above for the location created previously, add an `AND` rule to the selector. Choose `Location` and check the location to include in this policy.
+The policy will block security threats for any location in your Cloudflare Zero Trust deployment. If you want to only block the security risks selected above for the location created previously, add an `AND` rule to the selector. Choose `Location` and check the location to include in this policy.
 
 ![Include Location](../static/secure-web-gateway/secure-dns-network/include-location.png)
 
@@ -67,16 +66,16 @@ The rule will appear in your DNS policies list.
 
 You will need to make a one-time change to your router to use Cloudflare Gateway for DNS filtering for all devices in your network.
 
-Instructions to change your router's DNS settings are available in the Cloudflare for Teams dashboard. Navigate to the `Locations` page and expand the location you want to configure. Click `Setup instructions`.
+Instructions to change your router's DNS settings are available in the Zero Trust dashboard. Navigate to the `Locations` page and expand the location you want to configure. Click `Setup instructions`.
 
 ![Expand Location](../static/secure-web-gateway/secure-dns-network/expand-location.png)
 
-The default toggle presented will be `Router`. Follow the instructions on the page to change your router settings. Additional instructions are available for routers from specific manufacturers in the [documentation here](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/router).
+The default toggle presented will be `Router`. Follow the instructions on the page to change your router settings. Additional instructions are available for routers from specific manufacturers in the [1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1/setup-1.1.1.1/router).
 
 ![Expand Location](../static/secure-web-gateway/secure-dns-network/router-instructions.png)
 
 ## Review events
 
-Once configured, you can review DNS queries made from your network in the Gateway overview page.
+Once configured, you can review DNS queries made from your network in the **Analytics** > **Gateway** page.
 
-![Gateway Overview](../static/secure-web-gateway/secure-dns-network/gateway-overview.png)
+![Gateway Analytics](../static/secure-web-gateway/secure-dns-network/gateway-analytics.png)

@@ -1,9 +1,8 @@
 ---
-title: Waiting Room cookie
 pcx-content-type: reference
 ---
 
-# Cloudflare Waiting Room cookie
+# Cookies
 
 A waiting room only uses the `__cfwaitingroom` cookie when a visitor requests access to a host and path combination with an enabled and associated waiting room. When the waiting room is suspended, traffic goes to the origin and the `__cfwaitingroom` cookie is not created. The `__cfwaitingroom` cookie is encrypted and cookies copied to another device will not work.
 
@@ -26,7 +25,7 @@ The `__cfwaitingroom` cookie is used to:
 * Monitor each visitor's duration in the application to provide an [accurate entry time](#estimated-wait-time) to visitors queueing in the waiting room.
 * To allow re-entry for a period of time (specified by [session_duration](/reference/configuration-settings#session-duration)) without going back in the waiting room.
 
-## Estimated wait time
+## Estimated wait time (FIFO queueing method)
 
 When a visitor first enters the host and path combination for your waiting room, they receive the `__cfwaitingroom` cookie. That cookie contains a unique group ID, which corresponds to the minute your visitor entered the waiting room. Using this value, we can see how many visitors are in front of a specific group.
 

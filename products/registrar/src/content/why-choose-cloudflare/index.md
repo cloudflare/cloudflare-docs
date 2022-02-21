@@ -1,10 +1,10 @@
 ---
-order: 1
 title: Why choose Cloudflare
-pcx-content: concept
+order: 1
+pcx-content-type: concept
 ---
 
-# Domain registration
+# How domain registration works
 
 ![Domain Registration Overview](../static/domain-registry-process.png)
 

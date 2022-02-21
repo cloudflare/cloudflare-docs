@@ -24,7 +24,7 @@ This walkthrough extends a [previous guide](/tutorials/gitlab) that describes co
 
 ## Create a service token
 
-Navigate to the Access section of the Cloudflare for Teams dashboard and select the `Service Auth` page.
+Navigate to the Access section of the Zero Trust dashboard and select the `Service Auth` page.
 
 ![Service Auth Start](../static/zero-trust-security/ssh-tokens/service-auth-start.png)
 
@@ -42,7 +42,7 @@ For the purposes of this tutorial, the `Client Secret` is visible. However, real
 
 Next, find the application that should be available to services connecting with this token. This example uses a GitLab instance previously configured in another tutorial. You can also add this type of rule to an Access Group so that it can be reused or to a new application.
 
-Select the `Applications` page in the Access section of the Cloudflare for Teams dashboard. Locate the application and click **Edit**.
+Select the `Applications` page in the Access section of the Zero Trust dashboard. Locate the application and click **Edit**.
 
 ![App List](../static/zero-trust-security/ssh-tokens/app-list.png)
 
@@ -64,7 +64,7 @@ You should now see the `Service Auth` rule on a new line in the next page. Click
 
 ## Connect from `cloudflared`
 
-You can use the `Client ID` and `Client Secret` to connect to the resource over HTTP by using those values as [HTTP headers](https://developers.cloudflare.com/access/access-service-auth/service-tokens#connect-your-service-to-access). This example uses `cloudflared` to connect over SSH.
+You can use the `Client ID` and `Client Secret` to connect to the resource over HTTP by using those values as [HTTP headers](https://developers.cloudflare.com/cloudflare-one/identity/service-auth/service-tokens#connect-your-service-to-access). This example uses `cloudflared` to connect over SSH.
 
 The following `cloudflared` command is structured to use the Service Token generated to connect over SSH to the GitLab instance previously configured. The command relies on the [SSH configuration file being set](/tutorials/gitlab#configuring-ssh) to proxy the connection through `cloudflared`.
 

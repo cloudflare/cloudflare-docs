@@ -5,10 +5,10 @@ pcx-content-type: reference
 
 # Pagination
 
-Pagination--breaking up your query results into smaller parts--can be done using `limit`, `orderBy`, and filtering parameters. The GraphQL Analytics API does not support cursors for pagination.
+Pagination – breaking up your query results into smaller parts – can be done using `limit`, `orderBy`, and filtering parameters. The GraphQL Analytics API does not support cursors for pagination.
 
-- `limit` (integer) defines how many records to return
-- `orderBy` (string) defines the sort order for the data
+- `limit` (integer) defines how many records to return.
+- `orderBy` (string) defines the sort order for the data.
 
 ## Query pages without cursors
 
@@ -26,9 +26,10 @@ firewallEventsAdaptive (limit: 2, orderBy: [datetime_ASC, clientCountryName_ASC]
 }
 ```
 
-<Aside type="info" header="Info">
+<Aside type="note" header="Note">
 
 Specifying a sort order by date returns less specific results than specifying a sort order by date and country.
+
 </Aside>
 
 **Response**

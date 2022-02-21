@@ -6,7 +6,7 @@ pcx-content-type: configuration
 
 ## Background
 
-WebSockets allow you to communicate in real-time with your Cloudflare Workers serverless functions.
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions.
 
 ## Constructor
 
@@ -17,7 +17,7 @@ let websocketPair = new WebSocketPair()
 
 The WebSocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`. 
 
-These WebSockets are commonly referred to as `client` and `server`. In the below example, we combine `Object.values` and ES6 destructuring to retrieve the WebSockets as `client` and `server`:
+These WebSockets are commonly referred to as `client` and `server`. The below example combines `Object.values` and ES6 destructuring to retrieve the WebSockets as `client` and `server`:
 
 ```js
 let [client, server] = Object.values(new WebSocketPair())
@@ -51,9 +51,11 @@ let [client, server] = Object.values(new WebSocketPair())
 <Definitions>
 
 - `event` <TypeLink href="#events">WebSocketEvent</TypeLink>
-    - The WebSocket event (see "Events" below) to listen to.
+
+    - The WebSocket event (refer to [Events](/runtime-apis/websockets#events) to listen to.
 
 - <Code>callbackFunction(message<TypeLink href="#message">Message</TypeLink>) <Type>Function</Type></Code>
+
     - A function to be called when the Websocket responds to a specific event.
 
 </Definitions>
@@ -62,15 +64,18 @@ let [client, server] = Object.values(new WebSocketPair())
 
 - <Code>close(code<ParamType>number</ParamType>, reason<ParamType>string</ParamType>)</Code>
 
-Close the WebSocket connection.
+    Close the WebSocket connection.
 
 #### Parameters
 
 <Definitions>
 
 - <Code>code<ParamType>integer</ParamType></Code> <PropMeta>optional</PropMeta>
-  - An integer indicating the close code sent by the server. This should match an option from the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes">list of status codes</a> provided by the WebSocket spec.
+
+  - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
+
 - <Code>reason<ParamType>string</ParamType></Code> <PropMeta>optional</PropMeta>
+
   - A human-readable string indicating why the WebSocket connection was closed.
 
 </Definitions>
@@ -79,14 +84,15 @@ Close the WebSocket connection.
 
 - <Code>send(message<ParamType>string</ParamType>)</Code>
 
-Send a message to the other WebSocket in this WebSocket pair.
+    Send a message to the other WebSocket in this WebSocket pair.
 
 #### Parameters
 
 <Definitions>
 
 - <Code>message<ParamType>string</ParamType></Code>
-  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for instance, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
+
+  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
 </Definitions>
 
@@ -115,7 +121,7 @@ An event indicating a new message received from the client, including the data p
 
 </Definitions>
 
-## See also
+## Related resources
 
 - [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 - [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)

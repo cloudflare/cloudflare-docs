@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 1
 pcx-content-type: concept
 title: Zero Trust
 ---
@@ -18,7 +18,7 @@ The elements that make up a Zero Trust policy are:
 
 Actions let you define which *action* you want to take on a certain user or user group. Do you want to allow someone access to your applications? Do you want to deny someone access to your applications? Do you want to bypass certain users?
 
-The action is the first element you'll be asked to configure when you create a Zero Trust policy in the Teams Dash. You can set only one action per policy.
+The action is the first element you'll be asked to configure when you create an Access policy in the Zero Trust Dash. You can set only one action per policy.
 
 These are the action types you can choose from:
 
@@ -43,9 +43,9 @@ Rules work like logical operators. They help you define which categories of user
 
 These are the rule types you can choose from:
 
-| Include | Exclude | Require |
+| Include | Exclusion | Require |
 | ------- | ------- | ------- |
-| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclude criteria won’t be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+| The Include action is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclusion rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
 
 ## Criteria
 
@@ -93,7 +93,7 @@ Here is a list of all the criteria you can apply:
 
 ## Order of execution
 
-Policies are evaluted based on their action type and ordering. Bypass and Service Auth policies are evaluated first based on their order. Then, Block and Allow policies are evaluated based on their order.
+Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first based on their order. Then, Block and Allow policies are evaluated based on their order.
 
 For example, if you have a list of policies that reflects the following:
 
@@ -104,3 +104,9 @@ For example, if you have a list of policies that reflects the following:
 * Allow E
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
+
+<Aside type='warning'>
+
+    Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application. 
+    
+</Aside>

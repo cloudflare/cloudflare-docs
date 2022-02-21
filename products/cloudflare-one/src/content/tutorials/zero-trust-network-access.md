@@ -5,13 +5,13 @@ difficulty: Advanced
 pcx-content-type: tutorial
 ---
 
-# Configure Zero Trust Network Access in Cloudflare for Teams
+# Configure Zero Trust Network Access in Cloudflare Zero Trust
 
-In this tutorial we will cover how to configure a Zero Trust Private Network in Cloudflare for Teams by combining device enrollment rules, Cloudflare Tunnels, and identity-based network policies.
+In this tutorial we will cover how to configure a Zero Trust Private Network in Cloudflare Zero Trust by combining device enrollment rules, Cloudflare Tunnels, and identity-based network policies.
 
 **🗺️ This tutorial covers how to:**
 
-* Create device enrollment rules and connect a device to Teams
+* Create device enrollment rules and connect a device to Zero Trust
 * Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
 * Create identity-aware network policies
 
@@ -21,8 +21,8 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 <Aside header="Prerequisites">
 
-* A Teams account setup
-* The [WARP client](/connections/connect-devices/warp) installed on a device
+* A Zero Trust account setup
+* The [WARP client](/connections/connect-devices/warp) installed on a device and enrolled in a Zero Trust instance
 * Admin access to server with Internet access
 
 </Aside>
@@ -39,7 +39,7 @@ The first step is to enroll your devices into the WARP client. The WARP client i
 
  ![Device enrollment rules](../static/zero-trust-security/ztna/device-enrollment-rules.png)
  
-1. Enroll your device into your Teams account. To do that, click the WARP icon in your navigation bar, open **Settings** and select **Account > Login** with Cloudflare for Teams.
+1. Enroll your device into your Zero Trust account. To do that, click the WARP icon in your navigation bar, open **Settings** and select **Account > Login** with Cloudflare Zero Trust.
 
   ![WARP preferences](../static/zero-trust-security/ztna/warp-preferences.png)
 
@@ -99,14 +99,14 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1. Route the private IP addresses of your server’s network to Cloudflare, where:
 
-  * `10.0.0.0/10` is the IP or CIDR range of your server
+  * `10.0.0.0/8` is the IP or CIDR range of your server
   * `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
  
  ```sh
- $ cloudflared tunnel route ip add 10.0.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
+ $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
  ```
 
-1. Open your Teams dashboard to the **Gateway > Policies** tab.
+1. Open your Zero Trust dashboard to the **Gateway > Policies** tab.
 
    ![First network policy](../static/zero-trust-security/ztna/first-network-policy.png)
 
@@ -119,8 +119,6 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
    ![Create network policy](../static/zero-trust-security/ztna/create-network-policy.png)
 
 1. Verify that you do not have the desired target private IP range in the Split Tunnel configuration menu. This menu can be found at **Settings > Network > Split Tunnels**.
-
-   ![Split Tunnel](../static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/policies/filtering/network-policies).
 

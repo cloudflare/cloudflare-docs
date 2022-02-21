@@ -20,7 +20,7 @@ async function handleRequest(request) {
   const url = new URL(request.url)
 
   // Only use the path for the cache key, removing query strings
-  // and always store using HTTPS e.g. https://www.example.com/file-uri-here
+  // and always store using HTTPS, for example, https://www.example.com/file-uri-here
   const someCustomKey = `https://${url.hostname}${url.pathname}`
 
   let response = await fetch(request, {
@@ -56,24 +56,24 @@ addEventListener("fetch", event => {
 // Force Cloudflare to cache an asset
 fetch(event.request, { cf: { cacheEverything: true } })
 ```
-Setting the cache level to Cache Everything will override the default "cacheability" of the asset. For TTL, Cloudflare will still rely on headers set by the origin.
+Setting the cache level to **Cache Everything** will override the default cacheability of the asset. For time-to-live (TTL), Cloudflare will still rely on headers set by the origin.
 
 ## Custom cache keys
 
-<Aside>
+<Aside type="note">
 
-__Note:__ This feature is available only to enterprise customers.
+This feature is available only to Enterprise customers.
 
 </Aside>
 
-A request's cache key is what determines if two requests are "the same" for caching purposes. If a request has the same cache key as some previous request, then we can serve the same cached response for both. For more about cache keys see Using Custom Cache Keys support article.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](https://developers.cloudflare.com/cache/how-to/create-cache-keys/index.d425772ab3.html) documentation.
 
 ```js
 // Set cache key for this request to "some-string".
 fetch(event.request, { cf: { cacheKey: "some-string" } })
 ```
 
-Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you'd like different URLs to be treated as if they were the same for caching purposes. For example, say your web site content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you use a Worker to randomly balance between the two. However, you don't want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
+Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you may like different URLs to be treated as if they were the same for caching purposes. For example, if your website content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you can use a Worker to randomly balance between the two. However, you do not want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
 
 ```js
 addEventListener("fetch", (event) => {
@@ -94,13 +94,13 @@ addEventListener("fetch", (event) => {
 })
 ```
 
-Remember, Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (e.g. belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
+Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
 
 ## Override based on origin response code
 
-<Aside>
+<Aside type="note">
 
-__Note:__ This feature is available only to enterprise customers.
+This feature is available only to Enterprise customers.
 
 </Aside>
 
@@ -112,21 +112,6 @@ fetch(request, {
 })
 ```
 
-This option is a version of the cacheTtl feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin.
-
-### TTL interpretation
-
-<Definitions>
-
-- __Positive values__
-  - Indicate in seconds how long Cloudflare should cache the asset for.
-
-- __`0`__
-  - The asset will get cached but expire immediately (revalidate from origin every time).
-
-- __`-1` or any negative value__
-  - will instruct Cloudflare not to cache at all.
-
-</Definitions>
+This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/runtime-apis/request#requestinitcfproperties).
 
 </ContentColumn>
