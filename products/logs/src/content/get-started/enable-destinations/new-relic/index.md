@@ -60,7 +60,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 * **destination_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
 
-  * `<NEWRELIC_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
+  * `<NR_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
   * `<NR_LICENSE_KEY>`: This key can be found on the New Relic dashboard and it can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
   * `format`: The format is `cloudflare`.
 
