@@ -24,7 +24,11 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 By default, Cloudflare evaluates Firewall Rules in **list order**, where rules are evaluated in the order they appear in the Firewall Rules **Rules List**. List ordering is convenient when working with small numbers of rules because you can manage their order by dragging and dropping them into position. However, as the number of rules grows, managing rules in list order becomes difficult. This is where priority order comes into play.
 
-When **priority ordering** is enabled, Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. In this case, only the action of the rule with the highest precedence is executed, unless that action is _Log_ or _Bypass_ (refer to [Firewall Rules actions](/cf-firewall-rules/actions#supported-actions) for details). If both the priority and action are the same, the UI order determines which rule takes priority. Priority ordering makes it a lot easier to manage large numbers of Firewall Rules, and once the number of rules passes 200, Cloudflare requires it.
+When **priority ordering** is enabled, Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. In this case, only the action of the rule with the highest precedence is executed, unless that action is _Log_ or _Bypass_ (refer to [Firewall Rules actions](/cf-firewall-rules/actions#supported-actions) for details). 
+
+If there are multiple firewall rules with the same action and priority, they are effectively *all* executed, with the exception of logs (only one block rule will generate log events).  If there are multiple bypass rules with the same action, anything bypassed by any of those rules will be bypassed.
+
+Priority ordering makes it a lot easier to manage large numbers of Firewall Rules, and once the number of rules passes 200, Cloudflare requires it.
 
 ## Managing rule evaluation by list order
 
