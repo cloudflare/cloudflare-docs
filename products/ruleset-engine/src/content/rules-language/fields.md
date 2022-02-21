@@ -704,8 +704,8 @@ The Cloudflare Rules language supports these URI argument and value fields:
 <table>
   <thead>
     <tr>
-      <td style="width: 50%;"><strong>Field Name</strong></td>
-      <td><strong>Description</strong></td>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -795,10 +795,13 @@ The Rules language includes fields that represent properties of HTTP request hea
 The Cloudflare Rules language supports these HTTP header fields:
 
 <table>
+  <thead>
    <tr>
-      <td><strong>Field Name</strong></td>
-      <td style="width: 50%;"><strong>Description</strong></td>
-   </tr>
+      <th>Field Name</th>
+      <th style="width: 50%;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
    <tr id="field-http-request-headers">
       <td valign="top"><code>http.request.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
@@ -899,6 +902,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
       </td>
    </tr>
+  </tbody>
 </table>
 
 ## HTTP request body fields
@@ -924,9 +928,8 @@ The Cloudflare Rules language supports these HTTP body fields:
 <table>
   <thead>
     <tr>
-      <td style="width: 50%;"><strong>Field Name</strong></td>
-      <td><strong>Description</strong>
-      </td>
+      <th style="width: 50%;">Field Name</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1036,10 +1039,13 @@ You can only use HTTP response header fields in [HTTP Response Header Modificati
 The Cloudflare Rules language supports these HTTP response header fields:
 
 <table>
+  <thead>
    <tr>
-      <td><strong>Field Name</strong></td>
-      <td style="width: 50%;"><strong>Description</strong></td>
+      <th>Field Name</th>
+      <th style="width: 50%;">Description</th>
    </tr>
+  </thead>
+  <tbody>
    <tr id="field-http-response-headers">
       <td valign="top"><code>http.response.headers</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
@@ -1112,6 +1118,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
          </p>
       </td>
    </tr>
+  </tbody>
 </table>
 
 ---
