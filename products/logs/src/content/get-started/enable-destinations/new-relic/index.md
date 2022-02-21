@@ -124,7 +124,7 @@ Response:
 
 ### 2. Enable (update) a job
 
-To enable a job, make a PUT request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
+To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
 
 Example request using cURL:
 
