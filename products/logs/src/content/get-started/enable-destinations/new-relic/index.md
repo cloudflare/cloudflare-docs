@@ -144,7 +144,7 @@ Response:
    "messages" : [],
    "result" : {
       "dataset" : "http_requests",
-      "destination_conf" : "https://log-api.newrelic.com/log/v1?Api-Key=735071bcaf3d3367fc0c12d6898b356832c0NRAL&format=cloudflare",
+      "destination_conf" : "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare",
       "enabled" : true,
       "error_message" : null,
       "frequency" : "high",
