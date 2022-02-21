@@ -51,3 +51,6 @@ Here is a list of possible causes:
 * **Your policy is not assigned to a location.** If your policy is not assigned to a location and you send a DNS query from that location, Gateway will not apply that policy. Assign a policy to a location to make sure the desired policy is applied when you send a DNS query from that location.
 
 * **Your DoH endpoint is not a Gateway location**. Browsers can be configured to use any DoH endpoint. If you chose to configure DoH directly in your browser, make sure that the DoH  endpoint is a Gateway location. 
+
+## What is policy 5ca54fe7-c825-44b6-a464-873b685fe735?
+We disable inspection on requests to the cloudflareclient.com API in order to prevent a user from being able to put their settings into inoperable state.
