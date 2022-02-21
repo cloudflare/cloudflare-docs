@@ -45,7 +45,7 @@ The Cloudflare Rules language supports these standard fields:
     </tr>
   </thead>
   <tbody>
-   <tr>
+   <tr id="field-http-cookie">
       <td valign="top"><code>http.cookie</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the entire cookie as a string.</p>
@@ -54,7 +54,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-host">
       <td valign="top"><code>http.host</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the host name used in the full request URI.
@@ -84,7 +84,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-method">
       <td valign="top"><code>http.request.method</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the HTTP method, returned as a string of uppercase characters.
@@ -94,7 +94,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-cookies">
       <td valign="top"><code>http.request.cookies</code><br /><Type>Map&lt;String&gt;&lt;Array&gt;</Type></td>
       <td>
          <p>Represents the <code class="InlineCode">Cookie</code> HTTP header associated with a request as a Map (associative array).
@@ -110,7 +110,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-timestamp-sec">
       <td valign="top"><code>http.request.timestamp.sec</code><br /><Type>Integer</Type></td>
       <td>
          <p>Represents the timestamp when Cloudflare received the request, expressed as Unix time in seconds. This value is 10 digits long.
@@ -124,7 +124,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-timestamp-msec">
       <td valign="top"><code>http.request.timestamp.msec</code><br /><Type>Integer</Type></td>
       <td>
          <p>Represents the millisecond when Cloudflare received the request, between 0 and 999.
@@ -135,8 +135,8 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">857</code>
          </p>
       </td>
-   </tr>
-   <tr id="field-http-request-uri">
+    </tr>
+    <tr id="field-http-request-uri">
       <td valign="top"><code>http.request.uri</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the URI path and query string of the request.
@@ -166,7 +166,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-user-agent">
       <td valign="top"><code>http.user_agent</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the HTTP user agent, a request header that contains a characteristic string to allow identification of the client operating system and web browser.
@@ -176,7 +176,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-request-version">
       <td valign="top"><code>http.request.version</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the version of the HTTP protocol used. Use this field when you require different checks for different versions.
@@ -189,7 +189,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-x-forwarded-for">
       <td valign="top"><code>http.x_forwarded_for</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the full <code class="InlineCode">X-Forwarded-For</code> HTTP header.
@@ -199,7 +199,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-src">
       <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
       <td>
          <p> Represents the client TCP IP address, which may be adjusted to reflect the actual address of the client by using, for example, HTTP headers such as
@@ -210,7 +210,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-src-lat">
       <td valign="top"><code>ip.src.lat</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the latitude associated with the client IP address.
@@ -221,7 +221,7 @@ The Cloudflare Rules language supports these standard fields:
          <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-src-lon">
       <td valign="top"><code>ip.src.lon</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the longitude associated with the client IP address.
@@ -232,7 +232,7 @@ The Cloudflare Rules language supports these standard fields:
          <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-src-city">
       <td valign="top"><code>ip.src.city</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the city associated with the client IP address.
@@ -243,14 +243,14 @@ The Cloudflare Rules language supports these standard fields:
          <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-asnum">
       <td valign="top"><code>ip.geoip.asnum</code><br /><Type>Number</Type></td>
       <td>
          <p>Represents the 16- or 32-bit integer representing the Autonomous System (AS) number associated with client IP address.
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-continent">
       <td valign="top"><code>ip.geoip.continent</code><br /><Type>String</Type></td>
       <td>
          Represents the continent code associated with client IP address:
@@ -266,7 +266,7 @@ The Cloudflare Rules language supports these standard fields:
           </ul>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-country">
       <td valign="top"><code>ip.geoip.country</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the 2-letter country code in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.
@@ -277,7 +277,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-subdivision-1-iso-code">
       <td valign="top"><code>ip.geoip.subdivision_1_iso_code</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the ISO 3166-2 code for the first level region associated with the IP address. When the actual value is not available, this field contains an empty string.</p>
@@ -287,7 +287,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-subdivision-2-iso-code">
       <td valign="top"><code>ip.geoip.subdivision_2_iso_code</code><br /><Type>String</Type></td>
       <td>
          <p>Represents the ISO 3166-2 code for the second level region associated with the IP address. When the actual value is not available, this field contains an empty string.
@@ -299,7 +299,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
@@ -342,7 +342,7 @@ The Cloudflare Rules language supports these standard fields:
       </p>
     </td>
   </tr>
-  <tr>
+  <tr id="field-ssl">
       <td valign="top"><code>ssl</code><br /><Type>Boolean</Type></td>
       <td>
          <p>Returns<code class="InlineCode">true</code> when the HTTP connection to the client is encrypted.
