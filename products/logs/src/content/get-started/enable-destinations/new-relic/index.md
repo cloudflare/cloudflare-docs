@@ -12,16 +12,13 @@ Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflar
 
 ## Manage via the Cloudflare dashboard
 
-Enable Logpush to New Relic via the dashboard.
-
-To enable the Cloudflare Logpush service:
+To enable a Logpush service to New Relic via the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select the Enterprise domain you want to use with Logpush.
 
+1. Go to **Analytics** > **Logs**. 
 
-1. Go to **Analytics** > **Logs**.
-
-1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+1. Click **Connect a service** and a modal window will open.
 
 1. Select the dataset you want to push to a storage service.
 
@@ -33,7 +30,9 @@ To enable the Cloudflare Logpush service:
 
     ```bash
     US: "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"
-
+    ````
+    
+    ```bash
     EU: "https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"
     ````
 
@@ -71,13 +70,15 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
     ```bash
     US: "https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"
+    ````
 
+    ```bash
     EU: "https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"
     ````
 
 * **max_upload_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
 
-* **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size.  It is recommended to set this to 5,000,000.
+* **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
 
 * **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields) for the full list of supported datasets.
 
