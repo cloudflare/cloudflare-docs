@@ -27,7 +27,7 @@ You do not need to map ecommerce events to triggers. Zaraz will automatically fo
 After enabling ecommerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
 
 ```js
-zaraz.ecommerce('Event Name', {parameters})
+zaraz.ecommerce('<EVENT_NAME>', {<PARAMETERS>})
 ```
 
 To create a complete tracking event, you need to add an event and one or more parameters. Below you will find a list of events and parameters Zaraz supports, as well as code examples for different types of events. 
