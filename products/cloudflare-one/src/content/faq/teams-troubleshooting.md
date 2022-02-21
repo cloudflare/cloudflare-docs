@@ -121,3 +121,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 ## Connections are timing out after 270 seconds
 
 Cloudflare enforces a 270-second idle timeout on TCP connections that go through the gateway. If there is no new data to send in either direction for 270 seconds, the proxy process drops the connection. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever.
+
+## Error "0: Bad Request. Please create a ca for application." when attempting to connect to SSH with a short-lived certificate
+
+This error will appear if a certificate has not been generated for the Access application you are attempting to connect to. Generate a certificate for the application on the Access Service Auth SSH page, by clicking on "Generate certificate"
