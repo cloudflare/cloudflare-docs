@@ -77,7 +77,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 * **max_upload_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
 
-* **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5MB. Note that there is no way to set a minimum file size; this means that log files may be much smaller than this batch size.  It is recommended to set this to 5,000,000.
+* **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size.  It is recommended to set this to 5,000,000.
 
 * **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields) for the full list of supported datasets.
 
