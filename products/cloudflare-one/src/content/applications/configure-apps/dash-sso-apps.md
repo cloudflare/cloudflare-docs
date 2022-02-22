@@ -9,6 +9,8 @@ By adding a **Dashboard SSO application** to your Cloudflare Zero Trust account,
 
 Once you have configured SSO, every user that wants to login with Dashboard SSO will need to also be a Cloudflare user. If the account does not exist, the request will not forward the authentication phase to the Identity Provider. Refer to [Managing Cloudflare account access](https://support.cloudflare.com/hc/articles/200167946#12345680) for information on adding users to your Cloudflare account.
 
+Identity Provider initiated logins are not supported. As a workaround, a bookmark to https://dash.cloudflare.com/login can be implemented in your Identity Provider dashboard.
+
 <Aside type="note">
 
 Dashboard SSO is only available to Enterprise customers.
