@@ -25,9 +25,9 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 <Aside type="note">
 
-[Cloudflare for Teams](https://www.cloudflare.com/teams/) supports customizable [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
-If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/teams/).
+If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 
 </Aside>
 
