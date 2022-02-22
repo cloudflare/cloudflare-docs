@@ -68,6 +68,12 @@ $ wrangler generate <new-project-name> <github-repo-url>
   repo="sunderjs/sunder-worker-template"
 />
 
+<WorkerStarter
+  title="Hono Starter"
+  description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare."
+  repo="yusukebe/hono-minimal"
+/>
+
 --------------------------------
 
 ## Frameworks
