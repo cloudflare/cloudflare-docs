@@ -53,7 +53,7 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 - <Code>crypto.randomUUID()</Code>
   <Type>string</Type>
 
-  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt)
+  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
 
 </Definitions>
 
