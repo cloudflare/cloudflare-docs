@@ -84,6 +84,10 @@ An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
+## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
+
+This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/identity/users/short-lived-certificates).
+
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
 These mobile applications may use [certificate pinning](/glossary#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
