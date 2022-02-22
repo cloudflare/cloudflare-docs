@@ -6,7 +6,15 @@ weight: 5
 
 # Managed Rulesets
 
-Cloudflare provides the following Managed Rulesets in the WAF:
+The WAF Managed Rulesets are pre-configured rulesets that provide immediate protection against:
+* Zero-day vulnerabilities
+* Top-10 attack techniques
+* Use of stolen/exposed credentials
+* Extraction of sensitive data
+
+These rulesets are regularly updated. You can adjust the behavior of managed rules, choosing from several possible actions.
+
+Cloudflare provides the following WAF Managed Rulesets:
 
 {{<table-wrap>}}<table style="table-layout:fixed; width:100%;">
 
