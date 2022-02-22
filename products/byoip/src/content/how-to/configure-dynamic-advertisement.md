@@ -11,6 +11,14 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 </Aside>
 
+## Before you start (Magic Transit customers only)
+
+If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from _Withdrawn_ to _Advertised_), make sure you disable the [Advanced TCP Protection Managed Ruleset](https://developers.cloudflare.com/ddos-protection/managed-rulesets/tcp-protection) first.
+
+After enabling the prefix advertisement or advertising a new prefix, do the following:
+1. Ensure that the traffic is being successfully routed via the Cloudflare network. Check the Network Analytics dashboard or [use `traceroute`](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) to analyze the path IP packets are taking.
+1. Re-enable Advanced TCP Protection.
+
 ## Configure dynamic advertisement via the dashboard
 
 To configure IP prefix assignment from your Cloudflare account home, use the **Status** drop-down list in the **IP Prefixes** dialog, as outlined below.
