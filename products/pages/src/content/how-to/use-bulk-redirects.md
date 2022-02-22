@@ -4,7 +4,7 @@ pcx-content-type: how-to
 
 # Handle redirects with Bulk Redirects
 
-In this tutorial, you will learn how to use Bulk redirects to handle redirects that are over `100` on your Pages projects. Since [`_redirects`](https://developers.cloudflare.com/pages/platform/limits#redirects) have a maximum of 100 redirects. 
+In this tutorial, you will learn how to use Bulk redirects to handle redirects if you need more than the 100 supported by the [`_redirects`](https://developers.cloudflare.com/pages/platform/limits#redirects) file. 
 
 To do this, go to the [project overview dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) and under **Rules** select Bulk Redirects. 
 
