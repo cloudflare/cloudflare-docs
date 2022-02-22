@@ -32,7 +32,7 @@ It is recommended that you use Monitoring mode before Mitigation mode.
 
 ### Mitigation mode
 
-In this mode, the Advanced TCP Protection ruleset will challenge new connection initiation requests (SYN, SYN-ACK) if they exceed the provisioned thresholds. Furthermore, out-of-state packets that do not belong to existing (and tracked) TCP connections will be dropped if their rates exceed the threshold. If you are using Mitigation mode, you should disable Advanced TCP Protection before making changes to the Advanced TCP Protection ruleset or when advertising prefixes.
+In this mode, the Advanced TCP Protection ruleset will challenge new connection initiation requests (SYN, SYN-ACK) if they exceed the provisioned thresholds. Furthermore, out-of-state packets that do not belong to existing (and tracked) TCP connections will be dropped if their rates exceed the threshold. If you are using Mitigation mode, you should disable Advanced TCP Protection before making changes to the Advanced TCP Protection ruleset or before advertising prefixes.
 
 When you enable Advanced TCP Protection in Mitigation mode without first using Monitoring mode, the protection system will have a **learning period** of 10 minutes to learn the existing flows. After this period, the Mitigation mode will start and the protection system will apply any required mitigation actions to incoming packets, according to the current configuration.
 
