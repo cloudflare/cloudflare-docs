@@ -28,28 +28,27 @@ In the **Build & Deploy** tab, find the **Build settings** panel, which will hav
 
 ## Migrating Redirects and Headers
 
-If your site includes a `_redirects` folder in your publish directory you can use the same file in Cloudflare Pages and your redirects will work the same. If your redirects are in your `netlify.toml` file you will have to add them to the `_redirects` folder. Cloudflare Pages currently offers limited [supports for advanced redirects](https://developers.cloudflare.com/pages/platform/redirects). In the case where you have redirects rules over 100, it is recommended to use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects/create-dashboard).
+If your site includes a `_redirects` file in your publish directory, you can use the same file in Cloudflare Pages and your redirects will execute successfully. If your redirects are in your `netlify.toml` file, you will need to add them to the `_redirects` folder. Cloudflare Pages currently offers limited [supports for advanced redirects](https://developers.cloudflare.com/pages/platform/redirects). In the case where you have redirects rules over 100, it is recommended to use [Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/create-dashboard).
 
-Your header files can also be moved into a `_headers` folder in your publish directory. It is important to note that Custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the function route matches the URL pattern. To learn more about how to [handle headers checkout the documentation](https://developers.cloudflare.com/pages/platform/headers).
+Your header files can also be moved into a `_headers` folder in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from functions, even if the function route matches the URL pattern. To learn more about how to [handle headers, refer to Headers](https://developers.cloudflare.com/pages/platform/headers).
 
 <Aside type='note'>
 
-Redirects execute before headers, so in the case of a request matching rules in both files, the redirect will win out.
+Redirects execute before headers. In the case of a request matching rules in both files, the redirect will take precedence.
 
 </Aside>
 
 ## Forms 
 
-In your form component remove the `data-netlify = "true"` atrribute or netlify attribute from the `<form>` tag. You can now put your form logic as a Pages Function and collect the entries to a database or an Airtable. Check out this tutorial on [handling form submissions with Pages Functions](https://developers.cloudflare.com/pages/tutorials/forms).
+In your form component, remove the `data-netlify = "true"` attribute or the Netlify attribute from the `<form>` tag. You can now put your form logic as a Pages Function and collect the entries to a database or an Airtable. Refer to the [handling form submissions with Pages Functions](https://developers.cloudflare.com/pages/tutorials/forms) tutorial for more information.
 
-## Serverless Functions 
+## Serverless functions 
 
 Netlify functions and Pages Functions share the same filesystem convention using a `Functions` directory in the base of your project to handle your serverless functions the file can be stored directly under the functions directory or in a subdirectory dedicated to the function.  However, the syntax and how the functions are deployed defers. Your Netlify Edge handlers can be regular Pages Functions becuase Pages Functions under the hood are Cloudflare Workers and they by default run on the Edge. 
 
 Cloudflare Pages Functions also provides middleware that can handle any logic you need to run before and/or after your function route handler. 
 
-
-### Functions Syntax
+### Functions syntax
 
 Netlify functions export an async event handler that accepts and event and a context as arguments. In the case of a Pages Functions you will have to export a single `OnRequest` function that accepts a `context` object which contains all the information for the request such as request,env,params  and returns a new Response. You can learn more about [writing your first function](https://developers.cloudflare.com/pages/platform/functions#writing-your-first-function)
 
@@ -73,14 +72,15 @@ export async function onRequestPost(request) {
 }
 ```
 
-## Other Netlify Config
+## Other Netlify configurations
 
-Your `netlify.toml` might have other configurations that are supported by Pages in the Pages UI, by default such as preview deployment, specifying publish directory and plugins. You can delete the file after migrating your configurations. 
+Your `netlify.toml` file might have other configurations that are supported by Pages, such as, preview deployment, specifying publish directory, and plugins. You can delete the file after migrating your configurations. 
 
 
 ## Access management
 
-You can migrate your access management to [Cloudflare's Zero Trust](https://developers.cloudflare.com/cloudflare-one/) which allows you to manage authentication of users in your apps, event logging and requests. 
+You can migrate your access management to [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/) which allows you to manage user authentication for your applications, event logging and requests.
+
 ## Creating a new Pages project
 
 Once you have found your build directory and build command, you can move your project to Cloudflare Pages.
