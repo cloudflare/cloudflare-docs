@@ -14,7 +14,7 @@ Sitemap: https://developers.cloudflare.com/byoip/sitemap.xml
 Sitemap: https://developers.cloudflare.com/cache/sitemap.xml
 Sitemap: https://developers.cloudflare.com/cloudflare-one/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ddos-protection/sitemap.xml
-Sitemap: https://developers.cloudflare.com/distributed-web/sitemap.xml
+Sitemap: https://developers.cloudflare.com/web3/sitemap.xml
 Sitemap: https://developers.cloudflare.com/dns/sitemap.xml
 Sitemap: https://developers.cloudflare.com/docs-engine/sitemap.xml
 Sitemap: https://developers.cloudflare.com/email-routing/sitemap.xml

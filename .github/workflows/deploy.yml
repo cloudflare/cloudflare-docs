@@ -23,7 +23,7 @@ jobs:
       cloudflare-one: ${{ steps.filter.outputs.cloudflare-one }}
       ddos-protection: ${{ steps.filter.outputs.ddos-protection }}
       dns: ${{ steps.filter.outputs.dns }}
-      distributed-web: ${{ steps.filter.outputs.distributed-web }}
+      web3: ${{ steps.filter.outputs.web3 }}
       docs-engine: ${{ steps.filter.outputs.docs-engine }}
       email-routing: ${{ steps.filter.outputs.email-routing }}
       events: ${{ steps.filter.outputs.events }}
@@ -92,8 +92,8 @@ jobs:
               - 'products/ddos-protection/**'
             dns:
               - 'products/dns/**'
-            distributed-web:
-              - 'products/distributed-web/**'
+            web3:
+              - 'products/web3/**'
             docs-engine:
               - 'products/docs-engine/**'
             email-routing:
@@ -601,14 +601,14 @@ jobs:
           environment: "production"
           wranglerVersion: "1.13.0"
 
-  deploy-distributed-web:
+  deploy-web3:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ needs.changes.outputs.distributed-web == 'true' }}
+    if: ${{ needs.changes.outputs.web3 == 'true' }}
     defaults:
       run:
         shell: bash
-        working-directory: products/distributed-web
+        working-directory: products/web3
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -625,13 +625,13 @@ jobs:
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/distributed-web"
+          workingDirectory: "products/web3"
           wranglerVersion: "1.13.0"
       - name: Publish production
         uses: cloudflare/wrangler-action@1.2.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          workingDirectory: "products/distributed-web"
+          workingDirectory: "products/web3"
           environment: "production"
           wranglerVersion: "1.13.0"
 

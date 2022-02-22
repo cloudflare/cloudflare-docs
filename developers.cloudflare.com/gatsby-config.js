@@ -15,7 +15,6 @@ const products = [
   "byoip",
   "cloudflare-for-teams",
   "cloudflare-one",
-  "distributed-web",
   "docs-engine",
   "events",
   "firewall",
@@ -37,6 +36,7 @@ const products = [
   "time-services",
   "waf",
   "warp-client",
+  "web3",
   "workers",
 ]
 

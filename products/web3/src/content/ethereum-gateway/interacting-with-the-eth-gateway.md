@@ -5,7 +5,7 @@ pcx-content-type: configuration
 
 # Interacting with Ethereum
 
-Interacting with the network via the Cloudflare Distributed Web Gateway is as
+Interacting with the network via the Cloudflare Web3 Gateway is as
 simple as specifying the correct JSON blob for your query!
 
 ## Reading from the network
@@ -134,11 +134,11 @@ transaction!)_
 
 ## Cloudflare supported API
 
-The full list of API methods that are supported by the Distributed Web Gateway
+The full list of API methods that are supported by the Web3 Gateway
 is given below. The Gateway returns a `403` if a method is specified that is not
 supported.
 
-| RPC API method | Cloudflare Distributed Web Gateway support |
+| RPC API method | Cloudflare Web3 Gateway support |
 | --- | :---: |
 | web3_clientVersion | X |
 | web3_sha3 | X |

@@ -5,7 +5,7 @@ type: overview
 pcx-content-type: overview
 ---
 
-# Cloudflare Distributed Web docs
+# Cloudflare Web3 Docs
 
 <ContentColumn>
 

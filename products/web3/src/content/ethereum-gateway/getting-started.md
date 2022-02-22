@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Getting started
 
-Cloudflare's Ethereum Gateway is part of the wider Distributed Web Gateway
+Cloudflare's Ethereum Gateway is part of the wider Web3 Gateway
 offering, specifically providing access to the Ethereum network. In particular,
 users can read all information that has been agreed upon by the consensus of
 existing nodes in the network. In addition, they can write their own

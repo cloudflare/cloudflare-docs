@@ -76,9 +76,9 @@ const products = [
     icon: "ddos-protection",
   },
   {
-    title: "Distributed Web Gateway",
-    path: "distributed-web",
-    icon: "distributed-web",
+    title: "Web3",
+    path: "web3",
+    icon: "web3",
     wrap: true,
   },
   {

@@ -31,8 +31,8 @@ developers.cloudflare.com/ @cloudflare/PCX
 # DDoS Protection
 products/ddos-protection/ @cloudflare/PCX
 
-# Distributed Web
-products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
+# Web3
+products/web3/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @ColeBennett @cloudflare/PCX
 
 # Documentation Engine
 products/docs-engine/ @cloudflare/PCX

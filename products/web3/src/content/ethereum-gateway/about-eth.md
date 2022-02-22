@@ -74,4 +74,4 @@ official documentation [provided by Ethereum](https://www.ethereum.org/use/).
 
 You should also read our [Terms of
 Use](https://www.cloudflare.com/distributed-web-gateway-terms/), as it governs
-your use of the Cloudflare Distributed Web Gateway.
+your use of the Cloudflare Web3 Gateway.
