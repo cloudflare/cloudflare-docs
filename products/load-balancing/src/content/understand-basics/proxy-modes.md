@@ -23,7 +23,7 @@ Cloudflare performs layer 7 load balancing when traffic to your hostname is **pr
 
 ### Benefits
 
-In comparison to [DNS-only load balancing](#dns-only-load-balancing-gray-clouded), layer 7 load balancing:
+In comparison to [DNS-only load balancing](#gray-clouded-dns-only-load-balancing), layer 7 load balancing:
 
 - Protects origin servers from DDoS attacks by hiding their IP addresses.
 - Offers faster failover and more accurate routing, which can otherwise be affected by DNS caching.
