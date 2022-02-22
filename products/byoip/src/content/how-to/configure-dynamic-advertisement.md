@@ -17,7 +17,7 @@ If you are advertising a new prefix or enabling the advertisement of an existing
 
 After enabling the prefix advertisement or advertising a new prefix, do the following:
 1. Ensure that the traffic is being successfully routed via the Cloudflare network. Check the Network Analytics dashboard or [use `traceroute`](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) to analyze the path IP packets are taking.
-1. Enable Advanced TCP Protection again.
+1. Re-enable Advanced TCP Protection.
 
 ## Configure dynamic advertisement via the dashboard
 

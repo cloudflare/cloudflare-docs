@@ -20,7 +20,7 @@ The Advanced TCP Protection Managed Ruleset is available in early access to all 
 
 Advanced TCP Protection has two execution modes: **Monitoring mode** and **Mitigation mode**.
 
-Currently, to switch between execution modes you must contact Cloudflare Support or your account team.
+Currently, to switch between execution modes you must contact your account team.
 
 ### Monitoring mode
 
@@ -46,4 +46,4 @@ To enable or disable the Cloudflare Advanced TCP Protection Managed Ruleset, [us
 
 You may need to adjust the sensitivity thresholds of the ruleset in case of false positives or due to specific traffic patterns.
 
-To change the sensitivity thresholds, use Monitor mode, and add filter expressions, you must contact Cloudflare Support or your account team.
+To change the sensitivity thresholds, use Monitor mode, and add filter expressions, you must contact your account team.
