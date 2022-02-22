@@ -115,15 +115,15 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 {{<table-wrap>}}
 
-| Feature                                 | Limit                                          |
-| --------------------------------------- | ---------------------------------------------- |
-| [Number of objects](#durable-objects)   | unlimited                                      |
-| [Storage per account](#durable-objects) | 10 GB (can be raised by contacting Cloudflare) |
-| [Storage per class](#durable-objects)   | unlimited                                      |
-| [Storage per object](#durable-objects)  | unlimited                                      |
-| [Key size](#durable-objects)            | 2048 bytes                                     |
-| [Value size](#durable-objects)          | 128 KiB                                        |
-| [CPU per request](#durable-objects)     | 30s                                            |
+| Feature                                 | Limit
+| --------------------------------------- | ------
+| [Number of objects](#durable-objects)   | unlimited
+| [Storage per account](#durable-objects) | 50 GB (can be raised by contacting Cloudflare)
+| [Storage per class](#durable-objects)   | unlimited
+| [Storage per object](#durable-objects)  | unlimited
+| [Key size](#durable-objects)            | 2048 bytes
+| [Value size](#durable-objects)          | 128 KiB
+| [CPU per request](#durable-objects)     | 30s
 
 {{</table-wrap>}}
 
@@ -278,7 +278,7 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 - Unlimited Durable Objects within an account or of a given class
 
-- 10 GB total storage per account (can be raised by contacting Cloudflare)
+- 50 GB total storage per account (can be raised by contacting Cloudflare)
 
 - No storage limit per Durable Object separate from the account limit
 
