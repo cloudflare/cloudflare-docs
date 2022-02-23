@@ -43,6 +43,6 @@ In this type of detection, Page Shield will download the script file and run it 
 
 The script classifier will output a probability score for the script (also called the JS integrity score) between 1 and 99, where 1 means definitely malicious and 99 means definitely not malicious. This score, together with a threshold value, will determine if the malicious script detection system will classify the script as malicious or not.
 
-The score threshold for considering a script as malicious is currently set to 60. If the script classification score is below this value, the Script Monitor dashboard will display the script as being malicious.
+The score threshold for considering a script as malicious is currently set to 10. If the script classification score is below this value, the Script Monitor dashboard will display the script as being malicious.
 
 You can configure [Malicious Code Alerts](/reference/alerts). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.
