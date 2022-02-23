@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx-content-type: configuration
 title: Deploy rulesets via API
 weight: 6
 ---
