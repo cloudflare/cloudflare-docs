@@ -35,7 +35,7 @@ addEventListener("fetch", event => {
 *   `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
     *   The incoming HTTP request.
 
-*   {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|\<span style={{marginLeft:"-6px"}}>{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
+*   {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`respondWith`](#respondwith).
 
