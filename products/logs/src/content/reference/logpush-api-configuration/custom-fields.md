@@ -5,18 +5,18 @@ pcx-content-type: how-to
 
 # Configure custom fields
 
-You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone or account. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone/account that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
+You can configure custom fields — selected from the list of HTTP request headers, HTTP response headers, and cookies — to include in Logpush log entries of a zone. Once configured, these custom fields will be enabled for all the Logpush jobs in the zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields.
 
 Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to create a rule that configures custom fields. For more information on concepts like phases, rulesets, and rules, as well as the available API operations, refer to the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) documentation.
 
 To configure custom fields:
 
 1. Create a rule to configure the list of custom fields.
-1. Include custom fields in your Logpush job.
+1. Include the `Cookies`, `RequestHeaders`, and/or `ResponseHeaders` fields in your Logpush job.
 
 ## 1. Create a rule to configure the list of custom fields
 
-Create a rule configuring the list of custom fields in the `log_custom_fields` phase at the account or at the zone level. Set the rule action to `log_custom_field` and the rule expression to `true`.
+Create a rule configuring the list of custom fields in the `log_custom_fields` phase at the zone level. Set the rule action to `log_custom_field` and the rule expression to `true`.
 
 The `action_parameters` object that you must include in the rule that configures the list of custom fields should have the following structure:
 
@@ -46,8 +46,6 @@ Ensure that your rule definition complies with the following:
 * You must enter HTTP request and response header names in lower case.
 * Cookie names are case sensitive — you must enter cookie names with the same capitalization they have in the HTTP request.
 * You must set the rule expression to `true`.
-
-The example below defines a zone ruleset, but you can also define this configuration using an account ruleset. To do that, you must use a different endpoint and set the ruleset `kind` to `root`.
 
 Perform the following steps to create the rule:
 
