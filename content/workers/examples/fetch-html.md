@@ -10,12 +10,6 @@ weight: 3
 layout: example
 ---
 
-# Fetch HTML
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * Example someHost at URL is set up to respond with HTML

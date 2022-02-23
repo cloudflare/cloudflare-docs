@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Aggregate requests
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * someHost is set up to return JSON responses

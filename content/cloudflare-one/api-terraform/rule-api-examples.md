@@ -40,4 +40,4 @@ Access users can create policies, including individual rule blocks inside of gro
 
 These are commonly used rule configurations.
 
-{{<render file="docs-code-examples-overview.html">}}
+{{<list-examples>}}

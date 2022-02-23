@@ -12,12 +12,6 @@ weight: 1001
 layout: example
 ---
 
-# Cache using fetch
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 async function handleRequest(request) {
   const url = new URL(request.url)

@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Country code redirect
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * A map of the URLs to redirect to

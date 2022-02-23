@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Cookie parsing
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 import { parse } from "cookie"
 

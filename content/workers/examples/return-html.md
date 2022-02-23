@@ -10,12 +10,6 @@ weight: 1
 layout: example
 ---
 
-# Return small HTML page
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const html = `<!DOCTYPE html>
 <body>
@@ -35,9 +29,3 @@ addEventListener("fetch", event => {
   return event.respondWith(handleRequest(event.request))
 })
 ```
-
-## Demo
-
-<p><a href={props.frontmatter.demo}>Open demo</a></p>
-
-<Demo src={props.frontmatter.demo} title={props.frontmatter.summary} height="150"/>

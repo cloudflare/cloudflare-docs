@@ -10,12 +10,6 @@ weight: 4
 layout: example
 ---
 
-# Fetch JSON
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * Example someHost is set up to take in a JSON request

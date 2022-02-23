@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# CORS header proxy
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 // Cloudflare supports the GET, POST, HEAD, and OPTIONS methods from any origin,
 // and allow any header on requests. These headers must be present

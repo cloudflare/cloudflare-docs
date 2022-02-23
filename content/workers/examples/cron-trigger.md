@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Setting Cron Triggers
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 addEventListener('scheduled', event => {
     event.waitUntil(triggerEvent(event.scheduledTime))
@@ -37,7 +31,7 @@ name = "worker"
 # ...
 
 [triggers]
-crons = ["0 * * * *"] 
+crons = ["0 * * * *"]
 ```
 
 You also can set a different Cron Trigger for each environment in your `wrangler.toml`. You need to put the `[triggers]` table under your chosen environment. For example:

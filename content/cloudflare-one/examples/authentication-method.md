@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Authentication method
-
 ```json
 {
   "auth_method": {

@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Read POST
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * rawHtmlResponse returns HTML inputted directly
@@ -60,7 +54,7 @@ async function readRequestBody(request) {
   }
   else {
     // Perhaps some other type of data was submitted in the form
-    // like an image, or some other binary data. 
+    // like an image, or some other binary data.
     return 'a file';
   }
 }

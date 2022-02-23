@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Bulk redirects
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const externalHostname = "examples.cloudflareworkers.com"
 

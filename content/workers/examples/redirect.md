@@ -10,12 +10,6 @@ weight: 6
 layout: example
 ---
 
-# Redirect
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ## Redirect all requests to one URL
 
 ```js

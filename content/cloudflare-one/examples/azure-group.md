@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Azure® Group
-
 Allow members of an Azure Group. The ID is the group UUID (*`id`*) in Azure:
 
 ```json

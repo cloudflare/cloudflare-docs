@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Block on TLS
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 async function handleRequest(request) {
   try {

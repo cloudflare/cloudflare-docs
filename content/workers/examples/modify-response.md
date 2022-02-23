@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Modify response
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * @param {string} headerNameSrc Header to get the new value from

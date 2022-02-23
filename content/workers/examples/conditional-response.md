@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Conditional response
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const BLOCKED_HOSTNAMES = ["nope.mywebsite.com", "bye.website.com"]
 

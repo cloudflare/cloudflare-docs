@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Post JSON
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * Example someHost is set up to take in a JSON request

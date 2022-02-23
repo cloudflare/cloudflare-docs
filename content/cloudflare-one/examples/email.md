@@ -8,10 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Email
-
-Allow a specific email address
-
 ```json
 {
   "email": {

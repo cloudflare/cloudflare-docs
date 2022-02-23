@@ -9,4 +9,4 @@ layout: list
 
 # Examples
 
-{{<render file="docs-code-examples-overview.html">}}
+{{<list-examples>}}

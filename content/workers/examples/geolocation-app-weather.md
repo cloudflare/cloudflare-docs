@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Geolocation: Weather application
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
@@ -25,7 +19,7 @@ async function handleRequest(request) {
   let endpoint = "https://api.waqi.info/feed/geo:"
   const token = "" //Use a token from https://aqicn.org/api/
   let html_style = `body{padding:6em; font-family: sans-serif;} h1{color:#f6821f}`
-  
+
   let html_content = "<h1>Weather 🌦</h1>"
 
   latitude = request.cf.latitude
@@ -63,6 +57,7 @@ async function handleRequest(request) {
   return new Response(html, {
     headers: {
       "content-type": "text/html;charset=UTF-8",
-    },})
+    }
+  })
 }
 ```

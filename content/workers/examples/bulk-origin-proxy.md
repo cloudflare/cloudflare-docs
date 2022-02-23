@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Bulk origin override
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * An object with different URLs to fetch

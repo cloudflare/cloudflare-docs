@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# HTTP Basic Authentication
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * Shows how to restrict access using the HTTP Basic schema.
@@ -37,7 +31,7 @@ const BASIC_PASS = 'admin'
 async function handleRequest(request) {
   const { protocol, pathname } = new URL(request.url)
 
-  // In the case of a Basic authentication, the exchange 
+  // In the case of a Basic authentication, the exchange
   // MUST happen over an HTTPS (TLS) connection to be secure.
   if ('https:' !== protocol || 'https' !== request.headers.get('x-forwarded-proto')) {
     throw new BadRequestException('Please use a HTTPS connection.')
@@ -124,7 +118,7 @@ function basicAuthentication(request) {
   // @see https://dev.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
   const buffer = Uint8Array.from(atob(encoded), character => character.charCodeAt(0))
   const decoded =  new TextDecoder().decode(buffer).normalize()
-  
+
   // The username & password are split by the first colon.
   //=> example: "username:password"
   const index = decoded.indexOf(':')
@@ -134,8 +128,8 @@ function basicAuthentication(request) {
   if (index === -1 || /[\0-\x1F\x7F]/.test(decoded)) {
     throw new BadRequestException('Invalid authorization value.')
   }
-  
-  return { 
+
+  return {
     user: decoded.substring(0, index),
     pass: decoded.substring(index + 1),
   }

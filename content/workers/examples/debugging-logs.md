@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Debugging logs
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 // Service configured to receive logs
 const LOG_URL = "https://log-service.example.com/"

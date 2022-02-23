@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Cache POST requests
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 async function sha256(message) {
   // encode as UTF-8

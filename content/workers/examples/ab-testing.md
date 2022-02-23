@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# A/B testing with same-URL direct access
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const NAME = "myExampleWorkersABTest";
 

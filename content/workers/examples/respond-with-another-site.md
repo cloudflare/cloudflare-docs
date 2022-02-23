@@ -11,12 +11,6 @@ weight: 12
 layout: example
 ---
 
-# Respond with another site
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 addEventListener('fetch', function(event) {
   event.respondWith(handleRequest(event.request))
@@ -35,9 +29,3 @@ function MethodNotAllowed(request) {
   })
 }
 ```
-
-## Demo
-
-<p><a href={props.frontmatter.demo}>Open demo</a></p>
-
-<Demo src={props.frontmatter.demo} title={props.frontmatter.summary} aspectRatio={16/9}/>

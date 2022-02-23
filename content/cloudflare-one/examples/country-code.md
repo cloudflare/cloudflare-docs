@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Country Code
-
 ```json
 {
   "geo": {

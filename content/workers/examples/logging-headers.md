@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Logging headers to console
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 async function handleRequest(request) {
   console.log(new Map(request.headers))

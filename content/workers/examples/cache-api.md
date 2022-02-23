@@ -11,14 +11,7 @@ weight: 1001
 layout: example
 ---
 
-# Using the Cache API
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
-
 async function handleRequest(event) {
   const request = event.request
   const cacheUrl = new URL(request.url)
@@ -33,7 +26,7 @@ async function handleRequest(event) {
   let response = await cache.match(cacheKey)
 
   if (!response) {
-    console.log(`Response for request url: ${request.url} not present in cache. Fetching and caching request.`); 
+    console.log(`Response for request url: ${request.url} not present in cache. Fetching and caching request.`);
     // If not in cache, get it from origin
     response = await fetch(request)
 
@@ -51,7 +44,7 @@ async function handleRequest(event) {
     // writing to cache
     event.waitUntil(cache.put(cacheKey, response.clone()))
   } else {
-    console.log(`Cache hit for: ${request.url}.`); 
+    console.log(`Cache hit for: ${request.url}.`);
   }
   return response
 }

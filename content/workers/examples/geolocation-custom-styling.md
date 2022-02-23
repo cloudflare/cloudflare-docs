@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Geolocation: Custom Styling
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
@@ -100,6 +94,7 @@ async function handleRequest(request) {
   return new Response(html, {
     headers: {
       "content-type": "text/html;charset=UTF-8",
-    },})
+    }
+  })
 }
 ```

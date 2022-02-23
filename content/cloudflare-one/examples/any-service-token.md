@@ -9,8 +9,6 @@ weight: 4
 layout: example
 ---
 
-# Any valid service token
-
 The request will need to present the headers for any service token created for this account
 
 ```json

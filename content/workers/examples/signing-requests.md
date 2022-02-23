@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Sign requests
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 // You will need some super-secret data to use as a symmetric key.
 const encoder = new TextEncoder()

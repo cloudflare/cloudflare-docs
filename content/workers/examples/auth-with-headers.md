@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Auth with headers
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * @param {string} PRESHARED_AUTH_HEADER_KEY Custom header to check for key

@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# G Suite® Group
-
 ```json
 {
   "gsuite": {

@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# HTTP2 server push
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const CSS = `body { color: red; }`
 const HTML = `

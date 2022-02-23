@@ -12,12 +12,6 @@ weight: 1001
 layout: example
 ---
 
-# Set security headers
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const DEFAULT_SECURITY_HEADERS = {
     /*
@@ -27,7 +21,7 @@ const DEFAULT_SECURITY_HEADERS = {
     "Content-Security-Policy": "default-src 'self' example.com *.example.com",
     */
     /*
-    You can also set Strict-Transport-Security headers. 
+    You can also set Strict-Transport-Security headers.
     These are not automatically set because your website might get added to Chrome's HSTS preload list.
     Here's the code if you want to apply it:
     "Strict-Transport-Security" : "max-age=63072000; includeSubDomains; preload",
@@ -37,17 +31,17 @@ const DEFAULT_SECURITY_HEADERS = {
     "Permissions-Policy": "interest-cohort=()",
     */
     /*
-    X-XSS-Protection header prevents a page from loading if an XSS attack is detected. 
+    X-XSS-Protection header prevents a page from loading if an XSS attack is detected.
     @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
     */
     "X-XSS-Protection": "0",
     /*
-    X-Frame-Options header prevents click-jacking attacks. 
+    X-Frame-Options header prevents click-jacking attacks.
     @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
     */
     "X-Frame-Options": "DENY",
     /*
-    X-Content-Type-Options header prevents MIME-sniffing. 
+    X-Content-Type-Options header prevents MIME-sniffing.
     @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
     */
     "X-Content-Type-Options": "nosniff",
@@ -69,7 +63,7 @@ async function addHeaders(req) {
     let newHeaders = new Headers(response.headers)
 
     const tlsVersion = req.cf.tlsVersion
-    // This sets the headers for HTML responses: 
+    // This sets the headers for HTML responses:
     if (newHeaders.has("Content-Type") && !newHeaders.get("Content-Type").includes("text/html")) {
         return new Response(response.body, {
             status: response.status,

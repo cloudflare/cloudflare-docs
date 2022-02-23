@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# IP range
-
 ```json
 {
   "ip": {

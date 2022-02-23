@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Modify request property
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 /**
  * Example someHost is set up to return raw JSON

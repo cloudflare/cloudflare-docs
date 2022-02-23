@@ -8,8 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Email domain
-
 ```json
 {
   "email_domain": {

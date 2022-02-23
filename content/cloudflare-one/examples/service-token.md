@@ -8,10 +8,6 @@ weight: 4
 layout: example
 ---
 
-# Service token
-
-The request will need to present the correct service token headers
-
 ```json
 {
   "service_token": {

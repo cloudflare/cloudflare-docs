@@ -9,12 +9,6 @@ weight: 1001
 layout: example
 ---
 
-# Multiple Cron Triggers
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 addEventListener("scheduled", (event) => {
   event.waitUntil(triggerEvent(event));

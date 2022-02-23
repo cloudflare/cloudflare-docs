@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Rewrite links
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const OLD_URL = "developer.mozilla.org"
 const NEW_URL = "mynewdomain.com"
@@ -23,7 +17,7 @@ const NEW_URL = "mynewdomain.com"
 async function handleRequest(req) {
   const res = await fetch(req)
   const contentType = res.headers.get("Content-Type")
-  
+
   // If the response is HTML, it can be transformed with
   // HTMLRewriter -- otherwise, it should pass through
   if (contentType.startsWith("text/html")) {

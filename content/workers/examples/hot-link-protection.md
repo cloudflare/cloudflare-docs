@@ -11,12 +11,6 @@ weight: 1001
 layout: example
 ---
 
-# Hot-link protection
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/"
 const PROTECTED_TYPE = "image/"

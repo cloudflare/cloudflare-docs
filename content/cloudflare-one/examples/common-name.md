@@ -9,8 +9,6 @@ weight: 4
 layout: example
 ---
 
-# Common name
-
 ```json
 {
   "common_name": {

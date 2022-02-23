@@ -10,12 +10,6 @@ weight: 1001
 layout: example
 ---
 
-# Data loss prevention
-
-{{<content-column>}}
-  <p>{props.frontmatter.summary}</p>
-{{</content-column>}}
-
 ```js
 const DEBUG = true
 const SOME_HOOK_SERVER = "https://webhook.flow-wolf.io/hook"
