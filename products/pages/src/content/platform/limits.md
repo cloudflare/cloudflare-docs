@@ -35,7 +35,7 @@ You can have an unlimited number of [preview deployments](/platform/preview-depl
 
 ## Redirects
 
-A `_redirects` file can have a maximum of 100 redirect rules.
+A `_redirects` file can have a maximum of 100 redirect rules. It is recommended to use [Bulk Redirects](../how-to/use-bulk-redirects.md) when you have more than 100 redirect rules.
 
 ## Users
 
