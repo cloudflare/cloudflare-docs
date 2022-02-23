@@ -26,13 +26,13 @@ In the **Build & Deploy** tab, find the **Build settings** panel, which will hav
 
 ![Finding the "Build command" and "Publish directory" fields](./netlify-deploy-4.png)
 
-## Migrating Redirects and Headers
+## Migrating redirects and headers
 
 If your site includes a `_redirects` file in your publish directory, you can use the same file in Cloudflare Pages and your redirects will execute successfully. If your redirects are in your `netlify.toml` file, you will need to add them to the `_redirects` folder. Cloudflare Pages currently offers limited [supports for advanced redirects](https://developers.cloudflare.com/pages/platform/redirects). In the case where you have redirects rules over 100, it is recommended to use [Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/create-dashboard).
 
 Your header files can also be moved into a `_headers` folder in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from functions, even if the function route matches the URL pattern. To learn more about how to [handle headers, refer to Headers](https://developers.cloudflare.com/pages/platform/headers).
 
-<Aside type='note'>
+<Aside type="note">
 
 Redirects execute before headers. In the case of a request matching rules in both files, the redirect will take precedence.
 
@@ -50,7 +50,7 @@ Cloudflare Pages Functions also provides middleware that can handle any logic yo
 
 ### Functions syntax
 
-Netlify functions export an async event handler that accepts and event and a context as arguments. In the case of a Pages Functions you will have to export a single `OnRequest` function that accepts a `context` object which contains all the information for the request such as request,env,params  and returns a new Response. You can learn more about [writing your first function](https://developers.cloudflare.com/pages/platform/functions#writing-your-first-function)
+Netlify functions export an async event handler that accepts an event and a context as arguments. In the case of Pages Functions, you will have to export a single `onRequest` function that accepts a `context` object. The `context` object contains all the information for the request such as `request`, `env`, `params`, and returns a new Response. Learn more about [writing your first function](https://developers.cloudflare.com/pages/platform/functions#writing-your-first-function)
 
 Netlify function Hello world:
 
@@ -64,7 +64,7 @@ exports.handler = async function (event, context) {
 
 ```
 
-Pages Functions Hello world:
+Hello World with Pages Functions:
 
 ```js
 export async function onRequestPost(request) {
