@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 ## Creating redirects
 
-To use redirects on Cloudflare Pages, declare your redirects in a `_redirects` plain text file in the output folder of your project. The [build output folder](/platform/build-configuration) is project-specific so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
+To use redirects on Cloudflare Pages, declare your redirects in a plain text file called `_redirects` without a file extension, in the output folder of your project. The [build output folder](/platform/build-configuration) is project-specific, so the `_redirects` file should not always be in the root directory of the repository. Changes to redirects will be updated to your website at build time so make sure you commit and push the file to trigger a new build each time you update redirects.
 
 Only one redirect can be defined per line and must follow this format:
 
