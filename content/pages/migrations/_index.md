@@ -4,9 +4,7 @@ hideChildren: true
 pcx-content-type: navigation
 title: Migration guides
 weight: 5
-layout: list
+layout: table
 ---
 
 # Migration guides
-
-{{<render file="content-table.html" path="migrations" >}}

@@ -4,9 +4,10 @@ hideChildren: true
 pcx-content-type: navigation
 title: Tutorials
 weight: 3
-layout: list
+
+layout: table
+column_text: Category
+column_param: category
 ---
 
 # Tutorials
-
-{{<render file="content-table.html">}}
