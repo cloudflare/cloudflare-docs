@@ -44,7 +44,7 @@ In your form component, remove the `data-netlify = "true"` attribute or the Netl
 
 ## Serverless functions 
 
-Netlify functions and Pages Functions share the same filesystem convention using a `Functions` directory in the base of your project to handle your serverless functions the file can be stored directly under the functions directory or in a subdirectory dedicated to the function.  However, the syntax and how the functions are deployed defers. Your Netlify Edge handlers can be regular Pages Functions becuase Pages Functions under the hood are Cloudflare Workers and they by default run on the Edge. 
+Netlify functions and Pages Functions share the same filesystem convention using a `functions` directory in the base of your project to handle your serverless functions. However, the syntax and how the functions are deployed differs. Pages Functions run on Cloudflare Workers, which by default operate on the Cloudflare edge network, and do not require any additional code or configuration for edge deployment.
 
 Cloudflare Pages Functions also provides middleware that can handle any logic you need to run before and/or after your function route handler. 
 
