@@ -1,6 +1,7 @@
 ---
 title: Plans
 type: overview
+hideChildren: true
 pcx-content-type: navigation
 weight: 4
 layout: list
