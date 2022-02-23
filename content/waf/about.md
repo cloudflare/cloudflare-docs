@@ -79,7 +79,7 @@ To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in t
 
 ---
 
-## Get started
+## Next steps
 
 To configure Managed Rulesets using the Cloudflare dashboard, refer to [Deploy Managed Rulesets for a zone in the dashboard](/waf/managed-rulesets/deploy-zone-dashboard/).
 

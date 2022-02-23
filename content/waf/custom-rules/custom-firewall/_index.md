@@ -16,12 +16,12 @@ This feature is only available for selected customers on an Enterprise plan. Con
 
 Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), Custom Firewall rules have an **expression** and an **action**:
 
-*   The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language).
-*   The **action** specifies what to perform when there is a match for the rule.
+* The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language).
+* The **action** specifies what to perform when there is a match for the rule.
 
 ***
 
-## Getting started
+## Next steps
 
 To create Custom Firewall rules using the Cloudflare dashboard, refer to [Create Custom Firewall rules in the dashboard](/waf/custom-rules/custom-firewall/create-dashboard/).
 

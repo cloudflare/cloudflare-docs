@@ -35,7 +35,7 @@ Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-
 
 ***
 
-## Getting started
+## Next steps
 
 To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, refer to [Create Rate Limiting rules in the dashboard](/waf/custom-rules/rate-limiting/create-dashboard/).
 
