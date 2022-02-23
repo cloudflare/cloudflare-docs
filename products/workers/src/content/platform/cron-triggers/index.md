@@ -80,3 +80,7 @@ Users can review the execution history of their Cron Triggers in **Past Events**
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 
 Refer to [Metrics and Analytics](/learning/metrics-and-analytics) for more information.
+
+## Green Compute
+
+With Green Compute enabled, your Workers Cron Triggers will only run on Cloudflare points of presence that are located in data centers that are powered by 100 percent renewable energy. Organizations may claim that they are powered by 100 percent renewable energy if they have procured sufficient renewable energy to account for their overall energy use. Renewable energy can be purchased in a number of ways, including through on-site generation (wind turbines, solar panels), directly from renewable energy producers through contractual agreements called Power Purchase Agreements (PPA), or in the form of Renewable Energy Credits (REC, IRECs, GoOs) from an energy credit market.
