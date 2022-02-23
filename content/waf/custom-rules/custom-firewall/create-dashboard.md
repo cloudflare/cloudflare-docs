@@ -10,7 +10,7 @@ layout: list
 
 Create Custom Firewall rules under the **Custom Rules** tab in the **Firewall** app.
 
-{{<Aside type="warning">}}
+{{<Aside type="note">}}
 
 This feature is only available for selected customers on an Enterprise plan.
 

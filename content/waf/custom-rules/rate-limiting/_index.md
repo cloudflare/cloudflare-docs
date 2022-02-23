@@ -8,11 +8,11 @@ weight: 3
 
 Rate Limiting rules allow you to define rate limits for incoming requests matching an expression, as well as actions to take when those rate limits are reached.
 
-{{<Aside type="warning">}}
+{{<Aside type="note">}}
 
 This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
 
-For guidance on the previous version of Rate Limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
+For guidance on the previous version of Cloudflare Rate Limiting, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}
 

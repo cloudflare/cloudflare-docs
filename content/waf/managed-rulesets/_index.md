@@ -7,6 +7,7 @@ weight: 5
 # Managed Rulesets
 
 The WAF Managed Rulesets are pre-configured rulesets that provide immediate protection against:
+
 * Zero-day vulnerabilities
 * Top-10 attack techniques
 * Use of stolen/exposed credentials
