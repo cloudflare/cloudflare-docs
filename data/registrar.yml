@@ -155,7 +155,7 @@ meta:
   title: Cloudflare Registrar docs
   description: Welcome to Cloudflare Registrar. The first registrar you can love.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

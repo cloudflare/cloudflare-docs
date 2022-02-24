@@ -26,7 +26,7 @@ meta:
     prevent data theft and other tampering. We are the first Internet
     performance and security company to offer free SSL protection.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

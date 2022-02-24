@@ -18,7 +18,7 @@ meta:
     protection, traffic acceleration, and much more from every Cloudflare data
     center—for on-premise, cloud-hosted, and hybrid networks.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

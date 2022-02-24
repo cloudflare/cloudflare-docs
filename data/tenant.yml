@@ -28,7 +28,7 @@ meta:
     new set of APIs built into our Client v4 API library make a streamlined
     onboarding and setup experience
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 externals:
   - title: Cloudflare homepage

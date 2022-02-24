@@ -18,7 +18,7 @@ meta:
     processed by our network. Find out about the connecting client, Cloudflare's
     actions, and the response from the origin server
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -38,7 +38,7 @@ meta:
   title: Cloudflare HTTP/3 docs
   description: HTTP/3 is the newest version of the Hypertext Transfer Protocol
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

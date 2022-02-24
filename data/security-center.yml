@@ -33,7 +33,7 @@ meta:
     vulnerabilities, and providing a one-click solution for Cloudflare
     configuration issues.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -31,7 +31,7 @@ meta:
   title: Cloudflare Stream docs
   description: Store, encode, deliver, and play videos on your sites and applications.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

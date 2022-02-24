@@ -56,7 +56,7 @@ meta:
     like GitHub, track and version changes over time, and roll back when
     needed—all without needing to learn the Cloudflare APIs
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

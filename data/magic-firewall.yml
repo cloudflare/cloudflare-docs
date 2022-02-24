@@ -13,7 +13,7 @@ meta:
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -16,7 +16,7 @@ meta:
   title: Cloudflare R2 docs
   description: Store large amounts of unstructured data without egress fees.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 externals:
   - title: Cloudflare homepage

@@ -19,7 +19,7 @@ meta:
     and endpoint security providers. These docs contain step-by-step, use case
     driven, tutorials to use Cloudflare One products.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -18,7 +18,7 @@ meta:
     network, providing global connectivity, cloud-based security, performance,
     and control through one simple user interface.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

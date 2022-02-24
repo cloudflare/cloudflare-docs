@@ -34,7 +34,7 @@ meta:
   description: "Explore drand: a distributed service providing public randomness
     in an application-agnostic, secure, and efficient way."
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -29,7 +29,7 @@ meta:
     personalized web pages, dramatically reducing bandwidth usage and improving
     download times.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

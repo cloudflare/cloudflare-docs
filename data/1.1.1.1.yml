@@ -11,7 +11,7 @@ meta:
   title: Cloudflare 1.1.1.1 docs
   description: A blazing fast DNS resolver built for private browsing.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

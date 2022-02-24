@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming HTTP requests at the edge.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

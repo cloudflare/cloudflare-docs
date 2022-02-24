@@ -15,7 +15,7 @@ meta:
     entire networks while ensuring the performance of legitimate traffic is not
     compromised.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

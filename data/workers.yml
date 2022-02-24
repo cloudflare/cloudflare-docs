@@ -14,7 +14,7 @@ meta:
     environment that allows you to create entirely new applications or augment
     existing ones without configuring or maintaining infrastructure.
   author: "@cloudflare"
-  image: http://developers.cloudflare.com/workers/og-image.png
+  image: /workers/static/og-image.png
 
 algolia:
   index: developers-cloudflare

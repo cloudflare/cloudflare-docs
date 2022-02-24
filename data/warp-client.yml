@@ -46,7 +46,7 @@ meta:
   description: The Cloudflare WARP client allows individuals or organizations to
     have a faster, more secure and private experience online.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

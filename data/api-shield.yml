@@ -27,7 +27,7 @@ meta:
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

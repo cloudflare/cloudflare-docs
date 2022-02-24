@@ -27,7 +27,7 @@ meta:
   title: Cloudflare Page Shield docs
   description: Provide client-side protection as part of your domain's firewall
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

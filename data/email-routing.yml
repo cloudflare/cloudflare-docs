@@ -14,7 +14,7 @@ meta:
     to share your primary email address, and Email Routing will forward your
     email messages for you.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

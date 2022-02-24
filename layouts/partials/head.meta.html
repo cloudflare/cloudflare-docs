@@ -21,13 +21,13 @@
 
 <meta name="description" content="{{ $META.description }}" />
 
-<meta property="og:image" content="{{ $META.image }}"/>
+<meta property="og:image" content="{{ $META.image | absURL }}"/>
 <meta property="og:title" content="{{ $title }}"/>
 <meta property="og:description" content="{{ $META.description }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
-<meta name="twitter:image" content="{{ $META.image }}"/>
+<meta name="twitter:image" content="{{ $META.image | absURL }}"/>
 <meta name="twitter:description" content="{{ $META.description }}"/>
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>

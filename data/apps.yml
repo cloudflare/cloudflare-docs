@@ -68,7 +68,7 @@ meta:
     Routing, you can create any number of custom email addresses that you can
     use in situations where you do not want to share your real email address.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 externals:
   - title: Cloudflare homepage

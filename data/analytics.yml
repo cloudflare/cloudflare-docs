@@ -22,7 +22,7 @@ meta:
     exactly what you need, from one metric for a domain to multiple metrics
     aggregated for your account.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

@@ -33,7 +33,7 @@ meta:
   description: With BYOIP, Cloudflare announces your IPs in all our locations. Use
     your IPs with Magic Transit, Spectrum, or CDN services.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare

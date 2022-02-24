@@ -13,7 +13,7 @@ meta:
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
   author: "@cloudflare"
-  image: https://www.cloudflare.com/img/cf-twitter-card.png
+  image: /cf-twitter-card.png
 
 algolia:
   index: developers-cloudflare
