@@ -1,6 +1,26 @@
+let SEARCH_ID = /^(Docs|Site)Search/;
+let SEARCH_INPUT: HTMLElement;
+
+function $clickaway(ev: MouseEvent) {
+  if (SEARCH_INPUT && ev.target !== SEARCH_INPUT) {
+    $focus(SEARCH_INPUT, false);
+  }
+}
+
 export function $focus(elem: HTMLElement, bool: boolean) {
   elem.toggleAttribute('is-focus-visible', bool);
   if (bool) elem.focus();
+
+  // if is topbar search input
+  if (SEARCH_ID.test(elem.id)) {
+    SEARCH_INPUT = elem;
+
+    elem.parentElement.parentElement.toggleAttribute('is-focused', bool);
+    elem.setAttribute('aria-expanded', '' + bool);
+
+    if (bool) addEventListener('click', $clickaway);
+    else removeEventListener('click', $clickaway);
+  }
 }
 
 export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
@@ -17,6 +37,17 @@ export function mobile() {
   let btn = document.querySelector('.DocsMobileTitleHeader--sidebar-toggle-button')
   if (btn) btn.addEventListener('click', () => {
     root.toggleAttribute('is-mobile-sidebar-open');
+  });
+
+  // clicking on mobile search icon
+  let input: HTMLInputElement = (
+    document.querySelector('#DocsSearch--input')
+    || document.querySelector('#SiteSearch--input')
+  );
+
+  // register init handler
+  if (input) input.addEventListener('click', () => {
+    $focus(input, true);
   });
 }
 
