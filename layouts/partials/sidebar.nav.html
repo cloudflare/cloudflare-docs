@@ -82,10 +82,12 @@
             {{- $x := .RelPermalink -}}
             {{- $self := eq $x $current -}}
             {{- $delta := sub (len (split $x "/")) $len -}}
-            {{- if and (hasPrefix $x $current) (lt $delta 2) -}}
-              {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
-            {{- else if not (hasPrefix $x $current) -}}
-              {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+            {{- if not (in $x "/examples/") -}}
+              {{- if and (hasPrefix $x $current) (lt $delta 2) -}}
+                {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+              {{- else if not (hasPrefix $x $current) -}}
+                {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+              {{- end -}}
             {{- end -}}
           {{- end -}}
         </ul>
