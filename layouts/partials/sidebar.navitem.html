@@ -8,7 +8,9 @@
 {{- $isLinkTabbable := (or (eq .Depth 1) $isParentExpanded) -}}
 
 {{- if not .Context.Params.hidden -}}
-  {{- if $active -}}
+  {{- if (and $active $hasChildren) -}}
+  <li class="DocsSidebar--nav-item" is-active-root is-expanded>
+  {{- else if $active -}}
   <li class="DocsSidebar--nav-item" is-active>
   {{- else if $isExpand -}}
   <li class="DocsSidebar--nav-item" is-active-root is-expanded>
@@ -28,9 +30,9 @@
     </a>
 
     {{- if $hasChildren -}}
-      {{- $active := .Active -}}
+      {{- $bool := .Active -}}
       {{- $next := (add .Depth 1) -}}
-      {{- if $isSubVisible -}}
+      {{- if (or $isSubVisible $active) -}}
       <div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded>
       {{- else -}}
       <div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;">
@@ -40,7 +42,7 @@
             <div class="DocsSidebar--nav-item-collapse-content">
               <ul class="DocsSidebar--nav-subnav" depth="{{ .Depth }}" style="--depth:{{ .Depth }}">
                 {{- range (sort .Context.Pages.ByWeight) -}}
-                  {{- partial "sidebar.navitem" (dict "Context" . "Depth" $next "Active" $active) }}
+                  {{- partial "sidebar.navitem" (dict "Context" . "Depth" $next "Active" $bool) }}
                 {{- end -}}
               </ul>
             </div>
