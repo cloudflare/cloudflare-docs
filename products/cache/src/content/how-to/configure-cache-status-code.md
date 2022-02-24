@@ -11,7 +11,7 @@ Setting cache TTL based on response status overrides the [default cache behavior
 
 ## Caching limits
 
-The maximum caching limit for Free, Pro, and Business customers is 512MB, and the maximum caching limit for Enterprise customers is 5GB. If you need to raise the limits, contact your Customer Success Manager.
+The maximum caching limit for Free, Pro, and Business customers is 512MB per unique file, and the maximum caching limit for Enterprise customers is 5GB per unique file. Enterprise customers that need to raise the limits, contact your Customer Success Manager.
 
 ## Edge TTL
 
