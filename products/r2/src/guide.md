@@ -1,16 +1,18 @@
 ---
-order: 0
-title: "Guide"
+weight: 0
+title: "R2 Get started guide"
 pcx-content-type: get-started
 ---
 
 # R2 (beta) get started guide
 
-<Aside type="note" header="Beta registration">
+{{<Aside type="note" header="Beta registration">}}
 
 As of February 2022, R2 is currently under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
 
-</Aside>
+{{</Aside>}}
+
+Cloudflare R2 Storage 
 
 <!--
 R2 product and bucket description
@@ -69,25 +71,138 @@ To check that your bucket was created, run:
 ```sh
 wrangler r2 bucket list
 ```
-<!--
-// User binds buckets to a Worker.
+
 ## 4. Bind your bucket to a Worker
 
+You will need to bind your bucket to a Worker. Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
+```sh
+wrangler generate r2-demo https://github.com/cloudflare/worker-template
+```
 
+Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID. 
+
+Find your Account ID by going logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
+
+```sh
+name = "r2-demo"
+type = "javascript"
+compatibility_date = "2022-02-10"
+ 
+account_id = "your-account-id" # ← Replace with your Account ID.
+workers_dev = true
+```
+
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. You can customize `binding` and `bucket_name` to suit your project:
+
+```sh
+[[r2_buckets]]
+binding = 'MY_BUCKET'
+bucket_name = 'my-bucket'
+```
+
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration).
+
+<!--
 // Buckets API 
 // User downloads a file.
+-->
 
 ## 5. Buckets API
 
 
 
+```sh
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+ 
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  const key = url.pathname.slice(1);
+ 
+  switch (request.method) {
+    case 'PUT':
+      await MY_BUCKET.put(key, request.body);
+      return new Response(`Put ${key} successfully!`);
+    default:
+      return new Response('Route Not Found.', { status: 404 });
+  }
+}
+```
+
+GET requests
+
+```sh
+case 'GET':
+    const { value } = await MY_BUCKET.get(key);
+
+    if (value === null) {
+    return new Response('Object Not Found', { status: 404 });
+    }
+
+    return new Response(value);
+
+default:
+    // ...
+```
+
+DELETE requests
+
+```sh
+case 'DELETE':
+    await MY_BUCKET.delete(key);
+    return new Response('Deleted!', { status: 200 });
+
+default:
+    // ...
+```
+
+<!--
 // User decides whether to make the bucket public.
+-->
 
 ## 6. Bucket access and privacy
 
+At this step, there are no restrictions around reading from or writing to your bucket. To build authentication mechanisms within your Worker, refer to the following resources:
 
+1. [Basic Authentication](/workers/examples/basic-auth): Shows how to restrict access using the HTTP Basic schema.
+2. [Using Custom Headers](/workers/examples/auth-with-headers): Allow or deny a request based on a known pre-shared key in a header.
+3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
 
-## 7. Deploy your Worker/Bucket
+### Restricting PUT and DELETE requests
 
--->
+#### PUT
+
+#### DELETE
+
+## 7. Deploy your bucket
+
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/cli-wrangler/commands#publish) to deploy to Cloudflare's global network:
+
+```sh
+wrangler publish
+```
+
+To test
+
+```sh
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header --data 'test'
+Forbidden
+
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
+Put cat-pic1.jpg successfully!
+
+$ curl https://your-worker.dev/foo
+Forbidden
+
+$ curl https://your-worker.dev/cat-pic.jpg
+test
+```
+
+By completing this guide, you have successfully installed Wrangler and deployed your R2 bucket to Cloudflare.
+
+## Related resources
+
+[Workers Tutorials](https://developers.cloudflare.com/workers/tutorials)
+[Workers Examples](https://developers.cloudflare.com/workers/examples)
