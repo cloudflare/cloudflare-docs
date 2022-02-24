@@ -1,7 +1,8 @@
 {{- $url := .RelPermalink -}}
 {{- $root := relURL (printf "/%s/" .Section) -}}
-{{- $title := (title .Section) -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
+
+{{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
 
 <div class="DocsSidebar">
   <div class="DocsSidebar--sections">
