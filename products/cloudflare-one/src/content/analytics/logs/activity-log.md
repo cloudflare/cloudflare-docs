@@ -48,6 +48,12 @@ When you click on the row, you can see information related to the identity that 
 
 ## HTTP logs
 
+<Aside type='note'>
+
+When an HTTP request results in an error, the first 512 bytes of the request are logged for 30 days for internal troubleshooting. Otherwise, HTTP bodies are not logged.
+  
+</Aside>
+
 ### Explanation of the fields
 
 <TableWrap>
