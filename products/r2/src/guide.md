@@ -77,7 +77,7 @@ wrangler r2 bucket list
 You will need to bind your bucket to a Worker. Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
 ```sh
-wrangler generate r2-demo https://github.com/cloudflare/worker-template
+wrangler generate r2-demo
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID. 
@@ -93,12 +93,12 @@ account_id = "your-account-id" # ← Replace with your Account ID.
 workers_dev = true
 ```
 
-To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. You can customize `binding` and `bucket_name` to suit your project:
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update `binding` to a valid JavaScript identifier and `bucket_name` to the `<your-bucket-name>` you used to create your bucket in step 3:
 
 ```sh
 [[r2_buckets]]
-binding = 'MY_BUCKET'
-bucket_name = 'my-bucket'
+binding = '<your_bucket_name>'
+bucket_name = '<your_bucket_name>'
 ```
 
 Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration).
@@ -108,7 +108,7 @@ Find more detailed information on configuring your Worker in the [Wrangler Confi
 // User downloads a file.
 -->
 
-## 5. Buckets API
+## 5. Accessing your R2 bucket from your Worker
 
 
 
