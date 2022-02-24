@@ -280,25 +280,6 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 </details>
 
 <details>
-<summary>Dedicated SSL Alert</summary>
-<div>
-
-**Who is it for?**
-
-Customers with dedicated certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
-
-**Included with**
-
-All Cloudflare plans.
-
-**What should you do if you receive one?**
-
-<SSLTroubleshoot/>
-
-</div>
-</details>
-
-<details>
 <summary>SSL for SaaS Custom Hostnames Alert</summary>
 <div>
 

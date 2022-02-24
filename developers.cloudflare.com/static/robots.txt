@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /browser-isolation
 Disallow: /client-ip-geolocation
-Disallow: /dns
 
 Sitemap: https://developers.cloudflare.com/developers/sitemap.xml
 Sitemap: https://developers.cloudflare.com/1.1.1.1/sitemap.xml
@@ -12,12 +11,13 @@ Sitemap: https://developers.cloudflare.com/api-shield/sitemap.xml
 Sitemap: https://developers.cloudflare.com/automatic-platform-optimization/sitemap.xml
 Sitemap: https://developers.cloudflare.com/bots/sitemap.xml
 Sitemap: https://developers.cloudflare.com/byoip/sitemap.xml
+Sitemap: https://developers.cloudflare.com/cache/sitemap.xml
 Sitemap: https://developers.cloudflare.com/cloudflare-one/sitemap.xml
 Sitemap: https://developers.cloudflare.com/ddos-protection/sitemap.xml
 Sitemap: https://developers.cloudflare.com/distributed-web/sitemap.xml
+Sitemap: https://developers.cloudflare.com/dns/sitemap.xml
 Sitemap: https://developers.cloudflare.com/docs-engine/sitemap.xml
 Sitemap: https://developers.cloudflare.com/email-routing/sitemap.xml
-Sitemap: https://developers.cloudflare.com/events/sitemap.xml
 Sitemap: https://developers.cloudflare.com/firewall/sitemap.xml
 Sitemap: https://developers.cloudflare.com/fundamentals/sitemap.xml
 Sitemap: https://developers.cloudflare.com/http3/sitemap.xml
@@ -26,9 +26,12 @@ Sitemap: https://developers.cloudflare.com/load-balancing/sitemap.xml
 Sitemap: https://developers.cloudflare.com/logs/sitemap.xml
 Sitemap: https://developers.cloudflare.com/magic-transit/sitemap.xml
 Sitemap: https://developers.cloudflare.com/magic-firewall/sitemap.xml
+Sitemap: https://developers.cloudflare.com/magic-wan/sitemap.xml
 Sitemap: https://developers.cloudflare.com/network-interconnect/sitemap.xml
+Sitemap: https://developers.cloudflare.com/network-error-logging/sitemap.xml
 Sitemap: https://developers.cloudflare.com/pages/sitemap.xml
 Sitemap: https://developers.cloudflare.com/page-shield/sitemap.xml
+Sitemap: https://developers.cloudflare.com/partners/sitemap.xml
 Sitemap: https://developers.cloudflare.com/railgun/sitemap.xml
 Sitemap: https://developers.cloudflare.com/randomness-beacon/sitemap.xml
 Sitemap: https://developers.cloudflare.com/registrar/sitemap.xml

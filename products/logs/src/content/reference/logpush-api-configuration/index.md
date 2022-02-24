@@ -16,18 +16,17 @@ The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates t
 
 | Operation | Description | URL |
 |---|---|---|
-| POST | Create job | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs |
-| GET | Retrieve job | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt; |
-| GET | Retrieve all jobs for all datasets | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs |
-| GET | Retrieve all jobs for a dataset  | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/jobs |
-| GET | Retrieve all available fields for a dataset  | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields |
-| GET | Retrieve all default fields for a dataset  | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields/default |
-| PUT | Update job | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt; |
-| DELETE | Delete job | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt; |
-| POST | Check whether destination exists | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/destination/exists |
-| POST | Get ownership challenge | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership |
-| POST | Validate ownership challenge | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate |
-| POST | Validate log options | https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin |
+| POST | Create job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-create-logpush-job) |
+| GET | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-logpush-job-details) |
+| GET | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs) |
+| GET | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs-for-a-dataset) |
+| GET | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields`](https://api.cloudflare.com/#logpush-jobs-fields) |
+| PUT | Update job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-update-logpush-job) |
+| DELETE | Delete job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-delete-logpush-job) |
+| POST | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/destination/exists`](https://api.cloudflare.com/#logpush-jobs-check-destination-exists) |
+| POST | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership`](https://api.cloudflare.com/#logpush-jobs-get-ownership-challenge) |
+| POST | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
+| POST | Validate log options | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
 
 </TableWrap>
 
@@ -86,6 +85,7 @@ You can specify your cloud service provider destination via the required **desti
 * **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 * **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
 * **Microsoft Azure**: service-level SAS URL with `https` replaced by `azure` + optional directory added before query string; for example: `azure://<BlobContainerPath>/[dir]?<QueryString>`
+* **New Relic** New Relic endpoint URL which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for EU + a license key + a format; for example: for US `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"` and for EU `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 * **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
 * **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SumoEndpoint>/receiver/v1/http/<UniqueHTTPCollectorCode>`
 

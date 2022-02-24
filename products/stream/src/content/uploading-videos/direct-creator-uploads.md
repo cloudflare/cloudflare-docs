@@ -1,6 +1,6 @@
 ---
 order: 3
-pcx-content-type: interim
+pcx-content-type: tutorial
 ---
 
 # Direct creator uploads

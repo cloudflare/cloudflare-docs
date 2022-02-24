@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 The Direct Creator Upload feature in Cloudflare Images lets your users upload pictures with a one-time upload URL. By using Direct Creator Upload, you can accept uploads without exposing your API key or token to the client. It also eliminates the need for an intermediary storage bucket and the storage/egress costs associated with it.
 
-To request a one-time upload URL, simply have your back-end (or Worker script) call the `direct_upload` endpoint:
+To request a one-time upload URL, call the [`direct_upload` endpoint](https://api.cloudflare.com/#cloudflare-images-create-authenticated-direct-upload-url-v2) in your back-end (or Worker script):
 
 ```bash
 curl --request POST \
@@ -40,10 +40,10 @@ Previously, in version 1 of the `direct_upload` endpoint, the ID was an identifi
 
 </Aside>
 
-With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images ), but  it is possible to fetch an image record with the provided ID to check its current status: 
+With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images ), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<Image_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
 
 ```bash
-curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/2cdc28f0-017a-49c4-9ed7-87056c83901 \
+curl  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/<IMAGE_ID> \
  --header 'Content-Type: application/json' \
  --header 'Authorization: Bearer :token'
 ```

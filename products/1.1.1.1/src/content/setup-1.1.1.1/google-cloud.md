@@ -10,7 +10,7 @@ Google Cloud supports configuring [outbound server policy](https://cloud.google.
 
 <Aside type="note">
 
-If you are using [Cloudflare for Teams](https://developers.cloudflare.com/cloudflare-one/), you can choose assigned [locations](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/locations) to apply custom [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder) via Gateway.
+If you are using [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/), you can choose assigned [locations](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/locations) to apply custom [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder) via Gateway.
 
 </Aside>
 

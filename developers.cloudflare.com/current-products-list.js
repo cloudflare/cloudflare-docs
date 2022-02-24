@@ -61,6 +61,11 @@ const products = [
     wrap: true,
   },
   {
+    title: "DNS",
+    path: "dns",
+    icon: "dns",
+  },
+  {
     title: "DNS Resolver",
     path: "1.1.1.1",
     icon: "1.1.1.1",

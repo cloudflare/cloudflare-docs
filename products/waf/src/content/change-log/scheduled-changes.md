@@ -38,48 +38,22 @@ pcx-content-type: changelog
     <tbody>
         <tr>
             <td>
-                2022-02-07
+                2022-02-21
             </td>
             <td>
-                2022-02-14
-            </td>
-            <td>
-                Cloudflare Php
-            </td>
-            <td>
-                N/A
-            </td>
-            <td>
-                PHP100001
-            </td>
-            <td>
-                PHP - Command Injection - CVE:CVE-2012-2336, CVE:CVE-2012-2311, CVE:CVE-2012-1823
-            </td>
-            <td>
-                Challenge
-            </td>
-            <td>
-                Block
-            </td>
-        </tr>
-        <tr>
-            <td>
-                2022-02-07
-            </td>
-            <td>
-                2022-02-14
+                2022-02-28
             </td>
             <td>
                 Cloudflare Specials
             </td>
             <td>
-                ...dc29b753
+               ...5ea3d579
             </td>
             <td>
-                100515B
+                100518
             </td>
             <td>
-                Log4j Body Obfuscation
+                SAP - Code Injection - CVE:CVE-2022-22532
             </td>
             <td>
                 N/A

@@ -784,10 +784,10 @@ jobs:
         with:
           node-version: 14.2.0
       - run: |
-          npm install
+          yarn install --pure-lockfile
           mkdir .docs
-          npm run ghactionsbootstrap
-          npm run build
+          yarn ghactionsbootstrap
+          yarn build
 
   build-railgun:
     runs-on: ubuntu-latest

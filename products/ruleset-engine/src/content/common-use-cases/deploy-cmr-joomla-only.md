@@ -25,16 +25,15 @@ The example below uses the [Update ruleset](/rulesets-api/update) endpoint to de
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "enabled": false,
           "categories": [
@@ -51,7 +50,7 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`{zone-id}`).
+* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
 * `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
@@ -64,16 +63,15 @@ curl -X PUT \
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "enabled": false,
           "categories": [
@@ -90,7 +88,7 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "{managed-ruleset-id}"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
 * `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
 * `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
@@ -99,7 +97,7 @@ curl -X PUT \
 
 You can add more than one category override to a rule.
 
-The example below uses a `PUT` request to add two overrides to the rule that executes a Managed Ruleset (`{managed-ruleset-id}`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses a `PUT` request to add two overrides to the rule that executes a Managed Ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Add more than one category override at the zone level</summary>
@@ -107,16 +105,15 @@ The example below uses a `PUT` request to add two overrides to the rule that exe
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "true",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "enabled": false,
           "categories": [
@@ -146,16 +143,15 @@ curl -X PUT \
 
 ```json
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/account/{account-id}/rulesets/phases/http_request_firewall_managed/entrypoint" \
+"https://api.cloudflare.com/client/v4/account/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {
       "action": "execute",
       "expression": "cf.zone.name eq \"example.com\"",
       "action_parameters": {
-        "id": "{managed-ruleset-id}",
+        "id": "<MANAGED_RULESET_ID>",
         "overrides": {
           "enabled": false,          
           "categories": [

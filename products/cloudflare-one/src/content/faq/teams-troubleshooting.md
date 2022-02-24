@@ -53,13 +53,11 @@ You may not see analytics on the Overview page for the following reasons:
 
 ## I see a "No Browsers Available" alert.
 
-If you encounter this error please [file feedback](https://developers.cloudflare.com/cloudflare-one/connections/connect-browsers/known-limitations#submitting-feedback) via the WARP client and we will investigate.
+If you encounter this error please [file feedback](/policies/browser-isolation/known-limitations) via the WARP client and we will investigate.
 
 ## I see a "Maximum Sessions Reached" alert.
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
-
-Safari is more susceptible to presenting this error. See [workaround](/connections/connect-browsers/known-limitations#safari).
 
 ## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
 
@@ -85,6 +83,10 @@ An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First
 1. Make sure you run your tunnel (step 6 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#6-run-the-tunnel).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
+
+## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
+
+This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/identity/users/short-lived-certificates).
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 

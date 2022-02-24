@@ -42,7 +42,7 @@ Access to certain features depends on a customer's [plan type](/plans).
 ## Prerequisites
 
 * Cloudflare’s CDN is required to use the waiting room feature.
-* Configure a [proxied DNS record](https://support.cloudflare.com/hc/articles/360019093151) or a [proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
+* Configure a [proxied DNS record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) or a [proxied load balancer](https://developers.cloudflare.com/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
 * Visitors must enable cookies. Refer to [Waiting room cookie](/reference/waiting-room-cookie) for information on how cookies are used in Cloudflare Waiting Rooms.
 
 ## Get started

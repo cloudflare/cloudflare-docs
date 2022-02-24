@@ -22,7 +22,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 1 | [Custom Legacy](/edge-certificates/custom-certificates/)|
     | 2 | [Custom SNI-Only](/edge-certificates/custom-certificates/)|
     | 3 | [Custom Hostname (SSL for SaaS)](/ssl-for-saas/)|
-    | 4 | [Advanced](/edge-certificates/advanced-certificate-manager) or [Dedicated](https://support.cloudflare.com/hc/articles/228009108)|
+    | 4 | [Advanced](/edge-certificates/advanced-certificate-manager)|
     | 5 | [Universal](/edge-certificates/universal-ssl/)|
 
 4. **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
@@ -55,7 +55,7 @@ Cloudflare determines this priority in the following order (assuming each record
 
     1. [New Custom Hostname](/ssl-for-saas/getting-started) (Belonging to a SaaS Provider)
     1. [Legacy Custom Hostname](/ssl-for-saas/reference/versioning) (Belonging to a SaaS Provider)
-    1. [DNS](https://support.cloudflare.com/hc/articles/200169626) (Belonging to the logical DNS zone)
+    1. [DNS](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) (Belonging to the logical DNS zone)
 
 1. **Wildcard hostname match**:
     

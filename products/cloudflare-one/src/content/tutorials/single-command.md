@@ -11,7 +11,7 @@ You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applicatio
 
 Tunnels are [persistent objects](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) that, once created, do not need to be recreated each time. The connections inside of a Tunnel are ephemeral; your service can restart or be taken offline without deleting and recreating the Tunnel or associated DNS entries.
 
-You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). Doing so requires the use of a [configuration file](/connections/connect-apps/configuration/config), which Cloudflare recommends in most use cases. However, if you want to quickly spin up a new Tunnel, you can also use a single command to create, run, and route traffic to a Tunnel.
+You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/tutorials/multi-origin) or [multiple protocols simultaneously](/tutorials/gitlab). Doing so requires the use of a [configuration file](/connections/connect-apps/configuration), which Cloudflare recommends in most use cases. However, if you want to quickly spin up a new Tunnel, you can also use a single command to create, run, and route traffic to a Tunnel.
 
 <Aside>
 

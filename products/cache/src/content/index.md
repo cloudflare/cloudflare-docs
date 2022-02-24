@@ -17,4 +17,4 @@ Cloudflare caches static content based on the following factors:
 - Origin headers that indicate dynamic content
 - Page rules that bypass cache on cookie
 
-Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](https://support.cloudflare.com/hc/articles/200169626) DNS records.
+Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) DNS records.

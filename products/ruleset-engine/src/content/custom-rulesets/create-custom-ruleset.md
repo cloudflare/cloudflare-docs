@@ -13,10 +13,8 @@ The following `POST` request creates a new custom ruleset. Set the `kind` field 
 ---
 header: Request
 ---
-curl -X POST \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
-"https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "name": "Custom Ruleset 1",
   "description": "My First Custom Ruleset",

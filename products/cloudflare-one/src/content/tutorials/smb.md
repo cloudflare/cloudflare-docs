@@ -16,8 +16,8 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 ## Before you start
 1. Create a Cloudflare account
-1. [Add an active zone to Cloudflare](https://support.cloudflare.com/hc/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/installation) on the host and client machines
+1. Add an active zone to Cloudflare
+1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/tunnel-guide) on the host and client machines
 
 ---
 
@@ -25,7 +25,7 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 1. Make sure `cloudflared` is installed on the machine hosting the file share.
 
-1. Run the following command to [authenticate `cloudflared`](/connections/connect-apps/install-and-setup/setup) into your Cloudflare account.
+1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
 ```bash
 \cloudflared.exe tunnel login

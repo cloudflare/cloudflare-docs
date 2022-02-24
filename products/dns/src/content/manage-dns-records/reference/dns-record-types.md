@@ -15,7 +15,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (A for IPv4 addresses and AAAA for IPv6 addressess).
+[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (A for IPv4 addresses and AAAA for IPv6 addresses).
 
 These records include the following fields:
 
@@ -131,4 +131,4 @@ You only need to add NS records when you are [creating custom or vanity nameserv
 
 [DS and DNSKEY](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) records help implement DNSSEC, which cryptographically signs DNS records to prevent domain spoofing.
 
-Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/manage-dns-records/how-to/dnssec).
+Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/additional-options/dnssec).

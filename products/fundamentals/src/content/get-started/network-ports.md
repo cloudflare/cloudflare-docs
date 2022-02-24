@@ -61,7 +61,7 @@ By default, Cloudflare proxies traffic destined for the HTTP/HTTPS ports listed 
 
 If traffic for your domain is destined for a different port than listed above, either:
 
-- Add the subdomain as a [gray-clouded record](https://support.cloudflare.com/hc/en-us/articles/200169626) via your Cloudflare DNS app, or
+- Add the subdomain as a [gray-clouded record](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) via your Cloudflare DNS app, or
 - Enable [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started).
 
 Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing one of the following:

@@ -120,6 +120,8 @@ For troubleshooting a specific pool's health, use the [Pool Health Details](http
 
 </details>
 
+### Unexpected health status
+
 If you notice that healthy pools are being marked unhealthy:
 
 - Review [how origins and pools become unhealthy](/understand-basics/health-details).

@@ -5,13 +5,13 @@ pcx-content-type: reference
 
 # Manage subdomains
 
-Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://support.cloudflare.com/hc/articles/205195708), you also might want to set up a *subdomain*.
+Once you have [added your domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2) and [updated your nameservers](https://developers.cloudflare.com/dns/zone-setups/full-setup), you also might want to set up a subdomain.
 
 Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
 
 ## Create a subdomain
 
-If you have already added a subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain (`blog`, `store`).
+If you have already added a subdomain at your host, create a corresponding [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that subdomain (`blog`, `store`).
 
 ## Set up redirects
 
@@ -19,7 +19,7 @@ If you have already added a subdomain at your host, create a corresponding [DNS 
 
 Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your root domain (`example.com`).
 
-1. Create a [proxied DNS A record](https://support.cloudflare.com/hc/articles/360019093151) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
+1. Create a [proxied DNS A record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
     <Example>
 
@@ -43,7 +43,7 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
 
 Sometimes, you might want all traffic to your root domain (`example.com`) to actually go to a subdomain (`www.example.com`).
 
-1. If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://support.cloudflare.com/hc/articles/360019093151) for that subdomain.
+1. If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that subdomain.
 1. Create a proxied DNS A record for your root domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
     <Example>

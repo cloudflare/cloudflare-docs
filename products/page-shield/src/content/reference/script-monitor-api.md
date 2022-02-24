@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 3
 pcx-content-type: reference
 ---
 
@@ -39,7 +39,7 @@ The following table summarizes the available operations:
 
 ## API notes
 
-The malicious code classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 60 — scripts with a score value above the threshold are considered malicious.
+The malicious code classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 10 — scripts with a score value above the threshold are considered malicious.
 
 ## Common API calls
 
@@ -108,7 +108,7 @@ This example fetches a list of scripts monitored by Script Monitor on hostname `
 ---
 header: Request
 ---
-curl "https://dash.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts?hosts=example.net&page=1&per_page=15" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -173,7 +173,7 @@ This example obtains the details of a script monitored by Page Shield with scrip
 ---
 header: Request
 ---
-curl "https://dash.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
+curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8337233faec2357ff84465a919534e4d" \
 -H "Authorization: Bearer <API_TOKEN>"
 ```
 

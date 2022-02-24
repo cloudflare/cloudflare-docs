@@ -19,8 +19,8 @@ Use one of the following API endpoints:
 
 | Operation                            | Method + Endpoint                                     |
 |--------------------------------------|-------------------------------------------------------|
-| [Delete account ruleset][dr-account] | `DELETE /accounts/{account-id}/rulesets/{ruleset-id}` |
-| [Delete zone ruleset][dr-zone]       | `DELETE /zones/{zone-id}/rulesets/{ruleset-id}`       |
+| [Delete account ruleset][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Delete zone ruleset][dr-zone]       | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
 
 [dr-account]: https://api.cloudflare.com/#account-rulesets-delete-account-ruleset
 [dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-zone-ruleset
@@ -39,14 +39,13 @@ To delete the ruleset, update or delete any rules that reference the ruleset and
 
 The following example request deletes an existing ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
 curl -X DELETE \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}"
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## Delete ruleset version
@@ -57,8 +56,8 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Delete a version of an account ruleset][drv-account] | `DELETE /accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}` |
-| [Delete a version of a zone ruleset][drv-zone] | `DELETE /zones/{zone-id}/rulesets/{ruleset-id}/versions/{version-number}` |
+| [Delete a version of an account ruleset][drv-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
+| [Delete a version of a zone ruleset][drv-zone] | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
 
 [drv-account]: https://api.cloudflare.com/#account-rulesets-delete-a-version-of-an-account-ruleset
 [drv-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-version-of-a-zone-ruleset
@@ -79,12 +78,11 @@ To delete the ruleset version, update or delete any rules that reference the rul
 
 The following example request deletes a version of an existing ruleset.
 
-```json
+```bash
 ---
 header: Request
 ---
 curl -X DELETE \
-  -H "X-Auth-Email: user@example.com" \
-  -H "X-Auth-Key: REDACTED" \
-  "https://api.cloudflare.com/client/v4/accounts/{account-id}/rulesets/{ruleset-id}/versions/{version-number}"
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>" \
+-H "Authorization: Bearer <API_TOKEN>"
 ```

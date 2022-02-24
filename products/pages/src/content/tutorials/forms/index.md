@@ -92,7 +92,7 @@ The rest of this tutorial will focus on building an HTML form on Pages, includin
 
 <Aside type="info" header="GitHub Repository">
 
-The source code for this example is [available on GitHub](https://github.com/lukeed/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
+The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
 </Aside>
 
@@ -191,7 +191,7 @@ This HTML document will contain a form with a few fields for the user to fill ou
 
 Technically, only the `<form>` and its child elements are necessary. The `<head>` and the enclosing `<html>` and `<body>` tags are optional and not strictly necessary for a valid HTML document.
 
-The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/lukeed/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
+The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
 </Aside>
 
@@ -325,7 +325,7 @@ After clicking the **Save and Deploy** button, your Pages project will begin its
 
 In this tutorial, you built and deployed a website and its back-end logic using Cloudflare Pages with its Workers integration. You created a static HTML document with a form that communicates with a Worker handler to parse the submission request(s).
 
-If you would like to review the full source code for this application, you can find it on [GitHub](https://github.com/lukeed/submit.pages.dev).
+If you would like to review the full source code for this application, you can find it on [GitHub](https://github.com/cloudflare/submit.pages.dev).
 
 ## Related resources
 

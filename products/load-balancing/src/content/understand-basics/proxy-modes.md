@@ -23,7 +23,7 @@ Cloudflare performs layer 7 load balancing when traffic to your hostname is **pr
 
 ### Benefits
 
-In comparison to [DNS-only load balancing](#dns-only-load-balancing-gray-clouded), layer 7 load balancing:
+In comparison to [DNS-only load balancing](#gray-clouded-dns-only-load-balancing), layer 7 load balancing:
 
 - Protects origin servers from DDoS attacks by hiding their IP addresses.
 - Offers faster failover and more accurate routing, which can otherwise be affected by DNS caching.
@@ -41,6 +41,10 @@ DNS-only load balancers route traffic by returning specific IP addresses in resp
 When a client visits your application, Cloudflare provides the address for a healthy origin server (determined by your [pool-level steering policy](/understand-basics/traffic-steering/pool-level-steering) and [origin-level steering policy](/understand-basics/traffic-steering/origin-level-steering)). However, Cloudflare relies on DNS resolvers respecting the short TTL to re-query Cloudflare's DNS for an updated list of healthy addresses. If a client has a cached DNS response, they will go to their previous destination, potentially ignoring your load balancer.
 
 Cloudflare performs DNS-only load balancing when traffic to your hostname is **not proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with a gray cloud.
+
+### Benefits
+
+If your load balancer is attached to a hostname used for an [MX, SRV, or TXT record](/additional-options/additional-dns-records) — and not an A, AAAA, or CNAME record — its proxy mode should be **DNS-only**.
 
 ### Limitations
 

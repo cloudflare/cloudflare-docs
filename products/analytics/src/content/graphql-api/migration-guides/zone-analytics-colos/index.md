@@ -4,16 +4,9 @@ pcx-content-type: reference
 ---
 # Zone Analytics Colos Endpoint to GraphQL Analytics
 
-This guide shows how you might migrate from the deprecated (and soon to be
-sunset) zone analytics API to the GraphQL API. It provides an example for a
-plausible use-case of the colos endpoint, then shows how that use-case is
-translated to the GraphQL API. It also explores features of the GraphQL API
-that make it more powerful than the API it replaces.
+This guide shows how you might migrate from the deprecated (and soon to be sunset) zone analytics API to the GraphQL API. It provides an example for a plausible use-case of the colos endpoint, then shows how that use-case is translated to the GraphQL API. It also explores features of the GraphQL API that make it more powerful than the API it replaces.
 
-In this example, we want to calculate the number of requests for a particular
-colo, broken down by the hour in which the requests occurred. Referring to the
-zone analytics colos endpoint, we can construct a "curl" which retrieves the
-data from the API.
+In this example, we want to calculate the number of requests for a particular colo, broken down by the hour in which the requests occurred. Referring to the zone analytics colos endpoint, we can construct a curl which retrieves the data from the API.
 
 ```bash
 curl -H "Authorization: Bearer $API_TOKEN" "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/analytics/colos?since=2020-12-10T00:00:00Z"  > colos_endpoint_output.json
@@ -25,28 +18,25 @@ This query says:
 - Fetch colos analytics for `ZONE_ID` with a time range that starts on
   `2020-12-10T00:00:00Z` (`since` paramenter) to now.
 
-The question that we want to answer is: "what is the number of requests for ZHR
-per hour?" Using the colos endpoint response data and some wrangling by jq we
-can answer that question with this command:
+The question that we want to answer is: "What is the number of requests for ZHR per hour?" Using the colos endpoint response data and some wrangling by jq we can answer that question with this command:
 
 ```bash
 cat colos_endpoint_output.json | jq  -c '.result[] | {colo_id: .colo_id, timeseries: .timeseries[]} | {colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all} | select(.requests > 0) | select(.colo_id == "ZRH") '
 ```
 
-This jq command is a bit of a mouthful, so let's break it down:
+This jq command is complex, so we can break it down:
 
 ```bash
 .result[]
 ```
 
-This means "break out the result array into individual json lines"
+This means that the result array is split into individual json lines.
 
 ```bash
 {colo_id: .colo_id, timeseries: .timeseries[]}
 ```
 
-This breaks out each json line into multiple json lines. Each resulting line
-contains a `colo_id` and one element of the `timeseries` array. 
+This breaks each json line into multiple json lines. Each resulting line contains a `colo_id` and one element of the `timeseries` array.
 
 ```bash
 {colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all}
@@ -61,7 +51,7 @@ select(.requests > 0) | select(.colo_id == "ZRH")
 
 This selects only lines that contain more than 0 requests and the `colo_id` is ZRH.
 
-So the final data we get looks something like this:
+The final data we get looks like the following response:
 
 <details>
 <summary>Response</summary>
@@ -85,22 +75,13 @@ So the final data we get looks something like this:
 </div>
 </details>
 
-So, how do we do the same thing using the GraphQL API?
+How do we get the same result using the GraphQL API?
 
-The GraphQL API allows us to be much more specific about the data that we want
-to retrieve. While the colos endpoint forces us to retrieve all the information
-is has about the breakdown of requests and bandwidth per colo, using the
-GraphQL API allows us to fetch only the information we are interested in.
+The GraphQL API allows us to be much more specific about the data that we want to retrieve. While the colos endpoint forces us to retrieve all the information about the breakdown of requests and bandwidth per colo, using the GraphQL API allows us to fetch only the information we are interested in.
 
-The data we want is about HTTP requests. Hence, we use the canonical source for
-HTTP request data, also known as `httpRequestsAdaptiveGroups`. This node in
-GraphQL API allows you to filter and group by almost any dimension of an http
-request imaginable. It is "Adaptive" so responses will be fast since it is
-driven by our 
-["ABR" technology](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
+The data we want is about HTTP requests. Hence, we use the canonical source for HTTP request data, also known as `httpRequestsAdaptiveGroups`. This node in GraphQL API allows you to filter and group by almost any dimension of an HTTP request imaginable. It is [Adaptive](/graphql-api/migration-guides/network-analytics-v2/about#adaptive-bitrate-sampling) so responses will be fast since it is driven by our [ABR technology](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
 
-Let's craft a GraphQL API query to retrieve the data we need to answer the
-question: "what is the number of requests for ZHR per hour?" 
+The following is a GraphQL API query to retrieve the data we need to answer the question: "What is the number of requests for ZHR per hour?"
 
 ```text
 {
@@ -125,7 +106,7 @@ question: "what is the number of requests for ZHR per hour?"
 }
 ```
 
-Then we can run it with "curl":
+Then we can run it with curl:
 
 ```bash
 curl -X POST -H 'Authorization: Bearer $API_TOKEN'  https://api.cloudflare.com/client/v4/graphql -d "@./coloGroups.json" > graphqlColoGroupsResponse.json
@@ -137,39 +118,26 @@ We can answer our question in the same way as before using jq:
 cat graphqlColoGroupsResponse.json| jq -c '.data.viewer.zones[] | .httpRequestsAdaptiveGroups[] | {colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes}'
 ```
 
-This command is much simpler than what we had before, because the data returned
-by the GraphQL API is much simpler than what is returned by the colos endpoint.
+This command is much simpler than what we had before, because the data returned by the GraphQL API is more specific than what is returned by the colos endpoint.
 
-Still, it is worth explaining the command since it will help to understand some
-of the concepts underlying the GraphQL API.
+Still, it is worth explaining the command since it will help to understand some of the concepts underlying the GraphQL API.
 
 ```bash
 .data.viewer.zones[]
 ```
 
-The format of a GraphQL response is much the same as the query. A successful
-response always contains a "data" object which wraps the data in the response.
-A query will always have a "viewer" object which represents your user. Then, we
-unwrap the zones objects, one per line. Our query only has one zone (since this
-is how we chose to do it). But a query could have multiple zones as well. 
+The format of a GraphQL response is very similar to the query. A successful response always contains a `data` object which wraps the data in the response. A query will always have a `viewer` object which represents your user. Then, we unwrap the zones objects, one per line. Our query only has one zone (since this is how we chose to do it). But a query could have multiple zones as well.
 
 ```bash
 .httpRequestsAdaptiveGroups[]
 ```
 
-The httpRequestsAdaptiveGroups field is a list, where each datapoint in the
-list represents a combination of the dimensions that were selected, along with
-the aggregation that was selected for that combination of the dimensions. Here,
-we unwrap each of the datapoints, one per row.
+The `httpRequestsAdaptiveGroups` field is a list, where each datapoint in the list represents a combination of the dimensions that were selected, along with the aggregation that was selected for that combination of the dimensions. Here, we unwrap each of the datapoints, one per row.
 
 ```bash
 {colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes}
 ```
 
-This is straightforward: it just selects the attributes of each datapoint that
-we are interested in, in the format which we used previously in the colos
-endpoint.
+This is straightforward: it just selects the attributes of each datapoint that we are interested in, in the format which we used previously in the colos endpoint.
 
-The GraphQL API is so much more powerful than this, though. You can filter and
-group the data by any dimensions you can think of. This feature is totally
-absent from the colos endpoint in the Zone Analytics API.
+The GraphQL API is a very powerful tool, as you can filter and group the data by many dimensions. This feature is totally absent from the colos endpoint in the Zone Analytics API.

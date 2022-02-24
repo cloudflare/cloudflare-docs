@@ -9,7 +9,7 @@ pcx-content-type: reference
 
 GraphQL structures data as a graph. GraphQL uses a schema to define the objects and their hierarchy in your data graph. You can explore the edges of the graph by using queries to get the data you need. These queries must respect the structure of the schema.
 
-At the core of a GraphQL query is a _node_, followed by its _fields_. The node is an object of a certain _type_; the type specifies the fields that make up the object.
+At the core of a GraphQL query is a **node**, followed by its **fields**. The node is an object of a certain **type**; the type specifies the fields that make up the object.
 
 A field can be another node, in which case the appropriate query would contain nested elements. Some nodes look like functions that can take on arguments to limit the scope of what they can act on. You can apply filters at each node.
 
@@ -115,7 +115,7 @@ header: Query response from firewallEventsAdaptive
 
 ## Query two data sets in a single API call
 
-This example query employs a broad range of GraphQL functionality. The example queries two data sets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. (Note that you must include the `limit` argument, which can be equal or up to 10,000.)
+This example query employs a broad range of GraphQL functionality. The example queries two data sets for the specified zone simultaneously, applies filters and aggregations, and sets a limit on the number of records returned. Note that you must include the `limit` argument, which can be equal or up to 10,000.
 
 ```json
 ---
@@ -159,7 +159,7 @@ This is only an example. You must specify the <code>zoneTag</code> for your doma
 
 The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
 
-For an introduction to browsing the Analytics GraphQL API, see [_Explore the Analytics schema with GraphiQL_](/graphql-api/getting-started/explore-graphql-schema).
+For an introduction to browsing the Analytics GraphQL API, refer to [Explore the Analytics schema with GraphiQL](/graphql-api/getting-started/explore-graphql-schema).
 
 ## Helpful Resources
 
@@ -167,12 +167,12 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 
 ### Cloudflare specific
 
-* [_Understanding the Cloudflare Dashboard_](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
-* [_How to find your zoneTag using the API_](https://api.cloudflare.com/#getting-started-resource-ids)
+* [Understanding the Cloudflare Dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
+* [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
 
 ### General info on the GraphQL framework
 
-* [_How to use GraphQL (tutorials)_](https://www.howtographql.com/)
-* [_Thinking in Graphs_](https://graphql.org/learn/thinking-in-graphs/)
-* [_What data can you can query in the GraphQL type system (schemas)_](https://graphql.org/learn/schema/)
-* [_How to pass variables in GraphiQL (Medium article with quick tips)_](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)
+* [How to use GraphQL (tutorials)](https://www.howtographql.com/)
+* [Thinking in Graphs](https://graphql.org/learn/thinking-in-graphs/)
+* [What data can you can query in the GraphQL type system (schemas)](https://graphql.org/learn/schema/)
+* [How to pass variables in GraphiQL (Medium article with quick tips)](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)

@@ -48,12 +48,12 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
     - <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
 
-      - Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array</Type></Code>.
+      - Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array</Type></Code>.
 
 - <Code>crypto.randomUUID()</Code>
   <Type>string</Type>
 
-  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt)
+  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
 
 </Definitions>
 

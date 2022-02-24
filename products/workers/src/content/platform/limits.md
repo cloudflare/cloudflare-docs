@@ -12,7 +12,7 @@ pcx-content-type: concept
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50        | 50        |
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 32/worker | 32/worker |
+| [Environment variables](#environment-variables)                                 | 64/worker | 64/worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Script size](#script-size)                                                     | 1 MB      | 1 MB      |
 | [Number of scripts](#number-of-scripts)                                         | 30        | 100       |
@@ -84,7 +84,8 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 | [Writes/second (same key)](#kv)       | 1                     | 1          |
 | [Operations/worker invocation](#kv)   | 1000                  | 1000       |
 | [Namespaces](#kv)                     | 100                   | 100        |
-| [Keys/namespace](#kv)                 | 1 GB                  | unlimited  |
+| [Storage/namespace](#kv)              | 1 GB                  | unlimited  |
+| [Keys/namespace](#kv)                 | unlimited             | unlimited  |
 | [Key size](#kv)                       | 512 bytes             | 512 bytes  |
 | [Key metadata](#kv)                   | 1024 bytes            | 1024 bytes |
 | [Value size](#kv)                     | 25 MiB                | 25 MiB     |
@@ -217,7 +218,7 @@ If the system detects that a Worker is deadlocked on open connections — for ex
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 32 variables.
+The maximum number of environment variables (secret and text combined) for a Worker is 64 variables.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
@@ -244,6 +245,7 @@ Workers KV supports:
 
 - Up to 100 Namespaces per account
 - Unlimited keys per namespace
+- Unlimited storage per namespace (except on the free tier, which is limited to 1 GB)
 - Keys of up to 512 bytes
 - Values of up to 25 MiB
 - Metadata of up to 1024 bytes per key

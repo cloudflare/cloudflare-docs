@@ -34,7 +34,7 @@ To prevent this situation, Cloudflare recommends that you perform these steps to
 
 You must have one of the following:
 
-* [A zone onboarded to Cloudflare](https://support.cloudflare.com/hc/articles/205195708) but without updated DNS records
+* [A zone onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) but without updated DNS records
 * [An IP application onboarded to Spectrum](https://developers.cloudflare.com/spectrum/get-started)
 * [An IP Prefix onboarded to Magic Transit](https://developers.cloudflare.com/magic-transit/get-started)
 
@@ -61,12 +61,6 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 * [Configure an override for the HTTP DDoS Attack Protection Managed Ruleset](/managed-rulesets/http/configure-api#configure-an-override-for-http-ddos-attack-protection)
 * [Configure an override for the Network-layer DDoS Attack Protection Managed Ruleset](/managed-rulesets/network/configure-api#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset)
-
-<Aside type="warning" header="Notes">
-
-* Currently, Spectrum and Magic transit customers do not have access to **Firewall** > **DDoS** tab and have to configure the DDoS Attack Protection Managed Rulesets using the API.
-
-</Aside>
 
 ### 2. Review flagged traffic
 

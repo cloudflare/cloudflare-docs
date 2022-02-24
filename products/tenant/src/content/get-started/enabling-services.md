@@ -55,7 +55,7 @@ Allowed rate plans are:
 * PARTNERS_BIZ
 * PARTNERS_ENT
 
-These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select including `dedicated_certificates`, `dedicated_certificates_custom`, `page_rules`, etc. These are specified as `component_values` in the subscriptions creation request.
+These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select such as `page_rules`. These are specified as `component_values` in the subscriptions creation request.
 
 An example of a `POST` for such a request may look like this:
 

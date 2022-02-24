@@ -22,7 +22,7 @@ You must deploy Rate Limiting rules to the `http_ratelimit` phase.
 
 ## Create a Rate Limiting rule
 
-To create a Rate Limiting rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (see example below).
+To create a Rate Limiting rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (refer to the example below).
 
 Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
 

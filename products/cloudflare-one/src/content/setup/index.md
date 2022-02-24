@@ -15,11 +15,11 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 1. On your Account Home in the Cloudflare Dashboard, click on the Zero Trust icon.
 
-2. On the onboarding screen, choose a [team name](/glossary#team-name).
+1. On the onboarding screen, choose a [team name](/glossary#team-name).
 
-3. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Zero Trust Free plan**, please note this step is still needed, but you won’t be charged.
+1. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Zero Trust Free plan**, please note this step is still needed, but you will not be charged.
 
-4. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
+1. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
     ![Cloudflare Zero Trust Dashboard Home](../static/documentation/quickstart/quickstart-page.png)
 
@@ -37,7 +37,9 @@ If you want to enable security features such as Browser Isolation, HTTP filterin
 
 1. **Log in to your organization's Cloudflare Zero Trust instance from your devices**. On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
 
-1. **Enable the Proxy setting in the Zero Trust Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
+1. **Enable the Proxy setting in the Teams Dashboard.** Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to create [Network policies](/policies/filtering/network-policies).
+
+1. **Enable TLS decryption in the Teams Dashboard.** In the **Settings** > **Network** page, enable the **TLS decryption** switch. This will allow you to start routing your HTTP traffic to Gateway. You can also choose to enable the [FIPS compliance](/connections/connect-devices/warp/warp-settings#fips-compliance) setting.
 
 Your devices are now connected to Cloudflare Zero Trust through the WARP client, and you can start enforcing security measures on your traffic and access requests.
 

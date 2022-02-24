@@ -4,7 +4,9 @@ You can create a monitor within the [load balancer workflow](/how-to/create-load
 1. Click **Manage Monitors**.
 1. Click **Create**.
 1. Add the following information:
-    - **Type**: The protocol to use for health checks (_HTTP_, _HTTPS_, or _TCP_)
+    - **Type**: The protocol to use for health checks
+        - *Non-enterprise customers*: Choose **HTTP**, **HTTPS**, or **TCP**.
+        - *Enterprise customers*: Choose **HTTP**, **HTTPS**, **TCP**, **UDP ICMP**, **ICMP Ping**, or **SMTP**.
     - **Path**: The endpoint path to run health checks against
     - **Port**: The destination port for health checks
 
