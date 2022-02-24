@@ -39,6 +39,7 @@ The available Rate Limiting rule parameters are the following:
         `http.request.headers["<header_name>"]`       | _Headers_
         `http.request.cookies["<cookie_name>"]`       | _Cookie_
         `http.request.uri.args["<query_param_name>"]` | _Query_
+        `cf.bot_management.ja3_hash`                  | JA3 fingerprint for Bot Management users
 
     - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same Rate Limiting rule.
     - If you use `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
