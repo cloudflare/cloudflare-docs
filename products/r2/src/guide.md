@@ -58,9 +58,15 @@ y
 
 Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
+{{<Aside type="note">}}
+
+R2 requires a Wrangler version of `1.19.8` or higher. To check your Wrangler version, run `wrangler --version`.
+
+{{</Aside>}}
+
 ## 3. Create your bucket
 
-Create your bucket by running `wrangler r2 bucket create <your-bucket-name>`:
+Create your bucket by running:
 
 ```sh
 wrangler r2 bucket create <your-bucket-name>
@@ -72,20 +78,32 @@ To check that your bucket was created, run:
 wrangler r2 bucket list
 ```
 
+After running the `list` command, you will see all bucket names, including the one you have just created.
+
 ## 4. Bind your bucket to a Worker
 
-You will need to bind your bucket to a Worker. Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
+You will need to bind your bucket to a Worker.
+
+{{<Aside type="note" header="Bindings">}}
+
+A binding is a runtime variable that the Workers runtime provides to your code. The capability of these variables can perform a number of operations depending on what they are bound to; for example, a binding may offer the [KV Namespace API](/workers/runtime-apis/kv), the [Durable Object API](/workers/runtime-apis/durable-objects), the [R2 API](#api), or it may be one of your user-defined environment variables. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
+
+A binding is defined in the `wrangler.toml` file of your Worker project's directory.
+
+{{</Aside>}}
+
+Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
 ```sh
-wrangler generate r2-demo
+wrangler generate <your-worker-name>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID. 
 
 Find your Account ID by going logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
 
-```sh
-name = "r2-demo"
+```toml
+name = "<your-worker-name>"
 type = "javascript"
 compatibility_date = "2022-02-10"
  
@@ -93,11 +111,11 @@ account_id = "your-account-id" # ← Replace with your Account ID.
 workers_dev = true
 ```
 
-To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update `binding` to a valid JavaScript identifier and `bucket_name` to the `<your-bucket-name>` you used to create your bucket in step 3:
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<your-bucket-name>` you used to create your bucket in [step 3](#create-your-bucket):
 
-```sh
+```toml
 [[r2_buckets]]
-binding = '<your_bucket_name>'
+binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<your_bucket_name>'
 ```
 
@@ -110,9 +128,15 @@ Find more detailed information on configuring your Worker in the [Wrangler Confi
 
 ## 5. Accessing your R2 bucket from your Worker
 
+Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
 
+<!--
+Add links to the READ, WRITE, LIST.... reference
+-->
 
-```sh
+An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
+
+```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
@@ -125,56 +149,89 @@ async function handleRequest(request) {
     case 'PUT':
       await MY_BUCKET.put(key, request.body);
       return new Response(`Put ${key} successfully!`);
+
+   case 'GET':
+     const { value } = await MY_BUCKET.get(key);
+ 
+     if (value === null) {
+       return new Response('Object Not Found', { status: 404 });
+     }
+ 
+     return new Response(value);
+
+   case 'DELETE':
+     await MY_BUCKET.delete(key);
+     return new Response('Deleted!', { status: 200 });
+ 
     default:
       return new Response('Route Not Found.', { status: 404 });
   }
 }
 ```
-
-GET requests
-
-```sh
-case 'GET':
-    const { value } = await MY_BUCKET.get(key);
-
-    if (value === null) {
-    return new Response('Object Not Found', { status: 404 });
-    }
-
-    return new Response(value);
-
-default:
-    // ...
-```
-
-DELETE requests
-
-```sh
-case 'DELETE':
-    await MY_BUCKET.delete(key);
-    return new Response('Deleted!', { status: 200 });
-
-default:
-    // ...
-```
-
 <!--
 // User decides whether to make the bucket public.
 -->
 
 ## 6. Bucket access and privacy
 
-At this step, there are no restrictions around reading from or writing to your bucket. To build authentication mechanisms within your Worker, refer to the following resources:
+With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors. 
+
+You must now define authorization logic to determine who can perform what actions to your bucket. This logic lives within your Worker's code, as it is your application's job to determine user privileges. The following is a short list of resources related to access and authorization practices:
 
 1. [Basic Authentication](/workers/examples/basic-auth): Shows how to restrict access using the HTTP Basic schema.
 2. [Using Custom Headers](/workers/examples/auth-with-headers): Allow or deny a request based on a known pre-shared key in a header.
 3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
 
-### Restricting PUT and DELETE requests
+Continuing with the previous example, let's protect all bucket operations. For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret. For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
-#### PUT
+```js
+const ALLOW_LIST = ['cat-pic.jpg'];
 
-#### DELETE
+// Check requests for a pre-shared secret
+const hasValidHeader = request => {
+  return request.headers.get('X-Custom-Auth-Key') === AUTH_KEY_SECRET;
+};
+ 
+function authorizeRequest(request, key) {
+  switch (request.method) {
+    case 'PUT':
+    case 'DELETE':
+      return hasValidHeader(request);
+    case 'GET':
+      return ALLOW_LIST.includes(key);
+    default:
+      return false;
+  }
+}
+ 
+async function handleRequest(request) {
+  const url = new URL(request.url);
+  const key = url.pathname.slice(1);
+ 
+  if (!authorizeRequest(request, key)) {
+    return new Response('Forbidden', { status: 403 });
+  }
+
+  // ...
+```
+ 
+For this to work, you’ll need to create a secret via wrangler:
+
+```sh
+wrangler secret put AUTH_KEY_SECRET
+```
+
+This command will prompt you to enter a secret in your terminal:
+
+```sh
+wrangler secret put AUTH_KEY_SECRET
+Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <your-worker-name>:
+*********
+🌀  Creating the secret for script name <your-worker-name>
+✨  Success! Uploaded secret AUTH_KEY_SECRET.
+```
+
+This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker. 
 
 ## 7. Deploy your bucket
 
@@ -184,20 +241,33 @@ With your Worker and bucket set up, run the `wrangler publish` [command](/worker
 wrangler publish
 ```
 
-To test
+You can verify your authorization logic is working through the following commands, using your deployed Worker endpoint:
 
 ```sh
+# Attempt to write an object without providing the "X-Custom-Auth-Key" header
 $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header --data 'test'
-Forbidden
+#=> Forbidden
+# Expected because header was missing
 
+# Attempt to write an object with the wrong "X-Custom-Auth-Key" header value
+$ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: hotdog" --data 'test'
+#=> Forbidden
+# Expected because header value did not match the AUTH_KEY_SECRET value
+
+# Attempt to write an object with the correct "X-Custom-Auth-Key" header value
+# Note: Assume that "*********" is the value of your AUTH_KEY_SECRET Wrangler secret
 $ curl https://your-worker.dev/cat-pic.jpg -X PUT --header "X-Custom-Auth-Key: *********" --data 'test'
-Put cat-pic1.jpg successfully!
+#=> Put cat-pic1.jpg successfully!
 
+# Attempt to read object called "foo"
 $ curl https://your-worker.dev/foo
-Forbidden
+#=> Forbidden
+# Expected because "foo" is not in the ALLOW_LIST
 
+# Attempt to read an object called "cat-pic.jpg"
 $ curl https://your-worker.dev/cat-pic.jpg
-test
+#=> test
+# Note: This is the value that was successfully PUT above
 ```
 
 By completing this guide, you have successfully installed Wrangler and deployed your R2 bucket to Cloudflare.
