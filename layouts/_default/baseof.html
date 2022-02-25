@@ -16,7 +16,7 @@
     <noscript><link rel="stylesheet" href="https://feedback.developers.cloudflare.com/sdk.css"/></noscript>
   </head>
   <body>
-    {{- block "main" . -}}
-    {{- end -}}
+    {{- block "main" . -}}{{- end -}}
+    {{- partial "gtag" -}}
   </body>
 </html>
