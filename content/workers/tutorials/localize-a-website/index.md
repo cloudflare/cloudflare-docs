@@ -16,7 +16,7 @@ The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the 
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
-![Demo Image](../media/i18n.jpg)
+![Demo Image](./media/i18n.jpg)
 
 ## Setup
 
@@ -29,9 +29,6 @@ If you would like to deploy your own version of the site, you can find the sourc
 To generate a new project, use `wrangler generate --site` to create a new application, calling it `i18n-example`:
 
 ```sh
----
-theme: dark
----
 ~/ $ wrangler generate i18n-example --site
 ~/ $ cd i18n-example
 ~/i18n-example $
@@ -41,19 +38,11 @@ The `--site` flag tells Wrangler that you want to build a [Workers Sites](/worke
 
 The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `workers-site`:
 
-<pre class="CodeBlock CodeBlock-scrolls-horizontally" language="sh">
-  <code>
-    <u>
-      <b class="CodeBlock--token-directory">~/i18n-example</b>{' '}
-      <b class="CodeBlock--token-prompt">$</b>{' '}
-    </u>
-    ls
-    <br />
-    <u>
-      <b class="CodeBlock--token-value">public workers-site wrangler.toml</b>
-    </u>
-  </code>
-</pre>
+```sh
+$ ~/i18n-example
+ls
+public workers-site wrangler.toml
+```
 
 Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
@@ -65,7 +54,7 @@ The `HTMLRewriter` class provided in the Workers runtime allows developers to pa
 
 The example website in this tutorial is a basic single-page HTML project that lives in the `public` directory. It includes an `h1` element with the text `Example Site` and a number of `p` elements with different text:
 
-![Demo Code](../media/code-example.png)
+![Demo Code](./media/code-example.png)
 
 What is unique about this page is the addition of [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) in the HTML – custom attributes defined on a number of elements on this page. The `data-i18n-key` on the `h1` tag on this page, as well as many of the `p` tags, indicates that there is a corresponding internationalization key, which should be used to look up a translation for this text:
 
@@ -305,7 +294,7 @@ theme: dark
 ~/i18n-example $ wrangler publish
 ```
 
-![Demo Image](../media/i18n.jpg)
+![Demo Image](./media/i18n.jpg)
 
 ## Related resources
 
