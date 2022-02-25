@@ -81,11 +81,13 @@ query {
 
 Here is the exact cURL request:
 
-    curl --request POST \
-    --url https://api.cloudflare.com/client/v4/graphql \
-    --header 'content-type: application/json' \
-    --header 'Authorization: Bearer $TOKEN' \
-    --data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
+```bash
+curl --request POST \
+--url https://api.cloudflare.com/client/v4/graphql \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer $TOKEN' \
+--data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
+```
 
 ### Response:
 

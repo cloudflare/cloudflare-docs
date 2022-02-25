@@ -97,8 +97,6 @@ For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$A
 
 ### Command-line example
 
-{{<example>}}
-
 You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
 ```bash
@@ -111,15 +109,13 @@ tus-upload --chunk-size 52428800 --header Authorization "Bearer $TOKEN" $PATH_TO
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
 
-    INFO Creating file endpoint
-    INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b613bc3a9599cdc/stream/dd5d531a12de0c724bd1275a3b2bc9c6
-    ...
-
-{{</example>}}
+```bash
+INFO Creating file endpoint
+INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b613bc3a9599cdc/stream/dd5d531a12de0c724bd1275a3b2bc9c6
+...
+```
 
 ### Golang Example
-
-{{<example>}}
 
 To get started, import a [tus](https://tus.io) client. You can use the [go-tus](https://github.com/eventials/go-tus) by [eventials](https://github.com/eventials) to upload from your Go applications.
 
@@ -176,21 +172,18 @@ upload.Progress()
 upload.Finished()
 ```
 
-{{</example>}}
-
 Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
 
 ### Node.js Example
 
-{{<example>}}
 
-Install tus-js-client
+1. Install tus-js-client
 
 ```bash
 npm install tus-js-client
 ```
 
-Set up an index.js and configure:
+1. Set up an index.js and configure:
 
 - API endpoint with your Cloudflare Account ID
 - Request headers to include a API token
@@ -243,5 +236,3 @@ var options = {
 var upload = new tus.Upload(file, options);
 upload.start();
 ```
-
-{{</example>}}

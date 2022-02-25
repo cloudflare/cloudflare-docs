@@ -140,8 +140,6 @@ size, the user will receive a `4xx` response.
 
 ### Example
 
-{{<example>}}
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -179,8 +177,6 @@ size, the user will receive a `4xx` response.
 </html>
 ```
 
-{{</example>}}
-
 ## Using tus (recommended for videos over 200MB)
 
 tus is a protocol that supports resumable uploads and works best for larger files.
@@ -189,7 +185,9 @@ Typically, tus uploads require the authentication information to be sent with ev
 
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
 
-    curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
+```bash
+curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
+```
 
 The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
 
