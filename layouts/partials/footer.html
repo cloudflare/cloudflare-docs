@@ -3,7 +3,7 @@
     <div>
       <span class="DocsFooter--edit-on-gh-link-wrapper">
         {{- with .File -}}
-          {{ $url := printf "https://github.com/cloudflare/cloudflare-docs/blob/production/content/{{ .Path }}" -}}
+          {{- $url := (printf "https://github.com/cloudflare/cloudflare-docs/blob/production/content/%s" .Path) -}}
           {{- partial "external.link" (dict "text" "Edit on GitHub" "url" $url) }}
         {{- end -}}
       </span>

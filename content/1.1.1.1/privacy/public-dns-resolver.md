@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-title: 1.1.1.1 Public DNS ResolverWhat about requests for content blocking?
+title: 1.1.1.1 Public DNS Resolver
 weight: 0
 ---
 

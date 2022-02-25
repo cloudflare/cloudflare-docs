@@ -81,15 +81,13 @@ For this tutorial, you will need:
     | **Access Entity ID** | **IdP Issuer URL** |
     | **Public Key** | **IdP Certificate** |
 
-     {{<Aside>}}
+     {{<Aside type="note">}}
+The Public key must be transformed into a fingerprint. To do that:
 
-    The Public key must be transformed into a fingerprint. To do that:
-
-    1.  Copy the Public Key Value.
-    2.  Paste the Public Key into VIM or another code editor.
-    3.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-    4.  Set the file extension to `.crt` and save.
-
+1.  Copy the Public Key Value.
+2.  Paste the Public Key into VIM or another code editor.
+3.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+4.  Set the file extension to `.crt` and save.
      {{</Aside>}}
 
 2.  Click **Next: Review**.
@@ -99,13 +97,11 @@ For this tutorial, you will need:
     ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
      {{<Aside type="Warning" header="Important">}}
+Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
 
-    Access for SaaS does not currently support System for Cross-domain Identity Management (SCIM). Please make sure that:
-
-    1.  Users are created in both your identity provider and AWS
-    2.  Users have matching usernames in your identity provider and AWS.
-    3.  Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
-
+1.  Users are created in both your identity provider and AWS
+2.  Users have matching usernames in your identity provider and AWS.
+3.  Usernames are email addresses. This is the only format AWS supports with third-party SSO providers.
      {{</Aside>}}
 
 ## Test your connection

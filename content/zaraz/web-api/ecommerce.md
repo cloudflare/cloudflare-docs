@@ -59,7 +59,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 {{<table-wrap>}}
 
 Parameter | Type | Description
-\--- | --- | ---
+--- | --- | ---
 `product_id` | String | Product ID.
 `sku` | String | Product SKU number.
 `category` | String | Product category.

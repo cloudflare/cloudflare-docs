@@ -33,7 +33,7 @@ The available Rate Limiting rule parameters are the following:
     *   Use one or more of the following characteristics:
 
         API value                                     | UI value
-        \----------------------------------------------|--------------------------
+        ----------------------------------------------|--------------------------
         `cf.colo.id` (mandatory)                      | N/A (implicitly included)
         `cf.unique_visitor_id`                        | *IP with NAT support*
         `ip.src`                                      | *IP*
@@ -53,7 +53,7 @@ The available Rate Limiting rule parameters are the following:
 
     *   {{<Aside type="note">}}
 
-        Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
+  Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
 
         {{</Aside>}}
 

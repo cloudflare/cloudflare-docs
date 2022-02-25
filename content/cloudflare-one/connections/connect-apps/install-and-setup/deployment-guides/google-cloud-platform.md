@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Deploy  in GCPPrerequisitesCreate your environmentDeploying
+title: Deploy cloudflared in GCP
 weight: 8
 ---
 
@@ -28,7 +28,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
 5.  Configure your VM Instance. The following settings are recommended to get started:
 
     {{<Aside type="note">}}
-    We support a number of operating systems and versions, so make a selection based on your requirements.
+We support a number of operating systems and versions, so make a selection based on your requirements.
     {{</Aside>}}
 
     *   **Machine Family:** General Purpose

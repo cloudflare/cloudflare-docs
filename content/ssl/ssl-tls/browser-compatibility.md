@@ -11,7 +11,7 @@ Cloudflare attempts to provide compatibility for as wide a range of user agents 
 ## Universal SSL
 
 Feature/Zone Plan | Free | Pro | Business | Enterprise
-\------|-------------|---------------|---------------|---------------
+------|-------------|---------------|---------------|---------------
 Clients using ECDSA key exchange|✅|✅|✅|✅
 Clients using RSA key exchange|❌|✅|✅|✅
 
@@ -48,7 +48,7 @@ Paid plans provide additional compatibility with older browsers/operating system
 ## Other products
 
 Feature/Product | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | SSL for SaaS
-\------|-------------|---------------|---------------|---------------
+------|-------------|---------------|---------------|---------------
 Clients using ECDSA key exchange|✅|✅|✅|✅
 Clients using RSA key exchange|✅|✅|✅|✅
 Clients without SNI |✅|❌|❌|❌|❌

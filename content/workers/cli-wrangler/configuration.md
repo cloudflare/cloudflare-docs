@@ -554,33 +554,51 @@ If your project is written using CommonJS modules, you will need to re-export yo
         globs = ["**/*.js", "**/*.cjs"]
         ```
 
-    *   {{<definitions>}}
+    *   `type` {{<prop-meta>}}required{{</prop-meta>}}
 
-        *   `type` {{<prop-meta>}}required{{</prop-meta>}}
+        *   The module type, see the table below for acceptable options:
+        <div class="DocsMarkdown--table-wrap">
+          <div class="DocsMarkdown--table-wrap-inner">
+            <table>
+              <thead>
+                <tr>
+                  <th><code>type</code></th>
+                  <th>JavaScript type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ESModule</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>CommonJS</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>Text</td>
+                  <td><code>String</code></td>
+                </tr>
+                <tr>
+                  <td>Data</td>
+                  <td><code>ArrayBuffer</code></td>
+                </tr>
+                <tr>
+                  <td>CompiledWasm</td>
+                  <td><code>WebAssembly.Module</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            *   The module type, see the table below for acceptable options
+    *   `globs` {{<prop-meta>}}required{{</prop-meta>}}
 
-            {{<table-wrap>}}
+        *   Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
 
-            | `type`       | JavaScript type      |
-            | ------------ | -------------------- |
-            | ESModule     | -                    |
-            | CommonJS     | -                    |
-            | Text         | `String`             |
-            | Data         | `ArrayBuffer`        |
-            | CompiledWasm | `WebAssembly.Module` |
+    *   `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
 
-            {{</table-wrap>}}
-
-        *   `globs` {{<prop-meta>}}required{{</prop-meta>}}
-
-            *   Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
-
-        *   `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
-
-            *   This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
-
-        {{</definitions>}}
+        *   This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
 
 {{</definitions>}}
 

@@ -166,7 +166,7 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
   {{<table-wrap>}}
 
 Field | Operator | Value
-\------|----------|------
+------|----------|------
 Request Method | `equals` | `POST`
 Hostname | `equals` | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com`
 URI Path | `equals` | `/services/collector/raw`

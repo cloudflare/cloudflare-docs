@@ -34,8 +34,6 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 *   **`fit`**
     *   Resizing mode as a string. It affects interpretation of `width` and `height`:
 
-        {{<definitions>}}
-
         *   **`scale-down`**
             *   Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
 
@@ -50,8 +48,6 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
         *   **`pad`**
             *   Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
-
-        {{</definitions>}}
 
 *   **`gravity`**
 
@@ -89,18 +85,14 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 *   **`metadata`**
     *   What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
 
-        {{<definitions>}}
+      *   **`keep`**
+          *   Preserve most of EXIF metadata, including GPS location if present.
 
-        *   **`keep`**
-            *   Preserve most of EXIF metadata, including GPS location if present.
+      *   **`copyright`**
+          *   Only keep the copyright tag, and discard everything else. This is the default behavior for JPEG files.
 
-        *   **`copyright`**
-            *   Only keep the copyright tag, and discard everything else. This is the default behavior for JPEG files.
-
-        *   **`none`**
-            *   Discard all invisible EXIF metadata. Currently WebP and PNG output formats always discard metadata.
-
-        {{</definitions>}}
+      *   **`none`**
+          *   Discard all invisible EXIF metadata. Currently WebP and PNG output formats always discard metadata.
 
 *   **`background`**
     *   Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.

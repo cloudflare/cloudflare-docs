@@ -52,39 +52,31 @@ At least one option must be specified. Options are comma-separated (spaces are n
     *   Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`.
 
 *   **`fit`**
-    *   Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Available modes are:
+    * Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Available modes are:
 
-        {{<definitions>}}
+    *   **`fit=scale-down`**
+        *   Image will be shrunk in size to fully fit within the given `width` or `height`, but will not be enlarged.
 
-        *   **`fit=scale-down`**
-            *   Image will be shrunk in size to fully fit within the given `width` or `height`, but will not be enlarged.
+    *   **`fit=contain`**
+        *   Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio.
 
-        *   **`fit=contain`**
-            *   Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio.
+    *   **`fit=cover`**
+        *   Image will be resized to exactly fill the entire area specified by `width` and `height`, and will cropped if necessary.
 
-        *   **`fit=cover`**
-            *   Image will be resized to exactly fill the entire area specified by `width` and `height`, and will cropped if necessary.
+    *   **`fit=crop`**
+        *   Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`.
 
-        *   **`fit=crop`**
-            *   Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`.
-
-        *   **`fit=pad`**
-            *   Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio, and the extra area will be filled with a `background` color (white by default). Transparent background may be very expensive, and it is better to use `fit=contain` and CSS `object-fit: contain` property instead.
-
-        {{</definitions>}}
+    *   **`fit=pad`**
+        *   Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio, and the extra area will be filled with a `background` color (white by default). Transparent background may be very expensive, and it is better to use `fit=contain` and CSS `object-fit: contain` property instead.
 
 *   **`gravity`** or **`g`**
     *   Cropping with `fit=cover` specifies the most important side or point in the image that should not be cropped off.
 
-        {{<definitions>}}
+    *   **`gravity=auto`**
+        *   The point will be guessed by looking for areas that stand out the most from image background.
 
-        *   **`gravity=auto`**
-            *   The point will be guessed by looking for areas that stand out the most from image background.
-
-        *   **`gravity=side`** and **`gravity=XxY`**
-            *   A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from 0.0 (top or left) to 1.0 (bottom or right), 0.5 being the center. The X and Y coordinates are separated by lowercase x. For example, 0x1 means left and bottom, 0.5x0.5 is the center, 0.5x0.33 is a point in the top third of the image.
-
-        {{</definitions>}}
+    *   **`gravity=side`** and **`gravity=XxY`**
+        *   A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from 0.0 (top or left) to 1.0 (bottom or right), 0.5 being the center. The X and Y coordinates are separated by lowercase x. For example, 0x1 means left and bottom, 0.5x0.5 is the center, 0.5x0.33 is a point in the top third of the image.
 
 *   **`quality=x`** or **`q=x`**
     *   Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format.
@@ -107,18 +99,14 @@ At least one option must be specified. Options are comma-separated (spaces are n
 *   **`metadata`**
     *   Controls amount of invisible metadata (EXIF data) that should be preserved. Color profiles and EXIF rotation are applied to the image even if the metadata is discarded. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
 
-        {{<definitions>}}
+      *   **`metadata=keep`**
+          *   Preserve most of the image metadata (including GPS location) when possible.
 
-        *   **`metadata=keep`**
-            *   Preserve most of the image metadata (including GPS location) when possible.
+      *   **`metadata=copyright`**
+          *   Discard all metadata except EXIF copyright tag. This is the default for JPEG images.
 
-        *   **`metadata=copyright`**
-            *   Discard all metadata except EXIF copyright tag. This is the default for JPEG images.
-
-        *   **`metadata=none`**
-            *   Discard all invisible metadata.
-
-        {{</definitions>}}
+      *   **`metadata=none`**
+          *   Discard all invisible metadata.
 
 {{</definitions>}}
 

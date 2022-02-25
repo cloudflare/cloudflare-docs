@@ -69,9 +69,7 @@ To create, list, delete, or get information about the profile, you will need you
     *   Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
 
         {{<Aside>}}
-
-        Note that `center` will ignore the `padding` parameter.
-
+Note that `center` will ignore the `padding` parameter.
         {{</Aside>}}
 
 {{</definitions>}}

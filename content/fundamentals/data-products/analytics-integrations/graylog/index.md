@@ -70,20 +70,20 @@ Once decompressed, the integration package includes:
 }
 ```
 
-    **Note:** If your Graylog cluster is running in a VPC, you may need to add the _AWSLambdaVPCAccessExecutionRole_ managed role to allow the Lambda function to route traffic to the VPC.
+  **Note:** If your Graylog cluster is running in a VPC, you may need to add the _AWSLambdaVPCAccessExecutionRole_ managed role to allow the Lambda function to route traffic to the VPC.
 
-4\.  Once you've created the Lambda function, upload the function code ***graylog-s3-lambda.jar*** downloaded in [Task 1](#task1).  Specify the following method for the Handler: *org.graylog.integrations.s3.GraylogS3Function::handleRequest*.
+4.  Once you've created the Lambda function, upload the function code ***graylog-s3-lambda.jar*** downloaded in [Task 1](#task1).  Specify the following method for the Handler: *org.graylog.integrations.s3.GraylogS3Function::handleRequest*.
 
 5.  Specify at least the following required environment variables to configure the Lambda function for your Graylog cluster:
 
-    *   **CONTENT\_TYPE** (required) - *application/x.cloudflare.log* value to indicate that the Lambda function will process Cloudflare logs.
-    *   **COMPRESSION\_TYPE** ***(required*** **)** - *gzip* since Cloudflare logs are gzip compressed.
-    *   **GRAYLOG\_HOST** *(required)* - hostname or IP address of the Graylog host or cluster load balancer.
-    *   **GRAYLOG\_PORT** *(optional - defaults to 12201)* - The Graylog service port.
-    *   **CONNECT\_TIMEOUT** *(optional - defaults to 10000)* - The number of milliseconds to wait for the connection to be established.
-    *   **LOG\_LEVEL** *(optional - defaults to INFO)* - The level of detail to include in the CloudWatch logs generated from the Lambda function. Supported values are *OFF*, *ERROR*, *WARN*, *INFO*, *DEBUG*, *TRACE*, and *ALL*. Increase the logging level to help with troubleshooting. See [Defining Custom Log Levels in Code](https://logging.apache.org/log4j/2.0/manual/customloglevels.html) for more information.
-    *   **CLOUDFLARE\_LOGPUSH\_MESSAGE\_FIELDS** *(optional - defaults to all)* - The fields to parse from the message. Specify as a comma-separated list of field names.
-    *   **CLOUDFLARE\_LOGPUSH\_MESSAGE\_SUMMARY\_FIELDS** *(optional - defaults to ClientRequestHost, ClientRequestPath, OriginIP, ClientSrcPort, EdgeServerIP, EdgeResponseBytes)* - The fields to include in the message summary that appears above the parsed fields at the top of each message in Graylog. Specify as a comma-separated list of field names.
+    *   **CONTENT_TYPE** (required) - *application/x.cloudflare.log* value to indicate that the Lambda function will process Cloudflare logs.
+    *   **COMPRESSION_TYPE** ***(required*** **)** - *gzip* since Cloudflare logs are gzip compressed.
+    *   **GRAYLOG_HOST** *(required)* - hostname or IP address of the Graylog host or cluster load balancer.
+    *   **GRAYLOG_PORT** *(optional - defaults to 12201)* - The Graylog service port.
+    *   **CONNECT_TIMEOUT** *(optional - defaults to 10000)* - The number of milliseconds to wait for the connection to be established.
+    *   **LOG_LEVEL** *(optional - defaults to INFO)* - The level of detail to include in the CloudWatch logs generated from the Lambda function. Supported values are *OFF*, *ERROR*, *WARN*, *INFO*, *DEBUG*, *TRACE*, and *ALL*. Increase the logging level to help with troubleshooting. See [Defining Custom Log Levels in Code](https://logging.apache.org/log4j/2.0/manual/customloglevels.html) for more information.
+    *   **CLOUDFLARE_LOGPUSH_MESSAGE_FIELDS** *(optional - defaults to all)* - The fields to parse from the message. Specify as a comma-separated list of field names.
+    *   **CLOUDFLARE_LOGPUSH_MESSAGE_SUMMARY_FIELDS** *(optional - defaults to ClientRequestHost, ClientRequestPath, OriginIP, ClientSrcPort, EdgeServerIP, EdgeResponseBytes)* - The fields to include in the message summary that appears above the parsed fields at the top of each message in Graylog. Specify as a comma-separated list of field names.
         ![Graylog environment variables](/fundamentals/static/images/graylog/screenshots/graylog-environment-variables.png)
 
         **Note:** More configuration variables are available to fine-tune the function configuration in the Graylog Lambda S3 [README](https://github.com/Graylog2/graylog-s3-lambda/blob/master/README.md#step-2-specify-configuration) file.

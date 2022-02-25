@@ -80,7 +80,7 @@ Additionally, events will not become active if a waiting room itself is **Disabl
 ## Other API commands
 
 Function | Command
-\---------|---------
+---------|---------
 [Get event details](https://api.cloudflare.com/#waiting-room-event-details) | `GET`
 [List scheduled events](https://api.cloudflare.com/#waiting-room-list-events) | `GET`
 [Delete event](https://api.cloudflare.com/#waiting-room-delete-event) | `DELETE`

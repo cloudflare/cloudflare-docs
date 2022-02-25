@@ -22,7 +22,7 @@ now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERV
 As the table below shows, most of the checks take place on the first day. Most validations complete within the first 5 minutes, unless the customer has misconfigured the CNAME to your domain. We cap the check back off to a maximum of 4 hours to avoid the function growing exponentially, which would result in large gaps between checks towards the end of the month.
 
 Retry Attempt|In Seconds|In Minutes|In Hours
-\-----|-------|-------|-----
+-----|-------|-------|-----
 0|60|1.000|0.016667
 1|63|1.050|0.017500
 2|66|1.100|0.018333

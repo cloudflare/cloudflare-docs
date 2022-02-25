@@ -66,7 +66,7 @@ You can embed the Stream player on the following platforms:
 {{<table-wrap>}}
 
 Browser         | Version
-\----------------|-----------------------------------
+----------------|-----------------------------------
 Chrome          | Supported since Chrome version 88+
 Firefox         | Supported since Firefox version 87+
 Edge            | Supported since Edge 89+
@@ -84,7 +84,7 @@ Cloudflare Stream is not available on Chromium, as Chromium does not support H.2
 {{<table-wrap>}}
 
 Mobile Platform   | Version
-\------------------|-----------------------------------------------------------------------------------
+------------------|-----------------------------------------------------------------------------------
 Chrome on Android | Supported on Chrome 90
 UC Browser on Android | Supported on version 12.12+
 Samsung Internet | Supported on 13+
@@ -109,7 +109,7 @@ Below are bitrate recommendations for encoding new videos for Stream:
 {{<table-wrap>}}
 
 Resolution  |  Recommended bitrate
-\------------|---------
+------------|---------
 1080p  |	8 Mbps
 720p  |	4.8 Mbps
 480p  |	2.4 Mbps

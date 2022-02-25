@@ -19,7 +19,7 @@ We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-
 ## Supported cipher suites by protocol
 
 OpenSSL Name | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3
-\------|-------------|---------------|---------------|---------------
+------|-------------|---------------|---------------|---------------
 ECDHE-ECDSA-AES128-GCM-SHA256|❌|❌|✅|❌
 ECDHE-ECDSA-CHACHA20-POLY1305|❌|❌|✅|❌
 ECDHE-RSA-AES128-GCM-SHA256|❌|❌|✅|❌

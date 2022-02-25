@@ -36,7 +36,7 @@ The available skip options in Custom Firewall rules are the following:
     *   Skips specific security products that are not based on the Ruleset Engine. The products you can skip are the following:
 
     *   Product name in the dashboard | API value
-        \---|---
+        ---|---
         [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131) | `zoneLockdown`
         [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951) | `uaBlock`
         [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086) | `bic`

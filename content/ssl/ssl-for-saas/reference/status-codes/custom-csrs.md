@@ -11,7 +11,7 @@ meta:
 ## Success codes
 
 Endpoint|Method|HTTP Status Code
-\--------|------|----
+--------|------|----
 `/api/v4/zones/:zone_id/custom_csrs`|POST|201 Created
 `/api/v4/zones/:zone_id/custom_csrs`|GET|200 OK
 `/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id`|GET|200 OK
@@ -20,7 +20,7 @@ Endpoint|Method|HTTP Status Code
 ## Error codes
 
 HTTP Status Code|API Error Code|Error Message
-\----------------|--------------|-------------
+----------------|--------------|-------------
 400|1400|Unable to decode the JSON request body. Check your input and try again.
 400|1401|Zone ID is required. Check your input and try again.
 400|1402|The request has no Authorization header. Check your input and try again.

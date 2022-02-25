@@ -11,7 +11,7 @@ weight: 10
 ## Certificates
 
 Endpoint|Notes
-\-----|-------
+-----|-------
 [List custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) | Use the `page` parameter to pull additional pages. Add a `hostname` parameter to search for specific hostnames.
 [Create custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) |
 [Custom hostname details](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details) |

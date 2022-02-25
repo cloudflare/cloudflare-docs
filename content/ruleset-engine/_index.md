@@ -23,6 +23,6 @@ The Ruleset Engine supports different Cloudflare products. Check each product's 
 ***
 
 {{<button-group>}}
-  {{<button type="primary" href="/basic-operations">}}Basic operations{{</button>}}
-  {{<button type="secondary" href="/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/ruleset-engine/basic-operations">}}Basic operations{{</button>}}
+  {{<button type="secondary" href="/ruleset-engine/about">}}Learn more{{</button>}}
 {{</button-group>}}

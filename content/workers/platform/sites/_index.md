@@ -17,7 +17,7 @@ To deploy with Workers Sites, select from one of these three routes depending on
 
 If you have an existing project or static assets that you want to deploy with Workers, this quick start guide will help you add Wrangler and configure Workers Sites for your project.
 
-<p>{{<button type="primary" href="/platform/sites/start-from-existing">}}Start from existing{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/platform/sites/start-from-existing">}}Start from existing{{</button>}}</p>
 
 ***
 
@@ -25,7 +25,7 @@ If you have an existing project or static assets that you want to deploy with Wo
 
 If you are ready to start a brand new project, Workers Sites will set up the infrastructure to deploy a simple HTML website to Workers.
 
-<p>{{<button type="primary" href="/platform/sites/start-from-scratch">}}Start from scratch{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/platform/sites/start-from-scratch">}}Start from scratch{{</button>}}</p>
 
 ***
 
@@ -33,7 +33,7 @@ If you are ready to start a brand new project, Workers Sites will set up the inf
 
 If you already have an application deployed to Workers, this guide will show you how to use Workers Sites in your existing codebase, allowing you to deploy your entire application as a single Workers project.
 
-<p>{{<button type="primary" href="/platform/sites/start-from-worker">}}Start from a worker{{</button>}}</p>
+<p>{{<button type="primary" href="/workers/platform/sites/start-from-worker">}}Start from a worker{{</button>}}</p>
 
 {{<Aside type="note">}}
 

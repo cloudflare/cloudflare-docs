@@ -28,7 +28,7 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 {{<table-wrap>}}
 
 Field         | Values  | Characters
-\--------------|---------|------------
+--------------|---------|------------
 Minute        | 0-59    | \* , - /
 Hours         | 0-23    | \* , - /
 Days of Month | 1-31    | \* , - / L W

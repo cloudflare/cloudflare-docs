@@ -19,9 +19,7 @@ Destination addresses are shared at the account level and can be reused with any
 5.  In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 
   {{<Aside type="note">}}
-
 Email Routing will only process the most recent rule per custom address. Other destination addresses will not receive your forwarded emails.
-
   {{</Aside>}}
 
 1.  Click **Save**.

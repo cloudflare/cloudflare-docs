@@ -11,7 +11,7 @@ Cloudflare measures the following metrics for every video play:
 {{<table-wrap>}}
 
 Metric            | Name              | Example | Unit
-\------------------|-------------------|---------|---------------------
+------------------|-------------------|---------|---------------------
 totalTimeViewedMs | Total time viewed | 1000    | Time in milliseconds
 totalImpressions  | Total views       | 50      | Impressions
 
@@ -22,7 +22,7 @@ You can slice and dice your analytics by the following dimensions:
 {{<table-wrap>}}
 
 Dimension | Name     | Example
-\----------|----------|---------------------------------
+----------|----------|---------------------------------
 videoId   | Video ID | 40d67c87c6cd4b889a4fd57805225e85
 
 {{</table-wrap>}}
@@ -32,7 +32,7 @@ You can also filter the data using the following operators:
 {{<table-wrap>}}
 
 Operator | Name                     | URL Encoded
-\---------|--------------------------|------------
+---------|--------------------------|------------
 \==       | Equals                   | %3D%3D
 !=       | Does not equals          | !%3D
 \>       | Greater Than             | %3E

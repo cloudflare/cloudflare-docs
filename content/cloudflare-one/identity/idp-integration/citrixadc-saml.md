@@ -13,21 +13,22 @@ Cloudflare Zero Trust can integrate with Citrix ADC (formerly Citrix NetScaler A
 To set up Citrix ADC (SAML) as your identity provider:
 
 1.  First, you'll need to configure 2 SAML certificates:
+
     *   A certificate to **terminate TLS at the vServer**. Ensure that the certificate is issued by a publicly trusted CA.
     *   A certificate for **signing SAML assertions**.
 
-If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
+    If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
 
-     1. Navigate to **Traffic Management > SSL**.
-     2. Select **Create and Install a Server Test Certificate**.
+    1. Navigate to **Traffic Management > SSL**.
+    2. Select **Create and Install a Server Test Certificate**.
 
-    ![Citrix AD Configuration](../../static/documentation/identity/citrixadc/citrixadc-saml-1.png)
+    ![Citrix AD Configuration](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-1.png)
 
-1.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
+2.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
 
     ![Citrix AD Create and Install Test Certificate](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-2.png)
 
-2.  Create a publicly accessible authentication vServer and configure the user identity source (like, local users, LDAP) by following this [Citrix documentation](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/authentication-virtual-server/ns-aaa-setup-auth-vserver-tsk.html).
+3.  Create a publicly accessible authentication vServer and configure the user identity source (like, local users, LDAP) by following this [Citrix documentation](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/authentication-virtual-server/ns-aaa-setup-auth-vserver-tsk.html).
 
     For the rest of this example, the user refers to the IdP address `idp.yourdomain.com`.
 

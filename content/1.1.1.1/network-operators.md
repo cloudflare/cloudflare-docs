@@ -37,7 +37,7 @@ The publicly available endpoints for 1.1.1.1 are detailed in the following table
 {{<table-wrap>}}
 
 Resolver                           | IP Addresses       | DNS over HTTPS endpoint                         | DNS over TLS endpoint
-\-----------------------------------|--------------------|-------------------------------------------------|-------------------------------
+-----------------------------------|--------------------|-------------------------------------------------|-------------------------------
 1.1.1.1 (unfiltered)               | `1.1.1.1` / `1.0.0.1`  | `https://cloudflare-dns.com/dns-query`          | `cloudflare-dns.com`
 Families (Malware)                 | `1.1.1.2` / `1.0.0.2`  | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
 Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3`  | `https://family.cloudflare-dns.com/dns-query`   | `family.cloudflare-dns.com`

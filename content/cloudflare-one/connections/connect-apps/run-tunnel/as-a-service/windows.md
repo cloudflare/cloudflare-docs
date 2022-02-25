@@ -87,9 +87,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     ```
 
      {{<Aside type="Note">}}
-
-    If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
-
+If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
      {{</Aside>}}
 
 12. Validate the ingress rule entries in your configuration file using the command:

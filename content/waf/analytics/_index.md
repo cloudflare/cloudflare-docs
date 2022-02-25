@@ -33,7 +33,7 @@ The available features vary according to your Cloudflare plan:
 {{<table-wrap>}}
 
 Feature                  | Free                | Pro                 | Business            | Enterprise
-\-------------------------|---------------------|---------------------|---------------------|-------------------
+-------------------------|---------------------|---------------------|---------------------|-------------------
 Dashboard features       | Activity log only   | All except DoS      | All except DoS      | All
 Time window              | Up to last 24 hours | Up to last 24 hours | Up to last 72 hours | Up to last 30 days
 Print report             | –                   | Yes                 | Yes                 | Yes

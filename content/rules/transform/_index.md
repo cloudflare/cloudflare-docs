@@ -33,7 +33,7 @@ This table outlines the Transform Rules features available with each customer pl
 {{<table-wrap>}}
 
 Feature                                       | Free | Pro | Business | Enterprise
-\----------------------------------------------|------|-----|----------|-----------
+----------------------------------------------|------|-----|----------|-----------
 Active Transform Rules                        | 10   | 25  | 50       | 100
 Regular expression support                    | No   | No  | Yes      | Yes
 

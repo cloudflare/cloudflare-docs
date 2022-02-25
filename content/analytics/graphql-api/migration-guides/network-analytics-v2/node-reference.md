@@ -12,10 +12,10 @@ Main nodes provide deep packet-level information about traffic and attacks for S
 
 Use the main node to query traffic and attacks at a high level, as seen at the Cloudflare edge:
 
-Product       | Main node
-\--------------|---------------------------------------------
-Spectrum      | `spectrumNetworkAnalyticsAdaptiveGroups`
-Magic Transit | `magicTransitNetworkAnalyticsAdaptiveGroups`
+| Product       | Main node |
+| --------------|--------------------------------------------- |
+| Spectrum      | `spectrumNetworkAnalyticsAdaptiveGroups`     |
+| Magic Transit | `magicTransitNetworkAnalyticsAdaptiveGroups` |
 
 To query more specific details about attacks, use the [attack nodes](#attack-nodes).
 
@@ -38,7 +38,7 @@ Each row represents an attack event. Each attack has a unique ID.
 
 The sample rate is 1/10,000 packets.
 
-{{<Aside type="note" header="Adjusting attack mitigation">}}  
+{{<Aside type="note" header="Adjusting attack mitigation">}}
 
 To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network).
 

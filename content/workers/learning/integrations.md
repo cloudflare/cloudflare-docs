@@ -26,6 +26,6 @@ Integrate Workers to your existing services and platforms to optimize your conti
 
     {{<Aside type="note">}}
 
-    The Serverless Framework does not currently support `*.workers.dev` subdomains. Track support progress on [this GitHub issue](https://github.com/cloudflare/serverless-cloudflare-workers/issues/36).
+  The Serverless Framework does not currently support `*.workers.dev` subdomains. Track support progress on [this GitHub issue](https://github.com/cloudflare/serverless-cloudflare-workers/issues/36).
 
     {{</Aside>}}

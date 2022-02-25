@@ -29,11 +29,9 @@ The action that will be performed for requests that match specific rules of Clou
     *   Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
     {{<Aside type="note">}}
+You cannot configure the rule action to *Log* for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
 
-    You cannot configure the rule action to *Log* for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
-
-    However, you can use the *Log* action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset.
-
+However, you can use the *Log* action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset.
       {{</Aside>}}
 
 *   **Block**
@@ -67,7 +65,7 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 The available sensitivity levels are:
 
 UI value          | API value
-\------------------|----------
+------------------|----------
 *High*            | `"default"`
 *Medium*          | `"medium"`
 *Low*             | `"low"`

@@ -36,7 +36,7 @@ You are now ready to start configuring your app.
 1.  Choose an **application name** and set a **session duration**.
 
   {{<Aside>}}
-  The session duration for an application will determine the minimum frequency a user will be prompted to authenticate with the configured provider. If you want users to be prompted to authenticate every time they reach your application, select <code>No duration, expires immediately</code>.
+The session duration for an application will determine the minimum frequency a user will be prompted to authenticate with the configured provider. If you want users to be prompted to authenticate every time they reach your application, select `No duration, expires immediately`.
   {{</Aside>}}
 
 ![Set application name](/cloudflare-one/static/documentation/applications/applications-name-session.png)
@@ -44,7 +44,7 @@ You are now ready to start configuring your app.
 1.  From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
   {{<Aside>}}
-  When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the <a href="/policies/zero-trust/app-paths">Application paths</a> page.
+When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the [Application paths](/cloudflare-one/policies/zero-trust/app-paths) page.
   {{</Aside>}}
 
 1.  Scroll down to the **Application visibility** card.
@@ -53,7 +53,7 @@ You are now ready to start configuring your app.
     *   \[Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
      {{<Aside>}}
-     If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
+If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
      {{</Aside>}}
 
 2.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.

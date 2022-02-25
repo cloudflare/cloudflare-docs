@@ -25,7 +25,7 @@ The exact composition of the trigger will change depending on the type of rule y
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\---       | ---           | ---             | ---
+---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` |  *Contains* | `purchase`
 
 {{</table-wrap>}}
@@ -47,7 +47,7 @@ Zaraz tracks the variable you input in **Variable name**. For a complete list of
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\---       | ---           | ---             | ---
+---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` | *Contains* | `purchase`
 
 {{</table-wrap>}}
@@ -66,7 +66,7 @@ Tracks clicks in a web page. You can set up click listeners using CSS selectors 
 {{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Click listener* | *CSS* | `#my-button` | `500`
 
 {{</table-wrap>}}
@@ -76,7 +76,7 @@ To improve the performance of the web page, you can limit a Click listener to a 
 {{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Click listener* | *CSS* | `#myButton` | `500`
 
 {{</table-wrap>}}
@@ -84,7 +84,7 @@ Rule type | Type | Selector | Wait for events
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | *Contains* | `/my-page-path`
 
 {{</table-wrap>}}
@@ -98,7 +98,7 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 {{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Click listener* | *XPath* | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`
 
 {{</table-wrap>}}
@@ -117,7 +117,7 @@ Tracks form submissions using CSS selectors. Click the **Validate** toggle butto
 {{<table-wrap>}}
 
 Rule type | CSS Selector | Validate
-\--- | --- | ---
+--- | --- | ---
 *Form submission* | `#my-form` | Toggle on or off
 
 {{</table-wrap>}}
@@ -127,7 +127,7 @@ To improve the performance of the web page, you can limit a Form submission trig
 {{<table-wrap>}}
 
 Rule type | CSS Selector | Validate
-\--- | --- | ---
+--- | --- | ---
 *Form submission* | `#my-form` | Toggle on or off
 
 {{</table-wrap>}}
@@ -135,7 +135,7 @@ Rule type | CSS Selector | Validate
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | *Contains* | `/my-page-path`
 
 {{</table-wrap>}}
@@ -156,7 +156,7 @@ Set up an interval of time in milliseconds before activating the trigger in **In
 {{<table-wrap>}}
 
 Rule type | Interval | Limit
-\--- | --- | ---
+--- | --- | ---
 *Timer* | `50` | `2`
 
 {{</table-wrap>}}
@@ -166,7 +166,7 @@ To improve the performance of a web page, you can limit a Timer trigger to a spe
 {{<table-wrap>}}
 
 Rule type | Interval | Limit
-\--- | --- | ---
+--- | --- | ---
 *Timer* | `50` | `2` |
 
 {{</table-wrap>}}
@@ -174,7 +174,7 @@ Rule type | Interval | Limit
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\--- | --- | --- | ---
+--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
 
 {{</table-wrap>}}

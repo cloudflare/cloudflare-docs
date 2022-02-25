@@ -42,9 +42,7 @@ To upload a custom SSL certificate in the dashboard:
 5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
 
      {{<Aside type="note">}}
-
-    If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
-
+If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
      {{</Aside>}}
 
 6.  Choose the appropriate [**Bundle Method**](/ssl/bundling-methodologies/).

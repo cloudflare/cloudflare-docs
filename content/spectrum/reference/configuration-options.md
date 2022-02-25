@@ -106,7 +106,7 @@ The cipher suites below are ordered based on how they appear in the ClientHello,
 {{<table-wrap>}}
 
 OpenSSL Name | TLS 1.1 | TLS 1.2 | TLS 1.3
-\------|---------------|---------------|---------------
+------|---------------|---------------|---------------
 AEAD-AES128-GCM-SHA256 \[^1]|❌|❌|✅
 AEAD-AES256-GCM-SHA384 \[^1]|❌|❌|✅
 AEAD-CHACHA20-POLY1305-SHA256 \[^1]|❌|❌|✅

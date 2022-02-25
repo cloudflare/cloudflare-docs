@@ -43,7 +43,9 @@ For this tutorial, you will need:
     *   `<Cloudflare Last name attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
 
      {{<Aside type="note">}}
-     This step is optional. If the name is not provided, Zendesk will [use the user’s email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v))
+
+  This step is optional. If the name is not provided, Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v)
+
      {{</Aside>}}
 
     ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
@@ -57,17 +59,15 @@ For this tutorial, you will need:
     *   SSO Endpoint => SAML SSO URL
     *   Public Key => Certificate Fingerprint
 
-     {{<Aside>}}
+    {{<Aside type="note">}}
+The Public key must be transformed into a fingerprint. To do that:
 
-    The Public key must be transformed into a fingerprint. To do that:
-
-    1.  Copy the Public Key Value.
-    2.  Paste the Public Key into [SAML X.509 Certificate Fingerprint - Online SHA1 Decoder | SAMLTool.com](https://www.samltool.com/fingerprint.php).
-    3.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-    4.  Set the algorithm to SHA256.
-    5.  Copy the Formatted Fingerprint Value.
-
-     {{</Aside>}}
+1. Copy the Public Key Value.
+2. Paste the Public Key into [SAML X.509 Certificate Fingerprint - Online SHA1 Decoder | SAMLTool.com](https://www.samltool.com/fingerprint.php).
+3. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+4. Set the algorithm to SHA256.
+5. Copy the Formatted Fingerprint Value.
+    {{</Aside>}}
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 

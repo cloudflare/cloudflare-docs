@@ -11,6 +11,6 @@ meta:
 Cloudflare Waiting Room queues site visitors when a website experiences unmanageable surges in legitimate traffic.
 
 {{<button-group>}}
-  {{<button type="primary" href="/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/waiting-room/get-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="/waiting-room/about">}}Learn more{{</button>}}
 {{</button-group>}}

@@ -39,7 +39,7 @@ The following table shows how URL normalization settings affect incoming URLs be
 {{<table-wrap>}}
 
 Incoming URL | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin
-\---|---|---|---|---
+---|---|---|---|---
 `www.example.com/hello`   | *On*  | *Off* | `www.example.com/hello`   | `www.example.com/hello`
 `www.example.com/hello`   | *On*  | *On*  | `www.example.com/hello`   | `www.example.com/hello`
 `www.example.com/hello`   | *Off* | *Off* | `www.example.com/hello`   | `www.example.com/hello`

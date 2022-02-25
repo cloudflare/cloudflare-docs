@@ -11,7 +11,7 @@ Cloudflare measures the following metrics for every connection.
 {{<table-wrap>}}
 
 Metric                    | Name                                | Example                  | Unit
-\--------------------------|-------------------------------------|--------------------------|--------------------------
+--------------------------|-------------------------------------|--------------------------|--------------------------
 count                     | Count of total events               | 1000                     | Count
 bytesIngress              | Sum of ingress bytes                | 1000                     | Sum
 bytesEgress               | Sum of egress bytes                 | 1000                     | Sum
@@ -29,7 +29,7 @@ You can divide your analytics further by the following dimensions.
 {{<table-wrap>}}
 
 Dimension                 | Name                            | Example
-\--------------------------|---------------------------------|--------------------------
+--------------------------|---------------------------------|--------------------------
 event                     | Connection Event                | connect, progress, disconnect, originError, clientFiltered
 appID                     | Application ID                  | 40d67c87c6cd4b889a4fd57805225e85
 coloName                  | Colo Name                       | SFO
@@ -44,7 +44,7 @@ Use the operators below to filter data.
 {{<table-wrap>}}
 
 Operator                  | Name                            | URL Encoded
-\--------------------------|---------------------------------|--------------------------
+--------------------------|---------------------------------|--------------------------
 \==                        | Equals                          | %3D%3D
 !=                        | Does not equals                 | !%3D
 \>                        | Greater Than                    | %3E

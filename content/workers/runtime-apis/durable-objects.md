@@ -133,35 +133,31 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 *   {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<any>{{</type>}}
 
-    *   Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
+    *   Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.<br><br>
 
         **Supported options:**
 
-        {{<definitions>}}
-
-        *   {{<code>}}allowConcurrency{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+        * {{<code>}}allowConcurrency{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   By default, the system will pause delivery of I/O events to the object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
 
-        *   {{<code>}}noCache{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+        * {{<code>}}noCache{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance.
 
-        {{</definitions>}}
-
 *   {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-    *   Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
-
-        **Supported options:** Same as `get(key, options)`, above.
-
-*   {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}any{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
-
-    *   Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 128 KiB (131072 bytes).
+    *   Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.<br><br>
 
         **Supported options:**
 
-        {{<definitions>}}
+        Same as `get(key, options)`, above.
+
+*   {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}any{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
+
+    *   Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 128 KiB (131072 bytes).<br><br>
+
+        **Supported options:**
 
         *   {{<code>}}allowUnconfirmed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
@@ -171,18 +167,12 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
             *   If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance. In particular, if you `get()` the key before the write to disk has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
-        {{</definitions>}}
-
-        {{<Aside type="note" header="Automatic write coalescing">}}
-
-        If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
-
-        {{</Aside>}}
+{{<Aside type="note" header="Automatic write coalescing">}}
+If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
+{{</Aside>}}
 
         {{<Aside type="note" header="Write buffer behavior">}}
-
-        `put()` returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
-
+The `put()` method returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
         {{</Aside>}}
 
 *   {{<code>}}put(entries{{<param-type>}}Object{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
@@ -213,8 +203,6 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
         **Supported options:**
 
-        {{<definitions>}}
-
         *   {{<code>}}start{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Key at which the list results should start, inclusive.
@@ -243,27 +231,17 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
             *   Same as the option to `get()`, above.
 
-        {{</definitions>}}
-
 *   {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
-    *   Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
+    * Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
+    <aside class="DocsMarkdown--aside" role="note" data-type="note">
+      <div class="DocsMarkdown--aside-header">Deprecated</div>
+      {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
+    </aside>
 
-        {{<Aside type="note" header="Deprecated">}}
+    * {{<code>}}txn{{</code>}}
 
-        Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
-
-        {{</Aside>}}
-
-        {{<definitions>}}
-
-        *   `txn`
-
-            *   Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.
-
-                Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
-
-        {{</definitions>}}
+        *   Provides access to the `put()`, `get()`, `delete()` and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` object instead of on the top-level `state.storage` object.<br><br>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
 *   {{<code>}}deleteAll(){{</code>}} {{<type>}}Promise{{</type>}}
 

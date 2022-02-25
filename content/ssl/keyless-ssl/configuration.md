@@ -55,7 +55,7 @@ For each certificate you wish to use with Keyless SSL:
 4.  Fill in the upload modal with the certificate and other details and click **Add**.
 
 Label | Description | Example Values
-\------|-------------|---------------
+------|-------------|---------------
 Key server label|Any unique identifier for your key server|“test-keyless”, “production-keyless-1”
 Key server hostname|The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier).|11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com
 Key server port|Set to 2407 unless you have changed this on the key server.|2407

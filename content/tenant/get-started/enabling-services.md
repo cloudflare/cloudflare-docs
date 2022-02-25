@@ -24,10 +24,10 @@ curl -X POST https://api.cloudflare.com/client/v4/zones \
 -H 'x-auth-email: <x-auth-email>' \
 -H 'x-auth-key: <x-auth-key>' \
 -d '{
-   "name": "example.com", 
-   "account": { 
-      "id": "<customer account id>" 
-   } 
+   "name": "example.com",
+   "account": {
+      "id": "<customer account id>"
+   }
 }'
 ```
 
@@ -88,10 +88,10 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscrip
 -H 'Content-Type: application/json' \
 -H 'x-auth-email: <x-auth-email>' \
 -H 'x-auth-key: <x-auth-key>' \
--d '{ 
+-d '{
    "rate_plan": {
       "id": "<rate plan name>"
-   } 
+   }
 }'
 ```
 
@@ -103,4 +103,4 @@ Once you have added the necessary features, you or your customer can move on to 
 
 Learn how to modify zone settings and other services.
 
-<p>{{<button type="primary" href="/get-started/service-configuration">}}Step 4: Service configuration{{</button>}}</p>
+<p>{{<button type="primary" href="/tenant/get-started/service-configuration">}}Step 4: Service configuration{{</button>}}</p>

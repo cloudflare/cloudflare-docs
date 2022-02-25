@@ -77,12 +77,11 @@ warp-routing:
   enabled: true
 ```
 
- {{<Aside>}}
- Tunnel ID can be found by running <code>cloudflared tunnel list</code>.
+  {{<Aside>}}
+Tunnel ID can be found by running `cloudflared tunnel list`.
 
 ![Tunnel ID](/cloudflare-one/static/zero-trust-security/ztna/tunnel-id.png)
-
- {{</Aside>}}
+  {{</Aside>}}
 
 1.  Now run the tunnel:
 

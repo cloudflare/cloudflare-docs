@@ -32,7 +32,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
   </thead>
   <tbody>
     <tr>
-      <td><strong>Legacy CAPTCHA</strong><br/><br/>API value:<br/><code class="InlineCode">challenge</code></td>
+      <td><strong>Legacy CAPTCHA</strong><br/><br/>API value:<br/><code>challenge</code></td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
         <p>The client that made the request must pass a CAPTCHA challenge.</p>
@@ -41,7 +41,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>Yes</td>
     </tr>
     <tr>
-      <td><strong>JS Challenge</strong><br/><br/>API value:<br/><code class="InlineCode">js_challenge</code></td>
+      <td><strong>JS Challenge</strong><br/><br/>API value:<br/><code>js_challenge</code></td>
       <td>
         <p>Useful for ensuring that bots and spam cannot access the requested resource; browsers, however, are free to satisfy the challenge automatically.</p>
         <p>The client that made the request must pass a Cloudflare JavaScript Challenge before proceeding.</p>
@@ -50,7 +50,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>Yes</td>
     </tr>
     <tr>
-      <td><strong>Managed Challenge (Recommended)</strong><br/><br/>API value:<br/><code class="InlineCode">managed_challenge</code></td>
+      <td><strong>Managed Challenge (Recommended)</strong><br/><br/>API value:<br/><code>managed_challenge</code></td>
       <td>
         <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
         <p>Depending on the characteristics of a request, Cloudflare will perform the following actions:</p>
@@ -64,14 +64,18 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>Yes</td>
     </tr>
     <tr>
-      <td><strong>Block</strong><br/><br/>API value:<br/><code class="InlineCode">block</code></td>
+      <td>
+        <strong>Block</strong><br/><br/>API value:<br/><code>block</code>
+      </td>
       <td>
         <p>Matching requests are denied access to the site.</p>
       </td>
       <td>Yes</td>
     </tr>
     <tr>
-      <td><strong>Skip</strong><br/><br/>API value:<br/><code class="InlineCode">skip</code></td>
+      <td>
+        <strong>Skip</strong><br/><br/>API value:<br/><code>skip</code>
+      </td>
       <td>
         <p>Allows user to dynamically skip one or more security features or products for a request.</p>
         <p>Depending on the rule configuration, matching requests will skip the evaluation of one or more security features or products:</p>
@@ -89,7 +93,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>No<br/>(but some rules may be skipped)</td>
     </tr>
     <tr>
-      <td><strong>Log</strong><br/><br/>API value:<br/><code class="InlineCode">log</code></td>
+      <td>
+        <strong>Log</strong><br/><br/>API value:<br/><code>log</code>
+      </td>
       <td>
         <p>Records matching requests in the Cloudflare Logs.</p>
         <p>Only available on Enterprise plans.</p>
@@ -98,7 +104,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>No</td>
     </tr>
     <tr>
-      <td><strong>Execute</strong><br/><br/>API value:<br/><code class="InlineCode">execute</code></td>
+      <td><strong>Execute</strong><br/><br/>API value:<br/><code>execute</code></td>
       <td>
         <p>Executes the rules in the ruleset specified in the rule configuration. You can specify a Managed Ruleset or a custom ruleset to execute.</p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
@@ -106,19 +112,19 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       <td>No</td>
     </tr>
     <tr>
-      <td><strong>Rewrite</strong><br/><br/>API value:<br/><code class="InlineCode">rewrite</code></td>
+      <td><strong>Rewrite</strong><br/><br/>API value:<br/><code>rewrite</code></td>
       <td>
         <p>Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.</p>
-        <p>Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code class="InlineCode">http_request_transform</code>, <code class="InlineCode">http_request_late_transform</code>, and <code class="InlineCode">http_response_headers_transform</code>.</p>
+        <p>Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code>http_request_transform</code>, <code>http_request_late_transform</code>, and <code>http_response_headers_transform</code>.</p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Transform Rule.</p>
       </td>
       <td>No</td>
     </tr>
     <tr>
-      <td><strong>Redirect</strong><br/><br/>API value:<br/><code class="InlineCode">redirect</code></td>
+      <td><strong>Redirect</strong><br/><br/>API value:<br/><code>redirect</code></td>
       <td>
         <p>Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.</p>
-        <p>Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code class="InlineCode">http_request_redirect</code> phase.</p>
+        <p>Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code>http_request_redirect</code> phase.</p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule.</p>
       </td>
       <td>Yes</td>

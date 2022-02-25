@@ -49,7 +49,7 @@ $ wrangler dev
 
      {{<Aside type="note">}}
 
-    Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
+  Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
 
      {{</Aside>}}
 

@@ -27,7 +27,7 @@ The following example defines a Bulk Redirect List named `list_b` with two URL R
 **`list_b` Bulk Redirect List**
 
 Source URL                | Target URL                 | Status code
-\--------------------------|----------------------------|------------------
+--------------------------|----------------------------|------------------
 `example.com/about`       | `https://example.com/news` | `301` (the default)
 `example.com/new_feature` | `https://example.com/soon` | `302`
 

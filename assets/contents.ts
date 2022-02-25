@@ -9,6 +9,7 @@ export function toc() {
   if (article) {
     let headers = article.querySelectorAll('h2,h3,h4');
     let i=0, tmp: Element, last: ListItem, container = target;
+    if (!headers.length) return; // exit & leave hidden
 
     for (; i < headers.length; i++) {
       tmp = headers[i];

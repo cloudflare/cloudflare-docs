@@ -22,6 +22,6 @@ Firewall Rules are available to customers on all Cloudflare plans.
 ***
 
 {{<button-group>}}
-  {{<button type="primary" href="/cf-dashboard">}}Manage rules{{</button>}}
-  {{<button type="secondary" href="/cf-firewall-rules">}}Learn more{{</button>}}
+  {{<button type="primary" href="/firewall/cf-dashboard">}}Manage rules{{</button>}}
+  {{<button type="secondary" href="/firewall/cf-firewall-rules">}}Learn more{{</button>}}
 {{</button-group>}}

@@ -28,7 +28,7 @@ The following table shows some examples of URL normalization:
 {{<table-wrap>}}
 
 URL                                  | Normalized URL
-\-------------------------------------|--------------------------------
+-------------------------------------|--------------------------------
 `www.example.com/hello/`             | `www.example.com/hello/`
 `www.example.com/%68ello`            | `www.example.com/hello`
 `www.example.com\hello`              | `www.example.com/hello`

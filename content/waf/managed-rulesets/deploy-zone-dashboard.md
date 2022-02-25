@@ -115,11 +115,11 @@ Do the following:
 
     {{<Aside type="note" header="Note">}}
 
-    If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
+  If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
 
-    Select **Do not apply to new rules** to apply your configurations to the selected rules only.
+  Select **Do not apply to new rules** to apply your configurations to the selected rules only.
 
-    Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
+  Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
 
      {{</Aside>}}
 

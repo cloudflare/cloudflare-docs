@@ -106,7 +106,5 @@ For example, if you have a list of policies that reflects the following:
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
 
 {{<Aside type="warning">}}
-
-    Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application. 
-
+  Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application.
 {{</Aside>}}

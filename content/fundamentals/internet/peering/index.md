@@ -11,7 +11,7 @@ When the message reaches a new network, it stops first at a router.
 
 Routers contain a list of every block of IP’s (called a subnet) that it knows about (called a routing table). Routers on a network need to learn about other networks’ IP addresses. This process is extremely human. Humans from different networks sign contracts that agree that their network will share routing tables with another network.
 
-![routing-table](/fundamentals/static/routingtable.jpg)
+![routing-table](/fundamentals/internet/static/routingtable.jpg)
 
 These contracts are called peering agreements. Once the peering agreement is signed, the networks will exchange routing information from their network and information from all networks they peer with. This exchange of information is done through a standardized way called BGP. Networks with more “peers” know about more parts of the internet and can pass on messages directly to more parts of the internet and so they are faster networks to send a message through.
 
@@ -31,4 +31,4 @@ The places where multiple networks connect around the world are called internet 
 
 There are about 300 internet exchanges around the world. At an internet exchange, you’d find physical switches (servers built to route IP packets) that all the networks connect cables to. When a packet reaches that internet exchange, it uses the switches to change from one network to another. If the packet is going somewhere within the network’s local network (i.e. when a packet destined for a server on AWS reaches the Amazon network) the router sends the packet to the correct machine within the data center.
 
-![ixp](/fundamentals/static/ixp.jpg)
+![ixp](/fundamentals/internet/static/ixp.jpg)

@@ -32,13 +32,9 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 *   `listener` {{<type>}}function{{</type>}}
     *   The function to handle incoming events to the Worker script. The listener is passed a single argument:
 
-        {{<definitions>}}
+    *   `event` {{<type>}}FetchEvent{{</type>}} or {{<type>}}ScheduledEvent{{</type>}}
 
-        *   `event` {{<type>}}FetchEvent{{</type>}} or {{<type>}}ScheduledEvent{{</type>}}
-
-            *   The events dispatched to a Worker. Refer to [`FetchEvent`](/workers/runtime-apis/fetch-event/) or [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
-
-        {{</definitions>}}
+        *   The events dispatched to a Worker. Refer to [`FetchEvent`](/workers/runtime-apis/fetch-event/) or [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
 
 {{</definitions>}}
 

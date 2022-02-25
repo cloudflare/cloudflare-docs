@@ -56,7 +56,7 @@ async function markdown(file: string): Promise<void> {
   let output = '';
   let match: RegExpExecArray | null;
   let input = await fs.readFile(file, 'utf8');
-  let BACKTICKS = /^( +)?([`]{3})([A-Za-z]+?)\n([^]+?)(\2)/gm;
+  let BACKTICKS = /^(\n+)?([`]{3})([A-Za-z]+?)\r?\n([^]+?)(\2)/gm;
 
   while (match = BACKTICKS.exec(input)) {
     let current = match.index;

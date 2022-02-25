@@ -53,9 +53,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 *   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration#options).
 
     {{<Aside type="note" header="Note">}}
-
-    In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
-
+In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
     {{</Aside>}}
 
 *   **destination\_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.

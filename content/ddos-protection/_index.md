@@ -13,8 +13,8 @@ Cloudflare automatically detects and mitigates [Distributed Denial of Service](h
 The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Protection Managed Rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
 
 {{<button-group>}}
-  {{<button type="primary" href="/about">}}Learn more{{</button>}}
-  {{<button type="secondary" href="/managed-rulesets">}}Managed Rulesets{{</button>}}
+  {{<button type="primary" href="/ddos-protection/about">}}Learn more{{</button>}}
+  {{<button type="secondary" href="/ddos-protection/managed-rulesets">}}Managed Rulesets{{</button>}}
 {{</button-group>}}
 
 ***

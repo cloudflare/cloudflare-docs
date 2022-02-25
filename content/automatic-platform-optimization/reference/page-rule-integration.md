@@ -16,7 +16,7 @@ The following Page rules can control APO. Any changes to Caching page rules requ
 
     {{<Aside type="warning">}}
 
-    Automatic page purge via the WordPress plugin won’t clean all cached pages, only pages without query strings. Cached responses will be returned even with request header `cache-control: no-cache`.
+  Automatic page purge via the WordPress plugin won’t clean all cached pages, only pages without query strings. Cached responses will be returned even with request header `cache-control: no-cache`.
 
     {{</Aside>}}
 

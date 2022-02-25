@@ -15,8 +15,8 @@ meta:
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 {{<button-group>}}
-  {{<button type="primary" href="/get-started/guide">}}Get started{{</button>}}
-  {{<button type="secondary" href="/tutorials">}}View the tutorials{{</button>}}
+  {{<button type="primary" href="/workers/get-started/guide">}}Get started{{</button>}}
+  {{<button type="secondary" href="/workers/tutorials">}}View the tutorials{{</button>}}
 {{</button-group>}}
 
 ***
@@ -55,7 +55,7 @@ async function handleRequest(request) {
 
 {{<button-group>}}
   {{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}
-  {{<button type="secondary" href="/learning/playground">}}Learn more{{</button>}}
+  {{<button type="secondary" href="/workers/learning/playground">}}Learn more{{</button>}}
 {{</button-group>}}
 
 ***

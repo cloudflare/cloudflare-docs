@@ -34,12 +34,10 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
     *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
      {{<example>}}
-
-    Record|Type|Name|Content
-    \-----|-------|-------|-----
-    Fallback origin|A|`proxy-fallback.saasprovider.com`|192.0.2.1
-    CNAME target|CNAME|`*.customers.saasprovider.com`|`proxy-fallback.saasprovider.com`
-
+Record|Type|Name|Content
+-----|-------|-------|-----
+Fallback origin|A|`proxy-fallback.saasprovider.com`|192.0.2.1
+CNAME target|CNAME|`*.customers.saasprovider.com`|`proxy-fallback.saasprovider.com`
      {{</example>}}
 
 4.  Enable **Custom Hostnames** for your zone:

@@ -24,7 +24,9 @@ For more information on the available options, refer to [Available skip options]
 
 5.  Under **Choose action**, select *Skip* from the dropdown.
 
-  <div class="large-img"><img alt="Skip action options in Custom Rules" src="../../../images/custom-rules/skip-action-options.png"/></div>
+    <div class="large-img">
+      <img alt="Skip action options in Custom Rules" src="/waf/static/custom-rules/skip-action-options.png"/>
+    </div>
 
 1.  Configure the desired [skip options](/waf/custom-rules/custom-firewall/skip/options/).
 

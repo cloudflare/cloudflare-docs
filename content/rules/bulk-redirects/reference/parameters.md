@@ -21,9 +21,7 @@ The URL Redirect parameters are the following:
     *   For more information on the supported URL components, refer to [Supported URL components](/rules/bulk-redirects/reference/url-components/).
 
       {{<Aside type="warning" header="Important">}}
-
-    To ensure good performance at the edge, you can only have up to 16 URL Redirects with the same source URL **path** across all Bulk Redirect Lists in your account, regardless of the URL Redirect domain.
-
+To ensure good performance at the edge, you can only have up to 16 URL Redirects with the same source URL **path** across all Bulk Redirect Lists in your account, regardless of the URL Redirect domain.
       {{</Aside>}}
 
 *   **Target URL** {{<type>}}String{{</type>}}

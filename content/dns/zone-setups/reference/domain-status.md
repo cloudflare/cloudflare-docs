@@ -16,7 +16,7 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
       {{<Aside type="warning">}}
 
-    Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#limitations-for-pending-domains).
+  Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#limitations-for-pending-domains).
 
       {{</Aside>}}
 

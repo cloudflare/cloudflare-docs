@@ -19,7 +19,7 @@ Spectrum properties requiring an Enterprise plan:
 {{<table-wrap>}}
 
 Name          | Type         | Description                                                                              | Example
-\--------------|--------------|------------------------------------------------------------------------------------------|-------------------
+--------------|--------------|------------------------------------------------------------------------------------------|-------------------
 origin\_dns    | object       | Method and parameters used to discover the origin server address via DNS. Valid record types are A, AAAA, SRV and empty(both A and AAA).<br />A request must contain either an "origin\_dns" parameter or an "origin\_direct" parameter. When both are specified the service returns an HTTP 400 Bad Request. | "origin\_dns": {"type": "A", "name": "mqtt.example.com", ttl: 1200}
 origin\_port   | integer      | The destination port at the origin.                                                      | 22
 proxy\_protocol | string       | Enables Proxy Protocol to the origin. Spectrum supports "v1", "v2", and "simple" proxy protocols. See [Proxy Protocol](/spectrum/how-to/enable-proxy-protocol/) for more details.                                                  | "off"

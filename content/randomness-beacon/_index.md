@@ -12,6 +12,6 @@ meta:
 
 Explore drand: a distributed service providing public randomness in an application-agnostic, secure, and efficient way.
 
-<p>{{<button type="primary" href="/about">}}Get started{{</button>}}</p>
+<p>{{<button type="primary" href="/randomness-beacon/about">}}Get started{{</button>}}</p>
 
 {{</content-column>}}

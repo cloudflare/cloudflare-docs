@@ -32,7 +32,7 @@ To track a `dataLayer.push` function, create a trigger with `zaraz.track()`. The
 {{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
-\---       | ---           | ---             | ---
+---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` |  *Contains* | `purchase`
 
 {{</table-wrap>}}

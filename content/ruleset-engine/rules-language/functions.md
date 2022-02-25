@@ -31,9 +31,9 @@ The Rules language supports these transformation functions:
 
 {{<definitions>}}
 
-*   <code>any({{<type>}}Array{{</type>}}{'<'}{{<param-type>}}Boolean{{</param-type>}}{'>'})</code> {{<type>}}Boolean{{</type>}}
+*   <code>any({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
 
-    *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+    *   Returns <code>true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code>false</code> otherwise.
 
     *   <em>Example:</em><br />
 
@@ -41,13 +41,13 @@ The Rules language supports these transformation functions:
         any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
         </code>
 
-*   <code>all({{<type>}}Array{{</type>}}{'<'}{{<param-type>}}Boolean{{</param-type>}}{'>'})</code> {{<type>}}Boolean{{</type>}}
+*   <code>all({{<type>}}Array{{</type>}}\<{{<param-type>}}Boolean{{</param-type>}}\>)</code> {{<type>}}Boolean{{</type>}}
 
-    *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+    *   Returns <code>true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code>false</code> otherwise.
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">all(http.request.headers\['content-type']\[\*] == "application/json")</code>
+        <code>all(http.request.headers\['content-type']\[\*] == "application/json")</code>
 
 *   <code>concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -55,7 +55,7 @@ The Rules language supports these transformation functions:
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
+        <code>concat("String1"," ","String",2) == "String1 String2"</code>
 
 *   <code>ends\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
@@ -65,9 +65,7 @@ The Rules language supports these transformation functions:
         If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
         {{<Aside type="warning">}}
-
-        **Warning:** The `ends_with()` function is not available in [Firewall Rules](/firewall/).
-
+**Warning:** The `ends_with()` function is not available in [Firewall Rules](/firewall/).
         {{</Aside>}}
 
 *   <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
@@ -76,7 +74,7 @@ The Rules language supports these transformation functions:
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">len(http.host)</code>
+        <code>len(http.host)</code>
 
 *   <code>lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -84,7 +82,7 @@ The Rules language supports these transformation functions:
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
+        <code>lower(http.host) == "www.cloudflare.com"</code>
 
 *   <code>regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
@@ -111,9 +109,7 @@ The Rules language supports these transformation functions:
         `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
         {{<Aside type="warning">}}
-
-        **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
-
+**Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
         {{</Aside>}}
 
 *   <code>remove\_bytes({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
@@ -122,7 +118,7 @@ The Rules language supports these transformation functions:
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">remove\_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+        <code>remove\_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
 
 *   <code>starts\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
@@ -132,9 +128,7 @@ The Rules language supports these transformation functions:
         If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
         {{<Aside type="warning">}}
-
-        **Warning:** The `starts_with()` function is not available in [Firewall Rules](/firewall/).
-
+**Warning:** The `starts_with()` function is not available in [Firewall Rules](/firewall/).
         {{</Aside>}}
 
 *   <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
@@ -149,9 +143,7 @@ The Rules language supports these transformation functions:
         ```
 
         {{<Aside type="warning">}}
-
-        **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform).
-
+**Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform).
         {{</Aside>}}
 
 *   <code>upper({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
@@ -160,19 +152,19 @@ The Rules language supports these transformation functions:
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
+        <code>upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
 *   <code>url\_decode({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Decodes a URL formatted string, as in the following:
 
-        *   <code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode to space characters <code class="InlineCode"> </code>
+        *   <code>%20</code> and <code>+</code> decode to space characters <code> </code>
 
-        *   <code class="InlineCode">%E4%BD</code> decodes to <code class="InlineCode">ä½ </code>
+        *   <code>%E4%BD</code> decodes to <code>ä½ </code>
 
     *   <em>Example:</em><br />
 
-        <code class="InlineCode">any(url\_decode(http.request.body.form.values\[*])\[*] contains "an xss attack")</code>
+        <code>any(url\_decode(http.request.body.form.values\[*])\[*] contains "an xss attack")</code>
 
 {{</definitions>}}
 
@@ -180,7 +172,7 @@ The Rules language supports these transformation functions:
 
 *   <code>bit\_slice({{<type>}}String{{</type>}}, {{<type>}}Number{{</type>}}, {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
 
-    *   Select a slice of contiguous bits from a string field. This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
+    *   Select a slice of contiguous bits from a string field. This is primarily intended for use with <code>ip</code> and <code>tcp</code>.
     *   The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
     *   Use of structure fields is preferred over this mechanism.
 
@@ -274,23 +266,23 @@ and is composed of these parentheses-delimited expressions:
     <tr>
       <td valign="top"><code>(.+)</code></td>
       <td>The <em>message</em> to validate.</td>
-      <td valign="top"><code class="InlineCode">/download/cat.jpg</code></td>
+      <td valign="top"><nlineCode">/download/cat.jpg</code></td>
     </tr>
     <tr>
       <td valign="top"><code>(.*)</code></td>
       <td>The <em>separator</em> between message and timestamp, commonly a parameter name.</td>
-      <td valign="top"><code class="InlineCode">&verify=</code></td>
+      <td valign="top"><nlineCode">&verify=</code></td>
     </tr>
     <tr>
       <td valign="top"><code>(\d{'{10}'})</code></td>
       <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds.</td>
-      <td valign="top"><code class="InlineCode">1484063137</code></td>
+      <td valign="top"><nlineCode">1484063137</code></td>
     </tr>
     <tr>
       <td valign="top"><code>(.{'{43,}'})</code></td>
-      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code class="InlineCode">'s'</code>, you must URL encode the base64 value for <em>mac</em>.</p>
+      <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code>'s'</code>, you must URL encode the base64 value for <em>mac</em>.</p>
       <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em> contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
-      <td valign="top"><code class="InlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
+      <td valign="top"><nlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>
     </tr>
   </tbody>
 </table>

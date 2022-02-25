@@ -18,8 +18,8 @@ Advanced security features including HTTPS traffic inspection require users to i
 
 First, download the Cloudflare certificate. The certificate is available both as a `.pem` and as a `.crt` file. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-*   [Download certificate (.crt)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt/)
-*   [Download certificate (.pem)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem/)
+*   [Download certificate (.crt)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt)
+*   [Download certificate (.pem)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
 
 ### Verify the certificate fingerprint
 

@@ -46,7 +46,7 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 The available sensitivity levels are:
 
 UI Value          | API value
-\------------------|----------
+------------------|----------
 *High*            | `"default"`
 *Medium*          | `"medium"`
 *Low*             | `"low"`

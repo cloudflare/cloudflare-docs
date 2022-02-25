@@ -35,7 +35,7 @@ To configure Schema Validation in the Cloudflare dashboard:
 
      {{<Aside type="warning" note="Important">}}
 
-    To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
 
      {{</Aside>}}
 
@@ -51,7 +51,9 @@ To configure Schema Validation in the Cloudflare dashboard:
 
 9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
-     <div class="large-img"><img alt="Review your endpoints and associated actions before deploying your schema validation" src="../../images/api-shield-review-endpoints-step.png"/></div>
+    <div class="large-img">
+      <img alt="Review your endpoints and associated actions before deploying your schema validation" src="/api-shield/static/api-shield-review-endpoints-step.png"/>
+    </div>
 
 10. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 
@@ -59,7 +61,7 @@ To configure Schema Validation in the Cloudflare dashboard:
 
      {{<Aside type="warning">}}
 
-    Currently, request body validations are not supported.
+Currently, request body validations are not supported.
 
      {{</Aside>}}
 

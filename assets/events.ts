@@ -12,7 +12,7 @@ export function $focus(elem: HTMLElement, bool: boolean) {
   if (bool) elem.focus();
 
   // if is topbar search input
-  if (SEARCH_ID.test(elem.id)) {
+  if (SEARCH_ID && SEARCH_ID.test(elem.id)) {
     SEARCH_INPUT = elem;
 
     elem.parentElement.parentElement.toggleAttribute('is-focused', bool);

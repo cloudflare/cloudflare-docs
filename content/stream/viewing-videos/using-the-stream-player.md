@@ -68,7 +68,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
         {{<Aside>}}
 
-        Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
         {{</Aside>}}
 
@@ -82,7 +82,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
         {{<Aside>}}
 
-        This will *only* work once during initialization. Beyond that point the user has full control over their text track settings.
+This will *only* work once during initialization. Beyond that point the user has full control over their text track settings.
 
         {{</Aside>}}
 
@@ -100,7 +100,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
         {{<Aside>}}
 
-        The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
+The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
         {{</Aside>}}
 
@@ -110,7 +110,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
         {{<Aside type="note">}}
 
-        **Note:** Like all query string parameters, this value *must* be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
+**Note:** Like all query string parameters, this value *must* be URI encoded. For example, the thumbnail at `https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270` can be encoded using JavaScript's `encodeURIComponent()` function to `https%3A%2F%2Fvideodelivery.net%2F5d5bc37ffcf54c9b82e996823bffbb81%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D68s%26height%3D270`.
 
         {{</Aside>}}
 
@@ -120,7 +120,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
         {{<Aside type="note">}}
 
-        **Note:** Like all query string parameters, this value *must* be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+**Note:** Like all query string parameters, this value *must* be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
 
         {{</Aside>}}
 

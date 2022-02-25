@@ -38,7 +38,7 @@ If you can't find a Cloudflare port close to your infrastructure from your fabri
 Cloudflare collaborates with data center providers to streamline the physical network interconnect provisioning process in our physical locations. The locations below are available with our PNI partners.
 
 Metro | Data Center
-\---------|----------
+---------|----------
 | **Africa** |
 Cape Town | [Teraco Cape Town, South Africa](https://www.peeringdb.com/fac/1225)
 Johannesburg | [Teraco Johannesburg Campus, South Africa](https://www.peeringdb.com/fac/850)

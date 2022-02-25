@@ -61,9 +61,7 @@ The SDK provides an API for programmatically controlling the player and listenin
     *   Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
 
         {{<Aside>}}
-
-        Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
-
+Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
         {{</Aside>}}
 
 *   `buffered` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
@@ -84,7 +82,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 
         {{<Aside>}}
 
-        This will *only* work once during initialization. Beyond that point the user has full control over their text track settings.
+  This will *only* work once during initialization. Beyond that point the user has full control over their text track settings.
 
         {{</Aside>}}
 
@@ -117,9 +115,7 @@ The SDK provides an API for programmatically controlling the player and listenin
     *   Sets or returns whether the video should be preloaded upon element load.
 
         {{<Aside>}}
-
-        The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
-
+The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
         {{</Aside>}}
 
 *   `primaryColor` {{<type>}}string{{</type>}}

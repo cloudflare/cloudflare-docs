@@ -33,7 +33,7 @@ Raw DNS request:
 
 Wireshark’s interpretation:
 
-![dns-wireshark](/fundamentals/static/dns-wireshark.jpg)
+![dns-wireshark](/fundamentals/internet/static/dns-wireshark.jpg)
 
 Raw DNS Response:
 
@@ -45,7 +45,7 @@ Raw DNS Response:
 
 Wireshark’s interpretation:
 
-![dns-wireshark](/fundamentals/static/dns-wireshark-response.jpg)
+![dns-wireshark](/fundamentals/internet/static/dns-wireshark-response.jpg)
 
 ## How DNS works
 
@@ -53,7 +53,7 @@ DNS is a distributed key/value database. The values returned can in theory be an
 
 Web-enabled applications like browsers use something called a Stub Resolver to interact with the DNS. Once the application or browser has obtained the IP address of the website, they can access it using the HTTP or HTTPS protocols.
 
-![dns-diagram](/fundamentals/static/dns-diagram.jpg)
+![dns-diagram](/fundamentals/internet/static/dns-diagram.jpg)
 
 ## The DNS Namespace
 
@@ -105,7 +105,7 @@ The DS record is a hash of a DNSKEY. The .com zone stores this record for each z
 
 The ultimate root of trust is the KSK DNSKEY for the DNS root. This key is universally known and published.
 
-![dns-trust-anchor](/fundamentals/static/dnstrustanchor.jpg)
+![dns-trust-anchor](/fundamentals/internet/static/dnstrustanchor.jpg)
 
 By following the chain of DNSKEY, DS and RRSIG records to the root, any record can be trusted.
 
@@ -155,7 +155,7 @@ Of the requests above, message number 3 is a good target to attack. This is beca
 
 If one of your malicious—acceptable—responses arrives ahead of the real response, the recursive resolver will believe your record and cache it for as long as the TTL is set. Then any other clients asking for the poisoned record will be directed to your malicious servers.
 
-![dns-diagram](/fundamentals/static/kaminsky-1.jpg)
+![dns-diagram](/fundamentals/internet/static/kaminsky-1.jpg)
 
 There are some complications that make this harder than it sounds in practice. For example, you have to guess:
 
