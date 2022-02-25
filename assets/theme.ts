@@ -1,13 +1,20 @@
 (function () {
+  let tooEarly = false;
   let btn: HTMLInputElement;
   let media: MediaQueryList | void;
 
   if (document.readyState !== 'loading') init();
   else addEventListener('DOMContentLoaded', init);
 
+  btn = document.querySelector('#ThemeToggle')!;
+  tooEarly = !btn;
+
   function setter(isDark: boolean) {
     try {
       if (btn) btn.checked = isDark;
+      else if (tooEarly) return setTimeout(setter, 1, isDark);
+
+      tooEarly = false;
       let theme = isDark ? 'dark' : 'light';
       document.documentElement.setAttribute('theme', theme);
       localStorage.theme = JSON.stringify({ theme });
@@ -17,7 +24,7 @@
   }
 
   function init() {
-    btn = document.querySelector('#ThemeToggle')!;
+    btn = btn || document.querySelector('#ThemeToggle')!;
     btn.addEventListener('change', () => setter(!!btn.checked));
 
     // Shift+D for toggle
