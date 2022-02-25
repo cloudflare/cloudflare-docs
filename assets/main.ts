@@ -10,12 +10,14 @@ declare global {
   }
 }
 
-navs.init();
-timeago.init();
+(function () {
+  navs.init();
+  timeago.init();
 
-events.focus();
-events.mobile();
-events.dropdowns();
-events.copy();
+  events.focus();
+  events.mobile();
+  events.dropdowns();
+  events.copy();
 
-contents.toc();
+  contents.toc();
+})();
