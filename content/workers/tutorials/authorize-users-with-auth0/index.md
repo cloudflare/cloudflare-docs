@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Authorize users with Auth0
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Authorize users with Auth0
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

@@ -4,11 +4,9 @@ title: SSL for SaaS
 weight: 9
 ---
 
-import SSLforSaaSDefinition from "../\_partials/\_ssl-for-saas-definition.md"
-
 # SSL for SaaS
 
-<SSLforSaaSDefinition/>
+{{<render file="_ssl-for-saas-definition.md">}}
 
 For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`.
 

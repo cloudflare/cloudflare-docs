@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy a Hugo site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a Hugo site
 
 [Hugo](https://gohugo.io/) is a tool for generating static sites, written in Go. It is incredibly fast and has great high-level, flexible primitives for managing your content using Markdown and JSON.
@@ -55,7 +53,7 @@ The Hugo GitHub repository contains pre-built versions of the Hugo command-line 
 
 For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a new project
 

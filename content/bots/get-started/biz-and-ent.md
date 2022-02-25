@@ -6,9 +6,6 @@ meta:
   title: Get started with Super Bot Fight Mode (Business)
 ---
 
-import EnableSteps from "../\_partials/\_get-started-pro-biz-steps.md"
-import RulesetEngine from "../\_partials/\_bfm-ruleset-engine.md"
-
 # Get started with Super Bot Fight Mode (Business)
 
 Super Bot Fight Mode is included in your Business or Enterprise subscription. When enabled, the product:
@@ -26,7 +23,7 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 
 ## Enable Super Bot Fight Mode
 
-<EnableSteps/>
+{{<render file="_get-started-pro-biz-steps.md">}}
 
 ## Analytics
 
@@ -34,4 +31,4 @@ For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).
 
 ## Ruleset Engine
 
-<RulesetEngine/>
+{{<render file="_bfm-ruleset-engine.md">}}

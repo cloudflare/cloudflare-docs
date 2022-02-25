@@ -4,11 +4,9 @@ title: Always Use HTTPS
 weight: 15
 ---
 
-import AlwaysUseHTTPSDefinition from "../../\_partials/\_always-use-https-definition.md"
-
 # Always Use HTTPS
 
-<AlwaysUseHTTPSDefinition/>
+{{<render file="_always-use-https-definition.md">}}
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
 

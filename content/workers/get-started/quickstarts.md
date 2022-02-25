@@ -6,8 +6,6 @@ weight: 3
 layout: list
 ---
 
-import WorkerStarter from "../../components/worker-starter"
-
 # Quickstarts
 
 {{<content-column>}}

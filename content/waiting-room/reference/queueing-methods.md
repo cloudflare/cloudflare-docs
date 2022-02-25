@@ -3,8 +3,6 @@ pcx-content-type: concept
 title: Queueing method
 ---
 
-import ChangeQueueMethod from "../\_partials/\_change-queueing-method.md"
-
 # Queueing method
 
 The **queueing method** determines the order that visitors exit an active waiting room and reach your application.
@@ -53,4 +51,4 @@ Use this setup for event-only endpoints or to perform application maintenance.
 
 ## Changing queueing methods
 
-<ChangeQueueMethod/>
+{{<render file="_change-queueing-method.md">}}

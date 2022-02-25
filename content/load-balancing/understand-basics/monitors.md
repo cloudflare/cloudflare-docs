@@ -4,12 +4,9 @@ title: Monitors
 weight: 2
 ---
 
-import MonitorDefinition from "../\_partials/\_monitor-definition.md"
-import HealthCheckRegions from "../\_partials/\_health-check-regions.md"
-
 # Monitors
 
-<MonitorDefinition/>
+{{<render file="_monitor-definition.md">}}
 
 ![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
 
@@ -39,7 +36,7 @@ For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/cre
 
 When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
 
-<HealthCheckRegions/>
+{{<render file="_health-check-regions.md">}}
 
 ### Increased origin strain
 

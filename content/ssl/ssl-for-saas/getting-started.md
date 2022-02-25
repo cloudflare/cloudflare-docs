@@ -6,10 +6,6 @@ meta:
   title: Get started with SSL for SaaS
 ---
 
-import IssueCertsPreamble from "../\_partials/\_issue-certs-preamble.md"
-import CreateCustomHostname from "../\_partials/\_create-custom-hostname.md"
-import CreateCustomHostnameAPI from "../\_partials/\_create-custom-hostname-api.md"
-
 # Get started with SSL for SaaS
 
 ***
@@ -77,13 +73,13 @@ Depending on which method you select for each of these options, additional steps
 
 Once your account has been provisioned, you are ready to issue certificates.
 
-<IssueCertsPreamble/>
+{{<render file="_issue-certs-preamble.md">}}
 
 <details>
 <summary>Using the dashboard</summary>
 <div>
 
-<CreateCustomHostname/>
+{{<render file="_create-custom-hostname.md">}}
 
 </div>
 </details>
@@ -92,7 +88,7 @@ Once your account has been provisioned, you are ready to issue certificates.
 <summary>Using the API</summary>
 <div>
 
-<CreateCustomHostnameAPI/>
+{{<render file="_create-custom-hostname-api.md">}}
 
 </div>
 </details>

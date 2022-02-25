@@ -4,18 +4,6 @@ title: Get started
 weight: 3
 ---
 
-import PoolDefinition from "../\_partials/\_pool-definition.md"
-import PoolCreate from "../\_partials/\_pool-create.md"
-import PoolCreateAPI from "../\_partials/\_pool-create-api.md"
-import MonitorDefinition from "../\_partials/\_monitor-definition.md"
-import MonitorCreate from "../\_partials/\_monitor-create.md"
-import MonitorCreateAPI from "../\_partials/\_monitor-create-api.md"
-import MonitorPrepareServers from "../\_partials/\_monitor-prepare-server.md"
-import MonitorExample from "../\_partials/\_monitor-example.md"
-import LBDefinition from "../\_partials/\_load-balancer-definition.md"
-import LBCreate from "../\_partials/\_load-balancer-create.md"
-import LBCreateAPI from "../\_partials/\_load-balancer-create-api.md"
-
 # Get started
 
 This guide is meant for organizations setting up their first load balancer. If you already have active load balancers, refer to [Basic tasks](/load-balancing/how-to/) for general help or [Additional configurations](/load-balancing/additional-options/) for more advanced setups.
@@ -32,7 +20,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 ## Step 1 — Create a monitor
 
-<MonitorDefinition/>
+{{<render file="_monitor-definition.md">}}
 
 <details>
 <summary>Create a monitor (dashboard)</summary>
@@ -40,11 +28,11 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 <strong>Set up the monitor</strong>
 
-<MonitorCreate/>
+{{<render file="_monitor-create.md">}}
 
 <strong>Prepare your servers</strong>
 
-<MonitorPrepareServers/>
+{{<render file="_monitor-prepare-server.md">}}
 
 </div>
 </details>
@@ -55,26 +43,26 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 <strong>Set up the monitor</strong>
 
-<MonitorCreateAPI/>
+{{<render file="_monitor-create-api.md">}}
 
 <strong>Prepare your servers</strong>
 
-<MonitorPrepareServers/>
+{{<render file="_monitor-prepare-server.md">}}
 
 </div>
 </details>
 
-<MonitorExample/>
+{{<render file="_monitor-example.md">}}
 
 ## Step 2 — Create an origin pool
 
-<PoolDefinition/>
+{{<render file="_pool-definition.md">}}
 
 <details>
 <summary>Create a pool (dashboard)</summary>
 <div>
 
-<PoolCreate/>
+{{<render file="_pool-create.md">}}
 
 </div>
 
@@ -84,7 +72,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 <summary>Create a pool (API)</summary>
 <div>
 
-<PoolCreateAPI/>
+{{<render file="_pool-create-api.md">}}
 
 </div>
 
@@ -129,13 +117,13 @@ If you notice that healthy pools are being marked unhealthy:
 
 ## Step 4 — Create a load balancer on a test subdomain
 
-<LBDefinition/>
+{{<render file="_load-balancer-definition.md">}}
 
 <details>
 <summary>Create a load balancer (dashboard)</summary>
 <div>
 
-<LBCreate/>
+{{<render file="_load-balancer-create.md">}}
 
 </div>
 
@@ -145,7 +133,7 @@ If you notice that healthy pools are being marked unhealthy:
 <summary>Create a load balancer (API)</summary>
 <div>
 
-<LBCreateAPI/>
+{{<render file="_load-balancer-create-api.md">}}
 
 </div>
 

@@ -6,8 +6,6 @@ meta:
   title: Bot Management for Enterprise Analytics
 ---
 
-import AnalyticsFeatures from "../\_partials/\_analytics-features.md"
-
 # Bot Management for Enterprise Analytics
 
 Enterprise customers with Bot Management can use **Bot Analytics** to dynamically examine bot traffic.
@@ -29,7 +27,7 @@ For a full tour of Bot Analytics, see [our blog post](https://blog.cloudflare.co
 
 Bot Analytics shows up to one week of data at a time and can display data up to 30 days old. Bot Analytics displays data in real time in most cases.
 
-<AnalyticsFeatures/>
+{{<render file="_analytics-features.md">}}
 
 ## Common uses
 

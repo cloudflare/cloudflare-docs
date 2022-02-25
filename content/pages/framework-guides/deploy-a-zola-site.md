@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy a Zola site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a Zola site
 
 [Zola](https://www.getzola.org/) is a fast static site generator in a single binary with everything built-in. In this guide, you will create a new Zola application and deploy it using Cloudflare Pages. You will use the `zola` CLI to create a new Zola site.
@@ -72,7 +70,7 @@ Upon running `zola init`, you will prompted with  three questions:
 
 4.  Do you want to build a search index of the content? \[y/N]: y
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

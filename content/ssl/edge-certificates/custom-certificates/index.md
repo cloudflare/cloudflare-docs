@@ -4,11 +4,9 @@ title: Custom certificates
 weight: 3
 ---
 
-import CustomCertificateDefinition from "../../\_partials/\_custom-certificates-definition.md"
-
 # Custom certificates
 
-<CustomCertificateDefinition/>
+{{<render file="_custom-certificates-definition.md">}}
 
 Custom certificates require that you [upload the certificate](/ssl/uploading/), [manually renew these certificates](/ssl/renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
 

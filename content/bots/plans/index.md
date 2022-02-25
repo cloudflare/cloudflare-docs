@@ -8,12 +8,9 @@ meta:
   title: Cloudflare bot plans
 ---
 
-import PlanIntro from "../\_partials/\_plan-intro.md"
-import GetStarted from "../\_partials/\_plan-get-started.md"
-
 # Cloudflare bot plans
 
-<PlanIntro/>
+{{<render file="_plan-intro.md">}}
 
 {{<button-group>}}
   {{<button type="primary" href="/plans/free">}}Free{{</button>}}
@@ -24,4 +21,4 @@ import GetStarted from "../\_partials/\_plan-get-started.md"
 
 ## How do I get started?
 
-<GetStarted/>
+{{<render file="_plan-get-started.md">}}

@@ -3,13 +3,11 @@ pcx-content-type: how-to
 title: Deploying your site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploying your site
 
 Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/pages/framework-guides/), you can still deploy it using this guide.
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

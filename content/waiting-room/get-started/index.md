@@ -4,9 +4,6 @@ title: Get started
 weight: 2
 ---
 
-import QueueAll from "../\_partials/\_queue-all.md"
-import QueueSome from "../\_partials/\_queue-some.md"
-
 # Get started
 
 ***
@@ -63,11 +60,11 @@ Depending on your [queue activation](#queue-activation), you may deploy your wai
 
 ### Queue some visitors
 
-<QueueSome/>
+{{<render file="_queue-some.md">}}
 
 ### Queue all visitors
 
-<QueueAll/>
+{{<render file="_queue-all.md">}}
 
 ## Step 4 — Next steps
 

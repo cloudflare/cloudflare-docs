@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy a React application
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a React application
 
 [React](https://reactjs.org/) is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
@@ -19,7 +17,7 @@ Create a new project using `npx`, giving it the title `my-react-app` in your ter
 $ npx create-react-app my-react-app
 ```
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

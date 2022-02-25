@@ -5,8 +5,6 @@ meta:
   title: View Reports
 ---
 
-import Beta from "../\_partials/\_beta.md"
-
 # View Reports
 
 Use NEL reports to view information such as:
@@ -16,7 +14,7 @@ Use NEL reports to view information such as:
 *   The last mile network a request failed from
 *   The Cloudflare data center the request was most likely meant for
 
-<Beta/>
+{{<render file="_beta.md">}}
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 2.  Click **Analytics** > **Origin Reachability**.

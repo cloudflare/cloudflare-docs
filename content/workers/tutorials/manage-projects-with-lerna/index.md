@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Managing multiple Workers projects with Lerna
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Managing multiple Workers projects with Lerna
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

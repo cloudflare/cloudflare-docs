@@ -4,8 +4,6 @@ title: Bot scores
 weight: 2
 ---
 
-import BMBotDetectionEngines from "../\_partials/\_bm-bot-detection-engines.md"
-
 # Bot scores
 
 A bot score is a score from *1* to *99* that indicates how likely that request came from a bot. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
@@ -35,7 +33,7 @@ The following detection engines only apply to Enterprise Bot Management. For spe
 
 {{</Aside>}}
 
-<BMBotDetectionEngines/>
+{{<render file="_bm-bot-detection-engines.md">}}
 
 ## Comparison to Threat Score
 

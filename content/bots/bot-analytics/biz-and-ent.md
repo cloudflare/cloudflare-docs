@@ -6,8 +6,6 @@ meta:
   title: Super Bot Fight Mode (Business) Analytics
 ---
 
-import AnalyticsFeatures from "../\_partials/\_analytics-features.md"
-
 # Super Bot Fight Mode (Business) Analytics
 
 Business and Enterprise customers without Bot Management can use **Bot Analytics** to dynamically examine bot traffic. These dashboards offer less functionality than Bot Management for Enterprise but still help you understand bot traffic on your domain.
@@ -28,7 +26,7 @@ For a full tour of Bot Analytics, see [our blog post](https://blog.cloudflare.co
 
 Bot Analytics shows up to 72 hours of data at a time and can display data up to 30 days old. Bot Analytics displays data in real time in most cases.
 
-<AnalyticsFeatures/>
+{{<render file="_analytics-features.md">}}
 
 ## Common uses
 

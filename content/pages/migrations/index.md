@@ -7,8 +7,6 @@ weight: 5
 layout: list
 ---
 
-import ContentTable from "../components/content-table"
-
 # Migration guides
 
-<ContentTable path="migrations" />
+{{<render file="content-table.html" path="migrations" >}}

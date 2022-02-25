@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy a Preact site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a Preact site
 
 [Preact](https://preactjs.com) is a popular, open-source framework for building modern web applications. Preact can also be used as a lightweight alternative to React because the two share the same API and component model.
@@ -21,7 +19,7 @@ $ npm init wmr your-project-name
 $ cd your-project-name
 ```
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

@@ -8,26 +8,20 @@ meta:
   title: Plans — Bot Management for Enterprise
 ---
 
-import PlanIntro from "../\_partials/\_plan-intro.md"
-import PlanButtons from "../\_partials/\_buttons-plan-pages.md"
-import PlanInfoBMSub from "../\_partials/\_about-plan-bm-subscription.md"
-import BMBotDetectionEngines from "../\_partials/\_bm-bot-detection-engines.md"
-import GetStarted from "../\_partials/\_plan-get-started.md"
-
 # Plans — Bot Management for Enterprise
 
-<PlanIntro/>
+{{<render file="_plan-intro.md">}}
 
-<PlanButtons/>
+{{<render file="_buttons-plan-pages.md">}}
 
 ## Bot Management for Enterprise Features
 
-<PlanInfoBMSub/>
+{{<render file="_about-plan-bm-subscription.md">}}
 
 ## Bot detection engines
 
-<BMBotDetectionEngines/>
+{{<render file="_bm-bot-detection-engines.md">}}
 
 ## How do I get started?
 
-<GetStarted/>
+{{<render file="_plan-get-started.md">}}

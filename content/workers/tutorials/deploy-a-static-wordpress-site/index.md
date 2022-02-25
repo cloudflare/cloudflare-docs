@@ -6,8 +6,6 @@ pcx-content-type: tutorial
 title: Deploy a static WordPress site
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a static WordPress site
 
 {{<Aside type="warning" header="Warning">}}
@@ -16,7 +14,7 @@ As of August 2020, the WP2Static plugin is closed for downloads on WordPress.org
 
 {{</Aside>}}
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

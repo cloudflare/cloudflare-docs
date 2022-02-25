@@ -4,11 +4,9 @@ title: Certificate Transparency Monitoring
 weight: 3
 ---
 
-import CertTransparencyDefinition from "../../\_partials/\_cert-transparency-monitoring-definition.md"
-
 # Certificate Transparency Monitoring
 
-<CertTransparencyDefinition/>
+{{<render file="_cert-transparency-monitoring-definition.md">}}
 
 {{<Aside type="note">}}
 

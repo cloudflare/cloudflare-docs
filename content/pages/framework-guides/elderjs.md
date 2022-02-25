@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy an Elder.js site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy an Elder.js site
 
 [Elder.js](https://elderguide.com/tech/elderjs/) is an SEO-focused framework for building static sites with [Svelte](/pages/framework-guides/deploy-a-svelte-site/).
@@ -22,7 +20,7 @@ $ cd elderjs-app
 
 The Elder.js template includes a number of pages and examples showing how to build your static site, but by simply generating the project, it is already ready to be deployed to Cloudflare Pages.
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

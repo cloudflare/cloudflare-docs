@@ -6,11 +6,9 @@ meta:
   title: Change your authoritative nameservers (Full setup)
 ---
 
-import FullSetupDefinition from "../../\_partials/\_full-setup-definition.md"
-
 # Change your authoritative nameservers (Full setup)
 
-<FullSetupDefinition/>
+{{<render file="_full-setup-definition.md">}}
 
 ## Step 1 — Do you have an existing domain name?
 

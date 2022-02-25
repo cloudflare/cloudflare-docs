@@ -4,11 +4,9 @@ title: Partial (CNAME) setup
 weight: 2
 ---
 
-import PartialSetupDefinition from "../../\_partials/\_partial-setup-definition.md"
-
 # Partial (CNAME) setup
 
-<PartialSetupDefinition/>
+{{<render file="_partial-setup-definition.md">}}
 
 ## How to
 

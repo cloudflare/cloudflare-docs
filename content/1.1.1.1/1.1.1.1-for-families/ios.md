@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 for Families - iOS
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 for Families - iOS
 
 [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) is the preferred method of setting up 1.1.1.1 for Families in iOS devices. It allows you to automatically configure your phone to use 1.1.1.1 for Families on any network you connect to, and solves iOS inability of using an alternative DNS resolver in cellular connections.
@@ -90,4 +88,4 @@ If you configure 1.1.1.1 for Families manually, you will have to do it for every
 
 8.  Select **Save**.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

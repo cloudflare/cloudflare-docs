@@ -6,11 +6,9 @@ meta:
   title: Cipher suites — Edge certificates
 ---
 
-import CipherSuitesDefinition from "../\_partials/\_cipher-suites-definition.md"
-
 # Cipher suites — Edge certificates
 
-<CipherSuitesDefinition/>
+{{<render file="_cipher-suites-definition.md">}}
 
 Cloudflare publishes a [public repository of our SSL/TLS configurations](https://github.com/cloudflare/sslconfig) on GitHub. You can find changes in the commit history.
 

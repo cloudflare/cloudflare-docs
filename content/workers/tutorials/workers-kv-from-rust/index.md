@@ -10,9 +10,7 @@ title: Use Workers KV directly from Rust
 
 In this tutorial, you will learn how to read and write to Workers KV directly from Rust, by using `wasm_bindgen` and a simple custom wrapper around the JS Workers KV API.
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Basic project scaffolding
 

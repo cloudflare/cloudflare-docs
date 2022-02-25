@@ -5,33 +5,25 @@ title: Protect your origin server — Free
 weight: 3
 ---
 
-import OriginHealthOverview from "../../\_partials/\_origin-health-overview"
-import SecureOriginConnections from "../../\_partials/\_origin-secure-connections"
-import OriginPassiveAlert from "../../\_partials/\_origin-passive-alert"
-import OriginLBAlert from "../../\_partials/\_origin-lb-alert"
-import DDoS from "../../\_partials/\_origin-ddos"
-import Caching from "../../\_partials/\_origin-caching"
-import LoadBalancing from "../../\_partials/\_origin-load-balancing"
-
 # Protect your origin server — Free
 
-<OriginHealthOverview/>
+{{<render file="_origin-health-overview.md">}}
 
 ## Secure origin connections
 
-<SecureOriginConnections/>
+{{<render file="_origin-secure-connections.md">}}
 
 ## Monitor origin health
 
-<OriginPassiveAlert/>
+{{<render file="_origin-passive-alert.md">}}
 
-<OriginLBAlert/>
+{{<render file="_origin-lb-alert.md">}}
 
 ## Reduce origin traffic
 
 ### Block traffic
 
-<DDoS/>
+{{<render file="_origin-ddos.md">}}
 
 Additionally, adjust various settings in your **Firewall** to restrict potentially malicious traffic:
 
@@ -42,8 +34,8 @@ Additionally, adjust various settings in your **Firewall** to restrict potential
 
 ### Increase caching
 
-<Caching/>
+{{<render file="_origin-caching.md">}}
 
 ### Distribute traffic
 
-<LoadBalancing/>
+{{<render file="_origin-load-balancing.md">}}

@@ -8,45 +8,36 @@ meta:
   title: Plans — Free
 ---
 
-import PlanIntro from "../\_partials/\_plan-intro.md"
-import PlanButtons from "../\_partials/\_buttons-plan-pages.md"
-import PlanInfoFree from "../\_partials/\_about-plan-free.md"
-import Considerations from "../\_partials/\_about-plan-considerations.md"
-import BotsHeuristics from "../\_partials/\_bots-heuristics.md"
-import BotsJSD from "../\_partials/\_bots-jsd.md"
-import BotCookie from "../\_partials/\_bots-cookie.md"
-import GetStarted from "../\_partials/\_plan-get-started.md"
-
 # Plans — Free
 
-<PlanIntro/>
+{{<render file="_plan-intro.md">}}
 
-<PlanButtons/>
+{{<render file="_buttons-plan-pages.md">}}
 
 ## Free features
 
-<PlanInfoFree/>
+{{<render file="_about-plan-free.md">}}
 
 ## Bot detection engines
 
 ### Heuristics
 
-<BotsHeuristics/>
+{{<render file="_bots-heuristics.md">}}
 
 ### JavaScript detections
 
-<BotsJSD/>
+{{<render file="_bots-jsd.md">}}
 
 JSD is automatically enabled with Bot Fight Mode.
 
 ### Notes on detection
 
-<BotCookie/>
+{{<render file="_bots-cookie.md">}}
 
 ## Considerations
 
-<Considerations/>
+{{<render file="_about-plan-considerations.md">}}
 
 ## How do I get started?
 
-<GetStarted/>
+{{<render file="_plan-get-started.md">}}

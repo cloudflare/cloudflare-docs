@@ -6,13 +6,11 @@ pcx-content-type: tutorial
 title: Hello World in Rust
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Hello World in Rust
 
 In this tutorial, you will learn how to generate, build, preview, configure, and publish a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Generate
 

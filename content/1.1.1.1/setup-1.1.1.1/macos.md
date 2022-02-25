@@ -6,9 +6,6 @@ meta:
   title: Set up 1.1.1.1 - macOS
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-import Encrypted from "../\_partials/\_encrypted.md"
-
 # Set up 1.1.1.1 - macOS
 
 Follow these steps to configure 1.1.1.1:
@@ -51,6 +48,6 @@ Follow these steps to configure 1.1.1.1:
 
 6.  Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}
 
-<Encrypted/>
+{{<render file="_encrypted.md">}}

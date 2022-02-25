@@ -4,14 +4,11 @@ title: Custom origin server
 weight: 4
 ---
 
-import CustomOriginDefinition from "../../\_partials/\_custom-origin-server-definition.md"
-import PlanLimitation from "../../\_partials/\_ssl-for-saas-plan-limitation.md"
-
 # Custom origin server
 
-<CustomOriginDefinition/>
+{{<render file="_custom-origin-server-definition.md">}}
 
-<PlanLimitation/>
+{{<render file="_ssl-for-saas-plan-limitation.md">}}
 
 ## Requirements
 

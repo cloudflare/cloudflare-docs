@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: GitHub SMS notifications using Twilio
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # GitHub SMS notifications using Twilio
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

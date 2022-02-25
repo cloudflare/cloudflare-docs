@@ -4,11 +4,9 @@ title: Import and export records
 weight: 2
 ---
 
-import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
-
 # Import and export records
 
-<ImportScanInfo/>
+{{<render file="_import-scan-info.md">}}
 
 If you want more control over which DNS records are imported and how, use the bulk import functionality.
 

@@ -4,11 +4,9 @@ title: Full setup
 weight: 1
 ---
 
-import FullSetupDefinition from "../../\_partials/\_full-setup-definition.md"
-
 # Full setup
 
-<FullSetupDefinition/>
+{{<render file="_full-setup-definition.md">}}
 
 ## How to
 

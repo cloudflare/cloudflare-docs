@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy a Jekyll site
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy a Jekyll site
 
 [Jekyll](https://jekyllrb.com/) is an open-source framework for creating websites, based around Markdown with Liquid templates. In this guide, you will create a new Jekyll application and deploy it using Cloudflare Pages. You use the `jekyll` CLI to create a new Jekyll site.
@@ -56,7 +54,7 @@ Create a base `index.html` in your newly created folder to give your site conten
 
 Optionally, you may use a theme with your new Jekyll site if you would like to start with great styling defaults. For example, the [`minimal-mistakes`](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 

@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Build a Slackbot
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Build a Slackbot
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

@@ -6,12 +6,6 @@ meta:
   title: Get started with SSL/TLS
 ---
 
-import UniversalSSLDefinition from "../\_partials/\_universal-ssl-definition.md"
-import ACMDefinition from "../\_partials/\_acm-definition.md"
-import CustomCertificateDefinition from "../\_partials/\_custom-certificates-definition.md"
-import KeylessSSLDefinition from "../\_partials/\_keyless-ssl-definition.md"
-import SSLforSaaSDefinition from "../\_partials/\_ssl-for-saas-definition.md"
-
 # Get started with SSL/TLS
 
 Follow the steps below to enable SSL/TLS protection for your application.
@@ -28,14 +22,14 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 Cloudflare offers a variety of options for your application's edge certificates:
 
-*   [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): <UniversalSSLDefinition/>
-*   [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): <ACMDefinition/>
-*   [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): <CustomCertificateDefinition/>
-*   [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): <KeylessSSLDefinition/>
+*   [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<render file="_universal-ssl-definition.md">}}
+*   [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): {{<render file="_acm-definition.md">}}
+*   [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
+*   [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}
 
 {{<Aside type="note" header="Note:">}}
 
-<SSLforSaaSDefinition/>
+{{<render file="_ssl-for-saas-definition.md">}}
 
 For more details, refer to [SSL for SaaS (managed hostnames)](/ssl/ssl-for-saas/).
 

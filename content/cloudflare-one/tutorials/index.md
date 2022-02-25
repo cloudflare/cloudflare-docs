@@ -7,8 +7,6 @@ weight: 3
 layout: list
 ---
 
-import DocsTutorial from "../components/content-table"
-
 # Tutorials
 
-<DocsTutorial/>
+{{<render file="content-table.html">}}

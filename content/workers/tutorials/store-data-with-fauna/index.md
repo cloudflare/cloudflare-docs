@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Create a serverless, globally distributed REST API with Fauna
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Create a serverless, globally distributed REST API with Fauna
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

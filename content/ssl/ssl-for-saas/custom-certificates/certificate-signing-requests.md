@@ -6,16 +6,13 @@ meta:
   title: Certificate signing requests (CSRs) — SSL for SaaS
 ---
 
-import CSRDefinition from "../../\_partials/\_csr-definition.md"
-import PlanLimitation from "../../\_partials/\_ssl-for-saas-plan-limitation.md"
-
 # Certificate signing requests (CSRs) — SSL for SaaS
 
-<CSRDefinition/>
+{{<render file="_csr-definition.md">}}
 
 Once the CSR has been generated, provide it to your customer. Your customer will then pass it along to their preferred CA to obtain a certificate and return it to you. After you receive the certificate, you should upload it to Cloudflare and reference the unique CSR ID that was provided to you during CSR creation.
 
-<PlanLimitation/>
+{{<render file="_ssl-for-saas-plan-limitation.md">}}
 
 ***
 

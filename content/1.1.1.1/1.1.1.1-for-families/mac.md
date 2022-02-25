@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 for Families - macOS
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 for Families - macOS
 
 Follow these steps to configure 1.1.1.1 for Families:
@@ -84,4 +82,4 @@ Follow these steps to configure 1.1.1.1 for Families:
 
 5.  Click **OK** > **Apply**.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

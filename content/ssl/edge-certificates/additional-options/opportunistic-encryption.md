@@ -3,11 +3,9 @@ pcx-content-type: concept
 title: Opportunistic Encryption
 ---
 
-import OpportunisticEncryptionDefinition from "../../\_partials/\_opportunistic-encryption-definition.md"
-
 # Opportunistic Encryption
 
-<OpportunisticEncryptionDefinition/>
+{{<render file="_opportunistic-encryption-definition.md">}}
 
 Use HTTPS when both strong encryption and authentication are required. HTTP Opportunistic Encryption provides a means of enabling TLS when needed for other protocols such as HTTP/2. It does not provide the same indications of security as HTTPS (the green lock icon in most browser address bars).
 

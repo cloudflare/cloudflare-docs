@@ -4,8 +4,6 @@ title: How origins and pools become unhealthy
 weight: 5
 ---
 
-import HealthCheckRegions from "../\_partials/\_health-check-regions.md"
-
 # How origins and pools become unhealthy
 
 When we talk about dynamic load balancing, that means your load balancer only directs requests to servers that can handle the traffic.
@@ -35,7 +33,7 @@ A health check will fail if one of the following conditions are met:
 *   The health check exceeds the duration specified in the monitor's **Timeout** field (and does so more than the specified number of **Retries**).
 *   The origin does not return the **Expected codes** or **Response body** specified in the monitor's configuration.
 
-<HealthCheckRegions/>
+{{<render file="_health-check-regions.md">}}
 
 {{<Aside type="note">}}
 

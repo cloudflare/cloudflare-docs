@@ -4,13 +4,11 @@ title: Register a new domain
 weight: 4
 ---
 
-import VerifyEmail from "../\_partials/\_email-verification.md"
-
 # Register a new domain
 
 Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups)).
 
-<VerifyEmail />
+{{<render file="_email-verification.md">}}
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. Go to **Registrar** > **Register**.
 

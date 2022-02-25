@@ -4,11 +4,9 @@ title: Universal SSL
 weight: 1
 ---
 
-import UniversalSSLDefinition from "../../\_partials/\_universal-ssl-definition.md"
-
 # Universal SSL
 
-<UniversalSSLDefinition/>
+{{<render file="_universal-ssl-definition.md">}}
 
 When you change your authoritative nameservers to point to Cloudflare, this process happens **automatically** and between **15 minutes to 24 hours** of domain activation. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
 

@@ -4,8 +4,6 @@ title: Best practices
 weight: 0
 ---
 
-import ChangeQueueMethod from "../\_partials/\_change-queueing-method.md"
-
 # Best practices
 
 Follow these best practices to avoid potential issues and improve the visitor experience.
@@ -32,4 +30,4 @@ When users are actively queueing, only make changes to your [configuration setti
 
 ### Queueing method
 
-<ChangeQueueMethod/>
+{{<render file="_change-queueing-method.md">}}

@@ -4,8 +4,6 @@ title: Static resource protection
 weight: 0
 ---
 
-import StaticResourcesBM from "../\_partials/\_static-resources-bm.md"
-
 # Static resource protection
 
 Pro, Business, and Enterprise customers can use Cloudflare's bot solutions to protect their static resources from bots.
@@ -24,7 +22,7 @@ To enable this feature as a Pro or Business customer or an Enterprise customer w
 
 ## Bot Management for Enterprise
 
-<StaticResourcesBM/>
+{{<render file="_static-resources-bm.md">}}
 
 ## Which files are protected?
 

@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Build a QR code generator
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Build a QR code generator
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

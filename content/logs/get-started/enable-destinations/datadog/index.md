@@ -6,8 +6,6 @@ meta:
   title: Enable Logpush to Datadog
 ---
 
-import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
-
 # Enable Logpush to Datadog
 
 Cloudflare Logpush supports pushing logs directly to Datadog via the Cloudflare dashboard or via API.
@@ -55,7 +53,7 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 {{</Aside>}}
 
-<EnableReadPermissions/>
+{{<render file="_enable-read-permissions.md">}}
 
 ### 1. Create a job
 

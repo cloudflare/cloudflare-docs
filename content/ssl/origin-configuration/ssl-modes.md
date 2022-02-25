@@ -4,8 +4,6 @@ title: Encryption modes
 weight: 2
 ---
 
-import SSLModeErrors from "../\_partials/\_ssl-mode-errors.md"
-
 # Encryption modes
 
 The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
@@ -72,7 +70,7 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ### Required setup
 
-<SSLModeErrors/>
+{{<render file="_ssl-mode-errors.md">}}
 
 ### Limitations
 
@@ -94,7 +92,7 @@ Choose **Full** mode when your origin can support an SSL certification, but — 
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](https://support.cloudflare.com/hc/articles/115003011431#525error).
 
-<SSLModeErrors/>
+{{<render file="_ssl-mode-errors.md">}}
 
 ### Limitations
 
@@ -126,7 +124,7 @@ Before enabling **Full (strict)** mode, make sure your origin allows HTTPS conne
 
 ### Limitations
 
-<SSLModeErrors/>
+{{<render file="_ssl-mode-errors.md">}}
 
 ![SSL Encryption set to Full (strict)](/ssl/static/ssl-encryption-mode-full-strict.png)
 
@@ -150,7 +148,7 @@ The setup is the same as [**Full (strict)** mode](#full-strict), but you select 
 
 ### Limitations
 
-<SSLModeErrors/>
+{{<render file="_ssl-mode-errors.md">}}
 
 ## ERR\_SSL\_VERSION\_OR\_CIPHER\_MISMATCH
 

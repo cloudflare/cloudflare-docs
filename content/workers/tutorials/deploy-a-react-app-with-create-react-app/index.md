@@ -6,13 +6,11 @@ pcx-content-type: tutorial
 title: Deploy a React app with create‑react‑app
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 <!-- Use non-breaking hyphens &#8209; instead of - to improve layout -->
 
 # Deploy a React app with create‑react‑app
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

@@ -6,15 +6,13 @@ meta:
   title: Available fields and functions in URL Rewrite Rules
 ---
 
-import TransformPhaseFields from "../../../\_partials/transform/\_transform-phase-fields.md"
-
 # Available fields and functions in URL Rewrite Rules
 
 ## Filter expressions
 
 A URL Rewrite Rule filter expression (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
-<TransformPhaseFields/>
+{{<render file="transform/_transform-phase-fields.md">}}
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions).
 

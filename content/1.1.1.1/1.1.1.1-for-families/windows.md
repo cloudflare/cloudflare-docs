@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 for Families - Windows
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 for Families - Windows
 
 ## Windows 10
@@ -76,4 +74,4 @@ import CaptivePortals from "../\_partials/\_captive-portals.md"
 9.  Add `2606:4700:4700::1113` to the **Preferred DNS** field, and `2606:4700:4700::1003` to the **Alternate DNS** field.
 10. Click **Save**.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

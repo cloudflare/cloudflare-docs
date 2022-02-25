@@ -6,8 +6,6 @@ meta:
   title: Cloudflare Region Mapping API
 ---
 
-import RegionMapping from "../\_partials/\_region-mapping.md"
-
 # Cloudflare Region Mapping API
 
 ## Overview
@@ -28,4 +26,4 @@ For additional details and examples on using the Region Mapping API, see [Cloudf
 
 ## List of Load Balancer regions
 
-<RegionMapping/>
+{{<render file="_region-mapping.md">}}

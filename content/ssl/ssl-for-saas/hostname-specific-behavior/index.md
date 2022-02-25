@@ -4,8 +4,6 @@ title: Hostname specific behavior
 weight: 4
 ---
 
-import CustomOriginDefinition from "../../\_partials/\_custom-origin-server-definition.md"
-
 # Hostname specific behavior
 
 When you want to customize the behavior for specific custom hostnames, explore the following options:
@@ -19,4 +17,4 @@ When you want to customize the behavior for specific custom hostnames, explore t
 
     *   [**Custom metadata**](/ssl/custom-metadata/): Configure additional settings for custom hostnames using Cloudflare Workers to define per-hostname behavior.
     *   **Enforce specific protocols**: Using a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname), you can enforce a minimum TLS version and enable TLS 1.3 and HTTP/2.
-    *   [**Custom origin servers**](/ssl/custom-origin/): <CustomOriginDefinition/>
+    *   [**Custom origin servers**](/ssl/custom-origin/): {{<render file="_custom-origin-server-definition.md">}}

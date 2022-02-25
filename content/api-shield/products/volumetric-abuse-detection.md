@@ -6,12 +6,9 @@ weight: 3
 layout: list
 ---
 
-import Availability from "../\_partials/\_availability.md"
-import BlogBlurb from "../\_partials/\_blog-post.md"
-
 # Volumetric Abuse Detection
 
-<Availability/>
+{{<render file="_availability.md">}}
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
@@ -25,4 +22,4 @@ These two scenarios speak to the limitations of traditional rate limiting. Not o
 
 This process currently requires a session identifier, like an authorization token available as a request header.
 
-<BlogBlurb/>
+{{<render file="_blog-post.md">}}

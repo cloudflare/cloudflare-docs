@@ -4,11 +4,9 @@ title: Automatic HTTPS Rewrites
 weight: 14
 ---
 
-import AutomaticHTTPSRewritesDefinition from "../../\_partials/\_automatic-https-rewrites-definition.md"
-
 # Automatic HTTPS Rewrites
 
-<AutomaticHTTPSRewritesDefinition/>
+{{<render file="_automatic-https-rewrites-definition.md">}}
 
 ## Additional details
 

@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Handle form submissions with Airtable
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Handle form submissions with Airtable
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

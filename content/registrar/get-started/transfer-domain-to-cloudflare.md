@@ -4,10 +4,6 @@ title: Transfer your domain to Cloudflare
 weight: 5
 ---
 
-import BeforeYouBegin from "../\_partials/\_before-you-begin.md"
-import Restrictions from "../\_partials/\_restrictions.md"
-import VerifyEmail from "../\_partials/\_email-verification.md"
-
 # Transfer your domain to Cloudflare
 
 Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
@@ -16,9 +12,9 @@ Transferring a domain to a new registrar informs the registry that they should i
 
 This section contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
-<BeforeYouBegin/>
+{{<render file="_before-you-begin.md">}}
 
-<Restrictions />
+{{<render file="_restrictions.md">}}
 
 ***
 
@@ -75,7 +71,7 @@ Sites can be unavailable for a few reasons, including:
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 
-<VerifyEmail />
+{{<render file="_email-verification.md">}}
 
 ### 6. Input your authorization code
 

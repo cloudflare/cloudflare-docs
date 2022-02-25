@@ -4,8 +4,6 @@ pcx-content-type: how-to
 weight: 311
 ---
 
-import firewallRulesExpressionBuilder10 from '../images/firewall-rules-expression-builder-10.gif'
-
 # Create, edit, and delete rules
 
 The **Create Firewall Rule** page in the Firewall app is a good guide to the parts of a Firewall Rule. When an incoming HTTP request matches the **expression** in a Firewall Rule, the specified **action** is triggered:
@@ -104,7 +102,7 @@ In the confirmation dialog that appears, click **Delete** to confirm and complet
 
 By default, Cloudflare evaluates Firewall Rules in **list order**, where rules are evaluated in the order they appear in the **Rules List**. When list ordering is enabled, the Rules List allows you to drag and drop Firewall Rules into position, as shown below.
 
-<img src={firewallRulesExpressionBuilder10} alt="Order Firewall Rules" />
+<img src="/firewall/static/firewall-rules-expression-builder-10.gif" alt="Order Firewall Rules" />
 
 Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, refer to [Order and Priority](/firewall/cf-firewall-rules/order-priority/).
 

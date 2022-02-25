@@ -4,11 +4,9 @@ title: Load balancers
 weight: 3
 ---
 
-import LBDefinition from "../\_partials/\_load-balancer-definition.md"
-
 # Load balancers
 
-<LBDefinition/>
+{{<render file="_load-balancer-definition.md">}}
 
 {{<Aside type="note">}}
 

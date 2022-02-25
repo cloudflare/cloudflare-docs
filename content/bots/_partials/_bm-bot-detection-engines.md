@@ -5,34 +5,28 @@ _build:
   list: never
 ---
 
-import BotsHeuristics from "../\_partials/\_bots-heuristics.md"
-import BotsJSD from "../\_partials/\_bots-jsd.md"
-import BotsML from "../\_partials/\_bots-ml.md"
-import BotsAD from "../\_partials/\_bots-ad.md"
-import BotCookie from "../\_partials/\_bots-cookie.md"
-
 ### Heuristics
 
-<BotsHeuristics/> 
+{{<render file="_bots-heuristics.md">}} 
 
 The Heuristics engine immediately gives automated requests a score of one.
 
 ### Machine learning
 
-<BotsML/>
+{{<render file="_bots-ml.md">}}
 
 The ML engine produces scores 2 through 99.
 
 ### Anomaly detection
 
-<BotsAD/>
+{{<render file="_bots-ad.md">}}
 
 ### JavaScript detections
 
-<BotsJSD/>
+{{<render file="_bots-jsd.md">}}
 
 JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Firewall** > **Bots**.
 
 ### Notes on detection
 
-<BotCookie/>
+{{<render file="_bots-cookie.md">}}

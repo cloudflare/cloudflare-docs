@@ -6,11 +6,9 @@ pcx-content-type: tutorial
 title: Localize a website with HTMLRewriter
 ---
 
-import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
-
 # Localize a website with HTMLRewriter
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
 

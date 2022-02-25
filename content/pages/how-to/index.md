@@ -6,8 +6,6 @@ weight: 4
 layout: list
 ---
 
-import ContentTable from "../components/content-table"
-
 # How to
 
-<ContentTable path="how-to" />
+{{<render file="content-table.html" path="how-to" >}}

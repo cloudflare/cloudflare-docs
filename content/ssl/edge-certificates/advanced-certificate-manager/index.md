@@ -4,13 +4,11 @@ title: Advanced certificates
 weight: 2
 ---
 
-import ACMDefinition from "../../\_partials/\_acm-definition.md"
-
 # Advanced certificates
 
 Advanced certificates offers a flexible and customizable way to issue and manage certificates.
 
-<ACMDefinition/>
+{{<render file="_acm-definition.md">}}
 
 ## Features
 

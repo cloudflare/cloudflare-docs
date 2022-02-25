@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 for Families - Android
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 for Families - Android
 
 [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) is the preferred method of setting up 1.1.1.1 for Families, as it allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to.
@@ -36,4 +34,4 @@ Your connection to the Internet and your DNS queries are now private and protect
 
 You are now using encryption only for your DNS queries.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

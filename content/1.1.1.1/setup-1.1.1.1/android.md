@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 - Android
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 - Android
 
 [1.1.1.1: Faster Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) is the preferred method of setting up 1.1.1.1 DNS resolver, as it allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to.
@@ -71,4 +69,4 @@ Android Pie and later supports DNS over TLS to secure your queries through encry
 
 9.  Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

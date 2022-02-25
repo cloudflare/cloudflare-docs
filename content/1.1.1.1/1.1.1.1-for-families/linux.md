@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 for Families - Linux
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 for Families - Linux
 
 Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
@@ -74,4 +72,4 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 
 9.  Click **Apply**.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

@@ -6,12 +6,9 @@ weight: 4
 layout: list
 ---
 
-import Availability from "../\_partials/\_availability.md"
-import BlogBlurb from "../\_partials/\_blog-post.md"
-
 # Sequential Abuse Detection
 
-<Availability/>
+{{<render file="_availability.md">}}
 
 Sequential Abuse Detection uncovers endpoint abuse by looking for irregular traffic across multiple endpoints.
 
@@ -25,4 +22,4 @@ Requests tend to come to endpoints in predictable patterns. For example, a login
 
 When requests go straight to `/login-successful`, they are not following the typical pattern and might be malicious. Sequential Abuse Detection identifies these common patterns in your API traffic and flags traffic that does not match these patterns.
 
-<BlogBlurb/>
+{{<render file="_blog-post.md">}}

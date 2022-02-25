@@ -6,8 +6,6 @@ meta:
   title: Enable Logpush to New Relic
 ---
 
-import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
-
 # Enable Logpush to New Relic
 
 Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflare dashboard or via API.
@@ -44,7 +42,7 @@ Once connected, Cloudflare lists New Relic as a connected service under **Logs**
 
 ## Manage via API
 
-<EnableReadPermissions/>
+{{<render file="_enable-read-permissions.md">}}
 
 ### 1. Create a job
 

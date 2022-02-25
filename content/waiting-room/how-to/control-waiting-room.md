@@ -4,9 +4,6 @@ title: Control waiting room traffic
 weight: 4
 ---
 
-import QueueAll from "../\_partials/\_queue-all.md"
-import QueueSome from "../\_partials/\_queue-some.md"
-
 # Control waiting room traffic
 
 To change whether and how traffic reaches a waiting room, update the values for **Enabled**, **Queue All**, and **Queueing Method** on your waiting room.
@@ -26,11 +23,11 @@ However, if you want all visitors to be queued — in preparation for a product 
 
 ### Queue visitors when necessary
 
-<QueueSome/>
+{{<render file="_queue-some.md">}}
 
 ### Queue all visitors
 
-<QueueAll/>
+{{<render file="_queue-all.md">}}
 
 ## Queueing method
 

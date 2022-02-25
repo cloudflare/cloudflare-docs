@@ -6,11 +6,6 @@ meta:
   title: Firewall Analytics — Free plan
 ---
 
-import FilterReportDuration from "../\_partials/\_analytics-filter-report-duration.md"
-import ActivityLog from "../\_partials/\_analytics-activity-log.md"
-import CreateFirewallRule from "../\_partials/\_analytics-create-firewall-rule.md"
-import ShareFilters from "../\_partials/\_analytics-share-url.md"
-
 # Firewall Analytics — Free plan
 
 ## Adjusting displayed data
@@ -19,16 +14,16 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 ![Add a new filter in Firewall Analytics](/waf/static/analytics-add-filter-free.png)
 
-<FilterReportDuration/>
+{{<render file="_analytics-filter-report-duration.md">}}
 
 ## Create Firewall Rule from current filters
 
-<CreateFirewallRule/>
+{{<render file="_analytics-create-firewall-rule.md">}}
 
 ## Activity log
 
-<ActivityLog/>
+{{<render file="_analytics-activity-log.md">}}
 
 ## Share Firewall Analytics filters
 
-<ShareFilters/>
+{{<render file="_analytics-share-url.md">}}

@@ -7,8 +7,6 @@ weight: 3
 layout: list
 ---
 
-import DocsCodeExamplesOverview from "../../components/docs-code-examples-overview"
-
 # Examples
 
-<DocsCodeExamplesOverview/>
+{{<render file="docs-code-examples-overview.html">}}

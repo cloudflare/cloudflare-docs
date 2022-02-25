@@ -4,11 +4,9 @@ title: Manage DNS records
 weight: 1
 ---
 
-import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
-
 # Manage DNS records
 
-<ImportScanInfo/>
+{{<render file="_import-scan-info.md">}}
 
 If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/import-and-export/#import-records).
 

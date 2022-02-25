@@ -6,18 +6,9 @@ meta:
   title: Domain Control Validation (DCV) — SSL/TLS
 ---
 
-import DCVDefinition from "../../\_partials/\_dcv-definition.md"
-import DCVCNAMEDefinition from "../../\_partials/\_dcv-cname-definition.md"
-import CNAMECertValidation from "../../\_partials/\_cname-cert-verification.md"
-import GenericValidationProcess from "../../\_partials/\_generic-validation-process.md"
-import EmailValidationDefinition from "../../\_partials/\_email-validation-definition.md"
-import TXTValidationDefinition from "../../\_partials/\_txt-validation-definition.md"
-import EmailValidationProcess from "../../\_partials/\_email-validation-process.md"
-import DCVValidatePatch from "../../\_partials/\_dcv-validate-patch.md"
-
 # Domain Control Validation (DCV) — SSL/TLS
 
-<DCVDefinition/>
+{{<render file="_dcv-definition.md">}}
 
 ## DCV exceptions
 
@@ -55,7 +46,7 @@ If you are using proxied (orange-clouded) DNS records and can tolerate a few min
 <summary>What happens after you create your records</summary>
 <div>
 
-<CNAMECertValidation/>
+{{<render file="_cname-cert-verification.md">}}
 
 </div>
 
@@ -71,7 +62,7 @@ For additional help, refer to [Troubleshooting DCV](/ssl/troubleshooting/).
 
 #### TXT
 
-<TXTValidationDefinition/>
+{{<render file="_txt-validation-definition.md">}}
 
 <GenericProcess/>
 
@@ -80,30 +71,30 @@ For additional help, refer to [Troubleshooting DCV](/ssl/troubleshooting/).
 
 At your authoritative DNS provider, create a TXT record named the **name** and containing the **value**. Once this TXT is in place, validation and certificate issuance will automatically complete.
 
-<DCVValidatePatch/>
+{{<render file="_dcv-validate-patch.md">}}
 
 #### Email
 
-<EmailValidationDefinition/>
+{{<render file="_email-validation-definition.md">}}
 
-<GenericValidationProcess/>
+{{<render file="_generic-validation-process.md">}}
 
 *   API: `emails`
 *   Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the value for **Certificate validation email recipients**.
 
-<EmailValidationProcess/>
+{{<render file="_email-validation-process.md">}}
 
-<DCVValidatePatch/>
+{{<render file="_dcv-validate-patch.md">}}
 
 #### CNAME
 
-<DCVCNAMEDefinition/>
+{{<render file="_dcv-cname-definition.md">}}
 
 Since this method is only available using the API, you need to make a [PATCH request](/ssl/#ssl-verification-edit-ssl-certificate-pack-validation-method) and set a `"validation_method":"cname"` parameter.
 
 In the response, you will see two properties inside of the `verification_info` object: `cname` and `cname_target` (you can also see these values in the dashboard by clicking that specific hostname certificate). Then, use these values to add a CNAME record at your authoritative DNS provider.
 
-<DCVValidatePatch/>
+{{<render file="_dcv-validate-patch.md">}}
 
 ### Verify DCV status
 

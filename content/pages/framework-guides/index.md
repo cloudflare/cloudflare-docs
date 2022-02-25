@@ -6,8 +6,6 @@ weight: 4
 layout: list
 ---
 
-import ContentTable from "../components/content-table"
-
 # Framework guides
 
-<ContentTable path="framework-guides" />
+{{<render file="content-table.html" path="framework-guides" >}}

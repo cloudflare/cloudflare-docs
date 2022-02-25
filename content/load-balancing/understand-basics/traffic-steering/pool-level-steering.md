@@ -4,8 +4,6 @@ title: Pool steering
 weight: 1
 ---
 
-import RegionMapping from "../../\_partials/\_region-mapping.md"
-
 # Pool steering
 
 When you [create a load balancer](/load-balancing/how-to/create-load-balancer/), their are several options for **Traffic Steering**, which decide how your load balancer routes traffic to attached and available pools.
@@ -54,7 +52,7 @@ You can assign multiple pools to the same region and the load balancer will use 
 
 Cloudflare has 13 geographic regions that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
 
-<RegionMapping/>
+{{<render file="_region-mapping.md">}}
 
 For more details on working with regions and region codes, refer to [Region Mapping API](/load-balancing/reference/region-mapping-api/).
 

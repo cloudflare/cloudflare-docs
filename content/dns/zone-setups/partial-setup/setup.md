@@ -6,11 +6,9 @@ meta:
   title: Set up a partial (CNAME) zone
 ---
 
-import PartialSetupDefinition from "../../\_partials/\_partial-setup-definition.md"
-
 # Set up a partial (CNAME) zone
 
-<PartialSetupDefinition/>
+{{<render file="_partial-setup-definition.md">}}
 
 {{<Aside type="note">}}
 

@@ -6,8 +6,6 @@ meta:
   title: Set up 1.1.1.1 - Linux
 ---
 
-import CaptivePortals from "../\_partials/\_captive-portals.md"
-
 # Set up 1.1.1.1 - Linux
 
 Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
@@ -44,4 +42,4 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 
 10. Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected to 1.1.1.1.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

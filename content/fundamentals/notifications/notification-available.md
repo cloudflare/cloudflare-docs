@@ -6,12 +6,6 @@ meta:
   title: What kinds of Notifications are available?
 ---
 
-import SSLTroubleshoot from "../\_partials/\_troubleshoot-ssl"
-import DDOS from "../\_partials/\_ddos"
-import Errors5xx from "../\_partials/\_errors"
-import PageShieldDetectMaliciousScripts from "../\_partials/\_script-monitor-detect-malicious-scripts"
-import PageShieldReviewMaliciousScripts from "../\_partials/\_script-monitor-review-malicious-scripts"
-
 # What kinds of Notifications are available?
 
 Available Notifications depend on your Cloudflare plan. We offer a variety of Notifications for our products and services, such as Billing, Denial-of-Service protection, Magic Transit, and SSL/TLS.
@@ -159,7 +153,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-<DDOS/>
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -178,7 +172,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **What should you do if you receive one?**
 
-<DDOS/>
+{{<render file="_ddos.md">}}
 
 </div>
 </details>
@@ -236,7 +230,7 @@ Enterprise plans.
 **What should you do if you receive one?**
 
 1.  Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2.  <Errors5xx/>
+2.  {{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -255,7 +249,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-<Errors5xx/>
+{{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -293,7 +287,7 @@ Purchase of Cloudflare for SaaS.
 
 **What should you do if you receive one?**
 
-<SSLTroubleshoot/>
+{{<render file="_troubleshoot-ssl.md">}}
 
 </div>
 </details>
@@ -312,7 +306,7 @@ All Cloudflare plans.
 
 **What should you do if you receive one?**
 
-<SSLTroubleshoot/>
+{{<render file="_troubleshoot-ssl.md">}}
 
 </div>
 </details>
@@ -363,7 +357,7 @@ Investigate to confirm it is an expected change.
 
 Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious domain appear in their domain.
 
-<PageShieldDetectMaliciousScripts/>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Included with**
 
@@ -371,7 +365,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-<PageShieldReviewMaliciousScripts/>
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>
@@ -384,7 +378,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when Cloudflare classifies JavaScript dependencies in their domain as malicious.
 
-<PageShieldDetectMaliciousScripts/>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Included with**
 
@@ -392,7 +386,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-<PageShieldReviewMaliciousScripts/>
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>
@@ -405,7 +399,7 @@ Enterprise plans with paid add-on.
 
 Page Shield customers who want to receive a notification when JavaScript dependencies from a known malicious URL appear in their domain.
 
-<PageShieldDetectMaliciousScripts/>
+{{<render file="_script-monitor-detect-malicious-scripts.md">}}
 
 **Included with**
 
@@ -413,7 +407,7 @@ Enterprise plans with paid add-on.
 
 **What should you do if you receive one?**
 
-<PageShieldReviewMaliciousScripts/>
+{{<render file="_script-monitor-review-malicious-scripts.md">}}
 
 </div>
 </details>

@@ -3,13 +3,11 @@ pcx-content-type: concept
 title: Custom origin trust store
 ---
 
-import COTSDefinition from "../../\_partials/\_custom-origin-trust-store-definition.md"
-
 # Custom origin trust store
 
 By default, Cloudflare's edge network maintains a list of publicly trusted certificate authorities. This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/#full-strict), Cloudflare will only trust origin server certificates issued by a CA in this trust store.
 
-<COTSDefinition/>
+{{<render file="_custom-origin-trust-store-definition.md">}}
 
 When a CA has been uploaded to Custom Origin Server Trust Store, Cloudflare will ignore all default publicly trusted CAs and exclusively use the CA or CAs that have been uploaded to authenticate the origin server.
 

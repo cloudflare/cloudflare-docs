@@ -3,8 +3,6 @@ pcx-content-type: how-to
 title: Deploy an Angular application
 ---
 
-import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
-
 # Deploy an Angular application
 
 [Angular](https://angular.io/) is an incredibly popular framework for building reactive and powerful front-end applications.
@@ -39,7 +37,7 @@ $ cd my-angular-app
 
 With both approaches, the Angular CLI will prompt you for customization choices. Your answers will not affect the rest of this tutorial. Choose the option that is ideal for your project.
 
-<TutorialsBeforeYouStart/>
+{{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
 
