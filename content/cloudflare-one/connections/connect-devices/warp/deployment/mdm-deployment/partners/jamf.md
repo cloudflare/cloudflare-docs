@@ -16,18 +16,18 @@ Here is an example plist file with the accepted arguments:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>organization</key>
-        <string>yourorganization</string>
-        <key>auto_connect</key> 
-        <integer>1</integer>
-        <key>switch_locked</key> 
-        <false />
-        <key>service_mode</key>
-        <string>warp</string>
-        <key>support_url</key>
-        <string>https://support.example.com</string>
-    </dict>
+  <dict>
+    <key>organization</key>
+    <string>yourorganization</string>
+    <key>auto_connect</key>
+    <integer>1</integer>
+    <key>switch_locked</key>
+    <false />
+    <key>service_mode</key>
+    <string>warp</string>
+    <key>support_url</key>
+    <string>https://support.example.com</string>
+  </dict>
 </plist>
 ```
 
@@ -37,9 +37,9 @@ Here is an example `.mobileconfig` file with the accepted arguments:
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
+  <dict>
     <key>PayloadContent</key>
-    <array/>
+    <array />
     <key>PayloadDisplayName</key>
     <string>Cloudflare WARP</string>
     <key>PayloadIdentifier</key>
@@ -47,59 +47,58 @@ Here is an example `.mobileconfig` file with the accepted arguments:
     <key>PayloadOrganization</key>
     <string>Cloudflare, Ltd.</string>
     <key>PayloadRemovalDisallowed</key>
-    <false/>
+    <false />
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
     <string>F5046847-2B1C-4DA0-A872-F6E040B1B20E</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
+    <key>PayloadContent</key>
+    <array>
+      <dict>
+        <key>PayloadDisplayName</key>
+        <string>Custom</string>
+        <key>PayloadIdentifier</key>
+        <string>com.cloudflare.warp</string>
+        <key>PayloadOrganization</key>
+        <string>Cloudflare Ltd.</string>
+        <key>PayloadType</key>
+        <string>com.apple.ManagedClient.preferences</string>
+        <key>PayloadUUID</key>
+        <string>C2575334-358E-4925-8B29-30B4348D31E3</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadEnabled</key>
+        <true />
         <key>PayloadContent</key>
-        <array>
-            <dict>
-                <key>PayloadDisplayName</key>
-                <string>Custom</string>
-                <key>PayloadIdentifier</key>
-                <string>com.cloudflare.warp</string>
-                <key>PayloadOrganization</key>
-                <string>Cloudflare Ltd.</string>
-                <key>PayloadType</key>
-                <string>com.apple.ManagedClient.preferences</string>
-                <key>PayloadUUID</key>
-                <string>C2575334-358E-4925-8B29-30B4348D31E3</string>
-                <key>PayloadVersion</key>
-                <integer>1</integer>
-                <key>PayloadEnabled</key>
-                <true/>
-                <key>PayloadContent</key>
+        <dict>
+          <key>com.cloudflare.warp</key>
+          <dict>
+            <key>Forced</key>
+            <array>
+              <dict>
+                <key>mcx_preference_settings</key>
                 <dict>
-                    <key>com.cloudflare.warp</key>
-                    <dict>
-                        <key>Forced</key>
-                        <array>
-                            <dict>
-                                <key>mcx_preference_settings</key>
-                                <dict>
-                                    <key>organization</key>
-                                    <string>yourorganization</string>
-                                    <key>auto_connect</key> 
-                                    <integer>1</integer>
-                                    <key>switch_locked</key> 
-                                    <false />
-                                    <key>service_mode</key>
-                                    <string>warp</string>
-                                    <key>support_url</key>
-                                    <string>https://support.example.com</string>
-                                </dict>
-                            </dict>
-                        </array>
-                    </dict>
+                  <key>organization</key>
+                  <string>yourorganization</string>
+                  <key>auto_connect</key>
+                  <integer>1</integer>
+                  <key>switch_locked</key>
+                  <false />
+                  <key>service_mode</key>
+                  <string>warp</string>
+                  <key>support_url</key>
+                  <string>https://support.example.com</string>
                 </dict>
-            </dict>
-        </array>
-    </dict>
+              </dict>
+            </array>
+          </dict>
+        </dict>
+      </dict>
+    </array>
+  </dict>
 </plist>
-
 ```
 
 For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
@@ -124,7 +123,7 @@ For a description of each argument and what it means, see [deployment parameters
 5.  Click **Packages**.
 6.  Select **New**.
 7.  Upload the `Cloudflare_WARP.pkg` file.
-    For *Display name*, we recommend entering the version number of the package being uploaded.
+    For _Display name_, we recommend entering the version number of the package being uploaded.
 8.  Click **Save** to complete the upload.
 
 ### Create the policy
@@ -132,7 +131,7 @@ For a description of each argument and what it means, see [deployment parameters
 1.  Select **Computers** > **Policies** on the menu on the left side.
 2.  Click **+ New**.
 3.  Enter a Display name such as `Cloudflare WARP Client`.\
-    For *Triggers*, our recommendation is to select *Startup*, *Login*, *Enrollment Complete* and *Recurring Check-in*, but you can select the value that works best for your organization.
+    For _Triggers_, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
 4.  Navigate to **Packages**.
 5.  Click **Configure**.
 6.  Click **Add** next to the package you previously uploaded.
@@ -142,10 +141,10 @@ For a description of each argument and what it means, see [deployment parameters
 
 1.  Navigate to **Configuration Profiles**.
 2.  Click **New**.
-3.  Enter a name for your new profile, such as *Cloudflare Zero Trust*.
+3.  Enter a name for your new profile, such as _Cloudflare Zero Trust_.
 4.  Scroll through the options list and click on **Application & Custom Settings**.
 5.  Click **Configure**.
-6.  In *Preference Domain*, enter `com.cloudflare.warp`.
+6.  In _Preference Domain_, enter `com.cloudflare.warp`.
 7.  Upload a valid plist file. You can start with our example above and modify it for your organization.
 8.  Click **Save**.
 9.  Navigate to **Scope** to configure which devices in your organization will receive this profile.
@@ -161,16 +160,16 @@ To proceed with the installation, here is an example of the XML code you will ne
 
 ```xml
 <dict>
-    <key>organization</key>
-    <string>yourorganization</string>
-    <key>auto_connect</key> 
-    <integer>1</integer>
-    <key>switch_locked</key> 
-    <false />
-    <key>service_mode</key>
-    <string>warp</string>
-    <key>support_url</key>
-    <string>https://support.example.com</string>
+  <key>organization</key>
+  <string>yourorganization</string>
+  <key>auto_connect</key>
+  <integer>1</integer>
+  <key>switch_locked</key>
+  <false />
+  <key>service_mode</key>
+  <string>warp</string>
+  <key>support_url</key>
+  <string>https://support.example.com</string>
 </dict>
 ```
 
@@ -180,11 +179,11 @@ For a description of each argument and what it means, see [deployment parameters
 2.  Navigate to **Devices**.
 3.  Click **Mobile Device Apps**.
 4.  Click **+ New**.
-5.  Select *App store app or apps purchased in volume*.
+5.  Select _App store app or apps purchased in volume_.
 6.  Click **Next**.
 7.  In the search box, enter: `1.1.1.1: Faster Internet`.
 8.  Click **Next**.
-9.  Click **Add** in the row for *1.1.1.1: Faster Internet by Cloudflare Inc.*. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
+9.  Click **Add** in the row for _1.1.1.1: Faster Internet by Cloudflare Inc._. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
 10. Navigate to **Scope**.
 11. Specify the devices in your organization that will receive the application.
 12. Navigate to **App Configuration** and copy/paste the XML from above.

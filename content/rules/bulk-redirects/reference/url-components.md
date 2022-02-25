@@ -20,15 +20,15 @@ https://user:password@www.example.com:443/search?q=term#results
 
 {{<table-wrap>}}
 
-URL component | Supported in source URL | Supported in target URL
----|---|---
-**Scheme**<br/>(for example, `https`) | Yes, `http` or `https` only<br/>(optional) | Yes
-**User information**<br/>(for example, `user:password`) | No | Yes (optional)
-**Host**<br/>(for example, `www.example.com`) | Yes | Yes (optional)
-**Port**<br/>(for example, `443`) | No | Yes (optional)
-**Path**<br/>(for example, `/search`) | Yes | Yes
-**Query string**<br/>(for example, `q=term`) | No | Yes, if **Preserve query string** is false (optional)
-**Fragment**<br/>(for example, `results`) | No | Yes (optional)
+| URL component                                           | Supported in source URL                    | Supported in target URL                               |
+| ------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| **Scheme**<br/>(for example, `https`)                   | Yes, `http` or `https` only<br/>(optional) | Yes                                                   |
+| **User information**<br/>(for example, `user:password`) | No                                         | Yes (optional)                                        |
+| **Host**<br/>(for example, `www.example.com`)           | Yes                                        | Yes (optional)                                        |
+| **Port**<br/>(for example, `443`)                       | No                                         | Yes (optional)                                        |
+| **Path**<br/>(for example, `/search`)                   | Yes                                        | Yes                                                   |
+| **Query string**<br/>(for example, `q=term`)            | No                                         | Yes, if **Preserve query string** is false (optional) |
+| **Fragment**<br/>(for example, `results`)               | No                                         | Yes (optional)                                        |
 
 {{</table-wrap>}}
 

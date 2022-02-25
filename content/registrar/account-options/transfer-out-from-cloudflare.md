@@ -11,9 +11,9 @@ Cloudflare Registrar makes it easy to transfer your domain to another registrar.
 
 ICANN rules prohibit a domain from being transferred if:
 
-*   It has been transferred within the last 60 days;
-*   It was registered within the last 60 days;
-*   If the WHOIS registrant information has been modified in the last 60 days (even if redacted).
+- It has been transferred within the last 60 days;
+- It was registered within the last 60 days;
+- If the WHOIS registrant information has been modified in the last 60 days (even if redacted).
 
 {{</Aside>}}
 

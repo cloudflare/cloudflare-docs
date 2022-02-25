@@ -33,12 +33,13 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 1.  Scroll down to the **Application visibility** card.
 
-    *   Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
-    *   \[Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
+        *   Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application. Users with no access to the application will not see it in the App Launcher regardless of whether the toggle is enabled. Users with access to the application will still be able to reach it with a direct link.
+        *   \[Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
-     {{<Aside>}}
-If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-     {{</Aside>}}
+         {{<Aside>}}
+
+    If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+    {{</Aside>}}
 
 2.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
@@ -65,9 +66,9 @@ Before you begin using your application through Access, your last step is to int
 
 1.  First, configure these fields with your SAML SSO-compliant application. Take note of these fields before you click **Done**:
 
-*   Your SSO endpoint
-*   Your Access Entity ID or Issuer
-*   Your Public key
+- Your SSO endpoint
+- Your Access Entity ID or Issuer
+- Your Public key
 
 ![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-integrate.png)
 

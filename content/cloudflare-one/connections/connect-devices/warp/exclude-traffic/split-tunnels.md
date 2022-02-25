@@ -11,8 +11,8 @@ weight: 6
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| All systems | WARP with Gateway | All plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -31,8 +31,8 @@ To set up Split Tunnels:
 
 2.  Under **Split Tunnels**, select the mode you want to choose.
 
-    *   **(default) Exclude IPs and domains**. All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-    *   **Include IPs and Domains**. Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
+    - **(default) Exclude IPs and domains**. All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
+    - **Include IPs and Domains**. Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
 3.  If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
 
@@ -52,9 +52,9 @@ The domain will appear in the list of Split Tunnel entries.
 
 Valid domains include:
 
-*   `example.com`
-*   `example.example.com`
-*   `*.example.com`
+- `example.com`
+- `example.example.com`
+- `*.example.com`
 
 {{<Aside header="Warning about using domains in Split Tunnels">}}
 
@@ -79,9 +79,9 @@ Clients on these platforms work by dynamically inserting the IP address of the d
 
 Due to platform differences, mobile clients can only apply Split Tunnels rules when the tunnel is initially started. This means:
 
-*   Domain-based Split Tunnels rules are created when the tunnel is established based on the IP address for that domain at that time. The route is refreshed each time the tunnel is established.
+- Domain-based Split Tunnels rules are created when the tunnel is established based on the IP address for that domain at that time. The route is refreshed each time the tunnel is established.
 
-*   Wildcard domain prefixes (for example, `*.example.com`) are not supported. Because route information must be added when the tunnel starts, these platforms can’t support wildcards. Wildcard domain prefixes can still exist in your configuration, but they will be ignored on these platforms.
+- Wildcard domain prefixes (for example, `*.example.com`) are not supported. Because route information must be added when the tunnel starts, these platforms can’t support wildcards. Wildcard domain prefixes can still exist in your configuration, but they will be ignored on these platforms.
 
 ### Remove an item from Split Tunnels
 

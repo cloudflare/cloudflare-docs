@@ -34,16 +34,16 @@ formatted as a JSON object. For example:
       ]
     }
 
-It includes each server's *root public key*.  When the server starts, it
-generates an *online* public/secret key pair; the root secret key is used to
-create a *delegation* for the online public key, and the online secret key is
-used to sign the response. The delegation  serves the same function as a
+It includes each server's _root public key_. When the server starts, it
+generates an _online_ public/secret key pair; the root secret key is used to
+create a _delegation_ for the online public key, and the online secret key is
+used to sign the response. The delegation serves the same function as a
 traditional [X.509 certificate](https://en.wikipedia.org/wiki/X.509) on the web:
 the client first uses the root public key to verify the delegation, then uses
 the online public key to verify the response.
 
 ng response: 2018-09-12 16:59:39.141 -0700 PDT ±1s (in 26ms)
-*auditable* in this manner makes them accountable to provide accurate time.
+_auditable_ in this manner makes them accountable to provide accurate time.
 The configuration also encodes the type of signature algorithm used by the
 server. (Currently only [Ed25519](https://en.wikipedia.org/wiki/EdDSA) is
 supported.) Lastly, the configuration contains a list of addresses where the
@@ -53,7 +53,7 @@ service can be reached, and which transport protocol to use to reach them.
 ## TLS
 
 As a warm up , let's see how to sync a TLS client or server using a single
-Roughtime server.  What
+Roughtime server. What
 we're going to do is compute the time difference between our clock and the
 Roughtime sever's. The first step is to load the configuration file (be sure to
 import `github.com/cloudflare/roughtime`):
@@ -68,7 +68,7 @@ Next, let's get the system time and query the first server in the list:
     t0 := time.Now()
     rt, err := roughtime.Get(&servers[0], attempts, timeout, nil)
 
-This sends a request to the server and verifies the response.  Variable `rt` is
+This sends a request to the server and verifies the response. Variable `rt` is
 of type `*roughtime.Roughtime` and represents the result of the query. The
 inputs are:
 
@@ -80,7 +80,7 @@ inputs are:
 If the last parameter is provided, then it's used generate the nonce for the
 request. (More on this later.) The `crypto/tls` package allows the user to
 [specify a callback](https://golang.org/pkg/crypto/tls/#Config) for the current
-time to use when validating certificates, session tickets, etc.  You can compute
+time to use when validating certificates, session tickets, etc. You can compute
 this callback as follows:
 
     t1, radius := rt.Now()
@@ -90,7 +90,7 @@ this callback as follows:
     }
 
 Variable `t1` is the time reported by the server and `radius` is the server's
-uncertainty radius.  For a full working example, check out our
+uncertainty radius. For a full working example, check out our
 [GitHub](https://github.com/cloudflare/roughtime/blob/master/recipes/tls.go).
 
 ## Desktop alerts
@@ -121,7 +121,7 @@ Using multiple sources for Roughtime is easy (and highly recommended!):
     res := roughtime.Do(servers, attempts, timeout, nil)
 
 The first parameter is a sequence of servers, and the remaining parameters are
-the same as in `roughtime.Get()`.  This queries each server in the sequence
+the same as in `roughtime.Get()`. This queries each server in the sequence
 `servers` in order. The output `res` is a slice the same length as `servers`.
 Each element represents the result of the query to the server: if the query was
 successful, then the result contains the server's time; if unsuccessful, then

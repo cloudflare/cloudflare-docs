@@ -8,7 +8,7 @@ title: Query Postgres from Workers using a database connector
 
 # Query Postgres from Workers using a database connector
 
-<TutorialsBeforeYouStart/>
+<TutorialsBeforeYouStart />
 
 ## Overview
 
@@ -45,8 +45,8 @@ $ docker run -v ~/.cloudflared:/etc/cloudflared cloudflare/cloudflared:2021.11.0
 
 Running this command will:
 
-*   Prompt you to select your Cloudflare account and hostname.
-*   Download credentials and allow `cloudflared` to create Tunnels and DNS records.
+- Prompt you to select your Cloudflare account and hostname.
+- Download credentials and allow `cloudflared` to create Tunnels and DNS records.
 
 ## Start and prepare Postgres database
 
@@ -94,18 +94,18 @@ The above commands will download the SQL schema and dataset files from Pagila's 
 
 In `src/index.ts`, replace `https://dev.example.com` with your Cloudflare Tunnel hostname, ensuring that it is prefixed with the `https://` protocol:
 
-```javascript
+```js
 ---
 filename: src/index.ts
 highlight: [4]
 ---
 const client = new Client({
-    user: 'postgres',
-    database: 'postgres',
-    hostname: 'https://REPLACE_WITH_TUNNEL_HOSTNAME',
-    password: '',
-    port: 5432,
-})
+  user: 'postgres',
+  database: 'postgres',
+  hostname: 'https://REPLACE_WITH_TUNNEL_HOSTNAME',
+  password: '',
+  port: 5432,
+});
 ```
 
 At this point, you can deploy your Worker and make a request to it to verify that your database connection is working.
@@ -114,46 +114,48 @@ At this point, you can deploy your Worker and make a request to it to verify tha
 
 The template script includes a simple query to select a number (`SELECT 42;`) that is executed in the database. Edit the script to query the imported Pagila dataset if the `pagila-table` query parameter is present.
 
-```javascript
+```js
 // Query the database.
 
 // Parse the URL, and get the 'pagila-table' query parameter (which may not exist)
-const url = new URL(request.url)
-const pagilaTable = url.searchParams.get("pagila-table")
+const url = new URL(request.url);
+const pagilaTable = url.searchParams.get('pagila-table');
 
-let result
+let result;
 // if pagilaTable is defined, run a query on the Pagila dataset
-if ([
-  "actor",
-  "address",
-  "category",
-  "city",
-  "country",
-  "customer",
-  "film",
-  "film_actor",
-  "film_category",
-  "inventory",
-  "language",
-  "payment",
-  "payment_p2020_01",
-  "payment_p2020_02",
-  "payment_p2020_03",
-  "payment_p2020_04",
-  "payment_p2020_05",
-  "payment_p2020_06",
-  "rental",
-  "staff",
-  "store",
-].includes(pagilaTable)) {
-  result = await client.queryObject(`SELECT * FROM ${pagilaTable};`)
+if (
+  [
+    'actor',
+    'address',
+    'category',
+    'city',
+    'country',
+    'customer',
+    'film',
+    'film_actor',
+    'film_category',
+    'inventory',
+    'language',
+    'payment',
+    'payment_p2020_01',
+    'payment_p2020_02',
+    'payment_p2020_03',
+    'payment_p2020_04',
+    'payment_p2020_05',
+    'payment_p2020_06',
+    'rental',
+    'staff',
+    'store',
+  ].includes(pagilaTable)
+) {
+  result = await client.queryObject(`SELECT * FROM ${pagilaTable};`);
 } else {
-  const param = 42
-  result = await client.queryObject(`SELECT ${param} as answer;`)
+  const param = 42;
+  result = await client.queryObject(`SELECT ${param} as answer;`);
 }
 
 // Return result from database.
-return new Response(JSON.stringify(result))
+return new Response(JSON.stringify(result));
 ```
 
 ## Worker deployment
@@ -219,6 +221,6 @@ $ docker compose down
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
-*   [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
-*   [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
+- [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+- [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
+- [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

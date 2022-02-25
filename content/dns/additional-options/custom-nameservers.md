@@ -18,12 +18,12 @@ When using [subdomain support](https://support.cloudflare.com/hc/articles/360026
 
 Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at Cloudflare:
 
-*   Enterprise plans:
-    *   Create account-level nameservers via the [API](https://api.cloudflare.com/#account-level-custom-nameservers-properties)
-    *   Create zone-level nameservers via the dashboard or [API](https://api.cloudflare.com/#zone-edit-zone)
-*   Business plans:
-    *   Create account-level nameservers via the [API](https://api.cloudflare.com/#account-level-custom-nameservers-properties) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
-    *   Create zone-level nameservers via the dashboard or [API](https://api.cloudflare.com/#zone-edit-zone)
+- Enterprise plans:
+  - Create account-level nameservers via the [API](https://api.cloudflare.com/#account-level-custom-nameservers-properties)
+  - Create zone-level nameservers via the dashboard or [API](https://api.cloudflare.com/#zone-edit-zone)
+- Business plans:
+  - Create account-level nameservers via the [API](https://api.cloudflare.com/#account-level-custom-nameservers-properties) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
+  - Create zone-level nameservers via the dashboard or [API](https://api.cloudflare.com/#zone-edit-zone)
 
 ## Account-level nameservers
 
@@ -61,6 +61,7 @@ If you are **not** using [Cloudflare Registrar](/registrar) for the zone that pr
 2.  Add the [glue records](https://www.ietf.org/rfc/rfc1912.txt) for each entry at your DNS provider.
 3.  Use a [POST command](https://api.cloudflare.com/#account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
 4.  To enable the custom nameservers on existing zones:
+
     1.  Use a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records.
 
     2.  Modify the zone's registrar to use the custom nameserver names.
@@ -71,7 +72,7 @@ To make this custom nameserver the default for all new zones added to your accou
 
 To remove account-level nameservers and their associated DNS records from a zone, modify the zone's registrar to use your regular Cloudflare nameservers and then send a [PUT command](https://api.cloudflare.com/#account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) to the Cloudflare API.
 
-***
+---
 
 ## Zone-level nameservers
 
@@ -88,8 +89,8 @@ To add custom nameservers to a specific zone:
 3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (like ns1, ns2, ns3).
 4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records (visible after you refresh the page).
 5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar) for your domain:
-    *   If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
-    *   If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
+    - If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
+    - If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
 
 #### Using the API
 

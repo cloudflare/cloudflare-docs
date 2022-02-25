@@ -26,11 +26,11 @@ Simple expressions have the following syntax:
 
 Where:
 
-*   [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
+- [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
 
-*   [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
+- [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
 
-*   [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+- [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
 
 ## Compound expressions
 
@@ -54,6 +54,6 @@ Compound expressions allow you to generate sophisticated, highly targeted rules.
 
 You can also use the following Rules language features in your expressions:
 
-*   [Grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
+- [Grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
 
-*   [Functions](/ruleset-engine/rules-language/functions/) allow you to manipulate and validate values in expressions.
+- [Functions](/ruleset-engine/rules-language/functions/) allow you to manipulate and validate values in expressions.

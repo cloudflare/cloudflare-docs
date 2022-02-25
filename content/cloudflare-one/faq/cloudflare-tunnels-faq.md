@@ -94,18 +94,18 @@ Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d
 
 If you are having an issue with one or more tunnels, before contacting the Cloudflare support team:
 
-*   Take note of any specific error messages and/or problematic behaviors.
+- Take note of any specific error messages and/or problematic behaviors.
 
-*   Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
+- Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-*   Set [`log-level`](/cloudflare-one/connections/connect-apps/configuration/arguments#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Set [`log-level`](/cloudflare-one/connections/connect-apps/configuration/arguments#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-*   Set [`transport-log`](/cloudflare-one/connections/connect-apps/configuration/arguments#transport-loglevel) level to `debug`.
+- Set [`transport-log`](/cloudflare-one/connections/connect-apps/configuration/arguments#transport-loglevel) level to `debug`.
 
-*   Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/configuration/arguments#logfile) either on the command line or in your configuration file.
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/configuration/arguments#logfile) either on the command line or in your configuration file.
 
-*   Include your full `config.yml` file for the affected tunnel.
+- Include your full `config.yml` file for the affected tunnel.
 
-*   Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
+- Make sure that the `cloudflared daemon` is updated to the [latest version](https://github.com/cloudflare/cloudflared).
 
-*   Gather any relevant error/access logs from your server.
+- Gather any relevant error/access logs from your server.

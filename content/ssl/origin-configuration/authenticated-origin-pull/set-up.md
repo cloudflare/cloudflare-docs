@@ -8,13 +8,13 @@ weight: 2
 
 Set up authenticated origin pulls via one of the following options:
 
-*   [Zone-Level Authenticated Origin Pull using **Cloudflare** certificates](#zone-level--cloudflare-certificates)
-*   [Zone-Level Authenticated Origin Pull using **customer** certificates](#zone-level--customer-certificates)
-*   [Per-Hostname Authenticated Origin Pull using customer certificates](#per-hostname--customer-certificates)
+- [Zone-Level Authenticated Origin Pull using **Cloudflare** certificates](#zone-level--cloudflare-certificates)
+- [Zone-Level Authenticated Origin Pull using **customer** certificates](#zone-level--customer-certificates)
+- [Per-Hostname Authenticated Origin Pull using customer certificates](#per-hostname--customer-certificates)
 
 Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 
-***
+---
 
 ## Zone-Level — Cloudflare certificate
 
@@ -78,8 +78,8 @@ To enable Authenticated Origin Pull globally on a zone:
 3.  Configure your [origin web server](#server-installation-instructions) to accept client certificates:
 
      <details>
-     <summary>Apache example</summary>
-     <div>
+ <summary>Apache example</summary>
+ <div>
 
     For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/path/to/origin-pull-ca.pem</code>.
 
@@ -90,11 +90,11 @@ To enable Authenticated Origin Pull globally on a zone:
     ```
 
      </div>
-     </details>
+ </details>
 
      <details>
-     <summary>NGINX example</summary>
-     <div>
+ <summary>NGINX example</summary>
+ <div>
 
     For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/etc/nginx/certs/cloudflare.crt</code>.
 
@@ -109,10 +109,10 @@ To enable Authenticated Origin Pull globally on a zone:
 
 4.  Enable **Authenticated Origin Pulls**:
 
-    *   In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
-    *   For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
+    - For the API, [change the TLS Client Auth setting](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
 
-***
+---
 
 ## Zone-Level — customer certificates
 
@@ -120,10 +120,10 @@ To enable Authenticated Origin Pull globally on a zone:
 2.  Upload a custom certificate following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`origin_tls_client_auth` endpoint](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate).
 3.  Enable **Authenticated Origin Pulls**:
 
-    *   In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
-    *   For the API, [set the enablement for a zone](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
+    - In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
+    - For the API, [set the enablement for a zone](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-set-enablement-for-zone):
 
-***
+---
 
 ## Per-Hostname — customer certificates
 
@@ -131,9 +131,9 @@ When enabling Authenticated Origin Pull per hostname, all proxied traffic to the
 
 1.  Upload a custom certificate following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
-  {{<Aside type="note" header="Note">}}
+{{<Aside type="note" header="Note">}}
 Save the certificate ID `id` since it is required for the next step.
-  {{</Aside>}}
+{{</Aside>}}
 
 1.  On a specific hostname, [enable Authenticated Origin Pull](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
 
@@ -153,7 +153,7 @@ For global:
 
 3.  Once certificate is active, then [delete the old certificate](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-delete-certificate).
 
-***
+---
 
 ### To apply a different client certificate simultaneously at both the zone and hostname level
 
@@ -161,9 +161,9 @@ For global:
 
 2.  Upload multiple certificates following the steps in [Per-Hostname Authenticated Origin Pull](#per-hostname--customer-certificates)
 
-  {{<Aside type="note" header="Note">}}
+{{<Aside type="note" header="Note">}}
 Hostname certificates take precedence over zone certificates.
-  {{</Aside>}}
+{{</Aside>}}
 
 ### Delete a certificate
 

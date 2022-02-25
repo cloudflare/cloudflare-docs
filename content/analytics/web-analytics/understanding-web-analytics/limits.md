@@ -14,10 +14,10 @@ Cloudflare limits the number of sites for which you can track web analytics. Lim
 
 {{<table-wrap>}}
 
-| Site type                                      | Limit              |
-| ---------------------------------------------- | ------------------ |
-| Not proxied through Cloudflare                 | 10                 |
-| Proxied through Cloudflare                     | No limit           |
+| Site type                      | Limit    |
+| ------------------------------ | -------- |
+| Not proxied through Cloudflare | 10       |
+| Proxied through Cloudflare     | No limit |
 
 {{</table-wrap>}}
 
@@ -29,11 +29,11 @@ Rules are only available for sites proxied through Cloudflare.
 
 {{<table-wrap>}}
 
-| Plan type      | Rules limit  |
-| -------------- | ------------ |
-| Free           | 0            |
-| Pro            | 5            |
-| Business       | 20           |
-| Enterprise     | 100          |
+| Plan type  | Rules limit |
+| ---------- | ----------- |
+| Free       | 0           |
+| Pro        | 5           |
+| Business   | 20          |
+| Enterprise | 100         |
 
 {{</table-wrap>}}

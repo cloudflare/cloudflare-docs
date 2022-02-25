@@ -20,8 +20,8 @@ If you want to disable DoH for your organization so that Gateway can be enforced
 
 {{<table-wrap>}}
 
-| Before you start |
-| ---------------- |
+| Before you start                                                                                                |
+| --------------------------------------------------------------------------------------------------------------- |
 | Obtain a location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) (previously known as a unique id). |
 
 {{</table-wrap>}}

@@ -14,18 +14,18 @@ You can also secure those applications with [Cloudflare Access](/cloudflare-one/
 
 When users authenticate to the applications secured by Cloudflare Access, Cloudflare generates a JSON Web Token (JWT) that contains the user's information and permits the user to reach the application. In web-based use cases, the browser stores the JWT as a cookie.
 
-You can also use `cloudflared` to quickly gather the JWT from an application and use it from the command line or for  programmatic use cases like scripts.
+You can also use `cloudflared` to quickly gather the JWT from an application and use it from the command line or for programmatic use cases like scripts.
 
 **🗺️ This tutorial covers how to:**
 
-*   Login to an application secured by Cloudflare Access from the command line using `cloudflared`
-*   Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
+- Login to an application secured by Cloudflare Access from the command line using `cloudflared`
+- Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
 
 **⏲️Time to complete:**
 
 5 minutes
 
-***
+---
 
 ## Install `cloudflared`
 

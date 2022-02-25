@@ -180,7 +180,7 @@ Supporting native code would limit choice in future mitigation techniques. There
 
 In Workers, you can get the current time using the JavaScript Date API, for example by calling `Date.now()`. However, the time value returned by this is not really the current time. Instead, it is the time at which the network message was received which caused the application to begin executing. While the application executes, time is frozen. For example, if an attacker writes:
 
-```javascript
+```js
 let start = Date.now();
 for (let i = 0; i < 1e6; i++) {
   doSpectreAttack();

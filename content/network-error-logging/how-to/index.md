@@ -9,10 +9,10 @@ meta:
 
 Use NEL reports to view information such as:
 
-*   Why a request failed
-*   The country a request failed from
-*   The last mile network a request failed from
-*   The Cloudflare data center the request was most likely meant for
+- Why a request failed
+- The country a request failed from
+- The last mile network a request failed from
+- The Cloudflare data center the request was most likely meant for
 
 {{<render file="_beta.md">}}
 

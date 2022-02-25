@@ -24,11 +24,11 @@ Equal-cost multi-path routing uses hashes calculated from packet data to determi
 
 Using ECMP has a number of consequences:
 
-*   Routing to equal-cost paths is probabilistic.
+- Routing to equal-cost paths is probabilistic.
 
-*   Packets in the same session (or flow) with the same source and destination have the same hash. The packets also use the same next hop.
+- Packets in the same session (or flow) with the same source and destination have the same hash. The packets also use the same next hop.
 
-*   Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
+- Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
 
 As a result, ECMP provides load balancing across tunnels with the same priority.
 
@@ -77,7 +77,7 @@ When Magic Transit determines that Tunnels 1 and 2 are healthy again, it re-prio
 
 ## ECMP and bandwidth utilization
 
-Because ECMP is probabilistic, the algorithm routes roughly the same number of flows through each tunnel. However it does *not* consider the amount of traffic already sent through a tunnel when deciding where to route the next packet.
+Because ECMP is probabilistic, the algorithm routes roughly the same number of flows through each tunnel. However it does _not_ consider the amount of traffic already sent through a tunnel when deciding where to route the next packet.
 
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 

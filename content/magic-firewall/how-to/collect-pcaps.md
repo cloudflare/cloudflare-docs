@@ -23,18 +23,18 @@ This feature is currently in an Early Access state. For access, contact your acc
 
 To send a collect request, send a JSON body specifying:
 
-*   `time_limit`: The number of seconds to limit the PCAP. The number should be less than 300 seconds and cannot be set to zero.
-*   `packet_limit`: The number of packets to limit the PCAP. The number should be less than 10000 and cannot be set to zero.
-*   `type`: Must be `simple` as described in the above example.
-*   `system`: Must be `magic-transit` as described in the above example.
+- `time_limit`: The number of seconds to limit the PCAP. The number should be less than 300 seconds and cannot be set to zero.
+- `packet_limit`: The number of packets to limit the PCAP. The number should be less than 10000 and cannot be set to zero.
+- `type`: Must be `simple` as described in the above example.
+- `system`: Must be `magic-transit` as described in the above example.
 
 In addition to the above fields, the JSON body can optionally filter packets by specifying any of
 
-*   IPv4 Source address
-*   IPv4 Destination address
-*   (TCP/UDP) Source port
-*   (TCP/UDP) Destination port
-*   IP Protocol
+- IPv4 Source address
+- IPv4 Destination address
+- (TCP/UDP) Source port
+- (TCP/UDP) Destination port
+- IP Protocol
 
 Currently, you can only send one collect request per minute.
 

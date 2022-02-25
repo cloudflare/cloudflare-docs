@@ -10,8 +10,8 @@ meta:
 
 You can customize the **action** and **sensitivity** of the rules in the HTTP DDoS Attack Protection Managed Ruleset in the following ways:
 
-*   [Configure all the rules in the ruleset](#configure-all-the-rules-in-the-ruleset)
-*   [Configure one or more rules](#configure-one-or-more-rules)
+- [Configure all the rules in the ruleset](#configure-all-the-rules-in-the-ruleset)
+- [Configure one or more rules](#configure-one-or-more-rules)
 
 Tag and rule configurations have greater priority than ruleset configurations.
 

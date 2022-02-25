@@ -12,11 +12,11 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 
 This Enterprise product provides the most flexibility to customers by:
 
-*   Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-*   Allowing customers to take action on this score with Firewall Rules or [`Workers`](/workers/runtime-apis/request#incomingrequestcfproperties).
-*   Allowing customers to view this score in Bot Analytics or Logs.
+- Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
+- Allowing customers to take action on this score with Firewall Rules or [`Workers`](/workers/runtime-apis/request#incomingrequestcfproperties).
+- Allowing customers to view this score in Bot Analytics or Logs.
 
-***
+---
 
 ## Enable Bot Management for Enterprise
 
@@ -24,12 +24,12 @@ Our Solutions Engineering team will work with you to begin setting up the produc
 
 ### Before you begin
 
-*   Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
-*   Review the following concepts:
+- Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
+- Review the following concepts:
 
-    *   [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
-    *   [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/): Learn how to evaluate the effectiveness of Firewall rules.
-    *   [Bot tags](/bots/concepts/cloudflare-bot-tags/): Learn more about *why* Cloudflare classified a request a certain way.
+  - [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
+  - [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/): Learn how to evaluate the effectiveness of Firewall rules.
+  - [Bot tags](/bots/concepts/cloudflare-bot-tags/): Learn more about _why_ Cloudflare classified a request a certain way.
 
 ### Step 1 — Configure Bot Management
 
@@ -43,11 +43,11 @@ Before deploying Bot Management on live traffic, use [Bot Analytics](/bots/bot-a
 
 Go to **Firewall** > **Bots** and examine the following traffic segments:
 
-*   **Automated traffic**: Bot scores of 1
-*   **Likely automated traffic**: Bots scores of 2 through 29
-*   **Other traffic groups**: Any additional large spikes in bot scores
+- **Automated traffic**: Bot scores of 1
+- **Likely automated traffic**: Bots scores of 2 through 29
+- **Other traffic groups**: Any additional large spikes in bot scores
 
-For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not* be blocked — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
+For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that _should not_ be blocked — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
@@ -55,8 +55,8 @@ Use the slider tool to identify **other traffic groups**. For example, you may f
 
 At the end of your analysis, you should:
 
-*   Have a range of scores you can confidently block or challenge
-*   Understand nuances in your traffic that may require special attention
+- Have a range of scores you can confidently block or challenge
+- Understand nuances in your traffic that may require special attention
 
 {{<Aside type="note" header="Important">}}
 
@@ -71,6 +71,7 @@ New customers should give Bot Analytics a few days to gather data. You should on
 Based on your analysis of **automated** traffic, create a [Firewall Rule](/firewall/cf-firewall-rules) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
 {{<example>}}
+
 <table style='table-layout:fixed; width:100%'>
   <thead>
   <tr>
@@ -93,9 +94,9 @@ Create Firewall Rules that address **likely automated** traffic and **other traf
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 
-*   If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
-*   If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-*   If your Firewall Rule has a [**Challenge Solve Rate (CSR)**](/bots/concepts/challenge-solve-rate/) higher than 3%, consider lowering your challenge threshold.
+- If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
+- If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
+- If your Firewall Rule has a [**Challenge Solve Rate (CSR)**](/bots/concepts/challenge-solve-rate/) higher than 3%, consider lowering your challenge threshold.
 
 The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
@@ -103,7 +104,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Firewall Events](/waf/analytics) to see if your rules need additional tuning.
 
-***
+---
 
 ## Other considerations
 

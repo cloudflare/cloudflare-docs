@@ -10,9 +10,9 @@ weight: 13
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| macOS, Windows, Linux | WARP with Gateway | All plans |
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -74,7 +74,7 @@ The process to determine the signing thumbprint of a file varies depending on th
 3.  Next, run the following command to extract the SHA1 thumbprint:
 
     ```sh
-    $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :                              
+    $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
     SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
     ```
 

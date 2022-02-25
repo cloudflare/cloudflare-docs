@@ -61,16 +61,16 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 ---
 filename: index.js
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event));
+});
 
 /**
  * Fetch and log a request
  * @param {Request} request
  */
 async function handleRequest(event) {
-  return new Response("Hello worker!", { status: 200 })
+  return new Response('Hello worker!', { status: 200 });
 }
 ```
 
@@ -96,10 +96,10 @@ filename: index.js
 highlight: [2, 3, 4, 5, 6]
 ---
 async function handleRequest(event) {
-  if (event.request.method === "GET") {
-    return new Response("Hello worker!", { status: 200 })
+  if (event.request.method === 'GET') {
+    return new Response('Hello worker!', { status: 200 });
   } else {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response('Method not allowed', { status: 405 });
   }
 }
 ```
@@ -112,12 +112,12 @@ filename: index.js
 highlight: [1, 2, 3, 7]
 ---
 async function serveAsset(event) {
-  return new Response("Hello worker!", { status: 200 })
+  return new Response('Hello worker!', { status: 200 });
 }
 
 async function handleRequest(event) {
-  if (event.request.method === "GET") {
-    return serveAsset(event)
+  if (event.request.method === 'GET') {
+    return serveAsset(event);
   } // ...
 }
 ```
@@ -134,8 +134,8 @@ filename: index.js
 highlight: [2, 3]
 ---
 function serveAsset(event) {
-  const url = new URL(event.request.url)
-  console.log(url.pathname) // "/faces/1.jpg"
+  const url = new URL(event.request.url);
+  console.log(url.pathname); // "/faces/1.jpg"
 }
 ```
 
@@ -146,12 +146,12 @@ With that `path` available, the function can simply request the corresponding pa
 filename: index.js
 highlight: [1, 2, 6]
 ---
-const BUCKET_NAME = "my-bucket"
-const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`
+const BUCKET_NAME = 'my-bucket';
+const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`;
 
 function serveAsset(event) {
-  const url = new URL(event.request.url)
-  return fetch(`${BUCKET_URL}${url.pathname}`)
+  const url = new URL(event.request.url);
+  return fetch(`${BUCKET_URL}${url.pathname}`);
 }
 ```
 
@@ -177,17 +177,17 @@ filename: index.js
 highlight: [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 ---
 async function serveAsset(event) {
-  const url = new URL(event.request.url)
-  const cache = caches.default
-  let response = await cache.match(event.request)
+  const url = new URL(event.request.url);
+  const cache = caches.default;
+  let response = await cache.match(event.request);
 
   if (!response) {
-    response = await fetch(`${BUCKET_URL}${url.pathname}`)
-    const headers = { "cache-control": "public, max-age=14400" }
-    response = new Response(response.body, { ...response, headers })
-    event.waitUntil(cache.put(event.request, response.clone()))
+    response = await fetch(`${BUCKET_URL}${url.pathname}`);
+    const headers = { 'cache-control': 'public, max-age=14400' };
+    response = new Response(response.body, { ...response, headers });
+    event.waitUntil(cache.put(event.request, response.clone()));
   }
-  return response
+  return response;
 }
 ```
 
@@ -199,14 +199,14 @@ filename: index.js
 highlight: [3, 4, 5, 6, 7]
 ---
 async function handleRequest(event) {
-  if (event.request.method === "GET") {
-    let response = await serveAsset(event)
+  if (event.request.method === 'GET') {
+    let response = await serveAsset(event);
     if (response.status > 399) {
-      response = new Response(response.statusText, { status: response.status })
+      response = new Response(response.statusText, { status: response.status });
     }
-    return response
+    return response;
   } else {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response('Method not allowed', { status: 405 });
   }
 }
 ```
@@ -214,36 +214,36 @@ async function handleRequest(event) {
 And with that, you are finished writing the code for this tutorial. The final version of your script should like this:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event));
+});
 
-const BUCKET_NAME = "hugo-workers"
-const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`
+const BUCKET_NAME = 'hugo-workers';
+const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`;
 
 async function serveAsset(event) {
-  const url = new URL(event.request.url)
-  const cache = caches.default
-  let response = await cache.match(event.request)
+  const url = new URL(event.request.url);
+  const cache = caches.default;
+  let response = await cache.match(event.request);
 
   if (!response) {
-    response = await fetch(`${BUCKET_URL}${url.pathname}`)
-    const headers = { "cache-control": "public, max-age=14400" }
-    response = new Response(response.body, { ...response, headers })
-    event.waitUntil(cache.put(event.request, response.clone()))
+    response = await fetch(`${BUCKET_URL}${url.pathname}`);
+    const headers = { 'cache-control': 'public, max-age=14400' };
+    response = new Response(response.body, { ...response, headers });
+    event.waitUntil(cache.put(event.request, response.clone()));
   }
-  return response
+  return response;
 }
 
 async function handleRequest(event) {
-  if (event.request.method === "GET") {
-    let response = await serveAsset(event)
+  if (event.request.method === 'GET') {
+    let response = await serveAsset(event);
     if (response.status > 399) {
-      response = new Response(response.statusText, { status: response.status })
+      response = new Response(response.statusText, { status: response.status });
     }
-    return response
+    return response;
   } else {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response('Method not allowed', { status: 405 });
   }
 }
 ```

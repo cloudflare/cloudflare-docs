@@ -14,7 +14,7 @@ We update the list of supported applications and app types periodically. Check o
 {{<table-wrap>}}
 
 | Application                   | App Type          | Month Added |
-|-------------------------------|-------------------|-------------|
+| ----------------------------- | ----------------- | ----------- |
 | 1fichier                      | File Sharing      | April 2021  |
 | Back in Stock                 | Sales & Marketing | April 2021  |
 | Bajoo                         | File Sharing      | April 2021  |

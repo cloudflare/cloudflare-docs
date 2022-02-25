@@ -31,11 +31,11 @@ To configure Schema Validation in the Cloudflare dashboard:
 
 4.  For the **Shield properties**, enter a descriptive name and set up an expression to trigger your shield.
 
-    For example, if your API is available at `http://api.example.com/v1`, include a check for the *Hostname* field — equal to `api.example.com` — and a check for the *URI Path* field using a regular expression — matching the regex `^/v1`.
+    For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
 
-     {{<Aside type="warning" note="Important">}}
+    {{<Aside type="warning" note="Important">}}
 
-To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+To validate the hostname, you must include the _Hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
 
      {{</Aside>}}
 
@@ -52,14 +52,17 @@ To validate the hostname, you must include the *Hostname* field explicitly in th
 9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
     <div class="large-img">
-      <img alt="Review your endpoints and associated actions before deploying your schema validation" src="/api-shield/static/api-shield-review-endpoints-step.png"/>
+      <img
+        alt="Review your endpoints and associated actions before deploying your schema validation"
+        src="/api-shield/static/api-shield-review-endpoints-step.png"
+      />
     </div>
 
 10. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 
 11. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
 
-     {{<Aside type="warning">}}
+    {{<Aside type="warning">}}
 
 Currently, request body validations are not supported.
 

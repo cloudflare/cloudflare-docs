@@ -43,7 +43,7 @@ meta:
   title: Cloudflare Distributed Web Gateway docs
   description: View files stored on the InterPlanetary File System in your
     browser. Interact with the Ethereum blockchain. Explore the Distributed Web.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

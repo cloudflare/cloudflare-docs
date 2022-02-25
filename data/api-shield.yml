@@ -26,7 +26,7 @@ meta:
   title: Cloudflare API Shield docs
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

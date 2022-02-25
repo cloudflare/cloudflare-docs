@@ -16,15 +16,15 @@ To add a location to Cloudflare Zero Trust:
 
 4.  You may not need the IPv4 address field if:
 
-*   The location you're adding only uses IPv6
-*   Users will be sending all DNS requests from this location using DNS over HTTPS via a browser
-*   You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/)
+- The location you're adding only uses IPv6
+- Users will be sending all DNS requests from this location using DNS over HTTPS via a browser
+- You will be deploying the [WARP client](/cloudflare-one/connections/connect-devices/warp/)
 
 If any of the above apply to your case, click **Delete** to the right of the IPv4 field.
 
-   {{<Aside>}}
+{{<Aside>}}
 If you're using an Enterprise plan, you'll be able to manually change the IPv4 address.
-   {{</Aside>}}
+{{</Aside>}}
 
 ![Add location](/cloudflare-one/static/documentation/connections/add-location.png)
 

@@ -14,14 +14,14 @@ The Workers platform currently only implements an identity transform stream, a t
 ## Constructor
 
 ```js
-let { readable, writable } = new TransformStream()
+let { readable, writable } = new TransformStream();
 ```
 
 {{<definitions>}}
 
-*   `TransformStream()` {{<type>}}TransformStream{{</type>}}
+- `TransformStream()` {{<type>}}TransformStream{{</type>}}
 
-    *   Returns a new identity transform stream.
+  - Returns a new identity transform stream.
 
 {{</definitions>}}
 
@@ -29,14 +29,14 @@ let { readable, writable } = new TransformStream()
 
 {{<definitions>}}
 
-*   `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
-    *   An instance of a `ReadableStream`.
-*   `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
-    *   An instance of a `WritableStream`.
+- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+  - An instance of a `ReadableStream`.
+- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+  - An instance of a `WritableStream`.
 
 {{</definitions>}}
 
 ## See also
 
-*   [Using Streams.](/workers/learning/using-streams/)
-*   [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)
+- [Using Streams.](/workers/learning/using-streams/)
+- [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)

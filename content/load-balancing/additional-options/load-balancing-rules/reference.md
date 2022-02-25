@@ -61,10 +61,10 @@ Regardless of whether your traffic is proxied, you have access to the following 
 
 If your traffic is proxied, you have access to all the fields listed under **Proxied Only** and [**Both**](#fields-supported-regardless-of-proxy), such as:
 
-*   `Request Method`
-*   `URI`
-*   `Timestamp`
-*   `Header`
+- `Request Method`
+- `URI`
+- `Timestamp`
+- `Header`
 
 For the most up to date list of these fields, [create a load balancing rule](/load-balancing/create-rules/) in the UI.
 
@@ -123,14 +123,14 @@ Cloudflare Load Balancers support the following unproxied fields:
   </tbody>
 </table>
 
-***
+---
 
 ## Operators and grouping symbols
 
-*   **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
+- **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
 
-*   **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
+- **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-*   **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
+- **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
 For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators) in the Rules language documentation.

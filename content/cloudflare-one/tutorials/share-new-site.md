@@ -16,9 +16,9 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 **🗺️ This tutorial covers how to:**
 
-*   Start a secure, outbound-only, connection from an application running locally on a Mac laptop
-*   Give that application a hostname where users can reach the resource
-*   Optionally require a simple login to reach the application with Cloudflare Access
+- Start a secure, outbound-only, connection from an application running locally on a Mac laptop
+- Give that application a hostname where users can reach the resource
+- Optionally require a simple login to reach the application with Cloudflare Access
 
 **⏲️ Time to complete:**
 
@@ -30,7 +30,7 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 3.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
 
-***
+---
 
 ## Install `cloudflared`
 
@@ -126,4 +126,4 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 ## Additional Materials
 
-*   You can use this model to [share more complex development environments](https://blog.cloudflare.com/how-argo-tunnel-engineering-uses-argo-tunnel/) with other team members.
+- You can use this model to [share more complex development environments](https://blog.cloudflare.com/how-argo-tunnel-engineering-uses-argo-tunnel/) with other team members.

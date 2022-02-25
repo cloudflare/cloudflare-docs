@@ -24,15 +24,15 @@ If you want to block security threats and only allow queries from specific netwo
 
 **Condition 1**:
 
-| Selector | Operator | Value |
-| -- | -- | -- | -- |
-| Security Categories | In | Select all categories that apply |
+| Selector            | Operator | Value                            |
+| ------------------- | -------- | -------------------------------- |
+| Security Categories | In       | Select all categories that apply |
 
 **Condition 2**:
 
-| Selector | Operator | Value |
-| -- | -- | -- |
-| Source IP | In List | The name of the IP list containing your organization's networks |
+| Selector  | Operator | Value                                                           |
+| --------- | -------- | --------------------------------------------------------------- |
+| Source IP | In List  | The name of the IP list containing your organization's networks |
 
 **Action**: Block
 

@@ -31,9 +31,10 @@ To enable the Cloudflare Logpush service:
 7.  Select **Microsoft Azure**.
 
 8.  Enter or select the following destination information:
-    *   **SAS URL**
-    *   **Blob container subpath (optional)**
-    *   **Daily subfolders**
+
+    - **SAS URL**
+    - **Blob container subpath (optional)**
+    - **Daily subfolders**
 
 9.  Click **Validate access**.
 
@@ -54,9 +55,10 @@ To enable Logpush to Azure:
 1.  Create a Blob Storage container. Refer to [instructions from Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal).
 
 2.  Create a shared access signature (SAS). To learn about shared access signatures, refer to [information from Azure](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview).
-    *   Logpush requires a service-level SAS, which provides the most restricted access.
-    *   To create a service-level SAS, refer to [instructions from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas) or use the **Storage Explorer** feature in your storage account portal.
-    *   Select **Storage Explorer**, navigate to **Blob Containers** and then right-click on your blob container to see the **Get Shared Access Signature** option. Select that option, set an expiration time of at least 5 years, and select only **Write** permission.
+
+    - Logpush requires a service-level SAS, which provides the most restricted access.
+    - To create a service-level SAS, refer to [instructions from Azure](https://docs.microsoft.com/en-us/rest/api/storageservices/create-service-sas) or use the **Storage Explorer** feature in your storage account portal.
+    - Select **Storage Explorer**, navigate to **Blob Containers** and then right-click on your blob container to see the **Get Shared Access Signature** option. Select that option, set an expiration time of at least 5 years, and select only **Write** permission.
 
 3.  Provide the SAS URL when prompted by the Logpush API or UI.
 

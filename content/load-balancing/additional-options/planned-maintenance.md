@@ -55,10 +55,10 @@ To remove a server from rotation while still preserving session continuity, set 
 To direct traffic away from an origin server immediately:
 
 1.  Do one of the following actions:
-    *   On the origin's [monitor](/load-balancing/understand-basics/monitors/), update the monitor settings so the origin will fail health checks, such as putting an incorrect value for the **Response Body** or **Response Code**.
-    *   On the pool, disable the origin.
-    *   On the pool, set the [origin weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to `0` (though traffic may still reach the origin if it is included in multiple pools).
+    - On the origin's [monitor](/load-balancing/understand-basics/monitors/), update the monitor settings so the origin will fail health checks, such as putting an incorrect value for the **Response Body** or **Response Code**.
+    - On the pool, disable the origin.
+    - On the pool, set the [origin weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to `0` (though traffic may still reach the origin if it is included in multiple pools).
 2.  Monitor [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) to make sure no requests are reaching the pool.
-    *   If you are using [DNS-only load balancing (gray-clouded)](/load-balancing/understand-basics/proxy-modes/), changes may be delayed due to DNS resolver caching.
+    - If you are using [DNS-only load balancing (gray-clouded)](/load-balancing/understand-basics/proxy-modes/), changes may be delayed due to DNS resolver caching.
 3.  Perform your required maintenance or upgrades.
 4.  Undo the changes you made in **Step 1**.

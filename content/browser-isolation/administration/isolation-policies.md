@@ -29,29 +29,29 @@ When a HTTP policy applies the Isolate action the user's web browser is transpar
 
 #### Isolate all security threats
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Security Threats | In | `All security threats` | Isolate
+| Selector         | Operator | Value                  | Action  |
+| ---------------- | -------- | ---------------------- | ------- |
+| Security Threats | In       | `All security threats` | Isolate |
 
 #### Isolate specific domain names
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | In | `example.com`, `example.net` | Isolate
+| Selector | Operator | Value                        | Action  |
+| -------- | -------- | ---------------------------- | ------- |
+| Host     | In       | `example.com`, `example.net` | Isolate |
 
 #### Isolating entire domain names
 
 If you would like to isolate an entire domain name, use a regular expression match such as:
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `example\.com\|.*\.example\.com` | Isolate
+| Selector | Operator      | Value                            | Action  |
+| -------- | ------------- | -------------------------------- | ------- |
+| Host     | matches regex | `example\.com\|.*\.example\.com` | Isolate |
 
 #### Disabling isolation for domains
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | In | `example.com` | Do Not Isolate
+| Selector | Operator | Value         | Action         |
+| -------- | -------- | ------------- | -------------- |
+| Host     | In       | `example.com` | Do Not Isolate |
 
 ### API traffic
 

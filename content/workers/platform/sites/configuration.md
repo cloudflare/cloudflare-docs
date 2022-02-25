@@ -12,24 +12,25 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
 
 {{<definitions>}}
 
-*   `wrangler generate proj --site`
-    *   Creates a project with a Worker serving a generic HTML file and favicon with the directory structure:
+- `wrangler generate proj --site`
 
-        ```txt
-        ├── public # files to serve
-        |  ├── favicon.ico
-        |  └── index.html
-        ├── workers-site
-        |  ├── index.js # Workers script that serves the assets
-        |  ├── package-lock.json
-        |  └── package.json # defines dependencies used by Workers script
-        └── wrangler.toml
-        ```
+  - Creates a project with a Worker serving a generic HTML file and favicon with the directory structure:
 
-    *   Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
+    ```txt
+    ├── public # files to serve
+    |  ├── favicon.ico
+    |  └── index.html
+    ├── workers-site
+    |  ├── index.js # Workers script that serves the assets
+    |  ├── package-lock.json
+    |  └── package.json # defines dependencies used by Workers script
+    └── wrangler.toml
+    ```
 
-*   `wrangler init proj --site`
-    *   Creates a `wrangler.toml` file and a `workers-site` directory. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
+  - Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
+
+- `wrangler init proj --site`
+  - Creates a `wrangler.toml` file and a `workers-site` directory. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
 
 {{</definitions>}}
 
@@ -39,17 +40,20 @@ There are a few specific configuration settings for Workers Sites in your `wrang
 
 {{<definitions>}}
 
-*   `bucket` {{<prop-meta>}}required{{</prop-meta>}}
-    *   The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
+- `bucket` {{<prop-meta>}}required{{</prop-meta>}}
 
-*   `entry-point` {{<prop-meta>}}optional{{</prop-meta>}}
-    *   The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
+  - The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
 
-*   `include` {{<prop-meta>}}optional{{</prop-meta>}}
-    *   A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
+- `entry-point` {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `exclude` {{<prop-meta>}}optional{{</prop-meta>}}
-    *   A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
+  - The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
+
+- `include` {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
+
+- `exclude` {{<prop-meta>}}optional{{</prop-meta>}}
+  - A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
 
 {{</definitions>}}
 
@@ -137,9 +141,9 @@ If you provide both `include` and `exclude` fields, the `include` field will be 
 
 Wrangler will always ignore:
 
-*   `node_modules`
-*   Hidden files and directories
-*   Symlinks
+- `node_modules`
+- Hidden files and directories
+- Symlinks
 
 #### More about include/exclude patterns
 

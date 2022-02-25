@@ -12,17 +12,17 @@ Each key server uses a worker pool model, with incoming client connections handl
 
 Where needed, multiple key servers can be deployed and balanced between using your preferred ingress load balancing configuration. For full high availability, make sure to deploy sufficient key servers to handle twice the expected workload.
 
-***
+---
 
 ## Key type
 
 Key servers support both ECDSA and RSA keys, though signatures for RSA are an [order of magnitude more expensive](https://blog.cloudflare.com/ecdsa-the-digital-signature-algorithm-of-a-better-internet/) to compute and thus consider type of keys used when planning the number of key servers in your deployment.
 
-ECDSA signing can be broken down into two steps. Since the first step — generating random values (to be used later with the private key and message to be signed) — represents the majority of the computational cost,  we pre-generate these random values to significantly reduce latency. ECDSA signing requests are computationally isolated from RSA signing requests using separate worker pools to keep them as fast as possible.
+ECDSA signing can be broken down into two steps. Since the first step — generating random values (to be used later with the private key and message to be signed) — represents the majority of the computational cost, we pre-generate these random values to significantly reduce latency. ECDSA signing requests are computationally isolated from RSA signing requests using separate worker pools to keep them as fast as possible.
 
 Additional details can be found in the [gokeyless server readme file](https://github.com/cloudflare/gokeyless#readme) file.
 
-***
+---
 
 ## Benchmarks
 

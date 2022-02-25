@@ -11,12 +11,12 @@ weight: 0
 <table>
   <thead>
     <tr>
-      <th style='min-width:70px'>Anycast GRE or IPsec tunnel</th>
-      <th style='min-width:125px'>Customer edge IP</th>
-      <th style='min-width:100px'>Anycast IP</th>
-      <th style='min-width:130px'>Private subnet</th>
-      <th style='min-width:115px'>Customer private IP</th>
-      <th style='min-width:100px'>Cloudflare private IP</th>
+      <th style="min-width:70px">Anycast GRE or IPsec tunnel</th>
+      <th style="min-width:125px">Customer edge IP</th>
+      <th style="min-width:100px">Anycast IP</th>
+      <th style="min-width:130px">Private subnet</th>
+      <th style="min-width:115px">Customer private IP</th>
+      <th style="min-width:100px">Cloudflare private IP</th>
     </tr>
   </thead>
   <tbody>
@@ -60,30 +60,30 @@ weight: 0
 The table below lists Anycast GRE or IPsec tunnel and their associated Cloudflare region codes.
 
 <table>
- <thead>
-  <tr>
-   <th>Anycast GRE or IPsec tunnel</th>
-   <th>Region code</th>
-   </tr>
+  <thead>
+    <tr>
+      <th>Anycast GRE or IPsec tunnel</th>
+      <th>Region code</th>
+    </tr>
   </thead>
   <tbody>
-  <tr>
-     <td>GRE_1_IAD</td>
-     <td>AFR</td>
-  </tr>
-  <tr>
-    <td>GRE_2_IAD</td>
-    <td>EEUR</td>
-  </tr>
-  <tr>
-    <td>GRE_3_ATL</td>
-    <td>ENAM</td>
-  </tr>
-  <tr>
-    <td>GRE_4_ATL</td>
-    <td>ME</td>
+    <tr>
+      <td>GRE_1_IAD</td>
+      <td>AFR</td>
     </tr>
-</tbody>
+    <tr>
+      <td>GRE_2_IAD</td>
+      <td>EEUR</td>
+    </tr>
+    <tr>
+      <td>GRE_3_ATL</td>
+      <td>ENAM</td>
+    </tr>
+    <tr>
+      <td>GRE_4_ATL</td>
+      <td>ME</td>
+    </tr>
+  </tbody>
 </table>
 
 ## Regions and Region Codes
@@ -99,49 +99,40 @@ Cloudflare has nine geographic regions across the world. This table lists region
   </thead>
   <tbody>
     <tr>
-    <td>AFR</td>
-    <td>Africa
-    </td>
+      <td>AFR</td>
+      <td>Africa</td>
     </tr>
     <tr>
-    <td>APAC</td>
-    <td>Asia Pacific
-    </td>
+      <td>APAC</td>
+      <td>Asia Pacific</td>
     </tr>
     <tr>
-    <td>EEUR</td>
-    <td>Eastern Europe
-    </td>
+      <td>EEUR</td>
+      <td>Eastern Europe</td>
     </tr>
     <tr>
-    <td>ENAM</td>
-    <td>Eastern North America
-    </td>
+      <td>ENAM</td>
+      <td>Eastern North America</td>
     </tr>
     <tr>
-    <td>ME</td>
-    <td>Middle East
-    </td>
+      <td>ME</td>
+      <td>Middle East</td>
     </tr>
     <tr>
-    <td>OC</td>
-    <td>Oceania
-    </td>
+      <td>OC</td>
+      <td>Oceania</td>
     </tr>
     <tr>
-    <td>SAM</td>
-    <td>South America
-    </td>
+      <td>SAM</td>
+      <td>South America</td>
     </tr>
     <tr>
-    <td>WEUR</td>
-    <td>Western Europe
-    </td>
+      <td>WEUR</td>
+      <td>Western Europe</td>
     </tr>
     <tr>
-    <td>WNAM</td>
-    <td>Western North America
-    </td>
+      <td>WNAM</td>
+      <td>Western North America</td>
     </tr>
   </tbody>
 </table>

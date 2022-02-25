@@ -18,8 +18,8 @@ This architecture allows `cloudflared` instances to proxy Internet traffic into 
 
 **🗺️ This tutorial covers how to:**
 
-*   Deploy `cloudflared` in a replica model
-*   Proxy traffic into a Kubernetes service with Tunnel
+- Deploy `cloudflared` in a replica model
+- Proxy traffic into a Kubernetes service with Tunnel
 
 **⏲️ Time to complete: 45 minutes**
 

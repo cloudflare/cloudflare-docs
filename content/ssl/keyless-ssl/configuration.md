@@ -8,7 +8,7 @@ meta:
 
 # Get started with Keyless SSL
 
-***
+---
 
 ## Before you begin
 
@@ -22,14 +22,14 @@ In addition to running on bare metal, the key server should run without issue in
 
 You will need to be running a supported operating system (OS) to run Keyless. Supported operating systems include:
 
-*   Ubuntu 12.04.5 LTS, 14.04 LTS, 15.10, 16.04, 17.10
-*   Debian 7, 8, 9
-*   RHEL and CentOS 6, 7
-*   Amazon Linux 1, 2
+- Ubuntu 12.04.5 LTS, 14.04 LTS, 15.10, 16.04, 17.10
+- Debian 7, 8, 9
+- RHEL and CentOS 6, 7
+- Amazon Linux 1, 2
 
 We strongly recommend that you use an operating system still supported by the vendor (still receiving security updates) as your key server will have access to your private keys.
 
-***
+---
 
 ## Step 1 — Create a public DNS record
 
@@ -39,7 +39,7 @@ You need to create a public DNS record for your key server. If you are using Clo
 2.  Add this record via your DNS provider’s interface as an **A** or **AAAA** record pointing to the IP address of your Keyless SSL server.
 3.  Use this hostname as the server hostname during initialization of your Keyless SSL server.
 
-***
+---
 
 ## Step 2 — Upload “Keyless” SSL Certificates
 
@@ -54,15 +54,15 @@ For each certificate you wish to use with Keyless SSL:
 3.  Click **Upload Keyless SSL Certificate**.
 4.  Fill in the upload modal with the certificate and other details and click **Add**.
 
-Label | Description | Example Values
-------|-------------|---------------
-Key server label|Any unique identifier for your key server|“test-keyless”, “production-keyless-1”
-Key server hostname|The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier).|11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com
-Key server port|Set to 2407 unless you have changed this on the key server.|2407
-SSL Certificate|The valid X509v3 SSL certificate (in PEM form) for which you hold the private key.| (PEM bytes)
-Bundle method|This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details.|Compatible
+| Label               | Description                                                                                                                                                                 | Example Values                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Key server label    | Any unique identifier for your key server                                                                                                                                   | “test-keyless”, “production-keyless-1”                       |
+| Key server hostname | The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier).                                                    | 11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com |
+| Key server port     | Set to 2407 unless you have changed this on the key server.                                                                                                                 | 2407                                                         |
+| SSL Certificate     | The valid X509v3 SSL certificate (in PEM form) for which you hold the private key.                                                                                          | (PEM bytes)                                                  |
+| Bundle method       | This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details. | Compatible                                                   |
 
-***
+---
 
 ## Step 3 — Set up and activate key server
 
@@ -109,8 +109,8 @@ When running multiple key servers, make sure all required keys are distributed t
 
 To activate, restart your keyless instance:
 
-*   systemd: `sudo service gokeyless restart`
-*   upstart/sysvinit: `sudo /etc/init.d/gokeyless restart`
+- systemd: `sudo service gokeyless restart`
+- upstart/sysvinit: `sudo /etc/init.d/gokeyless restart`
 
 If this command fails, try troubleshooting by [checking the logs](/ssl/keyless-ssl/troubleshooting/).
 

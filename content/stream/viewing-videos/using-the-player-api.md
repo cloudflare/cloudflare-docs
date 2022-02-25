@@ -14,7 +14,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 <!-- You can use styles and CSS on this iframe element where the video player will appear -->
 <iframe
   src="https://iframe.videodelivery.net/$VIDEOID"
-  style="border: none;"
+  style="border: none"
   height="720"
   width="1280"
   allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
@@ -26,15 +26,15 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 <!-- Your JavaScript code below-->
 <script>
-  const player = Stream(document.getElementById('stream-player'))
+  const player = Stream(document.getElementById('stream-player'));
   player.addEventListener('play', () => {
-    console.log('playing!')
-  })
+    console.log('playing!');
+  });
   player.play().catch(() => {
-    console.log('playback failed, muting to try again')
-    player.muted = true
-    player.play()
-  })
+    console.log('playback failed, muting to try again');
+    player.muted = true;
+    player.play();
+  });
 </script>
 ```
 
@@ -42,13 +42,13 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 {{<definitions>}}
 
-*   `play()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">}}Promise{{</type-link>}}
+- `play()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">}}Promise{{</type-link>}}
 
-    *   Start video playback.
+  - Start video playback.
 
-*   `pause()` {{<type>}}null{{</type>}}
+- `pause()` {{<type>}}null{{</type>}}
 
-    *   Pause video playback.
+  - Pause video playback.
 
 {{</definitions>}}
 
@@ -56,75 +56,77 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 {{<definitions>}}
 
-*   `autoplay` {{<type>}}boolean{{</type>}}
+- `autoplay` {{<type>}}boolean{{</type>}}
 
-    *   Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
+      *   Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
 
-        {{<Aside>}}
-Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+          {{<Aside>}}
+
+  Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+  {{</Aside>}}
+
+- `buffered` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
+
+  - An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
+
+- `controls` {{<type>}}boolean{{</type>}}
+
+  - Sets or returns whether the video should display controls (like play/pause etc.)
+
+- `currentTime` {{<type>}}integer{{</type>}}
+
+  - Returns the current playback time in seconds. Setting this value seeks the video to a new time.
+
+- `defaultTextTrack`
+
+  - Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/uploading-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+
+    {{<Aside>}}
+
+This will _only_ work once during initialization. Beyond that point the user has full control over their text track settings.
+
         {{</Aside>}}
 
-*   `buffered` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
+- `duration` {{<type>}}integer{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
-    *   An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
+  - Returns the duration of the video in seconds.
 
-*   `controls` {{<type>}}boolean{{</type>}}
+- `ended` {{<type>}}boolean{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
-    *   Sets or returns whether the video should display controls (like play/pause etc.)
+  - Returns whether the video has ended.
 
-*   `currentTime` {{<type>}}integer{{</type>}}
+- `loop` {{<type>}}boolean{{</type>}}
 
-    *   Returns the current playback time in seconds. Setting this value seeks the video to a new time.
+  - Sets or returns whether the video should start over when it reaches the end
 
-*   `defaultTextTrack`
+- `muted` {{<type>}}boolean{{</type>}}
 
-    *   Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/uploading-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+  - Sets or returns whether the audio should be played with the video
 
-        {{<Aside>}}
+- `paused` {{<type>}}boolean{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
-  This will *only* work once during initialization. Beyond that point the user has full control over their text track settings.
+  - Returns whether the video is paused
 
-        {{</Aside>}}
+- `played` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
-*   `duration` {{<type>}}integer{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
+  - An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
 
-    *   Returns the duration of the video in seconds.
+- `preload` {{<type>}}boolean{{</type>}}
 
-*   `ended` {{<type>}}boolean{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
+      *   Sets or returns whether the video should be preloaded upon element load.
 
-    *   Returns whether the video has ended.
+          {{<Aside>}}
 
-*   `loop` {{<type>}}boolean{{</type>}}
+  The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
+  {{</Aside>}}
 
-    *   Sets or returns whether the video should start over when it reaches the end
+- `primaryColor` {{<type>}}string{{</type>}}
 
-*   `muted` {{<type>}}boolean{{</type>}}
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to certain elements of the player's UI.
 
-    *   Sets or returns whether the audio should be played with the video
+- `volume` {{<type>}}float{{</type>}}
 
-*   `paused` {{<type>}}boolean{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
-
-    *   Returns whether the video is paused
-
-*   `played` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
-
-    *   An object conforming to the TimeRanges interface. This object is normalized, which means that ranges are ordered, don't overlap, aren't empty, and don't touch (adjacent ranges are folded into one bigger range).
-
-*   `preload` {{<type>}}boolean{{</type>}}
-
-    *   Sets or returns whether the video should be preloaded upon element load.
-
-        {{<Aside>}}
-The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
-        {{</Aside>}}
-
-*   `primaryColor` {{<type>}}string{{</type>}}
-
-    *   Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to certain elements of the player's UI.
-
-*   `volume` {{<type>}}float{{</type>}}
-
-    *   Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
+  - Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
 
 {{</definitions>}}
 
@@ -136,89 +138,89 @@ We support most of the [standardized media element events](https://developer.moz
 
 {{<definitions>}}
 
-*   `abort`
+- `abort`
 
-    *   Sent when playback is aborted; for example, if the media is playing and is restarted from the beginning, this event is sent.
+  - Sent when playback is aborted; for example, if the media is playing and is restarted from the beginning, this event is sent.
 
-*   `canplay`
+- `canplay`
 
-    *   Sent when enough data is available that the media can be played, at least for a couple of frames.
+  - Sent when enough data is available that the media can be played, at least for a couple of frames.
 
-*   `canplaythrough`
+- `canplaythrough`
 
-    *   Sent when the entire media can be played without interruption, assuming the download rate remains at least at the current level. It will also be fired when playback is toggled between paused and playing. Note: Manually setting the currentTime will eventually fire a canplaythrough event in firefox. Other browsers might not fire this event.
+  - Sent when the entire media can be played without interruption, assuming the download rate remains at least at the current level. It will also be fired when playback is toggled between paused and playing. Note: Manually setting the currentTime will eventually fire a canplaythrough event in firefox. Other browsers might not fire this event.
 
-*   `durationchange`
+- `durationchange`
 
-    *   The metadata has loaded or changed, indicating a change in duration of the media. This is sent, for example, when the media has loaded enough that the duration is known.
+  - The metadata has loaded or changed, indicating a change in duration of the media. This is sent, for example, when the media has loaded enough that the duration is known.
 
-*   `ended`
+- `ended`
 
-    *   Sent when playback completes.
+  - Sent when playback completes.
 
-*   `error`
+- `error`
 
-    *   Sent when an error occurs. (e.g. the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
+  - Sent when an error occurs. (e.g. the video has not finished encoding yet, or the video fails to load due to an incorrect signed URL)
 
-*   `loadeddata`
+- `loadeddata`
 
-    *   The first frame of the media has finished loading.
+  - The first frame of the media has finished loading.
 
-*   `loadedmetadata`
+- `loadedmetadata`
 
-    *   The media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
+  - The media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
 
-*   `loadstart`
+- `loadstart`
 
-    *   Sent when loading of the media begins.
+  - Sent when loading of the media begins.
 
-*   `pause`
+- `pause`
 
-    *   Sent when the playback state is changed to paused (paused property is true).
+  - Sent when the playback state is changed to paused (paused property is true).
 
-*   `play`
+- `play`
 
-    *   Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute.
+  - Sent when the playback state is no longer paused, as a result of the play method, or the autoplay attribute.
 
-*   `playing`
+- `playing`
 
-    *   Sent when the media has enough data to start playing, after the play event, but also when recovering from being stalled, when looping media restarts, and after seeked, if it was playing before seeking.
+  - Sent when the media has enough data to start playing, after the play event, but also when recovering from being stalled, when looping media restarts, and after seeked, if it was playing before seeking.
 
-*   `progress`
+- `progress`
 
-    *   Sent periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
+  - Sent periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
 
-*   `ratechange`
+- `ratechange`
 
-    *   Sent when the playback speed changes.
+  - Sent when the playback speed changes.
 
-*   `seeked`
+- `seeked`
 
-    *   Sent when a seek operation completes.
+  - Sent when a seek operation completes.
 
-*   `seeking`
+- `seeking`
 
-    *   Sent when a seek operation begins.
+  - Sent when a seek operation begins.
 
-*   `stalled`
+- `stalled`
 
-    *   Sent when the user agent is trying to fetch media data, but data is unexpectedly not forthcoming.
+  - Sent when the user agent is trying to fetch media data, but data is unexpectedly not forthcoming.
 
-*   `suspend`
+- `suspend`
 
-    *   Sent when loading of the media is suspended; this may happen either because the download has completed or because it has been paused for any other reason.
+  - Sent when loading of the media is suspended; this may happen either because the download has completed or because it has been paused for any other reason.
 
-*   `timeupdate`
+- `timeupdate`
 
-    *   The time indicated by the element's currentTime attribute has changed.
+  - The time indicated by the element's currentTime attribute has changed.
 
-*   `volumechange`
+- `volumechange`
 
-    *   Sent when the audio volume changes (both when the volume is set and when the muted attribute is changed).
+  - Sent when the audio volume changes (both when the volume is set and when the muted attribute is changed).
 
-*   `waiting`
+- `waiting`
 
-    *   Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
+  - Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
 
 {{</definitions>}}
 
@@ -228,16 +230,16 @@ Non-standard events are prefixed with `stream-` to distinguish them from standar
 
 {{<definitions>}}
 
-*   `stream-adstart`
+- `stream-adstart`
 
-    *   Fires when `ad-url` attribute is present and the ad begins playback
+  - Fires when `ad-url` attribute is present and the ad begins playback
 
-*   `stream-adend`
+- `stream-adend`
 
-    *   Fires when `ad-url` attribute is present and the ad finishes playback
+  - Fires when `ad-url` attribute is present and the ad finishes playback
 
-*   `stream-adtimeout`
+- `stream-adtimeout`
 
-    *   Fires when `ad-url` attribute is present and the ad took too long to load.
+  - Fires when `ad-url` attribute is present and the ad took too long to load.
 
 {{</definitions>}}

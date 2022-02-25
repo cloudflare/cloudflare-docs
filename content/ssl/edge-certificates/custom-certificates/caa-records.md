@@ -20,17 +20,17 @@ For more technical details about CAA records, refer to the [introductory blog po
 
 You should [create CAA records](#create-caa-records) for your domain in Cloudflare if each of the following is true:
 
-*   You uploaded your own custom origin server certificate (not provisioned by Cloudflare).
-*   That certificate was issued by a CA (not self-signed).
-*   Your domain is on a full setup (not a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832)).
+- You uploaded your own custom origin server certificate (not provisioned by Cloudflare).
+- That certificate was issued by a CA (not self-signed).
+- Your domain is on a full setup (not a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832)).
 
 ## Who does not need to create CAA records?
 
 You **do not** need to create CAA records in Cloudflare if your domain falls into one of the following categories:
 
-*   You have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled (Cloudflare automatically adds CAA records for each our CA providers).
-*   Your custom origin server certificate is self-signed.
-*   You are using a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832) (CAA records should be added to your authoritative DNS provider).
+- You have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled (Cloudflare automatically adds CAA records for each our CA providers).
+- Your custom origin server certificate is self-signed.
+- You are using a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832) (CAA records should be added to your authoritative DNS provider).
 
 If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare.
 

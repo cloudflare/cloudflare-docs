@@ -27,7 +27,7 @@ meta:
     manage Cloudflare accounts and services for your team or your customers. A
     new set of APIs built into our Client v4 API library make a streamlined
     onboarding and setup experience
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 externals:

@@ -8,11 +8,11 @@ weight: 2
 
 Before you enable HTTP/3 on a Cloudflare domain, ensure you are using a supported client from the list below.
 
-*   [Google Chrome](https://www.google.com/chrome/canary/) - [Instructions](/http3/tutorials/chrome/)
-*   [Microsoft Edge](https://www.microsoftedgeinsider.com/en-us/) - [Instructions](/http3/tutorials/edge/)
-*   [Mozilla Firefox](https://www.mozilla.org/firefox/channel/desktop/#nightly) - [Instructions](/http3/tutorials/firefox/)
-*   [cURL](https://curl.haxx.se) + quiche - [Instructions](/http3/tutorials/curl-brew/)
-*   [Cloudflare quiche-client](https://github.com/cloudflare/quiche) - [Instructions](/http3/tutorials/quiche-http3-client/)
+- [Google Chrome](https://www.google.com/chrome/canary/) - [Instructions](/http3/tutorials/chrome/)
+- [Microsoft Edge](https://www.microsoftedgeinsider.com/en-us/) - [Instructions](/http3/tutorials/edge/)
+- [Mozilla Firefox](https://www.mozilla.org/firefox/channel/desktop/#nightly) - [Instructions](/http3/tutorials/firefox/)
+- [cURL](https://curl.haxx.se) + quiche - [Instructions](/http3/tutorials/curl-brew/)
+- [Cloudflare quiche-client](https://github.com/cloudflare/quiche) - [Instructions](/http3/tutorials/quiche-http3-client/)
 
 {{<Aside type="note" header="Note">}}
 

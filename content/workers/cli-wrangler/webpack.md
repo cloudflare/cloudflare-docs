@@ -22,9 +22,9 @@ This is the default webpack configuration that Wrangler uses to build your Worke
 
 ```js
 module.exports = {
-  target: "webworker",
-  entry: "./index.js" // inferred from "main" in package.json
-}
+  target: 'webworker',
+  entry: './index.js', // inferred from "main" in package.json
+};
 ```
 
 The `"main"` field in the `package.json` file determines the `entry` configuration value. When undefined or missing, `"main"` defaults to `index.js`, meaning that `entry` also defaults to `index.js`.
@@ -42,10 +42,10 @@ You can tell Wrangler to use a custom webpack configuration file by setting `web
 filename: webpack.config.js
 ---
 module.exports = {
-  target: "webworker",
-  entry: "./index.js",
-  mode: "production"
-}
+  target: 'webworker',
+  entry: './index.js',
+  mode: 'production',
+};
 ```
 
 ```toml
@@ -87,11 +87,11 @@ webpack_config = "webpack.production.js"
 filename: webpack.development.js
 ---
 module.exports = {
-  target: "webworker",
-  devtool: "cheap-module-source-map", // avoid "eval": Workers environment doesn’t allow it
-  entry: "./index.js",
-  mode: "development"
-}
+  target: 'webworker',
+  devtool: 'cheap-module-source-map', // avoid "eval": Workers environment doesn’t allow it
+  entry: './index.js',
+  mode: 'development',
+};
 ```
 
 ```js
@@ -99,10 +99,10 @@ module.exports = {
 filename: webpack.production.js
 ---
 module.exports = {
-  target: "webworker",
-  entry: "./index.js",
-  mode: "production"
-}
+  target: 'webworker',
+  entry: './index.js',
+  mode: 'production',
+};
 ```
 
 ### Using with Workers Sites
@@ -130,10 +130,10 @@ filename: webpack.config.js
 ---
 module.exports = {
   context: __dirname,
-  target: "webworker",
-  entry: "./index.js",
-  mode: "production"
-}
+  target: 'webworker',
+  entry: './index.js',
+  mode: 'production',
+};
 ```
 
 ## Shimming globals
@@ -149,18 +149,18 @@ For example, you may want to replace the `URL` global class with the `url-polyfi
 filename: webpack.config.js
 highlight: [1, 7, 8, 9, 10, 11]
 ---
-const webpack = require("webpack")
+const webpack = require('webpack');
 
 module.exports = {
-  target: "webworker",
-  entry: "./index.js",
-  mode: "production",
+  target: 'webworker',
+  entry: './index.js',
+  mode: 'production',
   plugins: [
     new webpack.ProvidePlugin({
-      URL: "url-polyfill",
+      URL: 'url-polyfill',
     }),
   ],
-}
+};
 ```
 
 ## Backwards compatibility

@@ -11,7 +11,7 @@ Cloudflare Zero Trust allows you to enforce sessions on Gateway Network and HTTP
 You can configure a WARP session for any Allow policy. To configure a session:
 
 1.  Navigate to either **Gateway > Policies > Network** or **Gateway > Policies > HTTP**.
-2.  Create a policy and select the *Allow* action. Alternatively, choose any existing *Allow* policy.
+2.  Create a policy and select the _Allow_ action. Alternatively, choose any existing _Allow_ policy.
 3.  Under **Step 4 - Configure policy settings**, select a session expiration time.
 4.  Save the policy.
 

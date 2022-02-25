@@ -11,42 +11,39 @@ layout: example
 ---
 
 ```js
-const OLD_URL = "developer.mozilla.org"
-const NEW_URL = "mynewdomain.com"
+const OLD_URL = 'developer.mozilla.org';
+const NEW_URL = 'mynewdomain.com';
 
 async function handleRequest(req) {
-  const res = await fetch(req)
-  const contentType = res.headers.get("Content-Type")
+  const res = await fetch(req);
+  const contentType = res.headers.get('Content-Type');
 
   // If the response is HTML, it can be transformed with
   // HTMLRewriter -- otherwise, it should pass through
-  if (contentType.startsWith("text/html")) {
-    return rewriter.transform(res)
+  if (contentType.startsWith('text/html')) {
+    return rewriter.transform(res);
   } else {
-    return res
+    return res;
   }
 }
 
 class AttributeRewriter {
   constructor(attributeName) {
-    this.attributeName = attributeName
+    this.attributeName = attributeName;
   }
   element(element) {
-    const attribute = element.getAttribute(this.attributeName)
+    const attribute = element.getAttribute(this.attributeName);
     if (attribute) {
-      element.setAttribute(
-        this.attributeName,
-        attribute.replace(OLD_URL, NEW_URL),
-      )
+      element.setAttribute(this.attributeName, attribute.replace(OLD_URL, NEW_URL));
     }
   }
 }
 
 const rewriter = new HTMLRewriter()
-  .on("a", new AttributeRewriter("href"))
-  .on("img", new AttributeRewriter("src"))
+  .on('a', new AttributeRewriter('href'))
+  .on('img', new AttributeRewriter('src'));
 
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 ```

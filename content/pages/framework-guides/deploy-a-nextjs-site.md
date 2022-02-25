@@ -37,8 +37,8 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 <div>
 
-| Configuration option | Value           |
-| -------------------- | ----------------|
+| Configuration option | Value            |
+| -------------------- | ---------------- |
 | Production branch    | `main`           |
 | Build command        | `npm run export` |
 | Build directory      | `out`            |

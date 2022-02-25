@@ -13,10 +13,11 @@ Follow these steps to configure 1.1.1.1 for Families:
 ## Block malware
 
 1.  Go to the IP address used to access your router's admin console in your browser.
-    *   Linksys and Asus routers typically use `http://192.168.1.1` or `http://router.asus.com` (for ASUS).
-    *   Netgear routers typically use `http://192.168.1.1` or `http://routerlogin.net`.
-    *   D-Link routers typically use `http://192.168.0.1`.
-    *   Ubiquiti routers typically use `http://unifi.ubnt.com`.
+
+    - Linksys and Asus routers typically use `http://192.168.1.1` or `http://router.asus.com` (for ASUS).
+    - Netgear routers typically use `http://192.168.1.1` or `http://routerlogin.net`.
+    - D-Link routers typically use `http://192.168.0.1`.
+    - Ubiquiti routers typically use `http://unifi.ubnt.com`.
 
 2.  Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
 
@@ -43,10 +44,11 @@ Follow these steps to configure 1.1.1.1 for Families:
 ## Block Malware and Adult Content
 
 1.  Go to the IP address used to access your router's admin console in your browser.
-    *   Linksys and Asus routers typically use `http://192.168.1.1` or `http://router.asus.com` (for ASUS).
-    *   Netgear routers typically use `http://192.168.1.1` or `http://routerlogin.net`.
-    *   D-Link routers typically use `http://192.168.0.1`.
-    *   Ubiquiti routers typically use `http://unifi.ubnt.com`.
+
+    - Linksys and Asus routers typically use `http://192.168.1.1` or `http://router.asus.com` (for ASUS).
+    - Netgear routers typically use `http://192.168.1.1` or `http://routerlogin.net`.
+    - D-Link routers typically use `http://192.168.0.1`.
+    - Ubiquiti routers typically use `http://unifi.ubnt.com`.
 
 2.  Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
 

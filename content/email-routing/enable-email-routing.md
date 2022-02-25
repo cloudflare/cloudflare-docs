@@ -18,9 +18,9 @@ Destination addresses are shared at the account level and can be reused with any
 4.  In **Custom addresses**, click **Create address**. Enter the email address you want to use in **Custom address** (for example, `my-new-email`).
 5.  In **Destination address**, enter the full email address you want your emails to be forwarded to — for example, `your-name@gmail.com`.
 
-  {{<Aside type="note">}}
+{{<Aside type="note">}}
 Email Routing will only process the most recent rule per custom address. Other destination addresses will not receive your forwarded emails.
-  {{</Aside>}}
+{{</Aside>}}
 
 1.  Click **Save**.
 

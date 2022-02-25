@@ -24,37 +24,37 @@ If only a domain is given for the command, the bot will default to looking for '
 
 </div>
 
-*`/dig domain: cloudflare.com`*
+_`/dig domain: cloudflare.com`_
 
 ### Supported record types
 
 Discord has a limit of 25 options in slash commands, so DNS over Discord offers the 25 most common DNS record types to choose from:
 
-*   A
-*   AAAA
-*   CAA
-*   CDNSKEY
-*   CDS
-*   CERT
-*   CNAME
-*   DNSKEY
-*   DS
-*   HINFO
-*   HTTPS
-*   LOC
-*   MX
-*   NAPTR
-*   NS
-*   PTR
-*   SMIMEA
-*   SOA
-*   SPF
-*   SRV
-*   SSHFP
-*   SVCB
-*   TLSA
-*   TXT
-*   URI
+- A
+- AAAA
+- CAA
+- CDNSKEY
+- CDS
+- CERT
+- CNAME
+- DNSKEY
+- DS
+- HINFO
+- HTTPS
+- LOC
+- MX
+- NAPTR
+- NS
+- PTR
+- SMIMEA
+- SOA
+- SPF
+- SRV
+- SSHFP
+- SVCB
+- TLSA
+- TXT
+- URI
 
 To query other DNS record types, or multiple record types at once, use the `/multi-dig` command.
 
@@ -76,7 +76,7 @@ When this is requested, the name and TTL columns will be excluded, with just the
 
 </div>
 
-*`/dig domain: cloudflare.com type: AAAA short: true`*
+_`/dig domain: cloudflare.com type: AAAA short: true`_
 
 ### Refreshing existing results
 
@@ -92,7 +92,7 @@ The refresh button is available on all responses to the dig command, including t
 
 </div>
 
-*`/dig domain: cloudflare.com`*
+_`/dig domain: cloudflare.com`_
 
 ## multi-dig command
 
@@ -106,7 +106,7 @@ If you want to look up multiple DNS record types at once, use the `/multi-dig` c
 
 </div>
 
-*`/multi-dig domain: cloudflare.com types: A AAAA`*
+_`/multi-dig domain: cloudflare.com types: A AAAA`_
 
 ### Supported record types
 
@@ -114,53 +114,53 @@ When providing DNS record types for the `/multi-dig` command, Discord will not p
 
 The following DNS record types are supported and considered valid by the bot:
 
-*   A
-*   AAAA
-*   AFSDB
-*   APL
-*   CAA
-*   CDNSKEY
-*   CDS
-*   CERT
-*   CNAME
-*   CSYNC
-*   DHCID
-*   DLV
-*   DNAME
-*   DNSKEY
-*   DS
-*   EUI48
-*   EUI64
-*   HINFO
-*   HIP
-*   HTTPS
-*   IPSECKEY
-*   KEY
-*   KX
-*   LOC
-*   MX
-*   NAPTR
-*   NS
-*   NSEC
-*   NSEC3
-*   NSEC3PARAM
-*   OPENPGPKEY
-*   PTR
-*   RP
-*   SMIMEA
-*   SOA
-*   SPF
-*   SRV
-*   SSHFP
-*   SVCB
-*   TA
-*   TKEY
-*   TLSA
-*   TXT
-*   URI
-*   ZONEMD
+- A
+- AAAA
+- AFSDB
+- APL
+- CAA
+- CDNSKEY
+- CDS
+- CERT
+- CNAME
+- CSYNC
+- DHCID
+- DLV
+- DNAME
+- DNSKEY
+- DS
+- EUI48
+- EUI64
+- HINFO
+- HIP
+- HTTPS
+- IPSECKEY
+- KEY
+- KX
+- LOC
+- MX
+- NAPTR
+- NS
+- NSEC
+- NSEC3
+- NSEC3PARAM
+- OPENPGPKEY
+- PTR
+- RP
+- SMIMEA
+- SOA
+- SPF
+- SRV
+- SSHFP
+- SVCB
+- TA
+- TKEY
+- TLSA
+- TXT
+- URI
+- ZONEMD
 
-*Use '\*' (asterisk) in place of a record type to get DNS results for all supported types.*
+_Use '\*' (asterisk) in place of a record type to get DNS results for all supported types._
 
 <div class="medium-img">
 
@@ -178,7 +178,7 @@ Like the main dig command, the multi-dig command also supports the optional shor
 
 </div>
 
-*`/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true`*
+_`/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true`_
 
 ### Refreshing existing results
 
@@ -192,7 +192,7 @@ As with the dig command, any user can press the refresh button to refresh the di
 
 </div>
 
-*`/multi-dig domain: cloudflare.com types: A AAAA`*
+_`/multi-dig domain: cloudflare.com types: A AAAA`_
 
 ## whois command
 
@@ -212,7 +212,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 </div>
 
-*`/whois query: cloudflare.com`*
+_`/whois query: cloudflare.com`_
 
 <div class="medium-img">
 
@@ -220,7 +220,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 </div>
 
-*`/whois query: 104.16.132.229`*
+_`/whois query: 104.16.132.229`_
 
 <div class="medium-img">
 
@@ -228,7 +228,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 </div>
 
-*`/whois query: 2606:4700::6810:84e5`*
+_`/whois query: 2606:4700::6810:84e5`_
 
 <div class="medium-img">
 
@@ -236,7 +236,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 </div>
 
-*`/whois query: 13335`*
+_`/whois query: 13335`_
 
 ## Other commands
 
@@ -252,7 +252,7 @@ The `/help` command provides in-Discord documentation about all the commands ava
 
 </div>
 
-*`/help`*
+_`/help`_
 
 ### privacy command
 
@@ -264,7 +264,7 @@ The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 
 
 </div>
 
-*`/privacy`*
+_`/privacy`_
 
 ### github command
 
@@ -276,7 +276,7 @@ The DNS over Discord bot is open-source, and the `/github` command provides a qu
 
 </div>
 
-*`/github`*
+_`/github`_
 
 ### invite command
 
@@ -289,9 +289,9 @@ The bot can be invited at any time with <https://cfl.re/3nM6VfQ>.
 
 </div>
 
-*`/invite`*
+_`/invite`_
 
-***
+---
 
 ## Development
 

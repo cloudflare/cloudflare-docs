@@ -27,9 +27,9 @@ If your uploaded CA expires and no alternative CAs are valid within the trust st
 
 ## API commands
 
-| Command | Method | Endpoint |
-| --- | --- | --- |
-| Create custom origin trust store | `POST` | `/zones/<ZONE_ID>/acm/custom_trust_store` |
-| List custom origin trust stores | `GET` | `/zones/<ZONE_ID>/acm/custom_trust_store` |
-| Get custom origin trust store | `GET` | `/zones/<ZONE_ID>/acm/custom_trust_store/<ID>` |
+| Command                          | Method   | Endpoint                                       |
+| -------------------------------- | -------- | ---------------------------------------------- |
+| Create custom origin trust store | `POST`   | `/zones/<ZONE_ID>/acm/custom_trust_store`      |
+| List custom origin trust stores  | `GET`    | `/zones/<ZONE_ID>/acm/custom_trust_store`      |
+| Get custom origin trust store    | `GET`    | `/zones/<ZONE_ID>/acm/custom_trust_store/<ID>` |
 | Delete custom origin trust store | `DELETE` | `/zones/<ZONE_ID>/acm/custom_trust_store/<ID>` |

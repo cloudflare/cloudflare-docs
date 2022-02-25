@@ -65,13 +65,13 @@ meta:
     deliver our security, reliability and performance solutions with a broad
     range of value-added and managed services, and Alliance Partners who embed
     Cloudflare into their applications.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=
 
 algolia:
   index: developers-cloudflare
-  apikey: ""
-  filters: ""
+  apikey: ''
+  filters: ''
 
 externals:
   - title: Cloudflare Partners homepage

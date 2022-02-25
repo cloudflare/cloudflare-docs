@@ -18,8 +18,8 @@ Advanced security features including HTTPS traffic inspection require users to i
 
 First, download the Cloudflare certificate. The certificate is available both as a `.pem` and as a `.crt` file. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-*   [Download certificate (.crt)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt)
-*   [Download certificate (.pem)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+- [Download certificate (.crt)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt)
+- [Download certificate (.pem)](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
 
 ### Verify the certificate fingerprint
 
@@ -53,8 +53,8 @@ F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37
 
 You will need to install the root certificate in the **Keychain Access** application. In the application, you can choose the keychain in which you want to install the certificate. macOS offers three options, each having a different impact on which users will be affected by trusting the root certificate.
 
-| Keychain   | Impact                  |
-|-------------|-------------------------|
+| Keychain    | Impact                  |
+| ----------- | ----------------------- |
 | login       | The logged in user      |
 | Local Items | Cached iCloud passwords |
 | System      | All users on the system |
@@ -67,7 +67,7 @@ To install the certificate in **Keychain Access**:
 
 2.  Double-click on the `.crt` file.
 
-3.  In the pop-up message, choose the option that suits your needs (*login*, *Local Items*, or *System*) and click **Add**.
+3.  In the pop-up message, choose the option that suits your needs (_login_, _Local Items_, or _System_) and click **Add**.
 
 ![Popup](/cloudflare-one/static/documentation/connections/keychain-popup.png)
 
@@ -111,7 +111,7 @@ sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 1.  [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-The device will show a message: *This website is trying to open Settings to how you a configuration profile. Do you want to allow this?*
+The device will show a message: _This website is trying to open Settings to how you a configuration profile. Do you want to allow this?_
 
 ![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.jpg)
 
@@ -133,7 +133,7 @@ The certificate is now installed. However, before it can be used, it must be tru
 
 7.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
-The installed root certificates will be displayed in the *Enable full trust for root certificates* section.
+The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
 
 ![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.jpg)
 
@@ -150,7 +150,7 @@ The root certificate is now installed and ready to be used.
 Windows offers two options to install the certificate, each having a different impact on which users will be affected by trusting the root certificate.
 
 | Store Location      | Impact                  |
-|---------------------|-------------------------|
+| ------------------- | ----------------------- |
 | Current User Store  | The logged in user      |
 | Local Machine Store | All users on the system |
 
@@ -197,8 +197,8 @@ The root certificate is now installed and ready to be used.
 
 {{<table-wrap>}}
 
-|  |  |
-|------|------|
+|                                                                                                            |                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | ![Android encrypt settings](/cloudflare-one/static/documentation/connections/android_advanced_encrypt.png) | ![Android cred settings](/cloudflare-one/static/documentation/connections/android_advanced_encrypt2.png) |
 
 {{</table-wrap>}}
@@ -207,8 +207,8 @@ The root certificate is now installed and ready to be used.
 
 {{<table-wrap>}}
 
-|  |  |
-|------|------|
+|                                                                                                    |                                                                                          |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | ![Android install cert](/cloudflare-one/static/documentation/connections/android_install_cert.png) | ![Android ca cert](/cloudflare-one/static/documentation/connections/android_ca_cert.png) |
 
 {{</table-wrap>}}
@@ -245,15 +245,15 @@ The root certificate is now installed and ready to be used.
 
 {{<table-wrap>}}
 
-|  |  |  |
-|------|------|------|
+|                                                                                                   |                                                                                           |                                                                                                    |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | ![Click security & location](/cloudflare-one/static/documentation/connections/chromeOS4_cert.png) | ![click credentials](/cloudflare-one/static/documentation/connections/chromeOS5_cert.png) | ![click install from SD card](/cloudflare-one/static/documentation/connections/chromeOS6_cert.png) |
 
 {{</table-wrap>}}
 
 6.  In the file open dialog select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
 
-![Choose the Cloudflare\_CA.crt file to install](/cloudflare-one/static/documentation/connections/chromeOS7_cert.png)
+![Choose the Cloudflare_CA.crt file to install](/cloudflare-one/static/documentation/connections/chromeOS7_cert.png)
 
 7.  Enter anything you want for the certificate name and click **OK**.
 

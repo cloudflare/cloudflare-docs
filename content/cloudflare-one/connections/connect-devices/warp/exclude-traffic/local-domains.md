@@ -11,8 +11,8 @@ weight: 6
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| All systems | WARP with Gateway | All plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -23,7 +23,7 @@ By default, Cloudflare Zero Trust excludes common top level domains used for loc
 
 Traffic destined to domains entered in the Local Domain Fallback configuration is still subject to Split Tunnel rules. If you want to prevent traffic from being sent to a specific domain or IP address, you must also enter that in the Split Tunnel configuration.
 
- {{</Aside>}}
+{{</Aside>}}
 
 You can add or remove domains from the Local Domains list at any time.
 

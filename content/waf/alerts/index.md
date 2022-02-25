@@ -10,8 +10,8 @@ meta:
 
 The WAF provides two types of alerts that inform you of any spikes in security events:
 
-*   **Security Events Alert**: Alerts about spikes across all services that generate log entries in firewall events.
-*   **Advanced Security Events Alert**: Similar to Security Events Alert with support for additional filtering options.
+- **Security Events Alert**: Alerts about spikes across all services that generate log entries in firewall events.
+- **Advanced Security Events Alert**: Similar to Security Events Alert with support for additional filtering options.
 
 For details on alert types and their availability, refer to [Alert types](#alert-types).
 
@@ -21,7 +21,7 @@ To receive WAF alerts, you must configure a [notification](/fundamentals/notific
 
 For instructions on how to set up a notification for a WAF alert, refer to [Create a Notification](/fundamentals/notifications/create-notifications).
 
-***
+---
 
 ## Alert logic
 

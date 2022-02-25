@@ -31,9 +31,10 @@ To enable the Cloudflare Logpush service:
 7.  Select **Google Cloud Storage**.
 
 8.  Enter or select the following destination information:
-    *   **Bucket path**
-    *   **Daily subfolders**
-    *   For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare's IAM as a user (if you did not add it already).
+
+    - **Bucket path**
+    - **Daily subfolders**
+    - For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare's IAM as a user (if you did not add it already).
 
 9.  Click **Validate access**.
 

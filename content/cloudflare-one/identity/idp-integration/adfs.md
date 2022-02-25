@@ -12,12 +12,12 @@ Active Directory is a directory service developed by Microsoft for Windows domai
 
 To get started, you need:
 
-*   An Active Directory Domain Controller where all users have an email attribute
-*   Generic SAML enabled for your Access Identity Provider (IdP)
-*   A Microsoft server running with Active Directory Federation Services (ADFS) installed. All screenshots in these instructions are for Server 2012R2. Similar steps will work for newer versions.
-*   A browser safe certificate for Active Directory Federation Services (ADFS)
+- An Active Directory Domain Controller where all users have an email attribute
+- Generic SAML enabled for your Access Identity Provider (IdP)
+- A Microsoft server running with Active Directory Federation Services (ADFS) installed. All screenshots in these instructions are for Server 2012R2. Similar steps will work for newer versions.
+- A browser safe certificate for Active Directory Federation Services (ADFS)
 
-Once you fulfill the requirements above, you are ready to begin. Installation and basic configuration of Active Directory Federation Services (ADFS) is outside the scope of this guide. A detailed guide can be found in a [Microsoft KB](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/gg188612\(v=crm.8\)).
+Once you fulfill the requirements above, you are ready to begin. Installation and basic configuration of Active Directory Federation Services (ADFS) is outside the scope of this guide. A detailed guide can be found in a [Microsoft KB](<https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/deployment-administrators-guide/gg188612(v=crm.8)>).
 
 Then to begin the connection between Cloudflare Access and ADFS create a Relying Party Trust in ADFS.
 
@@ -97,7 +97,7 @@ If you closed the Add Relying Trust wizard, use Explorer to find the **Relying P
 
 To create Claim Rules:
 
-1.  In the **Edit Claim Rules for CF Login** window, click  **Add Rule**. The **Choose Rule Type** step displays.
+1.  In the **Edit Claim Rules for CF Login** window, click **Add Rule**. The **Choose Rule Type** step displays.
 
 2.  In the **Claim rule template** field, select **Send LDAP Attributes as Claims** from the drop-down list.
 
@@ -135,7 +135,7 @@ Both Claim Rules are now available to export to your Cloudflare Access account.
 
 ## Export the certificate
 
-Now you’ll configure Cloudflare to recognize ADFS by extracting the *token-signing certificate* from ADFS.
+Now you’ll configure Cloudflare to recognize ADFS by extracting the _token-signing certificate_ from ADFS.
 
 To export the certificate:
 
@@ -231,15 +231,15 @@ To get your Cloudflare metadata file:
 
 ```json
 {
-    "config": {
-        "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
-        "sso_target_url": "https://adfs.example.com/adfs/ls/",
-        "attributes": ["email"],
-        "email_attribute_name": "",
-        "sign_request": false,
-        "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-    },
-    "type": "saml",
-    "name": "adfs saml example"
+  "config": {
+    "issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
+    "sso_target_url": "https://adfs.example.com/adfs/ls/",
+    "attributes": ["email"],
+    "email_attribute_name": "",
+    "sign_request": false,
+    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+  },
+  "type": "saml",
+  "name": "adfs saml example"
 }
 ```

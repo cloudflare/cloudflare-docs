@@ -18,17 +18,18 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<definitions>}}
 
-*   `new-project-name`
-    *   A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
+- `new-project-name`
 
-*   `github-repo-url`
-    *   This is the URL of the GitHub repo starter, as below.
+  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
+
+- `github-repo-url`
+  - This is the URL of the GitHub repo starter, as below.
 
 {{</definitions>}}
 
 {{</content-column>}}
 
-***
+---
 
 <style>
   .WorkerStarter--command pre {
@@ -63,7 +64,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Hono Starter" repo="yusukebe/hono-minimal" description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare.">}}
 
-***
+---
 
 ## Frameworks
 
@@ -71,7 +72,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Flareact" repo="flareact/flareact" description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs.">}}
 
-***
+---
 
 ## Example Projects
 
@@ -92,7 +93,7 @@ description="Measure download / upload connection speed from the client side, us
 
 {{<worker-starter title="REST API with Fauna" repo="fauna-labs/fauna-workers" description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications.">}}
 
-***
+---
 
 ## Other languages
 
@@ -122,7 +123,7 @@ Other languages may require you to install additional tools beyond wrangler. See
 
 {{<worker-starter title="Emscripten + Wasm Image Resizer" repo="cloudflare/worker-emscripten-template" description="An image resizer in C compiled to Wasm with Emscripten.">}}
 
-***
+---
 
 ## Built with Workers
 

@@ -18,7 +18,7 @@ meta:
     cost-effective network services, integrated with leading identity management
     and endpoint security providers. These docs contain step-by-step, use case
     driven, tutorials to use Cloudflare One products.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:
@@ -27,7 +27,7 @@ algolia:
   filters: '["project:cloudflare-one"]'
 
 externals:
-  - title: "Blog: Introducing Cloudflare One"
+  - title: 'Blog: Introducing Cloudflare One'
     url: https://blog.cloudflare.com/introducing-cloudflare-one/
   - title: Cloudflare for Teams pricing
     url: https://www.cloudflare.com/teams-pricing/

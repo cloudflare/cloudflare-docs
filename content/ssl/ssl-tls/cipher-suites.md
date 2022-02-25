@@ -14,50 +14,50 @@ Cloudflare publishes a [public repository of our SSL/TLS configurations](https:/
 
 We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-road-for-rc4/) or [SSLv3](https://blog.cloudflare.com/sslv3-support-disabled-by-default-due-to-vulnerability/).
 
-***
+---
 
 ## Supported cipher suites by protocol
 
-OpenSSL Name | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3
-------|-------------|---------------|---------------|---------------
-ECDHE-ECDSA-AES128-GCM-SHA256|❌|❌|✅|❌
-ECDHE-ECDSA-CHACHA20-POLY1305|❌|❌|✅|❌
-ECDHE-RSA-AES128-GCM-SHA256|❌|❌|✅|❌
-ECDHE-RSA-CHACHA20-POLY1305|❌|❌|✅|❌
-ECDHE-ECDSA-AES128-SHA256|❌|❌|✅|❌
-ECDHE-ECDSA-AES128-SHA|✅|✅|✅|❌
-ECDHE-RSA-AES128-SHA256|❌|❌|✅|❌
-ECDHE-RSA-AES128-SHA|✅|✅|✅|❌
-AES128-GCM-SHA256|❌|❌|✅|❌
-AES128-SHA256|❌|❌|✅|❌
-AES128-SHA|✅|✅|✅|❌
-ECDHE-ECDSA-AES256-GCM-SHA384|❌|❌|✅|❌
-ECDHE-ECDSA-AES256-SHA384|❌|❌|✅|❌
-ECDHE-RSA-AES256-GCM-SHA384|❌|❌|✅|❌
-ECDHE-RSA-AES256-SHA384|❌|❌|✅|❌
-ECDHE-RSA-AES256-SHA|✅	|✅|✅|❌
-AES256-GCM-SHA384|❌|❌|✅|❌
-AES256-SHA256|❌|❌|✅|❌
-AES256-SHA|✅|✅|✅|❌
-DES-CBC3-SHA|✅|❌|❌|❌
-AEAD-AES128-GCM-SHA256 \[^1]|❌|❌|❌|✅
-AEAD-AES256-GCM-SHA384 \[^1]|❌|❌|❌|✅
-AEAD-CHACHA20-POLY1305-SHA256 \[^1]|❌|❌|❌|✅
+| OpenSSL Name                        | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
+| ----------------------------------- | ------- | ------- | ------- | ------- |
+| ECDHE-ECDSA-AES128-GCM-SHA256       | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-CHACHA20-POLY1305       | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-GCM-SHA256         | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-CHACHA20-POLY1305         | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES128-SHA256           | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES128-SHA              | ✅      | ✅      | ✅      | ❌      |
+| ECDHE-RSA-AES128-SHA256             | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES128-SHA                | ✅      | ✅      | ✅      | ❌      |
+| AES128-GCM-SHA256                   | ❌      | ❌      | ✅      | ❌      |
+| AES128-SHA256                       | ❌      | ❌      | ✅      | ❌      |
+| AES128-SHA                          | ✅      | ✅      | ✅      | ❌      |
+| ECDHE-ECDSA-AES256-GCM-SHA384       | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-ECDSA-AES256-SHA384           | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-GCM-SHA384         | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-SHA384             | ❌      | ❌      | ✅      | ❌      |
+| ECDHE-RSA-AES256-SHA                | ✅      | ✅      | ✅      | ❌      |
+| AES256-GCM-SHA384                   | ❌      | ❌      | ✅      | ❌      |
+| AES256-SHA256                       | ❌      | ❌      | ✅      | ❌      |
+| AES256-SHA                          | ✅      | ✅      | ✅      | ❌      |
+| DES-CBC3-SHA                        | ✅      | ❌      | ❌      | ❌      |
+| AEAD-AES128-GCM-SHA256 \[^1]        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-AES256-GCM-SHA384 \[^1]        | ❌      | ❌      | ❌      | ✅      |
+| AEAD-CHACHA20-POLY1305-SHA256 \[^1] | ❌      | ❌      | ❌      | ✅      |
 
-***
+---
 
 ## Disable cipher suites
 
 With **Advanced Certificate Manager** or within **SSL for SaaS**, you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
 
-*   [Zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting)
-*   [Hostname (SSL for SaaS only)](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)
+- [Zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting)
+- [Hostname (SSL for SaaS only)](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)
 
 To specify certain [cipher suites](#supported-cipher-suites-by-protocol), include an array of applicable options in the `value` field.
 
 To reset to the default cipher suites, send an empty array in the `value` field.
 
-***
+---
 
 ## Matching on origin (optional)
 

@@ -18,12 +18,12 @@ Clicking the **Revoke** button next to a user will terminate all currently activ
 
 Clicking the View button for any user will show you details for that user, such as:
 
-*   Their user details
+- Their user details
 
 ![User details](/cloudflare-one/static/documentation/logs/user-summary.png)
 
-*   Devices they have connected to Cloudflare Zero Trust
-*   Their recent logins
+- Devices they have connected to Cloudflare Zero Trust
+- Their recent logins
 
 Click on **View all activity** to see a full list of the user’s login events.
 

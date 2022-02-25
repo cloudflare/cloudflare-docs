@@ -132,9 +132,9 @@ Enterprise plans.
 
 Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include:
 
-*   Checking the Access Control List (ACL) on your primary nameserver.
-*   Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
-*   Checking logs on primary nameservers for other errors.
+- Checking the Access Control List (ACL) on your primary nameserver.
+- Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
+- Checking logs on primary nameservers for other errors.
 
 </div>
 </details>

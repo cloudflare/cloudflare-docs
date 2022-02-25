@@ -18,34 +18,34 @@ In the Service Worker format, events are handled by using `addEventListener` to 
 Incoming HTTP requests can be handled by assigning a `"fetch"` event handler:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(
-    new Response("Hello")
-  )
-})
+addEventListener('fetch', event => {
+  event.respondWith(new Response('Hello'));
+});
 ```
 
 ### Supported `FetchEvent` properties
 
 {{<definitions>}}
 
-*   `event.type` {{<type>}}string{{</type>}}
-    *   The type of event. This will always return `"fetch"`.
+- `event.type` {{<type>}}string{{</type>}}
 
-*   `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
-    *   The incoming HTTP request.
+  - The type of event. This will always return `"fetch"`.
 
-*   {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
+- `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-    *   Refer to [`respondWith`](#respondwith).
+  - The incoming HTTP request.
 
-*   {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
 
-    *   Refer to [`waitUntil`](#waituntil).
+  - Refer to [`respondWith`](#respondwith).
 
-*   {{<code>}}event.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-    *   Refer to [`passThroughOnException`](#passthroughonexception).
+  - Refer to [`waitUntil`](#waituntil).
+
+- {{<code>}}event.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+
+  - Refer to [`passThroughOnException`](#passthroughonexception).
 
 {{</definitions>}}
 
@@ -62,28 +62,30 @@ While an incoming HTTP request is still given the `"fetch"` name, a Module Worke
 ```js
 export default {
   fetch(request, env, context) {
-    return new Response("Hello")
-  }
-}
+    return new Response('Hello');
+  },
+};
 ```
 
 ### Parameters
 
 {{<definitions>}}
 
-*   `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
-    *   The incoming HTTP request.
+- `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-*   `env` {{<type>}}object{{</type>}}
-    *   The [bindings](/workers/platform/environment-variables/) assigned to the Worker.
+  - The incoming HTTP request.
 
-*   {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- `env` {{<type>}}object{{</type>}}
 
-    *   Refer to [`waitUntil`](#waituntil).
+  - The [bindings](/workers/platform/environment-variables/) assigned to the Worker.
 
-*   {{<code>}}context.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-    *   Refer to [`passThroughOnException`](#passthroughonexception).
+  - Refer to [`waitUntil`](#waituntil).
+
+- {{<code>}}context.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+
+  - Refer to [`passThroughOnException`](#passthroughonexception).
 
 {{</definitions>}}
 
@@ -113,17 +115,15 @@ If no `fetch` event handler calls `respondWith`, then the runtime forwards the r
 
 ```js
 // Format: Service Worker
-addEventListener("fetch", event => {
-  let { pathname } = new URL(event.request.url)
+addEventListener('fetch', event => {
+  let { pathname } = new URL(event.request.url);
 
   // Allow "/ignore/*" URLs to hit origin
-  if (pathname.startsWith("/ignore/")) return
+  if (pathname.startsWith('/ignore/')) return;
 
   // Otherwise, respond with something
-  event.respondWith(
-    handler(event)
-  )
-})
+  event.respondWith(handler(event));
+});
 ```
 
 ### `waitUntil`
@@ -139,28 +139,21 @@ With the Module Worker format, `waitUntil` is moved and available on the `contex
 filename: service-worker.js
 ---
 // Format: Service Worker
-addEventListener("fetch", event => {
-  event.respondWith(
-    handler(event)
-  )
-})
+addEventListener('fetch', event => {
+  event.respondWith(handler(event));
+});
 
 async function handler(event) {
   // Forward / Proxy original request
-  let res = await fetch(event.request)
+  let res = await fetch(event.request);
 
   // Add custom header(s)
-  res = new Response(res.body, res)
-  res.headers.set("x-foo", "bar")
+  res = new Response(res.body, res);
+  res.headers.set('x-foo', 'bar');
 
   // Cache the response
   // NOTE: Does NOT block / wait
-  event.waitUntil(
-    caches.default.put(
-      event.request,
-      res.clone()
-    )
-  )
+  event.waitUntil(caches.default.put(event.request, res.clone()));
 
   // Done
   return res;
@@ -175,25 +168,20 @@ filename: module-worker.mjs
 export default {
   async fetch(request, env, context) {
     // Forward / Proxy original request
-    let res = await fetch(request)
+    let res = await fetch(request);
 
     // Add custom header(s)
-    res = new Response(res.body, res)
-    res.headers.set("x-foo", "bar")
+    res = new Response(res.body, res);
+    res.headers.set('x-foo', 'bar');
 
     // Cache the response
     // NOTE: Does NOT block / wait
-    context.waitUntil(
-      caches.default.put(
-        request,
-        res.clone()
-      )
-    )
+    context.waitUntil(caches.default.put(request, res.clone()));
 
     // Done
     return res;
-  }
-}
+  },
+};
 ```
 
 ### `passThroughOnException`
@@ -211,11 +199,11 @@ With the Module Worker format, `passThroughOnException` is available on the `con
 filename: service-worker.js
 ---
 // Format: Service Worker
-addEventListener("fetch", event => {
+addEventListener('fetch', event => {
   // Proxy to origin on unhandled/uncaught exceptions
-  event.passThroughOnException()
-  throw new Error("Oops")
-})
+  event.passThroughOnException();
+  throw new Error('Oops');
+});
 ```
 
 ```js
@@ -226,8 +214,8 @@ filename: module-worker.mjs
 export default {
   async fetch(request, env, context) {
     // Proxy to origin on unhandled/uncaught exceptions
-    context.passThroughOnException()
-    throw new Error("Oops")
-  }
-}
+    context.passThroughOnException();
+    throw new Error('Oops');
+  },
+};
 ```

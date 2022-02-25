@@ -14,16 +14,16 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 **🗺️ This tutorial covers how to:**
 
-*   Create a Cloudflare Access rule to secure a MongoDB deployment
-*   Configure a StatefulSet and service definition for the deployment
-*   Configure an Cloudflare Tunnel connection to Cloudflare's edge
-*   Create an SSH configuration file for the client
+- Create a Cloudflare Access rule to secure a MongoDB deployment
+- Configure a StatefulSet and service definition for the deployment
+- Configure an Cloudflare Tunnel connection to Cloudflare's edge
+- Create an SSH configuration file for the client
 
 **⏲️ Time to complete:**
 
 50 minutes
 
-***
+---
 
 ## Configure Cloudflare Access
 
@@ -71,73 +71,73 @@ spec:
         selector: mongodb-standalone
     spec:
       containers:
-      - name: mongodb-standalone
-        image: mongo
-        command: ["mongod"]
-        args: ["--config=/config/mongod.conf"]
-        ports:
-        - containerPort: 27017
-          protocol: TCP
-          name: mongod
-        volumeMounts:
-        - name: mongodb-conf
-          mountPath: /config
-          readOnly: true
-        - name: mongodb-data
-          mountPath: /data/db
-        - name: tls
-          mountPath: /etc/tls
-        - name: mongodb-socket
-          mountPath: /socket
-      - name: ssh-proxy
-        image: ubuntu:20.04
-        command: ["/scripts/entrypoint.sh"]
-        ports:
-        - containerPort: 22
-          protocol: TCP
-          name: ssh-port
-        volumeMounts:
-        - name: mongodb-socket
-          mountPath: /socket
-        - name: scripts
-          mountPath: /scripts
-          readOnly: true
-        - name: ssh-authorized-keys
-          mountPath: /config/ssh
-          readOnly: true
-        resources:
-          requests:
-            cpu: 20m
-            memory: 32Mi
+        - name: mongodb-standalone
+          image: mongo
+          command: ['mongod']
+          args: ['--config=/config/mongod.conf']
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+              name: mongod
+          volumeMounts:
+            - name: mongodb-conf
+              mountPath: /config
+              readOnly: true
+            - name: mongodb-data
+              mountPath: /data/db
+            - name: tls
+              mountPath: /etc/tls
+            - name: mongodb-socket
+              mountPath: /socket
+        - name: ssh-proxy
+          image: ubuntu:20.04
+          command: ['/scripts/entrypoint.sh']
+          ports:
+            - containerPort: 22
+              protocol: TCP
+              name: ssh-port
+          volumeMounts:
+            - name: mongodb-socket
+              mountPath: /socket
+            - name: scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: ssh-authorized-keys
+              mountPath: /config/ssh
+              readOnly: true
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
       volumes:
-      - name: mongodb-socket
-        emptyDir: {}
-      - name: mongodb-conf
-        configMap:
-          name: mongodb-standalone
-          items:
-          - key: mongod.conf
-            path: mongod.conf
-      - name: tls
-        secret:
-          secretName: tls
-      - name: mongodb-data
-        persistentVolumeClaim:
-          claimName: mongodb-standalone
-      - name: scripts
-        configMap:
-          name: scripts
-          items:
-          - key: entrypoint.sh
-            path: entrypoint.sh
-            mode: 0744
-      - name: ssh-authorized-keys
-        configMap:
-          name: ssh-proxy-config
-          items:
-          - key: authorized_keys
-            path: authorized_keys
-            mode: 0400
+        - name: mongodb-socket
+          emptyDir: {}
+        - name: mongodb-conf
+          configMap:
+            name: mongodb-standalone
+            items:
+              - key: mongod.conf
+                path: mongod.conf
+        - name: tls
+          secret:
+            secretName: tls
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb-standalone
+        - name: scripts
+          configMap:
+            name: scripts
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+                mode: 0744
+        - name: ssh-authorized-keys
+          configMap:
+            name: ssh-proxy-config
+            items:
+              - key: authorized_keys
+                path: authorized_keys
+                mode: 0400
 ```
 
 </details>
@@ -267,27 +267,27 @@ spec:
         - name: dashboard-tunnel
           # Image from https://hub.docker.com/r/cloudflare/cloudflared
           image: cloudflare/cloudflared:2020.11.11
-          command: ["cloudflared", "tunnel"]
-          args: ["--config", "/etc/tunnel/config.yaml", "run"]
+          command: ['cloudflared', 'tunnel']
+          args: ['--config', '/etc/tunnel/config.yaml', 'run']
           ports:
-          - containerPort: 5000
+            - containerPort: 5000
           livenessProbe:
             tcpSocket:
               port: 5000
             initialDelaySeconds: 60
             periodSeconds: 60
           volumeMounts:
-          - name: dashboard-tunnel-config
-            mountPath: /etc/tunnel
-          - name: tunnel-credentials
-            mountPath: /etc/credentials
+            - name: dashboard-tunnel-config
+              mountPath: /etc/tunnel
+            - name: tunnel-credentials
+              mountPath: /etc/credentials
       volumes:
-      - name: dashboard-tunnel-config
-        configMap:
-          name: dashboard-tunnel-config
-      - name: tunnel-credentials
-        secret:
-          secretName: tunnel-credentials
+        - name: dashboard-tunnel-config
+          configMap:
+            name: dashboard-tunnel-config
+        - name: tunnel-credentials
+          secret:
+            secretName: tunnel-credentials
 ---
 apiVersion: v1
 kind: ConfigMap

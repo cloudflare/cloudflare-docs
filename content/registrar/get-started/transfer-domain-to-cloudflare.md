@@ -16,17 +16,17 @@ This section contains generic instructions on how to transfer your domain to Clo
 
 {{<render file="_restrictions.md">}}
 
-***
+---
 
 ## Set up a domain transfer
 
 To begin, complete the following steps in your current registrar to transfer your domain to Cloudflare. Below, you will find links for detailed transfer instructions from some of the most popular registrars:
 
-*   [Enom](http://enom.help/outgoing)
-*   [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
-*   [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
-*   [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
-*   [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
+- [Enom](http://enom.help/outgoing)
+- [GoDaddy](https://www.godaddy.com/help/transfer-my-domain-away-from-godaddy-3560)
+- [Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/258/84/what-should-i-do-to-transfer-a-domain-from-namecheap/)
+- [Network Solutions](https://customerservice.networksolutions.com/prweb/PRAuth/webkm/help/article/KC-474/networksolutions)
+- [Ionos by 1&1](https://www.ionos.com/help/domains/domain-transfers/#acc4514)
 
 ### 1. Log in to your registrar account
 
@@ -64,10 +64,10 @@ If you do not have a payment method on file, add one at this step before proceed
 
 Sites can be unavailable for a few reasons, including:
 
-*   The site was registered in the last 60 days.
-*   Cloudflare does not yet support the TLD.
-*   The domain is designated as a premium domain by the registry.
-*   The domain has a status that does not allow for a transfer.
+- The site was registered in the last 60 days.
+- Cloudflare does not yet support the TLD.
+- The domain is designated as a premium domain by the registry.
+- The domain has a status that does not allow for a transfer.
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 
@@ -105,8 +105,8 @@ Registrants transferring a `.us` domain will always receive a FOA email.
 
 You can check the status of your transfer in **Account Home** > **Overview** > **Domain Registration** for your domain. Below, you can find a list of the possible transfer statuses.
 
-*   **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
+- **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
 
-*   **Pending approval**: Your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the dashboard of most registrars.
+- **Pending approval**: Your current registrar has received the transfer request. They can now wait up to five days to release the domain. If you want to move faster, you can manually approve the transfer for immediate release in the dashboard of most registrars.
 
-*   **Transfer rejected**: your transfer has been rejected. This can occur if you canceled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.
+- **Transfer rejected**: your transfer has been rejected. This can occur if you canceled the request at your current registrar instead of approving it. If you still wish to transfer, you can select **Retry** and initiate a new transfer request.

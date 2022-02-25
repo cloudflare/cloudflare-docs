@@ -9,8 +9,8 @@ pcx-content-type: tutorial
 
 Before you begin, you should understand two basic page rule behaviors:
 
-*   Only the highest priority matching page rule takes effect on a request.
-*   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
+- Only the highest priority matching page rule takes effect on a request.
+- Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
 Cloudflare recommends ordering your rules from most specific to least specific.
 
@@ -30,43 +30,23 @@ Page rules trigger certain actions when a request matches a defined URL pattern.
 
 <table>
   <tbody>
-    <th>
-      Plan
-    </th>
-    <th>
-      Page rules allowed
-    </th>
+    <th>Plan</th>
+    <th>Page rules allowed</th>
     <tr>
-      <td>
-        Free
-      </td>
-      <td>
-        3
-      </td>
+      <td>Free</td>
+      <td>3</td>
     </tr>
     <tr>
-      <td>
-        Pro
-      </td> 
-      <td>
-        20
-      </td>
+      <td>Pro</td>
+      <td>20</td>
     </tr>
     <tr>
-      <td>
-        Business
-      </td> 
-      <td>
-        50
-      </td>
+      <td>Business</td>
+      <td>50</td>
     </tr>
     <tr>
-      <td>
-        Enterprise
-      </td>  
-      <td>
-        125
-      </td>
+      <td>Enterprise</td>
+      <td>125</td>
     </tr>
   </tbody>
 </table>
@@ -85,8 +65,8 @@ You can also [purchase additional rules](https://www.cloudflare.com/features-pag
 8.  From the **Order** dropdown, specify the desired order: **First**, **Last**, or **Custom**.
 9.  Choose a save option:
 
-*   **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
-*   **Save and Deploy** to save the rule and enable it immediately.
+- **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
+- **Save and Deploy** to save the rule and enable it immediately.
 
 {{<Aside type="note" header="Note">}}
 
@@ -101,14 +81,14 @@ We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Ru
 3.  Click **Rules**.
 4.  In the **Page Rules** tab, locate the rule to edit.
 5.  Proceed to make the necessary changes, as follows:
-    *   To enable or disable a rule, click the **On/Off** toggle.
-    *   To modify the URL pattern, settings, or order, click the **Edit** button (wrench icon). In the dialog, enter the information you want to change.
+    - To enable or disable a rule, click the **On/Off** toggle.
+    - To modify the URL pattern, settings, or order, click the **Edit** button (wrench icon). In the dialog, enter the information you want to change.
 
 ## Delete a rule
 
 1.  Log in to your Cloudflare dashboard.
 2.  Select the domain where you want to edit your page rule.
-3.  Click  **Rules**.
+3.  Click **Rules**.
 4.  In the **Page Rules** tab, locate the rule to edit.
 5.  Click the **Delete** button (wrench icon) and confirm the deletion when prompted.
 
@@ -116,9 +96,9 @@ We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Ru
 
 Enterprise domains can cache content by device type to target visitors with content appropriate to their device. Cloudflare evaluates the User-Agent header in the HTTP request to identify the device type and identifies each device type with a case insensitive match to the regex below:
 
-*   Mobile: `(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\ mini|avantgo|mobilesafari|docomo|KAIOS)`
-*   Tablet: `(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))`
-*   Desktop: Everything else not matched above.
+- Mobile: `(?:phone|windows\s+phone|ipod|blackberry|(?:android|bb\d+|meego|silk|googlebot) .+? mobile|palm|windows\s+ce|opera\ mini|avantgo|mobilesafari|docomo|KAIOS)`
+- Tablet: `(?:ipad|playbook|(?:android|bb\d+|meego|silk)(?! .+? mobile))`
+- Desktop: Everything else not matched above.
 
 1.  Log in to your Cloudflare account.
 2.  Select the appropriate domain.
@@ -135,7 +115,7 @@ To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/ca
 
 ## Cache Everything
 
-Caching additional content at Cloudflare requires a **Cache Everything** Page Rule.  Without creating a Cache Everything Page Rule, dynamic assets are never cached even if a [public Cache-Control header](/cache/about/cache-control/) is returned. When combined with an Edge Cache TTL > 0, **Cache Everything** removes cookies from the origin web server response.
+Caching additional content at Cloudflare requires a **Cache Everything** Page Rule. Without creating a Cache Everything Page Rule, dynamic assets are never cached even if a [public Cache-Control header](/cache/about/cache-control/) is returned. When combined with an Edge Cache TTL > 0, **Cache Everything** removes cookies from the origin web server response.
 
 {{<Aside type="warning" header="Warning">}}
 

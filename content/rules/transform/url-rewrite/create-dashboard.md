@@ -34,11 +34,11 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 
 9.  To define the action for your URL Rewrite Rule, select one of the available options displayed as radio buttons and then a value from the drop-down list, depending on the action.
 
-    If you select **Rewrite to** > *Static*, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
+    If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 
-    If you select **Rewrite to** > *Dynamic*, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
+    If you select **Rewrite to** > _Dynamic_, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
 
-    If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the *Preserve* action for that component.
+    If you do not want to change the value of a component of the original request (the URL path or the URL query string), choose the _Preserve_ action for that component.
 
 10. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 

@@ -8,10 +8,10 @@ weight: 3
 
 Email Routing main page is divided into four sections:
 
-*   Custom address rules
-*   Catch-all
-*   DNS
-*   Verified emails
+- Custom address rules
+- Catch-all
+- DNS
+- Verified emails
 
 ## Custom addresses
 
@@ -21,8 +21,8 @@ Note that if you have more than one destination address linked to the same custo
 
 When creating a rule, you must specify an **Action**:
 
-*   *Send to*: Emails will be routed to your **Destination address**. This is the default action.
-*   *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
+- _Send to_: Emails will be routed to your **Destination address**. This is the default action.
+- _Drop_: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 {{<Aside type="note">}}
 
@@ -36,8 +36,8 @@ This feature enables Cloudflare to “catch” every variation of email addresse
 
 You must also specify an **Action** for Catch-all:
 
-*   *Send to*: Emails will be routed to your **Destination address**. This is the default action.
-*   *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
+- _Send to_: Emails will be routed to your **Destination address**. This is the default action.
+- _Drop_: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 ## Email DNS records
 

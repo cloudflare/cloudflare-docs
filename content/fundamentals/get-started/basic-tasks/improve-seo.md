@@ -41,8 +41,8 @@ Depending on your domain's security settings, you might accidentally block searc
 
 If you notice SEO issues, make sure your:
 
-*   [Firewall rules](/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
-*   [Bot protection](/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
+- [Firewall rules](/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
+- [Bot protection](/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
 
 If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](https://support.cloudflare.com/hc/articles/200169806).
 
@@ -50,7 +50,7 @@ If you still notice issues with search engine crawlers, refer to our [Troublesho
 
 The following characteristics do not affect your domain's SEO:
 
-*   **Changing your nameservers**: Using Cloudflare's nameservers does not affect your domain's SEO.
-*   **Server location**: According to Google, [server location](http://www.seroundtable.com/seo-geo-location-server-google-17468.html) is not important for SEO.
-*   **Sites sharing IP addresses**: Search engines do not generally penalize domains using shared IP addresses unless several of these sites are malicious or spammy.
-*   **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.
+- **Changing your nameservers**: Using Cloudflare's nameservers does not affect your domain's SEO.
+- **Server location**: According to Google, [server location](http://www.seroundtable.com/seo-geo-location-server-google-17468.html) is not important for SEO.
+- **Sites sharing IP addresses**: Search engines do not generally penalize domains using shared IP addresses unless several of these sites are malicious or spammy.
+- **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.

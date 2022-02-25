@@ -26,13 +26,13 @@ Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps yo
 
 #### DNS TXT Record
 
-When creating a Custom Hostname with the TXT method through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership\_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
+When creating a Custom Hostname with the TXT method through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
 #### HTTP Token
 
-When creating a Custom Hostname with the HTTP through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership\_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+When creating a Custom Hostname with the HTTP through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
 
-Cloudflare sends GET requests to the http\_url using `User-Agent: Cloudflare Custom Hostname Verification`.
+Cloudflare sends GET requests to the http_url using `User-Agent: Cloudflare Custom Hostname Verification`.
 
 When the HTTP token is verified, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
@@ -70,16 +70,16 @@ Before your migration, you should:
 
 1.  To test validation methods, set up a test zone and ask your Solutions Engineer (SE) to enable SSL for SaaS v2.
 2.  Wait for your SE to run our pre-migration tool. This tool groups your hostnames into one of the following statuses:
-    *   `test_pending`: In the process of being verified or was unable to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
-    *   `test_active`: Passed CNAME verification
-    *   `test_active_apex`: Passed Apex Proxy verification
-    *   `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
-    *   `test_failed`: Failed hostname verification 25 times
+    - `test_pending`: In the process of being verified or was unable to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
+    - `test_active`: Passed CNAME verification
+    - `test_active_apex`: Passed Apex Proxy verification
+    - `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
+    - `test_failed`: Failed hostname verification 25 times
 3.  Review the results of our pre-migration tool (run by your Solutions Engineer) using one of the following methods:
-    *   Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
-    *   Via a CSV file (provided by your SE)
-    *   Via the Cloudflare dashboard:
-        ![Review SSL migration status in the dashboard](/ssl/static/ssl-migration-status.png)
+    - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
+    - Via a CSV file (provided by your SE)
+    - Via the Cloudflare dashboard:
+      ![Review SSL migration status in the dashboard](/ssl/static/ssl-migration-status.png)
 4.  Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
 
 ## During the migration

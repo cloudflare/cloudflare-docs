@@ -12,9 +12,9 @@ meta:
 
 Prior to setting up DNS Firewall, you need:
 
-*   Account access to DNS Firewall (provided by your Enterprise account team).
-*   Access to **DNS Administrator** or **Super Administrator** privileges on your account.
-*   Newly updated IP addresses for your nameservers (protects against previously compromised IP addresses).
+- Account access to DNS Firewall (provided by your Enterprise account team).
+- Access to **DNS Administrator** or **Super Administrator** privileges on your account.
+- Newly updated IP addresses for your nameservers (protects against previously compromised IP addresses).
 
 ## Configure DNS Firewall
 
@@ -27,10 +27,10 @@ Prior to setting up DNS Firewall, you need:
 3.  Click **DNS Firewall**.
 4.  Click **Add Firewall Cluster**.
 5.  Fill out the required fields, including:
-    *   **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
-    *   **Minimum Cache TTL**: Recommended setting of **30 seconds**.
-    *   **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
-    *   **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
+    - **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
+    - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
+    - **Maximum Cache TTL**: Recommended setting of **1 hour**. Larger values increase the cache hit ratio, but also increase the time required for DNS changes to propagate.
+    - **ANY queries**: Recommended setting is **Off** because these are often used as part of DDoS attacks. Also refer to this [blog post](https://blog.cloudflare.com/rfc8482-saying-goodbye-to-any/).
 6.  Click **Continue**.
 7.  On the following screen, save the values for **Your new DNS Firewall IP Addresses**.
 

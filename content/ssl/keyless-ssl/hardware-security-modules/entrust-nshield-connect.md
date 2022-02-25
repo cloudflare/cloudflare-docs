@@ -35,7 +35,7 @@ The key piece of information is the label of the object, `rsa-privkey`. Open up 
 
 ```yaml
 private_key_stores:
-- dir: /etc/keyless/keys
+  - dir: /etc/keyless/keys
 ```
 
 add

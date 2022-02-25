@@ -15,19 +15,19 @@ In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunne
 
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, the following items should already be completed:
 
-*   Purchased Magic WAN and Secure Web Gateway
-*   Cloudflare created and provisioned Magic WAN and Secure Web Gateway
-*   Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
-*   Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
-*   Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Secure Web Gateway, to enforce a user's specific web access policies.
+- Purchased Magic WAN and Secure Web Gateway
+- Cloudflare created and provisioned Magic WAN and Secure Web Gateway
+- Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
+- Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
+- Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Secure Web Gateway, to enforce a user's specific web access policies.
 
 ## Example scenario
 
 For the purpose of this tutorial, setup will reference a scenario where an enterprise has three sites: headquarters, a branch office, and a data center. Each site has a local private network with RFC1918 address assignments:
 
-*   Headquarters is assigned a `192.168.0.0/16` network, and Router A is the site router terminating the Anycast GRE or IPsec tunnel
-*   Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel
-*   Data center is assigned with `172.16.0.0/12` network, and Router C is the site router terminating the Anycast GRE or IPsec tunnel
+- Headquarters is assigned a `192.168.0.0/16` network, and Router A is the site router terminating the Anycast GRE or IPsec tunnel
+- Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel
+- Data center is assigned with `172.16.0.0/12` network, and Router C is the site router terminating the Anycast GRE or IPsec tunnel
 
 Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`. The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
 

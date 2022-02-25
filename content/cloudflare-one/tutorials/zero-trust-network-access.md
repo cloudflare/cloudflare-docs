@@ -12,9 +12,9 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 **🗺️ This tutorial covers how to:**
 
-*   Create device enrollment rules and connect a device to Zero Trust
-*   Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
-*   Create identity-aware network policies
+- Create device enrollment rules and connect a device to Zero Trust
+- Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
+- Create identity-aware network policies
 
 **⏲️Time to complete:**
 
@@ -22,13 +22,13 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 {{<Aside header="Prerequisites">}}
 
-*   A Zero Trust account setup
-*   The [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on a device and enrolled in a Zero Trust instance
-*   Admin access to server with Internet access
+- A Zero Trust account setup
+- The [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on a device and enrolled in a Zero Trust instance
+- Admin access to server with Internet access
 
 {{</Aside>}}
 
-***
+---
 
 ## Device enrollment
 
@@ -77,11 +77,11 @@ warp-routing:
   enabled: true
 ```
 
-  {{<Aside>}}
+{{<Aside>}}
 Tunnel ID can be found by running `cloudflared tunnel list`.
 
 ![Tunnel ID](/cloudflare-one/static/zero-trust-security/ztna/tunnel-id.png)
-  {{</Aside>}}
+{{</Aside>}}
 
 1.  Now run the tunnel:
 
@@ -97,8 +97,8 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
 1.  Route the private IP addresses of your server’s network to Cloudflare, where:
 
-*   `10.0.0.0/8` is the IP or CIDR range of your server
-*   `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
+- `10.0.0.0/8` is the IP or CIDR range of your server
+- `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
 
 ```sh
 $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5

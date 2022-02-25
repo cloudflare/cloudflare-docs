@@ -20,8 +20,8 @@ At the moment, CSRs are only available to Enterprise customers who have purchase
 
 You can create two types of CSRs:
 
-*   **Zone-level**: Meant only for sign certificates associated with the current zone.
-*   **Account-level**: Meant for organizations that issue certificates across multiple domains.
+- **Zone-level**: Meant only for sign certificates associated with the current zone.
+- **Account-level**: Meant for organizations that issue certificates across multiple domains.
 
 ## Create and use a CSR
 
@@ -41,6 +41,7 @@ To use a CSR:
 4.  Obtain a certificate from the Certificate Authority (CA) of your choice using your CSR.
 5.  When you [upload the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/) to Cloudflare, select an **Encoding mode** of **Certificate Signing Request (CSR)** and enter the associated value.
 
-     {{<Aside type="note">}}
-You will not see the option to adjust your **Encoding Mode** until after you have created a CSR associated with the specific zone or your account.
-     {{</Aside>}}
+         {{<Aside type="note">}}
+
+    You will not see the option to adjust your **Encoding Mode** until after you have created a CSR associated with the specific zone or your account.
+    {{</Aside>}}

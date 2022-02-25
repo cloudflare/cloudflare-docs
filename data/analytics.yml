@@ -21,7 +21,7 @@ meta:
     and reliability data is available from one endpoint. And you can select
     exactly what you need, from one metric for a domain to multiple metrics
     aggregated for your account.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

@@ -117,7 +117,7 @@ To add environment variables, such as `vars` and `secret`:
 
 1.  Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
 2.  Input a **Variable name** and its **value**, which will be made available to your Worker.
-3.  If your variable is a secret, select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard.
+3.  If your variable is a secret, select **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard.
 4.  (Optional) To add multiple environment variables, select **Add variable**.
 5.  Select **Save** to implement your changes.
 

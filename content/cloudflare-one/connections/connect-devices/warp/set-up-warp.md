@@ -24,7 +24,7 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules]((/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions)) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](<(/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions)>) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. Install the Cloudflare root certificate on your devices.
 
@@ -42,9 +42,9 @@ Navigate to **Settings** > **Network** and enable the **Proxy** setting. This wi
 
 To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
 
-*   Your devices have the WARP client installed and connected.
-*   The [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) has been installed on your devices.
-*   The [proxy setting](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy) has been enabled on the Zero Trust Dashboard.
+- Your devices have the WARP client installed and connected.
+- The [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) has been installed on your devices.
+- The [proxy setting](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy) has been enabled on the Zero Trust Dashboard.
 
 ## Gateway with DoH
 

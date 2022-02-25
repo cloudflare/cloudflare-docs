@@ -10,22 +10,22 @@ meta:
 
 Follow the steps below to enable SSL/TLS protection for your application.
 
-***
+---
 
 ## Prerequisites
 
-*   [Create an account and register an application](https://support.cloudflare.com/hc/articles/360059655691)
+- [Create an account and register an application](https://support.cloudflare.com/hc/articles/360059655691)
 
-***
+---
 
 ## Step 1 — Choose an edge certificate
 
 Cloudflare offers a variety of options for your application's edge certificates:
 
-*   [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<render file="_universal-ssl-definition.md">}}
-*   [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): {{<render file="_acm-definition.md">}}
-*   [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
-*   [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}
+- [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): {{<render file="_universal-ssl-definition.md">}}
+- [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): {{<render file="_acm-definition.md">}}
+- [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): {{<render file="_custom-certificates-definition.md">}}
+- [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): {{<render file="_keyless-ssl-definition.md">}}
 
 {{<Aside type="note" header="Note:">}}
 
@@ -55,6 +55,6 @@ Using various Cloudflare settings, however, you can force all or most visitor co
 
 After you have chosen your edge certificate and updated your encryption mode, review the following Cloudflare settings:
 
-*   [Edge certificates](/ssl/edge-certificates/additional-options/): Customize different aspects of your edge certificates, from enabling **Opportunistic Encryption** to specifying a **Minimum TLS Version**.
-*   [Authenticated origin pull](/ssl/origin-configuration/authenticated-origin-pull/): Ensure all requests to your origin server originate from the Cloudflare network.
-*   [Notifications](/ssl/notifications/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.
+- [Edge certificates](/ssl/edge-certificates/additional-options/): Customize different aspects of your edge certificates, from enabling **Opportunistic Encryption** to specifying a **Minimum TLS Version**.
+- [Authenticated origin pull](/ssl/origin-configuration/authenticated-origin-pull/): Ensure all requests to your origin server originate from the Cloudflare network.
+- [Notifications](/ssl/notifications/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.

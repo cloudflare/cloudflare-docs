@@ -145,6 +145,6 @@ Refer to the [adding a custom domain](/pages/getting-started/#adding-a-custom-do
 
 ## What's next?
 
-*   Learn how to [customize HTTP response headers](/pages/how-to/add-custom-http-headers/) for your Pages site using Cloudflare Workers.
-*   Understand how to [rollback a potentially broken deployment](/pages/platform/rollbacks/) to a previously working version.
-*   [Configure redirects](/pages/platform/redirects/) so that visitors are always directed to your 'canonical' custom domain.
+- Learn how to [customize HTTP response headers](/pages/how-to/add-custom-http-headers/) for your Pages site using Cloudflare Workers.
+- Understand how to [rollback a potentially broken deployment](/pages/platform/rollbacks/) to a previously working version.
+- [Configure redirects](/pages/platform/redirects/) so that visitors are always directed to your 'canonical' custom domain.

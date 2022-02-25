@@ -18,7 +18,7 @@ meta:
   title: Cloudflare Ruleset Engine docs
   description: Create and deploy rules and rulesets in different Cloudflare
     products using the same basic syntax.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

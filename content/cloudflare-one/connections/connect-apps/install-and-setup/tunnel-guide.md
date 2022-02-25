@@ -104,8 +104,8 @@ $ cloudflared tunnel login
 
 Running this command will:
 
-*   Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname.
-*   Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
+- Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname.
+- Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
 ## 3. Create a tunnel and give it a name
 
@@ -115,9 +115,9 @@ $ cloudflared tunnel create <NAME>
 
 Running this command will:
 
-*   Create a tunnel by establishing a persistent relationship between the [name you provide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-name) and a [UUID](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet.
-*   Generate a [tunnel credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
-*   Create a subdomain of `.cfargotunnel.com`.
+- Create a tunnel by establishing a persistent relationship between the [name you provide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-name) and a [UUID](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet.
+- Generate a [tunnel credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
+- Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.
 
@@ -177,7 +177,7 @@ $ cloudflared tunnel route ip add <IP/CIDR> <UUID or NAME>
 You can confirm that the route has been successfully established by running:
 
 ```bash
-$ cloudflared tunnel route ip show 
+$ cloudflared tunnel route ip show
 ```
 
 ## 6. Run the tunnel

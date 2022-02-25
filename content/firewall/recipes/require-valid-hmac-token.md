@@ -25,13 +25,13 @@ The `http.request.uri` for this example is
 
 where
 
-*   `/download/cat.jpg?` represents the path to the asset—the HMAC **message** to authenticate
+- `/download/cat.jpg?` represents the path to the asset—the HMAC **message** to authenticate
 
-*   `?verify=` is the **separator** between the path to the asset and the timestamp when the HMAC token was issued
+- `?verify=` is the **separator** between the path to the asset and the timestamp when the HMAC token was issued
 
-*   `1484063787` represents the **timestamp when the token was issued**, expressed as Unix time in seconds
+- `1484063787` represents the **timestamp when the token was issued**, expressed as Unix time in seconds
 
-*   `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a base64-encoded **MAC**
+- `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a base64-encoded **MAC**
 
 The Firewall Rule below blocks requests to `example.com` that do not include a valid HMAC.
 
@@ -39,15 +39,22 @@ The rule supplies the value of the secret key shared between the website and Clo
 
 <table>
   <thead>
-  <tr>
-    <th>Expression</th>
-    <th>Action</th>
-  </tr>
+    <tr>
+      <th>Expression</th>
+      <th>Action</th>
+    </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code>http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("secretKey", http.request.uri, 10800, http.request.timestamp.sec,8)</code></td>
-      <td><em>Block</em></td>
+      <td>
+        <code>
+          http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("secretKey",
+          http.request.uri, 10800, http.request.timestamp.sec,8)
+        </code>
+      </td>
+      <td>
+        <em>Block</em>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -62,11 +69,11 @@ http.request.timestamp.sec < (timestamp-issued + 10800)
 
 then the token is valid and the function returns `true`.
 
-Since the expression in this example uses the `not` operator, it only matches when the HMAC token is *not* valid. When the token is not valid, the Cloudflare triggers the action and blocks the request.
+Since the expression in this example uses the `not` operator, it only matches when the HMAC token is _not_ valid. When the token is not valid, the Cloudflare triggers the action and blocks the request.
 
 {{<Aside type="warning" header="Important">}}
 
-When you do not use the optional *flags* argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for *mac* in the *MessageMAC* argument.
+When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rules-language/functions#hmac-validation).
 

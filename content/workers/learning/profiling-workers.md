@@ -24,12 +24,12 @@ $ wrangler generate my-worker
 
 Open the `index.js` file in your project's directory and replace the content with:
 
-```javascript
-addEventListener("fetch", (event) => {
+```js
+addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 
-const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+const timer = ms => new Promise(res => setTimeout(res, ms));
 
 async function sleepBetween() {
   let result = 0;
@@ -45,8 +45,8 @@ async function sleepBetween() {
 async function handleRequest(request) {
   await sleepBetween();
 
-  return new Response("Hello worker!", {
-    headers: { "content-type": "text/plain" },
+  return new Response('Hello worker!', {
+    headers: { 'content-type': 'text/plain' },
   });
 }
 ```

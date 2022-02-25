@@ -33,7 +33,7 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
     ![OpenID connect option](/cloudflare-one/static/documentation/identity/okta/okta-2.png)
 
-7.  Click **Edit** and set the Groups claim filter to *Matches regex* and the value `.*`.
+7.  Click **Edit** and set the Groups claim filter to _Matches regex_ and the value `.*`.
 
 8.  Return to the **General** tab. Scroll down to find your credentials, and copy the ID and secret.
 
@@ -57,12 +57,12 @@ To test that your connection is working, navigate to **Settings** > **Authentica
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>",
-        "okta_account": "https://dev-abc123.oktapreview.com",
-    },
-    "type": "okta",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>",
+    "okta_account": "https://dev-abc123.oktapreview.com"
+  },
+  "type": "okta",
+  "name": "my example idp"
 }
 ```

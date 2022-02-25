@@ -32,7 +32,7 @@ meta:
     single dashboard, warning you about possible security risks and
     vulnerabilities, and providing a one-click solution for Cloudflare
     configuration issues.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

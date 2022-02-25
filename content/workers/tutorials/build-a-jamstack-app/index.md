@@ -47,16 +47,16 @@ All Cloudflare Workers applications start by listening for `fetch` events, which
 ---
 filename: index.js
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 /**
  * Fetch and log a request
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response("Hello worker!", { status: 200 })
+  return new Response('Hello worker!', { status: 200 });
 }
 ```
 
@@ -113,12 +113,12 @@ async function handleRequest(request) {
     todos: [
       {
         id: 1,
-        name: "Finish the Cloudflare Workers blog post",
+        name: 'Finish the Cloudflare Workers blog post',
         completed: false,
       },
     ],
-  }
-  TODOS.put("data", JSON.stringify(defaultData))
+  };
+  TODOS.put('data', JSON.stringify(defaultData));
 
   // ...previous code
 }
@@ -137,25 +137,25 @@ const defaultData = {
   todos: [
     {
       id: 1,
-      name: "Finish the Cloudflare Workers blog post",
+      name: 'Finish the Cloudflare Workers blog post',
       completed: false,
     },
   ],
-}
+};
 
-const setCache = data => TODOS.put("data", data)
-const getCache = () => TODOS.get("data")
+const setCache = data => TODOS.put('data', data);
+const getCache = () => TODOS.get('data');
 
 async function getTodos(request) {
   // ... previous code
 
-  let data
-  const cache = await getCache()
+  let data;
+  const cache = await getCache();
   if (!cache) {
-    await setCache(JSON.stringify(defaultData))
-    data = defaultData
+    await setCache(JSON.stringify(defaultData));
+    data = defaultData;
   } else {
-    data = JSON.parse(cache)
+    data = JSON.parse(cache);
   }
 }
 ```
@@ -181,13 +181,13 @@ const html = `<!DOCTYPE html>
     <h1>Todos</h1>
   </body>
 </html>
-`
+`;
 
 async function handleRequest(request) {
   const response = new Response(html, {
-    headers: { "Content-Type": "text/html" },
-  })
-  return response
+    headers: { 'Content-Type': 'text/html' },
+  });
+  return response;
 }
 ```
 
@@ -210,7 +210,7 @@ const html = `<!DOCTYPE html>
     <div id="todos"></div>
   </body>
 </html>
-`
+`;
 ```
 
 Add a `<script>` element at the end of the body content that takes a `todos` array. For each `todo` in the array, create a `div` element and appends it to the `todos` HTML element:
@@ -241,7 +241,7 @@ const html = `<!DOCTYPE html>
     </script>
   </body>
 </html>
-`
+`;
 ```
 
 Your static page can take in `window.todos` and render HTML based on it, but you have not actually passed in any data from KV. To do this, you will need to make a few changes.
@@ -263,7 +263,7 @@ const html = todos => `
     // ...
   <script>
 </html>
-`
+`;
 ```
 
 In `handleRequest`, use the retrieved KV data to call the `html` function and generate a `Response` based on it:
@@ -274,11 +274,11 @@ filename: index.js
 highlight: [2]
 ---
 async function handleRequest(request) {
-  const body = html(JSON.stringify(data.todos).replace(/</g, "\\u003c"))
+  const body = html(JSON.stringify(data.todos).replace(/</g, '\\u003c'));
   const response = new Response(body, {
-    headers: { "Content-Type": "text/html" },
-  })
-  return response
+    headers: { 'Content-Type': 'text/html' },
+  });
+  return response;
 }
 ```
 
@@ -295,29 +295,29 @@ Add this new functionality in `handleRequest`: if the request method is a PUT, i
 filename: index.js
 highlight: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
-const setCache = data => TODOS.put("data", data)
+const setCache = data => TODOS.put('data', data);
 
 async function updateTodos(request) {
-  const body = await request.text()
+  const body = await request.text();
   try {
-    JSON.parse(body)
-    await setCache(body)
-    return new Response(body, { status: 200 })
+    JSON.parse(body);
+    await setCache(body);
+    return new Response(body, { status: 200 });
   } catch (err) {
-    return new Response(err, { status: 500 })
+    return new Response(err, { status: 500 });
   }
 }
 
 async function handleRequest(request) {
-  if (request.method === "PUT") {
-    return updateTodos(request)
+  if (request.method === 'PUT') {
+    return updateTodos(request);
   } else {
     // Defined in previous code block
-    return getTodos(request)
+    return getTodos(request);
   }
 }
 ```
@@ -341,7 +341,7 @@ const html = todos => `
   </div>
   <!-- existing script -->
 </html>
-`
+`;
 ```
 
 Given that input and button, add a corresponding JavaScript function to watch for clicks on the button — once the button is clicked, the browser will `PUT` to `/` and submit the todo.
@@ -376,7 +376,7 @@ const html = todos => `
     document.querySelector("#create").addEventListener("click", createTodo)
   </script>
 </html>
-`
+`;
 ```
 
 This code updates the cache. Remember that the KV cache is eventually consistent — even if you were to update your Worker to read from the cache and return it, you have no guarantees it will actually be up to date. Instead, update the list of todos locally, by taking your original code for rendering the todo list, making it a re-usable function called `populateTodos`, and calling it when the page loads and when the cache request has finished:
@@ -422,7 +422,7 @@ const html = todos => `
 
     document.querySelector("#create").addEventListener("click", createTodo)
   </script>
-`
+`;
 ```
 
 With the client-side code in place, deploying the new version of the function should put all these pieces together. The result is an actual dynamic todo list.
@@ -457,7 +457,7 @@ const html = todos => `
       })
     }
   </script>
-`
+`;
 ```
 
 You have designed the client-side part of this code to handle an array of todos and render a list of simple HTML elements. There is a number of things that you have been doing that you have not quite had a use for yet – specifically, the inclusion of IDs and updating the todo's completed state. These things work well together to actually support updating todos in the application UI.
@@ -480,16 +480,16 @@ const html = todos => `
       window.todos.forEach(todo => {
         var el = document.createElement("div")
         el.dataset.todo = todo.id
-        
+
         var name = document.createElement("span")
         name.textContent = todo.name
-        
+
         el.appendChild(name)
         todoContainer.appendChild(el)
       })
     }
   </script>
-`
+`;
 ```
 
 Inside your HTML, each `div` for a todo now has an attached data attribute, which looks like:
@@ -527,7 +527,7 @@ const html = todos => `
       todoContainer.appendChild(el)
     })
   </script>
-`
+`;
 ```
 
 The checkbox is set up to correctly reflect the value of completed on each todo but it does not yet update when you actually check the box. To do this, attach the `completeTodo` function as an event listener on the `click` event. Inside the function, inspect the checkbox element, find its parent (the todo `div`), and use its `todo` data attribute to find the corresponding todo in the data array. You can toggle the completed status, update its properties, and rerender the UI:
@@ -560,7 +560,7 @@ const html = todos => `
       updateTodos()
     }
   </script>
-`
+`;
 ```
 
 The final result of your code is a system that checks the `todos` variable, updates your Cloudflare KV cache with that value, and then does a re-render of the UI based on the data it has locally.
@@ -579,32 +579,32 @@ filename: index.js
 highlight: [2, 3, 5, 20, 21, 24]
 ---
 async function getTodos(request) {
-  const ip = request.headers.get("CF-Connecting-IP")
-  const myKey = `data-${ip}`
-  let data
-  const cache = await getCache(myKey)
+  const ip = request.headers.get('CF-Connecting-IP');
+  const myKey = `data-${ip}`;
+  let data;
+  const cache = await getCache(myKey);
   if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData))
-    data = defaultData
+    await setCache(myKey, JSON.stringify(defaultData));
+    data = defaultData;
   } else {
-    data = JSON.parse(cache)
+    data = JSON.parse(cache);
   }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, "\\u003c"))
+  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
   return new Response(body, {
-    headers: { "Content-Type": "text/html" },
-  })
+    headers: { 'Content-Type': 'text/html' },
+  });
 }
 
 async function updateTodos(request) {
-  const body = await request.text()
-  const ip = request.headers.get("CF-Connecting-IP")
-  const myKey = `data-${ip}`
+  const body = await request.text();
+  const ip = request.headers.get('CF-Connecting-IP');
+  const myKey = `data-${ip}`;
   try {
-    JSON.parse(body)
-    await setCache(myKey, body)
-    return new Response(body, { status: 200 })
+    JSON.parse(body);
+    await setCache(myKey, body);
+    return new Response(body, { status: 200 });
   } catch (err) {
-    return new Response(err, { status: 500 })
+    return new Response(err, { status: 500 });
   }
 }
 ```
@@ -697,54 +697,54 @@ const html = todos => `
     document.querySelector("#create").addEventListener("click", createTodo)
   </script>
 </html>
-`
+`;
 
-const defaultData = { todos: [] }
+const defaultData = { todos: [] };
 
-const setCache = (key, data) => TODOS.put(key, data)
-const getCache = key => TODOS.get(key)
+const setCache = (key, data) => TODOS.put(key, data);
+const getCache = key => TODOS.get(key);
 
 async function getTodos(request) {
-  const ip = request.headers.get("CF-Connecting-IP")
-  const myKey = `data-${ip}`
-  let data
-  const cache = await getCache(myKey)
+  const ip = request.headers.get('CF-Connecting-IP');
+  const myKey = `data-${ip}`;
+  let data;
+  const cache = await getCache(myKey);
   if (!cache) {
-    await setCache(myKey, JSON.stringify(defaultData))
-    data = defaultData
+    await setCache(myKey, JSON.stringify(defaultData));
+    data = defaultData;
   } else {
-    data = JSON.parse(cache)
+    data = JSON.parse(cache);
   }
-  const body = html(JSON.stringify(data.todos || []).replace(/</g, "\\u003c"))
+  const body = html(JSON.stringify(data.todos || []).replace(/</g, '\\u003c'));
   return new Response(body, {
-    headers: { "Content-Type": "text/html" },
-  })
+    headers: { 'Content-Type': 'text/html' },
+  });
 }
 
 async function updateTodos(request) {
-  const body = await request.text()
-  const ip = request.headers.get("CF-Connecting-IP")
-  const myKey = `data-${ip}`
+  const body = await request.text();
+  const ip = request.headers.get('CF-Connecting-IP');
+  const myKey = `data-${ip}`;
   try {
-    JSON.parse(body)
-    await setCache(myKey, body)
-    return new Response(body, { status: 200 })
+    JSON.parse(body);
+    await setCache(myKey, body);
+    return new Response(body, { status: 200 });
   } catch (err) {
-    return new Response(err, { status: 500 })
+    return new Response(err, { status: 500 });
   }
 }
 
 async function handleRequest(request) {
-  if (request.method === "PUT") {
-    return updateTodos(request)
+  if (request.method === 'PUT') {
+    return updateTodos(request);
   } else {
-    return getTodos(request)
+    return getTodos(request);
   }
 }
 
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 ```
 
 You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/signalnerve/cloudflare-workers-todos).

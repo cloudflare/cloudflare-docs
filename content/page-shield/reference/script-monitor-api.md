@@ -26,19 +26,16 @@ The `<SCRIPT_ID>` argument is the script ID (a hexadecimal string). This value i
 
 The following table summarizes the available operations:
 
-| Operation | Method + URL stub | Notes |
-|-----------|-------------------|-------|
-| [Get Page Shield settings][1] | `GET zones/<ZONE_ID>/script_monitor` | Fetch the current Page Shield status (enabled/disabled). |
-| [Update Page Shield settings][2] | `PUT zones/<ZONE_ID>/script_monitor` | Updates the Page Shield status (enabled/disabled). |
-| [List Page Shield scripts][3] | `GET zones/<ZONE_ID>/script_monitor/scripts` | Fetch a list of currently monitored scripts. |
-| [Get a script][4] | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.
+| Operation                        | Method + URL stub                                        | Notes                                                    |
+| -------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| [Get Page Shield settings][1]    | `GET zones/<ZONE_ID>/script_monitor`                     | Fetch the current Page Shield status (enabled/disabled). |
+| [Update Page Shield settings][2] | `PUT zones/<ZONE_ID>/script_monitor`                     | Updates the Page Shield status (enabled/disabled).       |
+| [List Page Shield scripts][3]    | `GET zones/<ZONE_ID>/script_monitor/scripts`             | Fetch a list of currently monitored scripts.             |
+| [Get a script][4]                | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.       |
 
 [1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
-
 [2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
-
 [3]: https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts
-
 [4]: https://api.cloudflare.com/#script-monitor-get-a-script
 
 ## API notes
@@ -149,7 +146,7 @@ header: Response
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
       "js_integrity_score": 50,
       "fetched_at": "2021-11-18T03:58:07Z"
-    },
+    }
     // (...)
   ],
   "success": true,
@@ -186,7 +183,7 @@ curl "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/script_monitor/scripts/8
 header: Response
 ---
 {
- "result": {
+  "result": {
     "script_id": "8337233faec2357ff84465a919534e4d",
     "script_url": "https://malicious.example.com/badscript.js",
     "added_at": "2021-11-18T10:51:10.09615Z",
@@ -212,9 +209,9 @@ header: Response
       }
     ]
   },
- "success": true,
- "errors": [],
- "messages": []
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

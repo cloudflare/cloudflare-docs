@@ -12,16 +12,16 @@ You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance 
 
 **🗺️ This walkthrough covers how to:**
 
-*   Deploy an instance of GitLab
-*   Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
-*   Build policies with Cloudflare Access to control who can reach GitLab
-*   Connect over HTTP and SSH through Cloudflare
+- Deploy an instance of GitLab
+- Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
+- Build policies with Cloudflare Access to control who can reach GitLab
+- Connect over HTTP and SSH through Cloudflare
 
 **⏲️ Time to complete:**
 
 1 hour
 
-***
+---
 
 ## Deploying GitLab
 
@@ -127,7 +127,7 @@ Click `Next` and `Next` again on the `Setup` page - this example does not requir
 
 ## Cloudflare Tunnel
 
-Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
 

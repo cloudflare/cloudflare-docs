@@ -17,7 +17,7 @@ example, if you would like to read the block that is at number `0x2244`, then
 your JSON blob takes the form:
 
 ```json
-{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}
+{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": ["0x2244", true], "id": 1 }
 ```
 
 Each blob must contain a valid method parameter, the Cloudflare supported
@@ -36,19 +36,21 @@ curl https://cloudflare-eth.com -H 'Content-Type: application/json' --data '{"js
 You can also write the same query using the JS fetch API:
 
 ```js
-await fetch(new Request("https://cloudflare-eth.com", {
-	method: "POST",
-	body: JSON.stringify({
-		"jsonrpc":"2.0",
-		"method":"eth_getBlockByNumber",
-		"params":["0x2244", true],
-		"id":64
-	}),
-	headers: {
-		"Content-Type": "application/json"
-	}
-})).then((resp) => {
-	return resp.json()
+await fetch(
+  new Request('https://cloudflare-eth.com', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: ['0x2244', true],
+      id: 64,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
 });
 ```
 
@@ -56,30 +58,30 @@ The response in both cases will be a JSON blob of the form:
 
 ```json
 {
-	"jsonrpc": "2.0",
-	"id": 64,
-	"result": {
-		"difficulty": "0x746ef15b66",
-		"extraData": "0x476574682f76312e302e302f6c696e75782f676f312e342e32",
-		"gasLimit": "0x1388",
-		"gasUsed": "0x0",
-		"hash": "0xd6bb42034740c5d728e774e43a01f26222e0fcc279c504ca5963dc34fe70f392",
-		"logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-		"miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
-		"mixHash": "0x975da446e302e6da6cedb3fbaa763c3c203ae88d6fab4924e2a3d34a568c4361",
-		"nonce": "0x88a7f12f49151c83",
-		"number": "0x2244",
-		"parentHash": "0x067fd84ecdbc7491bf5ec7d5d4ead361b1f590eec74797a7f90b4a7d7004a48d",
-		"receiptsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-		"sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-		"size": "0x21b",
-		"stateRoot": "0x828dade2067283e370993ec6a1bda0e65c1310e404a6d5bbb030b596eb80017c",
-		"timestamp": "0x55bb040f",
-		"totalDifficulty": "0x5c328da43525d",
-		"transactions": [],
-		"transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-		"uncles": []
-	}
+  "jsonrpc": "2.0",
+  "id": 64,
+  "result": {
+    "difficulty": "0x746ef15b66",
+    "extraData": "0x476574682f76312e302e302f6c696e75782f676f312e342e32",
+    "gasLimit": "0x1388",
+    "gasUsed": "0x0",
+    "hash": "0xd6bb42034740c5d728e774e43a01f26222e0fcc279c504ca5963dc34fe70f392",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
+    "mixHash": "0x975da446e302e6da6cedb3fbaa763c3c203ae88d6fab4924e2a3d34a568c4361",
+    "nonce": "0x88a7f12f49151c83",
+    "number": "0x2244",
+    "parentHash": "0x067fd84ecdbc7491bf5ec7d5d4ead361b1f590eec74797a7f90b4a7d7004a48d",
+    "receiptsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+    "size": "0x21b",
+    "stateRoot": "0x828dade2067283e370993ec6a1bda0e65c1310e404a6d5bbb030b596eb80017c",
+    "timestamp": "0x55bb040f",
+    "totalDifficulty": "0x5c328da43525d",
+    "transactions": [],
+    "transactionsRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+    "uncles": []
+  }
 }
 ```
 
@@ -114,24 +116,29 @@ curl https://cloudflare-eth.com -H 'Content-Type: application/json' --data '{"js
 or using a JS fetch API request:
 
 ```js
-await fetch(new Request("https://cloudflare-eth.com", {
-	method: "POST",
-	body: JSON.stringify({
-		"jsonrpc":"2.0",
-		"method":"eth_sendRawTransaction",
-		"params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675", true],
-		"id":1
-	}),
-	headers: {
-		"Content-Type": "application/json"
-	}
-})).then((resp) => {
-	return resp.json()
+await fetch(
+  new Request('https://cloudflare-eth.com', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_sendRawTransaction',
+      params: [
+        '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675',
+        true,
+      ],
+      id: 1,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
 });
 ```
 
-*(The actual command above will not work, you need to provide your own signed
-transaction!)*
+_(The actual command above will not work, you need to provide your own signed
+transaction!)_
 
 ## Cloudflare supported API
 
@@ -139,58 +146,58 @@ The full list of API methods that are supported by the Distributed Web Gateway
 is given below. The Gateway returns a `403` if a method is specified that is not
 supported.
 
-| RPC API method | Cloudflare Distributed Web Gateway support |
-| --- | :---: |
-| web3\_clientVersion | X |
-| web3\_sha3 | X |
-| net\_version | X |
-| net\_peerCount | X |
-| net\_listening | X |
-| eth\_protocolVersion | X |
-| eth\_syncing | X |
-| eth\_coinbase | |
-| eth\_mining | X |
-| eth\_hashrate | X |
-| eth\_gasPrice | X |
-| eth\_accounts | X |
-| eth\_blockNumber | X |
-| eth\_chainId | X |
-| eth\_getBalance\* | X |
-| eth\_getStorageAt\* | X |
-| eth\_getTransactionCount\* | X |
-| eth\_getBlockTransactionCountByHash | X |
-| eth\_getBlockTransactionCountByNumber | X |
-| eth\_getUncleCountByBlockHash | X |
-| eth\_getUncleCountByBlockNumber | X |
-| eth\_getCode\* | X |
-| eth\_sign | |
-| eth\_sendTransaction | |
-| eth\_sendRawTransaction | X |
-| eth\_call\* | X |
-| eth\_estimateGas | X |
-| eth\_getBlockByHash | X |
-| eth\_getBlockByNumber | X |
-| eth\_getTransactionByHash | X |
-| eth\_getTransactionByBlockHashAndIndex | X |
-| eth\_getTransactionByBlockNumberAndIndex | X |
-| eth\_getTransactionReceipt | X |
-| eth\_pendingTransactions | X |
-| eth\_getUncleByBlockHashAndIndex | X |
-| eth\_getUncleByBlockNumberAndIndex | X |
-| eth\_getCompilers | |
-| eth\_compileLLL | |
-| eth\_compileSolidity | |
-| eth\_compileSerpent | |
-| eth\_newFilter | |
-| eth\_newBlockFilter | |
-| eth\_newPendingTransactionFilter | |
-| eth\_uninstallFilter | |
-| eth\_getFilterChanges | |
-| eth\_getFilterLogs | |
-| eth\_getLogs\* | X |
-| eth\_getWork | X |
-| eth\_submitWork | X |
-| eth\_submitHashrate | X |
-| eth\_getProof | X |
+| RPC API method                          | Cloudflare Distributed Web Gateway support |
+| --------------------------------------- | :----------------------------------------: |
+| web3_clientVersion                      |                     X                      |
+| web3_sha3                               |                     X                      |
+| net_version                             |                     X                      |
+| net_peerCount                           |                     X                      |
+| net_listening                           |                     X                      |
+| eth_protocolVersion                     |                     X                      |
+| eth_syncing                             |                     X                      |
+| eth_coinbase                            |                                            |
+| eth_mining                              |                     X                      |
+| eth_hashrate                            |                     X                      |
+| eth_gasPrice                            |                     X                      |
+| eth_accounts                            |                     X                      |
+| eth_blockNumber                         |                     X                      |
+| eth_chainId                             |                     X                      |
+| eth_getBalance\*                        |                     X                      |
+| eth_getStorageAt\*                      |                     X                      |
+| eth_getTransactionCount\*               |                     X                      |
+| eth_getBlockTransactionCountByHash      |                     X                      |
+| eth_getBlockTransactionCountByNumber    |                     X                      |
+| eth_getUncleCountByBlockHash            |                     X                      |
+| eth_getUncleCountByBlockNumber          |                     X                      |
+| eth_getCode\*                           |                     X                      |
+| eth_sign                                |                                            |
+| eth_sendTransaction                     |                                            |
+| eth_sendRawTransaction                  |                     X                      |
+| eth_call\*                              |                     X                      |
+| eth_estimateGas                         |                     X                      |
+| eth_getBlockByHash                      |                     X                      |
+| eth_getBlockByNumber                    |                     X                      |
+| eth_getTransactionByHash                |                     X                      |
+| eth_getTransactionByBlockHashAndIndex   |                     X                      |
+| eth_getTransactionByBlockNumberAndIndex |                     X                      |
+| eth_getTransactionReceipt               |                     X                      |
+| eth_pendingTransactions                 |                     X                      |
+| eth_getUncleByBlockHashAndIndex         |                     X                      |
+| eth_getUncleByBlockNumberAndIndex       |                     X                      |
+| eth_getCompilers                        |                                            |
+| eth_compileLLL                          |                                            |
+| eth_compileSolidity                     |                                            |
+| eth_compileSerpent                      |                                            |
+| eth_newFilter                           |                                            |
+| eth_newBlockFilter                      |                                            |
+| eth_newPendingTransactionFilter         |                                            |
+| eth_uninstallFilter                     |                                            |
+| eth_getFilterChanges                    |                                            |
+| eth_getFilterLogs                       |                                            |
+| eth_getLogs\*                           |                     X                      |
+| eth_getWork                             |                     X                      |
+| eth_submitWork                          |                     X                      |
+| eth_submitHashrate                      |                     X                      |
+| eth_getProof                            |                     X                      |
 
 > RPC API methods followed by "\*" are only supported for the latest 128 blocks

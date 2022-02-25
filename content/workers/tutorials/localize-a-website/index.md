@@ -41,7 +41,19 @@ The `--site` flag tells Wrangler that you want to build a [Workers Sites](/worke
 
 The newly generated `i18n-example` project will contain two folders: `public`, which is your static HTML, and `workers-site`:
 
-<pre class="CodeBlock CodeBlock-scrolls-horizontally" language="sh"><code><u><b class="CodeBlock--token-directory">~/i18n-example</b> <b class="CodeBlock--token-prompt">$</b> </u>ls<br/><u><b class="CodeBlock--token-value">public    workers-site  wrangler.toml</b></u></code></pre>
+<pre class="CodeBlock CodeBlock-scrolls-horizontally" language="sh">
+  <code>
+    <u>
+      <b class="CodeBlock--token-directory">~/i18n-example</b>{' '}
+      <b class="CodeBlock--token-prompt">$</b>{' '}
+    </u>
+    ls
+    <br />
+    <u>
+      <b class="CodeBlock--token-value">public workers-site wrangler.toml</b>
+    </u>
+  </code>
+</pre>
 
 Inside of the `public` directory, replace the default generated HTML code with the HTML5 UP template seen in the demo screenshot: download a [release](https://github.com/signalnerve/i18n-example-workers/archive/v1.0.zip) (ZIP file) of the code for this project and copy the `public` folder to your own project to get started.
 
@@ -61,16 +73,13 @@ What is unique about this page is the addition of [data attributes](https://deve
 ---
 filename: public/index.html
 ---
+
 <!-- source clipped from i18n-example site -->
 
 <div class="inner">
   <h1 data-i18n-key="headline">Example Site</h1>
-  <p data-i18n-key="subtitle">
-    This is my example site. Depending o...
-  </p>
-  <p data-i18n-key="disclaimer">
-    Disclaimer: the initial translations...
-  </p>
+  <p data-i18n-key="subtitle">This is my example site. Depending o...</p>
+  <p data-i18n-key="disclaimer">Disclaimer: the initial translations...</p>
 </div>
 ```
 
@@ -91,8 +100,8 @@ To implement translations on the site, take the HTML response retrieved from KV 
 filename: workers-site/index.js
 ---
 async function handleEvent(event) {
-  const response = await getAssetFromKV(event)
-  return new HTMLRewriter().on("[data-i18n-key]", new ElementHandler()).transform(response)
+  const response = await getAssetFromKV(event);
+  return new HTMLRewriter().on('[data-i18n-key]', new ElementHandler()).transform(response);
 }
 ```
 
@@ -108,7 +117,7 @@ filename: workers-site/index.js
 ---
 class ElementHandler {
   element(element) {
-    const i18nKey = element.getAttribute("data-i18n-key")
+    const i18nKey = element.getAttribute('data-i18n-key');
   }
 }
 ```
@@ -121,13 +130,13 @@ filename: workers-site/index.js
 highlight: [1,2,3,8]
 ---
 const strings = {
-  headline: "Beispielseite",
-}
+  headline: 'Beispielseite',
+};
 
 class ElementHandler {
   element(element) {
-    const i18nKey = element.getAttribute("data-i18n-key")
-    const string = strings[i18nKey]
+    const i18nKey = element.getAttribute('data-i18n-key');
+    const string = strings[i18nKey];
   }
 }
 ```
@@ -140,15 +149,15 @@ filename: workers-site/index.js
 highlight: [9,10,11]
 ---
 const strings = {
-  headline: "Beispielseite",
-}
+  headline: 'Beispielseite',
+};
 
 class ElementHandler {
   element(element) {
-    const i18nKey = element.getAttribute("data-i18n-key")
-    const string = strings[i18nKey]
+    const i18nKey = element.getAttribute('data-i18n-key');
+    const string = strings[i18nKey];
     if (string) {
-      element.setInnerContent(string)
+      element.setInnerContent(string);
     }
   }
 }
@@ -180,71 +189,73 @@ Once imported into your code, use the package to parse the most relevant languag
 filename: workers-site/index.js
 highlight: [24,25,26,31,50,51,52,53,54,55,56]
 ---
-import { getAssetFromKV, defaultKeyModifier } from "@cloudflare/kv-asset-handler"
-import parser from "accept-language-parser"
+import { getAssetFromKV, defaultKeyModifier } from '@cloudflare/kv-asset-handler';
+import parser from 'accept-language-parser';
 
-const DEBUG = false
+const DEBUG = false;
 
-addEventListener("fetch", event => {
-  event.respondWith(handleEvent(event))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleEvent(event));
+});
 
 const strings = {
   de: {
-    title: "Beispielseite",
-    headline: "Beispielseite",
+    title: 'Beispielseite',
+    headline: 'Beispielseite',
     subtitle:
-      "Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.",
+      'Dies ist meine Beispielseite. Abhängig davon, wo auf der Welt Sie diese Site besuchen, wird dieser Text in die entsprechende Sprache übersetzt.',
     disclaimer:
-      "Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!",
-    tutorial: "Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.",
-    copyright: "Design von HTML5 UP.",
+      'Haftungsausschluss: Die anfänglichen Übersetzungen stammen von Google Translate, daher sind sie möglicherweise nicht perfekt!',
+    tutorial: 'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
+    copyright: 'Design von HTML5 UP.',
   },
-}
+};
 
 class ElementHandler {
   constructor(countryStrings) {
-    this.countryStrings = countryStrings
+    this.countryStrings = countryStrings;
   }
 
   element(element) {
-    const i18nKey = element.getAttribute("data-i18n-key")
+    const i18nKey = element.getAttribute('data-i18n-key');
     if (i18nKey) {
-      const translation = this.countryStrings[i18nKey]
+      const translation = this.countryStrings[i18nKey];
       if (translation) {
-        element.setInnerContent(translation)
+        element.setInnerContent(translation);
       }
     }
   }
 }
 
 async function handleEvent(event) {
-  const url = new URL(event.request.url)
+  const url = new URL(event.request.url);
   try {
-    let options = {}
+    let options = {};
     if (DEBUG) {
       options = {
         cacheControl: {
           bypassCache: true,
         },
-      }
+      };
     }
-    const languageHeader = event.request.headers.get("Accept-Language")
-    const language = parser.pick(["de"], languageHeader)
-    const countryStrings = strings[language] || {}
+    const languageHeader = event.request.headers.get('Accept-Language');
+    const language = parser.pick(['de'], languageHeader);
+    const countryStrings = strings[language] || {};
 
-    const response = await getAssetFromKV(event, options)
+    const response = await getAssetFromKV(event, options);
 
-    return new HTMLRewriter().on("[data-i18n-key]", new ElementHandler(countryStrings)).transform(response)
+    return new HTMLRewriter()
+      .on('[data-i18n-key]', new ElementHandler(countryStrings))
+      .transform(response);
   } catch (e) {
     if (DEBUG) {
       return new Response(e.message || e.toString(), {
         status: 404,
-      })
+      });
     } else {
       return new Response(`"${defaultKeyModifier(url.pathname)}" not found`, {
         status: 404,
-      })
+      });
     }
   }
 }

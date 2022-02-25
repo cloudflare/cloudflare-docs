@@ -16,8 +16,8 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 **🗺️ This walkthrough covers how to:**
 
-*   Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
-*   Configure that policies precedence in your Gateway configuration
+- Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
+- Configure that policies precedence in your Gateway configuration
 
 **⏲️ Time to complete:**
 

@@ -11,14 +11,14 @@ You can configure Cloudflare Zero Trust to exclude domains and IP addresses from
 
 **🗺️ This walkthrough covers how to:**
 
-*   Manage the default lists of excluded domains and IP addresses
-*   Add a domain or IP address to the exclusion list
+- Manage the default lists of excluded domains and IP addresses
+- Add a domain or IP address to the exclusion list
 
 **⏲️ Time to complete:**
 
 10 minutes
 
-***
+---
 
 ## Configure domains to resolve locally
 

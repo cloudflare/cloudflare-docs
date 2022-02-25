@@ -59,7 +59,7 @@ With Zola installed, create a new project by running the `zola init` command in 
 $ zola init my-zola-project
 ```
 
-Upon running `zola init`, you will prompted with  three questions:
+Upon running `zola init`, you will prompted with three questions:
 
 1.  What is the URL of your site? (https://example.com):
     You can leave this one blank for now.
@@ -88,11 +88,11 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 <div>
 
-| Configuration option | Value          |
-| -------------------- | -------------- |
-| Production branch    | `main`         |
+| Configuration option | Value        |
+| -------------------- | ------------ |
+| Production branch    | `main`       |
 | Build command        | `zola build` |
-| Build directory      | `public`       |
+| Build directory      | `public`     |
 
 </div>
 
@@ -116,7 +116,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-You can now add that subdomain as the `base_url` in your  `config.toml` file.
+You can now add that subdomain as the `base_url` in your `config.toml` file.
 
 For example:
 

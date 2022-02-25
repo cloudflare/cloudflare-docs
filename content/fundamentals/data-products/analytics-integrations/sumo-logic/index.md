@@ -18,10 +18,10 @@ This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and
 
 Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 
-*   Have an existing Sumo Logic account
-*   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-*   Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
-*   Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
+- Have an existing Sumo Logic account
+- Have a Cloudflare Enterprise account with Cloudflare Logs enabled
+- Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
+- Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
 {{<Aside type="note" header="Note">}}
 
@@ -41,7 +41,7 @@ To enable Cloudflare Logpush in Sumo Logic:
 
 2.  Configure an [HTTP Logs and Metrics Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source).
 
-3.  Provide the *HTTP Source Address (URL)* required by the Cloudflare Logpush API or Cloudflare dashboard UI.
+3.  Provide the _HTTP Source Address (URL)_ required by the Cloudflare Logpush API or Cloudflare dashboard UI.
 
 4.  Enable [Cloudflare Logpush to Sumo Logic](/logs/get-started/enable-destinations/sumo-logic).
 
@@ -57,7 +57,7 @@ To connect AWS S3 to Sumo Logic:
 
 If you have [Cloudflare Workers](https://www.cloudflare.com/products/cloudflare-workers/) enabled and want to filter them out from the logs, do the following:
 
-Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is *true*, as illustrated below:
+Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is _true_, as illustrated below:
 
 ![Sumo Logic Processing Rules for Logs](/fundamentals/static/images/sumo-logic/screenshots/exclude_Workers-sumo_logic.png)
 
@@ -65,10 +65,10 @@ Under **Processing Rules for Logs** create a **Filter** (processing rule regex o
 
 To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare):
 
-1.  In the Sumo Logic UI, click **App Catalog** and search for *Cloudflare*.
+1.  In the Sumo Logic UI, click **App Catalog** and search for _Cloudflare_.
     ![Sumo Logic Cloudflare in App Catalog](/fundamentals/static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
 
-2.  Click **Add to Library** and specify the **Source** category *Cloudflare*, which was completed in Step 1.
+2.  Click **Add to Library** and specify the **Source** category _Cloudflare_, which was completed in Step 1.
 
 You should now be able to see the Cloudflare dashboards populated with your Cloudflare log data.
 
@@ -139,35 +139,35 @@ You can use filters to drill down and examine the data at a granular level. Filt
 
 Each panel has a set of filters that are applied to the results for that panel only, as shown in the following example. Click the funnel icon in the top panel menu bar to display a list of panel-specific filters.
 
-The default time interval is set to 24 hours. Note that for correct filter calculations, you need to exclude Worker subrequests (**WorkerSubrequest** = *false*) and purge requests (**ClientRequestMethod** is not *PURGE*).
+The default time interval is set to 24 hours. Note that for correct filter calculations, you need to exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
 
 #### Available Filters
 
-*   Date (EdgeStartTimestamp)
+- Date (EdgeStartTimestamp)
 
-*   client\_country
+- client_country
 
-*   client\_device\_type
+- client_device_type
 
-*   client\_ip
+- client_ip
 
-*   client\_request\_host
+- client_request_host
 
-*   client\_request\_method
+- client_request_method
 
-*   client\_request\_uri
+- client_request_uri
 
-*   client\_request\_user\_agent
+- client_request_user_agent
 
-*   edge\_response\_status
+- edge_response_status
 
-*   origin\_ip
+- origin_ip
 
-*   origin\_response\_status
+- origin_response_status
 
-*   ray\_id
+- ray_id
 
-*   worker\_subrequest
+- worker_subrequest
 
 ## Debugging tips
 
@@ -179,102 +179,102 @@ If that is the case, verify and test the Cloudflare App filters below each dashb
 
 The available fields are:
 
-*   CacheCacheStatus
+- CacheCacheStatus
 
-*   CacheResponseBytes
+- CacheResponseBytes
 
-*   CacheResponseStatus
+- CacheResponseStatus
 
-*   ClientASN
+- ClientASN
 
-*   ClientCountry
+- ClientCountry
 
-*   ClientDeviceType
+- ClientDeviceType
 
-*   ClientIP
+- ClientIP
 
-*   ClientIPClass
+- ClientIPClass
 
-*   ClientRequestBytes
+- ClientRequestBytes
 
-*   ClientRequestHost
+- ClientRequestHost
 
-*   ClientRequestMethod
+- ClientRequestMethod
 
-*   ClientRequestPath
+- ClientRequestPath
 
-*   ClientRequestProtocol
+- ClientRequestProtocol
 
-*   ClientRequestReferer
+- ClientRequestReferer
 
-*   ClientRequestURI
+- ClientRequestURI
 
-*   ClientRequestUserAgent
+- ClientRequestUserAgent
 
-*   ClientSSLCipher
+- ClientSSLCipher
 
-*   ClientSSLProtocol
+- ClientSSLProtocol
 
-*   ClientSrcPort
+- ClientSrcPort
 
-*   EdgeColoCode
+- EdgeColoCode
 
-*   EdgeColoID
+- EdgeColoID
 
-*   EdgeEndTimestamp
+- EdgeEndTimestamp
 
-*   EdgePathingOp
+- EdgePathingOp
 
-*   EdgePathingSrc
+- EdgePathingSrc
 
-*   EdgePathi
+- EdgePathi
 
-*   ngStatus
+- ngStatus
 
-*   EdgeRateLimitAction
+- EdgeRateLimitAction
 
-*   EdgeRateLimitID
+- EdgeRateLimitID
 
-*   EdgeRequestHost
+- EdgeRequestHost
 
-*   EdgeResponseBytes
+- EdgeResponseBytes
 
-*   EdgeResponseContentType
+- EdgeResponseContentType
 
-*   EdgeResponseStatus
+- EdgeResponseStatus
 
-*   EdgeServerIP
+- EdgeServerIP
 
-*   EdgeStartTimestamp
+- EdgeStartTimestamp
 
-*   FirewallMatchesActions
+- FirewallMatchesActions
 
-*   FirewallMatchesSources
+- FirewallMatchesSources
 
-*   FirewallMatchesRuleIDs
+- FirewallMatchesRuleIDs
 
-*   OriginIP
+- OriginIP
 
-*   OriginResponseStatus
+- OriginResponseStatus
 
-*   OriginResponseTime
+- OriginResponseTime
 
-*   OriginSSLProtocol
+- OriginSSLProtocol
 
-*   RayID
+- RayID
 
-*   WAFAction
+- WAFAction
 
-*   WAFFlags
+- WAFFlags
 
-*   WAFMatchedVar
+- WAFMatchedVar
 
-*   WAFProfile
+- WAFProfile
 
-*   WAFRuleID
+- WAFRuleID
 
-*   WAFRuleMessage
+- WAFRuleMessage
 
-*   WorkerSubrequest
+- WorkerSubrequest
 
-*   ZoneID
+- ZoneID

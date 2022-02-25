@@ -6,9 +6,9 @@ weight: 51
 
 # DNS record
 
-| Before you start |
-|---|
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) |
+| Before you start                                                                   |
+| ---------------------------------------------------------------------------------- |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)      |
 | 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) |
 
 ## Route traffic from the Cloudflare dashboard

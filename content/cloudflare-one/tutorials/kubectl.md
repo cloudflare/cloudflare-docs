@@ -11,19 +11,19 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 **🗺️ This walkthrough covers how to:**
 
-*   Build a policy in Cloudflare Access to secure the machine
-*   Connect a machine to Cloudflare's network using kubectl
-*   Connect from a client machine
+- Build a policy in Cloudflare Access to secure the machine
+- Connect a machine to Cloudflare's network using kubectl
+- Connect from a client machine
 
 **Before you start**
 
-*   [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+- [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 
 **⏲️ Time to complete:**
 
 30 minutes
 
-***
+---
 
 ## Create a Zero Trust policy
 
@@ -49,7 +49,7 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 ## Install `cloudflared`
 
-Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
 
@@ -106,7 +106,7 @@ ingress:
   - hostname: azure.widgetcorp.tech
     service: tcp://kubernetes.docker.internal:6443
     originRequest:
-        proxyType: socks
+      proxyType: socks
   - service: http_status:404
   # Catch-all rule, which responds with 404 if traffic doesn't match any of
   # the earlier rules

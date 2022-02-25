@@ -10,19 +10,19 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 <p>{{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}</p>
 
-***
+---
 
 ## Hello world
 
 When you arrive in the playground, you will see this default code:
 
-```javascript
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+```js
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  return new Response("Hello world")
+  return new Response('Hello world');
 }
 ```
 
@@ -30,13 +30,13 @@ This is the least complex Worker you can write. When the Worker receives a reque
 
 Refer to the documentation for [`addEventListener`](/workers/runtime-apis/add-event-listener/) and [`FetchEvent`](/workers/runtime-apis/fetch-event/) to learn more.
 
-***
+---
 
 ## Beyond hello world
 
 To get familiar with Workers, experiment with the Playground by borrowing [Examples](/workers/examples/) from the documentation. This will allow you to experience firsthand [what Workers can do](https://www.cloudflare.com/learning/serverless/why-use-serverless/).
 
-***
+---
 
 ## Using the Playground
 
@@ -52,7 +52,7 @@ You can modify the script and click the preview button to view the effect on the
 
 To test a raw HTTP request — not in an HTML previewer, for example, to test a `POST` request — go to **HTTP**. To run the HTTP preview, select **Run Test**.
 
-***
+---
 
 ## Devtools
 

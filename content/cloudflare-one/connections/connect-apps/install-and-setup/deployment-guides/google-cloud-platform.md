@@ -10,8 +10,8 @@ The purpose of this guide is to walk through some best practices for accessing p
 
 # Prerequisites
 
-*   Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
-*   [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
 
 # Create your environment
 
@@ -27,16 +27,17 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
 
 5.  Configure your VM Instance. The following settings are recommended to get started:
 
-    {{<Aside type="note">}}
-We support a number of operating systems and versions, so make a selection based on your requirements.
+        {{<Aside type="note">}}
+
+    We support a number of operating systems and versions, so make a selection based on your requirements.
     {{</Aside>}}
 
-    *   **Machine Family:** General Purpose
-    *   **Series:** E2
-    *   **Machine Type:** e2-micro
-    *   **Boot Disk:** Debian GNU/Linux 10
-    *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
-    *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
+        *   **Machine Family:** General Purpose
+        *   **Series:** E2
+        *   **Machine Type:** e2-micro
+        *   **Boot Disk:** Debian GNU/Linux 10
+        *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
+        *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
 6.  Add a startup script for testing access. Here is an example:
 

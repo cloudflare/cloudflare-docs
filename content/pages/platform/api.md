@@ -34,20 +34,20 @@ Suppose we have a CMS that pulls data from live sources to compile a static outp
 
 ```js
 const endpoint =
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
-const email = "{your_email}";
+  'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments';
+const email = '{your_email}';
 
-addEventListener("scheduled", (event) => {
+addEventListener('scheduled', event => {
   event.waitUntil(handleScheduled(event.scheduledTime));
 });
 
 async function handleScheduled(request) {
   const init = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "content-type": "application/json;charset=UTF-8",
-      "X-Auth-Email": email,
-      "X-Auth-Key": API_KEY,
+      'content-type': 'application/json;charset=UTF-8',
+      'X-Auth-Email': email,
+      'X-Auth-Key': API_KEY,
       //We recommend you store API keys as secrets using the Workers dashboard or using Wrangler as documented here https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
     },
   };
@@ -65,20 +65,20 @@ Cloudflare Pages hosts and serves all project deployments on preview links. Supp
 
 ```js
 const deployments_endpoint =
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
-const email = "{your_email}";
+  'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments';
+const email = '{your_email}';
 const expiration_days = 7;
 
-addEventListener("scheduled", (event) => {
+addEventListener('scheduled', event => {
   event.waitUntil(handleScheduled(event.scheduledTime));
 });
 
 async function handleScheduled(request) {
   const init = {
     headers: {
-      "content-type": "application/json;charset=UTF-8",
-      "X-Auth-Email": email,
-      "X-Auth-Key": API_KEY,
+      'content-type': 'application/json;charset=UTF-8',
+      'X-Auth-Email': email,
+      'X-Auth-Key': API_KEY,
       // You should store API keys as secrets using the Workers dashboard or using Wrangler
       // @see https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
     },
@@ -89,26 +89,23 @@ async function handleScheduled(request) {
   let to_delete = [];
 
   deployments.result.forEach(function (deploy) {
-    if (
-      (Date.now() - new Date(deploy.created_on)) / 86400000 >
-      expiration_days
-    ) {
+    if ((Date.now() - new Date(deploy.created_on)) / 86400000 > expiration_days) {
       to_delete.push(deploy.id);
     }
   });
 
   const delete_request = {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "content-type": "application/json;charset=UTF-8",
-      "X-Auth-Email": email,
-      "X-Auth-Key": API_KEY,
+      'content-type': 'application/json;charset=UTF-8',
+      'X-Auth-Email': email,
+      'X-Auth-Key': API_KEY,
     },
   };
   for (const id of to_delete) {
-    await fetch(deployments_endpoint + "/" + id, delete_request);
+    await fetch(deployments_endpoint + '/' + id, delete_request);
   }
-  return new Response("OK", { status: 200 });
+  return new Response('OK', { status: 200 });
 }
 ```
 
@@ -120,22 +117,22 @@ Imagine you are working on a development team using Pages to build your websites
 
 ```js
 const deployments_endpoint =
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments";
+  'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments';
 const project_endpoint =
-  "https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}";
+  'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}';
 
-const email = "{your_email}";
+const email = '{your_email}';
 
-addEventListener("fetch", (event) => {
+addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
   const init = {
     headers: {
-      "content-type": "application/json;charset=UTF-8",
-      "X-Auth-Email": email,
-      "X-Auth-Key": API_KEY,
+      'content-type': 'application/json;charset=UTF-8',
+      'X-Auth-Email': email,
+      'X-Auth-Key': API_KEY,
       //We recommend you store API keys as secrets using the Workers dashboard or using Wrangler as documented here https://developers.cloudflare.com/workers/cli-wrangler/commands#secret
     },
   };
@@ -172,7 +169,7 @@ async function handleRequest(request) {
 </body>`;
   return new Response(results, {
     headers: {
-      "content-type": "text/html;charset=UTF-8",
+      'content-type': 'text/html;charset=UTF-8',
     },
   });
 }
@@ -180,6 +177,6 @@ async function handleRequest(request) {
 
 ## Related resources
 
-*   [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
-*   [Workers Getting Started Guide](/workers/get-started/guide)
-*   [Workers Cron Triggers](/workers/platform/cron-triggers)
+- [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
+- [Workers Getting Started Guide](/workers/get-started/guide)
+- [Workers Cron Triggers](/workers/platform/cron-triggers)

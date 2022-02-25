@@ -24,9 +24,9 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-*   Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/configuration/) to route traffic to a private IP space.
-*   `cloudflared` must be connected to Cloudflare from your target private network.
-*   Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
+- Cloudflare Tunnel must be properly [configured](/cloudflare-one/connections/connect-apps/configuration/) to route traffic to a private IP space.
+- `cloudflared` must be connected to Cloudflare from your target private network.
+- Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
 ## Enable UDP support
 
@@ -86,18 +86,18 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-*   Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
+- Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
 
-*   Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
+- Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 
-*   Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
+- Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
-*   Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
+- Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
 
-*   Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
+- Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
 
-*   Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
+- Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
 
-*   Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
+- Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
 
-*   Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.
+- Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.

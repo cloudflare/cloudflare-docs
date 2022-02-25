@@ -16,13 +16,13 @@ layout: example
  * @param {string} url the URL to send the request to
  * @param {BodyInit} body the JSON data to send in the request
  */
-const someHost = "https://examples.cloudflareworkers.com/demos"
-const url = someHost + "/requests/json"
+const someHost = 'https://examples.cloudflareworkers.com/demos';
+const url = someHost + '/requests/json';
 const body = {
-  results: ["default data to send"],
+  results: ['default data to send'],
   errors: null,
-  msg: "I sent this to the fetch",
-}
+  msg: 'I sent this to the fetch',
+};
 
 /**
  * gatherResponse awaits and returns a response body as a string.
@@ -30,35 +30,32 @@ const body = {
  * @param {Response} response
  */
 async function gatherResponse(response) {
-  const { headers } = response
-  const contentType = headers.get("content-type") || ""
-  if (contentType.includes("application/json")) {
-    return JSON.stringify(await response.json())
-  }
-  else if (contentType.includes("application/text")) {
-    return response.text()
-  }
-  else if (contentType.includes("text/html")) {
-    return response.text()
-  }
-  else {
-    return response.text()
+  const { headers } = response;
+  const contentType = headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    return JSON.stringify(await response.json());
+  } else if (contentType.includes('application/text')) {
+    return response.text();
+  } else if (contentType.includes('text/html')) {
+    return response.text();
+  } else {
+    return response.text();
   }
 }
 
 async function handleRequest() {
   const init = {
     body: JSON.stringify(body),
-    method: "POST",
+    method: 'POST',
     headers: {
-      "content-type": "application/json;charset=UTF-8",
+      'content-type': 'application/json;charset=UTF-8',
     },
-  }
-  const response = await fetch(url, init)
-  const results = await gatherResponse(response)
-  return new Response(results, init)
+  };
+  const response = await fetch(url, init);
+  const results = await gatherResponse(response);
+  return new Response(results, init);
 }
-addEventListener("fetch", event => {
-  return event.respondWith(handleRequest())
-})
+addEventListener('fetch', event => {
+  return event.respondWith(handleRequest());
+});
 ```

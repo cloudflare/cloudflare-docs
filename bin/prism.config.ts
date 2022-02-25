@@ -194,7 +194,7 @@ function normalize(tokens: (Token | string)[]) {
   }
 
   let arr: Line[] = [];
-  while (line = lines.shift()) {
+  while ((line = lines.shift())) {
     if (line.length > 1 && line[0].content === '\n') {
       // remove extra leading "\n" items for non-whitespace lines
     } else {
@@ -241,18 +241,15 @@ export function highlight(code: string, lang: string): string {
       // frontmatter = utils.frontmatter(content);
 
       let match = /^---\r?\n([\s\S]+?)\r?\n---/.exec(content);
-      if (match != null) match[1].split('\n').forEach(pair => {
-        let [key, ...v] = pair.split(':');
-        frontmatter[key.trim() as 'theme'] = v.join(':').trim();
-      });
+      if (match != null)
+        match[1].split('\n').forEach(pair => {
+          let [key, ...v] = pair.split(':');
+          frontmatter[key.trim() as 'theme'] = v.join(':').trim();
+        });
     }
   }
 
-  let highlights = new Set(
-    JSON.parse(
-      frontmatter.highlight || '[]'
-    ).map((x: number) => x - 1)
-  );
+  let highlights = new Set(JSON.parse(frontmatter.highlight || '[]').map((x: number) => x - 1));
 
   // tokenize & build custom string output
   let tokens = Prism.tokenize(code, grammar);
@@ -265,7 +262,8 @@ export function highlight(code: string, lang: string): string {
   output += ` CodeBlock--language-${lang}" language="${lang}">`;
 
   if (frontmatter.header) output += `<span class="CodeBlock--header">${frontmatter.header}</span>`;
-  else if (frontmatter.filename) output += `<span class="CodeBlock--filename">${frontmatter.filename}</span>`;
+  else if (frontmatter.filename)
+    output += `<span class="CodeBlock--filename">${frontmatter.filename}</span>`;
 
   output += '<code>';
   output += '<span class="CodeBlock--rows">';

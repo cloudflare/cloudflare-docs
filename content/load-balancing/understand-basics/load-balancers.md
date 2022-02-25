@@ -14,7 +14,7 @@ For more background information on what load balancers are and how they work, ch
 
 {{</Aside>}}
 
-***
+---
 
 ## Common configurations
 
@@ -36,19 +36,19 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 **For example, F5 BIG-IP load balancers set a session cookie at the beginning of a TCP connection** (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This tends to break session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection. Configuring the load balancer to parse HTTP requests by cookie headers avoids this issue.
 
-***
+---
 
 ## Create load balancers
 
 For step-by-step guidance, refer to [Create a load balancer](/load-balancing/how-to/create-load-balancer/).
 
-***
+---
 
 ## Properties
 
 For an up-to-date list of load balancer properties, refer to [Load balancer properties](https://api.cloudflare.com/#load-balancers-properties) in the Cloudflare API documentation.
 
-***
+---
 
 ## API commands
 

@@ -25,7 +25,7 @@ meta:
   description: Cloudflare wants to encrypt as much web traffic as possible to
     prevent data theft and other tampering. We are the first Internet
     performance and security company to offer free SSL protection.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

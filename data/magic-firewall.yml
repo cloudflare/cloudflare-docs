@@ -12,7 +12,7 @@ meta:
   title: Cloudflare Magic Firewall docs
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:
@@ -23,7 +23,7 @@ algolia:
 externals:
   - title: Magic Transit home
     url: https://www.cloudflare.com/magic-transit/
-  - title: "Blog: Magic WAN & Magic Firewall"
+  - title: 'Blog: Magic WAN & Magic Firewall'
     url: https://blog.cloudflare.com/introducing-magic-firewall/
   - title: Cloudflare homepage
     url: https://cloudflare.com

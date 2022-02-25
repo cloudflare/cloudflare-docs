@@ -14,10 +14,10 @@ Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 
 ## Updating IRR entries
 
-*   If you own your own subnet, use the RIPE and APNIC routing registries. These registries allow you to verify subnet ownership.
-*   If you lease your subnet, follow these guidelines:
-    *   When you do not need ownership verification, use the AFRINIC or NTT routing registry.
-    *   When you submit a route object via email, use the ARIN registry. Note that address blocks owned by others do not appear in the ARIN interface.
+- If you own your own subnet, use the RIPE and APNIC routing registries. These registries allow you to verify subnet ownership.
+- If you lease your subnet, follow these guidelines:
+  - When you do not need ownership verification, use the AFRINIC or NTT routing registry.
+  - When you submit a route object via email, use the ARIN registry. Note that address blocks owned by others do not appear in the ARIN interface.
 
 ### IRR Entry instructions
 

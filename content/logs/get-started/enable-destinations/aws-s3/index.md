@@ -31,12 +31,13 @@ To enable the Cloudflare Logpush service:
 7.  Select **Amazon S3**.
 
 8.  Enter or select the following destination information:
-    *   **Bucket path**
-    *   **Daily subfolders**
-    *   **Bucket region**
-    *   **Encryption constraint in bucket policy**
-    *   For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
-        *   Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**.
+
+    - **Bucket path**
+    - **Daily subfolders**
+    - **Bucket region**
+    - **Encryption constraint in bucket policy**
+    - For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
+      - Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**.
 
 9.  Click **Validate access**.
 
@@ -72,15 +73,11 @@ To enable Logpush to Amazon S3:
   "Statement": [
     {
       "Sid": "Stmt1506627150918",
-      "Action": [
-        "s3:PutObject"
-      ],
+      "Action": ["s3:PutObject"],
       "Effect": "Allow",
       "Resource": "arn:aws:s3:::burritobot/logs/*",
       "Principal": {
-        "AWS": [
-          "arn:aws:iam::391854517948:user/cloudflare-logpush"
-        ]
+        "AWS": ["arn:aws:iam::391854517948:user/cloudflare-logpush"]
       }
     }
   ]

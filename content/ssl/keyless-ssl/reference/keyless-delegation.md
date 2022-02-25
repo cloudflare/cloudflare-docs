@@ -6,7 +6,7 @@ weight: 7
 
 # Keyless delegation
 
-Keyless Delegation is [our implementation of the emerging delegated credentials standard](https://datatracker.ietf.org/doc/draft-ietf-tls-subcerts/).  When you upload a certificate for use with Keyless that has
+Keyless Delegation is [our implementation of the emerging delegated credentials standard](https://datatracker.ietf.org/doc/draft-ietf-tls-subcerts/). When you upload a certificate for use with Keyless that has
 the special extension permitting the use of delegated credentials,
 Cloudflare will automatically produce a delegated credential and use
 it at the edge with clients that support this feature. The handshakes

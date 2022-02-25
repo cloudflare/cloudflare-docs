@@ -85,10 +85,10 @@ filename: packages/public-api/index.js
 ---
 // Omitting addEventListener and boilerplate code
 
-import { json } from "handlers"
+import { json } from 'handlers';
 const handler = request => {
-  return json({ status: 200 })
-}
+  return json({ status: 200 });
+};
 ```
 
 After adding an identical `dependency` to `private-api/package.json`, run `lerna bootstrap` again, and begin sharing code between your projects.

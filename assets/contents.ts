@@ -8,7 +8,10 @@ export function toc() {
 
   if (article) {
     let headers = article.querySelectorAll('h2,h3,h4');
-    let i=0, tmp: Element, last: ListItem, container = target;
+    let i = 0,
+      tmp: Element,
+      last: ListItem,
+      container = target;
     if (!headers.length) return; // exit & leave hidden
 
     for (; i < headers.length; i++) {
@@ -18,9 +21,7 @@ export function toc() {
         container = target;
       } else if (last && tmp.nodeName > last.h) {
         // eg; "H4" > "H2" ==> true
-        container = last.appendChild(
-          document.createElement('ul')
-        );
+        container = last.appendChild(document.createElement('ul'));
       } else if (last && tmp.nodeName < last.h) {
         container = container.parentElement || target;
       }

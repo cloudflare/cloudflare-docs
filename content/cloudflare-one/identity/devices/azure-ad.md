@@ -11,8 +11,8 @@ weight: 4
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| Windows | WARP with Gateway | All plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows           | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -46,4 +46,4 @@ In the Cloudflare for Zero Trust dashboard, you can configure which applications
 
 2.  Open the **Authentication** tab.
 
-3.  Toggle the *Azure AD* integration that requires managed device usage.
+3.  Toggle the _Azure AD_ integration that requires managed device usage.

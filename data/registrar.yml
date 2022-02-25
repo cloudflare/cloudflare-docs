@@ -154,7 +154,7 @@ logo: <svg width="48" height="48" viewBox="0 0 48
 meta:
   title: Cloudflare Registrar docs
   description: Welcome to Cloudflare Registrar. The first registrar you can love.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

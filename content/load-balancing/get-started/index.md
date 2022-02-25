@@ -8,15 +8,15 @@ weight: 3
 
 This guide is meant for organizations setting up their first load balancer. If you already have active load balancers, refer to [Basic tasks](/load-balancing/how-to/) for general help or [Additional configurations](/load-balancing/additional-options/) for more advanced setups.
 
-***
+---
 
 ## Prerequisites
 
-*   **Multiple servers**, either physical or cloud-based.
-*   **Access to Load Balancing**, available as an add-on for any type of account.
-*   **Load balancer hostname**: The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
+- **Multiple servers**, either physical or cloud-based.
+- **Access to Load Balancing**, available as an add-on for any type of account.
+- **Load balancer hostname**: The hostname for which the Cloudflare Load Balancer will manage traffic. The default hostname is the root hostname.
 
-***
+---
 
 ## Step 1 — Create a monitor
 
@@ -80,7 +80,7 @@ This guide is meant for organizations setting up their first load balancer. If y
 
 ## Step 3 — Confirm pool health
 
-Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be *unknown* until the results of the first check are available.
+Before directing any traffic to your pools, make sure that your pools and monitors are set up correctly. The status of your health check will be _unknown_ until the results of the first check are available.
 
 <details>
 <summary>Confirm pool health (dashboard)</summary>
@@ -112,8 +112,8 @@ For troubleshooting a specific pool's health, use the [Pool Health Details](http
 
 If you notice that healthy pools are being marked unhealthy:
 
-*   Review [how origins and pools become unhealthy](/load-balancing/understand-basics/health-details/).
-*   Refer to the [Troubleshooting FAQ](https://support.cloudflare.com/hc/articles/4407016052493).
+- Review [how origins and pools become unhealthy](/load-balancing/understand-basics/health-details/).
+- Refer to the [Troubleshooting FAQ](https://support.cloudflare.com/hc/articles/4407016052493).
 
 ## Step 4 — Create a load balancer on a test subdomain
 
@@ -145,8 +145,8 @@ Just as in the previous step, make sure your load balancer is functioning as you
 
 For example, if you had `test.example.com` as a testing subdomain, you could either:
 
-*   Create a load balancer with a **Hostname** of `test.example.com`.
-*   Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
+- Create a load balancer with a **Hostname** of `test.example.com`.
+- Create a load balancer with a different **Hostname** (`lb.example.com`) and set up a CNAME record on `test.example.com` that points to `lb.example.com`.
 
 Either option would use your load balancer to distribute requests going to `test.example.com`.
 
@@ -168,8 +168,8 @@ Now that you have set up your load balancer and verified everything is working c
 
 As before, you could either:
 
-*   Edit the **Hostname** of your existing load balancer
-*   Update the CNAME record sending traffic to your load balancer
+- Edit the **Hostname** of your existing load balancer
+- Update the CNAME record sending traffic to your load balancer
 
 {{<Aside type="note">}}
 

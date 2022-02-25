@@ -10,7 +10,7 @@ layout: example
 ---
 
 ```js
-addEventListener("scheduled", (event) => {
+addEventListener('scheduled', event => {
   event.waitUntil(triggerEvent(event));
 });
 
@@ -18,19 +18,19 @@ async function triggerEvent(event) {
   // Write code for updating your API
   switch (event.cron) {
     // You can set up to three schedules maximum.
-    case "*/3 * * * *":
+    case '*/3 * * * *':
       // Every three minutes
       await updateAPI();
       break;
-    case "*/10 * * * *":
+    case '*/10 * * * *':
       // Every ten minutes
       await updateAPI2();
       break;
-    case "*/45 * * * *":
+    case '*/45 * * * *':
       // Every forty-five minutes
       await updateAPI3();
       break;
   }
-  console.log("cron processed");
+  console.log('cron processed');
 }
 ```

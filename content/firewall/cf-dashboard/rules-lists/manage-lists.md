@@ -18,13 +18,13 @@ The **Create new list** page displays.
 
 1.  Enter a name for your list, observing the following guidelines:
 
-    *   Use only lowercase letters, numbers and the underscore (`_`) character in the name. A valid name satisfies this regular expression:
+    - Use only lowercase letters, numbers and the underscore (`_`) character in the name. A valid name satisfies this regular expression:
 
-        `^[a-z0-9_]+$`
+      `^[a-z0-9_]+$`
 
-    *   The maximum length for a list name is 50 characters.
+    - The maximum length for a list name is 50 characters.
 
-    *   Use a descriptive name for your list so that the list is informative in the context of a Firewall Rule expression.
+    - Use a descriptive name for your list so that the list is informative in the context of a Firewall Rule expression.
 
 2.  Enter a description (optional). The maximum length for the description is 500 characters. There are no character constraints for the description field.
 
@@ -49,11 +49,11 @@ To delete an IP List, follow these steps:
 
 2.  Hover your pointer over the **Delete** button associated with the list you want to delete.
 
-    *   When the list is used in a Firewall Rule, a tooltip displays with notification that you cannot delete the list:
+    - When the list is used in a Firewall Rule, a tooltip displays with notification that you cannot delete the list:
 
-        ![Cannot Delete lists](/firewall/static/lists-cannot-delete.png)
+      ![Cannot Delete lists](/firewall/static/lists-cannot-delete.png)
 
-    *   When the list is not used in a Firewall Rule, **Delete** link highlights, indicating you can delete the list.
+    - When the list is not used in a Firewall Rule, **Delete** link highlights, indicating you can delete the list.
 
 3.  Click **Delete**.
 

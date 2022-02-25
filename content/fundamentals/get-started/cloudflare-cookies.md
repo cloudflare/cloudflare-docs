@@ -27,7 +27,7 @@ Currently Cloudflare only supports Session Affinity in "orange-cloud" (proxied) 
 
 {{</Aside>}}
 
-### \_\_cf\_bm cookie for Cloudflare bot products
+### \_\_cf_bm cookie for Cloudflare bot products
 
 Cloudflare's [bot products](/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the `__cf_bm` cookie on end-user devices that access customer sites protected by Bot Management or Bot Fight Mode. The `__cf_bm` cookie is necessary for these bot solutions to function properly.
 
@@ -41,13 +41,13 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 {{</Aside>}}
 
-### cf\_ob\_info and cf\_use\_ob cookie for Cloudflare Always Online
+### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:
 
-*   The HTTP Status Code returned by the origin web server
-*   The Ray ID of the original failed request
-*   The data center serving the traffic
+- The HTTP Status Code returned by the origin web server
+- The Ray ID of the original failed request
+- The data center serving the traffic
 
 The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from the Always Online cache on the designated port. Applicable values are: 0, 80, and 443. The `cf_ob_info` and `cf_use_ob` cookies are persistent cookies that expire after 30 seconds.
 
@@ -65,13 +65,13 @@ The `__cfruid` cookie is strictly necessary to support Cloudflare Rate Limiting 
 
 The table below shows additional cookies used by the Challenge Platform.
 
-| Cookie Name (XXX represents dynamic part)      | Description |
-| ----------- | ----------- |
-| `cf_clearance`      | 	Clearance Cookie stores the proof of challenge passed. It is used to no longer issue a captcha or jschallenge challenge if present. It is required to reach origin server.       |
-| `cf-cc-XXX`; `cf-chl-cc-XXX`; `cf-chl-seq-XXX`; `cf-chl-prog`   | These cookies are used by Cloudflare for the execution of Javascript or Captcha challenges. They are not used for tracking or beyond the scope of the challenge. They can be deleted if seen.        |
-| `cf-chl-XXXX`      | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.       |
-| `cf-chl-rc-i`; `cf-chl-rc-ni`   | These cookies are for internal use which allows Cloudflare to identify production issues on clients.        |
+| Cookie Name (XXX represents dynamic part)                     | Description                                                                                                                                                                                   |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf_clearance`                                                | Clearance Cookie stores the proof of challenge passed. It is used to no longer issue a captcha or jschallenge challenge if present. It is required to reach origin server.                    |
+| `cf-cc-XXX`; `cf-chl-cc-XXX`; `cf-chl-seq-XXX`; `cf-chl-prog` | These cookies are used by Cloudflare for the execution of Javascript or Captcha challenges. They are not used for tracking or beyond the scope of the challenge. They can be deleted if seen. |
+| `cf-chl-XXXX`                                                 | This cookie is used to check whether the [Cloudflare Edge server](https://www.cloudflare.com/en-gb/learning/cdn/glossary/edge-server/) supports cookies. It can be deleted if seen.           |
+| `cf-chl-rc-i`; `cf-chl-rc-ni`                                 | These cookies are for internal use which allows Cloudflare to identify production issues on clients.                                                                                          |
 
 ## Related resources
 
-*   [Understanding SameSite cookie interaction with Cloudflare](https://support.cloudflare.com/hc/articles/360038470312)
+- [Understanding SameSite cookie interaction with Cloudflare](https://support.cloudflare.com/hc/articles/360038470312)

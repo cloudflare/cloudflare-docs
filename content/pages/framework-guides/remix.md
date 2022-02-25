@@ -20,7 +20,7 @@ $ npx create-remix@latest
 
 After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses Cloudflare Pages.
 
-By selecting *Cloudflare Pages* as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions#path-segments) to learn more.
+By selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions#path-segments) to learn more.
 
 After selecting your deployment option, change the directory to your project and render your project by running the following command:
 
@@ -49,7 +49,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 <div>
 
 | Configuration option | Value           |
-| -------------------- | ----------------|
+| -------------------- | --------------- |
 | Production branch    | `main`          |
 | Framework preset     | `Remix`         |
 | Build command        | `npm run build` |
@@ -59,7 +59,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 {{<Aside type="warning">}}
 
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to *Settings* > *Environment Variables* > *Production* and add `NODE_VERSION = v16.7.0` in your production option.
+Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
 
 {{</Aside>}}
 

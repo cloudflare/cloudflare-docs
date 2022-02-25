@@ -7,11 +7,11 @@ weight: 4
 
 # Create a Tunnel
 
-| Before you start |
-|---|
+| Before you start                                                                                                                                |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website) |
-| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708) |
-| 3. [Install and authenticate `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/) |
+| 2. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)                                   |
+| 3. [Install and authenticate `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/)                                        |
 
 ## Create a Tunnel
 
@@ -33,14 +33,14 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 
 {{<table-wrap>}}
 
-| Action | `cert.pem` | Credentials file |
-|---|---|---|
-| Create a new Tunnel | Required | - |
-| Delete a Tunnel | Required | - |
-| Run a Tunnel | Available | Required |
-| Create DNS records<br/>from `cloudflared` | Required | - |
-| Connect to load balancer<br/>pools from `cloudflared` | Required | - |
-| Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available | Available |
+| Action                                                              | `cert.pem` | Credentials file |
+| ------------------------------------------------------------------- | ---------- | ---------------- |
+| Create a new Tunnel                                                 | Required   | -                |
+| Delete a Tunnel                                                     | Required   | -                |
+| Run a Tunnel                                                        | Available  | Required         |
+| Create DNS records<br/>from `cloudflared`                           | Required   | -                |
+| Connect to load balancer<br/>pools from `cloudflared`               | Required   | -                |
+| Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available  | Available        |
 
 {{</table-wrap>}}
 

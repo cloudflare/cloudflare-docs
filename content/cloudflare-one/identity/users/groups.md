@@ -20,8 +20,8 @@ Access groups are distinct from groups in your identity provider, like Okta grou
 
 Imagine you want to grant access to your applications to your team based in Lisbon, Portugal. In order to avoid building the same set of rules over and over across your applications, you can create a group called `lisbon-team`, which comprises:
 
-*   an Include rule granting access to everyone in Portugal, and
-*   a Require rule restricting access to users whose email ends in `@team.com`.
+- an Include rule granting access to everyone in Portugal, and
+- a Require rule restricting access to users whose email ends in `@team.com`.
 
 ![Groups](/cloudflare-one/static/documentation/identity/users/access-groups.png)
 
@@ -49,19 +49,19 @@ Group criteria determine whether or not a user is a member of a particular group
 
 Groups follow the same [logic](/cloudflare-one/policies/) as rules for Zero Trust policies in Access.
 
-Group criteria help define whether to include or exclude a team member from a  group. Here is a list of criteria and examples:
+Group criteria help define whether to include or exclude a team member from a group. Here is a list of criteria and examples:
 
-*   **Emails** — `you@company.com`
-*   **Emails ending in** — `@company.com`
-*   **Access groups** — `example-team`
-*   **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6)
-*   **Everyone** — allows, denies, or bypasses access to everyone.
-*   **Country** – uses the IP address to determine country
-*   **Valid Certificate** - The request will need to present any valid client certificate
-*   **Common Name** - The request will need to present a valid certificate with an expected common name
-*   **Any Access Service Token** - The request will need to present the headers for any service token created for this account
-*   **Service Token** - The request will need to present the correct service token headers configured for the specific application
-*   **Identity provider groups** — Employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
+- **Emails** — `you@company.com`
+- **Emails ending in** — `@company.com`
+- **Access groups** — `example-team`
+- **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6)
+- **Everyone** — allows, denies, or bypasses access to everyone.
+- **Country** – uses the IP address to determine country
+- **Valid Certificate** - The request will need to present any valid client certificate
+- **Common Name** - The request will need to present a valid certificate with an expected common name
+- **Any Access Service Token** - The request will need to present the headers for any service token created for this account
+- **Service Token** - The request will need to present the correct service token headers configured for the specific application
+- **Identity provider groups** — Employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
 
 ## Using groups for IP-based rules
 
@@ -69,7 +69,7 @@ We recommend using groups to define any IP address-based rules you configure in 
 
 {{<Aside>}}
 
-If adding more than one IP address or range to a group, it’s best to use an Include rule. If you don’t use the Include rule, the policy using that  group attempts to require traffic to originate from all ranges.
+If adding more than one IP address or range to a group, it’s best to use an Include rule. If you don’t use the Include rule, the policy using that group attempts to require traffic to originate from all ranges.
 
 {{</Aside>}}
 

@@ -63,25 +63,25 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 {{<definitions>}}
 
-*   `name`
+- `name`
 
-    *   Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
+  - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
-*   `requiresignedurls`
+- `requiresignedurls`
 
-    *   If this key is present, the video playback for this video will be required to use signed urls after upload.
+  - If this key is present, the video playback for this video will be required to use signed urls after upload.
 
-*   `allowedorigins`
+- `allowedorigins`
 
-    *   An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
+  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
 
-*   `thumbnailtimestamppct`
+- `thumbnailtimestamppct`
 
-    *   Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
+  - Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
-*   `watermark`
+- `watermark`
 
-    *   The watermark profile UID.
+  - The watermark profile UID.
 
 {{</definitions>}}
 
@@ -164,7 +164,6 @@ func main() {
 
 	uploader.Upload()
 }
-
 ```
 
 You can also get the progress of the upload if you're running the upload in a goroutine.
@@ -193,52 +192,52 @@ npm install tus-js-client
 
 Set up an index.js and configure:
 
-*   API endpoint with your Cloudflare Account ID
-*   Request headers to include a API token
+- API endpoint with your Cloudflare Account ID
+- Request headers to include a API token
 
-```javascript
-var fs = require("fs");
-var tus = require("tus-js-client");
+```js
+var fs = require('fs');
+var tus = require('tus-js-client');
 
 // specify location of file you'd like to upload below
-var path = __dirname + "/test.mp4";
+var path = __dirname + '/test.mp4';
 var file = fs.createReadStream(path);
 var size = fs.statSync(path).size;
-var mediaId = ''
+var mediaId = '';
 
 var options = {
-  endpoint: "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream",
+  endpoint: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream',
   headers: {
-    'Authorization': 'Bearer $TOKEN',
+    Authorization: 'Bearer $TOKEN',
   },
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   resume: true,
   metadata: {
-    filename: "test.mp4",
-    filetype: "video/mp4",
+    filename: 'test.mp4',
+    filetype: 'video/mp4',
     defaulttimestamppct: 0.5,
-    watermark: "$WATERMARKUID"
+    watermark: '$WATERMARKUID',
   },
   uploadSize: size,
   onError: function (error) {
     throw error;
   },
   onProgress: function (bytesUploaded, bytesTotal) {
-    var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
-    console.log(bytesUploaded, bytesTotal, percentage + "%");
+    var percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+    console.log(bytesUploaded, bytesTotal, percentage + '%');
   },
   onSuccess: function () {
-    console.log("Upload finished");
+    console.log('Upload finished');
   },
   onAfterResponse: function (req, res) {
     return new Promise(resolve => {
-        var mediaIdHeader = res.getHeader("stream-media-id");
-        if (mediaIdHeader) {
-            mediaId = mediaIdHeader;
-        }
-        resolve()
-    })
-  }
+      var mediaIdHeader = res.getHeader('stream-media-id');
+      if (mediaIdHeader) {
+        mediaId = mediaIdHeader;
+      }
+      resolve();
+    });
+  },
 };
 
 var upload = new tus.Upload(file, options);

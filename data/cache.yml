@@ -21,7 +21,7 @@ meta:
     website’s content on our servers. Caching static resources at Cloudflare
     reduces your server load and bandwidth, with no extra charges for bandwidth
     spikes
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

@@ -58,7 +58,7 @@ async function markdown(file: string): Promise<void> {
   let input = await fs.readFile(file, 'utf8');
   let BACKTICKS = /^(\s+)?([`]{3})([A-Za-z]+?)\r?\n([^]+?)(\2)/gm;
 
-  while (match = BACKTICKS.exec(input)) {
+  while ((match = BACKTICKS.exec(input))) {
     let current = match.index;
     let [full, ws, open, hint, inner, close] = match;
     output += input.substring(last, current);

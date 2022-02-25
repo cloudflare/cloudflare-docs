@@ -14,10 +14,10 @@ You can install `cloudflared` as a system service on Windows.
 
 By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/), but at a minimum you must specify the following arguments to run as a service:
 
-| Argument | Description |
-|---|---|
-|`tunnel`|The UUID of your Tunnel
-|`credentials-file`|The location of the credentials file for your Tunnel|
+| Argument           | Description                                          |
+| ------------------ | ---------------------------------------------------- |
+| `tunnel`           | The UUID of your Tunnel                              |
+| `credentials-file` | The location of the credentials file for your Tunnel |
 
 ## Running `cloudflared` as a service
 
@@ -82,13 +82,14 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 11. Copy the credentials file and the configuration file to the folder created in step 6:
 
-    ```bash
-    C:\Windows\System32\config\systemprofile\.cloudflared
-    ```
+        ```bash
+        C:\Windows\System32\config\systemprofile\.cloudflared
+        ```
 
-     {{<Aside type="Note">}}
-If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
-     {{</Aside>}}
+         {{<Aside type="Note">}}
+
+    If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
+    {{</Aside>}}
 
 12. Validate the ingress rule entries in your configuration file using the command:
 

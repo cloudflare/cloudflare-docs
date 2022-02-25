@@ -48,11 +48,11 @@ A blocklist is a list of items (usually websites, IP addresses, email addresses,
 
 ## cached bandwidth (cached egress bandwidth)
 
-The amount of bandwidth served from Cloudflare without hitting the origin server. Cached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** equals *hit*, *stale*, *updating*, *ignored*, or *revalidated*.
+The amount of bandwidth served from Cloudflare without hitting the origin server. Cached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
 
 ## cached requests
 
-The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals *hit*, *stale*, *updating*, *ignored*. This doesn’t include *revalidated* since the request had to be sent to the origin server.
+The number of requests served from Cloudflare without having to hit the origin server. Cached requests are the sum of all requests where **CacheCacheStatus** equals _hit_, _stale_, _updating_, _ignored_. This doesn’t include _revalidated_ since the request had to be sent to the origin server.
 
 **Relevant terms:** requests, uncached requests
 
@@ -256,7 +256,7 @@ OV certificates are used by corporations or governments to portray an extra laye
 
 ## origin bandwidth (origin egress bandwidth)
 
-The amount of data transferred from the origin server to Cloudflare within a certain period of time. Origin bandwidth is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** doesn’t equal *0*.
+The amount of data transferred from the origin server to Cloudflare within a certain period of time. Origin bandwidth is the sum of all **EdgeResponseBytes** where **OriginResponseStatus** doesn’t equal _0_.
 
 ## Origin Certificate
 
@@ -277,7 +277,7 @@ An origin response status code is an HTTP response code sent from the origin ser
 
 ## plan
 
-Plans distinguish the breadth of Cloudflare features accessible to a specific domain.  Plan options include [Free, Pro, Business, or Enterprise](https://www.cloudflare.com/plans/).
+Plans distinguish the breadth of Cloudflare features accessible to a specific domain. Plan options include [Free, Pro, Business, or Enterprise](https://www.cloudflare.com/plans/).
 
 ## primary certificate / secondary certificate
 
@@ -339,8 +339,8 @@ The SAN field of an SSL certificate specifies additional host names (sites, IP a
 
 Subscriptions are a monthly fee in addition to standard plan costs that are visible within the Cloudflare Overview app. Subscriptions refer to:
 
-*   Plan Extensions (Enterprise), or
-*   Active Subscriptions (Free, Pro, and Business)
+- Plan Extensions (Enterprise), or
+- Active Subscriptions (Free, Pro, and Business)
 
 Some examples include products and services such as Argo, Access, Load Balancing, Stream, and more.
 
@@ -354,8 +354,8 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 The customizable portion of your [team domain](#team-domain). You can change this name at any time in the Teams dashboard, under the **Authentication** tab.
 
-| team domain | team name |
-|-------------|-----------|
+| team domain                             | team name        |
+| --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
 ## Terraform
@@ -368,10 +368,10 @@ Any event that can potentially cause serious damage and lead to site attacks. In
 
 The security levels and the challenge display criteria are:
 
-*   *High* - for scores greater than 0
-*   *Medium* - for scores greater than 14
-*   *Low* - for scores greater than 24
-*   *Essentially off* - for scores greater than 49
+- _High_ - for scores greater than 0
+- _Medium_ - for scores greater than 14
+- _Low_ - for scores greater than 24
+- _Essentially off_ - for scores greater than 49
 
 **Relevant links:** [Cloudflare Logs documentation](/logs/)
 
@@ -393,11 +393,11 @@ Two-factor authentication adds an additional layer of login security to Cloudfla
 
 ## uncached bandwidth (uncached egress bandwidth)
 
-The amount of bandwidth that is not cached, and therefore is served from the origin. Uncached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** doesn’t equal *hit*, *stale*, *updating*, *ignored*, or *revalidated*.
+The amount of bandwidth that is not cached, and therefore is served from the origin. Uncached bandwidth is the sum of all **EdgeResponseBytes** where **CacheCacheStatus** doesn’t equal _hit_, _stale_, _updating_, _ignored_, or _revalidated_.
 
 ## uncached requests
 
-Uncached requests are requests that are not cached, and therefore are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** doesn’t equal to *hit*, *stale*, *updating*, or *ignored*.
+Uncached requests are requests that are not cached, and therefore are served from the origin server. Uncached requests are the sum of all requests where **CacheCacheStatus** doesn’t equal to _hit_, _stale_, _updating_, or _ignored_.
 
 **Related terms:** requests, cached requests
 

@@ -10,11 +10,11 @@ Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — mak
 
 To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works well with all static site generators. For a quick-start, review the following projects:
 
-*   [Hugo](https://gohugo.io/getting-started/quick-start/)
-*   [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
-*   [Jekyll](https://jekyllrb.com/docs/), requires Ruby
-*   [Eleventy](https://www.11ty.io/#quick-start), requires Node
-*   [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
+- [Hugo](https://gohugo.io/getting-started/quick-start/)
+- [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
+- [Jekyll](https://jekyllrb.com/docs/), requires Ruby
+- [Eleventy](https://www.11ty.io/#quick-start), requires Node
+- [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
 
 After you have generated a site, follow these steps:
 

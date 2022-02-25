@@ -129,9 +129,9 @@ Copy and paste the following content into your `public/index.html` file:
 ```html
 <html lang="en">
   <head>
-    <meta charset="utf8">
+    <meta charset="utf8" />
     <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
   </head>
   <body>
     <form method="POST" action="/api/submit">
@@ -246,8 +246,8 @@ export async function onRequestPost(context) {
     let pretty = JSON.stringify([...input], null, 2);
     return new Response(pretty, {
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      }
+        'Content-Type': 'application/json;charset=utf-8',
+      },
     });
   } catch (err) {
     return new Response('Error parsing JSON content', { status: 400 });
@@ -285,8 +285,8 @@ export async function onRequestPost(context) {
     let pretty = JSON.stringify(output, null, 2);
     return new Response(pretty, {
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      }
+        'Content-Type': 'application/json;charset=utf-8',
+      },
     });
   } catch (err) {
     return new Response('Error parsing JSON content', { status: 400 });
@@ -315,11 +315,11 @@ Your work now resides within the GitHub repository, which means that Pages is ab
 
 If this is your first Cloudflare Pages project, refer to the [Get started guide](/pages/get-started/) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-*   **Project name** – Your choice
-*   **Production branch** – `main`
-*   **Framework preset** – None
-*   **Build command** – None / Empty
-*   **Build output directory** – `public`
+- **Project name** – Your choice
+- **Production branch** – `main`
+- **Framework preset** – None
+- **Build command** – None / Empty
+- **Build output directory** – `public`
 
 After clicking the **Save and Deploy** button, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -329,5 +329,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-*   [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
-*   [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable)
+- [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
+- [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable)

@@ -24,9 +24,10 @@ To set up PingIdentity (SAML) as your identity provider:
 
 5.  In the **SAML attribute configuration** dialog select **Email attribute > urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
 
-     {{<Aside>}}
-There is an additional setting for PingFederate prior to 9.0.
-     {{</Aside>}}
+         {{<Aside>}}
+
+    There is an additional setting for PingFederate prior to 9.0.
+    {{</Aside>}}
 
 6.  In the **Signature Policy** tab, disable the option to **Always Sign Assertion**.
 
@@ -70,7 +71,7 @@ To get your Cloudflare metadata file:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `<your-team-name>`  with your [team name](/cloudflare-one/glossary/#team-name).
+    Replace `<your-team-name>` with your [team name](/cloudflare-one/glossary/#team-name).
 
     The link returns a web page with your SAML SP data in XML format.
 
@@ -82,15 +83,15 @@ To get your Cloudflare metadata file:
 
 ```json
 {
-    "config": {
-        "issuer_url": "https://example.cloudflareaccess.com/cdn-cgi/access/callback",
-        "sso_target_url": "https://sso.connect.pingidentity.com/sso/idp/SSO.saml2?idpid=aebe6668-32fe-4a87-8c2b-avcd3599a123",
-        "attributes": ["PingOne.AuthenticatingAuthority", "PingOne.idpid"],
-        "email_attribute_name": "",
-        "sign_request": false,
-        "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
-        },
-    "type": "saml",
-    "name": "ping saml example"
+  "config": {
+    "issuer_url": "https://example.cloudflareaccess.com/cdn-cgi/access/callback",
+    "sso_target_url": "https://sso.connect.pingidentity.com/sso/idp/SSO.saml2?idpid=aebe6668-32fe-4a87-8c2b-avcd3599a123",
+    "attributes": ["PingOne.AuthenticatingAuthority", "PingOne.idpid"],
+    "email_attribute_name": "",
+    "sign_request": false,
+    "idp_public_cert": "MIIDpDCCAoygAwIBAgIGAV2ka+55MA0GCSqGSIb3DQEBCwUAMIGSMQswCQYDVQQGEwJVUzETMBEG\nA1UEC.....GF/Q2/MHadws97cZg\nuTnQyuOqPuHbnN83d/2l1NSYKCbHt24o"
+  },
+  "type": "saml",
+  "name": "ping saml example"
 }
 ```

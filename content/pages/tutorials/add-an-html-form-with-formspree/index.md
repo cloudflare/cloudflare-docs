@@ -73,12 +73,11 @@ Copy and paste the following content into your `public/index.html` file, which i
 ```html
 <html lang="en">
   <head>
-    <meta charset="utf8">
+    <meta charset="utf8" />
     <title>Form Demo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
   </head>
   <body>
-
     <!-- the form from above -->
 
     <form method="POST" action="/">
@@ -93,7 +92,6 @@ Copy and paste the following content into your `public/index.html` file, which i
 
       <button type="submit">Submit</button>
     </form>
-
   </body>
 </html>
 ```
@@ -126,9 +124,8 @@ Copy the `Form Endpoint` URL and paste it into the `action` attribute of the for
 
 ```html
 <form method="POST" action="https://formspree.io/f/mqldaqwx">
-
-<!-- replace with your own formspree endpoint -->
-
+  <!-- replace with your own formspree endpoint -->
+</form>
 ```
 
 Now when you submit your form, you should be redirected to a Thank You page. The form data will be submitted to your account on [Formspree.io](/pages/formspree.io/).
@@ -137,9 +134,9 @@ You can now adjust your form processing logic to change the [redirect page](http
 
 For more help setting up Formspree, refer to the following resources:
 
-*   For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
-*   For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
-*   For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
+- For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
+- For examples and inspiration for your own HTML forms, review the [Formspree form library](https://formspree.io/library).
+- For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
 
 ## Deployment
 
@@ -160,11 +157,11 @@ Your work now resides within the GitHub repository, which means that Pages is ab
 
 If this is your first Cloudflare Pages project, refer to [Get started](/pages/get-started/) for a complete setup guide. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-*   **Project name** – Your choice
-*   **Production branch** – `main`
-*   **Framework preset** – None
-*   **Build command** – None / Empty
-*   **Build output directory** – `public`
+- **Project name** – Your choice
+- **Production branch** – `main`
+- **Framework preset** – None
+- **Build command** – None / Empty
+- **Build output directory** – `public`
 
 After selecting **Save and Deploy**, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -174,5 +171,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-*   [Add a React form with Formspree](/pages/tutorials/add-a-react-form-with-formspree/)
-*   [HTML Forms](/pages/tutorials/forms/)
+- [Add a React form with Formspree](/pages/tutorials/add-a-react-form-with-formspree/)
+- [HTML Forms](/pages/tutorials/forms/)

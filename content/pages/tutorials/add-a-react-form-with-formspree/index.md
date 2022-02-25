@@ -55,10 +55,10 @@ npm install --save @formspree/react
 Then paste the following code snippet into the `ContactForm.js` file:
 
 ```jsx
-import { useForm, ValidationError } from "@formspree/react";
+import { useForm, ValidationError } from '@formspree/react';
 
 export default function ContactForm() {
-  const [state, handleSubmit] = useForm("YOUR_FORM_ID");
+  const [state, handleSubmit] = useForm('YOUR_FORM_ID');
 
   if (state.succeeded) {
     return <p>Thanks for your submission!</p>;
@@ -69,7 +69,7 @@ export default function ContactForm() {
       <label htmlFor="name">Full Name</label>
       <input id="name" type="text" name="name" required />
       <ValidationError prefix="Name" field="name" errors={state.errors} />
-      
+
       <label htmlFor="email">Email Address</label>
       <input id="email" type="email" name="email" required />
       <ValidationError prefix="Email" field="email" errors={state.errors} />
@@ -77,7 +77,7 @@ export default function ContactForm() {
       <label for="message">Message</label>
       <textarea id="message" name="message" required></textarea>
       <ValidationError prefix="Message" field="message" errors={state.errors} />
-      
+
       <button type="submit" disabled={state.submitting}>
         Submit
       </button>
@@ -102,7 +102,7 @@ For clarity, this form does not include any styling, but in the GitHub project (
 To add this form to your website, import the component:
 
 ```jsx
-import ContactForm from "./ContactForm";
+import ContactForm from './ContactForm';
 ```
 
 Then insert the form into the page as a react component:
@@ -114,9 +114,9 @@ Then insert the form into the page as a react component:
 For example, you can update your `src/App.js` file to add the form:
 
 ```jsx
-import ContactForm from "./ContactForm"; // <-- import the form component
-import logo from "./logo.svg";
-import "./App.css";
+import ContactForm from './ContactForm'; // <-- import the form component
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
   return (
@@ -137,7 +137,6 @@ function App() {
 
         {/* your contact form component goes here */}
         <ContactForm />
- 
       </header>
     </div>
   );
@@ -169,7 +168,7 @@ You will be presented with instructions on how to integrate your new form. Copy 
 Your component should now have a line like this:
 
 ```jsx
-const [state, handleSubmit] = useForm("mqldaqwx");
+const [state, handleSubmit] = useForm('mqldaqwx');
 
 /* replace the random-like string above with your own form's ID */
 ```
@@ -180,9 +179,9 @@ From here you can adjust your form processing logic to update the [notification 
 
 For more help setting up Formspree, refer to the following resources:
 
-*   For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
-*   For more help creating forms in React, refer to the [formspree-react documentation](https://help.formspree.io/hc/en-us/articles/360055613373-The-Formspree-React-library)
-*   For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
+- For general help with Formspree, refer to the [Formspree help site](https://help.formspree.io/hc/en-us).
+- For more help creating forms in React, refer to the [formspree-react documentation](https://help.formspree.io/hc/en-us/articles/360055613373-The-Formspree-React-library)
+- For tips on integrating Formspree with popular platforms like Next.js, Gatsby and Eleventy, refer to the [Formspree guides](https://formspree.io/guides).
 
 ## Deployment
 
@@ -203,11 +202,11 @@ Your work now resides within the GitHub repository, which means that Pages is ab
 
 If this is your first Cloudflare Pages project, refer to the [Get started guide](/pages/get-started/) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-*   **Project name** – Your choice
-*   **Production branch** – `main`
-*   **Framework preset** – Create React App
-*   **Build command** – `npm run build`
-*   **Build output directory** – `build`
+- **Project name** – Your choice
+- **Production branch** – `main`
+- **Framework preset** – Create React App
+- **Build command** – `npm run build`
+- **Build output directory** – `build`
 
 After selecting **Save and Deploy**, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -241,5 +240,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-*   [Add an HTML form with Formspree](/pages/tutorials/add-an-html-form-with-formspree/)
-*   [HTML Forms](/pages/tutorials/forms/)
+- [Add an HTML form with Formspree](/pages/tutorials/add-an-html-form-with-formspree/)
+- [HTML Forms](/pages/tutorials/forms/)

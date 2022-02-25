@@ -22,9 +22,9 @@ The following example demonstrates a Worker that redirects all incoming requests
 
 With the Service Worker syntax, the example Worker looks like:
 
-```javascript
+```js
 async function handler(request) {
-  const base = "https://example.com";
+  const base = 'https://example.com';
   const statusCode = 301;
 
   const destination = new URL(request.url, base);
@@ -32,17 +32,17 @@ async function handler(request) {
 }
 
 // Initialize Worker
-addEventListener("fetch", (event) => {
+addEventListener('fetch', event => {
   event.respondWith(handler(event.request));
 });
 ```
 
 Module Workers replace the `addEventListener` syntax with an object definition, which must be the file's default export (via `export default`). The example code above becomes:
 
-```javascript
+```js
 export default {
   fetch(request) {
-    const base = "https://example.com";
+    const base = 'https://example.com';
     const statusCode = 301;
 
     const destination = new URL(request.url, base);
@@ -57,24 +57,24 @@ Workers often need access to data not in the `request` object. For example, some
 
 This example code:
 
-```javascript
+```js
 async function triggerEvent(event) {
   // Fetch some data
-  console.log("cron processed", event.scheduledTime);
+  console.log('cron processed', event.scheduledTime);
 }
 
 // Initialize Worker
-addEventListener("scheduled", (event) => {
+addEventListener('scheduled', event => {
   event.waitUntil(triggerEvent(event));
 });
 ```
 
 Then becomes:
 
-```javascript
+```js
 async function triggerEvent(event) {
   // Fetch some data
-  console.log("cron processed", event.scheduledTime);
+  console.log('cron processed', event.scheduledTime);
 }
 
 const worker = {
@@ -92,22 +92,22 @@ The module Worker syntax has full support in the Cloudflare dashboard. Go to **W
 
 Then replace:
 
-```javascript
-addEventListener("fetch", (event) => {
+```js
+addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  return new Response("Hello world");
+  return new Response('Hello world');
 }
 ```
 
 With:
 
-```javascript
+```js
 export default {
   fetch() {
-    return new Response("Hello world");
+    return new Response('Hello world');
   },
 };
 ```

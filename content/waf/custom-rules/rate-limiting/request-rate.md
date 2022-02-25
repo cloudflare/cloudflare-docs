@@ -18,8 +18,8 @@ Cloudflare keeps separate request counters for Rate Limiting rules for each valu
 
 For example, consider a rule configured with the following characteristics:
 
-*   IP address
-*   HTTP header `x-api-key`
+- IP address
+- HTTP header `x-api-key`
 
 In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
 
@@ -38,19 +38,19 @@ Consider the following configuration for a Rate Limiting rule:
 Expression:<br/>
 `http.request.uri.path eq "/form" and any(http.request.headers["content-type"][*] eq "application/x-www-form-urlencoded")`
 
-Action: *Block*
+Action: _Block_
 
 Characteristics:
 
-*   *Data center ID* (included by default when creating the rule in the dashboard)
-*   *IP Address*
-*   *HTTP Header* > `x-api-key`
+- _Data center ID_ (included by default when creating the rule in the dashboard)
+- _IP Address_
+- _HTTP Header_ > `x-api-key`
 
-Period: *10 seconds*
+Period: _10 seconds_
 
 Requests per period: `1`
 
-Mitigation timeout: *10 minutes*
+Mitigation timeout: _10 minutes_
 
 {{</example>}}
 

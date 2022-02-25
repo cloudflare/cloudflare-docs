@@ -19,73 +19,73 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 ## Requirements
 
 {{<table-wrap>}}
-    <table>
-        <tr>
-            <th>&nbsp;</th>
-            <th>Business and Enterprise Users</th>
-            <th>Optimized Partners</th>
-        </tr>
-        <tr>
-            <td><strong>Hardware</strong></td>
-            <td>
-                <ul>
-                    <li>Dual core processor</li>
-                    <li>4 GB RAM</li>
-                    <li>64-bit Architecture</li>
-                </ul>
-            </td>
-            <td>
-                <ul>
-                    <li>Quad core processor</li>
-                    <li>8 GB RAM</li>
-                    <li>64-bit Architecture</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Software</strong></td>
-            <td>
-                <ul>
-                    <li>Memcache &gt;= 1.4 with at least 512 MB of storage (&gt;1 GB recommended)</li>
-                </ul>
-            </td>
-            <td>
-                <ul>
-                    <li>Memcache &gt;= 1.4 with at least 1 GB of storage (&gt;2 GB recommended)</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>Operating System</strong></td>
-            <td>
-                <ul>
-                    <li>Debian 8, 9</li>
-                    <li>Ubuntu Linux 12.04, 14.04, 16.04</li>
-                    <li>Red Hat Enterprise Linux 6, 7</li>
-                    <li>CentOS 6, 7</li>
-                </ul>
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td><strong>Network</strong></td>
-            <td>
-                <ul>
-                    <li>Port 2408 open to traffic from our <a href="https://www.cloudflare.com/ips">IPs</a></li>
-                </ul>
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
+<table>
+<tr>
+<th>&nbsp;</th>
+<th>Business and Enterprise Users</th>
+<th>Optimized Partners</th>
+</tr>
+<tr>
+<td><strong>Hardware</strong></td>
+<td>
+<ul>
+<li>Dual core processor</li>
+<li>4 GB RAM</li>
+<li>64-bit Architecture</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>Quad core processor</li>
+<li>8 GB RAM</li>
+<li>64-bit Architecture</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><strong>Software</strong></td>
+<td>
+<ul>
+<li>Memcache &gt;= 1.4 with at least 512 MB of storage (&gt;1 GB recommended)</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>Memcache &gt;= 1.4 with at least 1 GB of storage (&gt;2 GB recommended)</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><strong>Operating System</strong></td>
+<td>
+<ul>
+<li>Debian 8, 9</li>
+<li>Ubuntu Linux 12.04, 14.04, 16.04</li>
+<li>Red Hat Enterprise Linux 6, 7</li>
+<li>CentOS 6, 7</li>
+</ul>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><strong>Network</strong></td>
+<td>
+<ul>
+<li>Port 2408 open to traffic from our <a href="https://www.cloudflare.com/ips">IPs</a></li>
+</ul>
+</td>
+<td>&nbsp;</td>
+</tr>
+</table>
 {{</table-wrap>}}
 
 ## Support
 
 When contacting [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476), provide the following information (if accessible):
 
-*   Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
-*   Output from `/var/log/messages` from Railgun.
-*   A copy of `/var/log/railgun/panic.log`, if not empty.
+- Your `railgun.conf` and `railgun-nat.conf` (if applicable) files.
+- Output from `/var/log/messages` from Railgun.
+- A copy of `/var/log/railgun/panic.log`, if not empty.
 
 Providing the IP address or hostname of your Railgun server will also allow our Support team to test connectivity remotely. Please let us know if you have firewalled your Railgun server when lodging support request.
 

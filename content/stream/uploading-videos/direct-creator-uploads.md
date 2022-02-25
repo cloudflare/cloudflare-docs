@@ -24,11 +24,12 @@ body of the `POST` request:
 
 {{<definitions>}}
 
-*   `maxDurationSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-    *   Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
+- `maxDurationSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-*   `expiry` {{<type>}}string (date){{</type>}} {{<prop-meta>}}default: now + 30 minutes{{</prop-meta>}}
-    *   Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
+  - Enforces the maximum duration in seconds for a video the user uploads. For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours. Therefore, this field must be greater than 1 and less than 21,600.
+
+- `expiry` {{<type>}}string (date){{</type>}} {{<prop-meta>}}default: now + 30 minutes{{</prop-meta>}}
+  - Optional string field that enforces the time after which the unique one-time upload URL is invalid. The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone. If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future. If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
 {{</definitions>}}
 
@@ -36,20 +37,24 @@ Additionally, you can control security features through these fields:
 
 {{<definitions>}}
 
-*   `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: false{{</prop-meta>}}
-    *   Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
+- `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: false{{</prop-meta>}}
 
-*   `allowedOrigins` {{<type>}}array of strings{{</type>}} {{<prop-meta>}}default: *empty*{{</prop-meta>}}
-    *   Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
+  - Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
 
-*   `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
-    *   Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
+- `allowedOrigins` {{<type>}}array of strings{{</type>}} {{<prop-meta>}}default: _empty_{{</prop-meta>}}
 
-*   `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: *none*{{</prop-meta>}}
-    *   `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/uploading-videos/applying-watermarks/) automatically.
+  - Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
 
-*   `meta` {{<type>}}json map{{</type>}} {{<prop-meta>}}default: *none*{{</prop-meta>}}
-    *   Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
+- `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
+
+  - Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
+
+- `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
+
+  - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/uploading-videos/applying-watermarks/) automatically.
+
+- `meta` {{<type>}}json map{{</type>}} {{<prop-meta>}}default: _none_{{</prop-meta>}}
+  - Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
 
 {{</definitions>}}
 
@@ -121,7 +126,7 @@ kept as a reference to query our [API](/stream/getting-started/searching/).
 ## Direct creator upload request from end users
 
 Using the `uploadURL` provided in the previous request, users can upload video
-files.  Uploads are limited to 200 MB in size.
+files. Uploads are limited to 200 MB in size.
 
 ```bash
 curl -X POST \
@@ -129,7 +134,7 @@ curl -X POST \
   https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22
 ```
 
-A successful upload will receive a `200` response.  If the upload does not meet
+A successful upload will receive a `200` response. If the upload does not meet
 the upload constraints defined at time of creation or is larger than 200 MB in
 size, the user will receive a `4xx` response.
 
@@ -144,32 +149,30 @@ size, the user will receive a `4xx` response.
   <body>
     <form id="form">
       <input type="file" accept="video/*" id="video" />
-      <button type="submit">
-        Upload Video
-      </button>
+      <button type="submit">Upload Video</button>
     </form>
     <script>
       async function getOneTimeUploadUrl() {
         // The real implementation of this function should make an API call to your server
         // where a unique one-time upload URL should be generated and returned to the browser.
         // Here we will use a fake one that looks real but won't actually work.
-        return "https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22";
+        return 'https://upload.videodelivery.net/f65014bc6ff5419ea86e7972a047ba22';
       }
 
-      const form = document.getElementById("form");
-      const videoInput = document.getElementById("video");
+      const form = document.getElementById('form');
+      const videoInput = document.getElementById('video');
 
-      form.addEventListener("submit", async (e) => {
+      form.addEventListener('submit', async e => {
         e.preventDefault();
         const oneTimeUploadUrl = await getOneTimeUploadUrl();
         const video = videoInput.files[0];
         const formData = new FormData();
-        formData.append("file", video);
+        formData.append('file', video);
         const uploadResult = await fetch(oneTimeUploadUrl, {
-          method: "POST",
+          method: 'POST',
           body: formData,
         });
-        form.innerHTML = "<h3>Upload successful!</h3>"
+        form.innerHTML = '<h3>Upload successful!</h3>';
       });
     </script>
   </body>
@@ -194,44 +197,47 @@ Here is a demo Cloudflare Worker script which returns the one-time upload URL:
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+  event.respondWith(handleRequest(event.request));
+});
 
 /**
  * Respond to the request
  * @param {Request} request
  */
 async function handleRequest(request) {
-  const response = await fetch("https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true", {
-    method: 'POST',
-    headers: {
-      'Authorization': 'bearer $TOKEN',
-      'Tus-Resumable': '1.0.0',
-      'Upload-Length': request.headers.get('Upload-Length'),
-      'Upload-Metadata': request.headers.get('Upload-Metadata')
-    },
-  })
+  const response = await fetch(
+    'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true',
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': 'bearer $TOKEN',
+        'Tus-Resumable': '1.0.0',
+        'Upload-Length': request.headers.get('Upload-Length'),
+        'Upload-Metadata': request.headers.get('Upload-Metadata'),
+      },
+    }
+  );
 
-  const destination = response.headers.get('Location')
+  const destination = response.headers.get('Location');
 
   return new Response(null, {
     headers: {
       'Access-Control-Expose-Headers': 'Location',
       'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Origin':'*',
-      'Location': destination
-    }
-  })
+      'Access-Control-Allow-Origin': '*',
+      'Location': destination,
+    },
+  });
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 
 Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the `Upload endpoint` field and then try to upload a video.
 
-When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL.
+When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which _returns_ the videodelivery.net URL.
 
 Please note that if you are developing on localhost, your test using the codepen may fail. Before testing, it is best to push your endpoint to a server with an IP and/or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
@@ -239,13 +245,13 @@ Please note that if you are developing on localhost, your test using the codepen
 
 You can apply the same constraints as Direct Creator Upload via basic upload when using tus. To do so, you must pass the expiry and maxDurationSeconds as part of the `Upload-Metadata` request header as part of the first request (made by the Worker in the example above.) The `Upload-Metadata` values are ignored from subsequent requests that do the actual file upload.
 
-Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, *not* an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
+Upload-Metadata header should contain key-value pairs. The keys are text and the values should be base64. Separate the key and values by a space, _not_ an equal sign. To join multiple key-value pairs, include a comma with no additional spaces.
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
 
 `'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'`
 
-*NjAw* is the base64 encoded value for "600" (or 10 minutes).
+_NjAw_ is the base64 encoded value for "600" (or 10 minutes).
 
 ## Tracking user upload progress
 
@@ -258,4 +264,4 @@ You can do that two ways:
     to understand it's status.
 
 2.  You can [create a webhook subscription](/stream/uploading-videos/using-webhooks/) to receive notifications
-    regarding the status of videos.  These notifications include the video's UID.
+    regarding the status of videos. These notifications include the video's UID.

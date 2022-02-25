@@ -18,14 +18,14 @@ pinning service and your own server for higher availability.
 
 ## Prerequisites
 
-*   A Linux server that's online as much as possible. A VPS from a provider like
-    [DigitalOcean](https://www.digitalocean.com/) is an option, or something like
-    a [NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc.html)
-    or [Raspberry Pi](https://www.raspberrypi.org/) running on your home network
-    will work.<br /> <u>Recommended Minimum Requirements:</u>
-    *   2 gigabytes of RAM
-    *   10 gigabytes of disk space
-    *   1 terabyte of bandwidth per month
+- A Linux server that's online as much as possible. A VPS from a provider like
+  [DigitalOcean](https://www.digitalocean.com/) is an option, or something like
+  a [NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc.html)
+  or [Raspberry Pi](https://www.raspberrypi.org/) running on your home network
+  will work.<br /> <u>Recommended Minimum Requirements:</u>
+  - 2 gigabytes of RAM
+  - 10 gigabytes of disk space
+  - 1 terabyte of bandwidth per month
 
 ## Installing IPFS
 
@@ -42,8 +42,8 @@ $ sudo mv go-ipfs/ipfs /usr/local/bin
 $ rm -rf go-ipfs go-ipfs_v0.4.21_linux-amd64.tar.gz
 ```
 
-IPFS also has to do its own setup, so we run this command *logged in as the user
-that we'll want to run the IPFS daemon*:
+IPFS also has to do its own setup, so we run this command _logged in as the user
+that we'll want to run the IPFS daemon_:
 
 ```bash
 $ ipfs init
@@ -60,7 +60,7 @@ are started automatically when the server boots, restarted if they fail, and
 have their output logs persisted to disk. Now that IPFS is installed, we want to
 create a service for it so that we get all these benefits.
 
-To do this, we create a *unit file* at `/etc/systemd/system/ipfs.service` with
+To do this, we create a _unit file_ at `/etc/systemd/system/ipfs.service` with
 the contents:
 
     [Unit]
@@ -86,16 +86,16 @@ $ sudo systemctl start ipfs
 
 ### Notes on systemd
 
-*   See high-level information on how the IPFS daemon is doing:<br />
-    `$ systemctl status ipfs`
-*   Stop the daemon:<br />
-    `$ systemctl stop ipfs`
-*   Start the daemon:<br />
-    `$ systemctl start ipfs`
-*   See all logs from the daemon:<br />
-    `$ journalctl -u ipfs`
-*   See only most recent logs, and show new logs as they're written:<br />
-    `$ journalctl -f -u ipfs`
+- See high-level information on how the IPFS daemon is doing:<br />
+  `$ systemctl status ipfs`
+- Stop the daemon:<br />
+  `$ systemctl stop ipfs`
+- Start the daemon:<br />
+  `$ systemctl start ipfs`
+- See all logs from the daemon:<br />
+  `$ journalctl -u ipfs`
+- See only most recent logs, and show new logs as they're written:<br />
+  `$ journalctl -f -u ipfs`
 
 ## Opening Up to the Internet
 
@@ -105,7 +105,7 @@ would've given your server a public IP when it was created and started allowing
 connections to all ports.
 
 If you're hosting your own server, you'll need to first configure your router to
-give the machine running the IPFS node an *internal* static IP address. This
+give the machine running the IPFS node an _internal_ static IP address. This
 address will probably look either like 192.168.x.y or 10.x.y.z, and will be
 assigned to this machine every time it boots (unlike other machines which may
 get a different IP every time). And once the server has a static IP, you'll need

@@ -8,9 +8,9 @@ weight: 4
 
 With Deploy Hooks, you can trigger deployments using event sources beyond commits in your source repository. Each event source may obtain its own unique URL, which will receive HTTP POST requests in order to initiate new deployments. This feature allows you to integrate Pages with new or existing workflows. For example, you may:
 
-*   Automatically deploy new builds whenever content in a Headless CMS changes
-*   Implement a fully customized CI/CD pipeline, deploying only under desired conditions
-*   Schedule a CRON trigger to update your website on a fixed timeline
+- Automatically deploy new builds whenever content in a Headless CMS changes
+- Implement a fully customized CI/CD pipeline, deploying only under desired conditions
+- Schedule a CRON trigger to update your website on a fixed timeline
 
 To create a Deploy Hook, navigate from **Account Home** to **Pages** and select your desired Pages project. Navigate to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
 

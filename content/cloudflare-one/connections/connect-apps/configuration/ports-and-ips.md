@@ -8,10 +8,10 @@ weight: 4
 
 Users can implement a positive security model with Cloudflare Tunnel by restricting traffic originating from `cloudflared`. The parameters below can be configured for egress traffic inside of a firewall.
 
-*   TCP/UDP port 7844 (for `h2mux`/`http2` and `quic`)
-    *   IPs are those behind `region1.argotunnel.com` and `region2.argotunnel.com` \*
-*   TCP port 443 (HTTPS)
-    *   IPs are those behind `api.cloudflare.com` and `update.cloudflare.com` \*
+- TCP/UDP port 7844 (for `h2mux`/`http2` and `quic`)
+  - IPs are those behind `region1.argotunnel.com` and `region2.argotunnel.com` \*
+- TCP port 443 (HTTPS)
+  - IPs are those behind `api.cloudflare.com` and `update.cloudflare.com` \*
 
 {{<Aside>}}
 
@@ -87,4 +87,4 @@ To test ports:
     SourceAddress    : 10.0.2.15
     TcpTestSucceeded : True
 
-\* *These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here.*
+\* _These IP addresses are unlikely to change but in the event that they do, Cloudflare will update the information here._

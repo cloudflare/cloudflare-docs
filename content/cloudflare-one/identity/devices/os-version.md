@@ -11,8 +11,8 @@ weight: 5
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| Windows, Mac | WARP with Gateway | All plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, Mac      | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -36,7 +36,7 @@ Operating systems display version numbers in different ways. This section covers
 
 You must ensure the version is entered is a valid `x.x.x` Semver. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
 
-  {{</Aside>}}
+{{</Aside>}}
 
 ### On macOS
 

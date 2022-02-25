@@ -33,7 +33,7 @@ To create a DNS record in the dashboard:
 
 To create records with the API, use a [POST request](https://api.cloudflare.com/#dns-records-for-a-zone-create-dns-record).
 
-***
+---
 
 ## Edit DNS records
 
@@ -51,7 +51,7 @@ To edit DNS records in the dashboard:
 
 To update part of a record with the API, use a [PATCH request](https://api.cloudflare.com/#dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record).
 
-***
+---
 
 ## Delete DNS records
 

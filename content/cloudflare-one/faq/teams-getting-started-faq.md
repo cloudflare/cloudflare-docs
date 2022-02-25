@@ -14,11 +14,11 @@ You can sign up today at [this link](https://dash.cloudflare.com/sign-up/teams).
 
 ## What's a team domain/team name?
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.  The customizable portion of your team domain is called **team name**. You can change this name at any time in the Zero Trust dashboard, under the **Authentication** tab.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them. The customizable portion of your team domain is called **team name**. You can change this name at any time in the Zero Trust dashboard, under the **Authentication** tab.
 
-| team name | team domain |
-|-------------|-----------|
-|  `your-team-name` | `<your-team-name>.cloudflareaccess.com` |
+| team name        | team domain                             |
+| ---------------- | --------------------------------------- |
+| `your-team-name` | `<your-team-name>.cloudflareaccess.com` |
 
 ## How do I change my subscription plan?
 
@@ -32,9 +32,9 @@ Cloudflare Zero Trust subscriptions consist of seats that users in your account 
 
 User seats can be removed for Access and Gateway at **My Team** > **Users**. Removing a user will have consequences both on Access and on Gateway:
 
-*   **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
+- **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
 
-*   **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
+- **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
 
 {{<Aside type="warning">}}
 

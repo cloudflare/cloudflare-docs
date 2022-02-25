@@ -21,10 +21,10 @@ Rule expression:<br/>
 
 Exposed credentials check with the following configuration:
 
-*   Username expression: `http.request.body.form["user_id"]`
-*   Password expression: `http.request.body.form["password"]`
+- Username expression: `http.request.body.form["user_id"]`
+- Password expression: `http.request.body.form["password"]`
 
-Action: *Legacy CAPTCHA*
+Action: _Legacy CAPTCHA_
 
 {{</example>}}
 

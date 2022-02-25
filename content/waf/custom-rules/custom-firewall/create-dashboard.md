@@ -34,6 +34,6 @@ To create a new Custom Firewall rule:
 
 6.  Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-7.  Select the rule action from the **Choose action** drop-down list. For example, selecting *Block* tells Cloudflare to refuse requests that match the conditions you specified.
+7.  Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
 8.  To save and deploy your rule, click **Save and Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.

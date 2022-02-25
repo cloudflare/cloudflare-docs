@@ -12,10 +12,10 @@ You can create Gateway HTTP policies to control access to your corporate SaaS ap
 
 Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
 
-*   Microsoft 365
-*   Slack
-*   GSuite
-*   Dropbox
+- Microsoft 365
+- Slack
+- GSuite
+- Dropbox
 
 ## Add custom headers for a SaaS application (Microsoft 365 example)
 
@@ -24,14 +24,16 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
 1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
 
 2.  Create a policy with the following values:
-    *   Action: `Allow`
-    *   Selector: `Application`
-    *   Operator: `In`
-    *   Value: select the application you would like to inject custom headers for.
+
+    - Action: `Allow`
+    - Selector: `Application`
+    - Operator: `In`
+    - Value: select the application you would like to inject custom headers for.
 
 3.  Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
-    *   Custom Header Name: Restrict-Access-To-Tenants
-    *   Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
+
+    - Custom Header Name: Restrict-Access-To-Tenants
+    - Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
 
 4.  Click **Create policy**.
 
@@ -45,9 +47,9 @@ This section covers policy configurations for common SaaS applications.
 
 {{<table-wrap>}}
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Microsoft Office365 | Allow | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
+| Selector    | Operator | Value               | Action | Header name                                             |
+| ----------- | -------- | ------------------- | ------ | ------------------------------------------------------- |
+| Application | In       | Microsoft Office365 | Allow  | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
 
 {{</table-wrap>}}
 
@@ -55,9 +57,9 @@ This section covers policy configurations for common SaaS applications.
 
 {{<table-wrap>}}
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Slack | Allow | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
+| Selector    | Operator | Value | Action | Header name                                                          |
+| ----------- | -------- | ----- | ------ | -------------------------------------------------------------------- |
+| Application | In       | Slack | Allow  | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
 
 {{</table-wrap>}}
 
@@ -65,9 +67,9 @@ This section covers policy configurations for common SaaS applications.
 
 {{<table-wrap>}}
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Google Workspace | Allow | `X-GooGApps-Allowed-Domains` |
+| Selector    | Operator | Value            | Action | Header name                  |
+| ----------- | -------- | ---------------- | ------ | ---------------------------- |
+| Application | In       | Google Workspace | Allow  | `X-GooGApps-Allowed-Domains` |
 
 {{</table-wrap>}}
 
@@ -75,9 +77,9 @@ This section covers policy configurations for common SaaS applications.
 
 {{<table-wrap>}}
 
-| Selector | Operator | Value | Action | Header name |
-| -- | -- | -- | -- | -- |
-| Application | In | Dropbox | Allow | `X-Dropbox-allowed-Team-Ids` |
+| Selector    | Operator | Value   | Action | Header name                  |
+| ----------- | -------- | ------- | ------ | ---------------------------- |
+| Application | In       | Dropbox | Allow  | `X-Dropbox-allowed-Team-Ids` |
 
 {{</table-wrap>}}
 
@@ -91,25 +93,25 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 
 #### 1. Create an Isolate policy
 
-*   **Name**: Isolate HTTPBIN
-*   **Description**: Isolates the `httpbin.org` website.
-*   **Action**: Isolate
+- **Name**: Isolate HTTPBIN
+- **Description**: Isolates the `httpbin.org` website.
+- **Action**: Isolate
 
-| Selector | Operator | Value |
-| -- | -- | -- |
-| Domain | in | httpbin.org |
+| Selector | Operator | Value       |
+| -------- | -------- | ----------- |
+| Domain   | in       | httpbin.org |
 
 ![Isolate policy](/cloudflare-one/static/documentation/policies/httpbin-policy-1.png)
 
 #### 2. Create an Allow policy with a Custom Header
 
-*   **Name**: Inject custom request header for HTTPBIN
-*   **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
-*   **Action**: Allow
+- **Name**: Inject custom request header for HTTPBIN
+- **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
+- **Action**: Allow
 
-| Selector | Operator | Value |
-| -- | -- | -- |
-| Domain | in | httpbin.org |
+| Selector | Operator | Value       |
+| -------- | -------- | ----------- |
+| Domain   | in       | httpbin.org |
 
 ![Allow policy](/cloudflare-one/static/documentation/policies/httpbin-policy.png)
 

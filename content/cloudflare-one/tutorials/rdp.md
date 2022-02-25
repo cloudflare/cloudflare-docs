@@ -11,9 +11,9 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 **🗺️ This walkthrough covers how to:**
 
-*   Build a policy in Cloudflare Access to secure the machine
-*   Connect a machine to Cloudflare's network using an RDP connection
-*   Connect from a client machine
+- Build a policy in Cloudflare Access to secure the machine
+- Connect a machine to Cloudflare's network using an RDP connection
+- Connect from a client machine
 
 **⏲️ Time to complete: 30 minutes**
 
@@ -22,7 +22,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
-***
+---
 
 ## Create a Zero Trust policy
 
@@ -54,7 +54,7 @@ You can always edit the policy to change who should be allowed access to the app
 
 ## Install `cloudflared`
 
-Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 1.  Download the version of `cloudflared` that matches your architecture from the [available releases](https://github.com/cloudflare/cloudflared/releases).
 
@@ -152,7 +152,8 @@ with `%USERNAME%` being your Windows username (this is your user folder).
 
 {{<Aside>}}
 
-<strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
+<strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your
+domain in the Cloudflare control panel:
 
 ![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
@@ -224,9 +225,9 @@ At this point the shortcut will appear on the desktop, and users can launch with
 
 ## Common issues
 
-*   You may get a warning indicating that the `.exe` (`cloudflared.exe`) is unknown. This can be skipped by clicking `More Info` in the dialog box and then clicking **Run Anyway**. This will only appear one time.
+- You may get a warning indicating that the `.exe` (`cloudflared.exe`) is unknown. This can be skipped by clicking `More Info` in the dialog box and then clicking **Run Anyway**. This will only appear one time.
 
-*   Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
+- Ensure that RDP is enabled on the target Windows machine. If not, you may encounter an error: `No connection could be made because the target machine actively refused it`.
 
 ### MacOS
 

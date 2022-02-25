@@ -11,7 +11,7 @@ layout: example
 ---
 
 ```js
-const CSS = `body { color: red; }`
+const CSS = `body { color: red; }`;
 const HTML = `
 <!doctype html>
 <html lang="en">
@@ -24,29 +24,28 @@ const HTML = `
     <h1>Server push test page</h1>
 </body>
 </html>
-`
+`;
 
 async function handleRequest(request) {
   // If request is for test.css, serve the raw CSS
   if (/test\.css$/.test(request.url)) {
     return new Response(CSS, {
       headers: {
-        "content-type": "text/css",
+        'content-type': 'text/css',
       },
-    })
-  }
-  else {
+    });
+  } else {
     // Serve raw HTML using HTTP/2 for the CSS file
     return new Response(HTML, {
       headers: {
-        "content-type": "text/html",
-        Link: "</http2_push/h2p/test.css>; rel=preload; as=style",
+        'content-type': 'text/html',
+        'Link': '</http2_push/h2p/test.css>; rel=preload; as=style',
       },
-    })
+    });
   }
 }
 
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 ```

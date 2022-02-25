@@ -17,17 +17,17 @@ JA3 Fingerprints are only available to Enterprise customers who have purchased B
 
 To get more information about potential bot requests, use these JA3 Fingerprints in:
 
-*   [Bot Analytics](/bots/bot-analytics/bm-subscription/)
-*   [Firewall Analytics](/waf/analytics)
-*   [Analytics GraphQL API](/analytics/graphql-api), specifically the **HTTP Requests** data set
+- [Bot Analytics](/bots/bot-analytics/bm-subscription/)
+- [Firewall Analytics](/waf/analytics)
+- [Analytics GraphQL API](/analytics/graphql-api), specifically the **HTTP Requests** data set
 
 ## Actions
 
 To adjust how your application responds to specific fingerprints, use them with:
 
-*   [Firewall Rules](/firewall/cf-dashboard)
-*   [Transform Rules](/rules/transform)
-*   [Cloudflare Workers](/workers/runtime-apis/request#incomingrequestcfproperties)
+- [Firewall Rules](/firewall/cf-dashboard)
+- [Transform Rules](/rules/transform)
+- [Cloudflare Workers](/workers/runtime-apis/request#incomingrequestcfproperties)
 
 ## Use cases
 

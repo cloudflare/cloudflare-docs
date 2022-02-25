@@ -20,9 +20,9 @@ For information on the available functions, refer to [Functions](/ruleset-engine
 
 A rewrite expression (that is, the expression that defines the dynamic URL rewrite to perform) can only include the following fields:
 
-*   `http.request.uri.*`
-*   `http.request.headers.*`
-*   `http.request.accepted_languages`
+- `http.request.uri.*`
+- `http.request.headers.*`
+- `http.request.accepted_languages`
 
 Refer to [Fields](/ruleset-engine/rules-language/fields) for reference information on these fields.
 

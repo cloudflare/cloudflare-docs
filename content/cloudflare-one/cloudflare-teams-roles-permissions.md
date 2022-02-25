@@ -12,14 +12,14 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 
 {{<table-wrap>}}
 
-| | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
-| -- | -- | -- | -- | -- | -- | -- | -- |
-| Super Administrator | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Cloudflare for Teams | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | - |
-| Cloudflare Access Admin | ✓ | ✓ | ✓ | - | ✓ | ✓ | - | - |
-| Cloudflare Gateway Admin | ✓ | - | ✓ | ✓ | ✓ | ✓ | - | - |
-| Cloudflare for Teams Read Only | ✓ | - | ✓ | - | ✓ | ✓ | - | - |
-| Cloudflare for Teams Reporting | - | - | - | - | ✓ | ✓ | - | - |
+|                                | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
+| ------------------------------ | ----------- | ----------- | ------------ | ------------ | -------------- | ------------ | ------------ | --- |
+| Super Administrator            | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | ✓            |
+| Cloudflare for Teams           | ✓           | ✓           | ✓            | ✓            | ✓              | ✓            | -            |
+| Cloudflare Access Admin        | ✓           | ✓           | ✓            | -            | ✓              | ✓            | -            | -   |
+| Cloudflare Gateway Admin       | ✓           | -           | ✓            | ✓            | ✓              | ✓            | -            | -   |
+| Cloudflare for Teams Read Only | ✓           | -           | ✓            | -            | ✓              | ✓            | -            | -   |
+| Cloudflare for Teams Reporting | -           | -           | -            | -            | ✓              | ✓            | -            | -   |
 
 {{</table-wrap>}}
 

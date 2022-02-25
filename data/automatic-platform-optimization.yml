@@ -44,7 +44,7 @@ meta:
   description: With Automatic Platform Optimization, Cloudflare serves your entire
     site from our edge network, ensuring customers see improved performance when
     visiting your site.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:
@@ -55,7 +55,7 @@ algolia:
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
-  - title: "Blog: Introducing APO"
+  - title: 'Blog: Introducing APO'
     url: https://blog.cloudflare.com/automatic-platform-optimizations-starting-with-wordpress/
-  - title: "Blog: APO Post-launch report"
+  - title: 'Blog: APO Post-launch report'
     url: https://blog.cloudflare.com/apo-post-launch-report/

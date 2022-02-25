@@ -18,18 +18,18 @@ Cloudflare produces a simple, trustworthy map of API endpoints through a process
 
 For example, you might have thousands of APIs, but a lot of the calls look similar, such as:
 
-*   `api.example.com/login/238`
-*   `api.example.com/login/392`
+- `api.example.com/login/238`
+- `api.example.com/login/392`
 
 Both paths serve a similar purpose — allowing users to log into their accounts — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/login/*`.
 
 API Discovery runs this process across all your authenticated endpoints, eventually generating a simple map of endpoints that might look like:
 
-*   `login/{customer_identifier}`
-*   `auth`
-*   `account/{customer_identifier}`
-*   `password_reset`
-*   `logout`
+- `login/{customer_identifier}`
+- `auth`
+- `account/{customer_identifier}`
+- `password_reset`
+- `logout`
 
 This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](/api-shield/volumetric-abuse-detection/) and [sequential](/api-shield/sequential-abuse-detection/) attacks.
 

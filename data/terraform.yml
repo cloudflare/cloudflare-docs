@@ -55,7 +55,7 @@ meta:
     infrastructure. Define and store configuration in source code repositories
     like GitHub, track and version changes over time, and roll back when
     needed—all without needing to learn the Cloudflare APIs
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

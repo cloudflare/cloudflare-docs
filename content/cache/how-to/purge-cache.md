@@ -21,15 +21,15 @@ The single-file purge rate limit for the Free subscription is 1000 urls/min. The
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 
-*   [Custom cache keys](/cache/about/cache-keys/)
-*   [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
-*   Any of these request headers:
-    *   `X-Forwarded-Host`
-    *   `X-Host`
-    *   `X-Forwarded-Scheme`
-    *   `X-Original-URL`
-    *   `X-Rewrite-URL`
-    *   `Forwarded`
+- [Custom cache keys](/cache/about/cache-keys/)
+- [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
+- Any of these request headers:
+  - `X-Forwarded-Host`
+  - `X-Host`
+  - `X-Forwarded-Scheme`
+  - `X-Original-URL`
+  - `X-Rewrite-URL`
+  - `Forwarded`
 
 You can purge objects with these characteristics using an API call ([Purge files by URL](https://api.cloudflare.com/#zone-purge-files-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
@@ -83,19 +83,19 @@ You add cache-tags to your web content in Cache-Tag HTTP response headers to all
 
 When your content reaches our edge network, Cloudflare:
 
-*   Removes the `Cache-Tag HTTP` header before sending the response to your website visitor. Your end users never see Cache-Tag HTTP headers on your Cloudflare-enabled website.
-*   Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
-*   Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
+- Removes the `Cache-Tag HTTP` header before sending the response to your website visitor. Your end users never see Cache-Tag HTTP headers on your Cloudflare-enabled website.
+- Removes whitespaces from the header and any before and after cache-tag names: `tag1`, `tag2` and `tag1,tag2` are considered the same.
+- Removes all repeated and trailing commas before applying cache-tags: `tag1,,,tag2` and `tag1,tag2` are considered the same.
 
 ### A few things to remember:
 
-*   A single HTTP response can have more than one `Cache-Tag HTTP` header field.
-*   The minimum length of a cache-tag is 1 byte.
-*   Individual tags don’t have a maximum length, but the aggregate `Cache-Tag HTTP` header cannot exceed 16 KB after the header field name, which is approximately 1000 unique tags. Length includes whitespace and commas but does not include the header field name.
-*   For cache purges, the maximum length of cache-tags in an API call is 120 characters.
-*   The `Cache-Tag HTTP` header must accept all valid characters allowable in HTTP headers, as specified in [RFC-5987](https://tools.ietf.org/html/rfc5987).
-*   Spaces are not allowed in cache-tags.
-*   Case does not matter. For example, `Tag1` and `tag1` are considered the same.
+- A single HTTP response can have more than one `Cache-Tag HTTP` header field.
+- The minimum length of a cache-tag is 1 byte.
+- Individual tags don’t have a maximum length, but the aggregate `Cache-Tag HTTP` header cannot exceed 16 KB after the header field name, which is approximately 1000 unique tags. Length includes whitespace and commas but does not include the header field name.
+- For cache purges, the maximum length of cache-tags in an API call is 120 characters.
+- The `Cache-Tag HTTP` header must accept all valid characters allowable in HTTP headers, as specified in [RFC-5987](https://tools.ietf.org/html/rfc5987).
+- Spaces are not allowed in cache-tags.
+- Case does not matter. For example, `Tag1` and `tag1` are considered the same.
 
 ## Purge using cache-tags
 
@@ -116,17 +116,17 @@ You can purge using cache-tags or hostnames via the Cloudflare API. For more inf
 
 Enterprise customers can purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
-*   `www.example.com/`
-*   `www.example.com/foo/`
-*   `www.example.com/foo/bar/`
-*   `www.example.com/foo/bar/baz/`
-*   `www.example.com/foo/bar/baz/qux.jpg`
+- `www.example.com/`
+- `www.example.com/foo/`
+- `www.example.com/foo/bar/`
+- `www.example.com/foo/bar/baz/`
+- `www.example.com/foo/bar/baz/qux.jpg`
 
 Purging by prefix is useful in different scenarios, such as:
 
-*   Purging everything within a directory
-*   Increasing control over cached objects in a path
-*   Simplifying the number of purge calls sent
+- Purging everything within a directory
+- Increasing control over cached objects in a path
+- Simplifying the number of purge calls sent
 
 1.  Log in to your Cloudflare dashboard.
 2.  Select the appropriate domain.
@@ -134,8 +134,8 @@ Purging by prefix is useful in different scenarios, such as:
 4.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
 5.  Under **Purge by**, select **Prefix**.
 6.  Follow the syntax instructions.
-    *   One prefix per line.
-    *   Maximum 30 prefixes per API call.
+    - One prefix per line.
+    - Maximum 30 prefixes per API call.
 7.  Enter the appropriate value(s) in the text field using the format shown in the example.
 8.  Click **Purge**.
 
@@ -143,12 +143,12 @@ Purging by prefix is useful in different scenarios, such as:
 
 There are several limitations regarding purge by prefix:
 
-*   Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
-*   Purge requests are limited to 30 prefixes per request.
-*   [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
-*   URI query strings & fragments cannot purge by prefix:
-    *   `www.example.com/foo?a=b` (query string)
-    *   `www.example.com/foo#bar` (fragment)
+- Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
+- Purge requests are limited to 30 prefixes per request.
+- [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
+- URI query strings & fragments cannot purge by prefix:
+  - `www.example.com/foo?a=b` (query string)
+  - `www.example.com/foo#bar` (fragment)
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -170,16 +170,16 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 
 See the example API request below to purge all mobile assets on the root web page.
 
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache" 
-    -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" 
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 
 ### Purge by geo
 
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache" 
-    -H "X-Auth-Email: user@example.com" 
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    -H "X-Auth-Email: user@example.com"
     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 
 ## Purge varied images

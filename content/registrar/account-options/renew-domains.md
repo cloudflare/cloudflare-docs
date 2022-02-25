@@ -44,12 +44,12 @@ Once Cloudflare validates your payment, the status of your domain changes to **R
 
 Once a domain is registered, Registrar sends the following expiration notices to the email address associated with the domain:
 
-*   A monthly email listing all domains set to renew automatically within the next 45 days.
-*   A monthly email listing all domains expiring in the next 60-90 days.
-*   A weekly email listing all domains expiring within the next month.
-*   A daily email listing all domains expiring in seven days.
-*   An email one day after a domain expires.
-*   An email 20 days after the expiration date.
+- A monthly email listing all domains set to renew automatically within the next 45 days.
+- A monthly email listing all domains expiring in the next 60-90 days.
+- A weekly email listing all domains expiring within the next month.
+- A daily email listing all domains expiring in seven days.
+- An email one day after a domain expires.
+- An email 20 days after the expiration date.
 
 {{<Aside type="note">}}
 

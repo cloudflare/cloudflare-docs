@@ -102,7 +102,7 @@ meta:
   title: Cloudflare Load Balancing docs
   description: Balance traffic loads, manage failovers, monitor server and pool
     health, and apply geographic control with Cloudflare Load Balancing
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

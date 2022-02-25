@@ -58,9 +58,9 @@ If your project makes use of environment variables to build your site, you can p
 
 The following system environment variables are injected by default (but can be overridden):
 
-| Environment Variable  | Injected value                        | Example use-case                                                               |
-| --------------------- | ------------------------------------- | ------------------------------------------------------------------------------ |
-| `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages versus locally                          |
+| Environment Variable  | Injected value                        | Example use-case                                                                        |
+| --------------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
+| `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages versus locally                               |
 | `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting, for example, Sentry                       |
 | `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customizing build based on branch, for example, disabling debug logging on `production` |
 

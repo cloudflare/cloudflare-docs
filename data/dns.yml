@@ -21,7 +21,7 @@ meta:
   title: Cloudflare DNS docs
   description: Cloudflare DNS provides the fastest, most resilient, and simplest
     managed DNS platform to meet your needs.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 externals:

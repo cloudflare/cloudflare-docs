@@ -13,8 +13,8 @@ meta:
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| All systems | WARP with Gateway | All plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -52,7 +52,7 @@ You are now ready to start requiring WARP for your Access applications.
 
 3.  Click **Edit**.
 
-4.  To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option *WARP* selected.
+4.  To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _WARP_ selected.
 
 5.  Click **Save rule**.
 

@@ -12,9 +12,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 
 **🗺️ This tutorial covers how to:**
 
-*   Create a Gateway policy to block file uploads to a specific provider
-*   Enroll devices into a Zero Trust account where this rule will be enforced
-*   Log file type upload attempts
+- Create a Gateway policy to block file uploads to a specific provider
+- Enroll devices into a Zero Trust account where this rule will be enforced
+- Log file type upload attempts
 
 **⏲️ Time to complete:**
 
@@ -96,12 +96,12 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 
-*   Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
-*   Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+- Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to *Enabled*. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 

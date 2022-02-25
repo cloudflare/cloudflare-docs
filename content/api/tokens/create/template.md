@@ -124,7 +124,9 @@ Below is a table of the currently available API token templates and the default 
     </tr>
     <tr>
       <td rowspan="3">Read All Resources</td>
-      <td><em>(All read permissions)</em></td>
+      <td>
+        <em>(All read permissions)</em>
+      </td>
       <td>Account, Zone, User</td>
     </tr>
     <tr>

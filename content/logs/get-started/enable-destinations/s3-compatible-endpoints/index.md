@@ -10,14 +10,14 @@ meta:
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
 
-*   [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
-*   [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
-*   [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-*   [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
-*   [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
-*   [Linode Object Storage](https://www.linode.com/products/object-storage/)
-*   [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
-*   On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
+- [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
+- [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
+- [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
+- [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
+- [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
+- [Linode Object Storage](https://www.linode.com/products/object-storage/)
+- [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
+- On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
 For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/logs/get-started/) documentation.
 
@@ -42,11 +42,12 @@ To enable the Cloudflare Logpush service:
 7.  Select **S3-Compatible**.
 
 8.  Enter or select the following destination information:
-    *   **S3 Compatible Bucket Path**
-    *   **Bucket region**
-    *   **Access Key ID**
-    *   **Secret Access Key**
-    *   **Endpoint URL**
+
+    - **S3 Compatible Bucket Path**
+    - **Bucket region**
+    - **Access Key ID**
+    - **Secret Access Key**
+    - **Endpoint URL**
 
 9.  Click **Validate access**.
 
@@ -73,8 +74,8 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-*   **name** (optional) - Use your domain name as the job name.
-*   **destination\_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
+- **name** (optional) - Use your domain name as the job name.
+- **destination_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
 
 ```bash
 "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>"
@@ -86,8 +87,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 {{</Aside>}}
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
+- **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
 
 Example request using cURL:
 
@@ -121,7 +122,7 @@ Response:
 
 ### 2. Enable (update) a job
 
-To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
+To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL, and send `{"enabled": true}` in the request body.
 
 Example request using cURL:
 

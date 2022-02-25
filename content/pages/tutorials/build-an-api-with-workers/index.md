@@ -48,19 +48,19 @@ With `itty-router` installed, you can open up `handler.ts` and set up your route
 ---
 filename: "src/handler.ts"
 ---
-import { Router } from 'itty-router'
+import { Router } from 'itty-router';
 
-import Posts from './handlers/posts'
-import Post from './handlers/post'
+import Posts from './handlers/posts';
+import Post from './handlers/post';
 
-const router = Router()
+const router = Router();
 
 router
   .get('/api/posts', Posts)
   .get('/api/posts/:id', Post)
-  .get('*', () => new Response("Not found", { status: 404 }))
+  .get('*', () => new Response('Not found', { status: 404 }));
 
-export const handleRequest = request => router.handle(request)
+export const handleRequest = request => router.handle(request);
 ```
 
 The above routing configuration defines three routes: `/api/posts`, `/api/posts/:id`, and a wildcard route, which will be called if the incoming request does not match the first two routes.
@@ -77,15 +77,15 @@ In the below sample, you will stub out the `posts` array, and later, you will co
 ---
 filename: "src/handlers/posts.ts"
 ---
-const posts = []
+const posts = [];
 
 const Posts = () => {
-  const body = JSON.stringify(posts)
-  const headers = { 'Content-type': 'application/json' }
-  return new Response(body, { headers })
-}
+  const body = JSON.stringify(posts);
+  const headers = { 'Content-type': 'application/json' };
+  return new Response(body, { headers });
+};
 
-export default Posts
+export default Posts;
 ```
 
 `Posts` is a simple function with no arguments that returns a JSON response. When an application makes a GET request to `/api/posts`, they will receive a JSON-encoded array back, which they can use to render a list of blog posts.
@@ -96,18 +96,18 @@ You will define something similar for `handlers/post.ts`, which returns a single
 ---
 filename: "src/handlers/post.ts"
 ---
-const post = {}
+const post = {};
 
 const Post = request => {
   // This will be used soon to retrieve a post
-  const postId = request.params.id
+  const postId = request.params.id;
 
-  const body = JSON.stringify(post)
-  const headers = { 'Content-type': 'application/json' }
-  return new Response(body, { headers })
-}
+  const body = JSON.stringify(post);
+  const headers = { 'Content-type': 'application/json' };
+  return new Response(body, { headers });
+};
 
-export default Post
+export default Post;
 ```
 
 ### Defining a static data class
@@ -121,25 +121,25 @@ filename: "src/posts_store.ts"
 const _posts = [
   {
     id: 1,
-    title: "My first blog post",
-    text: "Hello world! This is my first blog post on my new Cloudflare Workers + Pages blog.",
-    published_at: new Date("2020-10-23")
+    title: 'My first blog post',
+    text: 'Hello world! This is my first blog post on my new Cloudflare Workers + Pages blog.',
+    published_at: new Date('2020-10-23'),
   },
   {
     id: 2,
-    title: "Updating my blog",
+    title: 'Updating my blog',
     text: "It's my second blog post! I'm still writing and publishing using Cloudflare Workers + Pages :)",
-    published_at: new Date("2020-10-26")
-  }
-]
+    published_at: new Date('2020-10-26'),
+  },
+];
 
 export default class PostsStore {
   async all() {
-    return _posts
+    return _posts;
   }
 
   async find(id: number) {
-    return _posts.find(post => post.id.toString() === id.toString())
+    return _posts.find(post => post.id.toString() === id.toString());
   }
 }
 ```
@@ -153,16 +153,16 @@ With `PostsStore` set up, you can import it and use it in our handlers:
 filename: "src/handlers/posts.ts"
 highlight: [1, 4, 5]
 ---
-import Store from '../posts_store'
+import Store from '../posts_store';
 
 const Posts = async () => {
-  const posts = new Store()
-  const body = JSON.stringify(await posts.all())
-  const headers = { 'Content-type': 'application/json' }
-  return new Response(body, { headers })
-}
+  const posts = new Store();
+  const body = JSON.stringify(await posts.all());
+  const headers = { 'Content-type': 'application/json' };
+  return new Response(body, { headers });
+};
 
-export default Posts
+export default Posts;
 ```
 
 ```ts
@@ -170,18 +170,18 @@ export default Posts
 filename: "src/handlers/post.ts"
 highlight: [1, 4, 7]
 ---
-import Store from '../posts_store'
+import Store from '../posts_store';
 
 const Post = async request => {
-  const posts = new Store()
-  const postId = request.params.id
+  const posts = new Store();
+  const postId = request.params.id;
 
-  const body = JSON.stringify(await posts.find(postId))
-  const headers = { 'Content-type': 'application/json' }
-  return new Response(body, { headers })
-}
+  const body = JSON.stringify(await posts.find(postId));
+  const headers = { 'Content-type': 'application/json' };
+  return new Response(body, { headers });
+};
 
-export default Post
+export default Post;
 ```
 
 ### Adding CORS headers
@@ -193,19 +193,19 @@ Before you are ready to deploy, you will make one more change to our handlers, a
 filename: "src/handlers/posts.ts"
 highlight: [6, 7, 8, 9]
 ---
-import Store from '../posts_store'
+import Store from '../posts_store';
 
 const Posts = async () => {
-  const posts = new Store()
-  const body = JSON.stringify(await posts.all())
+  const posts = new Store();
+  const body = JSON.stringify(await posts.all());
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Content-type': 'application/json'
-  }
-  return new Response(body, { headers })
-}
+    'Content-type': 'application/json',
+  };
+  return new Response(body, { headers });
+};
 
-export default Posts
+export default Posts;
 ```
 
 ```ts
@@ -213,21 +213,21 @@ export default Posts
 filename: "src/handlers/post.ts"
 highlight: [8, 9, 10, 11]
 ---
-import Store from '../posts_store'
+import Store from '../posts_store';
 
 const Post = async request => {
-  const posts = new Store()
-  const postId = request.params.id
+  const posts = new Store();
+  const postId = request.params.id;
 
-  const body = JSON.stringify(await posts.find(postId))
+  const body = JSON.stringify(await posts.find(postId));
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Content-type': 'application/json'
-  }
-  return new Response(body, { headers })
-}
+    'Content-type': 'application/json',
+  };
+  return new Response(body, { headers });
+};
 
-export default Post
+export default Post;
 ```
 
 ### Publishing the API
@@ -293,10 +293,10 @@ Import it into `App.js`, and set up a new router with two routes:
 ---
 filename: "src/App.js"
 ---
-import { Router } from "@reach/router";
+import { Router } from '@reach/router';
 
-import Posts from './components/posts'
-import Post from './components/post'
+import Posts from './components/posts';
+import Post from './components/post';
 
 function App() {
   return (
@@ -316,17 +316,15 @@ Create a new folder called `components`, and inside of it, create two files: `po
 ---
 filename: "src/components/posts.js"
 ---
-import React, { useEffect, useState } from "react";
-import { Link } from "@reach/router";
+import React, { useEffect, useState } from 'react';
+import { Link } from '@reach/router';
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const getPosts = async () => {
-      const resp = await fetch(
-        "https://serverless-api.signalnerve.workers.dev/api/posts"
-      );
+      const resp = await fetch('https://serverless-api.signalnerve.workers.dev/api/posts');
       const postsResp = await resp.json();
       setPosts(postsResp);
     };
@@ -337,7 +335,7 @@ const Posts = () => {
   return (
     <div>
       <h1>Posts</h1>
-      {posts.map((post) => (
+      {posts.map(post => (
         <div key={post.id}>
           <h2>
             <Link to={`/posts/${post.id}`}>{post.title}</Link>
@@ -357,17 +355,15 @@ Next, add the component for individual blog posts, in `src/components/post.js`:
 ---
 filename: "src/components/post.js"
 ---
-import React, { useEffect, useState } from "react";
-import { Link } from "@reach/router";
+import React, { useEffect, useState } from 'react';
+import { Link } from '@reach/router';
 
 const Post = ({ id }) => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
     const getPost = async () => {
-      const resp = await fetch(
-        `https://serverless-api.signalnerve.workers.dev/api/posts/${id}`
-      );
+      const resp = await fetch(`https://serverless-api.signalnerve.workers.dev/api/posts/${id}`);
       const postResp = await resp.json();
       setPost(postResp);
     };
@@ -429,9 +425,9 @@ Now, when you run `wrangler publish`, your API will be published and served on `
 
 In this tutorial, you built a full blog application by combining a front end deployed with Cloudflare Pages, and a serverless API built with Cloudflare Workers. You can find the source code for both codebases on GitHub:
 
-*   Blog front end: https://github.com/signalnerve/blog-frontend
-*   Serverless API: https://github.com/signalnerve/serverless-api
+- Blog front end: https://github.com/signalnerve/blog-frontend
+- Serverless API: https://github.com/signalnerve/serverless-api
 
 If you enjoyed this tutorial, refer to the [headless CMS tutorial] to learn how to build a blog using Nuxt.js and Sanity.io.
 
-[headless CMS tutorial]: /tutorials/build-a-blog-using-nuxt-and-sanity
+[headless cms tutorial]: /tutorials/build-a-blog-using-nuxt-and-sanity

@@ -24,45 +24,46 @@ export function $focus(elem: HTMLElement, bool: boolean) {
 }
 
 export function $tabbable(links: NodeListOf<Element>, bool: boolean) {
-  for (let i=0; i < links.length; i++) {
-    bool
-      ? links[i].removeAttribute('tabindex')
-      : links[i].setAttribute('tabindex', '-1');
+  for (let i = 0; i < links.length; i++) {
+    bool ? links[i].removeAttribute('tabindex') : links[i].setAttribute('tabindex', '-1');
   }
 }
 
 // mobile sidebar toggle
 export function mobile() {
   let root = document.documentElement;
-  let btn = document.querySelector('.DocsMobileTitleHeader--sidebar-toggle-button')
-  if (btn) btn.addEventListener('click', () => {
-    root.toggleAttribute('is-mobile-sidebar-open');
-  });
+  let btn = document.querySelector('.DocsMobileTitleHeader--sidebar-toggle-button');
+  if (btn)
+    btn.addEventListener('click', () => {
+      root.toggleAttribute('is-mobile-sidebar-open');
+    });
 
   // clicking on mobile search icon
-  let input: HTMLInputElement = (
-    document.querySelector('#DocsSearch--input')
-    || document.querySelector('#SiteSearch--input')
-  );
+  let input: HTMLInputElement =
+    document.querySelector('#DocsSearch--input') || document.querySelector('#SiteSearch--input');
 
   // register init handler
-  if (input) input.addEventListener('click', () => {
-    $focus(input, true);
-  });
+  if (input)
+    input.addEventListener('click', () => {
+      $focus(input, true);
+    });
 }
 
 function $copy(ev: MouseEvent) {
   let btn = (ev.target as HTMLElement).closest('button');
   let txt = btn.getAttribute('data-clipboard');
   if (txt) {
-    try { navigator.clipboard.writeText(txt) }
-    catch (err) { /* no support */ }
+    try {
+      navigator.clipboard.writeText(txt);
+    } catch (err) {
+      /* no support */
+    }
   }
 }
 
 export function copy() {
   let btns = document.querySelectorAll('button[data-clipboard]');
-  for (let i=0; i < btns.length; i++) btns[i].addEventListener('click', $copy);
+  for (let i = 0; i < btns.length; i++) btns[i].addEventListener('click', $copy);
 }
 
 // add focus attribute to activeElement if keyboard trigger
@@ -134,7 +135,7 @@ export function dropdowns() {
         btn.setAttribute(attr, 'true');
 
         // focus the first link
-        $focus(links[focused=0], true);
+        $focus(links[(focused = 0)], true);
 
         div.addEventListener('keydown', arrows);
       };

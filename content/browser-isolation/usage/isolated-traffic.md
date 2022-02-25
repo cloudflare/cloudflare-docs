@@ -17,15 +17,15 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 
 ### Block security threats
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Security Threats | In | `All security threats` | Isolate
+| Selector         | Operator | Value                  | Action  |
+| ---------------- | -------- | ---------------------- | ------- |
+| Security Threats | In       | `All security threats` | Isolate |
 
 ### Isolate everything
 
-| Selector | Operator | Value | Action |
-| - | - | - | - |
-| Host | matches regex | `www.example.com` | Isolate
+| Selector | Operator      | Value             | Action  |
+| -------- | ------------- | ----------------- | ------- |
+| Host     | matches regex | `www.example.com` | Isolate |
 
 ### Bypass common cert pinning sites
 

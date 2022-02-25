@@ -30,9 +30,9 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 Create a session by sending a `POST` request to our Instant Logs job endpoint with the following parameters:
 
-*   **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests).
+- **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests).
 
-*   **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
+- **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
 {{<Aside type="note">}}
 
@@ -40,22 +40,22 @@ Instant Logs has a maximum data rate supported. For high volume domains, we samp
 
 {{</Aside>}}
 
-*   **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **FirewallMatchesAction**, and **FirewallMatchesRuleIDs**.
+- **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value. The keys we support are **Client ASN**, **CacheCacheStatus**, **ClientCountry**, **ClientIP**, **ClientRequestHost**, **ClientRequestMethod**, **ClientRequestPath**, **EdgeResponseStatus**, **FirewallMatchesAction**, and **FirewallMatchesRuleIDs**.
 
 This is the list of the supported operators that we have available:
 
-| **Name**    | **Op**      |
-| ----------- | ----------- |
-| Equals      | `"eq"`      |
-| Not Equals  | `"neq"`     |
-| Greater Than | `"gt"`     |
-| Greater Than or Equal to  | `"geq"`  |
-| Less Than      | `"lt"`   |
-| Less Than or Equal to  | `"leq"`     |
-| Starts with      | `"startsWith"`    |
-| Ends with  | `"endsWith"`            |
-| Contains      | `"contains"`         |
-| Is in  | `"In"`            |
+| **Name**                 | **Op**         |
+| ------------------------ | -------------- |
+| Equals                   | `"eq"`         |
+| Not Equals               | `"neq"`        |
+| Greater Than             | `"gt"`         |
+| Greater Than or Equal to | `"geq"`        |
+| Less Than                | `"lt"`         |
+| Less Than or Equal to    | `"leq"`        |
+| Starts with              | `"startsWith"` |
+| Ends with                | `"endsWith"`   |
+| Contains                 | `"contains"`   |
+| Is in                    | `"In"`         |
 
 Below we have three examples of filters:
 
@@ -83,12 +83,12 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge
     "sample": 1,
     "filter": "",
     "kind": "instant-logs"
-}' | jq . 
+}' | jq .
 ```
 
 Response:
 
-The response will include a new field called **destination\_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's edge.
+The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's edge.
 
 ```bash
 {
@@ -128,14 +128,14 @@ websocat wss://datalab.cfdata.org/instant-logs/ws/sessions/949f9eb846f06d8f8b7c9
 
 Response:
 
-| **ClientCountry**    | **\_sum**      |
-| ----------- | ----------- |
-| pt | `4` |
-| fr | `3` |
-| us | `3` |
-| om | `2` |
-| ar | `1` |
-| au | `1` |
+| **ClientCountry** | **\_sum** |
+| ----------------- | --------- |
+| pt                | `4`       |
+| fr                | `3`       |
+| us                | `3`       |
+| om                | `2`       |
+| ar                | `1`       |
+| au                | `1`       |
 
 ## Datasets available
 
@@ -149,27 +149,30 @@ You can download the table of logs that appears in your dash using the **Export*
 
 Instant Logs has three limits set in place:
 
-*   Only one active Instant Logs session per zone.
-*   Maximum session time is 60 minutes.
-*   If you stop listening to a socket for more than five minutes.
+- Only one active Instant Logs session per zone.
+- Maximum session time is 60 minutes.
+- If you stop listening to a socket for more than five minutes.
 
 If either of these limits are reached, the logs stream will automatically stop.
 
 ## Common issues
 
-*   Get a HTTP 301 when attempting to connect to the WebSocket.
-    *   Make sure you are using the `wss://` protocol when connecting to your WebSocket.
+- Get a HTTP 301 when attempting to connect to the WebSocket.
 
-*   Get a HTTP 429.
-    *   Connection requests are rate limited. Try your request again after waiting a few minutes.
+  - Make sure you are using the `wss://` protocol when connecting to your WebSocket.
 
-*   No data received.
-    *   First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
-    *   If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
-    *   Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
+- Get a HTTP 429.
 
-*   There was an error fetching your data.
-    *   Make sure you have the correct permissions. In order to use Instant Logs you need Super Administrator, Administrator, Log Share or Log Share Reader permissions.
+  - Connection requests are rate limited. Try your request again after waiting a few minutes.
+
+- No data received.
+
+  - First, double check if you have a filter defined. If you do, it may be too strict (or incorrect) which ends up dropping all your data.
+  - If you are confident in your filter, check the sample rate you used when creating the session. For example, a sample of 100 means you will receive one log for every 100 requests to your zone.
+  - Finally, make sure the destination is proxied through Cloudflare (also known as orange clouded). We cannot log your request if it does not go through our edge network.
+
+- There was an error fetching your data.
+  - Make sure you have the correct permissions. In order to use Instant Logs you need Super Administrator, Administrator, Log Share or Log Share Reader permissions.
 
 ## Connect with us
 

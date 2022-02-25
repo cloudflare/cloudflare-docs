@@ -66,11 +66,11 @@ To create a new Firewall Rule:
 
     In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/expression-preview-editor/).
 
-7.  Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value *United Kingdom* is set using the **Country** drop-down list.
+7.  Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
     ![Select value](/firewall/static/firewall-rules-expression-builder-value.png)
 
-8.  To set an action for your rule, use the **Action** drop-down list. In this example the *Block* action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
+8.  To set an action for your rule, use the **Action** drop-down list. In this example the _Block_ action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
 
     ![Select action](/firewall/static/firewall-rules-expression-builder-5.png)
 
@@ -80,7 +80,7 @@ After you choose an option, you are returned to the **Rules List**, which displa
 
 ![Rules List](/firewall/static/firewall-rules-expression-builder-11.png)
 
-If you choose to deploy your new rule, the toggle switch associated with the rule will be *On*. If you save the rule as a draft, the toggle will be *Off*. Use the toggle to enable or disable your Firewall Rule.
+If you choose to deploy your new rule, the toggle switch associated with the rule will be _On_. If you save the rule as a draft, the toggle will be _Off_. Use the toggle to enable or disable your Firewall Rule.
 
 ## Manage rules
 

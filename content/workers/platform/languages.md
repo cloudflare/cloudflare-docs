@@ -15,19 +15,19 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 {{<table-wrap>}}
 
-| Language   | Template                                                                                                                |
-|------------|-------------------------------------------------------------------------------------------------------------------------|
-| JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                                             |
-| TypeScript | [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template)                       |
+| Language   | Template                                                                                          |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                       |
+| TypeScript | [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template) |
 
 {{</table-wrap>}}
 
 ### Resources on JavaScript / Typescript
 
-*   [Quickstarts](/workers/get-started/quickstarts/) – More example repos to use as a basis for your projects
-*   [TypeScript type definitions](https://github.com/cloudflare/workers-types)
-*   [JavaScript and web standard APIs](/workers/runtime-apis/web-standards/)
-*   [Tutorials](/workers/tutorials/)
+- [Quickstarts](/workers/get-started/quickstarts/) – More example repos to use as a basis for your projects
+- [TypeScript type definitions](https://github.com/cloudflare/workers-types)
+- [JavaScript and web standard APIs](/workers/runtime-apis/web-standards/)
+- [Tutorials](/workers/tutorials/)
 
 ## Wasm-supported
 
@@ -36,7 +36,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 {{<table-wrap>}}
 
 | Language | Template                                                                                          |
-|----------|---------------------------------------------------------------------------------------------------|
+| -------- | ------------------------------------------------------------------------------------------------- |
 | Rust     | [cloudflare/rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)     |
 | C        | [cloudflare/worker-emscripten-template](https://github.com/cloudflare/worker-emscripten-template) |
 | Cobol    | [cloudflare/cobol-worker-template](https://github.com/cloudflare/cobol-worker-template)           |
@@ -45,8 +45,8 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 ### Resources on WebAssembly
 
-*   [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
-*   [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
+- [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
+- [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
 
 ## Compiled to JavaScript
 
@@ -55,7 +55,7 @@ You can write Workers with any language that can compile to JavaScript, includin
 {{<table-wrap>}}
 
 | Language     | Example project                                                                                 |
-|--------------|-------------------------------------------------------------------------------------------------|
+| ------------ | ----------------------------------------------------------------------------------------------- |
 | Kotlin       | [cloudflare/kotlin-worker-hello-world](https://github.com/cloudflare/kotlin-worker-hello-world) |
 | Dart         | [cloudflare/dart-worker-hello-world](https://github.com/cloudflare/dart-worker-hello-world)     |
 | Python       | [cloudflare/python-worker-hello-world](https://github.com/cloudflare/python-worker-hello-world) |

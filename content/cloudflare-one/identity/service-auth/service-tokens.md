@@ -74,10 +74,10 @@ To revoke a service token immediately:
 
 When revoking service tokens, keep in mind:
 
-*   Services that rely on a deleted service token can no longer reach your application.
-*   Clicking **Revoke Existing Tokens** when editing a policy in the **Edit Access Policy** dialog revokes existing sessions but does not revoke access.
+- Services that rely on a deleted service token can no longer reach your application.
+- Clicking **Revoke Existing Tokens** when editing a policy in the **Edit Access Policy** dialog revokes existing sessions but does not revoke access.
 
-As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must *delete* the service token.
+As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must _delete_ the service token.
 
 ## Set a token expiration alert
 
@@ -97,7 +97,7 @@ To configure a service token expiration alert:
 
     ![Expiration notification](/cloudflare-one/static/documentation/identity/users/notification-token.png)
 
-6.  If you'd like to add other recipients for the notification email, click *+Add email recipient*.
+6.  If you'd like to add other recipients for the notification email, click _+Add email recipient_.
 
 7.  Click **Create**.
 

@@ -10,11 +10,11 @@ meta:
 
 Bulk Redirects involve the following elements:
 
-*   **URL Redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL Redirects are the list items of Bulk Redirect Lists.
+- **URL Redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL Redirects are the list items of Bulk Redirect Lists.
 
-*   **Bulk Redirect List**: A list, similar to an IP List, containing one or more URL Redirects. To enable all the URL Redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
+- **Bulk Redirect List**: A list, similar to an IP List, containing one or more URL Redirects. To enable all the URL Redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-*   **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
+- **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL Redirects.
 
@@ -26,10 +26,10 @@ The following example defines a Bulk Redirect List named `list_b` with two URL R
 
 **`list_b` Bulk Redirect List**
 
-Source URL                | Target URL                 | Status code
---------------------------|----------------------------|------------------
-`example.com/about`       | `https://example.com/news` | `301` (the default)
-`example.com/new_feature` | `https://example.com/soon` | `302`
+| Source URL                | Target URL                 | Status code         |
+| ------------------------- | -------------------------- | ------------------- |
+| `example.com/about`       | `https://example.com/news` | `301` (the default) |
+| `example.com/new_feature` | `https://example.com/soon` | `302`               |
 
 {{</example>}}
 
@@ -39,8 +39,8 @@ The following Bulk Redirect Rule, named `Rule 2`, enables the URL Redirects in t
 
 **`Rule 2` Bulk Redirect Rule**
 
-*   **Rule name**: `Rule 2`
-*   **Associated list**: `list_b`
+- **Rule name**: `Rule 2`
+- **Associated list**: `list_b`
 
 {{</example>}}
 
@@ -96,8 +96,8 @@ For more information on the available fields, refer to [Available fields and fun
 
 At the left of the `in` operator you can only use fields directly and not values returned by a function. In most situations, you will want to use one of the following fields with the `in` operator:
 
-*   `http.request.full_uri`
-*   `raw.http.request.full_uri`
+- `http.request.full_uri`
+- `raw.http.request.full_uri`
 
 Refer to [Fields](/ruleset-engine/rules-language/fields) for more information.
 

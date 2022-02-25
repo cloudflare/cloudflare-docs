@@ -14,7 +14,7 @@ meta:
   title: Cloudflare Waiting Room docs
   description: Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms
     when they are trying to access web pages that have high volumes of traffic.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

@@ -52,11 +52,7 @@
     let row = value && JSON.parse(value);
 
     // defaults to "light" theme
-    setter(
-      row
-      ? /dark/.test(row.theme)
-      : !!(media && media.matches)
-    );
+    setter(row ? /dark/.test(row.theme) : !!(media && media.matches));
   } catch (err) {
     // security error
   }

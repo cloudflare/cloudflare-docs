@@ -30,8 +30,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 4.  Click **IPv4**.\
     Remove any IP addresses that may already be listed.
 5.  Add the following IP addresses:
-    *   **172.64.36.1**
-    *   **172.64.36.2**
+    - **172.64.36.1**
+    - **172.64.36.2**
 6.  Click **Apply**.
 
 #### IPv6
@@ -49,8 +49,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1.  In the command line, type: `sudo vim /etc/resolv.conf`
 2.  Press the **i** key on your keyboard to edit the document
 3.  Replace the nameserver lines with:
-    *   **172.64.36.1**
-    *   **172.64.36.2**
+    - **172.64.36.1**
+    - **172.64.36.2**
 4.  Press the **ESC** key on your keyboard to save and exit vim.
 5.  Type `:wq`.
 
@@ -69,8 +69,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 2.  Click **Advanced**.
 3.  Select the **DNS** tab, and remove any IP addresses that may be already listed.
 4.  Add the following IP addresses:
-    *   **172.64.36.1**
-    *   **172.64.36.2**
+    - **172.64.36.1**
+    - **172.64.36.2**
 5.  Click **OK**.
 6.  Click **Apply**.
 
@@ -98,8 +98,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 6.  Select **Internet Protocol Version 4**.
 7.  Click **Properties**.
 8.  Remove any IP addresses that may be already listed and add the following IP addresses in their place:
-    *   **172.64.36.1**
-    *   **172.64.36.2**
+    - **172.64.36.1**
+    - **172.64.36.2**
 9.  Click **OK**.
 
 ### IPv6

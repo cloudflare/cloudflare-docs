@@ -1,9 +1,9 @@
 ---
-title: "4: Service configuration"
+title: '4: Service configuration'
 weight: 4
 pcx-content-type: get-started
 meta:
-  title: "Step 4: Service configuration"
+  title: 'Step 4: Service configuration'
 ---
 
 # Step 4: Service configuration

@@ -31,8 +31,9 @@ To enable the Cloudflare Logpush service:
 7.  Select **Datadog**.
 
 8.  Enter or select the following destination information:
-    *   **Datadog URL Endpoint**
-    *   **Datadog API Key**
+
+    - **Datadog URL Endpoint**
+    - **Datadog API Key**
 
 9.  Click **Validate access**.
 
@@ -59,20 +60,20 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-*   **name** (optional) - Use your domain name as the job name.
-*   **destination\_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
+- **name** (optional) - Use your domain name as the job name.
+- **destination_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
 
-    *   **\<DATADOG\_ENDPOINT\_URL>**: The Datadog HTTP logs intake endpoint, which is `http-intake.logs.datadoghq.com/v1/input`.
-    *   **\<DATADOG\_API\_KEY>**: The Datadog API token. For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
-    *   **ddsource**: Set to `cloudflare`.
-    *   **service**, **host**, **ddtags**: Optional parameters allowed by Datadog.
+  - **\<DATADOG_ENDPOINT_URL>**: The Datadog HTTP logs intake endpoint, which is `http-intake.logs.datadoghq.com/v1/input`.
+  - **\<DATADOG_API_KEY>**: The Datadog API token. For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
+  - **ddsource**: Set to `cloudflare`.
+  - **service**, **host**, **ddtags**: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
 ```
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
+- **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
 
 Example request using cURL:
 
@@ -108,7 +109,7 @@ Response:
 
 ### 2. Enable (update) a job
 
-To enable a  job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
+To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
 
 Example request using cURL:
 

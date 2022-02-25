@@ -8,12 +8,12 @@ weight: 6
 
 ## Prerequisites for transferring a .UK domain:
 
-*   The domain must not be locked or suspended.
-*   There must be an active zone for the domain in your Cloudflare account.
-*   The domain must have Cloudflare nameservers.
-*   The domain must not be expiring within the next 10 days.
+- The domain must not be locked or suspended.
+- There must be an active zone for the domain in your Cloudflare account.
+- The domain must have Cloudflare nameservers.
+- The domain must not be expiring within the next 10 days.
 
-***
+---
 
 ## How to transfer a .UK domain to Cloudflare
 
@@ -26,17 +26,17 @@ Cloudflare currently supports the transfer of `.uk`, `co.uk`, `org.uk`, and `me.
 5.  After checkout, request your current registrar to update the IPS tag to `CLOUDFLARE`. The tag must be updated within seven days of completing the checkout process or the transfer will fail.
 6.  Cloudflare will receive a notice once your registrar updates the IPS tag. After that, we will finish transferring your domain.
 
-  {{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 If you request your current registrar to update the IPS tag before completing the checkout process, the transfer request will be automatically rejected. You must complete the checkout process before requesting the IPS tag update.
 
-  {{</Aside>}}
+{{</Aside>}}
 
 ## Possible reasons a transfer may fail or be rejected
 
-*   The domain is locked or suspended.
-*   The nameservers were updated after the checkout process.
-*   The IPS tag update was made more than seven days after the checkout process.
+- The domain is locked or suspended.
+- The nameservers were updated after the checkout process.
+- The IPS tag update was made more than seven days after the checkout process.
 
 ## Transferring a .UK domain to another Registrar
 

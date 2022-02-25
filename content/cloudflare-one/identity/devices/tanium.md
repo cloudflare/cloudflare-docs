@@ -10,9 +10,9 @@ weight: 4
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| Any OS supported by Tanium | WARP with Gateway | All plans |
+| Operating Systems          | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| -------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Any OS supported by Tanium | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -41,8 +41,8 @@ The integration does not currently support Safari.
 
 {{<table-wrap>}}
 
-| Requirements |
-| ------------ |
+| Requirements                                                                             |
+| ---------------------------------------------------------------------------------------- |
 | You will need an active Tanium™ Core Platform deployment that runs version 7.2 or later. |
 
 {{</table-wrap>}}
@@ -55,13 +55,13 @@ Integrate your Tanium deployment with Cloudflare Access using public keys genera
 
     ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-device-posture.png)
 
-3.  Click *+Add* to start configuring the Tanium integration.
+3.  Click _+Add_ to start configuring the Tanium integration.
 
 4.  Select **Tanium** from the list of providers.
 
     ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-posture-tanium.png)
 
-5.  In the next screen, give a name to the Tanium integration. *Tanium* will work, or, if you prefer, you can choose a more specific name.
+5.  In the next screen, give a name to the Tanium integration. _Tanium_ will work, or, if you prefer, you can choose a more specific name.
 
     ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/tanium-setup.png)
 
@@ -77,8 +77,8 @@ Adding the certificate allows Cloudflare to validate that the response from the 
 
 With Tanium integrated, you can build policies that enforce decisions using signal from the endpoint.
 
-| Signal | Value | Description |
-|--|--|--|
+| Signal  | Value   | Description                                                                 |
+| ------- | ------- | --------------------------------------------------------------------------- |
 | Managed | Boolean | Validates that the device is managed in your organization's Tanium account. |
 
 1.  On the Zero Trust dashboard, navigate to **Access > Applications**.

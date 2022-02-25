@@ -20,7 +20,7 @@ View the content of the matched rule payload in the dashboard by entering your p
 
     {{<Aside type="note">}}
 
-  The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
+The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
 
      {{</Aside>}}
 

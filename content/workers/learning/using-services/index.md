@@ -48,7 +48,7 @@ Workers Service environments take a cleaner approach. You can create and edit en
 2.  Select your **Account**.
 3.  Go to **Workers**.
 4.  Select your **Workers Service**.
-5.  Select  **Quick edit**.
+5.  Select **Quick edit**.
 
 Unlike Wrangler environments, Workers Service environments do not create extra Workers Services. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the dashboard via the quick editor:
 
@@ -94,10 +94,10 @@ export default {
     }
 
     // Request allowed
-    const data = "" // For example, read data from KV, Durable Objects, or Database
+    const data = ''; // For example, read data from KV, Durable Objects, or Database
     return new Response(data);
-  }
-}
+  },
+};
 ```
 
 ![service binding diagram](../media/app-workers-dev.png)
@@ -109,7 +109,7 @@ In the next example, 1% of requests are routed to a `CANARY` deployment of a Wor
 ```js
 export default {
   canRetry(request) {
-    return request.method === "GET" || request.method === "HEAD";
+    return request.method === 'GET' || request.method === 'HEAD';
   },
   async fetch(request, environment) {
     if (Math.random() < 0.01) {
@@ -119,8 +119,8 @@ export default {
       }
     }
     return environment.PRODUCTION.fetch(request);
-  }
-}
+  },
+};
 ```
 
 While the interface among Workers Services is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Workers Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
@@ -129,11 +129,11 @@ While the interface among Workers Services is HTTP, the networking is not. Unlik
 
 Workers Service bindings allow you to:
 
-*   Segment multiple use cases into separate Services that can be explicitly invoked from your code.
-*   Achieve better composability on the Workers platform using Service-oriented architecture.
-*   Create private microservices, to be conditionally invoked from other edge-facing Services.
+- Segment multiple use cases into separate Services that can be explicitly invoked from your code.
+- Achieve better composability on the Workers platform using Service-oriented architecture.
+- Create private microservices, to be conditionally invoked from other edge-facing Services.
 
-***
+---
 
 ## Composing an example Worker
 
@@ -145,13 +145,13 @@ Following authentication Workers Service code responds with `200` in case `x-cus
 export default {
   async fetch(request, env) {
     // Read x-custom-token header and make sure it matches SECRET_TOKEN
-    if (request.headers.get("x-custom-token") === env.SECRET_TOKEN) {
-      return new Response("Request allowed", { status: 200 });
+    if (request.headers.get('x-custom-token') === env.SECRET_TOKEN) {
+      return new Response('Request allowed', { status: 200 });
     } else {
-      return new Response("x-custom-token does not match, request not allowed", { status: 403 })
+      return new Response('x-custom-token does not match, request not allowed', { status: 403 });
     }
-  }
-}
+  },
+};
 ```
 
 This authentication Workers Service does not need to have a `*.workers.dev` or other domain endpoint, nor does it need an HTTP Route: it is accessed through a Workers Service binding from the other Worker directly. The authentication Worker is, effectively, a private Worker Service.
@@ -183,14 +183,14 @@ export default {
     }
 
     // Request allowed
-    const data = "" // For example, read data from KV, Durable Objects, or Database
+    const data = ''; // For example, read data from KV, Durable Objects, or Database
     return new Response(data);
-  }
-}
+  },
+};
 ```
 
 In this setup, only the Gateway Worker is exposed to the Internet and privately communicating with the authentication Workers Service using a Workers Service binding.
 
 ## Related resources
 
-*   [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)
+- [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

@@ -10,7 +10,7 @@ Cloudflare Tunnel requires the installation of a lightweight server-side daemon,
 
 Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
 
-Detailed release notes can be found on the [GitHub RELEASE\_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
+Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
 
 ## Linux
 
@@ -20,11 +20,11 @@ Alternatively, download the latest release directly.
 
 {{<table-wrap>}}
 
-Type   | amd64 / x86-64 | x86 (32-bit) | ARM  | ARM64 |
--------|----------------|--------------|------|-------|
-Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64) |
-.deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb) |
-.rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
+| Type   | amd64 / x86-64                                                                                              | x86 (32-bit)                                                                                             | ARM                                                                                                      | ARM64                                                                                                        |
+| ------ | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64)      | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386)     | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm)     | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64)       |
+| .deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb)  | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb)   |
+| .rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
 
 {{</table-wrap>}}
 
@@ -40,9 +40,9 @@ Alternatively, [download the latest Darwin amd64 release directly](https://githu
 
 ## Windows
 
-Type   | 32-bit | 64-bit |
--------|----------------|-----|
-Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
+| Type       | 32-bit                                                                                                     | 64-bit                                                                                                       |
+| ---------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
 {{<Aside>}}
 
@@ -103,7 +103,7 @@ sc.exe start <unique-name>
 
 Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](/cloudflare-one/connections/connect-apps/install-and-setup/installation#updating-cloudflared).
 
-| Version(s) | Deprecation status |
-|---|---|
-| 2020.5.1 and later | Supported |
+| Version(s)                 | Deprecation status  |
+| -------------------------- | ------------------- |
+| 2020.5.1 and later         | Supported           |
 | Versions prior to 2020.5.1 | No longer supported |

@@ -44,38 +44,38 @@ Test domains use the following format for categories with one-word names:
 NAME_OF_CATEGORY.testcategory.com
 ```
 
-| Category | Test domain |
-| -------- | ----------- |
-| *Malware* | `malware.testcategory.com` |
-| *Phishing* | `phishing.testcategory.com` |
-| *Cryptomining* | `cryptomining.testcategory.com` |
+| Category       | Test domain                     |
+| -------------- | ------------------------------- |
+| _Malware_      | `malware.testcategory.com`      |
+| _Phishing_     | `phishing.testcategory.com`     |
+| _Cryptomining_ | `cryptomining.testcategory.com` |
 
 #### Multi-word categories
 
-If the category has multiple words in the name (for example, *Parked & For Sale Domains*) then the test domain uses the following format:
+If the category has multiple words in the name (for example, _Parked & For Sale Domains_) then the test domain uses the following format:
 
-*   Remove any spaces between the words
-*   Replace `&` with `and`
-*   All letters are lowercase
+- Remove any spaces between the words
+- Replace `&` with `and`
+- All letters are lowercase
 
-| Category | Test domain |
-| -------- | ----------- |
-| *Parked & For Sale Domains* | `parkedandforsaledomains.testcategory.com` |
-| *Private IP Address* | `privateipaddress.testcategory.com` |
-| *Command and Control & Botnet* | `commandandcontrolandbotnet.testcategory.com` |
+| Category                       | Test domain                                   |
+| ------------------------------ | --------------------------------------------- |
+| _Parked & For Sale Domains_    | `parkedandforsaledomains.testcategory.com`    |
+| _Private IP Address_           | `privateipaddress.testcategory.com`           |
+| _Command and Control & Botnet_ | `commandandcontrolandbotnet.testcategory.com` |
 
 #### Common test domains
 
-| Category | Test domain |
-| -------- | ----------- |
-| *Anonymizer* | `anonymizer.testcategory.com` |
-| *Command and Control & Botnet* | `commandandcontrolandbotnet.testcategory.com` |
-| *Cryptomining* | `cryptomining.testcategory.com` |
-| *Malware* | `malware.testcategory.com` |
-| *New Domains* | `newdomains.testcategory.com` |
-| *Parked & For Sale Domains* | `parkedandforsaledomains.testcategory.com` |
-| *Phishing* | `phishing.testcategory.com` |
-| *Private IP Address* | `privateipaddress.testcategory.com` |
-| *Spam* | `spam.testcategory.com` |
-| *Spyware* | `spyware.testcategory.com` |
-| *Unreachable* | `unreachable.testcategory.com` |
+| Category                       | Test domain                                   |
+| ------------------------------ | --------------------------------------------- |
+| _Anonymizer_                   | `anonymizer.testcategory.com`                 |
+| _Command and Control & Botnet_ | `commandandcontrolandbotnet.testcategory.com` |
+| _Cryptomining_                 | `cryptomining.testcategory.com`               |
+| _Malware_                      | `malware.testcategory.com`                    |
+| _New Domains_                  | `newdomains.testcategory.com`                 |
+| _Parked & For Sale Domains_    | `parkedandforsaledomains.testcategory.com`    |
+| _Phishing_                     | `phishing.testcategory.com`                   |
+| _Private IP Address_           | `privateipaddress.testcategory.com`           |
+| _Spam_                         | `spam.testcategory.com`                       |
+| _Spyware_                      | `spyware.testcategory.com`                    |
+| _Unreachable_                  | `unreachable.testcategory.com`                |

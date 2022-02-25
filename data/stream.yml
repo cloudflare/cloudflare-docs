@@ -30,7 +30,7 @@ logo: <svg width="48" height="48" viewBox="0 0 48
 meta:
   title: Cloudflare Stream docs
   description: Store, encode, deliver, and play videos on your sites and applications.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

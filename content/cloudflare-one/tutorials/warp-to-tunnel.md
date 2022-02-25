@@ -16,10 +16,10 @@ Once enrolled, user endpoints will be able to connect to private [RFC 1918](http
 
 **🗺️ This tutorial covers how to:**
 
-*   Start a secure, outbound-only, connection from a machine to Cloudflare
-*   Assign the machine an IP that can consist of an RFC 1918 IP address or range
-*   Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
-*   Connect using any TCP-based protocol
+- Start a secure, outbound-only, connection from a machine to Cloudflare
+- Assign the machine an IP that can consist of an RFC 1918 IP address or range
+- Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
+- Connect using any TCP-based protocol
 
 **⏲️ Time to complete:** 45 minutes
 
@@ -44,7 +44,7 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 ![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 {{<Aside>}}
-  If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`. 
+If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`.
 {{</Aside>}}
 
 ## Create a Tunnel
@@ -158,12 +158,12 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 
 To download the Cloudflare certificate:
 
-*   Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
-*   Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+- Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to *Enabled*. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 

@@ -95,7 +95,7 @@ Refer to [Build configuration](/pages/platform/build-configuration/) for more in
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your *Framework preset*, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
+After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
 
 ## Your first deploy
 
@@ -129,9 +129,9 @@ To use a custom apex domain (for example, `example.com`) with your Pages project
 
 If you do not want to point your nameservers to Cloudflare, you can still use a custom CNAME record to use a single domain with Cloudflare Pages. After logging into your DNS provider, add a CNAME record for your desired subdomain; for example, `shop.example.com`. This record should point to your custom Pages subdomain; for example, `custom.pages.dev`.
 
-| Type         | Name                     | Content            |
-| ------------ | ------------------------ | ------------------ |
-| `CNAME`      | `shop.example.com`       | `custom.pages.dev` |
+| Type    | Name               | Content            |
+| ------- | ------------------ | ------------------ |
+| `CNAME` | `shop.example.com` | `custom.pages.dev` |
 
 If your site is already managed as a Cloudflare zone, the CNAME record will be added automatically after you confirm your DNS record.
 

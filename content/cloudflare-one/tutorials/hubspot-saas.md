@@ -14,25 +14,25 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 ## Configure Hubspot
 
 1.  Go to **Settings** > **Account**, and from there, navigate to **Defaults** > **Security**.
-2.  Select *Single Sign-on*.
-3.  Copy the values for *Audience URI* and *Sign on URL*.
+2.  Select _Single Sign-on_.
+3.  Copy the values for _Audience URI_ and _Sign on URL_.
 
 ## Configure Cloudflare Access
 
 1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 
-2.  Set the **Application type** to *Hubspot*.
+2.  Set the **Application type** to _Hubspot_.
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
 
 3.  Use the following Hubspot field mappings:
 
-    | Hubspot values | Cloudflare values |
-    | ---- | ---- |
-    | Audience URI | EntityID |
-    | Sign On URL | Assertion Consumer Service URL |
+    | Hubspot values | Cloudflare values              |
+    | -------------- | ------------------------------ |
+    | Audience URI   | EntityID                       |
+    | Sign On URL    | Assertion Consumer Service URL |
 
-4.  Next, set **NameID** to *Email*.
+4.  Next, set **NameID** to _Email_.
 
 5.  Add any desired [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to your application.
 
@@ -47,11 +47,11 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 1.  Use the following field mappings:
 
-    | Cloudflare value | Hubspot value |
-    | --- | --- |
-    | SSO endpoint | Identity Provider Single Sign-on URL |
-    | Entity ID | Identity Provider Identifier |
-    | Public key | Certificate |
+    | Cloudflare value | Hubspot value                        |
+    | ---------------- | ------------------------------------ |
+    | SSO endpoint     | Identity Provider Single Sign-on URL |
+    | Entity ID        | Identity Provider Identifier         |
+    | Public key       | Certificate                          |
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
 

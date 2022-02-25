@@ -21,7 +21,7 @@ For best practices related to Cache Analytics, refer to [Cache performance](/cac
 
 Cache Analytics also allows for flexible filtering of data. Create filters to focus on the traffic to optimize. Example filters include **Cache status**, **Host**, **Path**, or **Content type**.
 
-To add filters, under **Cache Performance**, click  **Add filter**.  Click **Apply** when you are done.
+To add filters, under **Cache Performance**, click **Add filter**. Click **Apply** when you are done.
 
 ## Review cache status
 

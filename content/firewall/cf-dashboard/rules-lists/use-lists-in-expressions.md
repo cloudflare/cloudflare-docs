@@ -10,7 +10,7 @@ weight: 371
 
 To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/):
 
-1.  Select *is in list* or *is not in list* from the **Operator** drop-down list.
+1.  Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
     ![Managed open proxies list](/firewall/static/cf-open-proxies-list.png)
 
@@ -20,9 +20,9 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit
 
 ## Expression Editor
 
-To use an IP List in the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) specify the `in` operator and use *$\<list\_name>* to specify the name of the list.
+To use an IP List in the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) specify the `in` operator and use _$\<list_name>_ to specify the name of the list.
 
-This expression filters requests from IP addresses that are in an IP List named *office\_network*:
+This expression filters requests from IP addresses that are in an IP List named _office_network_:
 
 ```sql
 (ip.src in $office_network)

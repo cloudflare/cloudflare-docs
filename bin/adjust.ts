@@ -138,7 +138,7 @@ async function walk(dir: string): Promise<void> {
   let count = 0;
   let ignores = new Set(['images', 'static']);
 
-  for (let i=0; i < files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
     let tmp = files[i];
     // has many markdown OR directory siblings
     if (isMD.test(tmp)) count++;

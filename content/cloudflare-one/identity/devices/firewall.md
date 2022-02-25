@@ -13,8 +13,8 @@ meta:
 <div>
 
 | Status | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --- | ----------------- | --------- | ---- |
-| Beta | macOS, Windows | WARP with Gateway | All plans |
+| ------ | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Beta   | macOS, Windows    | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>

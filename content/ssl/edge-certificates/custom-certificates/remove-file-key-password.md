@@ -41,7 +41,7 @@ The process for removing the password depends on your operating system. The foll
 <summary>Windows</summary>
 <div>
 
-1.  Go to https://indy.fulgan.com/SSL/ and download the latest version of OpenSSL for your x86 or x86\_64 operating system.
+1.  Go to https://indy.fulgan.com/SSL/ and download the latest version of OpenSSL for your x86 or x86_64 operating system.
 
 2.  Open the `.zip` file and extract it.
 

@@ -14,8 +14,8 @@ weight: 4
 
 To use a custom origin server, you need to meet the following requirements:
 
-*   Your fallback proxy zone has an entitlement for Custom Origin Servers.
-*   Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
+- Your fallback proxy zone has an entitlement for Custom Origin Servers.
+- Each custom origin needs to be a valid hostname with a proxied (orange-clouded) A, AAAA, or CNAME record in your account's DNS. You cannot use an IP address.
 
 ## Use a custom origin
 
@@ -33,20 +33,22 @@ To solve this problem, you can contact your account team to request an entitleme
 
 Choose how your custom hostname populates the SNI value with SNI rewrites:
 
-*   **Origin server name** (default): Sets SNI to the custom origin
-    *   If custom origin is `custom-origin.com`, then the SNI is `custom-origin.com`.
+- **Origin server name** (default): Sets SNI to the custom origin
 
-*   **Host header**: Sets SNI to the host header (or a host header override)
-    *   If wildcards are not enabled and the hostname is `example.com`, then the SNI is `example.com`.
-    *   If wildcards are enabled, the hostname is `example.com`, and a request comes to `www.example.com`, then the SNI is `www.example.com`.
+  - If custom origin is `custom-origin.com`, then the SNI is `custom-origin.com`.
 
-*   **Subdomain of zone**: Choose what to set as the SNI value (custom hostname or any subdomain)
-    *   If wildcards are not enabled and a request comes to `example.com`, choose whether to set the SNI as `example.com` or `www.example.com`.
-    *   If wildcards are enabled, you set the SNI to `example.com`, and a request comes to `www.example.com`, then the SNI is `example.com`.
+- **Host header**: Sets SNI to the host header (or a host header override)
+
+  - If wildcards are not enabled and the hostname is `example.com`, then the SNI is `example.com`.
+  - If wildcards are enabled, the hostname is `example.com`, and a request comes to `www.example.com`, then the SNI is `www.example.com`.
+
+- **Subdomain of zone**: Choose what to set as the SNI value (custom hostname or any subdomain)
+  - If wildcards are not enabled and a request comes to `example.com`, choose whether to set the SNI as `example.com` or `www.example.com`.
+  - If wildcards are enabled, you set the SNI to `example.com`, and a request comes to `www.example.com`, then the SNI is `example.com`.
 
 {{<Aside type="note">}}
 
-Currently, SNI Rewrite is not supported for **wildcard** custom hostnames. Subdomains covered by a wildcard Custom Hostname send the custom origin server name as the SNI value. 
+Currently, SNI Rewrite is not supported for **wildcard** custom hostnames. Subdomains covered by a wildcard Custom Hostname send the custom origin server name as the SNI value.
 
 {{</Aside>}}
 
@@ -56,6 +58,6 @@ To set an SNI rewrite in the dashboard, choose your preferred option from **Orig
 
 To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
 
-*   **Custom origin name** (default): Applies if you do not set the parameter
-*   **Host header**: Specify `":request_host_header:"`
-*   **Subdomain of zone**: Set to `"example.com"` or another subdomain of the custom hostname
+- **Custom origin name** (default): Applies if you do not set the parameter
+- **Host header**: Specify `":request_host_header:"`
+- **Subdomain of zone**: Set to `"example.com"` or another subdomain of the custom hostname

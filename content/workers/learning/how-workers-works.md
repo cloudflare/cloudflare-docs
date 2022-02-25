@@ -28,9 +28,9 @@ Unlike other serverless providers which use [containerized processes](https://ww
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
-*   resource limitations on the machine.
-*   a suspicious script - anything seen as trying to break out of the Isolate sandbox.
-*   individual [resource limits](/workers/platform/limits/).
+- resource limitations on the machine.
+- a suspicious script - anything seen as trying to break out of the Isolate sandbox.
+- individual [resource limits](/workers/platform/limits/).
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.
 
@@ -41,12 +41,12 @@ If you are interested in how Cloudflare handles security with the Workers runtim
 Most Workers scripts are a variation on the default Workers flow:
 
 ```js
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  return new Response("Hello worker!", { status: 200 })
+  return new Response('Hello worker!', { status: 200 });
 }
 ```
 
@@ -62,6 +62,6 @@ Like all other JavaScript platforms, a single Workers instance may handle multip
 
 Learn more about:
 
-*   [FetchEvents](/workers/runtime-apis/fetch-event/)
-*   [Request context](/workers/runtime-apis/request/)
-*   [Runtime limitations](/workers/platform/limits/)
+- [FetchEvents](/workers/runtime-apis/fetch-event/)
+- [Request context](/workers/runtime-apis/request/)
+- [Runtime limitations](/workers/platform/limits/)

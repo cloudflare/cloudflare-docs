@@ -16,13 +16,13 @@ In this tutorial, you will learn to build an SMS notification system on Workers 
 
 You will learn how to:
 
-*   Build webhooks using Workers.
-*   Integrate Workers with GitHub and Twilio.
-*   Use Worker secrets with Wrangler.
+- Build webhooks using Workers.
+- Integrate Workers with GitHub and Twilio.
+- Use Worker secrets with Wrangler.
 
 ![Video of receiving a text after pushing to a repo](../media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
-***
+---
 
 ## Generate a project
 
@@ -44,7 +44,7 @@ First, create a webhook for your repository to post updates to your Worker. Insi
 
 You can reference the finished code at this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
 
-***
+---
 
 ## Configure GitHub
 
@@ -54,7 +54,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/get-started/guide/#6-preview-your-project) file and then [running `wrangler publish` in your command line](/workers/get-started/guide/#8-publish-your-project) to generate a live URL for your Worker.
 
-3.  In the **Content type** dropdown, select *application/json*.
+3.  In the **Content type** dropdown, select _application/json_.
 
 4.  In the **Secret** field, input a secret key of your choice.
 
@@ -64,7 +64,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 ![GitHub config screenshot](../media/github-config-screenshot.png)
 
-***
+---
 
 ## Parsing the response
 
@@ -76,18 +76,18 @@ Your generated `index.js` should look like this:
 ---
 filename: index.js
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 /**
  * Respond with hello worker text
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response("Hello worker!", {
-    headers: { "content-type": "text/plain" },
-  })
+  return new Response('Hello worker!', {
+    headers: { 'content-type': 'text/plain' },
+  });
 }
 ```
 
@@ -100,25 +100,22 @@ filename: index.js
 function simpleResponse(statusCode, message) {
   let resp = {
     message: message,
-    status: statusCode
-  }
+    status: statusCode,
+  };
 
   return new Response(JSON.stringify(resp), {
-    headers: { "Content-Type": "application/json" },
-    status: statusCode
-  })
+    headers: { 'Content-Type': 'application/json' },
+    status: statusCode,
+  });
 }
 
-addEventListener("fetch", event => {
-  event.respondWith(githubWebhookHandler(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(githubWebhookHandler(event.request));
+});
 
 async function githubWebhookHandler(request) {
-  if (request.method !== "POST") {
-    return simpleResponse(
-      200,
-      "Please send a POST request :)"
-    )
+  if (request.method !== 'POST') {
+    return simpleResponse(200, 'Please send a POST request :)');
   }
 }
 ```
@@ -130,31 +127,23 @@ Next, validate that the request is sent with the right secret key. GitHub attach
 filename: index.js - githubWebhookHandler()
 ---
 async function githubWebhookHandler(request) {
-  if (request.method !== "POST") {
-    return simpleResponse(
-      200,
-      "Please send a POST request :)"
-    )
+  if (request.method !== 'POST') {
+    return simpleResponse(200, 'Please send a POST request :)');
   }
   try {
-    const formData = await request.json()
-    const headers = await request.headers
-    const action = headers.get("X-GitHub-Event")
-    const repo_name = formData.repository.full_name
-    const sender_name = formData.sender.login
+    const formData = await request.json();
+    const headers = await request.headers;
+    const action = headers.get('X-GitHub-Event');
+    const repo_name = formData.repository.full_name;
+    const sender_name = formData.sender.login;
 
     if (!checkSignature(formData, headers)) {
-      return simpleResponse(403, "Wrong password, try again :P")
+      return simpleResponse(403, 'Wrong password, try again :P');
     }
-
   } catch (e) {
-    return simpleResponse(
-      200,
-      `Error:  ${e}`
-    )
+    return simpleResponse(200, `Error:  ${e}`);
   }
 }
-
 ```
 
 The `checkSignature` function will use the crypto library to hash the received payload with your known secret key to ensure it matches the request hash. GitHub uses an HMAC hexdigest to compute the hash in the sha1 format.
@@ -163,20 +152,20 @@ The `checkSignature` function will use the crypto library to hash the received p
 ---
 filename: index.js
 ---
-const crypto = require("crypto")
+const crypto = require('crypto');
 
 async function createHexSignature(requestBody) {
-  let hmac = crypto.createHmac("sha1", SECRET_TOKEN)
-  hmac.update(requestBody,"utf-8")
+  let hmac = crypto.createHmac('sha1', SECRET_TOKEN);
+  hmac.update(requestBody, 'utf-8');
 
-  return hmac.digest("hex")
+  return hmac.digest('hex');
 }
 
 async function checkSignature(formData, headers) {
-  let expectedSignature = await createHexSignature(formData)
-  let actualSignature = headers.get("X-Hub-Signature")
+  let expectedSignature = await createHexSignature(formData);
+  let actualSignature = headers.get('X-Hub-Signature');
 
-  return expectedSignature === actualSignature
+  return expectedSignature === actualSignature;
 }
 ```
 
@@ -196,7 +185,7 @@ route = ""
 zone_id = ""
 ```
 
-***
+---
 
 ## Sending a text with Twilio
 
@@ -210,29 +199,29 @@ Construct your headers and body in the format shown in the Twilio reference page
 ---
 filename: index.js - sendText()
 ---
-async function sendText(message){
-  const endpoint = "https://api.twilio.com/2010-04-01/Accounts/" + ACCOUNT_SID + "/Messages.json"
+async function sendText(message) {
+  const endpoint = 'https://api.twilio.com/2010-04-01/Accounts/' + ACCOUNT_SID + '/Messages.json';
 
-  let encoded = new URLSearchParams()
-  encoded.append("To", RECIPIENT)
-  encoded.append("From", "+19388887573")
-  encoded.append("Body", message)
+  let encoded = new URLSearchParams();
+  encoded.append('To', RECIPIENT);
+  encoded.append('From', '+19388887573');
+  encoded.append('Body', message);
 
-  let token = btoa(ACCOUNT_SID + ":" + AUTH_TOKEN)
+  let token = btoa(ACCOUNT_SID + ':' + AUTH_TOKEN);
 
   const request = {
     body: encoded,
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Authorization": `Basic ${token}`,
-      "Content-Type": "application/x-www-form-urlencoded"
-    }
-  }
+      'Authorization': `Basic ${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
 
-  let result = await fetch(endpoint, request)
-  result = await result.json()
+  let result = await fetch(endpoint, request);
+  result = await result.json();
 
-  return new Response(JSON.stringify(result), request)
+  return new Response(JSON.stringify(result), request);
 }
 ```
 
@@ -248,30 +237,23 @@ Modify your `githubWebhookHandler` to send a text message using the `sendText` f
 
 ```js
 async function githubWebhookHandler(request) {
-  if (request.method !== "POST") {
-    return simpleResponse(
-      200,
-      "Please send a POST request :)"
-    )
+  if (request.method !== 'POST') {
+    return simpleResponse(200, 'Please send a POST request :)');
   }
   try {
-    const formData = await request.json()
-    const headers = await request.headers
-    const action = headers.get("X-GitHub-Event")
-    const repo_name = formData.repository.full_name
-    const sender_name = formData.sender.login
+    const formData = await request.json();
+    const headers = await request.headers;
+    const action = headers.get('X-GitHub-Event');
+    const repo_name = formData.repository.full_name;
+    const sender_name = formData.sender.login;
 
     if (!checkSignature(formData, headers)) {
-      return simpleResponse(403, "Wrong password, try again :P")
+      return simpleResponse(403, 'Wrong password, try again :P');
     }
 
-    return await sendText(`${sender_name} casted spell: ${action} onto your repo ${repo_name}`)
-
+    return await sendText(`${sender_name} casted spell: ${action} onto your repo ${repo_name}`);
   } catch (e) {
-    return simpleResponse(
-      200,
-      `Error:  ${e}`
-    )
+    return simpleResponse(200, `Error:  ${e}`);
   }
 }
 ```
@@ -292,6 +274,6 @@ By completing this tutorial, you have learned how to build webhooks using Worker
 
 ## Related resources
 
-*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
-*   [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
-*   [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)
+- [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+- [Build a JAMStack app](/workers/tutorials/build-a-jamstack-app/)
+- [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)

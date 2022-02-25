@@ -13,9 +13,9 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 **🗺️ This walkthrough covers how to:**
 
-*   Build a Zero Trust rule once and set it as the default for your account
-*   Use that rule when adding an application to Cloudflare Access
-*   Combine that default rule with other rules for additional customization
+- Build a Zero Trust rule once and set it as the default for your account
+- Use that rule when adding an application to Cloudflare Access
+- Combine that default rule with other rules for additional customization
 
 **⏲️ Time to complete:**
 

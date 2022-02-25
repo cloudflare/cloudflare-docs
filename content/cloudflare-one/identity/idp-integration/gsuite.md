@@ -114,12 +114,12 @@ Your user identity and group membership should return.
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>",
-        "apps_domain": "mycompany.com"
-    },
-    "type": "google-apps",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>",
+    "apps_domain": "mycompany.com"
+  },
+  "type": "google-apps",
+  "name": "my example idp"
 }
 ```

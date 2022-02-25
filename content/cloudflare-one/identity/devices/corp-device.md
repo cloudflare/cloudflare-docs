@@ -10,9 +10,9 @@ weight: 6
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| macOS, Windows, Linux | WARP with Gateway | All plans |
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -61,7 +61,7 @@ To do that:
 
 4.  Select the **Rules** tab and edit an existing rule. To add a new rule, click **Add a Rule**.
 
-5.  Add a **Require** rule and choose *Device Posture - Serial Number List* from the drop-down menu.
+5.  Add a **Require** rule and choose _Device Posture - Serial Number List_ from the drop-down menu.
 
 6.  Choose the list of devices to require and click **Save rule**.
 

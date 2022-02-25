@@ -13,11 +13,11 @@ You have several options available to determine how `CDN-Cache-Control` directiv
 
 An origin can:
 
-*   Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, is proxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
+- Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, is proxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
 
-*   Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it’s a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control` or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
+- Return the `Cloudflare-CDN-Cache-Control` response header. This results in the same behavior as the origin returning `CDN-Cache-Control` except Cloudflare does not proxy `Cloudflare-CDN-Cache-Control` downstream because it’s a header only used to control Cloudflare. This option is beneficial if you want only Cloudflare to have a different caching behavior while all other downstream servers rely on `Cache-Control` or if you do not want Cloudflare to proxy the `CDN-Cache-Control` header downstream.
 
-*   Return both `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` response headers. In this case, Cloudflare only looks at `Cloudflare-CDN-Cache-Control` when making caching decisions because it is the most specific version of `CDN-Cache-Control` and proxies `CDN-Cache-Control` downstream. Only forwarding `CDN-Cache-Control` in this situation is beneficial if you want Cloudflare to have a different caching behavior than other CDNs downstream.
+- Return both `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` response headers. In this case, Cloudflare only looks at `Cloudflare-CDN-Cache-Control` when making caching decisions because it is the most specific version of `CDN-Cache-Control` and proxies `CDN-Cache-Control` downstream. Only forwarding `CDN-Cache-Control` in this situation is beneficial if you want Cloudflare to have a different caching behavior than other CDNs downstream.
 
 Additionally, surrogates will not honor `Cache-Control` headers in the response from an origin. For example, if the `Surrogate-Control` header is present within the response, Cloudflare ignores any `Cache-Control` directives, even if the `Surrogate-Control` header does not contain directives.
 
@@ -47,9 +47,9 @@ Use `CDN-Cache-Control` when you want to manage cached asset’s TTLs separately
 
 Headers:
 
-*   `Cache-Control: max-age=14400, s-maxage=84000`
-*   `Cloudflare-CDN-Cache-Control: max-age=24400`
-*   `CDN-Cache-Control: 18000`
+- `Cache-Control: max-age=14400, s-maxage=84000`
+- `Cloudflare-CDN-Cache-Control: max-age=24400`
+- `CDN-Cache-Control: 18000`
 
 Cache behavior:
 
@@ -110,9 +110,9 @@ Use `CDN-Cache-Control` headers in conjunction with `Cache-Control` headers to s
 
 Headers:
 
-*   `Cache-Control: stale-if-error=400`
-*   `Cloudflare-CDN-Cache-Control: stale-if-error=60`
-*   `CDN-Cache-Control: stale-if-error=200`
+- `Cache-Control: stale-if-error=400`
+- `Cloudflare-CDN-Cache-Control: stale-if-error=60`
+- `CDN-Cache-Control: stale-if-error=200`
 
 Behavior in response to 5XX error:
 

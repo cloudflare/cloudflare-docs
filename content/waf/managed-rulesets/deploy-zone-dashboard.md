@@ -16,7 +16,7 @@ You can enable and configure Managed Rulesets for a zone in the **WAF** tab of t
 
 Under **Deploy Managed Rulesets**, click **Add to WAF** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
 
-When you deploy a Managed Ruleset, the WAF adds an *Execute* rule, displayed under **Web Application Firewall (WAF)**, that deploys the Managed Ruleset.
+When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **Web Application Firewall (WAF)**, that deploys the Managed Ruleset.
 
 ## Enable or disable a Managed Ruleset
 
@@ -26,8 +26,8 @@ Under **Web Application Firewall (WAF)**, click the **Enabled** toggle on the ri
 
 Configure a Managed Ruleset to:
 
-*   Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare)
-*   Disable one or more rules
+- Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare)
+- Disable one or more rules
 
 To skip one or more rules or WAF Managed Rulesets, [add a WAF exception](/waf/managed-rulesets/waf-exceptions/).
 
@@ -43,7 +43,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 1.  Go to **Firewall** > **WAF**.
 
-2.  Under **Web Application Firewall (WAF)** and on the right of the *Execute* rule that deploys the Managed Ruleset you want to configure, click **Edit**.
+2.  Under **Web Application Firewall (WAF)** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
 
 3.  Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
@@ -63,7 +63,7 @@ To view the rules of a Managed Ruleset:
 
 1.  Go to **Firewall** > **WAF**.
 
-2.  Under **Web Application Firewall (WAF)** and on the right of the *Execute* rule that deploys the Managed Ruleset you want to browse, click **Edit**.
+2.  Under **Web Application Firewall (WAF)** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
 
 3.  Click **Browse rules**.
 
@@ -115,11 +115,11 @@ Do the following:
 
     {{<Aside type="note" header="Note">}}
 
-  If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
+If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
 
-  Select **Do not apply to new rules** to apply your configurations to the selected rules only.
+Select **Do not apply to new rules** to apply your configurations to the selected rules only.
 
-  Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
+Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
 
      {{</Aside>}}
 

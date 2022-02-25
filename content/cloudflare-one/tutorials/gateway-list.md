@@ -10,19 +10,19 @@ title: Upload and use a list of objects
 
 You can upload and manage lists of objects to use in Gateway rules. These lists can include:
 
-|Object|Example|
-|---|---|
-|Hostname|`foo.app.com`|
-|URL|`https://foo.app.com/admin`|
-|Email| `user@cloudflare.com` |
+| Object   | Example                     |
+| -------- | --------------------------- |
+| Hostname | `foo.app.com`               |
+| URL      | `https://foo.app.com/admin` |
+| Email    | `user@cloudflare.com`       |
 
 You can then use these lists in Gateway policies to block, allow, isolate or exclude from decryption.
 
 **🗺️ This walkthrough covers how to:**
 
-*   Upload a CSV of hostnames into a list
-*   Manage the list in the Zero Trust dashboard
-*   Use the list in a Gateway policy
+- Upload a CSV of hostnames into a list
+- Manage the list in the Zero Trust dashboard
+- Use the list in a Gateway policy
 
 **⏲️ Time to complete:**
 

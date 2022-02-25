@@ -13,7 +13,7 @@ meta:
     number of custom email addresses to use in situations where you do not want
     to share your primary email address, and Email Routing will forward your
     email messages for you.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

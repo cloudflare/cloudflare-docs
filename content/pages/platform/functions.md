@@ -56,13 +56,13 @@ The following routes will be generated based on the file structure, mapping the 
 
 In the [example above](/pages/platform/functions/#functions-routing):
 
-*   A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
-*   A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
+- A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
+- A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
 
 When naming your files:
 
-*   `[name]` is a placeholder for a single path segment.
-*   `[[name]]` matches any depth of route below this point.
+- `[name]` is a placeholder for a single path segment.
+- `[[name]]` matches any depth of route below this point.
 
 {{<Aside type="note" header="Route specificity">}}
 
@@ -88,7 +88,7 @@ export async function onRequest(context) {
     data, // arbitrary space for passing data between middlewares
   } = context;
 
-  return new Response("Hello, world!");
+  return new Response('Hello, world!');
 }
 ```
 
@@ -96,12 +96,12 @@ When migrating from a [Module Worker](/workers/runtime-apis/fetch-event#syntax-m
 
 In the previous example, an `onRequest` function was exported. This is a generic name because it generically handles all HTTP requests. However, to react to specific HTTP request methods, you may use the method name as a suffix to the exported function. For example, a handler that should only receive `GET` requests should be named `onRequestGet`. The following other handlers are supported:
 
-*   `onRequestPost`
-*   `onRequestPut`
-*   `onRequestPatch`
-*   `onRequestDelete`
-*   `onRequestHead`
-*   `onRequestOptions`
+- `onRequestPost`
+- `onRequestPut`
+- `onRequestPatch`
+- `onRequestDelete`
+- `onRequestHead`
+- `onRequestOptions`
 
 These are the requests you export to write your first function. For example, you can write a function to output "Hello World" when it hits a `/functions/hello-world.js` file:
 
@@ -123,14 +123,11 @@ Another helpful example for handling single path segments can be querying an API
 filename:function/character/[id].js
 ---
 export async function onRequestGet({ params }) {
-  const res = await fetch(
-    `https://rickandmortyapi.com/api/character/${params.id}`
-  );
+  const res = await fetch(`https://rickandmortyapi.com/api/character/${params.id}`);
   const data = await res.json();
   const info = JSON.stringify(data);
   return new Response(info, null, 2);
 }
-
 ```
 
 The above will return each character at `/character/{id}` ID being associated with the character.
@@ -150,15 +147,15 @@ export const onRequestPut = onRequestPost;
 Additionally, an exported handler may be an array of function handlers. This allows you to easily compose Functions as a group, which may include a mix of shared and/or one-off behaviors:
 
 ```js
-import { extraLogging } from 'middlewares.ts'
+import { extraLogging } from 'middlewares.ts';
 
 export const onRequest = [
   extraLogging,
 
   async ({ request }) => {
     // ...
-  }
-]
+  },
+];
 ```
 
 ## Adding middleware
@@ -167,7 +164,7 @@ Middleware are reusable chunks of logic that can be executed before and/or after
 
 ### Exporting middleware
 
-Middleware files are similar to standard Function files. You may export an `onRequest`  handler or any of its method-specific variants. Additionally, like Functions files, you may export an array of Functions as your middleware handler.
+Middleware files are similar to standard Function files. You may export an `onRequest` handler or any of its method-specific variants. Additionally, like Functions files, you may export an array of Functions as your middleware handler.
 
 In your `_middleware.{js|ts}` files, you can define a middleware function that handles errors for all your Functions and export it to all the `onRequest` methods. This means the Functions defined within this file will be called on each function request declared in the directory that the middleware lives in. For example:
 
@@ -177,22 +174,19 @@ filename: functions/_middleware.js
 ---
 const errorHandler = async ({ next }) => {
   try {
-    return await next()
+    return await next();
   } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
   }
-}
+};
 
 const hello = async ({ next }) => {
-  const response = await next()
-  response.headers.set('X-Hello', 'Hello from functions Middleware!')
-  return response
-}
+  const response = await next();
+  response.headers.set('X-Hello', 'Hello from functions Middleware!');
+  return response;
+};
 
-export const onRequest = [
-  errorHandler,
-  hello
-]
+export const onRequest = [errorHandler, hello];
 ```
 
 In the function above, you can see that the `errorHandler` and `hello` Functions are exported to all requests so that if this middleware is in the base of the `/functions` directory it will run on all Functions defined in that directory. And if the middleware is defined in a subdirectory such as `/functions/todos/_middleware.ts` it will only run on all requests in that directory.
@@ -208,14 +202,9 @@ filename: functions/hello/_middleware.js
 import { errorHandler } from '../shared';
 import { hello } from '../custom';
 
-export const onRequest = [
-  errorHandler
-]
+export const onRequest = [errorHandler];
 
-export const onRequestGet = [
-  errorHandler,
-  hello
-]
+export const onRequestGet = [errorHandler, hello];
 ```
 
 ### Middleware routing
@@ -253,10 +242,10 @@ Within Pages, middleware functions have access to a `context.next` function whic
 async function errorHandler(context) {
   try {
     // wait for the next function to finish
-    return await context.next()
+    return await context.next();
   } catch (err) {
     // catch and report and errors when running the next function
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+    return new Response(`${err.message}\n${err.stack}`, { status: 500 });
   }
 }
 
@@ -269,23 +258,23 @@ Another use case for the `next` function is passing the request cycle from the c
 ```js
 // Attach multiple handlers
 export const onRequest = [
-  async ({ request,next }) => {
+  async ({ request, next }) => {
     try {
       // Call the next handler in the stack
-      const response = await next()
-      const responseText = await response.text()
+      const response = await next();
+      const responseText = await response.text();
       //~> "Hello from next base middleware"
-      return new Response(responseText + " from middleware")
+      return new Response(responseText + ' from middleware');
     } catch (thrown) {
       return new Response(`Error ${thrown}`, {
         status: 500,
-        statusText: "Internal Server Error"
-      })
+        statusText: 'Internal Server Error',
+      });
     }
   },
   ({ request, next }) => {
-    return new Response("Hello from next base middleware");
-  }
+    return new Response('Hello from next base middleware');
+  },
 ];
 ```
 
@@ -303,14 +292,14 @@ export async function onRequest(context) {
   let res;
 
   try {
-    context.data.timestamp = Date.now()
+    context.data.timestamp = Date.now();
     res = await context.next();
   } catch (err) {
-    res = new Response('Oops!', { status: 500 })
+    res = new Response('Oops!', { status: 500 });
   } finally {
-    let delta = Date.now() - context.data.timestamp
-    res.headers.set('x-response-timing', delta)
-    return res
+    let delta = Date.now() - context.data.timestamp;
+    res.headers.set('x-response-timing', delta);
+    return res;
   }
 }
 ```
@@ -321,17 +310,17 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 ### KV namespace
 
-Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to  **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
+Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a _KV namespace_ from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![KV-Binding](../KV-functions.png)
 
 ## KV namespace locally
 
-While developing locally you can interact with your KV namespace by add `-k, --kv  [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
+While developing locally you can interact with your KV namespace by add `-k, --kv [Namespace name]` to your run command. For example, if your namespace is called `TodoList`, you can access the KV namespace in your local dev by running `npx wrangler pages dev dist --kv TodoList`. The data from this namespace can be accessed using `context.env`.
 
 ```js
 export async function onRequest({ env }) {
-  const task = await env.TodoList.get("Task:123");
+  const task = await env.TodoList.get('Task:123');
   return new Response(task);
 }
 ```
@@ -340,7 +329,7 @@ export async function onRequest({ env }) {
 
 Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
 
-Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
+Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
 ![DO-Binding](../DO-functions.png)
 
@@ -385,9 +374,7 @@ const SentryMiddleware = async ({ request, next, env, waitUntil }) => {
     });
   }
 };
-export const onRequest = [
-  SentryMiddleware,
-];
+export const onRequest = [SentryMiddleware];
 ```
 
 ## Advanced mode
@@ -414,8 +401,8 @@ export default {
     // Otherwise, serve the static assets.
     // Without this, the Worker will error and no assets will be served.
     return env.ASSETS.fetch(request);
-  }
-}
+  },
+};
 ```
 
 {{<Aside type="warning">}}

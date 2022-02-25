@@ -9,7 +9,7 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
 meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming HTTP requests at the edge.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

@@ -12,7 +12,7 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 **🗺️ This tutorial covers how to:**
 
-*   Build a policy in Gateway to block entire TLDs
+- Build a policy in Gateway to block entire TLDs
 
 **⏲️Time to complete:**
 

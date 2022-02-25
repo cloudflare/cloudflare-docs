@@ -13,7 +13,7 @@ To prevent issues and simplify the advertisement process during an attack scenar
 
 ## Before you start (Magic Transit customers only)
 
-If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from *Withdrawn* to *Advertised*), make sure you disable the [Advanced TCP Protection Managed Ruleset](/ddos-protection/managed-rulesets/tcp-protection) first.
+If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from _Withdrawn_ to _Advertised_), make sure you disable the [Advanced TCP Protection Managed Ruleset](/ddos-protection/managed-rulesets/tcp-protection) first.
 
 After enabling the prefix advertisement or advertising a new prefix, do the following:
 
@@ -27,7 +27,7 @@ To configure IP prefix assignment from your Cloudflare account home, use the **S
 1.  Log in to your Cloudflare dashboard.
 2.  On **Account Home**, select **IP Prefixes**.
 3.  To edit a prefix, click the **Edit** at the end of the entry.
-4.  From **Edit IP Prefixes**, under **Status**, select *Advertised* or *Withdrawn*.
+4.  From **Edit IP Prefixes**, under **Status**, select _Advertised_ or _Withdrawn_.
 5.  Click **Save** to commit your changes.
 
 After saving your changes, it takes between 2 to 7 minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.

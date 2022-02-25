@@ -10,7 +10,7 @@ Debugging is a critical part of developing a new application — whether running
 
 {{<youtube id="8iPmy7ePYDE">}}
 
-***
+---
 
 ## Local testing with `wrangler dev`
 
@@ -39,10 +39,10 @@ To help you further debug your code, `wrangler dev` also supports `console.log` 
 ---
 filename: index.js
 ---
-addEventListener("fetch", event => {
-  console.log(`Received new request: ${event.request.url}`)
-  event.respondWith(handleEvent(event))
-})
+addEventListener('fetch', event => {
+  console.log(`Received new request: ${event.request.url}`);
+  event.respondWith(handleEvent(event));
+});
 ```
 
 ```sh

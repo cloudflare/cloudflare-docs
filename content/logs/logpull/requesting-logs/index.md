@@ -10,20 +10,20 @@ weight: 15
 
 The three endpoints supported by the Logpull API are:
 
-*   `GET /logs/received` - returns HTTP request log data based on the parameters specified
-*   `GET /logs/received/fields` - returns the list of all available log fields
-*   `GET /logs/rayids/<rayid>` - returns HTTP request log data matching `<rayid>`
+- `GET /logs/received` - returns HTTP request log data based on the parameters specified
+- `GET /logs/received/fields` - returns the list of all available log fields
+- `GET /logs/rayids/<rayid>` - returns HTTP request log data matching `<rayid>`
 
 ## Required authentication headers
 
 The following headers are required for all endpoint calls:
 
-*   `X-Auth-Email` - the Cloudflare account email address associated with the domain
-*   `X-Auth-Key` - the Cloudflare API key
+- `X-Auth-Email` - the Cloudflare account email address associated with the domain
+- `X-Auth-Key` - the Cloudflare API key
 
 Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
 
-*   `Authorization: Bearer <API_TOKEN>`
+- `Authorization: Bearer <API_TOKEN>`
 
 ## Parameters
 
@@ -45,15 +45,15 @@ The following table describes the parameters available:
 
 {{<table-wrap>}}
 
-| Parameter | Description | Applies to | Required |
-|---|---|---|--|
-| start | <p>- Inclusive</p> <p>- Timestamp formatted as `UNIX` (UTC by definition), `UNIX Nano`, or `rfc3339` (specifies time zone)</p> <p>- Must be no more than 7 days earlier than now</p> | /logs/received | Yes |
-| end | <p>- Exclusive</p> <p>- Same format as <em>start</em></p> <p>- Must be at least 1 minute earlier than now and later than <em>start</em></p> | /logs/received | Yes |
-| count | <p>- Return up to that many records</p> <p>- Do not include if returning all records</p> <p>- Results are not sorted; therefore, different data for repeated requests is likely</p> <p></p> <p>- Applies to number of total records returned, not number of sampled records</p> | /logs/received | No |
-| sample | <p>- Return only a sample of records</p> <p>- Do not include if returning all records</p> <p>- Value can range from `0.001` to `1.0` (inclusive)</p> <p>- `sample=0.1` means return 10% (1 in 10) of all records</p> <p>- Results are random; therefore, different numbers of results for repeated requests are likely</p> | /logs/received | No |
-| fields | <p>- Comma-separated list of fields to return</p> <p>- If empty, the default list is returned</p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
-| timestamps | <p>- Format in which timestamp fields will be returned</p> <p>- Value options are: `unixnano` (default), `unix`, `rfc3339`</p> <p>- Timestamps returned as integers for `unix` and `unixnano` and as strings for `rfc3339`</p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
-| CVE-2021-44228 | <p>- Optional redaction for [CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228).  This option will replace every occurrence of the string `${` with `x{`.</p> <p> For example: `CVE-2021-44228=true` </p> | <p>/logs/received</p> | No |
+| Parameter      | Description                                                                                                                                                                                                                                                                                                                | Applies to                                | Required |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | -------- |
+| start          | <p>- Inclusive</p> <p>- Timestamp formatted as `UNIX` (UTC by definition), `UNIX Nano`, or `rfc3339` (specifies time zone)</p> <p>- Must be no more than 7 days earlier than now</p>                                                                                                                                       | /logs/received                            | Yes      |
+| end            | <p>- Exclusive</p> <p>- Same format as <em>start</em></p> <p>- Must be at least 1 minute earlier than now and later than <em>start</em></p>                                                                                                                                                                                | /logs/received                            | Yes      |
+| count          | <p>- Return up to that many records</p> <p>- Do not include if returning all records</p> <p>- Results are not sorted; therefore, different data for repeated requests is likely</p> <p></p> <p>- Applies to number of total records returned, not number of sampled records</p>                                            | /logs/received                            | No       |
+| sample         | <p>- Return only a sample of records</p> <p>- Do not include if returning all records</p> <p>- Value can range from `0.001` to `1.0` (inclusive)</p> <p>- `sample=0.1` means return 10% (1 in 10) of all records</p> <p>- Results are random; therefore, different numbers of results for repeated requests are likely</p> | /logs/received                            | No       |
+| fields         | <p>- Comma-separated list of fields to return</p> <p>- If empty, the default list is returned</p>                                                                                                                                                                                                                          | <p>/logs/received</p> <p>/logs/rayids</p> | No       |
+| timestamps     | <p>- Format in which timestamp fields will be returned</p> <p>- Value options are: `unixnano` (default), `unix`, `rfc3339`</p> <p>- Timestamps returned as integers for `unix` and `unixnano` and as strings for `rfc3339`</p>                                                                                             | <p>/logs/received</p> <p>/logs/rayids</p> | No       |
+| CVE-2021-44228 | <p>- Optional redaction for [CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228). This option will replace every occurrence of the string `${` with `x{`.</p> <p> For example: `CVE-2021-44228=true` </p>                                                                                                     | <p>/logs/received</p>                     | No       |
 
 {{</table-wrap>}}
 

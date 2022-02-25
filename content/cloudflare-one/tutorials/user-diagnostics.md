@@ -12,15 +12,15 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 **🗺️ This tutorial covers how to:**
 
-*   Configure the App Launcher
-*   Visit the App Launcher as an end user
-*   Review login diagnostics as an end user
+- Configure the App Launcher
+- Visit the App Launcher as an end user
+- Review login diagnostics as an end user
 
 **⏲️Time to complete:**
 
 10 minutes
 
-***
+---
 
 ## Configure the App Launcher
 
@@ -66,22 +66,20 @@ Users can also copy the data to share it with an administrator. The data is stru
 
 ```json
 {
-   "id":"103616583934998960058",
-   "name":"Sam Rhea",
-   "email":"srhea@cloudflare.com",
-   "idp":{
-      "id":"7d373bcc-73cb-4d52-97a7-099a93b5587f",
-      "type":"google"
-   },
-   "geo":{
-      "country":"PT"
-   },
-   "user_uuid":"78f51e22-2a9f-4f51-a60f-bf97d097fb59",
-   "devicePosture":{
-      
-   },
-   "account_id":"1c787a4e7a6972171826b9c0bdd5a4ee",
-   "auth_cert":"",
-   "ip":"85.XXX.XXX.XX"
+  "id": "103616583934998960058",
+  "name": "Sam Rhea",
+  "email": "srhea@cloudflare.com",
+  "idp": {
+    "id": "7d373bcc-73cb-4d52-97a7-099a93b5587f",
+    "type": "google"
+  },
+  "geo": {
+    "country": "PT"
+  },
+  "user_uuid": "78f51e22-2a9f-4f51-a60f-bf97d097fb59",
+  "devicePosture": {},
+  "account_id": "1c787a4e7a6972171826b9c0bdd5a4ee",
+  "auth_cert": "",
+  "ip": "85.XXX.XXX.XX"
 }
 ```

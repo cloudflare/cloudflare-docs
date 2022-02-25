@@ -14,10 +14,10 @@ Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s
 
 **🗺️ This walkthrough covers how to:**
 
-*   Install and run a Cloudflare Tunnel on a Linux virtual machine
-*   Install and configure VNC on a Linux virtual machine
-*   Build a Zero Trust policy to determine who can reach the host
-*   Render the VNC server in your browser
+- Install and run a Cloudflare Tunnel on a Linux virtual machine
+- Install and configure VNC on a Linux virtual machine
+- Build a Zero Trust policy to determine who can reach the host
+- Render the VNC server in your browser
 
 **⏲️ Time to complete:**
 
@@ -177,7 +177,7 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
     ![Create policy](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
-6.  In **`cloudflared` settings**, set **Application Type** to be *VNC*.
+6.  In **`cloudflared` settings**, set **Application Type** to be _VNC_.
 
 And now you are ready to use the VNC terminal directly in the browser. Users will first see a login screen with your configured identity providers:
 

@@ -26,9 +26,9 @@ You cannot download a list in CSV format from the dashboard. If you need to down
 
 IP Lists support:
 
-*   Individual IPv4 addresses
-*   IPv4 CIDR ranges with a prefix from `/8` to `/32`
-*   IPv6 CIDR ranges with a prefix from `/4` to `/64`
+- Individual IPv4 addresses
+- IPv4 CIDR ranges with a prefix from `/8` to `/32`
+- IPv6 CIDR ranges with a prefix from `/4` to `/64`
 
 You can combine individual addresses and CIDR ranges in the same list.
 
@@ -38,8 +38,8 @@ To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the la
 
 For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
-*   `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
-*   `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+- `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
+- `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
 {{</Aside>}}
 
@@ -112,8 +112,8 @@ The **Add items to list** page updates to include the items from the CSV file:
 
 1.  You can continue to edit the items in the list before adding them:
 
-*   To delete any of the IP addresses that you have entered, click **X**.
-*   To add extra IP addresses manually, enter the information in the text inputs.
+- To delete any of the IP addresses that you have entered, click **X**.
+- To add extra IP addresses manually, enter the information in the text inputs.
 
 1.  Click **Add to list** to add the new items to your list.
 
@@ -123,8 +123,8 @@ The updated list displays.
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
-*   IP addresses that were already in the list are updated with the description from the CSV file.
-*   IP addresses in the CSV file that were not already in the list are added to the list.
+- IP addresses that were already in the list are updated with the description from the CSV file.
+- IP addresses in the CSV file that were not already in the list are added to the list.
 
 {{</Aside>}}
 

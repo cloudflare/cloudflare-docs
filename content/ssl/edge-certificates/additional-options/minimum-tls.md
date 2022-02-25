@@ -18,9 +18,9 @@ You can use the API to [configure cipher suites](/ssl/ssl-tls/cipher-suites).
 
 You can manage the TLS version your domain uses when proxied through Cloudflare by setting the **Minimum TLS Version** in the **SSL/TLS** tab of the Cloudflare dashboard.
 
-Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported.  TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
+Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported. TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
 
-To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version.  For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
+To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version. For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
 
 ```sh
 $ curl https://www.example.com -svo /dev/null --tls-max 1.1
@@ -34,7 +34,7 @@ For guidance on which TLS version to use, review the information outlined below.
 
 ## Understand TLS versions
 
-A higher TLS version implies a stronger cryptographic standard.  TLS 1.2 includes fixes for known vulnerabilities found in previous versions.
+A higher TLS version implies a stronger cryptographic standard. TLS 1.2 includes fixes for known vulnerabilities found in previous versions.
 
 As of June 2018, TLS 1.2 is the version required by the Payment Card Industry (PCI) Security Standards Council. Cloudflare recommends migrating to TLS 1.2 to comply with the PCI requirement.
 
@@ -52,6 +52,6 @@ It is not recommended to set the minimum TLS to 1.3, unless there is a specific 
 
 ## Related resources
 
-*   [PCI compliance and Cloudflare SSL/TLS](https://support.cloudflare.com/hc/en-us/articles/205043158)
-*   [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
-*   [PCI Security Standards Council](https://www.pcisecuritystandards.org/)
+- [PCI compliance and Cloudflare SSL/TLS](https://support.cloudflare.com/hc/en-us/articles/205043158)
+- [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security)
+- [PCI Security Standards Council](https://www.pcisecuritystandards.org/)

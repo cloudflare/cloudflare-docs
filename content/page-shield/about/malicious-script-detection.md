@@ -8,9 +8,9 @@ weight: 3
 
 Page Shield implements different mechanisms to determine if a script is malicious. These mechanisms are:
 
-*   Malicious URL checks
-*   Malicious domain checks
-*   Malicious script detection
+- Malicious URL checks
+- Malicious domain checks
+- Malicious script detection
 
 {{<Aside type="note">}}
 

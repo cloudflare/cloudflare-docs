@@ -27,8 +27,8 @@ Expression:<br />
 
 Rule characteristics:
 
-*   *Data center ID* (included by default when creating the rule in the dashboard)
-*   *IP Address*
+- _Data center ID_ (included by default when creating the rule in the dashboard)
+- _IP Address_
 
 {{</example>}}
 
@@ -43,9 +43,9 @@ Expression:<br />
 
 Rule characteristics:
 
-*   *Data center ID* (included by default when creating the rule in the dashboard)
-*   *IP Address*
-*   *HTTP Header* > `x-api-key`
+- _Data center ID_ (included by default when creating the rule in the dashboard)
+- _IP Address_
+- _HTTP Header_ > `x-api-key`
 
 {{</example>}}
 
@@ -60,8 +60,8 @@ Expression:<br />
 
 Rule characteristics:
 
-*   *Data center ID* (included by default when creating the rule in the dashboard)
-*   *IP Address*
-*   *HTTP Header* > `user-agent`
+- _Data center ID_ (included by default when creating the rule in the dashboard)
+- _IP Address_
+- _HTTP Header_ > `user-agent`
 
 {{</example>}}

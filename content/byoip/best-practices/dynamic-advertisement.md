@@ -12,9 +12,9 @@ meta:
 
 To prevent issues and simplify the advertisement process during an attack scenario, complete the following tasks.
 
-*   **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/articles/205065067#12345682).
+- **Assign appropriate user roles.** Ensure that users assigned to manage the status of IP prefix advertisement have the **Administrator** or **Super Administrator** role in your Cloudflare account. For more information, refer to [Setting up Multi-user accounts on Cloudflare](https://support.cloudflare.com/hc/articles/205065067#12345682).
 
-*   **Get a list of the Prefix IDs you want to manage.** Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. To obtain Prefix IDs, review [obtain prefix IDs](/byoip/how-to/configure-dynamic-advertisement/#obtain-prefix-ids) from the dashboard or use the [list prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
+- **Get a list of the Prefix IDs you want to manage.** Maintain a list of Cloudflare prefix IDs to simplify dynamic advertisement management and operations. To obtain Prefix IDs, review [obtain prefix IDs](/byoip/how-to/configure-dynamic-advertisement/#obtain-prefix-ids) from the dashboard or use the [list prefixes](https://api.cloudflare.com/#ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API. Refer to these Prefix IDs when managing prefix advertisement.
 
 ## Enable prefix advertisement
 
@@ -38,7 +38,7 @@ To disable (withdraw) prefix advertisement, reverse the steps you used to enable
 
 1.  Add the prefix advertisement to your data center.
 
-2.  *Optional.* Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/).
+2.  _Optional._ Verify the advertisement using a looking glass of your choice, such as [Hurricane Electric Internet Services](https://lg.he.net/).
 
 3.  To disable prefix advertisement at Cloudflare’s edge, refer to [configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/). This operation requires your Account ID, Prefix IDs, and API key.
 

@@ -23,25 +23,25 @@ default = 127.0.0.1
 example.com:2083 = 127.0.0.1:2083
 ```
 
-***
+---
 
 **Railgun is returning an HTTP 502 in its error logs**
 
 This commonly occurs when Railgun cannot reach your origin web server over port 443 (or port 80) within 30 seconds. Verify that the server your Railgun instance is on can connect via `telnet <host> 443`.
 
-***
+---
 
 **Railgun is returning a** `connection failed 127.0.0.1:443/welcome.cloudflare.com: x509: certificate is valid for www.cloudflare.com, not welcome.cloudflare.com` **error**
 
 Your origin webserver should have a certificate matching its hostname. If you are on an internal network and are aware of the risks, you can set `validate.cert = 0` in `railgun.conf` to turn off certificate validation (not recommended).
 
-***
+---
 
 **I’m seeing** `bad Content-Length: "-1"`
 
 Railgun expects that all POST, PUT, PATCH (and other non-idempotent methods) requests have either a `Content-Length` header or a `Transfer-Encoding: chunked` header present.
 
-***
+---
 
 **There are errors containing** `memcached: connection failed` (Unix socket) **or** `dial tcp 127.0.0.1:11211: i/o timeout` (TCP) **in the logs**
 
@@ -49,7 +49,7 @@ Railgun cannot connect to the memcached server. These errors should not cause vi
 
 You should confirm that memcached is running, is accepting connections, and confirm the state of your memcached server via the memcached `stats` command.
 
-***
+---
 
 **How can I tell what the compression ratio for a request is?**
 

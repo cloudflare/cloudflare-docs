@@ -16,7 +16,7 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 4.  Click the **1.1.1.1 bot** when it appears in the search results, and press **Start**.
 5.  You can send a single domain name, which will default to returning the AAAA record. For example:
 
-<br/>
+<br />
 
 <div class="medium-img">
 
@@ -24,25 +24,25 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 
 </div>
 
-<br/>
+<br />
 
 Or you can send a record type followed by a domain name. The record types supported are:
 
-*   A
-*   AAAA
-*   CAA
-*   CNAME
-*   DNSKEY
-*   DS
-*   MX
-*   NS
-*   NSEC
-*   NSEC3
-*   RRSIG
-*   SOA
-*   TXT
+- A
+- AAAA
+- CAA
+- CNAME
+- DNSKEY
+- DS
+- MX
+- NS
+- NSEC
+- NSEC3
+- RRSIG
+- SOA
+- TXT
 
-<br/>
+<br />
 
 Example:
 

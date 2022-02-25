@@ -38,7 +38,7 @@ To create a new Rate Limiting rule:
 
 7.  Under **And rate exceeds**, define the rate limit and the time period to consider when determining the request rate.
 
-8.  Select the rule action from the **Choose action** drop-down list. For example, selecting *Block* tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
+8.  Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
 
 9.  Under **For**, select the mitigation timeout. This is the time period during which Cloudflare applies the select action once the request rate is reached.
 

@@ -82,10 +82,10 @@ Any event that can potentially cause serious damage and lead to site attacks. In
 
 The security levels and the challenge display criteria are:
 
-*   **High** - for scores greater than 0
-*   **Medium** - for scores greater than 14
-*   **Low** - for scores greater than 24
-*   **Essentially off** - for scores greater than 49
+- **High** - for scores greater than 0
+- **Medium** - for scores greater than 14
+- **Low** - for scores greater than 24
+- **Essentially off** - for scores greater than 49
 
 #### Total Threats Stopped
 

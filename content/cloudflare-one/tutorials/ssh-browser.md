@@ -13,7 +13,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 **🗺️ This walkthrough covers how to:**
 
-*   Render a terminal in your browser for SSH connections
+- Render a terminal in your browser for SSH connections
 
 **⏲️ Time to complete:**
 
@@ -24,7 +24,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 2.  [Connect your machine to Cloudflare](/cloudflare-one/tutorials/ssh/) and apply Zero Trust rules
 
-***
+---
 
 ## Create a Zero Trust policy
 
@@ -50,7 +50,7 @@ Finally, click **Save** to save the policy. You can return to edit the policy to
 
 ## Install `cloudflared`
 
-Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can  prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
+Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install `cloudflared` with the commands below. You can find releases for other operating systems [here](https://github.com/cloudflare/cloudflared/releases).
 
@@ -141,7 +141,7 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
-To enable this feature, navigate to the **Access > Applications** page in the Zero Trust Dashboard. Click **Edit** and select the **Settings** tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable this feature, navigate to the **Access > Applications** page in the Zero Trust Dashboard. Click **Edit** and select the **Settings** tab. In the **`cloudflared` settings** card, select _SSH_ from the **Browser Rendering** drop-down menu.
 
 ![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
 

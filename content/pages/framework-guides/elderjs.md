@@ -50,11 +50,11 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 <div>
 
-| Configuration option | Value             |
-| -------------------- | ---------------   |
-| Production branch    | `main`            |
-| Build command        | `npm run build`   |
-| Build directory      | `public`          |
+| Configuration option | Value           |
+| -------------------- | --------------- |
+| Production branch    | `main`          |
+| Build command        | `npm run build` |
+| Build directory      | `public`        |
 
 </div>
 

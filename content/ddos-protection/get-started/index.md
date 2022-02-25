@@ -26,47 +26,47 @@ Cloudflare’s DDoS protection systems automatically detect and mitigate DDoS at
 
 To prevent this situation, Cloudflare recommends that you perform these steps to get started:
 
-1.  Set the ruleset actions for all the DDoS Attack Protection Managed Rulesets to *Log*.
+1.  Set the ruleset actions for all the DDoS Attack Protection Managed Rulesets to _Log_.
 2.  Analyze the flagged traffic.
 3.  Adjust the sensitivity or action of individual Managed Ruleset rules, if required.
-4.  Switch ruleset actions from *Log* back to the default.
+4.  Switch ruleset actions from _Log_ back to the default.
 
 ### Prerequisites
 
 You must have one of the following:
 
-*   [A zone onboarded to Cloudflare](/dns/zone-setups/full-setup) but without updated DNS records
-*   [An IP application onboarded to Spectrum](/spectrum/get-started)
-*   [An IP Prefix onboarded to Magic Transit](/magic-transit/get-started)
+- [A zone onboarded to Cloudflare](/dns/zone-setups/full-setup) but without updated DNS records
+- [An IP application onboarded to Spectrum](/spectrum/get-started)
+- [An IP Prefix onboarded to Magic Transit](/magic-transit/get-started)
 
 ### 1. Configure ruleset actions to Log
 
 {{<Aside type="note">}}
 
-The *Log* action is only available to Enterprise customers.
+The _Log_ action is only available to Enterprise customers.
 
 {{</Aside>}}
 
-Configure ruleset actions to *Log* for each of the [DDoS Attack Protection Managed Rulesets](/ddos-protection/managed-rulesets/).
+Configure ruleset actions to _Log_ for each of the [DDoS Attack Protection Managed Rulesets](/ddos-protection/managed-rulesets/).
 
 Do the following in the Cloudflare dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
 2.  Go to **Firewall** > **DDoS**.
 3.  Next to the Managed Ruleset you are configuring, click **Configure**.
-4.  In **Ruleset configuration** > **Ruleset action**, select *Log*.
+4.  In **Ruleset configuration** > **Ruleset action**, select _Log_.
 5.  Click **Save**.
 6.  Repeat the procedure for all DDoS Attack Protection Managed Rulesets.
 
 Alternatively, if you are using the API, define an override at the ruleset level to set the action of all Managed Ruleset rules to `log` by following these instructions:
 
-*   [Configure an override for the HTTP DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection)
-*   [Configure an override for the Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/configure-api/#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset)
+- [Configure an override for the HTTP DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection)
+- [Configure an override for the Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/configure-api/#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset)
 
 ### 2. Review flagged traffic
 
 1.  Navigate to your [analytics dashboard](/ddos-protection/reference/analytics/) (the exact dashboard depends on your Cloudflare services).
-2.  Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if *Log* mode were disabled. Take note of the rule IDs.
+2.  Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if _Log_ mode were disabled. Take note of the rule IDs.
 
 ### 3. Customize Managed Ruleset rules
 
@@ -74,13 +74,13 @@ Customize the Managed Ruleset rules you identified, changing their sensitivity o
 
 If you are using the Cloudflare dashboard, refer to:
 
-*   [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/)
-*   [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/)
+- [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/)
+- [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/)
 
 If you are using the API, refer to:
 
-*   [Configure HTTP DDoS Attack Protection via API](/ddos-protection/managed-rulesets/http/configure-api/)
-*   [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/)
+- [Configure HTTP DDoS Attack Protection via API](/ddos-protection/managed-rulesets/http/configure-api/)
+- [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/)
 
 When using the API, ensure that you add any required rule overrides without removing the ruleset override you configured in [Step 1](#1-configure-ruleset-actions-to-log).
 
@@ -92,7 +92,7 @@ Do the following in the Cloudflare dashboard:
 
 1.  Go to **Firewall** > **DDoS**.
 2.  Next to the Managed Ruleset you would like to configure, click **Configure**.
-3.  In **Ruleset configuration** > **Ruleset action**, select *Default*.
+3.  In **Ruleset configuration** > **Ruleset action**, select _Default_.
 4.  Click **Save**.
 
 Alternatively, if you are using the API, [remove the override](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#3-customize-managed-ruleset-rules).

@@ -20,10 +20,10 @@ Cloudflare is designed for easy setup. Anyone with a website and their own domai
 
 Cloudflare stops malicious traffic before it reaches your origin web server. Cloudflare analyzes potential threats in visitor requests based on a number of characteristics:
 
-*   Visitor's IP address
-*   Resources requested
-*   Request payload and frequency
-*   Customer-defined firewall rules
+- Visitor's IP address
+- Resources requested
+- Request payload and frequency
+- Customer-defined firewall rules
 
 A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Proxied traffic comes to Cloudflare's edge and then Cloudflare forwards the request to your server. Cloudflare masks your origin IP address for proxied DNS records so attackers cannot bypass Cloudflare and directly attack your origin web server.
 
@@ -53,13 +53,13 @@ Also, our flat-rate pricing structure provides predictability and reliability in
 
 Note that additional terms may apply to:
 
-*   Self-serve domains with add-on features
-*   Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
+- Self-serve domains with add-on features
+- Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
 
 Learn how to [get started with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360027989951).
 
 ## Related resources
 
-*   [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
-*   [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
-*   [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)
+- [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
+- [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
+- [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)

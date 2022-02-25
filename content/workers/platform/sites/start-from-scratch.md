@@ -47,9 +47,9 @@ $ wrangler dev
     route = "https://example.com/*"
     ```
 
-     {{<Aside type="note">}}
+    {{<Aside type="note">}}
 
-  Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
+Refer to the documentation on [Routes](/workers/platform/routes/) to configure a `route` properly.
 
      {{</Aside>}}
 

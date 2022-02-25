@@ -8,7 +8,7 @@ meta:
 
 # Get started with SSL for SaaS
 
-***
+---
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Before you can start creating custom hostnames, you need to have access to [SSL 
 
 If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
-***
+---
 
 ## Step 1 — Create fallback origin and CNAME target
 
@@ -30,42 +30,45 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
 3.  Create two DNS records:
 
-    *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
-    *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
+        *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+        *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
-     {{<example>}}
-Record|Type|Name|Content
------|-------|-------|-----
-Fallback origin|A|`proxy-fallback.saasprovider.com`|192.0.2.1
-CNAME target|CNAME|`*.customers.saasprovider.com`|`proxy-fallback.saasprovider.com`
-     {{</example>}}
+         {{<example>}}
+
+    | Record          | Type  | Name                              | Content                           |
+    | --------------- | ----- | --------------------------------- | --------------------------------- |
+    | Fallback origin | A     | `proxy-fallback.saasprovider.com` | 192.0.2.1                         |
+    | CNAME target    | CNAME | `*.customers.saasprovider.com`    | `proxy-fallback.saasprovider.com` |
+
+         {{</example>}}
 
 4.  Enable **Custom Hostnames** for your zone:
 
-    *   If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
-    *   If you are not an Enterprise customer, go to **SSL/TLS** > **Custom Hostnames** to enable **Cloudflare for SaaS**.
+    - If you are an Enterprise customer, upgrade your zone to an Enterprise plan and contact your Customer Success Manager to enable **SSL for SaaS Certificates**.
+    - If you are not an Enterprise customer, go to **SSL/TLS** > **Custom Hostnames** to enable **Cloudflare for SaaS**.
 
 5.  Set the **Fallback Origin** via either the dashboard or API.
-    *   **Dashboard**:
 
-        1.  Navigate to **SSL/TLS** > **Custom Hostnames**.
-        2.  In the **Custom Hostnames** card, enter the hostname for your fallback origin.
-        3.  Click **Add**.
+    - **Dashboard**:
 
-    *   **API**: Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+      1.  Navigate to **SSL/TLS** > **Custom Hostnames**.
+      2.  In the **Custom Hostnames** card, enter the hostname for your fallback origin.
+      3.  Click **Add**.
 
-***
+    - **API**: Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+
+---
 
 ## Step 2 — Review validation and verification options
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-*   [Certificate Validation](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-*   [Hostname Verification](/ssl/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+- [Certificate Validation](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+- [Hostname Verification](/ssl/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
-***
+---
 
 ## Step 3 — Issue certificate
 
@@ -91,7 +94,7 @@ Once your account has been provisioned, you are ready to issue certificates.
 </div>
 </details>
 
-***
+---
 
 ## Step 4 — Monitor and view certificates
 
@@ -113,7 +116,7 @@ To view these certificates, use `openssl` or your browser. The command below can
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
 ```
 
-***
+---
 
 ## Step 5 — Have customer create a CNAME record
 

@@ -18,10 +18,10 @@ This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Buck
 
 Before sending your Cloudflare log data to Looker, make sure that you:
 
-*   Have an existing Looker account
-*   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-*   Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
-*   Load your data in a [database supported by Looker](https://looker.com/solutions/other-databases)
+- Have an existing Looker account
+- Have a Cloudflare Enterprise account with Cloudflare Logs enabled
+- Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
+- Load your data in a [database supported by Looker](https://looker.com/solutions/other-databases)
 
 {{<Aside type="note" header="Note">}}
 
@@ -41,7 +41,7 @@ To create your new LookML project:
 
 1.  Log in to your Looker account.
 
-2.  In the menu bar, click **Develop** and make sure **Development Mode** is set to *ON*.
+2.  In the menu bar, click **Develop** and make sure **Development Mode** is set to _ON_.
 
 3.  Next, also under **Develop**, click **Manage LookML Projects**.
 
@@ -49,9 +49,9 @@ To create your new LookML project:
 
 5.  In the **New Project** dialog, enter a project name.
 
-6.  For **Starting Point**, choose *Clone Public Git Repository\*\*.\*\**
+6.  For **Starting Point**, choose \*Clone Public Git Repository\*\*.\*\*\*
 
-7.  Enter the *cloudflare\_block* URL for the public Git repository `git://github.com/llooker/cloudflare_block.git`.
+7.  Enter the _cloudflare_block_ URL for the public Git repository `git://github.com/llooker/cloudflare_block.git`.
 
 8.  Click **Create Project**. Looker will pull all of the repository files into a new LookML project.
 
@@ -64,7 +64,7 @@ To create your new LookML project:
 
 To update the connection name in the LookML files:
 
-1.  In your LookML **cloudflare\_looker** model file, replace the **connection** name with yours, for example:
+1.  In your LookML **cloudflare_looker** model file, replace the **connection** name with yours, for example:
     `connection: "bigquery_lpr"`.
 
 2.  Check if any table names need to be updated to your database connection names as well. If you decide to rename the filenames for explore, model name, and view, make sure to update all mentions within the other files. Otherwise, you might encounter errors.
@@ -113,40 +113,40 @@ All dashboard have a set of filters that you can apply to the entire dashboard, 
 
 ![Looker Cloudflare dashboard filters](/fundamentals/static/images/looker/screenshots/cloudflare-looker-dashboard-filters.png)
 
-The default time interval is set to 24 hours. Note that for correct calculations, by default, filters exclude Worker subrequests (**WorkerSubrequest** = *false*) and purge requests (**ClientRequestMethod** is not *PURGE*).
+The default time interval is set to 24 hours. Note that for correct calculations, by default, filters exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
 
 Available Filters:
 
-*   Date (EdgeStartTimestamp)
+- Date (EdgeStartTimestamp)
 
-*   Device type
+- Device type
 
-*   Country
+- Country
 
-*   Client IP
+- Client IP
 
-*   Hostname
+- Hostname
 
-*   Request URI
+- Request URI
 
-*   Origin Response Status
+- Origin Response Status
 
-*   Edge response status
+- Edge response status
 
-*   Origin IP
+- Origin IP
 
-*   User Agent
+- User Agent
 
-*   RayID
+- RayID
 
-*   Worker Subrequest
+- Worker Subrequest
 
-*   Client Request Method
+- Client Request Method
 
 With the following pre-set filter values in the Looker dashboards all workers subrequests and client request method PURGE are excluded from the calculations:
 
-*   **WorkerSubrequet** set to value *False*
+- **WorkerSubrequet** set to value _False_
 
-*   **ClientRequestMethod** doesn’t equal to *PURGE*
+- **ClientRequestMethod** doesn’t equal to _PURGE_
 
 You can always adjust your default filters values according to your needs.

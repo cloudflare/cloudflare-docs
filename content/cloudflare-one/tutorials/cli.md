@@ -13,13 +13,13 @@ These instructions are not meant for configuring a service to run against an API
 
 **🗺️ This walkthrough covers how to:**
 
-*   Connect to resources secured by Cloudflare Access from a CLI
+- Connect to resources secured by Cloudflare Access from a CLI
 
 **⏲️ Time to complete:**
 
 30 minutes
 
-***
+---
 
 ## Authenticate a session from the command line
 
@@ -43,7 +43,7 @@ The token is valid for the session duration configured by the Access administrat
 
 ## Access your API
 
-Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named *token*. You can invoke the wrapper as follows:
+Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
 
 ```sh
 $ cloudflared access curl http://example.com

@@ -11,17 +11,15 @@ The `HTMLRewriter` class allows developers to build comprehensive and expressive
 
 The `HTMLRewriter` class should be instantiated once in your Workers script, with a number of handlers attached using the `on` and `onDocument` functions.
 
-***
+---
 
 ## Constructor
 
 ```js
-new HTMLRewriter()
-  .on("*", new ElementHandler())
-  .onDocument(new DocumentHandler())
+new HTMLRewriter().on('*', new ElementHandler()).onDocument(new DocumentHandler());
 ```
 
-***
+---
 
 ## Global Types
 
@@ -29,17 +27,17 @@ Throughout the HTMLRewriter API, there are a few consistent types that many prop
 
 {{<definitions>}}
 
-*   `Content` {{<type>}}string{{</type>}}
+- `Content` {{<type>}}string{{</type>}}
 
-    *   Content inserted in the output stream should be a string.
+  - Content inserted in the output stream should be a string.
 
-*   `ContentOptions` {{<type>}}Object{{</type>}}
+- `ContentOptions` {{<type>}}Object{{</type>}}
 
-    *   `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
+  - `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
 
 {{</definitions>}}
 
-***
+---
 
 ## Handlers
 
@@ -53,7 +51,7 @@ An element handler responds to any incoming element, when attached using the `.o
 class ElementHandler {
   element(element) {
     // An incoming element, such as `div`
-    console.log(`Incoming element: ${element.tagName}`)
+    console.log(`Incoming element: ${element.tagName}`);
   }
 
   comments(comment) {
@@ -66,9 +64,9 @@ class ElementHandler {
 }
 
 async function handleRequest(req) {
-  const res = await fetch(req)
+  const res = await fetch(req);
 
-  return new HTMLRewriter().on("div", new ElementHandler()).transform(res)
+  return new HTMLRewriter().on('div', new ElementHandler()).transform(res);
 }
 ```
 
@@ -103,16 +101,16 @@ All functions defined on both element and document handlers can return either `v
 ```js
 class UserElementHandler {
   async element(element) {
-    let response = await fetch(new Request("/user"));
-    
+    let response = await fetch(new Request('/user'));
+
     // fill in user info using response
   }
 }
 
 async function handleRequest(req) {
-  const res = await fetch(req)
+  const res = await fetch(req);
 
-  return new HTMLRewriter().on("div:user_info", new UserElementHandler()).transform(res)
+  return new HTMLRewriter().on('div:user_info', new UserElementHandler()).transform(res);
 }
 ```
 
@@ -124,17 +122,20 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 {{<definitions>}}
 
-*   `tagName` {{<type>}}string{{</type>}}
-    *   The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
+- `tagName` {{<type>}}string{{</type>}}
 
-*   `attributes` {{<type>}}Iterator{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   A `[name, value]` pair of the tag’s attributes.
+  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
 
-*   `removed` {{<type>}}boolean{{</type>}}
-    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
+- `attributes` {{<type>}}Iterator{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-*   `namespaceURI` {{<type>}}String{{</type>}}
-    *   Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
+  - A `[name, value]` pair of the tag’s attributes.
+
+- `removed` {{<type>}}boolean{{</type>}}
+
+  - Indicates whether the element has been removed or replaced by one of the previous handlers.
+
+- `namespaceURI` {{<type>}}String{{</type>}}
+  - Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
 
 {{</definitions>}}
 
@@ -142,53 +143,53 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 {{<definitions>}}
 
-*   {{<code>}}getAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}string | null{{</type>}}
+- {{<code>}}getAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}string | null{{</type>}}
 
-    *   Returns the value for a given attribute name on the element, or `null` if it is not found.
+  - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-*   {{<code>}}hasAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}boolean{{</type>}}
+- {{<code>}}hasAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}boolean{{</type>}}
 
-    *   Returns a boolean indicating whether an attribute exists on the element.
+  - Returns a boolean indicating whether an attribute exists on the element.
 
-*   {{<code>}}setAttribute(name{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}setAttribute(name{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Sets an attribute to a provided value, creating the attribute if it does not exist.
+  - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-*   {{<code>}}removeAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}removeAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the attribute.
+  - Removes the attribute.
 
-*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content before the element.
+  - Inserts content before the element.
 
-*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content right after the element.
+  - Inserts content right after the element.
 
-*   {{<code>}}prepend(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}{{<type>}}Element{{</type>}}
+- {{<code>}}prepend(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}{{<type>}}Element{{</type>}}
 
-    *   Inserts content right after the start tag of the element.
+  - Inserts content right after the start tag of the element.
 
-*   {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content right before the end tag of the element.
+  - Inserts content right before the end tag of the element.
 
-*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element and inserts content in place of it.
+  - Removes the element and inserts content in place of it.
 
-*   {{<code>}}setInnerContent(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}setInnerContent(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Replaces content of the element.
+  - Replaces content of the element.
 
-*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element with all its content.
+  - Removes the element with all its content.
 
-*   {{<code>}}removeAndKeepContent(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}removeAndKeepContent(){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the start tag and end tag of the element but keeps its inner content intact.
+  - Removes the start tag and end tag of the element but keeps its inner content intact.
 
 {{</definitions>}}
 
@@ -202,14 +203,16 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 {{<definitions>}}
 
-*   `removed` {{<type>}}boolean{{</type>}}
-    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
+- `removed` {{<type>}}boolean{{</type>}}
 
-*   `text` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
+  - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-*   `lastInTextNode` {{<type>}}boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   Specifies whether the chunk is the last chunk of the text node.
+- `text` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+
+  - The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
+
+- `lastInTextNode` {{<type>}}boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+  - Specifies whether the chunk is the last chunk of the text node.
 
 {{</definitions>}}
 
@@ -217,21 +220,21 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 {{<definitions>}}
 
-*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content before the element.
+  - Inserts content before the element.
 
-*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content right after the element.
+  - Inserts content right after the element.
 
-*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element and inserts content in place of it.
+  - Removes the element and inserts content in place of it.
 
-*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element with all its content.
+  - Removes the element with all its content.
 
 {{</definitions>}}
 
@@ -251,11 +254,12 @@ class ElementHandler {
 
 {{<definitions>}}
 
-*   `removed` {{<type>}}boolean{{</type>}}
-    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
+- `removed` {{<type>}}boolean{{</type>}}
 
-*   `text` {{<type>}}string{{</type>}}
-    *   The text of the comment. This property can be assigned different values, to modify comment’s text.
+  - Indicates whether the element has been removed or replaced by one of the previous handlers.
+
+- `text` {{<type>}}string{{</type>}}
+  - The text of the comment. This property can be assigned different values, to modify comment’s text.
 
 {{</definitions>}}
 
@@ -263,21 +267,21 @@ class ElementHandler {
 
 {{<definitions>}}
 
-*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content before the element.
+  - Inserts content before the element.
 
-*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Inserts content right after the element.
+  - Inserts content right after the element.
 
-*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element and inserts content in place of it.
+  - Removes the element and inserts content in place of it.
 
-*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
+- {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
-    *   Removes the element with all its content.
+  - Removes the element with all its content.
 
 {{</definitions>}}
 
@@ -298,14 +302,16 @@ class DocumentHandler {
 
 {{<definitions>}}
 
-*   `name` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   The doctype name.
+- `name` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-*   `publicId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   The quoted string in the doctype after the PUBLIC atom.
+  - The doctype name.
 
-*   `systemId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
-    *   The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
+- `publicId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+
+  - The quoted string in the doctype after the PUBLIC atom.
+
+- `systemId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
+  - The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
 
 {{</definitions>}}
 
@@ -325,13 +331,13 @@ class DocumentHandler {
 
 {{<definitions>}}
 
-*   {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}DocumentEnd{{</type>}}
+- {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}DocumentEnd{{</type>}}
 
-    *   Inserts content after the end of the document.
+  - Inserts content after the end of the document.
 
 {{</definitions>}}
 
-***
+---
 
 ## Selectors
 
@@ -339,70 +345,88 @@ This is what selectors are and what they are used for.
 
 {{<definitions>}}
 
-*   `*`
-    *   Any element.
+- `*`
 
-*   `E`
-    *   Any element of type E.
+  - Any element.
 
-*   `E:nth-child(n)`
-    *   An E element, the n-th child of its parent.
+- `E`
 
-*   `E:first-child`
-    *   An E element, first child of its parent.
+  - Any element of type E.
 
-*   `E:nth-of-type(n)`
-    *   An E element, the n-th sibling of its type.
+- `E:nth-child(n)`
 
-*   `E:first-of-type`
-    *   An E element, first sibling of its type.
+  - An E element, the n-th child of its parent.
 
-*   `E:not(s)`
-    *   An E element that does not match either compound selectors.
+- `E:first-child`
 
-*   `E.warning`
-    *   An E element belonging to the class warning.
+  - An E element, first child of its parent.
 
-*   `E#myid`
-    *   An E element with ID equal to myid.
+- `E:nth-of-type(n)`
 
-*   `E[foo]`
-    *   An E element with a foo attribute.
+  - An E element, the n-th sibling of its type.
 
-*   `E[foo="bar"]`
-    *   An E element whose foo attribute value is exactly equal to bar.
+- `E:first-of-type`
 
-*   `E[foo="bar" i]`
-    *   An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
+  - An E element, first sibling of its type.
 
-*   `E[foo="bar" s]`
-    *   An E element whose foo attribute value is exactly and case-sensitively equal to bar.
+- `E:not(s)`
 
-*   `E[foo~="bar"]`
-    *   An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
+  - An E element that does not match either compound selectors.
 
-*   `E[foo^="bar"]`
-    *   An E element whose foo attribute value begins exactly with the string bar.
+- `E.warning`
 
-*   `E[foo$="bar"]`
-    *   An E element whose foo attribute value ends exactly with the string bar.
+  - An E element belonging to the class warning.
 
-*   `E[foo*="bar"]`
-    *   An E element whose foo attribute value contains the substring bar.
+- `E#myid`
 
-*   {{<code>}}E\[foo|="en"]{{</code>}}
+  - An E element with ID equal to myid.
 
-    *   An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
+- `E[foo]`
 
-*   `E F`
-    *   An F element descendant of an E element.
+  - An E element with a foo attribute.
 
-*   `E > F`
-    *   An F element child of an E element.
+- `E[foo="bar"]`
+
+  - An E element whose foo attribute value is exactly equal to bar.
+
+- `E[foo="bar" i]`
+
+  - An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
+
+- `E[foo="bar" s]`
+
+  - An E element whose foo attribute value is exactly and case-sensitively equal to bar.
+
+- `E[foo~="bar"]`
+
+  - An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
+
+- `E[foo^="bar"]`
+
+  - An E element whose foo attribute value begins exactly with the string bar.
+
+- `E[foo$="bar"]`
+
+  - An E element whose foo attribute value ends exactly with the string bar.
+
+- `E[foo*="bar"]`
+
+  - An E element whose foo attribute value contains the substring bar.
+
+- {{<code>}}E\[foo|="en"]{{</code>}}
+
+  - An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
+
+- `E F`
+
+  - An F element descendant of an E element.
+
+- `E > F`
+  - An F element child of an E element.
 
 {{</definitions>}}
 
-***
+---
 
 ## Errors
 
@@ -410,14 +434,14 @@ If a handler throws an exception, parsing is immediately halted, the transformed
 
 ```js
 async function handle(request) {
-  let oldResponse = await fetch(request)
+  let oldResponse = await fetch(request);
   let newResponse = new HTMLRewriter()
-    .on("*", {
+    .on('*', {
       element(element) {
-        throw new Error("A really bad error.")
+        throw new Error('A really bad error.');
       },
     })
-    .transform(oldResponse)
+    .transform(oldResponse);
 
   // At this point, an expression like `await newResponse.text()`
   // will throw `new Error("A really bad error.")`.
@@ -425,14 +449,14 @@ async function handle(request) {
   // and `oldResponse.body` will be closed.
 
   // Alternatively, this will produce a truncated response to the client:
-  return newResponse
+  return newResponse;
 }
 ```
 
-***
+---
 
 ## Related resources
 
-*   [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
-*   [Tutorial: Localize a Website](/workers/tutorials/localize-a-website/)
-*   [Example: rewrite links](/workers/examples/rewrite-links/)
+- [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
+- [Tutorial: Localize a Website](/workers/tutorials/localize-a-website/)
+- [Example: rewrite links](/workers/examples/rewrite-links/)

@@ -15,27 +15,39 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>Windows 8.1, Windows 10, Windows 11</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
+      <td>
+        <strong>OS Type</strong>
+      </td>
       <td>64bit only</td>
     </tr>
-     <tr>
-      <td><strong>.NET Framework Min version</strong></td>
+    <tr>
+      <td>
+        <strong>.NET Framework Min version</strong>
+      </td>
       <td>4.7.2 or later</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td>
+        <strong>HD Space</strong>
+      </td>
       <td>184MB</td>
     </tr>
     <tr>
-      <td><strong>Memory</strong></td>
+      <td>
+        <strong>Memory</strong>
+      </td>
       <td>3MB</td>
     </tr>
     <tr>
-      <td><strong>Network Types</strong></td>
+      <td>
+        <strong>Network Types</strong>
+      </td>
       <td>WIFI or LAN</td>
     </tr>
   </tbody>
@@ -50,23 +62,33 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>Mojave, Catalina, Big Sur, Monterey</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
+      <td>
+        <strong>OS Type</strong>
+      </td>
       <td>64bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td>
+        <strong>HD Space</strong>
+      </td>
       <td>75MB</td>
     </tr>
     <tr>
-      <td><strong>Memory</strong></td>
+      <td>
+        <strong>Memory</strong>
+      </td>
       <td>35MB</td>
     </tr>
     <tr>
-      <td><strong>Network Types</strong></td>
+      <td>
+        <strong>Network Types</strong>
+      </td>
       <td>WIFI or LAN</td>
     </tr>
   </tbody>
@@ -81,23 +103,33 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>CentOS 8, RHEL, Ubuntu, Debian</td>
     </tr>
     <tr>
-      <td><strong>OS Type</strong></td>
+      <td>
+        <strong>OS Type</strong>
+      </td>
       <td>64bit only</td>
     </tr>
     <tr>
-      <td><strong>HD Space</strong></td>
+      <td>
+        <strong>HD Space</strong>
+      </td>
       <td>75MB</td>
     </tr>
     <tr>
-      <td><strong>Memory</strong></td>
+      <td>
+        <strong>Memory</strong>
+      </td>
       <td>35MB</td>
     </tr>
     <tr>
-      <td><strong>Network Types</strong></td>
+      <td>
+        <strong>Network Types</strong>
+      </td>
       <td>WIFI or LAN</td>
     </tr>
   </tbody>
@@ -112,7 +144,9 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>iOS 11+</td>
     </tr>
   </tbody>
@@ -125,7 +159,9 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>5.0+</td>
     </tr>
   </tbody>
@@ -138,7 +174,9 @@ Alternatively, download the client from one of the following links after checkin
 <table>
   <tbody>
     <tr>
-      <td><strong>OS Ver</strong></td>
+      <td>
+        <strong>OS Ver</strong>
+      </td>
       <td>Chromebooks manufactured after 2019</td>
     </tr>
   </tbody>

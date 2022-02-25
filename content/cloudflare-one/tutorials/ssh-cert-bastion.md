@@ -15,16 +15,16 @@ Additionally, Access can help your team replace long-lived SSH keys with [short-
 
 Replacing long-lived API keys with short-lived certificates offers the following advantages:
 
-*   API keys are not left lingering on machines
-*   Revocation at the identity provider extends to SSH key
-*   The keys used to authenticate are automatically rotating
-*   Users do not have to add SSH keys to their onboarding; instead, only the identity provider is required
+- API keys are not left lingering on machines
+- Revocation at the identity provider extends to SSH key
+- The keys used to authenticate are automatically rotating
+- Users do not have to add SSH keys to their onboarding; instead, only the identity provider is required
 
 **🗺️ This tutorial covers how to:**
 
-*   Connect a host to Cloudflare's network that users can reach over SSH
-*   Build Zero Trust rules to protect that resource
-*   Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
+- Connect a host to Cloudflare's network that users can reach over SSH
+- Build Zero Trust rules to protect that resource
+- Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
 
 **⏲️ Time to complete:**
 
@@ -35,7 +35,7 @@ Replacing long-lived API keys with short-lived certificates offers the following
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
-***
+---
 
 ## Build a Zero Trust policy
 
@@ -87,9 +87,9 @@ credentials-file: /root/.cloudflared/79a60ee2-9a98-4f5f-96c7-76c88b2075be.json
 logDirectory: /var/log/cloudflared
 http2: true
 ingress:
-        - hostname: ssh-bastion.widgetcorp.tech
-          service: bastion
-        - service: http_status:404
+  - hostname: ssh-bastion.widgetcorp.tech
+    service: bastion
+  - service: http_status:404
 ```
 
 You can now run the Tunnel with the following command.
@@ -142,7 +142,7 @@ $ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-l
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 
     Host ssh-bastion.widgetcorp.tech
-      ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1' 
+      ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
 
     Host cfpipe-ssh-bastion.widgetcorp.tech
       HostName ssh-bastion.widgetcorp.tech

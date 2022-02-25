@@ -26,9 +26,9 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 
 The response displays the following rulesets:
 
-*   Managed Rulesets you can deploy, indicated by `"kind": "managed"`
-*   Zone-level phase entry points, if configured, indicated by `"kind": "zone"`
-*   Custom rulesets, if configured, indicated by `"kind": "custom"`
+- Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+- Zone-level phase entry points, if configured, indicated by `"kind": "zone"`
+- Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
 ---
@@ -87,9 +87,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
 
 The response displays the following rulesets:
 
-*   Managed Rulesets you can deploy, indicated by `"kind": "managed"`
-*   Account-level phase entry points, if configured, indicated by `"kind": "root"`
-*   Custom rulesets, if configured, indicated by `"kind": "custom"`
+- Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+- Account-level phase entry points, if configured, indicated by `"kind": "root"`
+- Custom rulesets, if configured, indicated by `"kind": "custom"`
 
 ```json
 ---
@@ -243,16 +243,12 @@ header: Response
         "id": "<RULE_2_ID>",
         "version": "1",
         "action": "block",
-        "categories": [
-          "broken-access-control",
-          "cve-2018-12895",
-          "wordpress"
-        ],
+        "categories": ["broken-access-control", "cve-2018-12895", "wordpress"],
         "description": "Wordpress - Broken Access Control - CVE:CVE-2018-12895",
         "last_updated": "2021-03-18T14:42:40.972022Z",
         "ref": "<RULE_2_REF>",
         "enabled": true
-      },
+      }
       // (...)
     ],
     "last_updated": "2021-03-18T14:42:40.972022Z",
@@ -269,6 +265,6 @@ Each rule in a Managed Ruleset can have associated tags or categories, listed in
 </div>
 </details>
 
-***
+---
 
 For more information on the available API methods for viewing rulesets, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/).

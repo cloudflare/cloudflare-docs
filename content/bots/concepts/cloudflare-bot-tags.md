@@ -8,7 +8,7 @@ layout: list
 
 # Bot Tags
 
-Bot Tags provide more detail about *why* Cloudflare assigned a [bot score](/bots/concepts/bot-score/) to a request.
+Bot Tags provide more detail about _why_ Cloudflare assigned a [bot score](/bots/concepts/bot-score/) to a request.
 
 Use these tags to learn more about your bot traffic and better inform security settings.
 
@@ -24,17 +24,17 @@ Once you [enable Bot Tags](#enable-bot-tags), you can see more information about
 
 The following values are **examples** of what may be present in the `BotTags` log field, but not an exhaustive list:
 
-*   api
-*   google
-*   bing
-*   googleAds
-*   googleMedia
-*   googleImageProxy
-*   pinterest
-*   newRelic
-*   baidu
-*   apple
-*   yandex
+- api
+- google
+- bing
+- googleAds
+- googleMedia
+- googleImageProxy
+- pinterest
+- newRelic
+- baidu
+- apple
+- yandex
 
 ## Enable bot tags
 

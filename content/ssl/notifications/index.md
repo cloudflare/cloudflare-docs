@@ -8,8 +8,8 @@ weight: 201
 
 In your [account notifications](https://dash.cloudflare.com/?to=/:account/notifications), set up alerts for the following SSL areas:
 
-*   Universal SSL
-*   SSL for SaaS Custom Hostnames
+- Universal SSL
+- SSL for SaaS Custom Hostnames
 
 These alerts cover certificate validation status, issuance, deployment, renewal, and expiration notices.
 

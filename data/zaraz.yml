@@ -8,7 +8,7 @@ meta:
   title: Cloudflare Zaraz docs
   description: Run third-party tools and services on the cloud, and improve the
     loading speed and security of your website.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

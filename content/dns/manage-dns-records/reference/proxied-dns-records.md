@@ -6,7 +6,7 @@ weight: 0
 
 # Proxy status
 
-When you *proxy* an **A**, **AAAA**, or **CNAME** DNS record for your application (also known as *orange-clouding*), DNS queries for these records will resolve to Cloudflare Anycast IPs instead of their original DNS target.
+When you _proxy_ an **A**, **AAAA**, or **CNAME** DNS record for your application (also known as _orange-clouding_), DNS queries for these records will resolve to Cloudflare Anycast IPs instead of their original DNS target.
 
 This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server. This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/how-cloudflare-works) all requests for your application.
 

@@ -56,7 +56,7 @@ Click the type definition of the `viewer` field (gold text) to list its sub-fiel
 
 The `accounts` and `zones` fields take arguments to specify which data set to query.
 
-For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter\_InputObject**.
+For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
 
 ## Find the data sets available for a zone
 

@@ -18,11 +18,11 @@ To set up OneLogin as your identity provider:
 
     ![OneLogin OIDC](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-1.png)
 
-    The *Custom Connectors* card displays.
+    The _Custom Connectors_ card displays.
 
 3.  Click **New Connector**.
 
-4.  Name the connector. The *connector name* card displays. Our example uses `access-oidc` for the connector name.
+4.  Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
 
     ![OneLogin OIDC Application Basic Configuration page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
@@ -74,12 +74,12 @@ To test that your connection is working, navigate to **Authentication > Login me
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>",
-        "onelogin_account": "https://mycompany.onelogin.com",
-    },
-    "type": "onelogin",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>",
+    "onelogin_account": "https://mycompany.onelogin.com"
+  },
+  "type": "onelogin",
+  "name": "my example idp"
 }
 ```

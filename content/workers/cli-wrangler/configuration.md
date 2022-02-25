@@ -10,7 +10,7 @@ weight: 4
 
 Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
 
-***
+---
 
 ## Environments
 
@@ -42,13 +42,13 @@ Environment configuration {{<prop-meta>}}(optional){{</prop-meta>}}: the configu
 
 Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/cli-wrangler/commands/) that are deploying live Worker scripts:
 
-*   `build`
-*   `dev`
-*   `preview`
-*   `publish`
-*   `secret`
+- `build`
+- `dev`
+- `preview`
+- `publish`
+- `secret`
 
-Some environment properties can be [*inherited*](#keys) from the top-level configuration, but if new values are configured in an environment, they will always override those at the top level.
+Some environment properties can be [_inherited_](#keys) from the top-level configuration, but if new values are configured in an environment, they will always override those at the top level.
 
 An example of an `[env.name]` configuration looks like this:
 
@@ -74,27 +74,27 @@ kv_namespaces = [
 
 To deploy this example Worker to the `helloworld` environment, you would run `wrangler publish --env helloworld`.
 
-***
+---
 
 ## Keys
 
 There are three types of keys in a `wrangler.toml` file:
 
-*   Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
+- Top level only keys are required to be configured at the top level of your `wrangler.toml` file only; multiple environments on the same project must share this key's value.
 
-*   Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
+- Inherited keys can be configured at the top level and/or environment. If the key is defined only at the top level, the environment will use the key's value from the top level. If the key is defined in the environment, the environment value will override the top-level value.
 
-*   Non-inherited keys must be defined for every environment individually.
+- Non-inherited keys must be defined for every environment individually.
 
 {{<definitions>}}
 
-*   `name` {{<type>}}inherited{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `name` {{<type>}}inherited{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The name of your Worker script. If inherited, your environment name will be appended to the top level.
+  - The name of your Worker script. If inherited, your environment name will be appended to the top level.
 
-*   `type` {{<type>}}top level{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `type` {{<type>}}top level{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   Specifies how `wrangler build` will build your project. There are three options: `javascript`, `webpack`, and `rust`. `javascript` checks for a build command specified in the `[build]` section, `webpack` builds your project using webpack v4, and `rust` compiles the Rust in your project to WebAssembly.
+  - Specifies how `wrangler build` will build your project. There are three options: `javascript`, `webpack`, and `rust`. `javascript` checks for a build command specified in the `[build]` section, `webpack` builds your project using webpack v4, and `rust` compiles the Rust in your project to WebAssembly.
 
 {{<Aside type="note">}}
 
@@ -102,56 +102,57 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 {{</Aside>}}
 
-*   `account_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `account_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
+  - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
 
-*   `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
+  - This is the ID of the zone or domain you want to run your script on. It can also be specified through the `CF_ZONE_ID` environment variable. This key is optional if you are using only a `*.workers.dev` subdomain.
 
-*   `workers_dev` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `workers_dev` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This is a boolean flag that specifies if your Worker will be deployed to your [`*.workers.dev`](https://workers.dev) subdomain. If omitted, it defaults to false.
+  - This is a boolean flag that specifies if your Worker will be deployed to your [`*.workers.dev`](https://workers.dev) subdomain. If omitted, it defaults to false.
 
-*   `route` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `route` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   A route, specified by URL pattern, on your zone that you would like to run your Worker on. <br />`route = "http://example.com/*"`. A `route` OR `routes` key is only required if you are not using a [`*.workers.dev`](https://workers.dev) subdomain.
+  - A route, specified by URL pattern, on your zone that you would like to run your Worker on. <br />`route = "http://example.com/*"`. A `route` OR `routes` key is only required if you are not using a [`*.workers.dev`](https://workers.dev) subdomain.
 
-*   `routes` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `routes` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a `*.workers.dev` subdomain.
+  - A list of routes you would like to use your Worker on. These follow exactly the same rules a `route`, but you can specify a list of them.<br />`routes = ["http://example.com/hello", "http://example.com/goodbye"]`. A `route` OR `routes` key is only required if you are not using a `*.workers.dev` subdomain.
 
-*   `webpack_config` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `webpack_config` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/cli-wrangler/webpack/) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/cli-wrangler/webpack/) for more information.
 
-*   `vars` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `vars` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   An object containing text variables that can be directly accessed in a Worker script.
+  - An object containing text variables that can be directly accessed in a Worker script.
 
-*   `kv_namespaces` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `kv_namespaces` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   These specify any [Workers KV](#kv_namespaces) Namespaces you want to access from inside your Worker.
+  - These specify any [Workers KV](#kv_namespaces) Namespaces you want to access from inside your Worker.
 
-*   `site` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `site` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Determines the local folder to upload and serve from a Worker.
+  - Determines the local folder to upload and serve from a Worker.
 
-*   `dev` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `dev` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Arguments for `wrangler dev` that configure local server.
+  - Arguments for `wrangler dev` that configure local server.
 
-*   `triggers` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `triggers` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Configures cron triggers for running a Worker on a schedule.
+  - Configures cron triggers for running a Worker on a schedule.
 
-*   `usage_model` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-    *   Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#bundled-usage-model) and [`unbound`](/workers/platform/limits/#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
+- `usage_model` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-*   `build` {{<type>}}top level{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies the [Usage Model](/workers/platform/pricing/#usage-models) for your Worker. There are two options - [`bundled`](/workers/platform/limits/#bundled-usage-model) and [`unbound`](/workers/platform/limits/#unbound-usage-model). For newly created Workers, if the Usage Model is omitted it will be set to the [default Usage Model set on the account](https://dash.cloudflare.com/?account=workers/default-usage-model). For existing Workers, if the Usage Model is omitted, it will be set to the Usage Model configured in the dashboard for that Worker.
 
-    *   Configures a custom build step to be run by Wrangler when building your Worker. Refer to the [custom builds documentation](#build) for more details.
+- `build` {{<type>}}top level{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Configures a custom build step to be run by Wrangler when building your Worker. Refer to the [custom builds documentation](#build) for more details.
 
 {{</definitions>}}
 
@@ -190,7 +191,7 @@ Secrets should be handled using the [`wrangler secret`](/workers/cli-wrangler/co
 
 {{</Aside>}}
 
-### kv\_namespaces
+### kv_namespaces
 
 `kv_namespaces` defines a list of KV namespace bindings for your Worker.
 
@@ -222,7 +223,7 @@ Much like environment variables and secrets, the `binding` names are available t
 ```js
 // Worker script:
 
-let value = await FOO.get("keyname");
+let value = await FOO.get('keyname');
 //=> gets the value for "keyname" from
 //=> the FOO variable, which points to
 //=> the "0f2ac...e279" KV namespace
@@ -230,17 +231,17 @@ let value = await FOO.get("keyname");
 
 {{<definitions>}}
 
-*   `binding` {{<prop-meta>}}required{{</prop-meta>}}
+- `binding` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/workers/runtime-apis/kv/).
+  - The name of the global variable your code will reference. It will be provided as a [KV runtime instance](/workers/runtime-apis/kv/).
 
-*   `id` {{<prop-meta>}}required{{</prop-meta>}}
+- `id` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The ID of the KV namespace that your `binding` should represent. Required for `wrangler publish`.
+  - The ID of the KV namespace that your `binding` should represent. Required for `wrangler publish`.
 
-*   `preview_id` {{<prop-meta>}}required{{</prop-meta>}}
+- `preview_id` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The ID of the KV namespace that your `binding` should represent during `wrangler dev` or `wrangler preview`. Required for `wrangler dev` and `wrangler preview`.
+  - The ID of the KV namespace that your `binding` should represent during `wrangler dev` or `wrangler preview`. Required for `wrangler dev` and `wrangler preview`.
 
 {{</definitions>}}
 
@@ -266,21 +267,21 @@ entry-point = "workers-site"
 
 {{<definitions>}}
 
-*   `bucket` {{<prop-meta>}}required{{</prop-meta>}}
+- `bucket` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The directory containing your static assets. It must be a path relative to your `wrangler.toml` file. Example: `bucket = "./public"`
+  - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file. Example: `bucket = "./public"`
 
-*   `entry-point` {{<prop-meta>}}optional{{</prop-meta>}}
+- `entry-point` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The location of your Worker script. The default location is `workers-site`. Example: `entry-point = "./workers-site"`
+  - The location of your Worker script. The default location is `workers-site`. Example: `entry-point = "./workers-site"`
 
-*   `include` {{<prop-meta>}}optional{{</prop-meta>}}
+- `include` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   An exclusive list of `.gitignore`-style patterns that match file or directory names from your `bucket` location. Only matched items will be uploaded. Example: `include = ["upload_dir"]`
+  - An exclusive list of `.gitignore`-style patterns that match file or directory names from your `bucket` location. Only matched items will be uploaded. Example: `include = ["upload_dir"]`
 
-*   `exclude` {{<prop-meta>}}optional{{</prop-meta>}}
+- `exclude` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   A list of `.gitignore`-style patterns that match files or directories in your `bucket` that should be excluded from uploads. Example: `exclude = ["ignore_dir"]`
+  - A list of `.gitignore`-style patterns that match files or directories in your `bucket` that should be excluded from uploads. Example: `exclude = ["ignore_dir"]`
 
 {{</definitions>}}
 
@@ -325,9 +326,9 @@ If you provide both `include` and `exclude` fields, the `include` field will be 
 
 Wrangler will always ignore:
 
-*   `node_modules`
-*   Hidden files and directories
-*   Symlinks
+- `node_modules`
+- Hidden files and directories
+- Symlinks
 
 #### More about include/exclude patterns
 
@@ -352,8 +353,8 @@ crons = ["0 0 * JAN-JUN FRI", "0 0 LW JUL-DEC *"]
 
 {{<definitions>}}
 
-*   `crons` {{<prop-meta>}}optional{{</prop-meta>}}
-    *   A set of [cron expressions](https://crontab.guru/), where each expression is a separate schedule to run the Worker on.
+- `crons` {{<prop-meta>}}optional{{</prop-meta>}}
+  - A set of [cron expressions](https://crontab.guru/), where each expression is a separate schedule to run the Worker on.
 
 {{</definitions>}}
 
@@ -371,21 +372,21 @@ local_protocol = "https"
 
 {{<definitions>}}
 
-*   `ip` {{<prop-meta>}}optional{{</prop-meta>}}
+- `ip` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
+  - IP address for the local `wrangler dev` server to listen on, defaults to `127.0.0.1`.
 
-*   `port` {{<prop-meta>}}optional{{</prop-meta>}}
+- `port` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Port for local `wrangler dev` server to listen on, defaults to `8787`.
+  - Port for local `wrangler dev` server to listen on, defaults to `8787`.
 
-*   `local_protocol` {{<prop-meta>}}optional{{</prop-meta>}}
+- `local_protocol` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Protocol that local `wrangler dev` server listen to requests on, defaults to `http`.
+  - Protocol that local `wrangler dev` server listen to requests on, defaults to `http`.
 
-*   `upstream_protocol` {{<prop-meta>}}optional{{</prop-meta>}}
+- `upstream_protocol` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Protocol that `wrangler dev` forwards requests on, defaults to `https`.
+  - Protocol that `wrangler dev` forwards requests on, defaults to `https`.
 
 {{</definitions>}}
 
@@ -399,8 +400,8 @@ This section is for customizing Workers with the `service-worker` format. These 
 
 ```js
 addEventListener('fetch', event => {
-  event.respondWith(new Response("I'm a service Worker!"))
-})
+  event.respondWith(new Response("I'm a service Worker!"));
+});
 ```
 
 Usage:
@@ -417,17 +418,17 @@ format = "service-worker"
 
 {{<definitions>}}
 
-*   `command` {{<prop-meta>}}optional{{</prop-meta>}}
+- `command` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
-*   `cwd` {{<prop-meta>}}optional{{</prop-meta>}}
+- `cwd` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The working directory for commands, defaults to the project root directory.
+  - The working directory for commands, defaults to the project root directory.
 
-*   `watch_dir` {{<prop-meta>}}optional{{</prop-meta>}}
+- `watch_dir` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 {{</definitions>}}
 
@@ -435,9 +436,9 @@ format = "service-worker"
 
 {{<definitions>}}
 
-*   `format` {{<prop-meta>}}required{{</prop-meta>}}
+- `format` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The format of the Worker script, must be `"service-worker"`.
+  - The format of the Worker script, must be `"service-worker"`.
 
 {{</definitions>}}
 
@@ -464,7 +465,7 @@ Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 ```js
-import html from './index.html'
+import html from './index.html';
 
 export default {
   // * request is the same as `event.request` from the service worker format
@@ -472,10 +473,10 @@ export default {
   // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
-    const headers = { 'Content-Type': 'text/html;charset=UTF-8' }
-    return new Response(html, { headers })
-  }
-}
+    const headers = { 'Content-Type': 'text/html;charset=UTF-8' };
+    return new Response(html, { headers });
+  },
+};
 ```
 
 To create a Workers project using Wrangler and Modules, add a `[build]` section:
@@ -493,17 +494,17 @@ main = "./worker.mjs"
 
 {{<definitions>}}
 
-*   `command` {{<prop-meta>}}optional{{</prop-meta>}}
+- `command` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
+  - The command used to build your Worker. On Linux and macOS system, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used.
 
-*   `cwd` {{<prop-meta>}}optional{{</prop-meta>}}
+- `cwd` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The working directory for commands, defaults to the project root directory.
+  - The working directory for commands, defaults to the project root directory.
 
-*   `watch_dir` {{<prop-meta>}}optional{{</prop-meta>}}
+- `watch_dir` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
+  - The directory to watch for changes while using `wrangler dev`, defaults to the `src` relative to the project root directory.
 
 {{</definitions>}}
 
@@ -511,17 +512,17 @@ main = "./worker.mjs"
 
 {{<definitions>}}
 
-*   `format` {{<prop-meta>}}required{{</prop-meta>}}
+- `format` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The format of the Workers script, must be `"modules"`.
+  - The format of the Workers script, must be `"modules"`.
 
-*   `dir` {{<prop-meta>}}optional{{</prop-meta>}}
+- `dir` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   The directory you wish to upload your modules from, defaults to the `dist` relative to the project root directory.
+  - The directory you wish to upload your modules from, defaults to the `dist` relative to the project root directory.
 
-*   `main` {{<prop-meta>}}required{{</prop-meta>}}
+- `main` {{<prop-meta>}}required{{</prop-meta>}}
 
-    *   The relative path of the main module from `dir`, including the `./` prefix. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler.
+  - The relative path of the main module from `dir`, including the `./` prefix. The main module must be an ES module. For projects with a build script, this usually refers to the output of your JavaScript bundler.
 
 {{<Aside type="note">}}
 
@@ -529,80 +530,88 @@ If your project is written using CommonJS modules, you will need to re-export yo
 
 {{</Aside>}}
 
-*   `rules` {{<prop-meta>}}optional{{</prop-meta>}}
+- `rules` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   An ordered list of rules that define which modules to import, and what type to import them as.
-        You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
-        have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
+  - An ordered list of rules that define which modules to import, and what type to import them as.
+    You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
+    have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
-    *   Defaults:
+  - Defaults:
 
-        ```toml
-        [build.upload]
-        format = "modules"
-        main = "./worker.mjs"
+    ```toml
+    [build.upload]
+    format = "modules"
+    main = "./worker.mjs"
 
-        # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
-        # The default rules are treated as the last two rules in the list.
+    # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
+    # The default rules are treated as the last two rules in the list.
 
-        [[build.upload.rules]]
-        type = "ESModule"
-        globs = ["**/*.mjs"]
+    [[build.upload.rules]]
+    type = "ESModule"
+    globs = ["**/*.mjs"]
 
-        [[build.upload.rules]]
-        type = "CommonJS"
-        globs = ["**/*.js", "**/*.cjs"]
-        ```
+    [[build.upload.rules]]
+    type = "CommonJS"
+    globs = ["**/*.js", "**/*.cjs"]
+    ```
 
-    *   `type` {{<prop-meta>}}required{{</prop-meta>}}
+  - `type` {{<prop-meta>}}required{{</prop-meta>}}
 
-        *   The module type, see the table below for acceptable options:
-        <div class="DocsMarkdown--table-wrap">
-          <div class="DocsMarkdown--table-wrap-inner">
-            <table>
-              <thead>
-                <tr>
-                  <th><code>type</code></th>
-                  <th>JavaScript type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ESModule</td>
-                  <td>-</td>
-                </tr>
-                <tr>
-                  <td>CommonJS</td>
-                  <td>-</td>
-                </tr>
-                <tr>
-                  <td>Text</td>
-                  <td><code>String</code></td>
-                </tr>
-                <tr>
-                  <td>Data</td>
-                  <td><code>ArrayBuffer</code></td>
-                </tr>
-                <tr>
-                  <td>CompiledWasm</td>
-                  <td><code>WebAssembly.Module</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    - The module type, see the table below for acceptable options:
+      <div class="DocsMarkdown--table-wrap">
+        <div class="DocsMarkdown--table-wrap-inner">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <code>type</code>
+                </th>
+                <th>JavaScript type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ESModule</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>CommonJS</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Text</td>
+                <td>
+                  <code>String</code>
+                </td>
+              </tr>
+              <tr>
+                <td>Data</td>
+                <td>
+                  <code>ArrayBuffer</code>
+                </td>
+              </tr>
+              <tr>
+                <td>CompiledWasm</td>
+                <td>
+                  <code>WebAssembly.Module</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
 
-    *   `globs` {{<prop-meta>}}required{{</prop-meta>}}
+  - `globs` {{<prop-meta>}}required{{</prop-meta>}}
 
-        *   Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
+    - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
 
-    *   `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
+  - `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
 
-        *   This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
+    - This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
 
 {{</definitions>}}
 
-***
+---
 
 ## Example
 

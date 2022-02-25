@@ -24,7 +24,7 @@ highlight: [3]
   "action": "drop",
   "ruleId": "sanity-shellshock",
   "source": "sanitycheck",
-  "userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\",
+  "userAgent": "() { :;}; printf \\\\\"detection[%s]string\\\\\" \\\\\"TjcLLwVzBtLzvbN\\\\"
   //...
 }
 ```

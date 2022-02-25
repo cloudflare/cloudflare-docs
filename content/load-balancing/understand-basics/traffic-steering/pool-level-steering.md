@@ -14,7 +14,7 @@ Without purchasing **Traffic Steering**, non-Enterprise customers only have acce
 
 {{</Aside>}}
 
-***
+---
 
 ## Off - standard failover
 
@@ -26,7 +26,7 @@ If all pools are marked unhealthy, Load Balancing will direct traffic to the fal
 
 If no monitors are attached to the load balancer, it will direct traffic to the primary pool exclusively.
 
-***
+---
 
 ## Dynamic steering
 
@@ -42,7 +42,7 @@ The diagram below shows how Cloudflare would route traffic to the pool with the 
 
 ![Dynamic steering routes traffic to the fastest available pool](/load-balancing/static/images/traffic-steering-2.png)
 
-***
+---
 
 ## Geo steering
 
@@ -90,8 +90,8 @@ To use proximity steering on a load balancer, you first need to add GPS coordina
 
 ### When to add proximity steering
 
-*   For new pools, add GPS coordinates when you create a pool.
-*   For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
+- For new pools, add GPS coordinates when you create a pool.
+- For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
 
 ### How to add proximity steering
 

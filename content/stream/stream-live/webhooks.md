@@ -30,7 +30,7 @@ The `event_type` property of the data object will either be `live_input.connecte
 
 ## Subscribe to Stream Live Webhooks
 
-1.  Log in to your Cloudflare account and click  **Notifications**.
+1.  Log in to your Cloudflare account and click **Notifications**.
 
 ![Click on Notifications](/stream/stream-live-webhooks-notifications-tab.png)
 

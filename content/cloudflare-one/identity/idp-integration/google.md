@@ -44,7 +44,7 @@ You can review the summary information and return to the dashboard at the bottom
 
 ![Summary](/cloudflare-one/static/documentation/identity/google/consent-screen-summary.png)
 
-1.  Return to the **APIs & Services** page and click *+ Create Credentials*. Select `OAuth client ID`.
+1.  Return to the **APIs & Services** page and click _+ Create Credentials_. Select `OAuth client ID`.
 
 ![Create OAuth](/cloudflare-one/static/documentation/identity/google/create-oauth.png)
 
@@ -84,11 +84,11 @@ Your user identity should return.
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>",
-    },
-    "type": "google",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>"
+  },
+  "type": "google",
+  "name": "my example idp"
 }
 ```

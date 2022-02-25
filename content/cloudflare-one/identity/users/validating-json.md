@@ -10,16 +10,16 @@ Cloudflare Access uses JSON Web Tokens (JWTs) and their contents to confirm a us
 
 Two tokens are generated:
 
-*   **Team Domain Token**: a token stored at the [team domain](/cloudflare-one/glossary/#team-domain) that prevents a user from needing to login to each application. The token is stored as a cookie at your account's team domain, for example, `https://<your-team-name>.cloudflareaccess.com`.
+- **Team Domain Token**: a token stored at the [team domain](/cloudflare-one/glossary/#team-domain) that prevents a user from needing to login to each application. The token is stored as a cookie at your account's team domain, for example, `https://<your-team-name>.cloudflareaccess.com`.
 
-*   **App Token**: a token generated for each application that a user reaches. The token is stored as a cookie on the application, for example, `https://jira.site.com`.
+- **App Token**: a token generated for each application that a user reaches. The token is stored as a cookie on the application, for example, `https://jira.site.com`.
 
 You can use the JWT created by Cloudflare Access to validate requests on your origin.
 
-| Best practices |  |
-| -------------- | ------ |
-| **Only validate tokens using the external endpoint, rather than saving the public key as a hard-coded value.** Cloudflare signs both tokens with a key pair that you can validate using the corresponding public certificate, available at an external endpoint. As a security best practice, Cloudflare rotates the key pair in use periodically. |  |
-| **Do not only look for the first certificate of the two in the list.** The ordering of which certificate is current will change. It is possible that clock skew between your server and Cloudflare's would result in a failure when validating a token's IAT or NBF fields. A grace period can help prevent downtime if that is the case.  |
+| Best practices                                                                                                                                                                                                                                                                                                                                     |     |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| **Only validate tokens using the external endpoint, rather than saving the public key as a hard-coded value.** Cloudflare signs both tokens with a key pair that you can validate using the corresponding public certificate, available at an external endpoint. As a security best practice, Cloudflare rotates the key pair in use periodically. |     |
+| **Do not only look for the first certificate of the two in the list.** The ordering of which certificate is current will change. It is possible that clock skew between your server and Cloudflare's would result in a failure when validating a token's IAT or NBF fields. A grace period can help prevent downtime if that is the case.          |
 
 ## Manual verification
 
@@ -55,11 +55,11 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
 
 ## Programmatic verification
 
-Before you start, click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the *Edit Access Policy* dialog box:
+Before you start, click the **Settings** button to copy the AUD tag from your **Access** app on your Cloudflare dashboard in the _Edit Access Policy_ dialog box:
 
-*   Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
+- Certificate URL: `https://<Your Team Domain>/cdn-cgi/access/certs`
 
-*   JWT Issuer: `https://<Your Team Domain>`
+- JWT Issuer: `https://<Your Team Domain>`
 
 ### Updating your Access signing keys
 
@@ -143,9 +143,9 @@ func main() {
 
 `pip` install the following:
 
-*   flask
-*   requests
-*   PyJWT
+- flask
+- requests
+- PyJWT
 
 ```python
 from flask import Flask, request
@@ -219,9 +219,9 @@ if __name__ == '__main__':
 
 JWTs contain three Base64-URL, separated by dots:
 
-*   Header
-*   Payload
-*   Signature
+- Header
+- Payload
+- Signature
 
 A typical JWT looks like this:
 
@@ -236,9 +236,9 @@ When you configure Access, the public certificates are available at this URL, wh
 
 ```json
 {
-    "alg": "RS256",
-    "kid": "9338abe1baf2fe492f646a736f25afbf7b025e35c627be4f60c414d4c73069b8",
-    "typ": "JWT"
+  "alg": "RS256",
+  "kid": "9338abe1baf2fe492f646a736f25afbf7b025e35c627be4f60c414d4c73069b8",
+  "typ": "JWT"
 }
 ```
 
@@ -248,26 +248,26 @@ The header contains the encoding algorithm. kid identifies the key used to sign 
 
 ```json
 {
-    "aud": ["97e2aae120121f902df8bc99fc345913ab186d174f3079ea729236766b2e7c4a"],
-    "email": "admin@example.com",
-    "exp": 1519418214,
-    "iat": 1519331815,
-    "iss": "https://drawbridge.cloudflareaccess.com",
-    "nonce": "1d8083f708a47982296f2d9896d70f207a27938f026540c392b903e5fdf4d6e9",
-    "sub": "ca639bb9-26ab-42e5-b9bf-3aea27b331fd"
+  "aud": ["97e2aae120121f902df8bc99fc345913ab186d174f3079ea729236766b2e7c4a"],
+  "email": "admin@example.com",
+  "exp": 1519418214,
+  "iat": 1519331815,
+  "iss": "https://drawbridge.cloudflareaccess.com",
+  "nonce": "1d8083f708a47982296f2d9896d70f207a27938f026540c392b903e5fdf4d6e9",
+  "sub": "ca639bb9-26ab-42e5-b9bf-3aea27b331fd"
 }
 ```
 
 The payload contains the actual claim and user information to pass to the application.
 
-*   `aud` identifies the application to which the JWT is issued. Our example uses test.example.com.
-*   `email` contains the email address of the authenticated user.
-*   `sub` contains the identifier of the authenticated user.
-*   `iss` the issuer is the application’s Cloudflare Access Domain URL.
-*   `iat` and exp are the issuance and expiration timestamps.
-*   `nonce` is the session identifier.
-*   `identity_nonce` is available in the Application Token and can be used to query all group membership for a given user.
-*   `custom` contains SAML attributes in the Application Token specified by an administrator in the identity provider configuration.
+- `aud` identifies the application to which the JWT is issued. Our example uses test.example.com.
+- `email` contains the email address of the authenticated user.
+- `sub` contains the identifier of the authenticated user.
+- `iss` the issuer is the application’s Cloudflare Access Domain URL.
+- `iat` and exp are the issuance and expiration timestamps.
+- `nonce` is the session identifier.
+- `identity_nonce` is available in the Application Token and can be used to query all group membership for a given user.
+- `custom` contains SAML attributes in the Application Token specified by an administrator in the identity provider configuration.
 
 ### Signature
 
@@ -275,8 +275,8 @@ To generate the signature, the encoded header, encoded payload, and the algorith
 
 Cloudflare includes the JWT with all authenticated requests in two places:
 
-*   The response header `Cf-Access-Jwt-Assertion`
-*   The cookie `CF_Authorization`
+- The response header `Cf-Access-Jwt-Assertion`
+- The cookie `CF_Authorization`
 
 Visit [jwt.io](https://jwt.io/) for more information on JWTs.
 

@@ -20,8 +20,8 @@ If an origin [becomes unhealthy](/load-balancing/understand-basics/health-detail
 
 When you [create a pool](/load-balancing/how-to/create-pool/), you have to choose an option for **Origin Steering**:
 
-*   **Random**: Sends requests to origins purely based on [origin weights](#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
-*   **Hash**: Cloudflare sends requests to origins based on a combination of [origin weights](#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same origin, but actual traffic distribution may differ from origin weights.
+- **Random**: Sends requests to origins purely based on [origin weights](#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
+- **Hash**: Cloudflare sends requests to origins based on a combination of [origin weights](#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same origin, but actual traffic distribution may differ from origin weights.
 
 ## Weights
 
@@ -43,9 +43,9 @@ To customize weights when you [create or edit a pool](/load-balancing/how-to/cre
 
 Here’s an example applying weights to three origin servers with a **Random** origin steering policy:
 
-*   **Weights:** Origin Server A = 0.25; Origin Server B = 0.25; Origin Server C = 0.50
-*   **When all origins are healthy**, each origin will receive the following proportion of total traffic: A = 25%; B = 25%; C = 50%.
-*   **When one origin is unhealthy** (such as origin C), each healthy origin will receive the following proportion of total traffic: A = 50%; B=50%.
+- **Weights:** Origin Server A = 0.25; Origin Server B = 0.25; Origin Server C = 0.50
+- **When all origins are healthy**, each origin will receive the following proportion of total traffic: A = 25%; B = 25%; C = 50%.
+- **When one origin is unhealthy** (such as origin C), each healthy origin will receive the following proportion of total traffic: A = 50%; B=50%.
 
 A significant amount of traffic is required for the distribution to converge on the expected values.
 

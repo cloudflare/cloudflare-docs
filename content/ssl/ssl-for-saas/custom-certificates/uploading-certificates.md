@@ -50,7 +50,7 @@ Use a [POST request](https://api.cloudflare.com/#custom-hostname-for-a-zone-crea
 
 The serial number returned is unique to the issuer, but not globally unique. Additionally, it is returned as a string, not an integer.
 
-***
+---
 
 ## Move to a Cloudflare certificate
 

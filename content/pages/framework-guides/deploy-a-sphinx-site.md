@@ -11,11 +11,11 @@ In this guide, you will create a new Sphinx project and deploy it using Cloudfla
 
 ## Prerequisites
 
-*   Python 3 - Sphinx is based on Python, therefore you must have Python installed
+- Python 3 - Sphinx is based on Python, therefore you must have Python installed
 
-*   [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages
+- [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages
 
-*   [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
+- [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
 
 {{<Aside type="note">}}
 
@@ -31,10 +31,10 @@ The latest version of Python 3.7 is 3.7.11:
 
 Refer to the official Python documentation for installation guidance:
 
-*   [Windows](https://www.python.org/downloads/windows/)
-*   [Linux/UNIX](https://www.python.org/downloads/source/)
-*   [Mac OS X](https://www.python.org/downloads/mac-osx/)
-*   [Other](https://www.python.org/download/other/)
+- [Windows](https://www.python.org/downloads/windows/)
+- [Linux/UNIX](https://www.python.org/downloads/source/)
+- [Mac OS X](https://www.python.org/downloads/mac-osx/)
+- [Other](https://www.python.org/download/other/)
 
 ### Installing Pipenv
 
@@ -86,7 +86,7 @@ Using /usr/bin/python3.7m (3.7.11) to create virtualenv...
     added seed packages: pip==21.1.3, setuptools==57.1.0, wheel==0.36.2
   activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
 
-✔ Successfully created virtual environment! 
+✔ Successfully created virtual environment!
 Virtualenv location: /home/ubuntu/.local/share/virtualenvs/my-wonderful-new-sphinx-project-Y2HfWoOr
 Creating a Pipfile for this project...
 ```
@@ -113,13 +113,13 @@ You should see output similar to the following:
 ```shell
 Installing sphinx...
 Adding sphinx to Pipfile's [packages]...
-✔ Installation Succeeded 
+✔ Installation Succeeded
 Pipfile.lock not found, creating...
 Locking [dev-packages] dependencies...
 Locking [packages] dependencies...
 Building requirements...
 Resolving dependencies...
-✔ Success! 
+✔ Success!
 Updated Pipfile.lock (763aa3)!
 Installing dependencies from Pipfile.lock (763aa3)...
   🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 0/0 — 00:00:00
@@ -215,11 +215,11 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 <div>
 
-| Configuration option | Value          |
-| -------------------- | -------------- |
-| Production branch    | `main`         |
-| Build command        | `make html`    |
-| Build directory      | `build/html`   |
+| Configuration option | Value        |
+| -------------------- | ------------ |
+| Production branch    | `main`       |
+| Build command        | `make html`  |
+| Build directory      | `build/html` |
 
 </div>
 
@@ -229,9 +229,9 @@ For example:
 
 <div>
 
-| Variable name         | Value          |
-| --------------------  | -------------- |
-| PYTHON\_VERSION        | 3.7            |
+| Variable name  | Value |
+| -------------- | ----- |
+| PYTHON_VERSION | 3.7   |
 
 </div>
 

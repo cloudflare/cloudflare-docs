@@ -10,17 +10,17 @@ weight: 86
 
 After downloading your Cloudflare Logs data, you can use different tools to parse and analyze your logs.
 
-In this tutorial, you will learn how to parse your JSON log data using *jq*.  To get started with *jq*, visit the [*jq* official site](https://stedolan.github.io/jq/).
+In this tutorial, you will learn how to parse your JSON log data using _jq_. To get started with _jq_, visit the [_jq_ official site](https://stedolan.github.io/jq/).
 
 {{<Aside type="note" header="Note">}}
 
-*jq* is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as *Kibana*.
+_jq_ is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as _Kibana_.
 
 {{</Aside>}}
 
 ## Aggregating fields
 
-To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several *jq* commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
+To aggregate a field appearing in the log, such as by IP address, URI, or referrer, you can use several _jq_ commands. This is useful to identify any patterns in traffic; for example, to identify your most popular pages or to block an attack.
 
 The following examples match on a field name and provide a count of each field instance, sorted in ascending order by count.
 
@@ -60,7 +60,7 @@ $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 
 ## Filtering fields
 
-Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like *Which URLs saw the most 502 errors?* For example:
+Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like _Which URLs saw the most 502 errors?_ For example:
 
 ```bash
 $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort -n | uniq -c | sort -n | tail

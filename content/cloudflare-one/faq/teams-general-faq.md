@@ -24,8 +24,8 @@ Access does not have an independent or out-of-band MFA feature.
 
 These browsers are supported:
 
-*   Internet Explorer® 11
-*   Edge® (current release, last release)
-*   Firefox® (current release, last release)
-*   Chrome® (current release, last release)
-*   Safari® (current release, last release)
+- Internet Explorer® 11
+- Edge® (current release, last release)
+- Firefox® (current release, last release)
+- Chrome® (current release, last release)
+- Safari® (current release, last release)

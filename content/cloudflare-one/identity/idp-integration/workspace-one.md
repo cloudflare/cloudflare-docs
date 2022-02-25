@@ -7,16 +7,16 @@ weight: 4
 
 # Workspace ONE
 
-Device posture with Workspace ONE requires that the Workspace ONE agent and the Cloudflare WARP client are deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial\_number** being the same in both clients. Follow the instructions below to set up the check.
+Device posture with Workspace ONE requires that the Workspace ONE agent and the Cloudflare WARP client are deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up the check.
 
 ## Obtain Workspace ONE Settings
 
 The following Workspace ONE values are needed to set up the Workspace ONE posture check:
 
-*   ClientID
-*   Client Secret
-*   Region-Specific token URL
-*   REST API URL
+- ClientID
+- Client Secret
+- Region-Specific token URL
+- REST API URL
 
 To retrieve those values:
 

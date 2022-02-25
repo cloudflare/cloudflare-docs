@@ -56,13 +56,13 @@ Copy the `Value` field of the client secret. Treat this value like a password. T
 
 1.  Select Delegated permissions. You will need to toggle 7 specific permissions in the next page. Once toggled, click **Add permissions**.
 
-    *   email
-    *   openid
-    *   profile
-    *   offline\_access
-    *   User.Read
-    *   Directory.Read.All
-    *   Group.Read.All
+    - email
+    - openid
+    - profile
+    - offline_access
+    - User.Read
+    - Directory.Read.All
+    - Group.Read.All
 
 ![Azure AD API Permissions](/cloudflare-one/static/documentation/identity/azure/request-perms.png)
 
@@ -102,13 +102,13 @@ This will enable you to select **Azure AD groups** when creating or editing a gr
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>",
-        "directory_id": "<your azure directory uuid>",
-        "support_groups": true
-    },
-    "type": "azureAD",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>",
+    "directory_id": "<your azure directory uuid>",
+    "support_groups": true
+  },
+  "type": "azureAD",
+  "name": "my example idp"
 }
 ```

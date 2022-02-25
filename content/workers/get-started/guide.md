@@ -20,7 +20,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script.
 
-***
+---
 
 ## 1. Sign up for a Workers account
 
@@ -30,7 +30,7 @@ Before you can start [publishing](/workers/cli-wrangler/commands/#publish) your 
 
 The signup process will guide you through choosing a `*.workers.dev` subdomain and verifying your email address, both of which are required to publish.
 
-***
+---
 
 ## 2. Install the Workers CLI
 
@@ -55,7 +55,7 @@ $ wrangler --version
 👷 ✨  wrangler 1.19.4
 ```
 
-***
+---
 
 ## 3. Configure the Workers CLI
 
@@ -74,7 +74,7 @@ y
 
 Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
-***
+---
 
 ## 4. Generate a new project
 
@@ -111,7 +111,7 @@ For example, to build a Workers project in TypeScript, run:
 
 To start a project from your own code — rather than a starter — use [`wrangler init`](/workers/cli-wrangler/commands/#init).
 
-***
+---
 
 ## 5. Write code
 
@@ -130,14 +130,14 @@ When a request is received on one of Cloudflare’s edge servers for a URL match
 ---
 filename: ~/my-worker/index.js
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  return new Response("Hello worker!", {
-    headers: { "content-type": "text/plain" }
-  })
+  return new Response('Hello worker!', {
+    headers: { 'content-type': 'text/plain' },
+  });
 }
 ```
 
@@ -147,9 +147,9 @@ Below is an example of the request response workflow:
 
 2.  The call to [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
 
-    *   The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
+    - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/workers/runtime-apis/response/) or `Promise<Response>` that determines the response.
 
-    *   The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
 
 Learn more about [the `FetchEvent` lifecycle](/workers/learning/fetch-event-lifecycle/).
 
@@ -166,16 +166,16 @@ Use standard JavaScript branching logic, such as `if`/`else` or `switch` stateme
 filename: ~/my-worker/index.js
 highlight: [7, 8, 9, 10, 11]
 ---
-addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
-})
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
 
 async function handleRequest(request) {
-  let response
-  if (request.method === "POST") {
-    response = await generate(request)
+  let response;
+  if (request.method === 'POST') {
+    response = await generate(request);
   } else {
-    response = new Response("Expected POST", { status: 500 })
+    response = new Response('Expected POST', { status: 500 });
   }
   // ...
 }
@@ -183,9 +183,9 @@ async function handleRequest(request) {
 
 It is common to route requests based on:
 
-*   `request.method` — for example, `GET` or `POST`.
-*   `request.url` — for example, filter based on query parameters or the pathname.
-*   `request.headers` — filter based on specific headers.
+- `request.method` — for example, `GET` or `POST`.
+- `request.url` — for example, filter based on query parameters or the pathname.
+- `request.headers` — filter based on specific headers.
 
 Refer to a full list of [all properties of a `Request` object](/workers/runtime-apis/request/#properties).
 
@@ -207,7 +207,7 @@ The example outlined in this guide is a starting point. There are many Workers [
 
 For inspiration, refer to [Built with Workers](https://workers.cloudflare.com/built-with) for a showcase of projects.
 
-***
+---
 
 ## 6. Preview your project
 
@@ -253,7 +253,7 @@ Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforeha
 
 {{</Aside>}}
 
-***
+---
 
 ## 7. Configure your project for deployment
 
@@ -339,7 +339,7 @@ You may enter a placeholder `AAAA` record pointing to `100::`, which must be pro
 
 Whichever method you choose, your record must be proxied through Cloudflare (orange-clouded) and resolve successfully.
 
-***
+---
 
 ## 8. Publish your project
 
@@ -375,7 +375,7 @@ For more information on environments, refer to the [Wrangler documentation](/wor
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
-***
+---
 
 ## 9. Turn on/off usage notifications
 
@@ -407,7 +407,7 @@ After you enable notifications and add recipients, edit or turn off notification
 
 ![notifications-tab](../media/workers-overview-notifications.png)
 
-***
+---
 
 ## Next steps
 

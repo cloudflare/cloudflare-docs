@@ -25,9 +25,10 @@ With Logpush, you can create a job to upload logs of the metadata Cloudflare col
 To get started:
 
 1.  Set up a storage provider and grant Cloudflare access. Your storage provider may request your Cloudflare API credentials and other information including:
-    *   Email address
-    *   Cloudflare API key
-    *   Zone ID
-    *   Destination access details for your cloud service provider
+
+    - Email address
+    - Cloudflare API key
+    - Zone ID
+    - Destination access details for your cloud service provider
 
 2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/logs/reference/logpush-api-configuration/).

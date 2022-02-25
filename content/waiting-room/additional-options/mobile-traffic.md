@@ -19,13 +19,13 @@ Only certain customers can support mobile traffic with their waiting rooms. For 
 
 {{</Aside>}}
 
-***
+---
 
 ## Before you begin
 
 This tutorial assumes you have previously [planned out](/waiting-room/get-started/) and [created](/waiting-room/how-to/create-via-dashboard/) a waiting room.
 
-***
+---
 
 ## Step 1 — Prepare your mobile app
 
@@ -41,8 +41,8 @@ Since a waiting room [requires cookies](/waiting-room/reference/waiting-room-coo
 
 To receive a JSON response, you first need to enable that option on your waiting room:
 
-*   **Via the dashboard**: When [customizing a waiting room](/waiting-room/additional-options/customize-waiting-room/), toggle **JSON Response** to **On**.
-*   **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to `true`.
+- **Via the dashboard**: When [customizing a waiting room](/waiting-room/additional-options/customize-waiting-room/), toggle **JSON Response** to **On**.
+- **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to `true`.
 
 ## Step 3 — Get JSON data
 
@@ -59,15 +59,15 @@ To get the JSON data associated with a waiting room, make a request to that endp
 header: Response
 ---
 {
-    "cfWaitingRoom": {
-        "inWaitingRoom": true,
-        "waitTime": 5,
-        "waitTimeKnown": true,
-        "waitTimeFormatted": "5 minutes",
-        "queueIsFull": false,
-        "queueAll": false,
-        "lastUpdated": "2021-08-03T23:46:00.000Z",
-        "refreshIntervalSeconds": 20
-    }
+  "cfWaitingRoom": {
+    "inWaitingRoom": true,
+    "waitTime": 5,
+    "waitTimeKnown": true,
+    "waitTimeFormatted": "5 minutes",
+    "queueIsFull": false,
+    "queueAll": false,
+    "lastUpdated": "2021-08-03T23:46:00.000Z",
+    "refreshIntervalSeconds": 20
+  }
 }
 ```

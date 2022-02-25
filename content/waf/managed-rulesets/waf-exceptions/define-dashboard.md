@@ -20,7 +20,7 @@ weight: 2
 
 6.  In **Then**, select the [WAF exception type](/waf/managed-rulesets/waf-exceptions/#types-of-waf-exceptions) that determines which rules to skip:
 
-    *   *Skip all remaining rules* — Skips all remaining rules of WAF Managed Rulesets.
-    *   *Skip specific rules from a Managed Ruleset* — Click **Select rules** to select the specific rules to skip. Learn more about [searching and selecting Managed Ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    - _Skip all remaining rules_ — Skips all remaining rules of WAF Managed Rulesets.
+    - _Skip specific rules from a Managed Ruleset_ — Click **Select rules** to select the specific rules to skip. Learn more about [searching and selecting Managed Ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
 7.  To save and deploy your WAF exception, click **Deploy**. If you are not ready to deploy your exception, click **Save as Draft**.

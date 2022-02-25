@@ -12,8 +12,8 @@ By default, your HTTP request logs are not retained. When using the Logpull API 
 
 There are two endpoints for managing log retention:
 
-*   `GET /logs/control/retention/flag` - returns whether retention is on
-*   `POST /logs/control/retention/flag` - turns retention on or off
+- `GET /logs/control/retention/flag` - returns whether retention is on
+- `POST /logs/control/retention/flag` - turns retention on or off
 
 {{<Aside type="note" header="Note">}}
 
@@ -50,7 +50,7 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 
 #### Parameters
 
-*   *flag* - can be either `true` or `false`
+- _flag_ - can be either `true` or `false`
 
 #### Response:
 

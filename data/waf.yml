@@ -16,7 +16,7 @@ meta:
   title: Cloudflare Web Application Firewall (WAF) docs
   description: Protect against web application vulnerabilities with Cloudflare’s
     Web Application Firewall (WAF).
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

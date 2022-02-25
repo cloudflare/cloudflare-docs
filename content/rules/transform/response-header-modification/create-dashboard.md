@@ -24,27 +24,29 @@ Create HTTP Response Header Modification Rules in the **Transform Rules** tab un
 
 5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
-     {{<Aside type="note">}}
-Check the [available fields and functions](/rules/transform/response-header-modification/reference/fields-functions/).
-     {{</Aside>}}
+         {{<Aside type="note">}}
+
+    Check the [available fields and functions](/rules/transform/response-header-modification/reference/fields-functions/).
+    {{</Aside>}}
 
 6.  For **Modify response header**, select one of the following options:
 
-    *   *Set static* — Sets the value of an HTTP response header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
-    *   *Set dynamic* — Sets the value of an HTTP response header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
-    *   *Remove* — Removes the HTTP response header with the provided name, if it exists.
+    - _Set static_ — Sets the value of an HTTP response header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
+    - _Set dynamic_ — Sets the value of an HTTP response header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
+    - _Remove_ — Removes the HTTP response header with the provided name, if it exists.
 
 7.  Enter the name of the HTTP response header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
 
 8.  To modify another HTTP response header in the same rule, click **+ Set new header**.
 
-    The following example includes the modification of three response headers using the available actions:
+        The following example includes the modification of three response headers using the available actions:
 
-    ![HTTP response header modification examples](/rules/static/transform/response-header-modification-example.png)
+        ![HTTP response header modification examples](/rules/static/transform/response-header-modification-example.png)
 
-     {{<Aside type="note">}}
-You can modify up to 30 HTTP response headers in a single rule.
-     {{</Aside>}}
+         {{<Aside type="note">}}
+
+    You can modify up to 30 HTTP response headers in a single rule.
+    {{</Aside>}}
 
 9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 

@@ -68,4 +68,4 @@ Run your tunnel and check that all the services specified in `config.yml` should
 
 You can also:
 
-*   [Secure your application with Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/)
+- [Secure your application with Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/)

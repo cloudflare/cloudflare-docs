@@ -32,10 +32,10 @@ curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 
 ```json
 {
-	"type": "CNAME",
-	"name": "cname-to-origin.example.com",
-	"content": "origin.domain.com",
-	"proxied": true,
+  "type": "CNAME",
+  "name": "cname-to-origin.example.com",
+  "content": "origin.domain.com",
+  "proxied": true
 }
 ```
 
@@ -57,18 +57,18 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 ```json
 {
-	"dns": {
-		"type": "CNAME",
-		"name": "spectrum-cname.example.com"
-	},
-	"ip_firewall": false,
-	"protocol": "tcp/22",
-	"proxy_protocol": "off",
-	"tls": "off",
-	"origin_dns": {
-		"name": "cname-to-origin.example.com",
-		"ttl": 1200
-	},
-	"origin_port": 22
+  "dns": {
+    "type": "CNAME",
+    "name": "spectrum-cname.example.com"
+  },
+  "ip_firewall": false,
+  "protocol": "tcp/22",
+  "proxy_protocol": "off",
+  "tls": "off",
+  "origin_dns": {
+    "name": "cname-to-origin.example.com",
+    "ttl": 1200
+  },
+  "origin_port": 22
 }
 ```

@@ -16,10 +16,10 @@ To update your registrant contacts:
 
 If you change any of the following fields, Cloudflare Registrar will require a Change of Registrant approval before the changes are finalized:
 
-*   First name
-*   Last name
-*   Organization
-*   Email address
+- First name
+- Last name
+- Organization
+- Email address
 
 If you update any of the fields mentioned above, Cloudflare Registrar will send an approval email to the current registrant's email address. The approval email contains a link to a web page where the requested change may be viewed and approved or rejected. If the pending change is not approved or rejected within seven days, the request will automatically be canceled.
 
@@ -29,7 +29,7 @@ If you do not update these fields, your contact information is updated immediate
 
 After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.
 
-If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox *before* clicking the **Accept** button.
+If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox _before_ clicking the **Accept** button.
 
 {{</Aside>}}
 

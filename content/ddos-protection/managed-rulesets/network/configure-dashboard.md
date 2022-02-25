@@ -10,8 +10,8 @@ meta:
 
 You can customize the **action** and **sensitivity** of the rules in the Network-layer DDoS Attack Protection Managed Ruleset in the following ways:
 
-*   [Override all the rules in the ruleset](#override-all-the-rules-in-the-ruleset)
-*   [Override one or more rules](#override-one-or-more-rules)
+- [Override all the rules in the ruleset](#override-all-the-rules-in-the-ruleset)
+- [Override one or more rules](#override-one-or-more-rules)
 
 You define overrides for the Network-layer DDoS Attack Protection Managed Ruleset at the account level. Tag and rule overrides have greater priority than ruleset overrides.
 

@@ -7,16 +7,16 @@ weight: 4
 
 # CrowdStrike
 
-Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial\_number** being the same in both clients. Follow the instructions below to set up he integration.
+Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflare WARP client to be deployed on your devices. For this integration to function, our service-to-service posture check relies on the **serial_number** being the same in both clients. Follow the instructions below to set up he integration.
 
 ## Obtain CrowdStrike Settings
 
 The following CrowdStrike values are needed to set up the CrowdStrike posture check:
 
-*   API ClientID
-*   API Client Secret
-*   Base API URL
-*   Customer ID
+- API ClientID
+- API Client Secret
+- Base API URL
+- Customer ID
 
 To retrieve those values:
 
@@ -26,9 +26,9 @@ To retrieve those values:
 4.  Copy the Client ID and Client Secret to a safe place.
 5.  Navigate to **Hosts** > **Sensor Downloads** and note down your Customer ID.
 6.  Determine your Cloud Environment API endpoint by following the instructions [here](https://falcon.us-2.crowdstrike.com/documentation/93/oauth2-auth-token-apis). This becomes your Base API URL. As an example:
-    *   US-1: `https://api.crowdstrike.com`
-    *   US-2: `https://api.us-2.crowdstrike.com`
-    *   etc.
+    - US-1: `https://api.crowdstrike.com`
+    - US-2: `https://api.us-2.crowdstrike.com`
+    - etc.
 
 ## Configure the provider on the Zero Trust dashboard
 

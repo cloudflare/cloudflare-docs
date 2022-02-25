@@ -4,7 +4,7 @@ logo: <svg viewBox="0 0 48 48" fill="currentColor" role="img" aria-labelledby="t
 meta:
   title: Browser Isolation
   description: Cloudflare Browser Isolation
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 externals:

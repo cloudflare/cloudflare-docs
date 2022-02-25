@@ -21,7 +21,7 @@ It is not currently (January 2022) possible to send fetch requests to other Work
 
 {{</Aside>}}
 
-***
+---
 
 ## Constructor
 
@@ -31,15 +31,15 @@ It is not currently (January 2022) possible to send fetch requests to other Work
 ---
 highlight: [8]
 ---
-addEventListener("fetch", event => {
+addEventListener('fetch', event => {
   // NOTE: can’t use fetch here, as we’re not in an async scope yet
-  event.respondWith(eventHandler(event))
-})
+  event.respondWith(eventHandler(event));
+});
 
 async function eventHandler(event) {
   // fetch can be awaited here since `event.respondWith()` waits for the Promise it receives to settle
-  const resp = await fetch(event.request)
-  return resp
+  const resp = await fetch(event.request);
+  return resp;
 }
 ```
 
@@ -47,31 +47,32 @@ async function eventHandler(event) {
 
 {{<definitions>}}
 
-*   {{<code>}}fetch(){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}fetch(){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
 
-    *   Fetch returns a promise to a Response.
+  - Fetch returns a promise to a Response.
 
 {{</definitions>}}
 
-***
+---
 
 ## Properties
 
 {{<definitions>}}
 
-*   `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}} | {{<type>}}string{{</type>}}
-    *   The [`Request`](/workers/runtime-apis/request/) object or a string represents the URL to fetch.
+- `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}} | {{<type>}}string{{</type>}}
 
-*   `init` {{<type-link href="/runtime-apis/request#requestinit">}}RequestInit{{</type-link>}}
-    *   The content of the request.
+  - The [`Request`](/workers/runtime-apis/request/) object or a string represents the URL to fetch.
+
+- `init` {{<type-link href="/runtime-apis/request#requestinit">}}RequestInit{{</type-link>}}
+  - The content of the request.
 
 {{</definitions>}}
 
-***
+---
 
 ## Related resources
 
-*   [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)
-*   [Example: Fetch HTML](/workers/examples/fetch-html/)
-*   [Example: Fetch JSON](/workers/examples/fetch-json/)
-*   [Example: cache using Fetch](/workers/examples/cache-using-fetch/)
+- [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)
+- [Example: Fetch HTML](/workers/examples/fetch-html/)
+- [Example: Fetch JSON](/workers/examples/fetch-json/)
+- [Example: cache using Fetch](/workers/examples/cache-using-fetch/)

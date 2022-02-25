@@ -1,9 +1,9 @@
 ---
-title: "2: User access"
+title: '2: User access'
 pcx-content-type: get-started
 weight: 3
 meta:
-  title: "Step 2: User access"
+  title: 'Step 2: User access'
 ---
 
 # Step 2: User access
@@ -62,29 +62,29 @@ An example response for a successful creation:
 
 ```json
 {
-    "result": {
-        "id": "60758bd48392a06215ae817bc35084b6",
-        "email": "<identifier>@youremaildomain.com>",
-        "first_name": null,
-        "last_name": null,
-        "username": "17bd2796b374cec14976ac3bced85c05",
-        "telephone": null,
-        "country": null,
-        "created_on": "2019-02-21T23:20:28.645256Z",
-        "modified_on": "2019-02-21T23:20:28.645256Z",
-        "two_factor_authentication": {
-            "enabled": false,
-            "locked": false
-        },
-        "api_key": "xxx"
+  "result": {
+    "id": "60758bd48392a06215ae817bc35084b6",
+    "email": "<identifier>@youremaildomain.com>",
+    "first_name": null,
+    "last_name": null,
+    "username": "17bd2796b374cec14976ac3bced85c05",
+    "telephone": null,
+    "country": null,
+    "created_on": "2019-02-21T23:20:28.645256Z",
+    "modified_on": "2019-02-21T23:20:28.645256Z",
+    "two_factor_authentication": {
+      "enabled": false,
+      "locked": false
     },
-    "success": true,
-    "errors": [],
-    "messages": []
+    "api_key": "xxx"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
-***
+---
 
 ## Next step
 

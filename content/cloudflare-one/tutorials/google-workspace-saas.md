@@ -23,21 +23,21 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
 1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 
-2.  Follow [this guide](https://support.google.com/a/answer/6349809?hl=en\&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
+2.  Follow [this guide](https://support.google.com/a/answer/6349809?hl=en&ref_topic=7556907) to collect the Entity ID and Assertion Consumer Service URL to add to your application:
 
-    *   Entity ID: `google.com`
-    *   Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
-    *   Name ID: `Email`
+    - Entity ID: `google.com`
+    - Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
+    - Name ID: `Email`
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
 
 3.  Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 
-    | Google Workspace value | Cloudflare value |
-    | ----- | ---- |
-    | Sign-in page URL | SSO Endpoint |
-    | Sign-out page URL | SSO Endpoint |
-    | Verification Certificate | Public Key |
+    | Google Workspace value   | Cloudflare value |
+    | ------------------------ | ---------------- |
+    | Sign-in page URL         | SSO Endpoint     |
+    | Sign-out page URL        | SSO Endpoint     |
+    | Verification Certificate | Public Key       |
 
 4.  Next, you can select **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your domain (where `your_domain.com` is replaced with your actual primary Google Workspace domain name).
 

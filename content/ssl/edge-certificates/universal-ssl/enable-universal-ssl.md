@@ -20,11 +20,11 @@ Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encry
 
 For non-authoritative or partial domains (domains on a CNAME setup), Universal SSL will be:
 
-*   Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
-*   Validated:
+- Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
+- Validated:
 
-    *   Immediately if you add [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) records to your authoritative DNS.
-    *   After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
+  - Immediately if you add [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) records to your authoritative DNS.
+  - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
 
 Unless you cover and validate multiple subdomains with an [advanced certificate](/ssl/advanced-certificate-manager/), you will need to proxy and validate each new subdomains as they are added.
 
@@ -40,16 +40,16 @@ To avoid errors with your domain, either [upload a custom certificate](/ssl/cust
 
 If you disable Universal SSL, you may experience errors with the following scenarios:
 
-*   **Enabled features**:
+- **Enabled features**:
 
-    *   [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/)
-    *   [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
-    *   [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/)
+  - [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/)
+  - [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/)
+  - [Opportunistic Encryption](/ssl/edge-certificates/additional-options/opportunistic-encryption/)
 
-*   **Other setups**:
+- **Other setups**:
 
-    *   [Page rules](https://support.cloudflare.com/hc/articles/218411427) that redirect traffic to HTTPS
-    *   HTTP to HTTPS redirects at your origin web server
+  - [Page rules](https://support.cloudflare.com/hc/articles/218411427) that redirect traffic to HTTPS
+  - HTTP to HTTPS redirects at your origin web server
 
 ### Disable Universal SSL
 

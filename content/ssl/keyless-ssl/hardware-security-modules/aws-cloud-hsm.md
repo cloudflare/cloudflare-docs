@@ -12,16 +12,16 @@ This example imports an existing key pair, but you may prefer to [generate your 
 
 {{</Aside>}}
 
-***
+---
 
 ## Before you start
 
 Make sure you have:
 
-*   Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
-*   Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
+- Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
+- Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
 
-***
+---
 
 ## 1. Import the public and private key to the HSM
 
@@ -64,17 +64,17 @@ Command: logoutHSM
 Command: exit
 ```
 
-***
+---
 
 ## 2. Modify the gokeyless config file and restart the service
 
 Now that the keys are in place, we need to modify the configuration file that the key server will read on startup. Change the `object=mykey` and `pin-value=username:password` values to match the key label you provided and CU user you created.
 
-Open  `/etc/keyless/gokeyless.yaml` and immediately after:
+Open `/etc/keyless/gokeyless.yaml` and immediately after:
 
 ```yaml
 private_key_stores:
-- dir: /etc/keyless/keys
+  - dir: /etc/keyless/keys
 ```
 
 add:

@@ -68,11 +68,11 @@ To test that your connection is working, navigate to **Authentication > Login me
 
 ```json
 {
-    "config": {
-        "client_id": "<your client id>",
-        "client_secret": "<your client secret>"
-    },
-    "type": "facebook",
-    "name": "my example idp"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>"
+  },
+  "type": "facebook",
+  "name": "my example idp"
 }
 ```

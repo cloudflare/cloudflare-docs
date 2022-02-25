@@ -12,8 +12,8 @@ meta:
 
 The Cloudflare Rules language supports comparison and logical operators:
 
-*   [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
-*   [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
+- [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
+- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
 [Grouping symbols](#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
 
@@ -36,6 +36,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
 {{</Aside>}}
 
 {{<table-wrap style="width:100%">}}
+
 <table style='width:100%'>
   <thead>
    <tr>
@@ -171,6 +172,7 @@ Logical operators combine two or more expressions into a single compound express
 Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
 
 {{<table-wrap>}}
+
 <table style='width:100%'>
   <thead>
    <tr>

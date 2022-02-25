@@ -16,9 +16,9 @@ Private network interconnects (PNI) are available at any of our [private peering
 
 Choose a PNI if you are co-located with a Cloudflare data center. We also recommend a PNI if:
 
-*   Your link size is 10G or higher
-*   You want higher throughput than a virtual connection
-*   You want to eliminate as many intermediaries from an interconnect as possible
+- Your link size is 10G or higher
+- You want higher throughput than a virtual connection
+- You want to eliminate as many intermediaries from an interconnect as possible
 
 ### Limitations
 

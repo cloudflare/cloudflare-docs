@@ -10,7 +10,6 @@ weight: 0
 
 ```js
 function NSLookup(type, domain) {
-
   if (typeof type == 'undefined') {
     throw new Error('Missing parameter 1 dns type');
   }
@@ -21,13 +20,17 @@ function NSLookup(type, domain) {
 
   type = type.toUpperCase();
 
-  var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
+  var url =
+    'https://cloudflare-dns.com/dns-query?name=' +
+    encodeURIComponent(domain) +
+    '&type=' +
+    encodeURIComponent(type);
 
   var options = {
-    "muteHttpExceptions": true,
-    "headers": {
-      "accept": "application/dns-json"
-    }
+    muteHttpExceptions: true,
+    headers: {
+      accept: 'application/dns-json',
+    },
   };
 
   var result = UrlFetchApp.fetch(url, options);
@@ -39,16 +42,16 @@ function NSLookup(type, domain) {
   }
 
   var errors = [
-    { "name": "NoError", "description": "No Error"}, // 0
-    { "name": "FormErr", "description": "Format Error"}, // 1
-    { "name": "ServFail", "description": "Server Failure"}, // 2
-    { "name": "NXDomain", "description": "Non-Existent Domain"}, // 3
-    { "name": "NotImp", "description": "Not Implemented"}, // 4
-    { "name": "Refused", "description": "Query Refused"}, // 5
-    { "name": "YXDomain", "description": "Name Exists when it should not"}, // 6
-    { "name": "YXRRSet", "description": "RR Set Exists when it should not"}, // 7
-    { "name": "NXRRSet", "description": "RR Set that should exist does not"}, // 8
-    { "name": "NotAuth", "description": "Not Authorized"} // 9
+    { name: 'NoError', description: 'No Error' }, // 0
+    { name: 'FormErr', description: 'Format Error' }, // 1
+    { name: 'ServFail', description: 'Server Failure' }, // 2
+    { name: 'NXDomain', description: 'Non-Existent Domain' }, // 3
+    { name: 'NotImp', description: 'Not Implemented' }, // 4
+    { name: 'Refused', description: 'Query Refused' }, // 5
+    { name: 'YXDomain', description: 'Name Exists when it should not' }, // 6
+    { name: 'YXRRSet', description: 'RR Set Exists when it should not' }, // 7
+    { name: 'NXRRSet', description: 'RR Set that should exist does not' }, // 8
+    { name: 'NotAuth', description: 'Not Authorized' }, // 9
   ];
 
   var response = JSON.parse(resultText);
@@ -66,7 +69,6 @@ function NSLookup(type, domain) {
   var outputString = outputData.join(',');
 
   return outputString;
-
 }
 ```
 
@@ -74,19 +76,19 @@ Now, when you feed the function `NSLookup` a record type and a domain, you will 
 
 The record types supported are:
 
-*   A
-*   AAAA
-*   CAA
-*   CNAME
-*   DS
-*   DNSKEY
-*   MX
-*   NS
-*   NSEC
-*   NSEC3
-*   RRSIG
-*   SOA
-*   TXT
+- A
+- AAAA
+- CAA
+- CNAME
+- DS
+- DNSKEY
+- MX
+- NS
+- NSEC
+- NSEC3
+- RRSIG
+- SOA
+- TXT
 
 For example, typing:
 
@@ -100,7 +102,7 @@ NSLookup(B1, B2)
 
 </div>
 
-<br/>
+<br />
 
 Returns
 

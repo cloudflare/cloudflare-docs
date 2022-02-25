@@ -8,10 +8,10 @@ weight: 5
 
 Below you will find answers to our most commonly asked questions on Cloudflare Registrar, namely about billing, domain transfers, and how to troubleshoot common issues you may come across. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
 
-*   [Domain transfers](#domain-transfers)
-*   [Domain registrations](#domain-registrations)
-*   [Additional requirements for .US domains](#additional-requirements-for-us-domains)
-*   [Billing](#billing)
+- [Domain transfers](#domain-transfers)
+- [Domain registrations](#domain-registrations)
+- [Additional requirements for .US domains](#additional-requirements-for-us-domains)
+- [Billing](#billing)
 
 ## Domain transfers
 
@@ -59,7 +59,7 @@ If you enter an incorrect auth code (also referred to as authentication code or 
 
 No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
 
-***
+---
 
 ## Domain registrations
 
@@ -79,17 +79,17 @@ If a year is not added to your registration, you have effectively paid twice for
 
 ### What Happens When a Domain Expires?
 
-Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. The redemption period lasts for 30 days.  During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. Contact your account team for assistance. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
+Cloudflare currently offers a 40-day grace period for most top-level domains (TLDs). During this period you may renew/extend the domain at any time from within the dashboard but no further auto-renew attempts will be made. For the first 30 days of the grace period, the domain will continue to resolve as normal. On the 30th day after the expiration date, the domain will be suspended and a parked suspension page will be displayed. You may still renew the domain at any time during this suspension period. On the 40th day, the domain will enter the Redemption Period and will no longer resolve to any web page. The redemption period lasts for 30 days. During this time, it may be possible to restore and renew the domain. A restore fee may apply in addition to the renewal fee. Contact your account team for assistance. At the end of the 30 day redemption period, the domain will be placed in pending delete status for a period of five days, after which it will be released and made available for re-registration. The domain cannot be restored or renewed during this period.
 
 In summary, here is what will happen after a domain expires:
 
-*   **Day 0:**	Expiration Date.
-*   **Day 1 - 30:** Grace Period (domain resolves normally).
-*   **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
-*   **Day 41 - 70:** Redemption Period.
-*   **Day 71 - 75:** Pending Delete Period.
+- **Day 0:** Expiration Date.
+- **Day 1 - 30:** Grace Period (domain resolves normally).
+- **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
+- **Day 41 - 70:** Redemption Period.
+- **Day 71 - 75:** Pending Delete Period.
 
-***
+---
 
 ## Additional requirements for .US domains
 
@@ -132,11 +132,11 @@ The nexus category information will be supplied to the .US registry. Failure to 
 
 In addition to nexus information, registrants must also identify their intended use of the domain name. The possible options are:
 
-*   Personal use
-*   For-profit business
-*   Non-profit business or organization
-*   Government
-*   Education
+- Personal use
+- For-profit business
+- Non-profit business or organization
+- Government
+- Education
 
 ### .US WHOIS requirements
 
@@ -148,7 +148,7 @@ Transferring a `.us` domain works in a similar way to other domains, but always 
 
 Refer to [Transfer your domain to Cloudflare](/registrar/get-started/transfer-domain-to-cloudflare/) for more information.
 
-***
+---
 
 ## Billing
 

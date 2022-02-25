@@ -16,9 +16,9 @@ Then, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dn
 
 {{<example>}}
 
-| Type | Name | IPv4 address | Proxy status |
-| --- | --- | --- | --- |
-| A | `www` | `192.0.2.1`| Proxied |
+| Type | Name  | IPv4 address | Proxy status |
+| ---- | ----- | ------------ | ------------ |
+| A    | `www` | `192.0.2.1`  | Proxied      |
 
 {{</example>}}
 

@@ -12,49 +12,49 @@ layout: example
 
 ```js
 // Service configured to receive logs
-const LOG_URL = "https://log-service.example.com/"
+const LOG_URL = 'https://log-service.example.com/';
 
 function postLog(data) {
   return fetch(LOG_URL, {
-    method: "POST",
+    method: 'POST',
     body: data,
-  })
+  });
 }
 
 async function handleRequest(event) {
-  let response
+  let response;
 
   try {
-    response = await fetch(event.request)
+    response = await fetch(event.request);
     if (!response.ok && !response.redirected) {
-      const body = await response.text()
+      const body = await response.text();
       throw new Error(
-        "Bad response at origin. Status: " +
+        'Bad response at origin. Status: ' +
           response.status +
-          " Body: " +
+          ' Body: ' +
           // Ensure the string is small enough to be a header
-          body.trim().substring(0, 10),
-      )
+          body.trim().substring(0, 10)
+      );
     }
   } catch (err) {
     // Without event.waitUntil(), your fetch() to Cloudflare's
     // logging service may or may not complete
-    event.waitUntil(postLog(err.toString()))
-    const stack = JSON.stringify(err.stack) || err
+    event.waitUntil(postLog(err.toString()));
+    const stack = JSON.stringify(err.stack) || err;
 
     // Copy the response and initialize body to the stack trace
-    response = new Response(stack, response)
+    response = new Response(stack, response);
 
     // Add the error stack into a header to find out what happened
-    response.headers.set("X-Debug-stack", stack)
-    response.headers.set("X-Debug-err", err)
+    response.headers.set('X-Debug-stack', stack);
+    response.headers.set('X-Debug-err', err);
   }
-  return response
+  return response;
 }
 
-addEventListener("fetch", event => {
+addEventListener('fetch', event => {
   // Have any uncaught errors thrown go directly to origin
-  event.passThroughOnException()
-  event.respondWith(handleRequest(event))
-})
+  event.passThroughOnException();
+  event.respondWith(handleRequest(event));
+});
 ```

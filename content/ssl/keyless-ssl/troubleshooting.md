@@ -12,8 +12,8 @@ meta:
 
 To check logs, use a command similar to the following.
 
-*   systemd: `sudo journalctl -f -u gokeyless`
-*   upstart/sysvinit: `sudo tail -f /var/log/gokeyless.log`
+- systemd: `sudo journalctl -f -u gokeyless`
+- upstart/sysvinit: `sudo tail -f /var/log/gokeyless.log`
 
 ## Enable debug logging
 

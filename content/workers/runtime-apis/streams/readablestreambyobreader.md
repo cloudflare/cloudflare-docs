@@ -20,27 +20,27 @@ An instance of `ReadableStreamBYOBReader` is functionally identical to [`Readabl
 A `ReadableStreamBYOBReader` is not instantiated via its constructor. Rather, it is retrieved from a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/):
 
 ```js
-const { readable, writable } = new TransformStream()
-const reader = readable.getReader({ mode: "byob" })
+const { readable, writable } = new TransformStream();
+const reader = readable.getReader({ mode: 'byob' });
 ```
 
 ## Methods
 
 {{<definitions>}}
 
-*   {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
-    *   Returns a promise with the next available chunk of data read into a passed-in buffer.
+  - Returns a promise with the next available chunk of data read into a passed-in buffer.
 
-*   {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
-    *   Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
+  - Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
 
 {{</definitions>}}
 
 ## Common issues
 
-  {{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="Warning">}}
 
 `read` provides no control over the minimum number of bytes that should be read into the buffer. Even if you allocate a 1 MiB buffer, the kernel is perfectly within its rights to fulfill this read with a single byte, whether or not an EOF immediately follows.
 
@@ -48,9 +48,9 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 
 `readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read.
 
-  {{</Aside>}}
+{{</Aside>}}
 
 ## Related resources
 
-*   [Using Streams](/workers/learning/using-streams/)
-*   [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)
+- [Using Streams](/workers/learning/using-streams/)
+- [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)

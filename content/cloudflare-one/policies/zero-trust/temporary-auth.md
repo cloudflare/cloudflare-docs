@@ -14,8 +14,8 @@ Administrators can set up an Access policy to require approval before a user is 
 
 ## Pre-requisites
 
-*   Enable [Purpose Justification](/cloudflare-one/policies/zero-trust/require-purpose-justification/) on the Access policy for the desired application.
-*   If desired, ensure you have a second Access policy for users that should have persistent access. Be sure the policy order is set to allow persistent users through.
+- Enable [Purpose Justification](/cloudflare-one/policies/zero-trust/require-purpose-justification/) on the Access policy for the desired application.
+- If desired, ensure you have a second Access policy for users that should have persistent access. Be sure the policy order is set to allow persistent users through.
 
 ## Set up temporary authentication
 

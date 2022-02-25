@@ -10,11 +10,11 @@ To design and preview the appearance of a waiting room, select the **Customizati
 
 Cloudflare offers options to customize the appearance of your waiting room:
 
-*   [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
-*   [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
-    *   Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
-    *   Edit content directly in the dashboard or import relevant files.
-*   [Support mobile app traffic](/waiting-room/additional-options/mobile-traffic/): Toggle to also enable a JSON response with a user's status in the waiting room.
+- [Default waiting room](#default-waiting-room): An unbranded waiting room that displays an estimated waiting time to visitors.
+- [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
+  - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
+  - Edit content directly in the dashboard or import relevant files.
+- [Support mobile app traffic](/waiting-room/additional-options/mobile-traffic/): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ## Default waiting room
 
@@ -40,9 +40,9 @@ To customize a waiting room:
 
 You can edit the HTML code directly in the text box:
 
-*   Click **Download Template** to download a HTML file containing the default template content to your computer.
-*   Click **Download** to download a HTML file containing the text box content to your computer.
-*   Click **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
+- Click **Download Template** to download a HTML file containing the default template content to your computer.
+- Click **Download** to download a HTML file containing the text box content to your computer.
+- Click **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
 
 The template text contains [code to display the wait time](#display-wait-time). If you want to display the estimated wait time to visitors, do not delete this content.
 
@@ -58,41 +58,38 @@ Make further edits in the text box. Include the [code to display the wait time](
 The following content in the `<main>` section of the template HTML code displays the wait time:
 
 ```html
-     <h2 id="time-remaining">
-        <noscript>
-          {{#waitTimeKnown}}Your estimated wait time is
-          {{waitTimeFormatted}}...{{/waitTimeKnown}}
-          {{^waitTimeKnown}}{{#queueIsFull}}The estimated wait time is
-          greater than a day. You will automatically be placed in the
-          queue once space is available.{{/queueIsFull}}
-          {{^queueIsFull}}Your estimated wait time is
-          unavailable.{{/queueIsFull}}{{/waitTimeKnown}}
-        </noscript>
-     </h2>
+<h2 id="time-remaining">
+  <noscript>
+    {{#waitTimeKnown}}Your estimated wait time is {{waitTimeFormatted}}...{{/waitTimeKnown}}
+    {{^waitTimeKnown}}{{#queueIsFull}}The estimated wait time is greater than a day. You will
+    automatically be placed in the queue once space is available.{{/queueIsFull}}
+    {{^queueIsFull}}Your estimated wait time is unavailable.{{/queueIsFull}}{{/waitTimeKnown}}
+  </noscript>
+</h2>
 ```
 
 The following script within the `<body>` section after `<main>` fetches the wait time:
 
 ```html
-   <script type="text/javascript">
-      var remainingEl = document.getElementById('time-remaining');
-      var waitTime = {{waitTime}};
-      var waitTimeKnown = {{waitTimeKnown}};
+<script type="text/javascript">
+  var remainingEl = document.getElementById('time-remaining');
+  var waitTime = {{waitTime}};
+  var waitTimeKnown = {{waitTimeKnown}};
 
-      var remainingString = 'Your estimated wait time is ';
+  var remainingString = 'Your estimated wait time is ';
 
-      if (!waitTimeKnown) {
-        remainingString += 'unavailable.'
-      } else {
-        if (waitTime === 1) {
-          remainingString += waitTime + ' minute...';
-        } else {
-          remainingString += waitTime + ' minutes...';
-        }
-      }
+  if (!waitTimeKnown) {
+    remainingString += 'unavailable.'
+  } else {
+    if (waitTime === 1) {
+      remainingString += waitTime + ' minute...';
+    } else {
+      remainingString += waitTime + ' minutes...';
+    }
+  }
 
-      remainingEl.innerText = remainingString;
-    </script>
+  remainingEl.innerText = remainingString;
+</script>
 ```
 
 ### Available variables
@@ -116,8 +113,8 @@ To preview the appearance of a waiting room:
 3.  Go to the **Review** step.
 4.  Click **Preview Waiting Room**:
 
-*   Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
-*   Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
+- Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
+- Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
 
 ## Troubleshooting
 

@@ -12,7 +12,7 @@ SoftHSMv2 should not be considered any more secure than storing private keys dir
 
 {{</Aside>}}
 
-***
+---
 
 ## 1. Install and configure SoftHSMv2
 
@@ -40,7 +40,7 @@ $ echo 'export SOFTHSM2_CONF=/etc/softhsm/softhsm2.conf' | tee -a ~/.profile
 $ source ~/.profile
 ```
 
-***
+---
 
 ## 2. Create a token and private keys, and generate CSRs
 
@@ -81,7 +81,7 @@ $ cfssl genkey csr.json | cfssljson -bare certificate
 2018/08/12 00:52:22 [INFO] encoded CSR
 ```
 
-***
+---
 
 ## 3. Convert and import the key
 
@@ -110,7 +110,7 @@ Private Key Object; RSA
   Usage:      sign
 ```
 
-***
+---
 
 ## 4. Modify your gokeyless config file and restart the service
 
@@ -120,7 +120,7 @@ Open up `/etc/keyless/gokeyless.yaml` and immediately after
 
 ```yaml
 private_key_stores:
-- dir: /etc/keyless/keys
+  - dir: /etc/keyless/keys
 ```
 
 add

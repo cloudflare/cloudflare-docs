@@ -8,9 +8,9 @@ weight: 6
 
 Use your certificate staging environment to test new custom (modern) certificates before pushing them to your production environment. This process helps you solve potential certificate problems **before** there's an incident, such as when:
 
-*   You make a mistake when uploading a new custom certificate.
-*   You misunderstand the order of your certificates.
-*   Clients have previously pinned your custom certificate, causing a TLS termination error.
+- You make a mistake when uploading a new custom certificate.
+- You misunderstand the order of your certificates.
+- Clients have previously pinned your custom certificate, causing a TLS termination error.
 
 {{<Aside type="note">}}
 
@@ -18,7 +18,7 @@ Staging environments are available only to Enterprise customers as part of an op
 
 {{</Aside>}}
 
-***
+---
 
 ## Use your staging environment
 
@@ -41,9 +41,9 @@ curl --resolve <HOSTNAME>:<STAGING_IP> https://<HOSTNAME> -iv
 
 You should confirm whether:
 
-*   TLS termination is successful.
-*   The right certificate is being served at the edge.
-*   Any clients are pinning the old certificate.
+- TLS termination is successful.
+- The right certificate is being served at the edge.
+- Any clients are pinning the old certificate.
 
 ### Step 3 — Push certificate to production
 
@@ -63,7 +63,7 @@ If you roll out a custom (modern) certificate to production and encounter issues
 2.  Click a custom certificate.
 3.  Click **Push to Staging**.
 
-***
+---
 
 ## Limitations
 
@@ -75,5 +75,5 @@ Currently, staging environments are only available to Enterprise customers parti
 
 At the moment, staging environments have limited functionality:
 
-*   Only custom (modern) certificates
-*   Only accessed via the dashboard
+- Only custom (modern) certificates
+- Only accessed via the dashboard

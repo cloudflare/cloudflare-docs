@@ -15,8 +15,8 @@ By default, Magic Firewall permits all traffic until explicitly blocked by a rul
 
 You have two options for configuring a security policy:
 
-*   Enforce a positive security model and only permit required traffic and block everything else.
-*   Begin with a minimal ruleset to block specific traffic and, by default, everything else is permitted.
+- Enforce a positive security model and only permit required traffic and block everything else.
+- Begin with a minimal ruleset to block specific traffic and, by default, everything else is permitted.
 
 Traffic is matched in order of the configured rules. As soon as traffic is matched by an enabled rule, it is no longer validated against the later rules, and traffic will pass through disabled rules. In the dashboard under **Magic Firewall**, rule order begins from the top and flows down your list of rules.
 
@@ -26,6 +26,6 @@ For best practices when configuring your security policy, refer to [Best practic
 
 ## Magic Firewall rules and Magic Transit endpoint health checks
 
-Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure.  If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
+Cloudflare-sourced traffic is also subject to the Magic Firewall rules you configure. If you block all ICMP traffic, you will also block Cloudflare's endpoint health checks. When blocking ICMP traffic, ensure your rules first allow ICMP sourced from Cloudflare public IPs to your prefix endpoint IPs before applying a block ICMP rule.
 
 For a list of Cloudflare's public IPs, refer to [IP Ranges](https://www.cloudflare.com/ips/).

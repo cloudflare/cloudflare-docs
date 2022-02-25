@@ -44,7 +44,7 @@ $ choco install hugo --confirm
 If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
 
 ```sh
-$ scoop install hugo 
+$ scoop install hugo
 ```
 
 ### Manual installation

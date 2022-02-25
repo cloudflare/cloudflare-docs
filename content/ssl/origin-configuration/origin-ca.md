@@ -14,7 +14,7 @@ Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cl
 For more background information on Origin CA certificates, see the <a href="https://blog.cloudflare.com/cloudflare-ca-encryption-origin/">introductory blog post</a>.
 {{</Aside>}}
 
-***
+---
 
 ## Deploy an Origin CA certificate
 
@@ -27,14 +27,14 @@ To create an Origin CA certificate in the dashboard:
 3.  Go to **SSL/TLS** > **Origin Server**.
 4.  Click **Create Certificate**.
 5.  Choose either:
-    *   **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
-    *   **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
+    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
+    - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
 6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
 7.  Choose the [expiration date](#expiration).
 8.  Click **Next**.
 9.  Choose the **Key Format**:
-    *   Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
-    *   Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
+    - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
+    - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
 10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
 11. Click **OK**.
 
@@ -48,24 +48,25 @@ To add an Origin CA certificate to your origin web server
 2.  Update your web server configuration:
 
      <details>
-     <summary>Configuration guides for popular servers</summary>
-     <div>
+ <summary>Configuration guides for popular servers</summary>
+ <div>
 
-    *   [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
-    *   [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
-    *   [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
-    *   [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
-    *   [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
-    *   [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-    *   [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
-    *   [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
-    *   [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
-    *   [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
+    - [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
+    - [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
+    - [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
+    - [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
+    - [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
+    - [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
+    - [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
+    - [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
+    - [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
+    - [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
     If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.
 
      </div>
-     </details>
+ </details>
+
 3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
 
@@ -84,8 +85,8 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
 
-*   [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem/) (do not use with Apache cPanel)
-*   [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem/)
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem/) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem/)
 
 ## Revoke an Origin CA certificate
 
@@ -118,35 +119,57 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 To automate processes involving Origin CA certificates, use the following API calls.
 
 <table style="width:100%">
-   <thead>
-        <tr>
-            <th>Operation</th>
-            <th>Method + URL stub</th>
-            <th>Notes</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#origin-ca-list-certificates'>List Certificates</a></td>
-            <td><code>GET&nbsp;certificates/:zone_id</code></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#origin-ca-create-certificate'>Create Certificate</a></td>
-            <td><code>POST&nbsp;certificates/:zone_id</code></td>
-            <td>See the API documentation for a full list of optional parameters, but some are also described in the <a href="#additional-details">Details</a> section of this page.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#origin-ca-get-certificate'>Get Certificate</a></td>
-            <td><code>GET&nbsp;certificates/:certificate_id</code></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#origin-ca-revoke-certificate'>Revoke Certificate</a></td>
-            <td><code>DELETE&nbsp;certificates/:certificate_id</code></td>
-            <td>Additional details and warnings in <a href="#revoke-an-origin-ca-certificate">Revoke an Origin CA certificate</a></td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Method + URL stub</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://api.cloudflare.com/#origin-ca-list-certificates">List Certificates</a>
+      </td>
+      <td>
+        <code>GET&nbsp;certificates/:zone_id</code>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://api.cloudflare.com/#origin-ca-create-certificate">Create Certificate</a>
+      </td>
+      <td>
+        <code>POST&nbsp;certificates/:zone_id</code>
+      </td>
+      <td>
+        See the API documentation for a full list of optional parameters, but some are also
+        described in the <a href="#additional-details">Details</a> section of this page.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://api.cloudflare.com/#origin-ca-get-certificate">Get Certificate</a>
+      </td>
+      <td>
+        <code>GET&nbsp;certificates/:certificate_id</code>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://api.cloudflare.com/#origin-ca-revoke-certificate">Revoke Certificate</a>
+      </td>
+      <td>
+        <code>DELETE&nbsp;certificates/:certificate_id</code>
+      </td>
+      <td>
+        Additional details and warnings in{' '}
+        <a href="#revoke-an-origin-ca-certificate">Revoke an Origin CA certificate</a>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Troubleshooting

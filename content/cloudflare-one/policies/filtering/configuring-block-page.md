@@ -91,17 +91,17 @@ If your users are seeing the following error when navigating to a blocked page, 
 
 You can customize the block page by making global changes that will show up every time a user navigates to a block page, independently of the type of rule (DNS or HTTP) that's blocking the website. These global customizations include:
 
-*   Adding your organization's name
-*   Adding a logo
-*   Adding a header text
-*   Adding a global block message
-*   Choosing a background color
+- Adding your organization's name
+- Adding a logo
+- Adding a header text
+- Adding a global block message
+- Choosing a background color
 
 All of these elements will display in addition to two fields specific to the policy that's blocking the website:
 
-*   **The policy-specific block message** you've specified while creating the policy. This message is displayed under your global block message, and above the Rule ID.
+- **The policy-specific block message** you've specified while creating the policy. This message is displayed under your global block message, and above the Rule ID.
 
-*   **The Rule ID**, which will make it easier for admins to debug possible policy issues in relation to blocked websites.
+- **The Rule ID**, which will make it easier for admins to debug possible policy issues in relation to blocked websites.
 
 To apply customizations to your block page, navigate to the **Block page** card under **Settings > General**.
 

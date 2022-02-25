@@ -10,7 +10,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 ## Pre-requisites
 
-*   A Cloudflare account
+- A Cloudflare account
 
 ## Start from the Cloudflare Dashboard
 

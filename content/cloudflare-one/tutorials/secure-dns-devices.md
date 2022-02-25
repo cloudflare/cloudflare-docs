@@ -11,9 +11,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 **🗺️ This tutorial covers how to:**
 
-*   Create a DNS filtering policy that secures devices by blocking malicious hostnames
-*   Apply that policy to devices on any network
-*   Enroll devices into a Cloudflare Gateway deployment
+- Create a DNS filtering policy that secures devices by blocking malicious hostnames
+- Apply that policy to devices on any network
+- Enroll devices into a Cloudflare Gateway deployment
 
 **⏲️ Time to complete:**
 
@@ -23,7 +23,7 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 1.  [Add Gateway to your account](/cloudflare-one/setup/)
 
-***
+---
 
 ## Create a DNS filtering policy
 

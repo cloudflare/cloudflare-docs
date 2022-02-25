@@ -24,11 +24,11 @@ To set up a generic OIDC:
 
 3.  Copy the content of these fields:
 
-    *   Client ID
-    *   Client secret
-    *   Auth URL: The `authorization_endpoint` URL of your IdP
-    *   Token URL: The token\_endpoint URL of your IdP
-    *   Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
+    - Client ID
+    - Client secret
+    - Auth URL: The `authorization_endpoint` URL of your IdP
+    - Token URL: The token_endpoint URL of your IdP
+    - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
 
     You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
 
@@ -50,14 +50,14 @@ On success, a confirmation screen displays.
 
 ```json
 {
-	"config": {
-		"client_id": "<your client id>",
-		"client_secret": "<your client secret>",
-		"auth_url": "https://accounts.google.com/o/oauth2/auth",
-		"token_url": "https://accounts.google.com/o/oauth2/token",
-		"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-	},
-	"type": "oidc",
-	"name": "Generic Google"
+  "config": {
+    "client_id": "<your client id>",
+    "client_secret": "<your client secret>",
+    "auth_url": "https://accounts.google.com/o/oauth2/auth",
+    "token_url": "https://accounts.google.com/o/oauth2/token",
+    "certs_url": "https://www.googleapis.com/oauth2/v3/certs"
+  },
+  "type": "oidc",
+  "name": "Generic Google"
 }
 ```

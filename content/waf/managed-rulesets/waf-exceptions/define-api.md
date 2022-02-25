@@ -47,10 +47,7 @@ Example of rule definition:
   "expression": "<RULE_EXPRESSION>",
   "action": "skip",
   "action_parameters": {
-    "rulesets": [
-      "{waf-managed-ruleset-id-1}",
-      "{waf-managed-ruleset-id-2}"
-    ]
+    "rulesets": ["{waf-managed-ruleset-id-1}", "{waf-managed-ruleset-id-2}"]
   }
 }
 ```

@@ -26,7 +26,7 @@ You can share your load balancer with other sites in your account by [creating a
 
 You can also configure separate load balancers for each domain and reuse monitors and pools. This is especially useful for changing the failover order for different domains, such as when your `example.co.uk` server has a different failover priority from `example.com` or `example.com.au`.
 
-***
+---
 
 ## Edit a load balancer
 
@@ -43,7 +43,7 @@ To edit a load balancer in the dashboard:
 
 To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://api.cloudflare.com/#load-balancers-update-load-balancer) request.
 
-***
+---
 
 ## Delete a load balancer
 

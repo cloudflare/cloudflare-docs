@@ -14,8 +14,8 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 **🗺️ This walkthrough covers how to:**
 
-*   Create a list of approved countries where a team operates
-*   Require that users connecting to self-hosted or SaaS applications connect from those countries
+- Create a list of approved countries where a team operates
+- Require that users connecting to self-hosted or SaaS applications connect from those countries
 
 **⏲️ Time to complete:**
 

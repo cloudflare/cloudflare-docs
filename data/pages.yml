@@ -18,7 +18,7 @@ meta:
   title: Cloudflare Pages docs
   description: Documentation for Cloudflare Pages, the best way to deploy your
     static and JAMstack sites
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:

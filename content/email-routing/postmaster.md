@@ -22,7 +22,7 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 `104.30.0.0/20`
 
-*Ranges last updated: December 7, 2021*
+_Ranges last updated: December 7, 2021_
 
 ## Outbound hostnames
 
@@ -33,7 +33,7 @@ PTR records (reverse DNS) ensure that each hostname has an corresponding IP. For
 ```sh
 $ dig a0-7.email.cloudflare.net +short
 104.30.0.7
- 
+
 $ dig -x 104.30.0.7 +short
 a0-7.email.cloudflare.net.
 ```
@@ -46,7 +46,7 @@ Email Routing automatically adds a few DNS records to the zone when our customer
 example.com. 300 IN MX 13 amir.mx.cloudflare.net.
 example.com. 300 IN MX 86 linda.mx.cloudflare.net.
 example.com. 300 IN MX 24 isaac.mx.cloudflare.net.
- 
+
 example.com. 300 IN TXT "v=spf1 include:_spf.mx.cloudflare.net ~all"
 ```
 
@@ -66,9 +66,9 @@ v=spf1 include:_spf.mx.cloudflare.net ~all
 
 In the example above:
 
-*   `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
-*   `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
-*   `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
+- `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
+- `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
+- `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
 
 If we do a TXT query to `_spf.mx.cloudflare.net`, we get:
 
@@ -78,8 +78,8 @@ _spf.mx.cloudflare.net. 300 IN TXT "v=spf1 ip4:104.30.0.0/20 ~all"
 
 This response means:
 
-*   Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
-*   Otherwise, `SoftFail`.
+- Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
+- Otherwise, `SoftFail`.
 
 You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and Phishing](https://blog.cloudflare.com/tackling-email-spoofing/) blog.
 
@@ -95,7 +95,7 @@ Below is the DKIM key for `email.cloudflare.net`:
 
 ```sh
 $ dig TXT 2022._domainkey.email.cloudflare.net +short
- 
+
 "v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnraPy1d8e6+lzeE1HIoUvYWoAOUSREkNHcwxA/ueVM8f6FKXvPu/9gVpgkn8iUyaCfk2z1MW+OVLuFeH64YRMa39mkaQalgke2tZ05SnjRUtYEHYvfrqPuMT+Ouk+GecpgvrtMq5gMXm6ZfeUhQkdWxmMQJGf4fdW5I0piUQJMhK/Qc1dNRSskk" "TiUtXKnsEdjTN2xcnHhyj985S0xOEAxm9Uj1rykPqVvKpqEdjUkujbXOwR0KmHTvPyFpBjCCfxAVqOwwo9zBYuvk/nh0qlDgLIpy0SimrYhNFCq2XBxIj4tdUzIl7qZ5Ck6zLCQ+rjzJ4sm/zA+Ov9kDkbcmyrwIDAQAB"
 ```
 
@@ -111,10 +111,10 @@ This has no effect to the end user's experience, though. The message headers wil
 
 Handling spam and abusive traffic is essential to any email provider. Below is a list of how Email Routing tackles this issue:
 
-*   Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
-*   Email Routing rejects emails whose SPF validation fails.
-*   Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
-*   Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
+- Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
+- Email Routing rejects emails whose SPF validation fails.
+- Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
+- Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
 ## SMTP errors
 
@@ -122,4 +122,4 @@ In most cases, Email Routing simply forwards the upstream SMTP errors back to th
 
 ## Contact information
 
-The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas\&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).

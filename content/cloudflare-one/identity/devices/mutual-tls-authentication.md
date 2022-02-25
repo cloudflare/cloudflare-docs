@@ -11,8 +11,8 @@ weight: 5
 <div>
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | --------- | ---- |
-| All systems | WARP not required | Enterprise plans |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP not required                                                                         | Enterprise plans                                              |
 
 </div>
 </details>
@@ -61,14 +61,14 @@ If your zone is using an intermediate certificate in addition to the root certif
 
 7.  Create a new (or amend an existing) policy that will enforce mTLS authentication.
 
-The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
+The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for _Rule Action_. In the Include rule, you can pick from two options for mTLS authentication or both.
 
 ![mTLS Policy](/cloudflare-one/static/documentation/identity/devices/create-mtls-rule.png)
 
-|Option|Result|
-|-|-|
-|**Common Name**|Only client certificates with a specific common name will be allowed to proceed.|
-|**Valid Certificate**|Any client certificate that can authenticate with the Root CA will be allowed to proceed.|
+| Option                | Result                                                                                    |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| **Common Name**       | Only client certificates with a specific common name will be allowed to proceed.          |
+| **Valid Certificate** | Any client certificate that can authenticate with the Root CA will be allowed to proceed. |
 
 8.  Save the rule.
 
@@ -115,7 +115,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
 2.  Within that directory, create two new files:
 
-*   **CSR**. Create a file named `ca-csr.json` and add the following JSON blob, then save the file.
+- **CSR**. Create a file named `ca-csr.json` and add the following JSON blob, then save the file.
 
 ```json
 {
@@ -136,7 +136,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 }
 ```
 
-*   **config**. Create a file named `ca-config.json` and add the following JSON blob, then save the file.
+- **config**. Create a file named `ca-config.json` and add the following JSON blob, then save the file.
 
 ```json
 {
@@ -150,7 +150,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
         "expiry": "8760h"
       },
       "client": {
-        "usages": ["signing","key encipherment","client auth"],
+        "usages": ["signing", "key encipherment", "client auth"],
         "expiry": "8760h"
       }
     }
@@ -231,7 +231,7 @@ $ open client.pem
 $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
 ```
 
-2.  Click on the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in *My Certificates*.
+2.  Click on the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in _My Certificates_.
 
 ### Creating a CRL
 

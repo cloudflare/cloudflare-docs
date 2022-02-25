@@ -16,7 +16,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 {{</Aside>}}
 
-***
+---
 
 ## Step 1 — Add your domain to Cloudflare
 
@@ -42,13 +42,13 @@ Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare)
 
 That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
-***
+---
 
 ## Optional — Provision an SSL certificate
 
 To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains).
 
-***
+---
 
 ## Step 3 — Add DNS records
 
@@ -60,8 +60,8 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
     2.  Add a **CNAME** record for `{your-hostname}.cdn.cloudflare.net`.
 
          <details>
-         <summary>Example</summary>
-         <div>
+ <summary>Example</summary>
+ <div>
 
         The CNAME record for `www.example.com` would be:
 
@@ -70,6 +70,6 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
         ```
 
          </div>
-         </details>
+ </details>
 
     3.  Repeat this process for each subdomain proxied to Cloudflare.

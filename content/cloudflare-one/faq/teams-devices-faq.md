@@ -12,9 +12,9 @@ weight: 6
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-*   Sometimes your nearest colo might be having problems, although we work hard to prevent it. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
-*   Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
-*   Not all Cloudflare data centers are WARP-enabled. We are constantly evaluating performance and how users are connecting, bringing more colos online with WARP all the time.
+- Sometimes your nearest colo might be having problems, although we work hard to prevent it. Check [here](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for system status.
+- Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
+- Not all Cloudflare data centers are WARP-enabled. We are constantly evaluating performance and how users are connecting, bringing more colos online with WARP all the time.
 
 ## Why is my public IP address sometimes visible?
 
@@ -39,7 +39,7 @@ Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/c
 
 In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
-If you ever see an error like *Certificate not trusted* or *Not trusted identity* or *SSL Error*, it is likely related to our root certificates.
+If you ever see an error like _Certificate not trusted_ or _Not trusted identity_ or _SSL Error_, it is likely related to our root certificates.
 
 As a last resort, add the application to a **Do Not Decrypt** policy in Gateway.
 
@@ -65,11 +65,11 @@ Running VPNs or firewalls alongside the WARP client may interfere with some of i
 
 The most common places we see interference with WARP from these products are:
 
-*   **Control of the routing table:** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
+- **Control of the routing table:** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
 
-*   **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
+- **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
-*   If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 

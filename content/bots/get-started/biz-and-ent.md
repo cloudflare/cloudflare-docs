@@ -10,10 +10,10 @@ meta:
 
 Super Bot Fight Mode is included in your Business or Enterprise subscription. When enabled, the product:
 
-*   Identifies traffic matching patterns of known bots and likely bots
-*   Can challenge or block bots
-*   Offers protection for static resources
-*   Provides robust analytics to help you understand bot traffic
+- Identifies traffic matching patterns of known bots and likely bots
+- Can challenge or block bots
+- Offers protection for static resources
+- Provides robust analytics to help you understand bot traffic
 
 {{<Aside>}}
 

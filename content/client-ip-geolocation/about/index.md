@@ -26,7 +26,7 @@ If a VPN user tries to use an interposed VPN or proxy system that attempts to hi
 
 ## Technical explanation
 
-We map our egress IP addresses for our forward-proxy offerings to specific geolocations and continuously share this information with major geolocation database providers like *MaxMind*, *IP 2 Location*, and *Neustar*.
+We map our egress IP addresses for our forward-proxy offerings to specific geolocations and continuously share this information with major geolocation database providers like _MaxMind_, _IP 2 Location_, and _Neustar_.
 
 When Cloudflare receives an inbound request from a WARP or 1.1.1.1 user, we first geolocate the IP address that made the connection to Cloudflare. Then, we select an egress IP that maps to the client geolocation. We then discard Client IP information to preserve user privacy but return their true geographic location.
 

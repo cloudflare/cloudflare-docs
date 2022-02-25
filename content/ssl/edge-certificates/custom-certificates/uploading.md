@@ -10,20 +10,20 @@ weight: 2
 
 Certificates are parsed and checked for validity before being accepted. Each certificate uploaded must:
 
-*   Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
-*   Not have a [key file password](/ssl/remove-file-key-password/).
-*   Not be expiring in less than 14 days from time of upload.
-*   Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
-*   Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
-*   Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
-*   Be one of the following certificate types:
+- Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
+- Not have a [key file password](/ssl/remove-file-key-password/).
+- Not be expiring in less than 14 days from time of upload.
+- Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
+- Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
+- Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
+- Be one of the following certificate types:
 
-    *   Unified Communications Certificates (UCC)
-    *   Extended Validation (EV)
-    *   Domain Validated (DV)
-    *   Organization Validated (OV)
+  - Unified Communications Certificates (UCC)
+  - Extended Validation (EV)
+  - Domain Validated (DV)
+  - Organization Validated (OV)
 
-***
+---
 
 ## Upload a custom certificate
 
@@ -41,9 +41,10 @@ To upload a custom SSL certificate in the dashboard:
 
 5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
 
-     {{<Aside type="note">}}
-If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
-     {{</Aside>}}
+         {{<Aside type="note">}}
+
+    If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
+    {{</Aside>}}
 
 6.  Choose the appropriate [**Bundle Method**](/ssl/bundling-methodologies/).
 
@@ -51,14 +52,14 @@ If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIF
 
 8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](/fundamentals/glossary#server-name-indication-sni) support:
 
-    *   **Modern (recommended)**: SNI only
-    *   **Legacy**: Supports non-SNI
+    - **Modern (recommended)**: SNI only
+    - **Legacy**: Supports non-SNI
 
 9.  Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
 10. (optional) [Add a CAA DNS record](/ssl/caa-records/).
 
-***
+---
 
 ### Using the API
 

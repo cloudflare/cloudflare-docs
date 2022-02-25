@@ -58,7 +58,7 @@ ingress:
     path: /*.(jpg|png|css|js)
     service: https://localhost:8001
   # Rules can match the request's hostname to a wildcard character:
-  - hostname: "*.example.com"
+  - hostname: '*.example.com'
     service: https://localhost:8002
   # An example of a catch-all rule:
   - service: https://localhost:8003
@@ -68,7 +68,7 @@ ingress:
 
 In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. See a [list of supported protocols](/cloudflare-one/applications/non-http/).
 
-You can also route traffic to the built-in *Hello World* test server. This is useful when you need to test your Cloudflare Tunnel protocol.
+You can also route traffic to the built-in _Hello World_ test server. This is useful when you need to test your Cloudflare Tunnel protocol.
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -90,16 +90,16 @@ ingress:
 
 With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
 
-| Service | Description | Example `service` value |
-|--|--|--|--|
-| HTTP/S | Incoming HTTP requests are proxied directly to your local service. | `https://localhost:8000` |
-| HTTP/S over Unix socket | Just like HTTP/S, but using a Unix socket instead. | `unix:/home/production/echo.sock` |
-| TCP | TCP connections are proxied to your local service. | `tcp://localhost:2222` |
-| SSH | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22` |
-| RDP | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389` |
-| kubectl bastion mode | `cloudflared` will act like a jumphost, allowing access to any local address. | `bastion` |
-| Hello World | Test server for validating your Cloudflare Tunnel setup. | `hello_world` |
-| HTTP status | Responds to all requests with the given HTTP status. | `http_status:404` |
+| Service                 | Description                                                                                      | Example `service` value           |
+| ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------- |
+| HTTP/S                  | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`          |
+| HTTP/S over Unix socket | Just like HTTP/S, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
+| TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
+| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22`              |
+| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`            |
+| kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
+| Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
+| HTTP status             | Responds to all requests with the given HTTP status.                                             | `http_status:404`                 |
 
 ## Origin configuration
 
@@ -131,22 +131,22 @@ ingress:
   - service: http_status:404
 ```
 
-To set both top-level configurations and origin-specific configurations, you can use the following properties within  `originRequest` rules:
+To set both top-level configurations and origin-specific configurations, you can use the following properties within `originRequest` rules:
 
-*   [connectTimeout](#connecttimeout)
-*   [tlsTimeout](#tlstimeout)
-*   [tcpKeepAlive](#tcpkeepalive)
-*   [noHappyEyeballs](#nohappyeyeballs)
-*   [keepAliveConnections](#keepaliveconnections)
-*   [keepAliveTimeout](#keepalivetimeout)
-*   [httpHostHeader](#httphostheader)
-*   [originServerName](#originservername)
-*   [caPool](#capool)
-*   [noTLSVerify](#notlsverify)
-*   [disableChunkedEncoding](#disablechunkedencoding)
-*   [proxyAddress](#proxyaddress)
-*   [proxyPort](#proxyport)
-*   [proxyType](#proxyyype)
+- [connectTimeout](#connecttimeout)
+- [tlsTimeout](#tlstimeout)
+- [tcpKeepAlive](#tcpkeepalive)
+- [noHappyEyeballs](#nohappyeyeballs)
+- [keepAliveConnections](#keepaliveconnections)
+- [keepAliveTimeout](#keepalivetimeout)
+- [httpHostHeader](#httphostheader)
+- [originServerName](#originservername)
+- [caPool](#capool)
+- [noTLSVerify](#notlsverify)
+- [disableChunkedEncoding](#disablechunkedencoding)
+- [proxyAddress](#proxyaddress)
+- [proxyPort](#proxyport)
+- [proxyType](#proxyyype)
 
 ### connectTimeout
 
@@ -236,8 +236,8 @@ Default: `""`
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures what type of proxy will be started. Valid options are:
 
-*   `""` for the regular proxy
-*   `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/cloudflare-one/tutorials/kubectl/) for more information.
+- `""` for the regular proxy
+- `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/cloudflare-one/tutorials/kubectl/) for more information.
 
 ## Validating your configuration
 

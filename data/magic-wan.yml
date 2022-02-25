@@ -17,7 +17,7 @@ meta:
   description: Magic WAN replaces legacy WAN architectures with Cloudflare’s
     network, providing global connectivity, cloud-based security, performance,
     and control through one simple user interface.
-  author: "@cloudflare"
+  author: '@cloudflare'
   image: /cf-twitter-card.png
 
 algolia:
@@ -28,7 +28,7 @@ algolia:
 externals:
   - title: Magic WAN home
     url: https://www.cloudflare.com/magic-wan/
-  - title: "Blog: Magic WAN & Magic Firewall"
+  - title: 'Blog: Magic WAN & Magic Firewall'
     url: https://blog.cloudflare.com/magic-wan-firewall/
   - title: Cloudflare homepage
     url: https://cloudflare.com

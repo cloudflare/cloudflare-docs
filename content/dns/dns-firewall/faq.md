@@ -47,7 +47,7 @@ When EDNS is enabled, the DNS Firewall gives out the geographically correct answ
 
 1.  A resolver says it is looking for an answer for client `192.0.2.0/24`.
 2.  The DNS Firewall will proxy the request to the origin for the answer.
-3.  The DNS Firewall  will cache the answer from the origin, but only for that `/24`.
+3.  The DNS Firewall will cache the answer from the origin, but only for that `/24`.
 4.  `203.0.113.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
 
 {{<Aside type="note">}}

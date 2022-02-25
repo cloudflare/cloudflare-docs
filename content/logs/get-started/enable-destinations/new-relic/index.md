@@ -48,29 +48,30 @@ Once connected, Cloudflare lists New Relic as a connected service under **Logs**
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-*   **name** (optional) - Use your domain name as the job name.
+- **name** (optional) - Use your domain name as the job name.
 
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration#options).
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration#options).
 
-    {{<Aside type="note" header="Note">}}
-In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
-    {{</Aside>}}
+      {{<Aside type="note" header="Note">}}
 
-*   **destination\_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
+  In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
+  {{</Aside>}}
 
-    *   `<NR_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
-    *   `<NR_LICENSE_KEY>`: This key can be found on the New Relic dashboard and it can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
-    *   `format`: The format is `cloudflare`.
+- **destination_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
 
-        US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+  - `<NR_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
+  - `<NR_LICENSE_KEY>`: This key can be found on the New Relic dashboard and it can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
+  - `format`: The format is `cloudflare`.
 
-        EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+    US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
-*   **max\_upload\_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
+    EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
-*   **max\_upload\_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
+- **max_upload_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields) for the full list of supported datasets.
+- **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
+
+- **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields) for the full list of supported datasets.
 
 Example request using cURL:
 

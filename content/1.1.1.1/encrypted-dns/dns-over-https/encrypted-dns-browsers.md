@@ -23,7 +23,7 @@ Some browsers might already have this setting enabled.
 1.  Click the three-dot menu in your browser > **Settings**.
 2.  Click **Privacy and security** > **Security**.
 3.  Scroll down and enable **Use secure DNS**.
-4.  Click the **With** option, and from the drop-down menu choose *Cloudflare (1.1.1.1)*.
+4.  Click the **With** option, and from the drop-down menu choose _Cloudflare (1.1.1.1)_.
 
 ## Microsoft Edge
 
@@ -31,14 +31,14 @@ Some browsers might already have this setting enabled.
 2.  Click **Privacy, Search, and Services**, and scroll down to **Security**.
 3.  Enable **Use secure DNS**.
 4.  Click **Choose a service provider**.
-5.  Click the **Enter custom provider** drop-down menu and choose *Cloudflare (1.1.1.1)*.
+5.  Click the **Enter custom provider** drop-down menu and choose _Cloudflare (1.1.1.1)_.
 
 ## Brave
 
 1.  Click the menu button in your browser > **Settings**.
 2.  Click **Security and Privacy** > **Security**.
 3.  Enable **Use secure DNS**.
-4.  Click **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
+4.  Click **With Custom** and choose _Cloudflare (1.1.1.1)_ as a service provider from the drop-down menu.
 
 ## How to check if browser is configured correctly
 

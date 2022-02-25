@@ -8,7 +8,7 @@ weight: 5
 
 Cloudflare may issue certificates for SSL products from any of the following Certificate Authorities (CAs):
 
-*   DigiCert
-*   GlobalSign
-*   Let’s Encrypt
-*   Sectigo (formerly Comodo)
+- DigiCert
+- GlobalSign
+- Let’s Encrypt
+- Sectigo (formerly Comodo)

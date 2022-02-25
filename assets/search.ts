@@ -11,7 +11,7 @@ function loaded() {
     indexName: index,
     apiKey: key,
     algoliaOptions: {
-      facetFilters: filters || ''
+      facetFilters: filters || '',
     },
 
     inputSelector: '#' + element.id,
@@ -26,7 +26,7 @@ function loaded() {
       appendTo: '.' + element.parentNode.className,
       hint: false,
 
-      autoselectOnBlur: matchMedia('(pointer: course)').matches
+      autoselectOnBlur: matchMedia('(pointer: course)').matches,
     },
 
     // https://docsearch.algolia.com/docs/behavior
@@ -45,13 +45,13 @@ function loaded() {
 
     transformData(hits) {
       // Remove empty results
-      for (let len = hits.length; len-- > 0;) {
+      for (let len = hits.length; len-- > 0; ) {
         let info = hits[len].hierarchy;
         if (!info.lvl0 && !info.lvl1) {
           hits.splice(len, 1);
         }
       }
-    }
+    },
   });
 
   let input = algolia.input[0];

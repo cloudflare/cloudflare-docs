@@ -10,11 +10,11 @@ meta:
 
 [Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/) use two kinds of expressions:
 
-*   [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (*equals* or *less than*, for example).
+- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (_equals_ or _less than_, for example).
 
-*   [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (*and*, *or*, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
+- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
 
-***
+---
 
 ## Simple expressions
 
@@ -40,16 +40,16 @@ In general, simple expressions use this pattern:
 
 For more details, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/).
 
-***
+---
 
 ## Compound expressions
 
-A compound expression uses a **logical operator** (*and*, *or*, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
+A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
 The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
 
 ```sql
-(http.request.uri.path contains "/content") 
+(http.request.uri.path contains "/content")
 and (http.request.uri.query contains "webserver")
 ```
 
@@ -63,7 +63,7 @@ A compound expression can be an operand of a logical operator. This allows multi
 
 For more details, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/).
 
-***
+---
 
 ## Working with expressions
 
@@ -82,7 +82,7 @@ This Expression Builder screenshot shows the example compound expression describ
 The **Expression Preview** displays the expression in text:
 
 ```sql
-(http.request.uri.path contains "/content") 
+(http.request.uri.path contains "/content")
 and (http.request.uri.query contains "webserver")
 ```
 

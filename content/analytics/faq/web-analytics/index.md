@@ -35,9 +35,9 @@ If you used a [manual setup] instead, only those pages that render the JS snippe
 
 Since only one JS snippet can be rendered and used per page, you cannot have multiple snippets on the same page.
 
-{{</Aside>}} 
+{{</Aside>}}
 
-***
+---
 
 ## Setup
 
@@ -73,7 +73,7 @@ No, you can only use the [automatic setup] with JS snippet injection if traffic 
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
 
-***
+---
 
 ## Functionality
 
@@ -105,5 +105,4 @@ Not yet, but we may add support for this in the future.
 Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
 
 [manual setup]: /web-analytics/getting-started#sites-not-proxied-through-cloudflare
-
 [automatic setup]: /web-analytics/getting-started#sites-proxied-through-cloudflare

@@ -12,7 +12,7 @@ meta:
 
 For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
 
-***
+---
 
 ## Create a pool
 
@@ -24,7 +24,7 @@ For more background information on pools, refer to [Origin pools](/load-balancin
 
 {{<render file="_pool-create-api.md">}}
 
-***
+---
 
 ## Edit a pool
 
@@ -42,7 +42,7 @@ To edit a pool in the dashboard:
 
 To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request. For broader changes, use a [PUT](https://api.cloudflare.com/#account-load-balancer-pools-update-pool) request.
 
-***
+---
 
 ## Delete a pool
 

@@ -82,9 +82,10 @@ Your list is now ready to be referenced by Gateway HTTP policies.
     ![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
 
 3.  Set the expression to:
-    *   Selector: `Host`
-    *   Operator: `In List`
-    *   Value: your newly created list name.
+
+    - Selector: `Host`
+    - Operator: `In List`
+    - Value: your newly created list name.
 
 4.  Set the Action to `Block`.
 

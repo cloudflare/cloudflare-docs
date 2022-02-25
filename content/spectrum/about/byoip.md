@@ -26,9 +26,7 @@ To use an IP, it must be assigned to a Spectrum app to create the appropriate A 
     "type": "ADDRESS",
     "name": "ssh.example.com"
   },
-  "origin_direct": [
-    "tcp://192.0.2.1:22"
-  ],
+  "origin_direct": ["tcp://192.0.2.1:22"],
   "ip_firewall": true,
   "proxy_protocol": false,
   "spp": false,
@@ -36,10 +34,7 @@ To use an IP, it must be assigned to a Spectrum app to create the appropriate A 
   "traffic_type": "direct",
   "edge_ips": {
     "type": "static",
-    "ips": [
-      "198.51.100.10",
-      "2001:DB8::1"
-    ]
+    "ips": ["198.51.100.10", "2001:DB8::1"]
   }
 }
 ```
@@ -74,4 +69,4 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
     }'
 ```
 
-(replace ZONEID, USER\_EMAIL and API\_KEY with your actual values)
+(replace ZONEID, USER_EMAIL and API_KEY with your actual values)

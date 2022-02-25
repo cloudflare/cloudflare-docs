@@ -33,9 +33,9 @@ Directives can be broken down into four groups: cacheability, expiration, revali
 
 Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource’s cacheability.
 
-*   `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
-*   `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
-*   `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
+- `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
+- `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
+- `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
 
 ### Expiration
 
@@ -49,20 +49,20 @@ When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to c
 
 {{</Aside>}}
 
-*   `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
-*   `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
-*   `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
+- `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
+- `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
+- `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 
-Ensure the HTTP `Expires` header is set in your origin server to use Greenwich Mean Time (GMT) as stipulated in [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3 "3.3.1 Full Date").
+Ensure the HTTP `Expires` header is set in your origin server to use Greenwich Mean Time (GMT) as stipulated in [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3 '3.3.1 Full Date').
 
 ### Revalidation
 
 Revalidation determines how the cache should behave when a resource expires, and the directives below affect the revalidation behavior.
 
-*   `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
-*   `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-*   `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/about/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
-*   `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
+- `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
+- `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
+- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/about/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
+- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
 
 The `stale-if-error` directive is ignored if [Always Online](/cache/about/always-online/) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 
@@ -70,9 +70,9 @@ The `stale-if-error` directive is ignored if [Always Online](/cache/about/always
 
 Additional directives that influence cache behavior are listed below.
 
-*   `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload
-*   `vary` — Cloudflare does not consider vary values in caching decisions.
-*   `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
+- `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload
+- `vary` — Cloudflare does not consider vary values in caching decisions.
+- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Origin Cache-Control behavior
 
@@ -130,7 +130,8 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Caches if headers mentioned in <code>no-cache=#headers</code> do not exist. Always revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
+        Caches if headers mentioned in <code>no-cache=#headers</code> do not exist. Always
+        revalidates if any header mentioned in <code>no-cache=#headers</code> is present.
       </td>
     </tr>
     <tr>
@@ -141,7 +142,8 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code> directive.
+        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code>{' '}
+        directive.
       </td>
     </tr>
     <tr>
@@ -198,7 +200,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
       <td colspan="5" rowspan="1">
         Proxied downstream. Browser facing, does not impact caching proxies.
       </td>
-    </tr>                
+    </tr>
   </tbody>
 </table>
 
@@ -223,7 +225,8 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
         Content may be cached
       </td>
       <td colspan="5" rowspan="1">
-        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
+        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or{' '}
+        <code>s-maxage</code> is also present
       </td>
     </tr>
     <tr>
@@ -258,7 +261,7 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
       <td colspan="5" rowspan="1">
         If origin returns <code>private</code> in Cache-Control then preserve it
       </td>
-    </tr>             
+    </tr>
   </tbody>
 </table>
 
@@ -267,57 +270,46 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
 Review the examples below to learn which directives to use with the Cache-Control header to control specific caching behavior.
 
 <details>
-  <summary>
-    Cache a static asset
-  </summary>
-    <div>
-      <code>Cache-Control: public, max-age=86400</code>
-    </div>
+  <summary>Cache a static asset</summary>
+  <div>
+    <code>Cache-Control: public, max-age=86400</code>
+  </div>
 </details>
 
 <details>
-  <summary>
-    Ensure a secret asset is never cached
-  </summary>
-    <div>
-      <code>Cache-Control: no-store</code>
-    </div>
+  <summary>Ensure a secret asset is never cached</summary>
+  <div>
+    <code>Cache-Control: no-store</code>
+  </div>
 </details>
 
 <details>
-  <summary>
-    Cache assets on browsers but not on proxy caches
-  </summary>
-    <div>
-      <code>Cache-Control: private, max-age=3600</code>
-    </div>
+  <summary>Cache assets on browsers but not on proxy caches</summary>
+  <div>
+    <code>Cache-Control: private, max-age=3600</code>
+  </div>
 </details>
 
 <details>
-  <summary>
-    Cache assets in client and proxy caches, but prefer revalidation when served
-  </summary>
-    <div>
-      <code>Cache-Control: public, no-cache</code>
-    </div>
+  <summary>Cache assets in client and proxy caches, but prefer revalidation when served</summary>
+  <div>
+    <code>Cache-Control: public, no-cache</code>
+  </div>
 </details>
 
 <details>
-  <summary>
-    Cache assets in proxy caches but REQUIRE revalidation by the proxy when served
-  </summary>
-    <div>
-      <code>Cache-Control: public, no-cache, proxy-revalidate</code> or <code>Cache-Control: public, s-maxage=0</code>
-    </div>
+  <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
+  <div>
+    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or{' '}
+    <code>Cache-Control: public, s-maxage=0</code>
+  </div>
 </details>
 
 <details>
-  <summary>
-    Cache assets in proxy caches, but REQUIRE revalidation by any cache when served
-  </summary>
-    <div>
-      <code>Cache-Control: public, no-cache, must-revalidate</code>
-    </div>
+  <summary>Cache assets in proxy caches, but REQUIRE revalidation by any cache when served</summary>
+  <div>
+    <code>Cache-Control: public, no-cache, must-revalidate</code>
+  </div>
 </details>
 
 <details>
@@ -348,9 +340,9 @@ With this configuration, Cloudflare attempts to revalidate the content with the 
   <summary>
     Cache assets for different amounts of time on Cloudflare and in visitor browsers
   </summary>
-    <div>
-      <code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
-    </div>
+  <div>
+    <code>Cache-Control: public, max-age=7200, s-maxage=3600</code>
+  </div>
 </details>
 
 <details>

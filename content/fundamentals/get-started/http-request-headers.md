@@ -104,4 +104,4 @@ You can add `CF-Worker` header on server logs similar to the way you add the [`C
 
 ## Related resources
 
-*   [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786)
+- [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786)

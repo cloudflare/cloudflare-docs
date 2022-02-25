@@ -12,16 +12,16 @@ For more details on API tokens and the full range of supported options, refer to
 
 To create an API token for authentication to the GraphQL Analytics API, use this workflow:
 
-*   [Access the Create API Token page](#access-the-create-api-token-page)
-*   [Configure a custom API token](#configure-a-custom-api-token)
-*   [Review and create your API token](#review-and-create-your-api-token)
-*   [Copy and test your API token](#copy-and-test-your-api-token)
+- [Access the Create API Token page](#access-the-create-api-token-page)
+- [Configure a custom API token](#configure-a-custom-api-token)
+- [Review and create your API token](#review-and-create-your-api-token)
+- [Copy and test your API token](#copy-and-test-your-api-token)
 
 ## Access the Create API Token page
 
 To access the **Create Custom Token** page, follow these steps:
 
-1.  Log in to your Cloudflare account and select *My Profile* from the user account drop-down list.
+1.  Log in to your Cloudflare account and select _My Profile_ from the user account drop-down list.
 
 ![User account drop-down list](/analytics/static/images/account-profile.png)
 
@@ -41,7 +41,7 @@ The next section of this walkthrough shows you how to configure a custom token f
 
 To configure a custom token, follow these steps:
 
-1.  Click **Get started** in the **Custom token** section of the  **Create API Token** page:
+1.  Click **Get started** in the **Custom token** section of the **Create API Token** page:
 
 ![Create API Token page](/analytics/static/images/create-api-token-get-started.png)
 
@@ -51,7 +51,7 @@ The **Create Custom Token** page displays:
 
 1.  Enter a descriptive name for your token in the **Token name** text input field.
 
-2.  To configure access to the GraphQL Analytics API, use the **Permissions** drop-down lists. To set permissions for the GraphQL Analytics API, select *Analytics* from the second drop-down list.
+2.  To configure access to the GraphQL Analytics API, use the **Permissions** drop-down lists. To set permissions for the GraphQL Analytics API, select _Analytics_ from the second drop-down list.
 
 This example scopes zone-level permissions for read access to the Analytics API:
 

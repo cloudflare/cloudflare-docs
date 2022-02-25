@@ -19,7 +19,7 @@ This individualized zone cache object differs from Cloudflare’s Global CDN. Fo
 
 {{</Aside>}}
 
-***
+---
 
 ## Accessing Cache
 
@@ -37,7 +37,7 @@ let myCache = await caches.open('custom:cache');
 await myCache.match(request);
 ```
 
-***
+---
 
 ## Headers
 
@@ -45,16 +45,16 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 {{<definitions>}}
 
-*   `Cache-Control`
-    *   Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
-*   `Cache-Tag`
-    *   Allows resource purging by tag(s) later (Enterprise only).
-*   `ETag`
-    *   Allows `cache.match()` to evaluate conditional requests with `If-None-Match`.
-*   `Expires` {{<type>}}string{{</type>}}
-    *   A string that specifies when the resource becomes invalid.
-*   `Last-Modified`
-    *   Allows `cache.match()` to evaluate conditional requests with `If-Modified-Since`.
+- `Cache-Control`
+  - Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
+- `Cache-Tag`
+  - Allows resource purging by tag(s) later (Enterprise only).
+- `ETag`
+  - Allows `cache.match()` to evaluate conditional requests with `If-None-Match`.
+- `Expires` {{<type>}}string{{</type>}}
+  - A string that specifies when the resource becomes invalid.
+- `Last-Modified`
+  - Allows `cache.match()` to evaluate conditional requests with `If-Modified-Since`.
 
 {{</definitions>}}
 
@@ -68,21 +68,21 @@ Use the `Cache-Control` method to store the response without the `Set-Cookie` he
 
 {{</Aside>}}
 
-***
+---
 
 ## Methods
 
 ### Put
 
 ```js
-cache.put(request, response)
+cache.put(request, response);
 ```
 
 {{<definitions>}}
 
-*   {{<code>}}put(request, response){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}put(request, response){{</code>}} {{<type>}}Promise{{</type>}}
 
-    *   Adds to the cache a response keyed to the given request. Returns a promise that resolves to `undefined` once the cache stores the response.
+  - Adds to the cache a response keyed to the given request. Returns a promise that resolves to `undefined` once the cache stores the response.
 
 {{</definitions>}}
 
@@ -96,11 +96,12 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 {{<definitions>}}
 
-*   `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
-    *   Either a string or a [`Request`](/workers/runtime-apis/request/) object to serve as the key. If a string is passed, it is interpreted as the URL for a new Request object.
+- `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-*   `response` {{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}
-    *   A [`Response`](/workers/runtime-apis/response/) object to store under the given key.
+  - Either a string or a [`Request`](/workers/runtime-apis/request/) object to serve as the key. If a string is passed, it is interpreted as the URL for a new Request object.
+
+- `response` {{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}
+  - A [`Response`](/workers/runtime-apis/response/) object to store under the given key.
 
 {{</definitions>}}
 
@@ -108,9 +109,9 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 `cache.put` will throw an error if:
 
-*   the `request` passed is a method other than `GET`.
-*   the `response` passed has a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
-*   the `response` passed contains the header `Vary: *` (required by the Cache API specification).
+- the `request` passed is a method other than `GET`.
+- the `response` passed has a `status` of [`206 Partial Content`](https://httpstatuses.com/206).
+- the `response` passed contains the header `Vary: *` (required by the Cache API specification).
 
 #### Errors
 
@@ -119,14 +120,14 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 ### `Match`
 
 ```js
-cache.match(request, options)
+cache.match(request, options);
 ```
 
 {{<definitions>}}
 
-*   {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
 
-    *   Returns a promise wrapping the response object keyed to that request.
+  - Returns a promise wrapping the response object keyed to that request.
 
 {{</definitions>}}
 
@@ -140,12 +141,12 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 {{<definitions>}}
 
-*   `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
+- `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-    *   The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
+  - The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
-*   `options`
-    *   Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
+- `options`
+  - Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
 
 {{</definitions>}}
 
@@ -155,17 +156,20 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 {{<definitions>}}
 
-*   `Range`
-    *   Results in a `206` response if a matching response with a Content-Length header is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
+- `Range`
 
-*   `If-Modified-Since`
-    *   Results in a `304` response if a matching response is found with a `Last-Modified` header with a value after the time specified in `If-Modified-Since`.
+  - Results in a `206` response if a matching response with a Content-Length header is found. Your Cloudflare cache always respects range requests, even if an `Accept-Ranges` header is on the response.
 
-*   `If-None-Match`
-    *   Results in a `304` response if a matching response is found with an `ETag` header with a value that matches a value in `If-None-Match`.
+- `If-Modified-Since`
 
-*   `cache.match()`
-    *   Never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
+  - Results in a `304` response if a matching response is found with a `Last-Modified` header with a value after the time specified in `If-Modified-Since`.
+
+- `If-None-Match`
+
+  - Results in a `304` response if a matching response is found with an `ETag` header with a value that matches a value in `If-None-Match`.
+
+- `cache.match()`
+  - Never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
 
 {{</definitions>}}
 
@@ -176,40 +180,40 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 ### `Delete`
 
 ```js
-cache.delete(request, options)
+cache.delete(request, options);
 ```
 
 {{<definitions>}}
 
-*   {{<code>}}delete(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<boolean>`}{{</type-link>}}
+- {{<code>}}delete(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<boolean>`}{{</type-link>}}
 
 {{</definitions>}}
 
 Deletes the `Response` object from the cache and returns a `Promise` for a Boolean response:
 
-*   `true`: The response was cached but is now deleted
-*   `false`: The response was not in the cache at the time of deletion.
+- `true`: The response was cached but is now deleted
+- `false`: The response was not in the cache at the time of deletion.
 
 #### Parameters
 
 {{<definitions>}}
 
-*   `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
+- `request` {{<type>}}string{{</type>}} | {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
 
-    *   The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
+  - The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 <!-- What type is this? -->
 
-*   `options`
-    *   Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
+- `options`
+  - Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
 
 {{</definitions>}}
 
-***
+---
 
 ## Related resources
 
-*   [How the Cache works](/workers/learning/how-the-cache-works/)
-*   [Configure your CDN](/workers/tutorials/configure-your-cdn/)
-*   [Example: using the Cache API](/workers/examples/cache-api/)
-*   [Example: caching POST requests](/workers/examples/cache-post-request/)
+- [How the Cache works](/workers/learning/how-the-cache-works/)
+- [Configure your CDN](/workers/tutorials/configure-your-cdn/)
+- [Example: using the Cache API](/workers/examples/cache-api/)
+- [Example: caching POST requests](/workers/examples/cache-post-request/)

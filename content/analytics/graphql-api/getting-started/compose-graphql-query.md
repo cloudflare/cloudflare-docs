@@ -86,12 +86,12 @@ Once you have entered all the fields you want your query to return, click the **
 
 The GraphiQL client allows you to create variables for use in your queries.
 
-To add a query variable, click the **Query Variables** pane and enter a JSON object that defines  your variable.
+To add a query variable, click the **Query Variables** pane and enter a JSON object that defines your variable.
 
 This example JSON object defines a query variable for a zone ID:
 
 ```json
-{"zoneTag":"xxxxxxxxx"}
+{ "zoneTag": "xxxxxxxxx" }
 ```
 
 To use a variable in your query, prepend the `$` character to your variable name and use it to replace the desired value. When using a variable as a value in a query, do not wrap the variable in quotes as you would for a literal value.

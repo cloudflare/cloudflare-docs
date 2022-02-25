@@ -11,9 +11,9 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 **🗺️ This walkthrough covers how to:**
 
-*   Build a policy in Cloudflare Access to secure the machine
-*   Connect a machine to Cloudflare's network using an SSH connection
-*   Connect from a client machine
+- Build a policy in Cloudflare Access to secure the machine
+- Connect a machine to Cloudflare's network using an SSH connection
+- Connect from a client machine
 
 **⏲️ Time to complete:**
 
@@ -23,7 +23,7 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 
-***
+---
 
 ## Create a Zero Trust policy
 
@@ -167,7 +167,7 @@ You can now test the SSH flow by running a command to reach the service. When th
 
 Cloudflare can render an SSH client in your browser without the need for client software or end user configuration changes.
 
-To enable, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select _SSH_ from the **Browser Rendering** drop-down menu.
 
 ![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
 

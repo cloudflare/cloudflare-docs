@@ -8,13 +8,13 @@ weight: 16
 
 Create and manage [Load Balancing rules](/load-balancing/) in the **Custom Rules** page, which is part of the Create/Edit Load Balancer workflow found in **Traffic** in the dashboard.
 
-***
+---
 
 ## Prerequisites
 
-*   **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](/load-balancing/reference/).
+- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](/load-balancing/reference/).
 
-***
+---
 
 ## Workflow
 
@@ -60,27 +60,32 @@ This example routes certain content requests from our webserver to a different o
 
 <strong>When incoming requests match</strong>:
 
-  <table style="width:100%">
-    <thead>
-      <tr>
-        <th>Field</th>
-        <th>Operator</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    <tbody>
+{' '}
+<table style="width:100%">
+  <thead>
     <tr>
-        <td>URI Path</td>
-        <td>contains</td>
-        <td><code>/content</code></td>
-      </tr>
+      <th>Field</th>
+      <th>Operator</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
-        <td>URI Query String</td>
-        <td>contains</td>
-        <td><code>webserver</code></td>
-      </tr>
-    </tbody>
-  </table>
+      <td>URI Path</td>
+      <td>contains</td>
+      <td>
+        <code>/content</code>
+      </td>
+    </tr>
+    <tr>
+      <td>URI Query String</td>
+      <td>contains</td>
+      <td>
+        <code>webserver</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <strong>Then</strong>:
 

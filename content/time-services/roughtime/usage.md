@@ -10,7 +10,7 @@ meta:
 
 Our service can be reached at `roughtime.cloudflare.com:2002`. The domain
 resolves to an IP address in our [anycast IP
-range](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/).  You
+range](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/). You
 can use either IPv4 or IPv6.
 
 Cloudflare-Roughtime is currently in beta. As such, our root public key may

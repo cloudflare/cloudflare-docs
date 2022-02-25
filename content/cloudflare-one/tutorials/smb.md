@@ -22,7 +22,7 @@ You can set up this connection by downloading and installing the Cloudflare daem
 2.  Add an active zone to Cloudflare
 3.  [Install the `cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) on the host and client machines
 
-***
+---
 
 ## Connect the machine hosting the file share to Cloudflare
 

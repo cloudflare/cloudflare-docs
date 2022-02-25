@@ -18,7 +18,7 @@ Create an initial Terraform config file. Any files ending in `.tf` will be proce
 
 ```bash
 $ cat > cloudflare.tf <<'EOF'
-terraform { 
+terraform {
   required_providers {
     cloudflare = {
       source = "cloudflare/cloudflare"
