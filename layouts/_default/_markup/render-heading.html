@@ -1,0 +1,12 @@
+{{- $ID := (.Anchor | safeURL) -}}
+{{- $text := (.Text | safeHTML) -}}
+{{- if eq .Level 1 }}
+  <h1 id="{{ $ID }}">{{ $text }}</h1>
+{{- else -}}
+  <h{{ .Level }} id="{{ $ID }}">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#{{ $ID }}" aria-hidden="true">&#8203;​</a>
+    </span>
+    <span>{{ $text }}</span>
+  </h{{ .Level }}>
+{{- end -}}
