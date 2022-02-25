@@ -182,7 +182,11 @@ You must now define authorization logic to determine who can perform what action
 2. [Using Custom Headers](/workers/examples/auth-with-headers): Allow or deny a request based on a known pre-shared key in a header.
 3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
 
-Continuing with the previous example, let's protect all bucket operations. For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret. For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
+Continuing with your newly created bucket and Worker, you will need to protect all bucket operations. 
+
+For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret. 
+
+For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
 ```js
 const ALLOW_LIST = ['cat-pic.jpg'];
@@ -215,7 +219,7 @@ async function handleRequest(request) {
   // ...
 ```
  
-For this to work, you’ll need to create a secret via wrangler:
+For this to work, you need to create a secret via Wrangler:
 
 ```sh
 wrangler secret put AUTH_KEY_SECRET
