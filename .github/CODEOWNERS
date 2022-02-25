@@ -2,7 +2,7 @@
 products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Analytics
-products/analytics/ @soheiokamoto @jherre @tlozoot @cloudflare/PCX
+products/analytics/ @soheiokamoto @jherre @tlozoot @tanushreesharma-cf @cloudflare/PCX
 
 # API
 products/api/ @cloudflare/sdk @cloudflare/PCX
@@ -59,7 +59,7 @@ products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 products/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @cloudflare/PCX
+products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @tanushreesharma-cf @cloudflare/PCX
 
 # Magic Transit
 products/magic-transit/ @annikagarbers @cloudflare/PCX
