@@ -1,7 +1,9 @@
 ---
-order: 6
 title: Types of Notifications
 pcx-content-type: concept
+weight: 7
+meta:
+  title: What kinds of Notifications are available?
 ---
 
 import SSLTroubleshoot from "../\_partials/\_troubleshoot-ssl"
@@ -214,7 +216,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](https://developers.cloudflare.com/byoip/dynamic-advertisement).
+You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/dynamic-advertisement).
 
 </div>
 </details>
@@ -462,7 +464,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](https://developers.cloudflare.com/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts).
 
 **Included with**
 
@@ -470,7 +472,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
@@ -483,7 +485,7 @@ Review the information in [Firewall Analytics](https://developers.cloudflare.com
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](https://developers.cloudflare.com/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts).
 
 **Included with**
 
@@ -491,7 +493,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
 
 </div>
 </details>

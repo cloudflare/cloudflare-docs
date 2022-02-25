@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: SAML | Okta
+weight: 2
 ---
 
 # SAML | Okta
@@ -21,7 +22,7 @@ To set up SAML with Okta as your identity provider:
 
 5.  Enter an app name and click **Next**.
 
-    ![Okta Applications page](../../static/documentation/identity/saml-okta/saml-okta-1.png)
+    ![Okta Applications page](/cloudflare-one/static/documentation/identity/saml-okta/saml-okta-1.png)
 
 6.  In the Single sign on URL and the Audience URI (SP Entity ID) fields, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
@@ -37,7 +38,7 @@ To set up SAML with Okta as your identity provider:
 
 10. Select **I’m an Okta customer adding an internal app** and check **This is an internal app that we have created**.
 
-    ![Okta Applications page](../../static/documentation/identity/saml-okta/saml-okta-2.png)
+    ![Okta Applications page](/cloudflare-one/static/documentation/identity/saml-okta/saml-okta-2.png)
 
 11. Click **Finish**.
 
@@ -82,7 +83,7 @@ To get your Cloudflare metadata file:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `<your-team-name>`  with your [team name](/glossary#team-name).
+    Replace `<your-team-name>`  with your [team name](/cloudflare-one/glossary/#team-name).
 
 2.  Save the file in XML format.
 

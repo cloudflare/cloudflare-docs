@@ -1,7 +1,7 @@
 ---
-order: 2
 title: Get started
 pcx-content-type: get-started
+weight: 3
 ---
 
 # Get started
@@ -16,10 +16,10 @@ Cloudflare requires a service-specific configuration for your prefixes, as well 
 
 There are two major prerequisites before Cloudflare can begin onboarding your IP space.
 
-1.  You must verify your [Internet Routing Registry (IRR)](/about/irr) records are up to date with the correct prefix/ASN information.
+1.  You must verify your [Internet Routing Registry (IRR)](/byoip/about/irr/) records are up to date with the correct prefix/ASN information.
 
-2.  Cloudflare must receive a [Letter of Authorization](/about/loa) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
+2.  Cloudflare must receive a [Letter of Authorization](/byoip/about/loa/) to announce your prefixes, which we will share with our transit partners as evidence that we are allowed to announce the route.
 
 Optionally, if you use the RPKI protocol to sign your routes, Cloudflare can help with this as well. Just let your account team know if you’re interested in using RPKI.
 
-After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/about/dynamic-advertisement) API or via the Cloudflare dashboard.
+After onboarding, [Border Gateway Protocol (BGP)](https://www.cloudflare.com/learning/security/glossary/what-is-bgp/) announcements for customer prefixes can be controlled with the [Dynamic Advertisement](/byoip/about/dynamic-advertisement/) API or via the Cloudflare dashboard.

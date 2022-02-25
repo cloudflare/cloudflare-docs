@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: how-to
+title: Specify prefixes to advertise
+weight: 0
 ---
 
 # Specify prefixes to advertise
@@ -44,7 +45,7 @@ Use BGP to control the status of your prefix — advertised or withdrawn — fro
 
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
-![BGP control diagram](../../static/bgp-control-diagram.png)
+![BGP control diagram](/magic-transit/static/bgp-control-diagram.png)
 
 To begin using BGP control, contact your account team with the following information:
 

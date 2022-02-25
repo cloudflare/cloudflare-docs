@@ -1,7 +1,9 @@
 ---
 title: API tokens
-order: 6
 pcx-content-type: overview
+weight: 7
+meta:
+  title: API tokens and keys
 ---
 
 # API tokens and keys
@@ -14,6 +16,6 @@ When possible, use API tokens to interact with the Cloudflare API.
 
 <Aside type="note">
 
-Though you can still use API keys to access the Cloudflare API, these keys have [several limitations](/keys#limitations) that make them less secure than API tokens.
+Though you can still use API keys to access the Cloudflare API, these keys have [several limitations](/api/keys/#limitations) that make them less secure than API tokens.
 
 </Aside>

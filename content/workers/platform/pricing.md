@@ -1,10 +1,11 @@
 ---
 pcx-content-type: concept
+title: Pricing
 ---
 
 # Pricing
 
-By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/platform/limits#worker-limits).
+By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
 The Workers Paid plan includes Workers, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
@@ -21,19 +22,19 @@ All included usage is on a monthly basis.
 
 </TableWrap>
 
-1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/platform/limits#worker-limits) given.
+1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 2.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
 
 ### Usage models
 
-Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify the upper [limits](/platform/limits) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [Pricing](/platform/pricing#pricing).
+Workers are available under two Usage Models: Bundled and Unbound. Usage Models are settings on your Workers that specify the upper [limits](/workers/platform/limits/) for how long a Worker can execute. In addition to different limits, Workers on the Bundled Usage Model have usage billing based on requests only, while Workers on Unbound have usage billing based on requests and duration at the rates shown under [Pricing](/workers/platform/pricing/#pricing).
 
 #### Default usage model
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](https://developers.cloudflare.com/workers/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
@@ -133,7 +134,7 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 ## Durable Objects storage API
 
-The [Durable Objects storage API](/runtime-apis/durable-objects#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
+The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
 <TableWrap>
 
@@ -155,4 +156,4 @@ The [Durable Objects storage API](/runtime-apis/durable-objects#transactional-st
 
 Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
 
-Only requests that hit a Worker script will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/platform/limits).
+Only requests that hit a Worker script will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. See definitions and behavior after a limit is hit in the [limits article](/workers/platform/limits/).

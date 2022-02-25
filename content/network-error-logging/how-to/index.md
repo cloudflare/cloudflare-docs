@@ -1,6 +1,8 @@
 ---
 title: How to
 pcx-content-type: how-to
+meta:
+  title: View Reports
 ---
 
 import Beta from "../\_partials/\_beta.md"
@@ -33,4 +35,4 @@ Run a traceroute from a specific data center to an origin IP to for information 
 
 The results display in a table below, and you can optionally export the data to a .CSV format by clicking **Export as CSV**.
 
-To view the log fields available for NEL, refer to [NEL reports](https://developers.cloudflare.com/logs/reference/log-fields/zone/nel_reports).
+To view the log fields available for NEL, refer to [NEL reports](/logs/reference/log-fields/zone/nel_reports).

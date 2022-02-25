@@ -1,6 +1,7 @@
 ---
-order: 15
 pcx-content-type: configuration
+title: Manage Railguns
+weight: 16
 ---
 
 # Manage Railguns

@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: reference
+title: Configuration
+weight: 1
 ---
 
 # Configuration

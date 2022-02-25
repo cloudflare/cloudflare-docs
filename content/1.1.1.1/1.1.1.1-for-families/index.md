@@ -1,11 +1,12 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Set up 1.1.1.1 for Families
+weight: 3
 ---
 
 # Set up 1.1.1.1 for Families
 
-1.1.1.1 for Families adds a layer of protection to your home network, and protects it from malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
+1.1.1.1 for Families adds a layer of protection to your home network, and protects it from malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
 
 1.1.1.1 for Families categorizes destinations on the Internet based on the potential threat they pose regarding malware, phishing, or other types of security risks. When enabled, 1.1.1.1 for Families will block resolution to these destinations.
 

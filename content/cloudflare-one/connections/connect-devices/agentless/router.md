@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: Router setup
+weight: 5
 ---
 
 # Router setup

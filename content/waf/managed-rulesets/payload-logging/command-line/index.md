@@ -1,6 +1,7 @@
 ---
 pcx-content-type: navigation
-order: 4
+title: Command-line operations
+weight: 5
 ---
 
 # Command-line operations

@@ -1,7 +1,9 @@
 ---
 title: How it works
-order: 3
 pcx-content-type: concept
+weight: 4
+meta:
+  title: How Bulk Redirects work
 ---
 
 # How Bulk Redirects work
@@ -36,7 +38,7 @@ The following URL Redirect parameters control the matching behavior between the 
 
 </Definitions>
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/bulk-redirects/reference/parameters).
+For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
 
 ## Configuring the path and query string behavior
 
@@ -68,7 +70,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
 </Definitions>
 
-For detailed information on these parameters, refer to [URL Redirect parameters](/bulk-redirects/reference/parameters).
+For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
 
 ## URL matching algorithm
 

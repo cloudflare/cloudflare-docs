@@ -1,7 +1,9 @@
 ---
 pcx-content-type: reference
-order: 785
 type: overview
+title: Update and deploy rulesets
+weight: 786
+layout: list
 ---
 
 # Update and deploy rulesets
@@ -166,7 +168,7 @@ curl -X PUT \
 </div>
 </details>
 
-For more information on deploying rulesets, check [Deploy rulesets](/basic-operations/deploy-rulesets).
+For more information on deploying rulesets, check [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).
 
 ## Example - Update ruleset description
 
@@ -174,7 +176,7 @@ You can use this API method to update the description of an existing ruleset or 
 
 \<Aside type='warning' header='Important'>
 
-You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
+You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 
 </Aside>
 

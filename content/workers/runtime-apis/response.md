@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Response
 ---
 
 # Response
@@ -39,7 +40,7 @@ Valid options for the `options` object include: <Definitions>
     *   The status message associated with the status code, such as, `OK`.
 
 *   `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink> | <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ByteString">ByteString</TypeLink>
-    *   Any headers to add to your response that are contained within a [`Headers`](/runtime-apis/request#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
+    *   Any headers to add to your response that are contained within a [`Headers`](/workers/runtime-apis/request/#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
 
 </Definitions>
 
@@ -115,6 +116,6 @@ Valid options for the `options` object include: <Definitions>
 
 ## Related resources
 
-*   [Examples: Modify response](/examples/modify-response)
-*   [Examples: Conditional response](/examples/conditional-response)
-*   [Reference: `Request`](/runtime-apis/request)
+*   [Examples: Modify response](/workers/examples/modify-response/)
+*   [Examples: Conditional response](/workers/examples/conditional-response/)
+*   [Reference: `Request`](/workers/runtime-apis/request/)

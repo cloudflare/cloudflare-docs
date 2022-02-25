@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Encoding
 ---
 
 # Encoding

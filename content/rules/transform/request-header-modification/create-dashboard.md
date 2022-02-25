@@ -1,30 +1,32 @@
 ---
 title: Create a rule in the dashboard
 pcx-content-type: how-to
-order: 1
+weight: 2
+meta:
+  title: Create an HTTP Request Header Modification Rule in the dashboard
 ---
 
 # Create an HTTP Request Header Modification Rule in the dashboard
 
-Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. Refer to [Request header modification examples](/transform/request-header-modification/examples) for examples of rule definitions.
+Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![Transform Rules tab](../../images/transform/overview.png)
+    ![Transform Rules tab](/rules/static/transform/overview.png)
 
 3.  Click **Create transform rule** > **Modify Request Header**.
 
-    ![Create HTTP Request Header Modification rule page](../../images/transform/create-request-header-modification-rule.png)
+    ![Create HTTP Request Header Modification rule page](/rules/static/transform/create-request-header-modification-rule.png)
 
 4.  Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
 
-5.  Under **When incoming requests match**, define the [rule expression](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
+5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
      <Aside type='note'>
 
-    Check the [available fields and functions](/transform/request-header-modification/reference/fields-functions).
+    Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
 
      </Aside>
 
@@ -40,7 +42,7 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
     The following example includes the modification of three headers using the available actions:
 
-    ![HTTP request header modification examples](../../images/transform/request-header-modification-example.png)
+    ![HTTP request header modification examples](/rules/static/transform/request-header-modification-example.png)
 
      <Aside type='note'>
 

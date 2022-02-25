@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: reference
+title: Using DNS Wireformat
+weight: 0
 ---
 
 # Using DNS Wireformat

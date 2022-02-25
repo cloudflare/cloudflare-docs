@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: tutorial
+title: Direct creator uploads
+weight: 4
 ---
 
 # Direct creator uploads
@@ -36,16 +37,16 @@ Additionally, you can control security features through these fields:
 <Definitions>
 
 *   `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
-    *   Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
+    *   Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
 
 *   `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: *empty*</PropMeta>
-    *   Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
+    *   Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
 
 *   `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
-    *   Sets the timestamp location of [thumbnail](/viewing-videos/displaying-thumbnails) image to a percentage location of the video from 0 to 1.
+    *   Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
 
 *   `watermark` <Type>string</Type> <PropMeta>default: *none*</PropMeta>
-    *   `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/uploading-videos/applying-watermarks) automatically.
+    *   `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/uploading-videos/applying-watermarks/) automatically.
 
 *   `meta` <Type>json map</Type> <PropMeta>default: *none*</PropMeta>
     *   Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
@@ -115,7 +116,7 @@ The `uploadURL` provided in the `result` body of a successful request should be
 passed along to the end-user to make their upload request.
 
 The `uid` references the reserved media object's unique identifier and can be
-kept as a reference to query our [API](/getting-started/searching/).
+kept as a reference to query our [API](/stream/getting-started/searching/).
 
 ## Direct creator upload request from end users
 
@@ -224,7 +225,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](https://developers.cloudflare.com/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to *your* endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 
@@ -253,8 +254,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1.  You can [query the media API](/uploading-videos/searching/) with the UID
+1.  You can [query the media API](/stream/uploading-videos/searching/) with the UID
     to understand it's status.
 
-2.  You can [create a webhook subscription](/uploading-videos/using-webhooks/) to receive notifications
+2.  You can [create a webhook subscription](/stream/uploading-videos/using-webhooks/) to receive notifications
     regarding the status of videos.  These notifications include the video's UID.

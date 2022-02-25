@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Service tokens
+weight: 4
 ---
 
 # Service tokens
@@ -27,7 +28,7 @@ This section covers how to create, renew, and revoke a service token.
 
 The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
-![Name Service Token](../../static/documentation/identity/users/service-token-name.png)
+![Name Service Token](/cloudflare-one/static/documentation/identity/users/service-token-name.png)
 
 1.  Click **Generate token**.
 
@@ -35,7 +36,7 @@ The next page will display the generated `Client ID` and `Client Secret` for the
 
 1.  In the next page, copy the `Client Secret`.
 
-![Access Service Token card](../../static/documentation/identity/users/detail-service-token.png)
+![Access Service Token card](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
 
 <Aside type='warning' header='Important'>
 
@@ -45,7 +46,7 @@ This is the **only time** Cloudflare Access will display the Client Secret. If y
 
 6.  Click **Close**.
 
-You can now use the service token when you create [service auth policies](/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
+You can now use the service token when you create [service auth policies](/cloudflare-one/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
 ## Connect your service to Access
 
@@ -94,7 +95,7 @@ To configure a service token expiration alert:
 
 5.  Enter a name for your alert, and an optional description.
 
-    ![Expiration notification](../../static/documentation/identity/users/notification-token.png)
+    ![Expiration notification](/cloudflare-one/static/documentation/identity/users/notification-token.png)
 
 6.  If you'd like to add other recipients for the notification email, click *+Add email recipient*.
 

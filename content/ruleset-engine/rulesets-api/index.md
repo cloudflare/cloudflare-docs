@@ -1,7 +1,7 @@
 ---
 title: Rulesets API
 pcx-content-type: navigation
-order: 780
+weight: 781
 ---
 
 # Rulesets API
@@ -10,4 +10,4 @@ The Rulesets API provides an interface for managing and configuring the executio
 
 ## Get started
 
-To get started, review the Rulesets [JSON object](/rulesets-api/json-object) and the available [Endpoints](/rulesets-api/endpoints).
+To get started, review the Rulesets [JSON object](/ruleset-engine/rulesets-api/json-object/) and the available [Endpoints](/ruleset-engine/rulesets-api/endpoints/).

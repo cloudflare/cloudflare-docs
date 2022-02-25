@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: FetchEvent
 ---
 
 # FetchEvent
@@ -50,13 +51,13 @@ addEventListener("fetch", event => {
 
 ### Bindings
 
-When a Worker is deployed using the Service Worker syntax, any [bindings](/platform/environment-variables) will be made available as global runtime variables.
+When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/platform/environment-variables/) will be made available as global runtime variables.
 
 ## Syntax: Module Worker
 
 In the Module Worker format, events are handled by defining and exporting an object with method handlers corresponding to event names.
 
-While an incoming HTTP request is still given the `"fetch"` name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/runtime-apis/request) and must reply with a [`Response`](/runtime-apis/response) directly.
+While an incoming HTTP request is still given the `"fetch"` name, a Module Worker does not surface the `FetchEvent` interface. Instead, Module Workers receive the [`Request`](/workers/runtime-apis/request/) and must reply with a [`Response`](/workers/runtime-apis/response/) directly.
 
 ```js
 export default {
@@ -74,7 +75,7 @@ export default {
     *   The incoming HTTP request.
 
 *   `env` <Type>object</Type>
-    *   The [bindings](/platform/environment-variables) assigned to the Worker.
+    *   The [bindings](/workers/platform/environment-variables/) assigned to the Worker.
 
 *   <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
@@ -88,7 +89,7 @@ export default {
 
 ### Bindings
 
-When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
+When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
 
 ## Lifecycle methods
 
@@ -127,7 +128,7 @@ addEventListener("fetch", event => {
 
 ### `waitUntil`
 
-The `waitUntil` command extends the lifetime of the `"fetch"` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/runtime-apis/cache#put) or handling logging.
+The `waitUntil` command extends the lifetime of the `"fetch"` event. It accepts a `Promise`-based task which the Workers runtime will execute before the handler terminates but without blocking the response. For example, this is ideal for [caching responses](/workers/runtime-apis/cache/#put) or handling logging.
 
 With the Service Worker format, `waitUntil` is available within the `event` because it is a native `FetchEvent` property.
 

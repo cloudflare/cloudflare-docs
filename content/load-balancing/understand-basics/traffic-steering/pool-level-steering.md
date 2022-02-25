@@ -1,13 +1,14 @@
 ---
-order: 0
 pcx-content-type: concept
+title: Pool steering
+weight: 1
 ---
 
 import RegionMapping from "../../\_partials/\_region-mapping.md"
 
 # Pool steering
 
-When you [create a load balancer](/how-to/create-load-balancer), their are several options for **Traffic Steering**, which decide how your load balancer routes traffic to attached and available pools.
+When you [create a load balancer](/load-balancing/how-to/create-load-balancer/), their are several options for **Traffic Steering**, which decide how your load balancer routes traffic to attached and available pools.
 
 <Aside type="note">
 
@@ -19,7 +20,7 @@ Without purchasing **Traffic Steering**, non-Enterprise customers only have acce
 
 ## Off - standard failover
 
-Standard failover directs traffic from unhealthy pools — determined by [health checks](/understand-basics/monitors) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/reference/common-configurations#active---passive-failover).
+Standard failover directs traffic from unhealthy pools — determined by [health checks](/load-balancing/understand-basics/monitors/) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/load-balancing/reference/common-configurations/#active---passive-failover).
 
 Standard failover uses the pool order to determine failover priority (the failover order).
 
@@ -41,7 +42,7 @@ For TCP health checks, calculated latency may not reflect the true latency to th
 
 The diagram below shows how Cloudflare would route traffic to the pool with the lowest EWMA among three regions: Eastern North America, Europe, and Australia. In this case, the ENAM pool is selected because it has the lowest RTT.
 
-![Dynamic steering routes traffic to the fastest available pool](../../static/images/traffic-steering-2.png)
+![Dynamic steering routes traffic to the fastest available pool](/load-balancing/static/images/traffic-steering-2.png)
 
 ***
 
@@ -55,7 +56,7 @@ Cloudflare has 13 geographic regions that span the world. The region of a client
 
 <RegionMapping/>
 
-For more details on working with regions and region codes, refer to [Region Mapping API](/reference/region-mapping-api).
+For more details on working with regions and region codes, refer to [Region Mapping API](/load-balancing/reference/region-mapping-api/).
 
 ### Via the API
 
@@ -92,7 +93,7 @@ To use proximity steering on a load balancer, you first need to add GPS coordina
 ### When to add proximity steering
 
 *   For new pools, add GPS coordinates when you create a pool.
-*   For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of [creating a load balancer](/how-to/create-load-balancer).
+*   For existing pools, add GPS coordinates when [managing pools](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing/pools) or in the **Add Traffic Steering** step of [creating a load balancer](/load-balancing/how-to/create-load-balancer/).
 
 ### How to add proximity steering
 
@@ -110,4 +111,4 @@ For accurate proximity steering, add GPS coordinates to all pools within the sam
 
 ## Random steering
 
-Choose **Random** to route traffic to a healthy pool at random. Customers can use this option to set up [active - active failover](/reference/common-configurations#active---active-failover) (or round robin), where traffic is split equally between multiple pools.
+Choose **Random** to route traffic to a healthy pool at random. Customers can use this option to set up [active - active failover](/load-balancing/reference/common-configurations/#active---active-failover) (or round robin), where traffic is split equally between multiple pools.

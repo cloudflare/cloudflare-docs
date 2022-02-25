@@ -1,6 +1,7 @@
 ---
-order: 8
 pcx-content-type: faq
+title: FAQ
+weight: 9
 ---
 
 # FAQ

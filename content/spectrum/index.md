@@ -1,7 +1,9 @@
 ---
 title: Welcome
-order: 0
-pcx-content-type: overview 
+pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Spectrum
 ---
 
 # Cloudflare Spectrum

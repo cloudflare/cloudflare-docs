@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 8
+title: High-level metrics
+weight: 9
 ---
 
 # High-level metrics
@@ -10,4 +11,4 @@ order: 8
 *   **Page load time** - The total amount of time required to load the page.
 *   **Core Web Vitals** - Higher-level metrics designed by Google to capture the user experience more completely.
 
-![Web Analytics overview](../../../static/images/dash-web_analytics-overview.png)
+![Web Analytics overview](/analytics/static/images/dash-web_analytics-overview.png)

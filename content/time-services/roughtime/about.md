@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 0
+title: Roughtime Protocol
+weight: 1
 ---
 
 # Roughtime Protocol

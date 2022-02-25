@@ -1,7 +1,9 @@
 ---
 title: About
 pcx-content-type: concept
-order: 2
+weight: 3
+meta:
+  title: About Cloudflare Security Center
 ---
 
 # About Cloudflare Security Center
@@ -23,7 +25,7 @@ These insights have the following properties:
 *   **Risk**: A description of the risk associated with not addressing the issue.
 *   **Type**: The insight category.
 
-For more information on the available operations in the **Security Insights** tab, refer to [Review Security Insights](/tasks/review-insights).
+For more information on the available operations in the **Security Insights** tab, refer to [Review Security Insights](/security-center/tasks/review-insights/).
 
 ### Scan frequency
 
@@ -33,4 +35,4 @@ Once you enable Security Insights, Cloudflare performs scans at the below freque
 *   Every day for Cloudflare accounts on the Teams Standard or Teams Enterprise plans.
 *   Every three days for all other Cloudflare accounts.
 
-Additionally, Cloudflare accounts with at least one Business or Enterprise zone, or accounts on the Teams Standard or Teams Enterprise plans, can also manually start a new scan. Refer to [Start a new scan](/tasks/start-scan) for more information.
+Additionally, Cloudflare accounts with at least one Business or Enterprise zone, or accounts on the Teams Standard or Teams Enterprise plans, can also manually start a new scan. Refer to [Start a new scan](/security-center/tasks/start-scan/) for more information.

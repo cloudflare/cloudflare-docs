@@ -1,6 +1,7 @@
 ---
-order: 12
 pcx-content-type: how-to
+title: GitHub
+weight: 13
 ---
 
 # GitHub
@@ -15,19 +16,19 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 2.  Go to your account **Settings > Developer Settings**, select **OAuth Apps** and click **Register a new application**.
 
-    ![GitHub OAuth page](../../static/documentation/identity/github/github1.png)
+    ![GitHub OAuth page](/cloudflare-one/static/documentation/identity/github/github1.png)
 
     The **Register a new OAuth application** window displays.
 
-    ![GitHub Register a new OAuth application window](../../static/documentation/identity/github/github2.png)
+    ![GitHub Register a new OAuth application window](/cloudflare-one/static/documentation/identity/github/github2.png)
 
 3.  Enter an **Application name**. Your users will see this name on the login page.
 
-4.  Enter your [team domain](/glossary#team-domain) in the **Homepage URL** field.
+4.  Enter your [team domain](/cloudflare-one/glossary/#team-domain) in the **Homepage URL** field.
 
     For example, `https://<your-team-name>.cloudflareaccess.com`
 
-5.  In the GitHub **Authorization callback URL** field, enter your [team domain](/glossary#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
+5.  In the GitHub **Authorization callback URL** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) and add this to the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -37,7 +38,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 7.  Copy the **Client ID** and **Client Secret**.
 
-    ![Client ID and Client secret](../../static/documentation/identity/github/github4.png)
+    ![Client ID and Client secret](/cloudflare-one/static/documentation/identity/github/github4.png)
 
 8.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

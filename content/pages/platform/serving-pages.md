@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: concept
+title: Serving Pages
+weight: 5
 ---
 
 # Serving Pages

@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: concept
+title: Keyless delegation
+weight: 7
 ---
 
 # Keyless delegation

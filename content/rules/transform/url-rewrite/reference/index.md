@@ -1,7 +1,9 @@
 ---
 title: Reference
 pcx-content-type: navigation
-order: 4
+weight: 5
+meta:
+  title: URL Rewrite Rules reference
 ---
 
 # URL Rewrite Rules reference

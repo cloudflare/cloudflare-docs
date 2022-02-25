@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Querying Firewall Events with GraphQL
 ---
 
 # Querying Firewall Events with GraphQL

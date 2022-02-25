@@ -1,7 +1,9 @@
 ---
 title: FAQ
-order: 6
 pcx-content-type: faq
+weight: 7
+meta:
+  title: Frequently asked questions about Cloudflare Stream
 ---
 
 # Frequently asked questions about Cloudflare Stream
@@ -21,7 +23,7 @@ Stream does not currently support multi-audio tracks. For files with multiple au
 
 ### Can I download original video files from Stream?
 
-You cannot download the *exact* input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](https://developers.cloudflare.com/stream/viewing-videos/download-videos) feature to get encoded MP4s for use cases like offline viewing.
+You cannot download the *exact* input file that you uploaded. However, depending on your use case, you can use the [Downloadable Videos](/stream/viewing-videos/download-videos) feature to get encoded MP4s for use cases like offline viewing.
 
 ### Is there a limit to the amount of videos I can upload?
 

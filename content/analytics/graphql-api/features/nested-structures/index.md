@@ -1,6 +1,7 @@
 ---
-order: 16
 pcx-content-type: reference
+title: Nested Structures
+weight: 17
 ---
 
 # Nested Structures

@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Deploy a Zola site
 ---
 
 import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
@@ -44,7 +45,7 @@ Your Linux distro's package manager may include Zola. If this is the case, you c
 $ pkg install zola
 ```
 
-If your package manager does not include Zola or you would like to download a release directly, refer to the [**Manual**](/framework-guides/deploy-a-zola-site#manual-installation) section below.
+If your package manager does not include Zola or you would like to download a release directly, refer to the [**Manual**](/pages/framework-guides/deploy-a-zola-site/#manual-installation) section below.
 
 ### Manual installation
 
@@ -111,7 +112,7 @@ After configuring your site, you can begin your first deploy. You should see Clo
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 </Aside>
 
@@ -126,8 +127,8 @@ For example:
 base_url = "https://my-zola-project.pages.dev"
 ```
 
-Every time you commit new code to your Zola site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Zola site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Zola site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
+By completing this guide, you have successfully deployed your Zola site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

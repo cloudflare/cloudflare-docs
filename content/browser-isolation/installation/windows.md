@@ -1,6 +1,8 @@
 ---
 title: Windows
-order: 2
+weight: 3
+meta:
+  title: Installation on Windows
 ---
 
 # Installation on Windows
@@ -25,8 +27,8 @@ Follow this article to configure the Cloudflare root certificate on your device:
 6.  Enter your organization name (if your auth domain were `https://example.cloudflareaccess.com`, you would enter `example`).
 7.  Complete the authentication steps required by your organization.
 
-![Preferences UI in the Account tab with the Login to Teams button circled](../static/windows_TeamsButton.png)
+![Preferences UI in the Account tab with the Login to Teams button circled](/browser-isolation/static/windows_TeamsButton.png)
 
 ## Start using Browser Isolation
 
-You're now ready to start using an isolated browser. Get started [here](/usage).
+You're now ready to start using an isolated browser. Get started [here](/browser-isolation/usage/).

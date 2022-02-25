@@ -1,6 +1,8 @@
 ---
 title: New account
-order: 1
+weight: 2
+meta:
+  title: Setup Cloudflare for Teams
 ---
 
 # Setup Cloudflare for Teams
@@ -35,4 +37,4 @@ You may specify individual email addresses, or entire domain names. When finishe
 
 ## Setup an isolation policy
 
-Your Cloudflare for Teams account has now been created. Continue to [isolation policies](/administration/isolation-policies).
+Your Cloudflare for Teams account has now been created. Continue to [isolation policies](/browser-isolation/administration/isolation-policies/).

@@ -1,19 +1,20 @@
 ---
 pcx-content-type: configuration
 alwaysopen: true
-order: 774
+title: Deploy a Managed Ruleset with ruleset, tag, and rule overrides
+weight: 775
 ---
 
 # Deploy a Managed Ruleset with ruleset, tag, and rule overrides
 
 Customize the execution of Managed Rulesets with a combination of ruleset overrides, tag overrides, and rule overrides in your phase entry point ruleset.
 
-1.  [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset to execute a Managed Ruleset.
-2.  [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-3.  [Configure a tag override](/managed-rulesets/override-managed-ruleset) that sets an action for rules with a given tag.
-4.  [Configure a rule override](/managed-rulesets/override-managed-ruleset) that sets an action for the rules you want to execute.
+1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset to execute a Managed Ruleset.
+2.  [Configure a ruleset override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that disables all rules in the Managed Ruleset.
+3.  [Configure a tag override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for rules with a given tag.
+4.  [Configure a rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that sets an action for the rules you want to execute.
 
-The request below uses the [Update ruleset](/rulesets-api/update) operation to execute the following in a single `PUT` request:
+The request below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to execute the following in a single `PUT` request:
 
 *   Add a rule to the `http_request_firewall_managed` phase entry point ruleset that executes a Managed Ruleset.
 *   Use category overrides to enable rules with `wordpress` and `drupal` tags and set their actions to `log`.

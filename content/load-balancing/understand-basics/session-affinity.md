@@ -1,6 +1,7 @@
 ---
-order: 16
 pcx-content-type: concept
+title: Session affinity
+weight: 17
 ---
 
 # Session affinity
@@ -25,13 +26,13 @@ Session Affinity automatically directs requests from the same client to the same
 
 All sessions default to 23 hours unless you set a custom session *Time to live* (TTL).
 
-The session cookie is secure when [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+The session cookie is secure when [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ***
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
-Enable Session Affinity when you [create  or edit a load balancer](/how-to/create-load-balancer), during the **Hostname** step.
+Enable Session Affinity when you [create  or edit a load balancer](/load-balancing/how-to/create-load-balancer/), during the **Hostname** step.
 
 If you enable Session Affinity, choose one of the following options:
 
@@ -40,17 +41,17 @@ If you enable Session Affinity, choose one of the following options:
 
 <Aside type='warning' header='Important'>
 
-Session Affinity with Client IP fallback is not supported for load balancers in [DNS-only mode (gray cloud)](/understand-basics/proxy-modes).
+Session Affinity with Client IP fallback is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
 </Aside>
 
 ### Origin Drain
 
-Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. For more details on origin drain, refer to [Performing planned maintenance](/additional-options/planned-maintenance#gradual-rotation).
+Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. For more details on origin drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
 
 <Aside type='warning' header='Important'>
 
-Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)](/understand-basics/proxy-modes).
+Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
 </Aside>
 
@@ -65,4 +66,4 @@ Session affinity is a property of load balancers, which you can set with the fol
 
 Customize the behavior of session affinity by using the `session_affinity`, `session_affinity_ttl`, and `session_affinity_attributes` parameters.
 
-For more details on API commands in context, refer to [Create a load balancer with the API](/how-to/create-load-balancer).
+For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/how-to/create-load-balancer/).

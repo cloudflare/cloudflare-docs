@@ -1,8 +1,11 @@
 ---
 title: Requirements
-order: 3
 pcx-content-type: reference
 type: overview
+weight: 4
+layout: list
+meta:
+  title: Installation requirements
 ---
 
 # Installation requirements

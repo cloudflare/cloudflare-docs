@@ -1,15 +1,16 @@
 ---
 updated: 2021-11-30
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Add an HTML form with Formspree
 ---
 
 # Add an HTML form with Formspree
 
 Almost every website, whether it is a simple HTML portfolio page or a complex JavaScript application, will need a form to collect user data. [Formspree](https://formspree.io) is a back-end service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
 
-In this tutorial, you will create a `<form>` using plain HTML and CSS and add it to a static HTML website hosted on Cloudflare Pages. Refer to the [Get started guide](/get-started) to familiarize yourself with the platform. You will use Formspree to collect the submitted data and send out email notifications when new submissions arrive, without requiring any JavaScript or back-end coding.
+In this tutorial, you will create a `<form>` using plain HTML and CSS and add it to a static HTML website hosted on Cloudflare Pages. Refer to the [Get started guide](/pages/get-started/) to familiarize yourself with the platform. You will use Formspree to collect the submitted data and send out email notifications when new submissions arrive, without requiring any JavaScript or back-end coding.
 
 ## Setup
 
@@ -36,7 +37,7 @@ You will only be using plain HTML for this example project. The home page will i
 
 <Aside type="note">
 
-The form code is adapted from the HTML Forms tutorial. For a more in-depth explanation of how HTML forms work and additional learning resources, refer to the [HTML Forms tutorial](/tutorials/forms).
+The form code is adapted from the HTML Forms tutorial. For a more in-depth explanation of how HTML forms work and additional learning resources, refer to the [HTML Forms tutorial](/pages/tutorials/forms/).
 
 </Aside>
 
@@ -61,7 +62,7 @@ The `action` attribute determines where the form data is sent. You will update t
 
 <Aside type="note">
 
-Refer to the [HTML Forms tutorial](/tutorials/forms#Overview) on how to build an HTML form.
+Refer to the [HTML Forms tutorial](/pages/tutorials/forms/#Overview) on how to build an HTML form.
 
 </Aside>
 
@@ -115,11 +116,11 @@ Next, create a new form with the **+ New form** button. Name it `Contact-us form
 
 <GatsbyImage image="./new-form-dialog.png" alt="Creating a Formspree form" />
 
-![Creating a Formspree form](./new-form-dialog.png)
+![Creating a Formspree form](/pages/new-form-dialog.png)
 
 You will then be presented with instructions on how to integrate your new form.
 
-![Formspree endpoint](./form-endpoint.png)
+![Formspree endpoint](/pages/form-endpoint.png)
 
 Copy the `Form Endpoint` URL and paste it into the `action` attribute of the form you created above.
 
@@ -130,7 +131,7 @@ Copy the `Form Endpoint` URL and paste it into the `action` attribute of the for
 
 ```
 
-Now when you submit your form, you should be redirected to a Thank You page. The form data will be submitted to your account on [Formspree.io](formspree.io).
+Now when you submit your form, you should be redirected to a Thank You page. The form data will be submitted to your account on [Formspree.io](/pages/formspree.io/).
 
 You can now adjust your form processing logic to change the [redirect page](https://help.formspree.io/hc/en-us/articles/360012378333--Thank-You-redirect), update the [notification email address](https://help.formspree.io/hc/en-us/articles/115008379348-Changing-a-form-email-address), or add plugins like [Google Sheets](https://help.formspree.io/hc/en-us/articles/360036563573-Use-Google-Sheets-to-send-your-submissions-to-a-spreadsheet), [Slack](https://help.formspree.io/hc/en-us/articles/360045648933-Send-Slack-notifications) and more.
 
@@ -157,7 +158,7 @@ $ git push -u origin main
 
 Your work now resides within the GitHub repository, which means that Pages is able to access it too.
 
-If this is your first Cloudflare Pages project, refer to [Get started](/get-started) for a complete setup guide. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
+If this is your first Cloudflare Pages project, refer to [Get started](/pages/get-started/) for a complete setup guide. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
 *   **Project name** – Your choice
 *   **Production branch** – `main`
@@ -173,5 +174,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-*   [Add a React form with Formspree](/tutorials/add-a-react-form-with-formspree)
-*   [HTML Forms](/tutorials/forms)
+*   [Add a React form with Formspree](/pages/tutorials/add-a-react-form-with-formspree/)
+*   [HTML Forms](/pages/tutorials/forms/)

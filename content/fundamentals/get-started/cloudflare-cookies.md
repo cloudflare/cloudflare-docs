@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Cloudflare Cookies
 ---
 
 # Cloudflare Cookies
@@ -16,7 +17,7 @@ Cookie data is processed in Cloudflare's data center in the United States and is
 
 ### \_\_cflb cookie for Cloudflare Load Balancer session affinity
 
-When enabling session affinity with [Cloudflare Load Balancer](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity), Cloudflare sets a `__cflb` cookie with a unique value on the first response to the requesting client. Cloudflare routes future requests to the same origin, optimizing network resource usage. In the event of a failover, Cloudflare sets a new `__cflb` cookie to direct future requests to the failover pool.
+When enabling session affinity with [Cloudflare Load Balancer](/load-balancing/understand-basics/session-affinity), Cloudflare sets a `__cflb` cookie with a unique value on the first response to the requesting client. Cloudflare routes future requests to the same origin, optimizing network resource usage. In the event of a failover, Cloudflare sets a new `__cflb` cookie to direct future requests to the failover pool.
 
 The `__cflb` cookie allows Cloudflare to return an end user to the same customer origin for a specific period of time configured by the customer. This allows the end user to have a seamless experience (for example, this cookie is used for keeping an end user’s items in a shopping cart while they continue to navigate around the website). This cookie is a session cookie that lasts from several seconds up to 24 hours.
 
@@ -28,7 +29,7 @@ Currently Cloudflare only supports Session Affinity in "orange-cloud" (proxied) 
 
 ### \_\_cf\_bm cookie for Cloudflare bot products
 
-Cloudflare's [bot products](https://developers.cloudflare.com/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the `__cf_bm` cookie on end-user devices that access customer sites protected by Bot Management or Bot Fight Mode. The `__cf_bm` cookie is necessary for these bot solutions to function properly.
+Cloudflare's [bot products](/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the `__cf_bm` cookie on end-user devices that access customer sites protected by Bot Management or Bot Fight Mode. The `__cf_bm` cookie is necessary for these bot solutions to function properly.
 
 This cookie expires after 30 minutes of continuous inactivity by the end user. The cookie contains information related to the calculation of Cloudflare’s proprietary bot score and, when Anomaly Detection is enabled on Bot Management, a session identifier. The information in the cookie (other than time-related information) is encrypted and can only be decrypted by Cloudflare.
 
@@ -36,7 +37,7 @@ A separate `__cf_bm` cookie is generated for each site that an end user visits, 
 
 <Aside type="note">
 
-Bot Management is available to Enterprise customers as an add-on service. Contact your Cloudflare account team to enable Bot Management for your site. Non-Enterprise customers can enable [Bot Fight Mode or Super Bot Fight Mode](https://developers.cloudflare.com/bots/).
+Bot Management is available to Enterprise customers as an add-on service. Contact your Cloudflare account team to enable Bot Management for your site. Non-Enterprise customers can enable [Bot Fight Mode or Super Bot Fight Mode](/bots/).
 
 </Aside>
 
@@ -52,9 +53,9 @@ The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from t
 
 ### \_\_cfwaitingroom for Cloudflare Waiting Rooms
 
-[Cloudflare’s Waiting Room](https://developers.cloudflare.com/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
+[Cloudflare’s Waiting Room](/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
 
-The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](https://developers.cloudflare.com/waiting-room/reference/waiting-room-cookie).
+The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](/waiting-room/reference/waiting-room-cookie).
 
 ### \_\_cfruid to support Cloudflare Rate Limiting Products
 

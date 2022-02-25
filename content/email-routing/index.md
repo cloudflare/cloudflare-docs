@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Email Routing
 ---
 
 # Cloudflare Email Routing
@@ -12,4 +14,4 @@ Email Routing is free and private by design. Cloudflare will not store or access
 
 ## Availability
 
-Email Routing (beta) is available to all Cloudflare customers using Cloudflare as an authoritative nameserver. For more information, refer to [Changing your domain nameservers to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup).
+Email Routing (beta) is available to all Cloudflare customers using Cloudflare as an authoritative nameserver. For more information, refer to [Changing your domain nameservers to Cloudflare](/dns/zone-setups/full-setup).

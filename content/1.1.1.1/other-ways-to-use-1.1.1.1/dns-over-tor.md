@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: tutorial
+title: DNS over Tor
+weight: 0
 ---
 
 # DNS over Tor
@@ -64,7 +65,7 @@ The hidden resolver is set up to listen on TCP ports 53 and 853 for DNS over TCP
 $ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
 ```
 
-From here, you can follow the regular guide for [Setting up 1.1.1.1](../../setup-1.1.1.1/), except you should always use `127.0.0.1` instead of 1.1.1.1. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
+From here, you can follow the regular guide for [Setting up 1.1.1.1](/1.1.1.1/setup-1.1.1.1/), except you should always use `127.0.0.1` instead of 1.1.1.1. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
 
 ### DNS over UDP
 
@@ -78,7 +79,7 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
-1.  Download `cloudflared` by following the guide for [Running a DNS over HTTPS Client](../../encrypted-dns/dns-over-https/dns-over-https-client).
+1.  Download `cloudflared` by following the guide for [Running a DNS over HTTPS Client](/1.1.1.1/encrypted-dns/dns-over-https/dns-over-https-client/).
 
 2.  Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 

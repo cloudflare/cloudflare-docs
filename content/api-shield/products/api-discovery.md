@@ -1,7 +1,9 @@
 ---
-order: 0
 pcx-content-type: concept
 type: overview
+title: API Discovery
+weight: 1
+layout: list
 ---
 
 import Availability from "../\_partials/\_availability.md"
@@ -32,7 +34,7 @@ API Discovery runs this process across all your authenticated endpoints, eventua
 *   `password_reset`
 *   `logout`
 
-This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](../volumetric-abuse-detection) and [sequential](../sequential-abuse-detection) attacks.
+This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](/api-shield/volumetric-abuse-detection/) and [sequential](/api-shield/sequential-abuse-detection/) attacks.
 
 <BlogBlurb/>
 
@@ -40,4 +42,4 @@ This process currently requires a session identifier, like an authorization toke
 
 To better understand your API traffic, you can also see [API requests](https://dash.cloudflare.com/?to=/:account/:zone/analytics/traffic/api-requests) in your application dashboard.
 
-This view adds a lightweight filter to application requests so you can better identify API traffic. If you want a more sophisticated understanding of API traffic, check out [Bot Tags](https://developers.cloudflare.com/bots/concepts/cloudflare-bot-tags).
+This view adds a lightweight filter to application requests so you can better identify API traffic. If you want a more sophisticated understanding of API traffic, check out [Bot Tags](/bots/concepts/cloudflare-bot-tags).

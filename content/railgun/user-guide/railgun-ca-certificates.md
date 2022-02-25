@@ -1,6 +1,7 @@
 ---
-order: 23
 pcx-content-type: reference
+title: Using Railgun with Origin CA Certificates
+weight: 24
 ---
 
 # Using Railgun with Origin CA Certificates

@@ -1,7 +1,9 @@
 ---
 title: Enable Splunk
-order: 63
 pcx-content-type: how-to
+weight: 64
+meta:
+  title: Enable Logpush to Splunk
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
@@ -68,7 +70,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
     *   **\<SPLUNK\_ENDPOINT\_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
         *   Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
         *   Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
-        *   Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk.
+        *   Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk.
     *   **\<SPLUNK\_CHANNEL\_ID>**: A unique channel ID. This is a random GUID that you can generate by:
         *   Using an online tool like the [GUID generator](https://www.guidgenerator.com/).
         *   Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`.
@@ -85,9 +87,9 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
 ```
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
@@ -153,7 +155,7 @@ Response:
 }
 ```
 
-Refer to the [Logpush FAQ](../../../faq#logpush-faq) for troubleshooting information.
+Refer to the [Logpush FAQ](/logs/faq/#logpush-faq) for troubleshooting information.
 
 ### 3. Create WAF rule for Splunk HEC endpoint (optional)
 

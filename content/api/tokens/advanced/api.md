@@ -1,7 +1,9 @@
 ---
 title: Creating tokens via API
-order: 10
 pcx-content-type: tutorial
+weight: 11
+meta:
+  title: Creating API tokens via the API
 ---
 
 # Creating API tokens via the API
@@ -18,7 +20,7 @@ It is highly recommended when using this template to not grant other permissions
 
 </Aside>
 
-Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](/tokens/advanced/restrictions) for more information.
+Limiting the use of the token via IP filtering or TTL is also recommended to reduce the potential for abuse in the event that the token is compromised. See [adding restrictions](/api/tokens/advanced/restrictions/) for more information.
 
 ## Creating API tokens with the API
 
@@ -96,11 +98,11 @@ For user resources, the only option is referencing one's self which is done with
 
 ### Permission groups
 
-The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](../../create/permissions), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/create/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### Define the restrictions
 
-Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/tokens/advanced/restrictions).
+Last in defining the token is setting up any limitations on how the token can be used. Currently, API Tokens allow for IP filtering and TTLs. You can find general info in [Restricting Token Use](/api/tokens/advanced/restrictions/).
 
 When defining TTLs you can set the time at which a token becomes active, `not_before` and the time when it expires, `expires_on`. Both of these fields take timestamps in UTC in the following format: `"2018-07-01T05:20:00Z"`.
 

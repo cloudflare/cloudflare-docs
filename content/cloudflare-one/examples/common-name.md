@@ -1,9 +1,12 @@
 ---
-order: 3
 type: example
-summary: The request will need to present a valid certificate with an expected common name.
+summary: The request will need to present a valid certificate with an expected
+  common name.
 tags:
-- Common name
+  - Common name
+title: Common name
+weight: 4
+layout: example
 ---
 
 # Common name

@@ -1,7 +1,7 @@
 ---
 title: Requirements
-order: 
 pcx-content-type: tutorial
+weight: 0
 ---
 
 # Requirements
@@ -20,7 +20,7 @@ The routers at your GRE tunnel endpoints must meet the following requirements to
 
 ## Draft Letter of Authorization
 
-Draft a [Letter of Authorization (LOA)](https://developers.cloudflare.com/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](https://developers.cloudflare.com/byoip/loa/loa-template) for an example.
+Draft a [Letter of Authorization (LOA)](/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](/byoip/loa/loa-template) for an example.
 
 <Aside type="note" header="Note">
 
@@ -30,11 +30,11 @@ The Letter of Authorization must be a PDF. Transit providers may reject the LOA 
 
 ## Verify Internet Routing Registry entries
 
-Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](https://developers.cloudflare.com/byoip/irr-records/verify-irr-entries).
+Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/irr-records/verify-irr-entries).
 
 ## Set maximum segment size
 
-![Packet flow diagram](../static/mss-values-and-packet.png)
+![Packet flow diagram](/magic-transit/static/mss-values-and-packet.png)
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 

@@ -1,6 +1,7 @@
 ---
 pcx-content-type: get-started
-order: 1
+title: Get started
+weight: 2
 ---
 
 # Get started
@@ -20,6 +21,6 @@ This guide covers the steps you need to take to set up Security Center in your C
 
 3.  Under **Perform initial scan**, click **Start scan**.
 
-    ![Security Center's home page where you can start an initial scan](../images/security-insights-start-scan.png)
+    ![Security Center's home page where you can start an initial scan](/security-center/static/security-insights-start-scan.png)
 
 The initial Security Insights scan will start. The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account. When the scan is complete, the status of the page will change from **Scan in Progress** to **Last Scan Completed: `<DATE_TIME>`**.

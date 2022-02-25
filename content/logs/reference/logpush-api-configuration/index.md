@@ -1,13 +1,14 @@
 ---
-order: 41
 pcx-content-type: concept
+title: Logpush API configuration
+weight: 42
 ---
 
 # Logpush API configuration
 
 ## Endpoints
 
-The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/reference/log-fields) page.
+The table below summarizes the job operations available. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
 The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
@@ -30,7 +31,7 @@ The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates t
 
 </TableWrap>
 
-For concrete examples, see the tutorial [Manage Logpush with cURL](/reference/logpush-api-configuration/examples/example-logpush-curl).
+For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/reference/logpush-api-configuration/examples/example-logpush-curl/).
 
 ## Connecting
 
@@ -141,13 +142,13 @@ curl -sv \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
 ```
 
-In Logpush, the Logpull options would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. Refer to [Logpull API parameters](/logpull/requesting-logs/#parameters) for more info.
+In Logpush, the Logpull options would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. Refer to [Logpull API parameters](/logs/logpull/requesting-logs/#parameters) for more info.
 
 If you do not change any options, you will receive logs with default fields that are unsampled (i.e., `sample=1`).
 
 The four options that you can customize are:
 
-1.  **Fields**: Refer to [Log fields](/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
+1.  **Fields**: Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
 2.  **Sampling rate**: Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10% (1 in 10) of all records`.
 3.  **Timestamp format**: The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 4.  **Optional redaction for CVE-2021-44228**: This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.

@@ -1,7 +1,9 @@
 ---
 title: Network Interconnect
-order: 3
 pcx-content-type: tutorial
+weight: 4
+meta:
+  title: Network Interconnect and Magic Transit
 ---
 
 # Network Interconnect and Magic Transit
@@ -10,7 +12,7 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 
 Use Cloudflare Network Interconnect with Magic Transit to decrease jitter, drive throughput improvements, and harden infrastructure to attack.
 
-For more information about Network Interconnect, refer to the [Network Interconnect documentation](https://developers.cloudflare.com/network-interconnect/).
+For more information about Network Interconnect, refer to the [Network Interconnect documentation](/network-interconnect/).
 
 ## Guidelines
 

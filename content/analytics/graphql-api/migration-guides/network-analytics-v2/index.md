@@ -1,7 +1,9 @@
 ---
-order: 13
 type: overview
 pcx-content-type: reference
+title: Network Analytics v1 to Network Analytics v2
+weight: 14
+layout: list
 ---
 
 # Network Analytics v1 to Network Analytics v2
@@ -10,7 +12,7 @@ In early 2020, Cloudflare released the first version of the Network Analytics da
 
 ## Before you start
 
-Learn more about the [concepts introduced in Network Analytics v2](/graphql-api/migration-guides/network-analytics-v2/about).
+Learn more about the [concepts introduced in Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2/about/).
 
 ## Feature comparison
 
@@ -21,8 +23,8 @@ The following table compares the features of NAv1 and NAv2:
 | Feature | NAv1 | NAv2 |
 |---------|------|------|
 | Sampling rate | 1/8,192 packets | Varies between 1/100 and 1/10,000 packets,<br/> depending on the mitigation service. |
-| Sampling method | Core Sample Enrichment | [Edge Sample Enrichment](/graphql-api/migration-guides/network-analytics-v2/about#edge-sample-enrichment) |
-| Historical data retention method | Aggregated roll-ups | [Adaptive Bitrate](/graphql-api/migration-guides/network-analytics-v2/about#adaptive-bitrate-sampling) |
+| Sampling method | Core Sample Enrichment | [Edge Sample Enrichment](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#edge-sample-enrichment) |
+| Historical data retention method | Aggregated roll-ups | [Adaptive Bitrate](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#adaptive-bitrate-sampling) |
 | Retention period | 1-min roll-ups: 30 days<br/>1-hour roll-ups: 6 months<br/>1-day roll-ups: 1 year<br/>Attack roll-ups: 1 year | All nodes: 90 days |
 | Attack mitigation systems | dosd and gatebot | dosd, gatebot, flowtrackd\*, and Magic Firewall\* |
 | Examples of new fields | n/a | Rule ID<br/>GRE tunnel ID<br/>Packet size |
@@ -50,13 +52,13 @@ NAv2 uses the same API endpoint but makes use of new nodes. While NAv1 has three
 
 </TableWrap>
 
-Each row represents one packet sample. The data is sampled at Cloudflare’s edge at [various rates](/graphql-api/migration-guides/network-analytics-v2/node-reference). You can also query the sample rate from the nodes using the `sample_interval` field.
+Each row represents one packet sample. The data is sampled at Cloudflare’s edge at [various rates](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/). You can also query the sample rate from the nodes using the `sample_interval` field.
 
-For reference information on NAv2 nodes, refer to the [NAv2 node reference](/graphql-api/migration-guides/network-analytics-v2/node-reference).
+For reference information on NAv2 nodes, refer to the [NAv2 node reference](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/).
 
 ## Schema comparison
 
-Refer to [NAv1 to NAv2 schema map](/graphql-api/migration-guides/network-analytics-v2/schema-map) for a mapping of schema fields from NAv1 nodes to NAv2 nodes. Follow this recommended mapping when migrating to NAv2.
+Refer to [NAv1 to NAv2 schema map](/analytics/graphql-api/migration-guides/network-analytics-v2/schema-map/) for a mapping of schema fields from NAv1 nodes to NAv2 nodes. Follow this recommended mapping when migrating to NAv2.
 
 ## Example
 

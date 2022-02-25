@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: how-to
+title: DNS over Telegram
+weight: 0
 ---
 
 # DNS over Telegram
@@ -19,7 +20,7 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 
 <div class="medium-img">
 
-![Search](../static/example-com.png)
+![Search](/1.1.1.1/static/example-com.png)
 
 </div>
 
@@ -47,6 +48,6 @@ Example:
 
 <div class="medium-img">
 
-![Search](../static/aaaa-example-com.png)
+![Search](/1.1.1.1/static/aaaa-example-com.png)
 
 </div>

@@ -1,21 +1,22 @@
 ---
-order: 5
 pcx-content-type: reference
+title: Network operators
+weight: 6
 ---
 
 # Network operators
 
-Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/setup-1.1.1.1) and [1.1.1.1 for Families](/1.1.1.1-for-families) in place of operating their own recursive DNS infrastructure.
+Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup-1.1.1.1/) and [1.1.1.1 for Families](/1.1.1.1/1.1.1.1-for-families/) in place of operating their own recursive DNS infrastructure.
 
 Using 1.1.1.1 can improve performance for end-users due to Cloudflare's extensive [global network](https://www.cloudflare.com/network/), as well as provide higher overall cache hit rates due to our regional caches.
 
-The 1.1.1.1 resolver was designed with a privacy-first approach. Refer to our [data and privacy policies](/privacy/public-dns-resolver) for what is logged and retained by 1.1.1.1.
+The 1.1.1.1 resolver was designed with a privacy-first approach. Refer to our [data and privacy policies](/1.1.1.1/privacy/public-dns-resolver/) for what is logged and retained by 1.1.1.1.
 
 ## Configuring 1.1.1.1
 
 There are multiple ways to use 1.1.1.1 as an operator:
 
-*   Including a [DNS over HTTPS](/encrypted-dns/dns-over-https) or [DNS over TLS](/encrypted-dns/dns-over-tls) proxy on end-user routers or devices (best for privacy).
+*   Including a [DNS over HTTPS](/1.1.1.1/encrypted-dns/dns-over-https/) or [DNS over TLS](/1.1.1.1/encrypted-dns/dns-over-tls/) proxy on end-user routers or devices (best for privacy).
 *   Pushing 1.1.1.1 to devices via DHCP/PPP within an operator network (recommended; most practical).
 *   Having a DNS proxy on a edge router make requests to 1.1.1.1 on behalf of all connected devices.
 
@@ -25,7 +26,7 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 <Aside type="note">
 
-[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
 If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 
@@ -43,7 +44,7 @@ Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3`  | `https://family.cl
 
 </TableWrap>
 
-You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1-for-families) endpoints.
+You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/1.1.1.1-for-families/) endpoints.
 
 ## Rate Limiting
 

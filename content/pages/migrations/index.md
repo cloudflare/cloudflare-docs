@@ -1,8 +1,10 @@
 ---
 type: overview
 hideChildren: true
-order: 4
 pcx-content-type: navigation
+title: Migration guides
+weight: 5
+layout: list
 ---
 
 import ContentTable from "../components/content-table"

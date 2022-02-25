@@ -1,7 +1,9 @@
 ---
-order: 1
 pcx-content-type: navigation
 type: overview
+title: Products
+weight: 2
+layout: list
 ---
 
 # Products

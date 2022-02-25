@@ -1,12 +1,14 @@
 ---
 title: 2 – Track your history
-order: 2
 pcx-content-type: tutorial
+weight: 3
+meta:
+  title: Track your history
 ---
 
 # Track your history
 
-In the [Initialize Terraform](/tutorial/initialize-terraform) tutorial, you created and applied some basic Cloudflare configuration. Terraform applied this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file.
+In the [Initialize Terraform](/terraform/tutorial/initialize-terraform/) tutorial, you created and applied some basic Cloudflare configuration. Terraform applied this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file.
 
 ```sh
 $ head -n13 cloudflare.tf | tail -n4

@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: reference
+title: Operator Guide
+weight: 5
 ---
 
 # Operator Guide

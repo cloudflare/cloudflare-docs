@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 2
+title: Advanced Usage
+weight: 3
 ---
 
 # Advanced Usage

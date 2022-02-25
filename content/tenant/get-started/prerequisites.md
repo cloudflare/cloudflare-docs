@@ -1,7 +1,7 @@
 ---
 title: Prerequisites
-order: 0
 pcx-content-type: get-started
+weight: 1
 ---
 
 # Prerequisites

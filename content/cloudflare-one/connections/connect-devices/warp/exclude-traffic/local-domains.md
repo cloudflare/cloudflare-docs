@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Local Domain Fallback
+weight: 6
 ---
 
 # Local Domain Fallback
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans |
 

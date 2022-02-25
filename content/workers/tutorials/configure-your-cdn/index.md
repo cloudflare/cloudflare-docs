@@ -1,8 +1,9 @@
 ---
 updated: 2020-04-15
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Configure your CDN
 ---
 
 import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
@@ -52,7 +53,7 @@ $ wrangler generate serve-cdn-assets
 $ cd serve-cdn-assets
 ```
 
-By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/examples), there is a variety of options to help you get started.
+By default, Wrangler will use our [`worker-template`](https://github.com/cloudflare/worker-template). Wrangler templates are git repositories, so if you want to create your own templates, or use one from our [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
 
 Cloudflare’s `worker-template` includes support for building and deploying JavaScript-based projects. Inside of your new `serve-cdn-assets` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 
@@ -81,7 +82,7 @@ When a Worker receives a `fetch` event, the script must use `event.respondWith` 
 
 ## Build
 
-Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. You can [build full applications](/tutorials/build-a-slackbot), or [serverless functions](/tutorials/build-a-qr-code-generator) on Workers using the same tooling and process as what you will be building with this tutorial.
+Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. You can [build full applications](/workers/tutorials/build-a-slackbot/), or [serverless functions](/workers/tutorials/build-a-qr-code-generator/) on Workers using the same tooling and process as what you will be building with this tutorial.
 
 The Cloudflare Workers project built in this tutorial will be a serverless function that runs on a wildcard route and receives requests. When the serverless function receives an incoming request, it should parse the URL, find what asset is being requested and serve it from the configured Cloud Storage bucket.
 
@@ -125,7 +126,7 @@ async function handleRequest(event) {
 
 ### Routing to your assets
 
-Reviewing the original definition of this project, at the beginning of [Build](/tutorials/configure-your-cdn#build), the `serveAsset` function should parse the URL, find what asset is being requested, and serve it from the configured Cloud Storage bucket. To do this, the `event.request.url` field should be parsed using the `URL` library, and set to `url`.
+Reviewing the original definition of this project, at the beginning of [Build](/workers/tutorials/configure-your-cdn/#build), the `serveAsset` function should parse the URL, find what asset is being requested, and serve it from the configured Cloud Storage bucket. To do this, the `event.request.url` field should be parsed using the `URL` library, and set to `url`.
 
 Given an instance of the `URL` class, `url`, there are a number of useful properties that can be used to query the incoming request. `serveAsset` should check the `pathname`, which contains the part of the URL after the `host`: for example, given the URL `https://assets.mysite.com/faces/1.jpg`, the pathname will be `/faces/1.jpg`:
 
@@ -158,7 +159,7 @@ function serveAsset(event) {
 
 ### Custom caching
 
-At this point in the tutorial, deploying this script would give you a fully-functional project you could use to retrieve assets from your Cloud Storage bucket. You will now continue to explore how to configure your CDN with Workers by making use of the [Cache API](/learning/how-the-cache-works).
+At this point in the tutorial, deploying this script would give you a fully-functional project you could use to retrieve assets from your Cloud Storage bucket. You will now continue to explore how to configure your CDN with Workers by making use of the [Cache API](/workers/learning/how-the-cache-works/).
 
 To cache responses in a Workers function, the Cache API provides `cache.match`, to check for the presence of a cached asset, and `cache.put`, to cache a `response` for a given `request`. Given those two functions, the general flow will look like this:
 
@@ -263,10 +264,10 @@ $ wrangler publish
 
 After deploying your project, open your browser to test retrieving your assets. For example, if your Workers project is deployed to the route `myassets.com`, going to the URL `myassets.com/faces/1.jpg` should show an uploaded asset. In addition, you can inspect the request in your browser to confirm that it is being cached. Cloudflare’s CDN will send a `cf-cache-status` header, with `HIT` or `MISS`, to indicate whether the content was cached or not:
 
-![Result](./media/result.png)
+![Result](../media/result.png)
 
 ## Related resources
 
 In this tutorial, you built and published a serverless function to Cloudflare Workers for serving assets from cloud storage. If you would like to review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/assets-on-workers).
 
-If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).
+If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

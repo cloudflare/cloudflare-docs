@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: Generic SAML 2.0
+weight: 1
 ---
 
 # Generic SAML 2.0
@@ -21,8 +22,8 @@ Depending on the identity provider you would like to integrate, the following st
 The typical setup requirements are:
 
 1.  Create a new integration in the identity provider with the type set as **SAML**.
-2.  Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
-3.  Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
+2.  Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
+3.  Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/cloudflare-one/glossary/#team-name).
 4.  Set the Name ID/Email format to `emailAddress`.
 5.  \[Optional] Set the signature policy to *Always Sign*.
 6.  \[Optional] If your identity provider supports metadata file configuration, use the endpoint:  `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
@@ -45,12 +46,12 @@ This optional configuration signs the Access JWT with the Cloudflare Access publ
 
 ### Email attribute name
 
-Many [Zero Trust policies](/policies/zero-trust) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
+Many [Zero Trust policies](/cloudflare-one/policies/zero-trust/) depend on a user’s email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.
 
 Example in Okta:
 
-![SAML dialog](../../static/documentation/identity/saml-assertion.png)
-![SAML dialog](../../static/documentation/identity/saml-attributes.png)
+![SAML dialog](/cloudflare-one/static/documentation/identity/saml-assertion.png)
+![SAML dialog](/cloudflare-one/static/documentation/identity/saml-attributes.png)
 
 ### SAML attributes
 
@@ -58,11 +59,11 @@ SAML attributes can be added to the Access JWT. These can then be consumed by se
 
 Example in Okta:
 
-![SAML dialog](../../static/documentation/identity/attribute-statements.png)
+![SAML dialog](/cloudflare-one/static/documentation/identity/attribute-statements.png)
 
 How to receive these Attributes in Cloudflare:
 
-![SAML dialog](../../static/documentation/identity/attributes-cloudflare.png)
+![SAML dialog](/cloudflare-one/static/documentation/identity/attributes-cloudflare.png)
 
 ### SAML header attributes
 

@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: reference
+title: Delete images
+weight: 7
 ---
 
 # Delete images

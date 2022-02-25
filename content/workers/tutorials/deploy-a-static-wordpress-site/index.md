@@ -1,8 +1,9 @@
 ---
 updated: 2020-07-25
 difficulty: Intermediate
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Deploy a static WordPress site
 ---
 
 import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
@@ -19,7 +20,7 @@ As of August 2020, the WP2Static plugin is closed for downloads on WordPress.org
 
 ## Overview
 
-In this tutorial, you will migrate a WordPress site to Cloudflare Workers, making use of [Workers Sites](/platform/sites). Serving a static version of your WordPress site has many advantages over directly exposing your WordPress site. While WordPress is extremely powerful and easy to use, the consistent discovery of new vulnerabilities make it a target for hackers to attack. Because WordPress is built on PHP, each incoming request to your site regenerates a new response on the server – for most websites this is not necessary and leads to scaling issues when your site receives a lot of traffic.
+In this tutorial, you will migrate a WordPress site to Cloudflare Workers, making use of [Workers Sites](/workers/platform/sites/). Serving a static version of your WordPress site has many advantages over directly exposing your WordPress site. While WordPress is extremely powerful and easy to use, the consistent discovery of new vulnerabilities make it a target for hackers to attack. Because WordPress is built on PHP, each incoming request to your site regenerates a new response on the server – for most websites this is not necessary and leads to scaling issues when your site receives a lot of traffic.
 
 You will use the free WordPress plugin [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/), which generates a completely static (HTML, CSS, and JavaScript) version of your WordPress site. Using [Wrangler](https://github.com/cloudflare/wrangler), you will publish the site to Cloudflare Workers. The Workers Sites functionality built into Wrangler includes support for serving and caching your site directly in Cloudflare’s CDN, enabling users to view your site quickly and securely.
 
@@ -34,7 +35,7 @@ This tutorial assumes that you are:
 
 To start, install the [WP2Static](https://wordpress.org/plugins/static-html-output-plugin/) plugin to export your WordPress site to a ZIP file. In your WordPress admin, go to the **Add Plugins** page, by default at `/wp-admin/plugin-install.php`. In the search bar, search for `WP2Static` and confirm that the resulting plugin that you will be installing matches the plugin below.
 
-![Installing the plugin](./media/wordpress--install-plugin.png)
+![Installing the plugin](../media/wordpress--install-plugin.png)
 
 Select **Install** on the plugin. After it has finished installing, select **Activate**.
 
@@ -46,11 +47,11 @@ From the **Where will you host...** dropdown on the page, select *ZIP archive (.
 
 To do your first export, select **Start static site export** (this operation may take a while), and when it completes, save the ZIP file somewhere you can easily find later.
 
-![Exporting your WordPress site](./media/wordpress--export.png)
+![Exporting your WordPress site](../media/wordpress--export.png)
 
 ## Creating the Workers project
 
-With an export ready of your site, it is time to deploy. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/get-started/guide) guide.
+With an export ready of your site, it is time to deploy. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/workers/get-started/guide/) guide.
 
 Once Wrangler is installed and configured, create a new project for deploying your static WordPress site to Workers. To generate a new project, run:
 
@@ -61,7 +62,7 @@ header: Generate a new project
 $ wrangler generate --site wp-static
 ```
 
-The [`--site`](/platform/sites/configuration) flag indicates that you want to deploy a static site: your static WordPress site.
+The [`--site`](/workers/platform/sites/configuration/) flag indicates that you want to deploy a static site: your static WordPress site.
 
 ### Port the WordPress site
 
@@ -103,13 +104,13 @@ $ tree wp-static
 
 ## Deploying
 
-To preview and deploy your application, fill out the fields in your `wrangler.toml` file — the configuration file for this project. Fill out the [`account_id`](/get-started/guide#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
+To preview and deploy your application, fill out the fields in your `wrangler.toml` file — the configuration file for this project. Fill out the [`account_id`](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id) field in `wrangler.toml` with your Cloudflare account ID.
 
 Using Wrangler’s preview feature, you can quickly upload a version of your site to the Cloudflare Workers preview service and review that the static export looks as expected. Running `wrangler dev` will upload your static site and preview it in a browser window.
 
-When your site looks correct in Wrangler’s preview, you can move onto publishing your project to a domain. For a guide on how to do this, refer to [Get started](/get-started/guide#6-configure-your-project-for-deployment).
+When your site looks correct in Wrangler’s preview, you can move onto publishing your project to a domain. For a guide on how to do this, refer to [Get started](/workers/get-started/guide/#6-configure-your-project-for-deployment).
 
-[![Demo site](./media/wordpress--demo.png)](https://wp-static.signalnerve.workers.dev)
+[![Demo site](../media/wordpress--demo.png)](https://wp-static.signalnerve.workers.dev)
 
 ## Limitations
 
@@ -123,7 +124,7 @@ There are some features available in WordPress sites that will not be supported 
 
 Deploying your WordPress site to Workers has benefits for your site’s performance, security, and cost. With a static version of your site being served, you can do a number of things with your live WordPress installation:
 
-*   Move your WordPress install to a private URL or subdomain, and serve the static version of your site by deploying the Workers application to your domain. Refer to [Deploying to a Domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) to learn more.
+*   Move your WordPress install to a private URL or subdomain, and serve the static version of your site by deploying the Workers application to your domain. Refer to [Deploying to a Domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) to learn more.
 *   Run your WordPress instance locally, or put your now-hidden WordPress instance behind [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
 *   Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting. Your Cloudflare Workers plan is priced per-request and because you can host up to thirty sites on your account, serving a high number of static WordPress sites can be an order of magnitude cheaper on Workers.
 

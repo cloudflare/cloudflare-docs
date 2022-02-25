@@ -1,20 +1,22 @@
 ---
 pcx-content-type: how-to
 type: overview
-order: 2
+title: Add rules to phase entry point rulesets
+weight: 3
+layout: list
 ---
 
 # Add rules to phase entry point rulesets
 
 A phase entry point ruleset contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
-To add one or more rules to a phase entry point ruleset, use the [Update ruleset](/rulesets-api/update) method of the [Rulesets API](/rulesets-api). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
+To add one or more rules to a phase entry point ruleset, use the [Update ruleset](/ruleset-engine/rulesets-api/update/) method of the [Rulesets API](/ruleset-engine/rulesets-api/). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 
-If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/rulesets-api/add-rule) API method instead. In this case, the request only includes the definition of the new rule.
+If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) API method instead. In this case, the request only includes the definition of the new rule.
 
 <Aside type="note" header="Creating an entry point ruleset">
 
-Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using the [Create ruleset](/rulesets-api/create) method.
+Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method.
 
 </Aside>
 
@@ -26,7 +28,7 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 <summary>Example: Set the rules of a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update ruleset](/rulesets-api/update) API method.
+The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update ruleset](/ruleset-engine/rulesets-api/update/) API method.
 
 ```json
 ---
@@ -104,7 +106,7 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Add rule to ruleset](/rulesets-api/add-rule) API method.
+The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) API method.
 
 ```json
 ---
@@ -168,4 +170,4 @@ header: Response
 
 ## Next steps
 
-To deploy a ruleset in a phase, add a rule that executes that ruleset to the entry point ruleset. For more information, see [Deploy rulesets](/basic-operations/deploy-rulesets).
+To deploy a ruleset in a phase, add a rule that executes that ruleset to the entry point ruleset. For more information, see [Deploy rulesets](/ruleset-engine/basic-operations/deploy-rulesets/).

@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: reference
+title: Glossary
+weight: 11
 ---
 
 # Glossary
@@ -27,7 +28,7 @@ Cloudflare Zero Trust customers can use the Cloudflare WARP application to conne
 
 ***
 
-## [App Launcher](/applications/app-launcher)
+## [App Launcher](/cloudflare-one/applications/app-launcher/)
 
 The App Launcher portal provides end users with a single dashboard from which they can open applications secured by Cloudflare Zero Trust.
 
@@ -35,13 +36,13 @@ The App Launcher portal provides end users with a single dashboard from which th
 
 A DNS zone is a portion of the DNS namespace that is managed by a specific organization or administrator. For a domain to be active on Cloudflare, its nameservers need to be changed to Cloudflare's.
 
-## [application](/applications/)
+## [application](/cloudflare-one/applications/)
 
 The resource being protected by Cloudflare Zero Trust. An application can be a subdomain, a path, or a SaaS application.
 
 ## Authenticated Origin Pulls
 
-[Authenticated Origin Pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
+[Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
 ## certificate pinning
 
@@ -67,7 +68,7 @@ Each device connected to the Internet has a unique IP address which other machin
 
 By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
 
-[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/connections/connect-devices/agentless/dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+[DNS over TLS (DoT)](#dns-over-tls) and [DNS over HTTPS (DoH)](/cloudflare-one/connections/connect-devices/agentless/dns-over-https/) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
 
 DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS request in an HTTPS request. It uses HTTPS and HTTP/2 to encrypt traffic at the application layer. With DoH, DNS queries and responses are camouflaged within other HTTPS traffic, since it all comes and goes from the same port. This means they cannot easily be blocked without blocking all other HTTPS traffic as well, but it also provides users with greater privacy, as network administrators will have no visibility on the DNS queries hidden within the larger flow of HTTPS traffic.
 
@@ -83,7 +84,7 @@ Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously kn
 
 By default, DNS queries and responses are sent from a DNS client to a DNS server using the UDP or TCP protocols — which means they’re sent in plaintext, without encryption. This lack of privacy has a huge impact on security: unencrypted queries can be tracked and spoofed by malicious actors, advertisers, ISPs, and others.
 
-[DNS over TLS (DoT)](/connections/connect-devices/agentless/dns-over-tls) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
+[DNS over TLS (DoT)](/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/) and [DNS over HTTPS (DoH)](#dns-over-https) are two standards developed for encrypting plaintext DNS traffic to prevent untrustworthy entities from interpreting and manipulating it. The main difference between DoT and DoH is the port they use to encrypt traffic, and the encryption method they use.
 
 DNS over TLS uses its own port, 853, to wrap DNS requests within a TLS connection. With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of the user datagram protocol (UDP). Because DoT has a dedicated port, anyone with network visibility can see DoT traffic coming and going, even though the requests and responses themselves are encrypted. This gives administrators the ability to monitor and block DNS queries, which is important for identifying and stopping malicious traffic.
 
@@ -99,7 +100,7 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/connections/connect-networks/locations)
+## [location](/cloudflare-one/connections/connect-networks/locations/)
 
 Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
@@ -123,9 +124,9 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
-## [policy](/policies)
+## [policy](/cloudflare-one/policies/)
 
 A set of rules that regulate your network activity, such as who logs into your applications, or which websites your users can reach.
 
@@ -135,7 +136,7 @@ A set of rules that regulate your network activity, such as who logs into your a
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/policies/filtering/dns-policies-builder)
+## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies-builder/)
 
 A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
@@ -183,7 +184,7 @@ A technology which combines several different application login screens into one
 
 ## team domain
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Cloudflare Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.
 
 ## team name
 

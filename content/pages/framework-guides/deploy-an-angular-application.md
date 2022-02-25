@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Deploy an Angular application
 ---
 
 import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
@@ -111,7 +112,7 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 </Aside>
 
@@ -119,8 +120,8 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](/platform/preview-deployments), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Angular CLI site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
+By completing this guide, you have successfully deployed your Angular CLI site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

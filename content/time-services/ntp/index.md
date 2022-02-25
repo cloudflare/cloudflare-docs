@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 1
+title: Network Time Protocol
+weight: 2
 ---
 
 # Network Time Protocol

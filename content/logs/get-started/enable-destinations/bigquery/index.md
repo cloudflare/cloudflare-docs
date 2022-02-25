@@ -1,7 +1,9 @@
 ---
 title: Enable BigQuery
-order: 61
 pcx-content-type: how-to
+weight: 62
+meta:
+  title: Enable Logpush to BigQuery
 ---
 
 # Enable Logpush to BigQuery

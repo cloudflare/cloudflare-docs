@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Encrypt DNS traffic
+weight: 4
 ---
 
 # Encrypt DNS traffic

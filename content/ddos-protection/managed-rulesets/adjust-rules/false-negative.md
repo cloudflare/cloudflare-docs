@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 2
+title: Handle a false negative or an incomplete mitigation
+weight: 3
 ---
 
 # Handle a false negative or an incomplete mitigation
@@ -13,7 +14,7 @@ To address a false negative:
 
 *   If you are a WAF/CDN customer, follow the steps in the [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196) page, which guides you on enabling the *Under Attack* mode and creating Rate Limiting and Firewall rules as needed.
 
-*   If you are a Magic Transit customer, [use Magic Firewall rules](https://developers.cloudflare.com/magic-firewall/how-to/add-rules) to help mitigate the attack.
+*   If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules) to help mitigate the attack.
 
 ## Incomplete mitigations
 
@@ -76,4 +77,4 @@ The **DDoS** tab under **Firewall** is currently only available to the WAF/CDN c
 
 </Aside>
 
-Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/reference/analytics).
+Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).

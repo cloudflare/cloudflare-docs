@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Bundle methodologies
+weight: 4
 ---
 
 # Bundle methodologies

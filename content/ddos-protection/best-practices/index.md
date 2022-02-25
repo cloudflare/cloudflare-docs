@@ -1,7 +1,7 @@
 ---
 title: Best practices
 pcx-content-type: navigation
-order: 6
+weight: 7
 ---
 
 # Best practices

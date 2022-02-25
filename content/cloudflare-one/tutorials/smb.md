@@ -2,6 +2,7 @@
 updated: 2021-03-30
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Connect through Cloudflare Access to SMB file shares
 ---
 
 # Connect through Cloudflare Access to SMB file shares
@@ -19,7 +20,7 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 1.  Create a Cloudflare account
 2.  Add an active zone to Cloudflare
-3.  [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/tunnel-guide) on the host and client machines
+3.  [Install the `cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) on the host and client machines
 
 ***
 
@@ -47,7 +48,7 @@ If you are working on a machine that does not have a browser, or a browser windo
 
 ## Secure the subdomain with Cloudflare Access
 
-Next, protect the subdomain you plan to register with a Cloudflare Access application policy. Follow [these instructions](/policies/zero-trust/) to build a new policy to control who can connect to the drive.
+Next, protect the subdomain you plan to register with a Cloudflare Access application policy. Follow [these instructions](/cloudflare-one/policies/zero-trust/) to build a new policy to control who can connect to the drive.
 
 For example, if you share the drive at `smb.site.com`, build a policy to only allow your team members to connect to that subdomain.
 

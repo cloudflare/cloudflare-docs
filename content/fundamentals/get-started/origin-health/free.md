@@ -1,7 +1,8 @@
 ---
-order: 2
 pcx-content-type: how-to
 hidden: true
+title: Protect your origin server — Free
+weight: 3
 ---
 
 import OriginHealthOverview from "../../\_partials/\_origin-health-overview"
@@ -34,8 +35,8 @@ import LoadBalancing from "../../\_partials/\_origin-load-balancing"
 
 Additionally, adjust various settings in your **Firewall** to restrict potentially malicious traffic:
 
-*   Set up customized [firewall rules](https://developers.cloudflare.com/firewall/cf-firewall-rules)
-*   Enable [bot protection](https://developers.cloudflare.com/bots/get-started)
+*   Set up customized [firewall rules](/firewall/cf-firewall-rules)
+*   Enable [bot protection](/bots/get-started)
 *   Block, challenge, or allow specific addresses with [IP access rules](https://support.cloudflare.com/hc/articles/217074967)
 *   Create [rate limiting](https://support.cloudflare.com/hc/articles/115001635128) rules as a final defense against malicious traffic (usage-based billing)
 

@@ -1,5 +1,6 @@
 ---
 pcx-content-type: reference
+title: Domain statuses
 ---
 
 # Domain statuses
@@ -10,12 +11,12 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
 *   **Pending Nameserver Update**:
 
-    *   [*Full setups*](/zone-setups/full-setup): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
-    *   [*Partial setups*](/zone-setups/partial-setup): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
+    *   [*Full setups*](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
+    *   [*Partial setups*](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
 
       <Aside type="warning">
 
-    Pending zones cannot be used to [proxy traffic to Cloudflare](/manage-dns-records/reference/proxied-dns-records#limitations-for-pending-domains).
+    Pending zones cannot be used to [proxy traffic to Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/#limitations-for-pending-domains).
 
       </Aside>
 

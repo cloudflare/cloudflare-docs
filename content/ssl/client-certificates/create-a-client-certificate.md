@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: Create a client certificate
+weight: 3
 ---
 
 # Create a client certificate
@@ -29,4 +30,4 @@ If you need to use certificates issued by another CA, use <a href="https://devel
 
 5.  To close the dialog, click **OK**.
 
-You can now embed the client certificate in your mobile app or IoT device. For an example, refer to [Configure your mobile app or Internet-of-things device](/client-certificates/configure-your-mobile-app-or-iot-device).
+You can now embed the client certificate in your mobile app or IoT device. For an example, refer to [Configure your mobile app or Internet-of-things device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/).

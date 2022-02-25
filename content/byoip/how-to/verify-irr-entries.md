@@ -1,7 +1,6 @@
 ---
 title: Verify IRR entries
 pcx-content-type: reference
-
 ---
 
 # Verify IRR entries
@@ -16,7 +15,7 @@ Each IRR entry record must include the following information:
 
 ## Add or update IRR entries
 
-[Add or update IRR entries](/best-practices/irr-entries) when they meet any of these criteria:
+[Add or update IRR entries](/byoip/best-practices/irr-entries/) when they meet any of these criteria:
 
 *   The entry is missing.
 *   The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
@@ -98,6 +97,6 @@ source:         APNIC
 
 WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
-For more information, see [best practices for IRR entry updates](/best-practices/irr-entries).
+For more information, see [best practices for IRR entry updates](/byoip/best-practices/irr-entries/).
 
 </Aside>

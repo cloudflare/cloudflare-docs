@@ -7,13 +7,13 @@ pcx-content-type: how-to
 
 <Aside>
 
-To prevent issues and simplify the advertisement process during an attack scenario, refer to [best practices for managing dynamic advertisement](/best-practices/dynamic-advertisement).
+To prevent issues and simplify the advertisement process during an attack scenario, refer to [best practices for managing dynamic advertisement](/byoip/best-practices/dynamic-advertisement/).
 
 </Aside>
 
 ## Before you start (Magic Transit customers only)
 
-If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from *Withdrawn* to *Advertised*), make sure you disable the [Advanced TCP Protection Managed Ruleset](https://developers.cloudflare.com/ddos-protection/managed-rulesets/tcp-protection) first.
+If you are advertising a new prefix or enabling the advertisement of an existing IP prefix (changing it from *Withdrawn* to *Advertised*), make sure you disable the [Advanced TCP Protection Managed Ruleset](/ddos-protection/managed-rulesets/tcp-protection) first.
 
 After enabling the prefix advertisement or advertising a new prefix, do the following:
 

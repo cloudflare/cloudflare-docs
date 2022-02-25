@@ -1,6 +1,7 @@
 ---
-order: 12
 pcx-content-type: how-to
+title: Okta
+weight: 13
 ---
 
 # Okta
@@ -12,11 +13,11 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 3.  Click **Create App Integration** in the top right corner.
 4.  In the pop-up dialog, select **OpenID Connect**.
 
-![OpenID connect option](../../static/documentation/identity/okta/okta-1.png)
+![OpenID connect option](/cloudflare-one/static/documentation/identity/okta/okta-1.png)
 
 1.  Choose `Web Application` as the Application type and click **Next**.
 
-2.  Enter any name for the application. In the **Login redirect URIs** field, input your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2.  Enter any name for the application. In the **Login redirect URIs** field, input your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -30,13 +31,13 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 6.  Scroll down to the OpenID ConnectID Token.
 
-    ![OpenID connect option](../../static/documentation/identity/okta/okta-2.png)
+    ![OpenID connect option](/cloudflare-one/static/documentation/identity/okta/okta-2.png)
 
 7.  Click **Edit** and set the Groups claim filter to *Matches regex* and the value `.*`.
 
 8.  Return to the **General** tab. Scroll down to find your credentials, and copy the ID and secret.
 
-    ![Client credentials](../../static/documentation/identity/okta/okta-3.png)
+    ![Client credentials](/cloudflare-one/static/documentation/identity/okta/okta-3.png)
 
 9.  On the Zero Trust dashboard, navigate to **Settings** > **Authentication**.
 

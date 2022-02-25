@@ -1,7 +1,9 @@
 ---
 title: Console Connect
-order: 1
 pcx-content-type: tutorial
+weight: 2
+meta:
+  title: Console Connect Users
 ---
 
 # Console Connect Users

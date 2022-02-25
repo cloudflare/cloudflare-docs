@@ -1,7 +1,9 @@
 ---
 title: Enable New Relic
-order: 63
 pcx-content-type: how-to
+weight: 64
+meta:
+  title: Enable Logpush to New Relic
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
@@ -50,7 +52,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 *   **name** (optional) - Use your domain name as the job name.
 
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](https://developers.cloudflare.com/logs/reference/logpush-api-configuration#options).
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration#options).
 
     <Aside type="note" header="Note">
 
@@ -72,7 +74,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 *   **max\_upload\_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields) for the full list of supported datasets.
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields) for the full list of supported datasets.
 
 Example request using cURL:
 

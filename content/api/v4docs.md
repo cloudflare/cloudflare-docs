@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: navigation
+title: API v4 documentation
+weight: 4
 ---
 
 # API v4 documentation

@@ -1,7 +1,9 @@
 ---
 title: Common tasks
-order: 3
 pcx-content-type: navigation
+weight: 4
+meta:
+  title: Common Page Shield tasks
 ---
 
 # Common Page Shield tasks

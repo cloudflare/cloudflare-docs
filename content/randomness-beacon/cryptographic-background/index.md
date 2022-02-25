@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Cryptographic Background
+weight: 3
 ---
 
 # Cryptographic Background

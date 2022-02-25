@@ -1,7 +1,9 @@
 ---
 title: Common tasks
-order: 3
 pcx-content-type: navigation
+weight: 4
+meta:
+  title: Common Security Center tasks
 ---
 
 # Common Security Center tasks

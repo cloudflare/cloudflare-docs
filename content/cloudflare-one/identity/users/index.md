@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: navigation
+title: User management
+weight: 5
 ---
 
 # User management

@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: configuration
+title: Verify custom hostnames
+weight: 5
 ---
 
 # Verify custom hostnames
@@ -9,7 +10,7 @@ Cloudflare verifies ownership of each new hostname before traffic is allowed to 
 
 <Aside type="note" header="Note:">
 
-If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/ssl-for-saas/getting-started#step-5--have-customer-create-a-cname-record).
+If a custom hostname is already on Cloudflare, then traffic will only shift to your fallback origin once the [DNS target has changed](/ssl/ssl-for-saas/getting-started/#step-5--have-customer-create-a-cname-record).
 
 </Aside>
 

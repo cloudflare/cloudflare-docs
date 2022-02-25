@@ -1,7 +1,9 @@
 ---
 title: Make API requests to 1.1.1.1
-order: 1
 pcx-content-type: reference
+weight: 2
+meta:
+  title: Make API requests to 1.1.1.1 over DoH
 ---
 
 # Make API requests to 1.1.1.1 over DoH
@@ -24,7 +26,7 @@ When making requests using `GET`, the DNS query is encoded into the URL. An addi
 
 If you use JSON format, set `application/dns-json` URL parameter, and if you use DNS wireformat, use `application/dns-message` as either the URL parameter of `ct` or a `Content-Type` header for `POST` requests.
 
-See also curl examples for [UDP wireformat](/encrypted-dns/dns-over-https/make-api-requests/dns-wireformat) and [JSON](/encrypted-dns/dns-over-https/make-api-requests/dns-json).
+See also curl examples for [UDP wireformat](/1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/dns-wireformat/) and [JSON](/1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/dns-json/).
 
 ## Send multiple questions in a query
 

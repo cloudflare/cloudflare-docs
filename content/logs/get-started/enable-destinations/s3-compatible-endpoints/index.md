@@ -1,7 +1,9 @@
 ---
 title: Enable S3-compatible endpoints
-order: 56
 pcx-content-type: how-to
+weight: 57
+meta:
+  title: Enable Logpush to S3-compatible endpoints
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
@@ -19,7 +21,7 @@ Cloudflare Logpush supports pushing logs to S3-compatible destinations via the C
 *   [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
 *   On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
-For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/get-started/) documentation.
+For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/logs/get-started/) documentation.
 
 ## Manage via the Cloudflare dashboard
 
@@ -86,8 +88,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 </Aside>
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
 
 Example request using cURL:
 

@@ -1,6 +1,6 @@
 ---
 title: Known limitations
-order: 3
+weight: 4
 ---
 
 # Known limitations
@@ -14,11 +14,11 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 *   Netflix and Spotify Web Player are unavailable.
 *   Browser extensions are currently unsupported.
 
-If one of these limitations affects you, please let us know by [submitting feedback](/feedback).
+If one of these limitations affects you, please let us know by [submitting feedback](/browser-isolation/feedback/).
 
 ## Browser plugins / extensions
 
-Browser extensions / plugins are not compatible with isolated pages at this time however we do plan to support them in future. Let us know what plugins you would like supported by [submitting feedback](/feedback).
+Browser extensions / plugins are not compatible with isolated pages at this time however we do plan to support them in future. Let us know what plugins you would like supported by [submitting feedback](/browser-isolation/feedback/).
 
 ## Device / Browser support
 
@@ -36,4 +36,4 @@ We are still defining our minimum requirements but expect Browser Isolation to w
 
 ### Safari
 
-Safari's default configuration is susceptible to "[Maximum Sessions Reached](/feedback/faq#why-do-i-see-a-maximum-sessions-reached)" alerts. To workaround this behaviour open Safari → Preferences → Privacy and uncheck **Prevent cross-site tracking**.
+Safari's default configuration is susceptible to "[Maximum Sessions Reached](/browser-isolation/feedback/faq/#why-do-i-see-a-maximum-sessions-reached)" alerts. To workaround this behaviour open Safari → Preferences → Privacy and uncheck **Prevent cross-site tracking**.

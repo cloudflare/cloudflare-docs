@@ -1,7 +1,9 @@
 ---
-order: 1
 title: Gateway
 pcx-content-type: how-to
+weight: 2
+meta:
+  title: Require Gateway
 ---
 
 # Require Gateway
@@ -10,25 +12,25 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans |
 
 </div>
 </details>
 
-With Require Gateway you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/identity/devices/require-warp), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
+With Require Gateway you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/cloudflare-one/identity/devices/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
 The process involves two steps:
 
 1.  Setting up **Require Gateway** as a device posture check.
-2.  Adding the check to new or existing [Zero Trust policies](/policies/zero-trust) to enforce the check for one or more of your applications.
+2.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
 
 ## Set up a device posture check
 
 1.  On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 
-    ![Device Posture](../../static/documentation/identity/devices/device-posture.png)
+    ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 
 2.  Select **Gateway**.
 

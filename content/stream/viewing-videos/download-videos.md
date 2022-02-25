@@ -1,5 +1,6 @@
 ---
-order: 5
+title: Download videos
+weight: 6
 ---
 
 # Download videos
@@ -14,7 +15,7 @@ When you upload a video to Stream, it can be streamed using HLS/DASH. However, f
 
 You can enable downloads for an uploaded video once it is ready to view by making an HTTP request to the /downloads endpoint.
 
-To get notified when a video is ready to view, please see the [webhook documentation](../../uploading-videos/using-webhooks#notifications).
+To get notified when a video is ready to view, please see the [webhook documentation](/stream/uploading-videos/using-webhooks/#notifications).
 
 The downloads API response will include all available download types for the video, the download URL for each type, and the processing status of the download file.
 
@@ -88,7 +89,7 @@ If your video is public, the mp4 will also be publicly accessible. If your video
 
 Download links will not work for videos which already require signed URLs if the `downloadable` flag is not present in the token.
 
-For more details about using signed URLs with videos, please see [the documentation](/viewing-videos/securing-your-stream).
+For more details about using signed URLs with videos, please see [the documentation](/stream/viewing-videos/securing-your-stream/).
 
 ### Example token payload
 

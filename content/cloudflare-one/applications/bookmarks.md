@@ -1,11 +1,12 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Add bookmarks
+weight: 6
 ---
 
 # Add bookmarks
 
-Cloudflare Zero Trust allows admins to show applications on their user’s [App Launcher](/applications/app-launcher) even if those applications are not secured behind Access. This way, users can access all the applications they need to work, all in one place — regardless of whether those applications are protected by Access.
+Cloudflare Zero Trust allows admins to show applications on their user’s [App Launcher](/cloudflare-one/applications/app-launcher/) even if those applications are not secured behind Access. This way, users can access all the applications they need to work, all in one place — regardless of whether those applications are protected by Access.
 
 Links to applications not protected by Access can be added as **bookmarks**. To add a bookmark:
 

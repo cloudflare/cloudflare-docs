@@ -1,7 +1,9 @@
 ---
 title: Troubleshooting
-order: 6
 pcx-content-type: faq
+weight: 7
+meta:
+  title: Troubleshooting client certificates
 ---
 
 # Troubleshooting client certificates
@@ -24,7 +26,7 @@ If the SSL/TLS handshake cannot be completed, check whether the certificate and 
 
 ## Check mTLS hosts
 
-Check whether [mTLS has been enabled](../enable-mtls) for the correct host. The host should match the API endpoint that you want to protect.
+Check whether [mTLS has been enabled](/ssl/enable-mtls/) for the correct host. The host should match the API endpoint that you want to protect.
 
 ***
 

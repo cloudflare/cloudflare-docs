@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: Mutual TLS
+weight: 5
 ---
 
 # Mutual TLS
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP not required | Enterprise plans |
 
@@ -28,7 +29,7 @@ With a root certificate authority (CA) in place, Access only allows requests fro
 
 Currently, mTLS does not work with HTTP3 traffic.
 
-![mTLS Diagram](../../static/documentation/identity/devices/mtls.png)
+![mTLS Diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
 
 ## Add mTLS authentication to your Access configuration
 
@@ -50,7 +51,7 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 4.  Assign the Root CA a name and add the fully-qualified domain names (FQDN) that will use this certificate.
 
-These FQDNs will be the hostnames used for the resources being protected in the [Zero Trust policy](/policies/zero-trust). You must associate the Root CA with the FQDN that the application being protected uses.
+These FQDNs will be the hostnames used for the resources being protected in the [Zero Trust policy](/cloudflare-one/policies/zero-trust/). You must associate the Root CA with the FQDN that the application being protected uses.
 
 5.  Click **Save**.
 
@@ -62,7 +63,7 @@ If your zone is using an intermediate certificate in addition to the root certif
 
 The policy must be built with a hostname that was associated in the certificate upload modal. If this is for a client who does not need to log in through an IdP, select **Service Auth** from the drop-down for *Rule Action*. In the Include rule, you can pick from two options for mTLS authentication or both.
 
-![mTLS Policy](../../static/documentation/identity/devices/create-mtls-rule.png)
+![mTLS Policy](/cloudflare-one/static/documentation/identity/devices/create-mtls-rule.png)
 
 |Option|Result|
 |-|-|
@@ -75,12 +76,12 @@ The policy must be built with a hostname that was associated in the certificate 
 
 10. Set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
-![mTLS session duration](../../static/documentation/identity/devices/mutual-tls-session-duration.png)
+![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
 
 ## Test using cURL
 
 Test for the site using mTLS by attempting to curl the site without a client certificate.
-This curl command example is for the site `example.com` that has a [Zero Trust policy](/policies/zero-trust) set for `https://auth.example.com`:
+This curl command example is for the site `example.com` that has a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) set for `https://auth.example.com`:
 
 ```curl
 curl -sv https://auth.example.com

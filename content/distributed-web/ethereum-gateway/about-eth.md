@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: About Ethereum
+weight: 3
 ---
 
 # About Ethereum
@@ -58,13 +59,13 @@ sent to the wider network and added to the consensus.
 
 Reading and writing content to the Ethereum network can be done using
 Cloudflare's Gateway. To learn more about how to do this see [Interacting with
-the Ethereum network](../interacting-with-the-eth-gateway).
+the Ethereum network](/distributed-web/interacting-with-the-eth-gateway/).
 
 ## Connect your website to the gateway
 
 If you want to be able to access the Ethereum network accessible from a custom
 domain name, you can do that using Cloudflare’s Ethereum Gateway. To
-learn how, refer to [Connecting your Website](../connecting-your-website).
+learn how, refer to [Connecting your Website](/distributed-web/connecting-your-website/).
 
 ## Going Further
 

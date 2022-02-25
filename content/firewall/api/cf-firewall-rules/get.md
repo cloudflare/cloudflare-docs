@@ -1,7 +1,7 @@
 ---
 title: GET examples
 pcx-content-type: reference
-order: 425
+weight: 426
 ---
 
 # GET examples

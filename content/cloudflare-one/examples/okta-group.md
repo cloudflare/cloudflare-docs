@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow members of an Okta Group.
 tags:
-- Okta® Group
+  - Okta® Group
+title: Okta® Group
+weight: 4
+layout: example
 ---
 
 # Okta® Group

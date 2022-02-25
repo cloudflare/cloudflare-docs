@@ -1,10 +1,14 @@
 ---
-order: 1000
 type: example
-summary: Set up an A/B test by controlling what response is served based on cookies. This version supports passing the request through to test and control on the origin, bypassing random assignment.
+summary: Set up an A/B test by controlling what response is served based on
+  cookies. This version supports passing the request through to test and control
+  on the origin, bypassing random assignment.
 tags:
   - Originless
 pcx-content-type: configuration
+title: A/B testing with same-URL direct access
+weight: 1001
+layout: example
 ---
 
 # A/B testing with same-URL direct access

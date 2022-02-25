@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Build configuration
+weight: 3
 ---
 
 # Build configuration

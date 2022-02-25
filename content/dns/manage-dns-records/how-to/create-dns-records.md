@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: Manage DNS records
+weight: 1
 ---
 
 import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
@@ -9,7 +10,7 @@ import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
 
 <ImportScanInfo/>
 
-If you want more control over which DNS records are imported and how, use the [bulk imports](../import-and-export#import-records).
+If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/import-and-export/#import-records).
 
 <Aside type="note">
 
@@ -26,7 +27,7 @@ To create a DNS record in the dashboard:
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account and domain.
 2.  Go to **DNS**.
 3.  Click **Add record**.
-4.  Choose a record [**Type**](/manage-dns-records/reference/dns-record-types).
+4.  Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
 5.  Complete the required fields.
 6.  Click **Save**.
 

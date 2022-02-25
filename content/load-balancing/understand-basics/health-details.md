@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: concept
+title: How origins and pools become unhealthy
+weight: 5
 ---
 
 import HealthCheckRegions from "../\_partials/\_health-check-regions.md"
@@ -17,11 +18,11 @@ But how does your load balancer *know* which servers can handle the traffic? We 
 
 Dynamic load balancing happens through a combination of:
 
-*   [**Origin pools**](/understand-basics/pools): Contain one or more origin servers.
-*   [**Monitors**](/understand-basics/monitors): Are attached to individual origin servers and issue health checks at regular intervals.
+*   [**Origin pools**](/load-balancing/understand-basics/pools/): Contain one or more origin servers.
+*   [**Monitors**](/load-balancing/understand-basics/monitors/): Are attached to individual origin servers and issue health checks at regular intervals.
 *   **Health checks**: Are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](../static/images/load-balancer-components.png)
+![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
 
 ***
 
@@ -58,7 +59,7 @@ When an [individual origin becomes unhealthy](#how-an-origin-becomes-unhealthy),
 
 ### Traffic distribution
 
-When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Pool-level steering policy](/understand-basics/traffic-steering/pool-level-steering):
+When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Pool-level steering policy](/load-balancing/understand-basics/traffic-steering/pool-level-steering/):
 
 *   **Off**:
 

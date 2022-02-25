@@ -1,7 +1,9 @@
 ---
 title: User Guide
 pcx-content-type: how-to
-order: 0
+weight: 1
+meta:
+  title: Using Cloudflare's Time Service
 ---
 
 # Using Cloudflare's Time Service
@@ -19,7 +21,7 @@ Here is an example of how to configure your Mac to synchronize time from time.cl
 4.  Enter your password
 5.  Next to Set date and time automatically, enter `time.cloudflare.com`
 
-![MacOS](../static/mactime.png)
+![MacOS](/time-services/static/mactime.png)
 
 ... and you're all set!
 
@@ -33,8 +35,8 @@ Here is an example of how to configure your Windows computer to synchronize time
 6.  Next to Server:, type `time.cloudflare.com` and click 'Update now'
 7.  Click 'OK'
 
-![Windows](../static/window.png)
+![Windows](/time-services/static/window.png)
 
 You should receive the following message, letting you know that you have successfully synchronized your time.
 
-![](../static/windowtime2.png)
+![](/time-services/static/windowtime2.png)

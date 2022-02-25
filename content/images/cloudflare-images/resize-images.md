@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Resize images
+weight: 4
 ---
 
 # Resize images
@@ -9,7 +10,7 @@ Cloudflare Images supports Variants that specify how images should be resized fo
 
 Each variant has properties including the width and height of resized images.
 
-![Configure variants in Cloudflare Images](../static/variants.png)
+![Configure variants in Cloudflare Images](/images/static/variants.png)
 
 The **Fit** property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
 

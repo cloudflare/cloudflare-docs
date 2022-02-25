@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: navigation
+title: API and Terraform
+weight: 8
 ---
 
 # API and Terraform

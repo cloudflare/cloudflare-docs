@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: reference
+title: WARP modes
+weight: 2
 ---
 
 # WARP modes

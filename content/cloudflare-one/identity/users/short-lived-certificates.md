@@ -1,7 +1,9 @@
 ---
-order: 3
 title: Short-lived certificates
 pcx-content-type: how-to
+weight: 4
+meta:
+  title: Configure short-lived certificates
 ---
 
 # Configure short-lived certificates
@@ -12,7 +14,7 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 ## 1. **Secure a server behind Cloudflare Access**.
 
-To protect a resource behind Cloudflare Access, first follow [these instructions](/tutorials/ssh) to secure the server.
+To protect a resource behind Cloudflare Access, first follow [these instructions](/cloudflare-one/tutorials/ssh/) to secure the server.
 
 ## 2. **Generate a short-lived certificate public key**.
 
@@ -20,14 +22,14 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 2.  In the dropdown, choose the application that represents the resource you secured in Step 1.
 
-    ![New Cert](../../static/documentation/applications/non-http/slc-dropdown.png)
+    ![New Cert](/cloudflare-one/static/documentation/applications/non-http/slc-dropdown.png)
 
 3.  Click **Generate certificate**. A row will appear with a public key scoped to your application.
 
 4.  Save the key or keep it somewhere convenient for configuring your server.
     You can return to copy this public key any time in the Service Auth dashboard.
 
-    ![Pub Key Cert](../../static/documentation/applications/non-http/slc-key.png)
+    ![Pub Key Cert](/cloudflare-one/static/documentation/applications/non-http/slc-key.png)
 
 ## 3. **Ensure Unix usernames match user SSO identities**
 
@@ -121,7 +123,7 @@ $ sudo systemctl restart sshd
 
 ### Configure your client SSH config
 
-On the client side, follow [this tutorial](/tutorials/ssh) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
+On the client side, follow [this tutorial](/cloudflare-one/tutorials/ssh/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 
@@ -146,4 +148,4 @@ Host cfpipe-vm.example.com
 
 ### Connect through a browser-based terminal
 
-End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/tutorials/ssh-browser).
+End users can connect to the SSH session without any configuration by using Cloudflare's browser-based terminal. Users visit the URL of the application and Cloudflare's terminal handles the short-lived certificate flow. To enable, follow the instructions [here](/cloudflare-one/tutorials/ssh-browser/).

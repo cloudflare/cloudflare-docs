@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: reference
+title: Set up a new account
+weight: 1
 ---
 
 # Set up a new account
@@ -10,8 +11,8 @@ If you need help setting up and securing a new Cloudflare account, refer to the 
 *   **Account setup**:
     *   [Create a Cloudflare account](https://support.cloudflare.com/hc/articles/201720164#6NswogCXqM6TSaxqEf5Bz4)
     *   [Enable two-factor authentication (2FA)](https://support.cloudflare.com/hc/articles/200167906)
-    *   [Create an API token](https://developers.cloudflare.com/api/tokens/create)
-    *   [Set up notifications](/notifications)
+    *   [Create an API token](/api/tokens/create)
+    *   [Set up notifications](/fundamentals/notifications/)
     *   [Add account members](https://support.cloudflare.com/hc/articles/200167946)
     *   [Set up payment methods](https://support.cloudflare.com/hc/articles/4402711553165)
 

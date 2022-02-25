@@ -1,19 +1,20 @@
 ---
 pcx-content-type: how-to
-order: 360
+title: Manage IP List items
+weight: 361
 ---
 
 # Manage IP List items
 
 ## View items in an IP List
 
-1.  [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
 2.  To view items in a list, click the **Edit** link associated with the list you want to view.
 
 The list of items displays sorted by IP address, ascending:
 
-![View items in a list](../../images/lists-view-items-in-list.png)
+![View items in a list](/firewall/static/lists-view-items-in-list.png)
 
 <Aside type='note' header='Note'>
 
@@ -46,7 +47,7 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1.  [Access the Lists interface](/cf-dashboard/rules-lists) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
 2.  Click the **Edit** button associated with the list that you want to edit.
 
@@ -56,17 +57,17 @@ The list of IP items displays.
 
 The **Add items to list** page displays:
 
-![Add items to list page](../../images/lists-add-items-to-list-page.png)
+![Add items to list page](/firewall/static/lists-add-items-to-list-page.png)
 
 1.  To [add items to the list manually](#add-items-to-a-list-manually), use the text inputs in the Lists interface.
 
-2.  To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
+2.  To [add items in CSV format](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
 
 ### Add items to a list manually
 
 1.  In the **Add items to list** page, add an IP Address and an optional description in the text inputs.
 
-![Enter list items manually](../../images/lists-add-items-manually.png)
+![Enter list items manually](/firewall/static/lists-add-items-manually.png)
 
 1.  As you enter information into a text input, a new row of inputs displays below the current one.
 
@@ -82,7 +83,7 @@ The updated list displays.
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/api/cf-lists/endpoints).
+If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/firewall/api/cf-lists/endpoints/).
 
 </Aside>
 
@@ -107,7 +108,7 @@ Your operating system's file browser dialog displays.
 
 The **Add items to list** page updates to include the items from the CSV file:
 
-![CSV items shown in Add items page](../../images/lists-add-items-csv.png)
+![CSV items shown in Add items page](/firewall/static/lists-add-items-csv.png)
 
 1.  You can continue to edit the items in the list before adding them:
 
@@ -129,13 +130,13 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 ## Delete items from a list
 
-1.  [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
 2.  Click the **Edit** link associated with list from which you want to delete.
 
 3.  Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
 
-![Delete items from list](../../images/lists-delete-items.png)
+![Delete items from list](/firewall/static/lists-delete-items.png)
 
 1.  Click **Remove** to delete the selected items from the list.
 

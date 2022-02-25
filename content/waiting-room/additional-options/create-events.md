@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Create scheduled events
+weight: 4
 ---
 
 # Create scheduled events
@@ -21,7 +22,7 @@ At the moment, you can only create an event using the API.
 
 To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](../customize-waiting-room#custom-waiting-room), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
 <Aside type="note">
 
@@ -45,15 +46,15 @@ Though most properties are identical to those on a [regular waiting room](https:
 
 When setting up events, you may want to also adjust the default queueing methods for your waiting room.
 
-Set the waiting room's queueing method to [**Passthrough**](/reference/queueing-methods#passthrough) when you want to allow traffic normally, but then restrict traffic during a scheduled event.
+Set the waiting room's queueing method to [**Passthrough**](/waiting-room/reference/queueing-methods/#passthrough) when you want to allow traffic normally, but then restrict traffic during a scheduled event.
 
-Set the waiting room's queueing method to [**Reject**](/reference/queueing-methods#reject) when you want to block all traffic normally, but then allow traffic during special events like signups or ticket sales.
+Set the waiting room's queueing method to [**Reject**](/waiting-room/reference/queueing-methods/#reject) when you want to block all traffic normally, but then allow traffic during special events like signups or ticket sales.
 
 ## Set up a "lottery"
 
 Set up a "lottery" system to reward all users who enter into the queue prior to your event start time.
 
-Users who reach your application **during the prequeue period** are [randomly assigned](/reference/queueing-methods#random) a place in line when the event starts. If the event uses [FIFO ordering](/reference/queueing-methods#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
+Users who reach your application **during the prequeue period** are [randomly assigned](/waiting-room/reference/queueing-methods/#random) a place in line when the event starts. If the event uses [FIFO ordering](/waiting-room/reference/queueing-methods/#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
 To set up a "lottery", include the [following parameters](#properties) in your API request:
 

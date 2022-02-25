@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Bidrectional Forwarding Direction
 ---
 
 # Bidrectional Forwarding Direction

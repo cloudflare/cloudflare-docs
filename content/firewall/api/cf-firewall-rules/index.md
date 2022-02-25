@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 405
+title: Firewall Rules API
+weight: 406
 ---
 
 # Firewall Rules API
@@ -9,12 +10,12 @@ Use the Firewall Rules API to programmatically manage your rules.
 
 When working with the Firewall Rules API, refer to these topics for additional context:
 
-*   [Firewall Rules actions](/cf-firewall-rules/actions)
-*   [Cloudflare Filters API](/api/cf-filters)
+*   [Firewall Rules actions](/firewall/cf-firewall-rules/actions/)
+*   [Cloudflare Filters API](/firewall/api/cf-filters/)
 
-To get started with the API, review the Firewall Rules API [JSON object](/api/cf-firewall-rules/json-object) and [Endpoints](/api/cf-firewall-rules/endpoints).
+To get started with the API, review the Firewall Rules API [JSON object](/firewall/api/cf-firewall-rules/json-object/) and [Endpoints](/firewall/api/cf-firewall-rules/endpoints/).
 
-For more information on the Rules language used to write rule expressions, refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language) in the Ruleset Engine documentation.
+For more information on the Rules language used to write rule expressions, refer to [Rules language](/ruleset-engine/rules-language) in the Ruleset Engine documentation.
 
 ## Differences from other Cloudflare APIs
 

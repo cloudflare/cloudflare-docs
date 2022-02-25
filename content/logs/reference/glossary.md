@@ -1,6 +1,7 @@
 ---
-order: 121
 pcx-content-type: glossary
+title: Glossary
+weight: 122
 ---
 
 # Glossary

@@ -1,13 +1,14 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: Review changed scripts
+weight: 5
 ---
 
 # Review changed scripts
 
 Page Shield analyzes the JavaScript dependencies in the pages of your domain over time.
 
-You can configure a notification for [code change alerts](/reference/alerts) to receive a daily notification about changed scripts in your domain.
+You can configure a notification for [code change alerts](/page-shield/reference/alerts/) to receive a daily notification about changed scripts in your domain.
 
 <Aside type="note">
 

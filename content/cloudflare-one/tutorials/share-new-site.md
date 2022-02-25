@@ -3,15 +3,16 @@ updated: 2020-11-28
 category: 🌐 Connections
 difficulty: Beginner
 pcx-content-type: tutorial
+title: Share development environments
 ---
 
 # Share development environments
 
-You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/glossary#cloudflare-tunnel) to share local development environments with team members or customers across the Internet.
+You can use Cloudflare's reverse proxy and [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel) to share local development environments with team members or customers across the Internet.
 
 Instead of pointing DNS records to the external IP of a web service, you can connect that service to Cloudflare's network using Cloudflare Tunnel. Cloudflare Tunnel relies on a lightweight service, `cloudflared`, that you run in your infrastructure. `cloudflared` makes outbound-only connections to Cloudflare's network, so that you do not need to open holes in your firewall.
 
-You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/policies/zero-trust) to only allow certain people to reach the site.
+You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to only allow certain people to reach the site.
 
 **🗺️ This tutorial covers how to:**
 
@@ -35,9 +36,9 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 
 In this example, the new website is a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313` - an address only available currently on the same machine as the server.
 
-![New Hugo](../static/secure-origin-connections/share-new-site/hugo-new.png)
+![New Hugo](/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
 
-To share this work-in-progress, start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+To share this work-in-progress, start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 
@@ -47,15 +48,15 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your Cloudflare account. The website selected does not need to be the website where the environment will be made available.
 
-![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file to authenticate this instance of `cloudflared`. You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
-You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `new-website` with any name that you choose.
 
@@ -63,11 +64,11 @@ Run the following command to create a Tunnel. You can replace `new-website` with
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](../static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ## Configure `cloudflared`
 
-You can now [configure](/connections/connect-apps/configuration) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
+You can now [configure](/cloudflare-one/connections/connect-apps/configuration/) `cloudflared` to route traffic to your local development environment. You can use a configuration file to do so, which makes it easier to start `cloudflared` in the future.
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 
@@ -83,19 +84,19 @@ credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e
 
 ## Run Cloudflare Tunnel
 
-At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](/connections/connect-apps/create-tunnel). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
+At this point, you have created and configured your Cloudflare Tunnel connection. You can now [run the Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/). Running the Tunnel will create connections to Cloudflare's edge. Those connections will not respond to traffic, yet. You'll add DNS records in the next step to share the resource across the Internet.
 
 `$ cloudflared tunnel run`
 
 ## Create DNS records
 
-You can now [route traffic](/connections/connect-apps/routing-to-tunnel) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your Tunnel, and on to your local server, using Cloudflare DNS. Visit the [Cloudflare dashboard](https://dash.cloudflare.com), select a website, and click on the `DNS` tab.
 
 Click `+Add record` and choose `CNAME`. In the `Name` field, add the name of the subdomain of your new site. In the `Content` field, paste the ID of your Tunnel created earlier and append `cfargotunnel.com`.
 
 `5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com`
 
-![Add DNS](../static/secure-origin-connections/share-new-site/add-dns.png)
+![Add DNS](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
 
 Once saved, you can share the subdomain created and visitors can reach your local web server environment.
 
@@ -107,7 +108,7 @@ Alternatively, you can create a DNS record from `cloudflared` directly. To do so
 
 When you create the DNS record, any visitor will be able to view that new site. You can restrict the audience to certain users by adding a rule in Cloudflare Access. You can also build this Access rule before creating the DNS record so that the site is never accessible to the rest of the Internet.
 
-Before you build the rule, you'll need to follow [these instructions](/setup) to set up Cloudflare Access in your account.
+Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
 1.  Once enabled, navigate to the `Applications` page in the Zero Trust dashboard.
 
@@ -117,11 +118,11 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 
 4.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
-    ![App Picker](../static/secure-origin-connections/share-new-site/configure-app.png)
+    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
 
     You can then add rules to determine who can reach the site.
 
-    ![App Picker](../static/secure-origin-connections/share-new-site/add-rules.png)
+    ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/add-rules.png)
 
 ## Additional Materials
 

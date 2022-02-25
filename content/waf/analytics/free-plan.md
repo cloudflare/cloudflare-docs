@@ -1,7 +1,9 @@
 ---
-order: 1
 pcx-content-type: reference
 title: Free plan
+weight: 2
+meta:
+  title: Firewall Analytics — Free plan
 ---
 
 import FilterReportDuration from "../\_partials/\_analytics-filter-report-duration.md"
@@ -15,7 +17,7 @@ import ShareFilters from "../\_partials/\_analytics-share-url.md"
 
 You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed in the **Activity Log**.
 
-![Add a new filter in Firewall Analytics](../images/analytics-add-filter-free.png)
+![Add a new filter in Firewall Analytics](/waf/static/analytics-add-filter-free.png)
 
 <FilterReportDuration/>
 

@@ -1,7 +1,9 @@
 ---
 title: Configure BGP
-order: 5
 pcx-content-type: tutorial
+weight: 6
+meta:
+  title: Configure the BGP
 ---
 
 # Configure the BGP
@@ -17,7 +19,7 @@ Cloudflare sends a set of IPs that you assign to your connection before Cloudfla
     Cloudflare v6: 2001:db8:12:3::7ac2:d64a/127
     Acme: 2001:db8:12:3::7ac2:d64b/127
 
-Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/set-up-cni/configure-cross-connect), the ping tests confirm packets are flowing over the link.
+Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/network-interconnect/set-up-cni/configure-cross-connect/), the ping tests confirm packets are flowing over the link.
 
 If you have a virtual link via Megaport, the IP provisioning may fail if you have not configured the VLAN with the VLAN provided by your Customer Success Manager.
 

@@ -1,6 +1,7 @@
 ---
 pcx-content-type: configuration
-order: 4
+title: Response header modification examples
+weight: 5
 ---
 
 # Response header modification examples

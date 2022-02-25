@@ -1,7 +1,9 @@
 ---
 title: Fields
 pcx-content-type: reference
-order: 5
+weight: 6
+meta:
+  title: Fields reference
 ---
 
 # Fields reference
@@ -21,7 +23,7 @@ Most standard fields use the same naming conventions as [Wireshark display field
 
 *   Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
-    To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
+    To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
 
 *   In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
@@ -358,7 +360,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 <Aside type='note'>
 
-Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](https://developers.cloudflare.com/bots/plans/bm-subscription) enabled.
+Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription) enabled.
 
 </Aside>
 
@@ -697,7 +699,7 @@ The Cloudflare Rules language supports these dynamic fields:
 
 ## URI argument and value fields
 
-The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/rules-language/values#arrays) containing the respective values.
+The Cloudflare Rules language includes URI argument and value fields associated with HTTP requests. Many of these fields return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
 The Cloudflare Rules language supports these URI argument and value fields:
 
@@ -790,7 +792,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
 
 ## HTTP request header fields
 
-The Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of HTTP request headers. Many of these return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
 The Cloudflare Rules language supports these HTTP header fields:
 
@@ -913,7 +915,7 @@ Access to HTTP body is an add-on product of the Cloudflare Enterprise plan.
 
 </Aside>
 
-The Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/rules-language/values#arrays) containing the respective values.
+The Rules language includes fields that represent properties of an HTTP request body. Many of these return [arrays](/ruleset-engine/rules-language/values/#arrays) containing the respective values.
 
 <Aside type="warning">
 
@@ -1032,7 +1034,7 @@ The Rules language includes fields that represent properties of HTTP response he
 
 <Aside type="note">
 
-You can only use HTTP response header fields in [HTTP Response Header Modification Rules](https://developers.cloudflare.com/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](https://developers.cloudflare.com/waf/managed-rulesets) ruleset.
+You can only use HTTP response header fields in [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets) ruleset.
 
 </Aside>
 

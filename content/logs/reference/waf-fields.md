@@ -1,6 +1,7 @@
 ---
-order: 123
 pcx-content-type: reference
+title: WAF fields
+weight: 124
 ---
 
 # WAF fields

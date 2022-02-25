@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: tutorial
+title: SoftHSMv2
+weight: 5
 ---
 
 # SoftHSMv2

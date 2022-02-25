@@ -1,7 +1,9 @@
 ---
-order: 3
 pcx-content-type: how-to
 type: overview
+title: HTTP Strict Transport Security (HSTS)
+weight: 4
+layout: list
 ---
 
 import HSTSDefinition from "../../\_partials/\_hsts-definition.md"
@@ -10,7 +12,7 @@ import HSTSDefinition from "../../\_partials/\_hsts-definition.md"
 
 <HSTSDefinition/>
 
-HSTS adds an HTTP header that directs [compliant web browsers](/ssl-tls/browser-compatibility) to:
+HSTS adds an HTTP header that directs [compliant web browsers](/ssl/ssl-tls/browser-compatibility/) to:
 
 *   Transform HTTP links to HTTPS links
 *   Prevent users from bypassing SSL browser warnings
@@ -34,7 +36,7 @@ In order for HSTS to work as expected, you need to:
 
 Once you enabled HSTS, avoid the following actions to ensure visitors can still access your site:
 
-*   Changing your DNS records from [Proxied to DNS only](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+*   Changing your DNS records from [Proxied to DNS only](/dns/manage-dns-records/reference/proxied-dns-records)
 *   [Pausing Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753) on your site
 *   Pointing your nameservers away from Cloudflare
 *   Redirecting HTTPS to HTTP

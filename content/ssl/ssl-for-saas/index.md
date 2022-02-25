@@ -1,6 +1,7 @@
 ---
-order: 8
 pcx-content-type: overview
+title: SSL for SaaS
+weight: 9
 ---
 
 import SSLforSaaSDefinition from "../\_partials/\_ssl-for-saas-definition.md"
@@ -29,11 +30,11 @@ If your customers already have their applications on Cloudflare, they cannot con
 *   Web Application Firewall (WAF)
 *   SSL settings
 
-For more information on these features, refer to [hostname specific behavior](hostname-specific-behavior).
+For more information on these features, refer to [hostname specific behavior](/ssl/hostname-specific-behavior/).
 
 ## Availability
 
-SSL for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl-for-saas/plans).
+SSL for SaaS is available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/ssl/ssl-for-saas/plans/).
 
 ## Next steps
 

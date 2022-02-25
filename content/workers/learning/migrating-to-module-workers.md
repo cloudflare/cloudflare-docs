@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: Migrating to module Workers
+weight: 0
 ---
 
 # Migrating to module Workers
@@ -11,7 +12,7 @@ This guide will show you how to migrate your Workers from the [Service Worker](h
 
 There are several reasons you might want to migrate your Workers to the module syntax:
 
-1.  [Durable Objects](/learning/using-durable-objects) require the module syntax.
+1.  [Durable Objects](/workers/learning/using-durable-objects/) require the module syntax.
 2.  Module Workers do not rely on any global bindings, which means the Workers runtime does not need to set up fresh execution contexts, making Module Workers safer and faster to run.
 3.  Module Workers are ES Modules, which allows them to be shared and published to npm, for example. Module Workers can be imported by and composed within other Module Workers.
 
@@ -52,7 +53,7 @@ export default {
 
 ## Accessing event or context data
 
-Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/runtime-apis/fetch-event#waituntil) to delay execution. Module workers can access `waitUntil` vida the `context` parameter. For a list of Module worker parameters, see [this list](/runtime-apis/fetch-event#parameters).
+Workers often need access to data not in the `request` object. For example, sometimes Workers use [`waitUntil`](/workers/runtime-apis/fetch-event/#waituntil) to delay execution. Module workers can access `waitUntil` vida the `context` parameter. For a list of Module worker parameters, see [this list](/workers/runtime-apis/fetch-event/#parameters).
 
 This example code:
 

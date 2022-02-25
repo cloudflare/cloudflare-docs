@@ -1,7 +1,9 @@
 ---
 type: overview
-order: 3
 pcx-content-type: configuration
+title: Access API examples
+weight: 4
+layout: list
 ---
 
 # Access API examples

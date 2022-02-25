@@ -1,6 +1,7 @@
 ---
-order: 9
 pcx-content-type: reference
+title: Common API calls
+weight: 10
 ---
 
 # Common API calls
@@ -19,7 +20,7 @@ Endpoint|Notes
 
 ## Fallback origins
 
-Our API includes the following endpoints related to the [fallback origin](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target):
+Our API includes the following endpoints related to the [fallback origin](/ssl/ssl-for-saas/getting-started/#step-1--create-fallback-origin-and-cname-target):
 
 *   [Get fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-get-fallback-origin-for-custom-hostnames)
 *   [Update fallback origin](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames)

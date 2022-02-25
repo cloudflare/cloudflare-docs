@@ -1,7 +1,9 @@
 ---
 title: Configure the Managed Ruleset in the dashboard
 pcx-content-type: how-to
-order: 1
+weight: 2
+meta:
+  title: Configure HTTP DDoS Attack Protection in the dashboard
 ---
 
 # Configure HTTP DDoS Attack Protection in the dashboard
@@ -13,7 +15,7 @@ You can customize the **action** and **sensitivity** of the rules in the HTTP DD
 
 Tag and rule configurations have greater priority than ruleset configurations.
 
-For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
+For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
 ## Configure all the rules in the ruleset
 
@@ -25,7 +27,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 4.  In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
 
-    ![Configure HTTP DDoS Managed Ruleset](../../images/ddos/ddos-configure-ruleset.png)
+    ![Configure HTTP DDoS Managed Ruleset](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
 
 5.  Click **Save**.
 
@@ -41,11 +43,11 @@ For more information on the available parameters and allowed values, refer to [M
 
 5.  Search for the rules you wish to configure using the available filters. You can search for tags.
 
-    ![Configure rules in Managed Ruleset](../../images/ddos/ddos-configure-rules.png)
+    ![Configure rules in Managed Ruleset](/ddos-protection/static/ddos/ddos-configure-rules.png)
 
 6.  To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/deploy-zone-dashboard#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard#configure-rules-in-bulk-in-a-managed-ruleset).
 
 7.  Click **Next**.
 

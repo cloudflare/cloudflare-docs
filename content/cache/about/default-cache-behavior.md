@@ -1,6 +1,8 @@
 ---
 title: Default cache behavior
 pcx-content-type: concept
+meta:
+  title: Default Cache Behavior
 ---
 
 # Default Cache Behavior
@@ -13,7 +15,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
     *   The `Expires` header is set to a future date.
 *   If both the `max-age` and an `Expires` header are set, `max-age` is used.
 
-For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/about/cache-control#cache-control-directives).
+For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/about/cache-control/#cache-control-directives).
 
 ## Default cached file extensions
 
@@ -31,14 +33,14 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | CLASS | EXE   | JS   | PICT | SWF  | XLS  |
 | CSS   | FLAC  | MID  | PLS  | TAR  | XLSX |
 
-To cache additional content, see [Page Rules](/how-to/create-page-rules) to create a rule to cache everything.
+To cache additional content, see [Page Rules](/cache/how-to/create-page-rules/) to create a rule to cache everything.
 
 ## Customization options and limitations
 
 Cloudflare’s CDN provides several cache customization options:
 
-*   Caching behavior for individual URLs via [Cloudflare Page Rules](/how-to/create-page-rules)
-*   Customize caching with [Cloudflare Workers](https://developers.cloudflare.com/workers/learning/how-the-cache-works)
+*   Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/create-page-rules/)
+*   Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works)
 *   Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
@@ -47,7 +49,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 *   200MB Business
 *   500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
-If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
+If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ## Cloudflare cache responses
 

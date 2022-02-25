@@ -1,6 +1,8 @@
 ---
 title: Wildcard matching
 pcx-content-type: navigation
+meta:
+  title: Wildcard matching and referencing
 ---
 
 # Wildcard matching and referencing

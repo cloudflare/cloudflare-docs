@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Hexnode
+weight: 2
 ---
 
 # Hexnode

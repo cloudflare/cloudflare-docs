@@ -1,7 +1,8 @@
 ---
-order: 3
 pcx-content-type: how-to
 hidden: true
+title: Workspace ONE
+weight: 4
 ---
 
 # Workspace ONE

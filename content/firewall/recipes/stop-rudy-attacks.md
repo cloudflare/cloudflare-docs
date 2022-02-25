@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
 ---
 
 # Stop R-U-Dead-Yet? (R.U.D.Y.) attacks
@@ -8,7 +9,7 @@ R-U-Dead-Yet (R.U.D.Y.) attacks accomplish denial of service (DoS) by submitting
 
 This example combines three expressions to target HTTP POST requests that do not contain a legitimate authenticated session cookie.
 
-The first expression uses the `http.request.uri.path` [field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#standard-fields) to target the paths to secure from R.U.D.Y.:
+The first expression uses the `http.request.uri.path` [field](/ruleset-engine/rules-language/fields#standard-fields) to target the paths to secure from R.U.D.Y.:
 
 ```bash
 http.request.uri.path matches "(comment|conversation|event|poll)/create"

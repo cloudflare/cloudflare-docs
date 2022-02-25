@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Headers
 ---
 
 # Headers
@@ -33,7 +34,7 @@ headers.get('x-foo'); //=> "hello, world"
 
 ## Cloudflare headers
 
-Cloudflare sets a number of [its own custom headers on incoming requests](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers) and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
+Cloudflare sets a number of [its own custom headers on incoming requests](/fundamentals/get-started/http-request-headers) and outgoing responses. While some may be used for its own tracking and bookkeeping, many of these can be useful to your own applications – or Workers – too.
 
 ### Request headers
 

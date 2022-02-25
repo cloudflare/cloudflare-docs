@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: get-started
+title: Get started
+weight: 0
 ---
 
 # Get started

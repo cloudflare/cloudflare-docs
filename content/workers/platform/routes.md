@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Routes
 ---
 
 # Routes
@@ -14,13 +15,13 @@ For zones proxied on Cloudflare\*, route patterns decide what (if any) script is
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
-![Workers Route Modal](./media/add-route-modal.png)
+![Workers Route Modal](../media/add-route-modal.png)
 
 Cloudflare Site routes are comprised of:
 
 *   Route URL (refer to [Matching Behavior](#matching-behavior))
 *   Worker script to execute on matching requests
-*   Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/platform/limits#request-limits))
+*   Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/workers/platform/limits/#request-limits))
 
 The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
 
@@ -110,7 +111,7 @@ If a route pattern path ends with `*`, then it matches all suffixes of that path
 
 <Aside type="warning">
 
-There is a well-known bug associated with path matching concerning wildcards (`*`) and forward slashes (`/`) that is documented in [Known issues](/platform/known-issues).
+There is a well-known bug associated with path matching concerning wildcards (`*`) and forward slashes (`/`) that is documented in [Known issues](/workers/platform/known-issues/).
 
 </Aside>
 

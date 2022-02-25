@@ -1,7 +1,7 @@
 ---
 title: POST example
 pcx-content-type: reference
-order: 460
+weight: 461
 ---
 
 # POST example

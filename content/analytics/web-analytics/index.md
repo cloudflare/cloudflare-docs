@@ -1,7 +1,7 @@
 ---
 title: Cloudflare Web Analytics
-order: 1
 pcx-content-type: reference
+weight: 2
 ---
 
 # Cloudflare Web Analytics

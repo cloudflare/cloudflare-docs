@@ -1,11 +1,12 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: Start from worker
+weight: 3
 ---
 
 # Start from worker
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/cli-wrangler/install-update#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
 
 If you have a pre-existing Worker project, you can use Workers Sites to serve static assets to the Worker. To do so, follow these instructions:
 

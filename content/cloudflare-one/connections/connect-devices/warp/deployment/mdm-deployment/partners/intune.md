@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Intune
+weight: 2
 ---
 
 # Intune
@@ -121,9 +122,9 @@ Here is an example `.mobileconfig` file with the accepted arguments:
 </plist>
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-[Click here to download](../../../../../../static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you plan to download the `plist` file and manually place it in `/Library/Managed Preferences`, convert the `plist` into binary format first. To do that:
+[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist/) this example `plist`. If you plan to download the `plist` file and manually place it in `/Library/Managed Preferences`, convert the `plist` into binary format first. To do that:
 
 1.  Open a Terminal window.
 2.  Run the following command:
@@ -132,7 +133,7 @@ For a description of each argument and what it means, see [deployment parameters
 
     % plutil -convert binary1 com.cloudflare.warp.plist
 
-[Click here to download](../../../../../../static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig/) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
 
 ## iOS
 
@@ -155,7 +156,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 </dict>
 ```
 
-For a description of each argument and what it means, refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
+For a description of each argument and what it means, refer to the [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
 ## Android
 
@@ -176,4 +177,4 @@ To proceed with the installation, here is an example of the XML code you will ne
 <string>https://support.example.com</string>
 ```
 
-Refer to the [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) for a description of each value.
+Refer to the [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each value.

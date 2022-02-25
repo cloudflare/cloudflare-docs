@@ -1,7 +1,7 @@
 ---
 title: Examples
-order:  5
 pcx-content-type: reference
+weight: 6
 ---
 
 # Examples
@@ -58,7 +58,7 @@ The example below blocks all packets with a source or destination IP address com
 
 ## Use an IP List
 
-Magic Firewall supports [using lists in expressions](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/use-lists-in-expressions) for the `ip.src` and `ip.dst` fields.  The supported lists are:
+Magic Firewall supports [using lists in expressions](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions) for the `ip.src` and `ip.dst` fields.  The supported lists are:
 
 *   `$cf.anonymizer` - Anonymizer proxies
 *   `$cf.botnetcc` - Botnet command and control channel

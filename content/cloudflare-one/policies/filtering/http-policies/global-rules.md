@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Global rules
+weight: 3
 ---
 
 # Global rules

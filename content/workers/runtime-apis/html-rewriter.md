@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: HTMLRewriter
 ---
 
 # HTMLRewriter
@@ -433,5 +434,5 @@ async function handle(request) {
 ## Related resources
 
 *   [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
-*   [Tutorial: Localize a Website](/tutorials/localize-a-website)
-*   [Example: rewrite links](/examples/rewrite-links)
+*   [Tutorial: Localize a Website](/workers/tutorials/localize-a-website/)
+*   [Example: rewrite links](/workers/examples/rewrite-links/)

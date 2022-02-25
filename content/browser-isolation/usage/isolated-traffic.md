@@ -1,6 +1,8 @@
 ---
 title: Isolated traffic
-order: 2
+weight: 3
+meta:
+  title: Isolated trafficExample isolation policies
 ---
 
 # Isolated traffic
@@ -27,4 +29,4 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 
 ### Bypass common cert pinning sites
 
-See [Gateway recommended rules](https://developers.cloudflare.com/gateway/connecting-to-gateway/Troubleshooting#im-using-a-common-application-and-it-seems-unable-to-connect-when-i-inspect-http-traffic-or-presents-an-untrusted-certificate-error)
+See [Gateway recommended rules](/gateway/connecting-to-gateway/Troubleshooting#im-using-a-common-application-and-it-seems-unable-to-connect-when-i-inspect-http-traffic-or-presents-an-untrusted-certificate-error)

@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Jamf
+weight: 2
 ---
 
 # Jamf
@@ -101,9 +102,9 @@ Here is an example `.mobileconfig` file with the accepted arguments:
 
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-[Click here to download](../../../../../../static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist/) this example `plist`. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 
 1.  Open a Terminal window.
 2.  Run the following command:
@@ -112,7 +113,7 @@ For a description of each argument and what it means, see [deployment parameters
 % plutil -convert binary1 com.cloudflare.warp.plist
 ```
 
-[Click here to download](../../../../../../static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig/) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
 
 ### Upload the package
 
@@ -173,7 +174,7 @@ To proceed with the installation, here is an example of the XML code you will ne
 </dict>
 ```
 
-For a description of each argument and what it means, see [deployment parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters).
+For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
 1.  Log in to your `jamfcloud.com` account.
 2.  Navigate to **Devices**.

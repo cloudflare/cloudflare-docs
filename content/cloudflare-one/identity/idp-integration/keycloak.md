@@ -1,6 +1,7 @@
 ---
-order: 9
 pcx-content-type: how-to
+title: SAML | Keycloak
+weight: 10
 ---
 
 # SAML | Keycloak
@@ -13,15 +14,15 @@ To set up Keycloak (SAML) as your identity provider:
 
 1.  In Keycloak, select **Clients** in the navigation bar and create a new client.
 
-    ![SAML Client](../../static/documentation/identity/keycloak/create-client.png)
+    ![SAML Client](/cloudflare-one/static/documentation/identity/keycloak/create-client.png)
 
-2.  Under **Client ID**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2.  Under **Client ID**, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![SAML Client](../../static/documentation/identity/keycloak/configure-client.png)
+    ![SAML Client](/cloudflare-one/static/documentation/identity/keycloak/configure-client.png)
 
 3.  Change the `Name ID Format` to `email`
 
@@ -31,13 +32,13 @@ To set up Keycloak (SAML) as your identity provider:
 
 6.  If you wish to enable client signatures, enable `Client Signature Required` and click save.
 
-    1.  You will need to [follow the steps here to get the certificate and enable it in the Cloudflare dashboard](/identity/idp-integration/signed_authn).
+    1.  You will need to [follow the steps here to get the certificate and enable it in the Cloudflare dashboard](/cloudflare-one/identity/idp-integration/signed_authn/).
 
     2.  Import the Access certificate you downloaded into the `SAML Keys` tab. Use `Certificate PEM` as the format.
 
 7.  Set the built-in protocol mapper for the `email` property.
 
-    ![Mapper](../../static/documentation/identity/keycloak/protocol-mapper.png)
+    ![Mapper](/cloudflare-one/static/documentation/identity/keycloak/protocol-mapper.png)
 
     Next, you will need to integrate with Cloudflare Access.
 

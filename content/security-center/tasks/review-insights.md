@@ -1,11 +1,12 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Review Security Insights
+weight: 2
 ---
 
 # Review Security Insights
 
-After [enabling Security Insights](/get-started) and letting the first scan run, check the **Security Insights** tab for a list of detected insights that you should address.
+After [enabling Security Insights](/security-center/get-started/) and letting the first scan run, check the **Security Insights** tab for a list of detected insights that you should address.
 
 For each detected insight, you can resolve it or archive it, after understanding its risks.
 

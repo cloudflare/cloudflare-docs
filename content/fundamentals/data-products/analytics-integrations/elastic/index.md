@@ -1,6 +1,7 @@
 ---
-order: 99
 pcx-content-type: how-to
+title: Elastic
+weight: 100
 ---
 
 # Elastic
@@ -9,7 +10,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you have not used Cloudflare Logs before, refer to the [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
 ### Prerequisites
 
@@ -17,7 +18,7 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 
 *   Have an existing Elastic instance (versions 6.x and 7.x supported)
 *   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-*   Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
+*   Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
 
 <Aside type="note" header="Note">
 
@@ -33,14 +34,14 @@ Before getting Cloudflare logs into Elastic:
 
 2.  Upload the *cloudflare-elastic-lambda.zip* file to an S3 bucket.
 
-    ![Amazon S3 bucket](../../../static/images/elastic/screenshots/cloudflare-elastic-lambda-zip-s3-bucket.png)
+    ![Amazon S3 bucket](/fundamentals/static/images/elastic/screenshots/cloudflare-elastic-lambda-zip-s3-bucket.png)
 
 ## Task 2 - Create Elasticsearch deployment on Elastic Cloud
 
 1.  Create an account on [Elastic Cloud](https://cloud.elastic.co) and log in.
 
 2.  Once logged in, create a new deployment where the Cloudflare logs will reside.
-    ![Create your first deployment](../../../static/images/elastic/screenshots/create-your-first-deployment.png)
+    ![Create your first deployment](/fundamentals/static/images/elastic/screenshots/create-your-first-deployment.png)
 
 3.  Configure your new deployment with the following parameters:
 
@@ -53,7 +54,7 @@ Before getting Cloudflare logs into Elastic:
     *   **Version**: Choose version *6.x* or *7.x*
 
     *   **Template**: Choose *Hot-Warm Architecture* (recommended) or *I/O Optimize*
-        ![Create Elastic deployment part 1](../../../static/images/elastic/screenshots/create-elastic-deployment-hot-warm-architecture.png)
+        ![Create Elastic deployment part 1](/fundamentals/static/images/elastic/screenshots/create-elastic-deployment-hot-warm-architecture.png)
 
 4.  Click **Customize Deployment**. On this page, you can set your Elasticsearch cluster memory and storage.
 
@@ -67,15 +68,15 @@ Before getting Cloudflare logs into Elastic:
 
         *   *Warm Zone*: 2 availability zones, 8 GB RAM
 
-        ![Create Elastic deployment part 2](../../../static/images/elastic/screenshots/configure-hot-and-warm-elastic-8gb-ram.png)
+        ![Create Elastic deployment part 2](/fundamentals/static/images/elastic/screenshots/configure-hot-and-warm-elastic-8gb-ram.png)
         In a hot-warm template, the system will automatically manage the data lifecycle for you by migrating old data to less expensive storage. To configure this, click **Configure index management**.
 
 5.  Add an index pattern for `cloudflare-*` and set it to migrate data off the hot zone after 7 days.
-    ![Create Elastic deployment part 3](../../../static/images/elastic/screenshots/index-curation-add-cloudflare.png)
+    ![Create Elastic deployment part 3](/fundamentals/static/images/elastic/screenshots/index-curation-add-cloudflare.png)
 
 6.  You are now ready to create your Elastic deployment. Click **Create deployment**. The page will refresh with details of your new cluster. It is important to save the randomly generated password (see screenshot). All Elastic deployments are secure by default and are bootstrapped with a randomly generated password for the **Elastic** user. You will use this password to log in to view your Cloudflare logs.
 
-![Elastic generated user details](../../../static/images/elastic/screenshots/generated-user-details-elastic-deployment.png)
+![Elastic generated user details](/fundamentals/static/images/elastic/screenshots/generated-user-details-elastic-deployment.png)
 
 ## Task 3 - Configure the deployment
 
@@ -103,7 +104,7 @@ Next, to configure your deployment:
 
 5.  Upload *dashboards.json* by clicking the **Import** link.
 
-![Elastic Kibana saved objects import](../../../static/images/elastic/screenshots/kibana-saved-objects-import-dashboards.png)
+![Elastic Kibana saved objects import](/fundamentals/static/images/elastic/screenshots/kibana-saved-objects-import-dashboards.png)
 
 ## Task 4 - Create the Lambda function in AWS
 
@@ -114,7 +115,7 @@ To create the Lambda function:
 2.  Log in to your AWS console and navigate to the Lambda section. Create a new function, using the Java 8 runtime and give it a name such as *cloudflare-elastic-logs*.
 
 3.  Configure the handler as `com.cloudflare.elastic.ElasticLambdaForwarder::handleRequest` and upload the function that we had previously saved to our S3 bucket.
-    ![Elastic function code lambda](../../../static/images/elastic/screenshots/function-code-lambda.png)
+    ![Elastic function code lambda](/fundamentals/static/images/elastic/screenshots/function-code-lambda.png)
 
 4.  Configure the function. The Lambda function requires the following environment variables:
 
@@ -123,15 +124,15 @@ To create the Lambda function:
     *   **elastic\_username**: Enter *elastic*.
 
     *   **elastic\_password**: Use the randomly generated password that was created for you.
-        ![Elastic Lambda environment variables](../../../static/images/elastic/screenshots/environment-variables-lambda-cloudflare.png)
+        ![Elastic Lambda environment variables](/fundamentals/static/images/elastic/screenshots/environment-variables-lambda-cloudflare.png)
 
 5.  To connect your Cloudflare S3 log bucket. the last step is to tell the Lambda function to listen for events on the S3 bucket where your Cloudflare logs reside. Choose the S3 trigger type and configure it with the name of the S3 bucket. For **Event type**, select *All object create events*.
 
 6.  Ensure your execution role is configured. In order for the function to be able to read logs from the S3 bucket, you may have to configure the execution role.
-    ![Elastic Lambda execution role](../../../static/images/elastic/screenshots/execution-role-aws.png)
+    ![Elastic Lambda execution role](/fundamentals/static/images/elastic/screenshots/execution-role-aws.png)
 
 7.  View the execution role and add an inline policy that enables the function to read from the bucket.
-    ![Elastic AWS S3 bucket actions](../../../static/images/elastic/screenshots/s3-bucket-actions.png)
+    ![Elastic AWS S3 bucket actions](/fundamentals/static/images/elastic/screenshots/s3-bucket-actions.png)
 
 8.  Give the policy a name and save it.
 
@@ -150,43 +151,43 @@ There are nine dashboards to help you analyze Cloudflare logs. You can also use 
 #### Snapshot
 
 This is a quick overview of the most important metrics from your Cloudflare Logs, including the total number of requests, top visitors by geography, IP, user agent, traffic type, the total number of threats, and bandwidth usage.
-![Cloudflare dashboard - snapshot](../../../static/images/elastic/dashboards/elastic-snapshot.png)
+![Cloudflare dashboard - snapshot](/fundamentals/static/images/elastic/dashboards/elastic-snapshot.png)
 
 #### Security
 
 *Cloudflare - Security (Overview)* - Get insights on threats to your websites and applications, including the number of threats stopped, threats over time, top threat countries, and more.
-![Cloudflare dashboard - security overview](../../../static/images/elastic/dashboards/elastic-security.png)
+![Cloudflare dashboard - security overview](/fundamentals/static/images/elastic/dashboards/elastic-security.png)
 
 *Cloudflare - Security (WAF)* - Get insights on threat identification and mitigation by our Web Application Firewall, including events like SQL injections, XSS, and more. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
-![Cloudflare dashboard - security WAF](../../../static/images/elastic/dashboards/elastic-security-waf.png)
+![Cloudflare dashboard - security WAF](/fundamentals/static/images/elastic/dashboards/elastic-security-waf.png)
 
 *Cloudflare - Security (Rate Limiting)* - Get insights on rate limiting protection against denial-of-service attacks, brute-force login attempts, and other types of abusive behavior targeted at your websites or applications.
-![Cloudflare dashboard - security rate limiting](../../../static/images/elastic/dashboards/elastic-security-rate-limiting.png)
+![Cloudflare dashboard - security rate limiting](/fundamentals/static/images/elastic/dashboards/elastic-security-rate-limiting.png)
 
 *Cloudflare - Security (Bot Management)* - Reliably detects and mitigates bad bots to prevent credential stuffing, spam registration, content scraping, click fraud, inventory hoarding, and other malicious activities.
-![Cloudflare dashboard - bot management](../../../static/images/elastic/dashboards/elastic-bot-management.png)
+![Cloudflare dashboard - bot management](/fundamentals/static/images/elastic/dashboards/elastic-bot-management.png)
 
 #### Performance
 
 *Cloudflare - Performance (Requests, Bandwidth, Cache)* - Identify and address performance issues and caching misconfigurations. Metrics include total vs. cached bandwidth, saved bandwidth, total requests, cache ratio, top uncached requests, and more.
-![Cloudflare dashboard - performance (requests, bandwidth, cache)](../../../static/images/elastic/dashboards/elastic-performance.png)
+![Cloudflare dashboard - performance (requests, bandwidth, cache)](/fundamentals/static/images/elastic/dashboards/elastic-performance.png)
 
 *Cloudflare - Performance (Hostname, Content Type, Request Methods, Connection Type)* - Get insights into your most popular hostnames, most requested content types, breakdown of request methods, and connection type.
-![Cloudflare dashboard - performance (hostname, content type, request methods, connection type)](../../../static/images/elastic/dashboards/elastic-origin-requests-by-hostname-type.png)
+![Cloudflare dashboard - performance (hostname, content type, request methods, connection type)](/fundamentals/static/images/elastic/dashboards/elastic-origin-requests-by-hostname-type.png)
 
 *Cloudflare - Performance (Static vs. Dynamic Content)* - Get insights into the performance of your static and dynamic content, including slowest URLs.
-![Cloudflare dashboard - performance (static vs. dynamic content)](../../../static/images/elastic/dashboards/elastic-performance-static-vs-dynamic-content.png)
+![Cloudflare dashboard - performance (static vs. dynamic content)](/fundamentals/static/images/elastic/dashboards/elastic-performance-static-vs-dynamic-content.png)
 
 #### Reliability
 
 Get insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
-![Cloudflare dashboard - reliability](../../../static/images/elastic/dashboards/elastic-reliability.png)
+![Cloudflare dashboard - reliability](/fundamentals/static/images/elastic/dashboards/elastic-reliability.png)
 
 ### Filters
 
 All dashboard have a set of filters that you can apply to the entire dashboard, as shown in the following example. Filters are applied across the entire dashboard.
 
-![Cloudflare dashboard filters](../../../static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
+![Cloudflare dashboard filters](/fundamentals/static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
 
 <Aside type="note" header="Note">
 
@@ -238,15 +239,15 @@ To begin, in AWS:
 2.  Click the **Monitoring** tab.
 3.  Click **View logs in CloudWatch**.
 
-![AWS Lambda function monitoring](../../../static/images/elastic/screenshots/aws-lambda-monitoring.png)
+![AWS Lambda function monitoring](/fundamentals/static/images/elastic/screenshots/aws-lambda-monitoring.png)
 
 A list of log streams generated by the Lambda function (see image below) appears. Each stream contains log messages. However, some log streams will either be empty or not contain any useful information. You might need to review several of them.
 
-![AWS Lambda log streams](../../../static/images/elastic/screenshots/aws-lambda-log-streams.png)
+![AWS Lambda log streams](/fundamentals/static/images/elastic/screenshots/aws-lambda-log-streams.png)
 
 When you click to review a stream, you want to look for messages starting with the the text *Connected to cluster:* and ending with *status: \[GREEN]* as shown in the image below.
 
-![AWS Lambda log stream messages](../../../static/images/elastic/screenshots/aws-lambda-log-streams-messages.png)
+![AWS Lambda log stream messages](/fundamentals/static/images/elastic/screenshots/aws-lambda-log-streams-messages.png)
 
 If you see *status: \[RED]*, then your cluster isn’t healthy and it’s likely that your Cloudflare logs won’t appear. If this is the case, review how to debug in Kibana (see below).
 
@@ -265,13 +266,13 @@ If you run into any other issues, take note of the exact return message and cont
 To analyze the health status of the Lambda function from Kibana:
 
 1.  From Elastic Cloud, launch the Kibana console.
-    ![Elastic Cloud console](../../../static/images/elastic/screenshots/elastic-cloud-console.png)
+    ![Elastic Cloud console](/fundamentals/static/images/elastic/screenshots/elastic-cloud-console.png)
 2.  Find the **Dev Tools** app on the left navigation bar.
 3.  Under the **Console** tab, type the following into the left pane: *GET \_cat/indices?v\&s=index*.
 4.  In the right pane, you should see a table of indices with the column headings: **health status index**, **uuid**, **pri**, **rep**, **docs.count**, **docs.deleted**, **store.size**, and **pri.store.size**.
 
-![Elastic Kibana Dev Tools console 1](../../../static/images/elastic/screenshots/elastic-kibana-dev-tools-console-1.png)
+![Elastic Kibana Dev Tools console 1](/fundamentals/static/images/elastic/screenshots/elastic-kibana-dev-tools-console-1.png)
 
 The first column should read *green*. If it does not, or if there are no *cloudflare-\<DATE>* indices, then there is a problem loading the logs from the AWS Lambda function.
 
-![Elastic Kibana Dev Tools console 2](../../../static/images/elastic/screenshots/elastic-kibana-dev-tools-console-2.png)
+![Elastic Kibana Dev Tools console 2](/fundamentals/static/images/elastic/screenshots/elastic-kibana-dev-tools-console-2.png)

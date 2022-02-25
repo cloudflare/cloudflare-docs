@@ -1,7 +1,9 @@
 ---
-order: 3
 pcx-content-type: concept
 type: overview
+title: Sequential Abuse Detection
+weight: 4
+layout: list
 ---
 
 import Availability from "../\_partials/\_availability.md"

@@ -1,6 +1,7 @@
 ---
-order: 87
 pcx-content-type: how-to
+title: Manage Logpush with cURL
+weight: 88
 ---
 
 # Manage Logpush with cURL
@@ -9,7 +10,7 @@ You can manage your Cloudflare Logpush service from the command line using cURL.
 
 Before getting started, review:
 
-*   [Logpush API configuration](/reference/logpush-api-configuration)
+*   [Logpush API configuration](/logs/reference/logpush-api-configuration/)
 *   [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)
 
 <Aside type="note">
@@ -30,7 +31,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 ### Parameters
 
-*   **destination\_conf** - See [Destination](/reference/logpush-api-configuration/#destination) for details.
+*   **destination\_conf** - See [Destination](/logs/reference/logpush-api-configuration/#destination) for details.
 
 ### Response
 
@@ -68,9 +69,9 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs \
 ### Parameters
 
 *   **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
-*   **destination\_conf** - Refer to [Destination](/reference/logpush-api-configuration/#destination) for details.
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets; this parameter cannot be changed after the job is created.
-*   **logpull\_options** (optional) - Refer to [Options](/reference/logpush-api-configuration/#options).
+*   **destination\_conf** - Refer to [Destination](/logs/reference/logpush-api-configuration/#destination) for details.
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets; this parameter cannot be changed after the job is created.
+*   **logpull\_options** (optional) - Refer to [Options](/logs/reference/logpush-api-configuration/#options).
     *   Typically includes the desired fields and timestamp format.
     *   Set the timestamp format to `RFC 3339` (`&timestamps=rfc3339`) for:
         *   Google BigQuery usage.

@@ -2,6 +2,7 @@
 updated: 2021-02-02
 category: 🛡️ Web Gateway
 pcx-content-type: tutorial
+title: Configure local domains and split tunnel mode
 ---
 
 # Configure local domains and split tunnel mode
@@ -27,7 +28,7 @@ You can configure domains to use the device's local resolver. Cloudflare Zero Tr
 
 2.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
-    ![Network Settings](../static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
+    ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 By default, Cloudflare Zero Trust excludes common top-level domains used for local resolution. Everything listed will be excluded. To delete a default domain from this list, toggle the box to the left of the domain name and click **Confirm delete**.
 
@@ -41,14 +42,14 @@ You can deploy Cloudflare Zero Trust in split tunnel mode and exclude IP address
 
 2.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
-    ![Network Settings](../static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
+    ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 By default, Cloudflare Zero Trust excludes IP addresses commonly used for private routing, including those defined in [RFC 1918](https://tools.ietf.org/html/rfc1918). Everything listed under **Split Tunnel entries** will be excluded. To delete an IP address from the list of excluded IP addresses, toggle the box to the left of the IP address range and click **Confirm delete**.
 
 To add IP addresses to the default list, input the address or CIDR in the **Selector** field. You can add an optional description and click **Add**.
 
-![Split Tunnel](../static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
+![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
 ## Enroll devices
 
-You [can now begin enrolling devices](/connections/connect-devices/warp) to use Cloudflare Zero Trust with the WARP client.
+You [can now begin enrolling devices](/cloudflare-one/connections/connect-devices/warp/) to use Cloudflare Zero Trust with the WARP client.

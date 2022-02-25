@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: tutorial
+title: DNS over Discord
+weight: 0
 ---
 
 # DNS over Discord
@@ -17,9 +18,9 @@ If only a domain is given for the command, the bot will default to looking for '
 
 <div class="medium-img">
 
-![dig command](../static/dns-over-discord/dig-command.png)
+![dig command](/1.1.1.1/static/dns-over-discord/dig-command.png)
 
-![dig domain: cloudflare.com](../static/dns-over-discord/dig-command-example-1.png)
+![dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-example-1.png)
 
 </div>
 
@@ -59,7 +60,7 @@ To query other DNS record types, or multiple record types at once, use the `/mul
 
 <div class="medium-img">
 
-![dig command types](../static/dns-over-discord/dig-command-types.png)
+![dig command types](/1.1.1.1/static/dns-over-discord/dig-command-types.png)
 
 </div>
 
@@ -71,7 +72,7 @@ When this is requested, the name and TTL columns will be excluded, with just the
 
 <div class="medium-img">
 
-![dig domain: cloudflare.com type: AAAA short: true](../static/dns-over-discord/dig-command-example-2.png)
+![dig domain: cloudflare.com type: AAAA short: true](/1.1.1.1/static/dns-over-discord/dig-command-example-2.png)
 
 </div>
 
@@ -87,7 +88,7 @@ The refresh button is available on all responses to the dig command, including t
 
 <div class="medium-img">
 
-![Refreshing dig domain: cloudflare.com](../static/dns-over-discord/dig-command-refresh.gif)
+![Refreshing dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif)
 
 </div>
 
@@ -99,9 +100,9 @@ If you want to look up multiple DNS record types at once, use the `/multi-dig` c
 
 <div class="medium-img">
 
-![multi-dig command](../static/dns-over-discord/multi-dig-command.png)
+![multi-dig command](/1.1.1.1/static/dns-over-discord/multi-dig-command.png)
 
-![multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-example-1.png)
+![multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-example-1.png)
 
 </div>
 
@@ -163,7 +164,7 @@ The following DNS record types are supported and considered valid by the bot:
 
 <div class="medium-img">
 
-![multi-dig command types](../static/dns-over-discord/multi-dig-command-types.png)
+![multi-dig command types](/1.1.1.1/static/dns-over-discord/multi-dig-command-types.png)
 
 </div>
 
@@ -173,7 +174,7 @@ Like the main dig command, the multi-dig command also supports the optional shor
 
 <div class="large-img">
 
-![multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true](../static/dns-over-discord/multi-dig-command-example-2.png)
+![multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true](/1.1.1.1/static/dns-over-discord/multi-dig-command-example-2.png)
 
 </div>
 
@@ -187,7 +188,7 @@ As with the dig command, any user can press the refresh button to refresh the di
 
 <div class="medium-img">
 
-![Refreshing multi-dig domain: cloudflare.com types: A AAAA](../static/dns-over-discord/multi-dig-command-refresh.gif)
+![Refreshing multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-refresh.gif)
 
 </div>
 
@@ -199,7 +200,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 <div class="medium-img">
 
-![whois command](../static/dns-over-discord/whois-command.png)
+![whois command](/1.1.1.1/static/dns-over-discord/whois-command.png)
 
 </div>
 
@@ -207,7 +208,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 <div class="medium-img">
 
-![whois query: cloudflare.com](../static/dns-over-discord/whois-command-example-1.png)
+![whois query: cloudflare.com](/1.1.1.1/static/dns-over-discord/whois-command-example-1.png)
 
 </div>
 
@@ -215,7 +216,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 <div class="medium-img">
 
-![whois query: 104.16.132.229](../static/dns-over-discord/whois-command-example-2.png)
+![whois query: 104.16.132.229](/1.1.1.1/static/dns-over-discord/whois-command-example-2.png)
 
 </div>
 
@@ -223,7 +224,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 <div class="medium-img">
 
-![whois query: 2606:4700::6810:84e5](../static/dns-over-discord/whois-command-example-3.png)
+![whois query: 2606:4700::6810:84e5](/1.1.1.1/static/dns-over-discord/whois-command-example-3.png)
 
 </div>
 
@@ -231,7 +232,7 @@ The `/whois` command allows you to perform an RDAP/WHOIS lookup right in Discord
 
 <div class="medium-img">
 
-![whois query: 13335](../static/dns-over-discord/whois-command-example-4.png)
+![whois query: 13335](/1.1.1.1/static/dns-over-discord/whois-command-example-4.png)
 
 </div>
 
@@ -247,7 +248,7 @@ The `/help` command provides in-Discord documentation about all the commands ava
 
 <div class="medium-img">
 
-![help command](../static/dns-over-discord/help-command.png)
+![help command](/1.1.1.1/static/dns-over-discord/help-command.png)
 
 </div>
 
@@ -259,7 +260,7 @@ The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 
 
 <div class="medium-img">
 
-![privacy command](../static/dns-over-discord/privacy-command.png)
+![privacy command](/1.1.1.1/static/dns-over-discord/privacy-command.png)
 
 </div>
 
@@ -271,7 +272,7 @@ The DNS over Discord bot is open-source, and the `/github` command provides a qu
 
 <div class="medium-img">
 
-![github command](../static/dns-over-discord/github-command.png)
+![github command](/1.1.1.1/static/dns-over-discord/github-command.png)
 
 </div>
 
@@ -284,7 +285,7 @@ The bot can be invited at any time with <https://cfl.re/3nM6VfQ>.
 
 <div class="medium-img">
 
-![invite command](../static/dns-over-discord/invite-command.png)
+![invite command](/1.1.1.1/static/dns-over-discord/invite-command.png)
 
 </div>
 

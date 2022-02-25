@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Update Firewall Rules for customers or partners
 ---
 
 # Update Firewall Rules for customers or partners
@@ -26,7 +27,7 @@ If a customer or partner is large enough, you could set up a Firewall Rule based
 This example uses:
 
 *   `ip.geoip.asnum` to specify the general region
-*   The `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
+*   The `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -45,7 +46,7 @@ This example uses:
 
 <Aside type='warning' header='Important'>
 
-Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan with Bot Management.
+Access to [Bot Management](/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan with Bot Management.
 
 </Aside>
 
@@ -54,7 +55,7 @@ Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm
 This example uses:
 
 *   The `ip.geoip.asnum` field to specify the general region.
-*   The `cf.threat_score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+*   The `cf.threat_score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your firewall bypasses normal `User Agent Block` rules.
 
@@ -82,7 +83,7 @@ For smaller organizations, you could set up Firewall Rules based on IP addresses
 This example:
 
 *   Specifies the network and host.
-*   Uses the `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+*   Uses the `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>

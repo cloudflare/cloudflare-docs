@@ -1,11 +1,12 @@
 ---
-order: 0
 pcx-content-type: reference
+title: Using the Stream player
+weight: 1
 ---
 
 # Using the Stream player
 
-The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/viewing-videos/securing-your-stream)) replacing `$VIDEOID` in the example below.
+The Stream player can be placed on a web page in an iframe element with the video UID (or [signed token](/stream/viewing-videos/securing-your-stream/)) replacing `$VIDEOID` in the example below.
 
 ```html
 <iframe
@@ -77,7 +78,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 *   `defaultTextTrack`
 
-    *   Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/uploading-videos/adding-captions). If the specified language code has no captions available, the player will behave as though no language code had been provided.
+    *   Will initialize the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [upload the text track](/stream/uploading-videos/adding-captions/). If the specified language code has no captions available, the player will behave as though no language code had been provided.
 
         <Aside>
 

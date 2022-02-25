@@ -1,7 +1,9 @@
 ---
 title: Actions
 pcx-content-type: reference
-order: 220
+weight: 221
+meta:
+  title: Firewall Rules actions
 ---
 
 # Firewall Rules actions
@@ -20,7 +22,7 @@ There are two exceptions to this behavior: the *Log* and *Bypass* actions. Unlik
 
 <Aside type="note">
 
-For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions).
 
 </Aside>
 

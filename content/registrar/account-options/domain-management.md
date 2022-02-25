@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Domain management
 ---
 
 # Domain management
@@ -19,7 +20,7 @@ Cloudflare redacts WHOIS information from your domain by default. However, we do
 3.  Select the domain you want to edit and click **Manage** > **Contacts**.
 4.  Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
 
-Refer to [Registrant contact updates](/account-options/domain-contact-updates) for more information.
+Refer to [Registrant contact updates](/registrar/account-options/domain-contact-updates/) for more information.
 
 ## Edit Default Contact information
 
@@ -37,7 +38,7 @@ Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other 
 
 There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While we will make several attempts to renew, we strongly recommend you frequently review your account to ensure your domains have been renewed.
 
-If you decide you no longer need the domain, [disable auto-renew for your domain](/account-options/renew-domains#set-up-automatic-renewals). Once disabled, your domain will not renew upon expiration.
+If you decide you no longer need the domain, [disable auto-renew for your domain](/registrar/account-options/renew-domains/#set-up-automatic-renewals). Once disabled, your domain will not renew upon expiration.
 
 <Aside type="note" header="Note">
 
@@ -47,4 +48,4 @@ The first auto-renew attempt will occur approximately 30 days prior to expiratio
 
 You can continue to keep your domain registered with Cloudflare for the time remaining on the expiration date. If you decide you want to keep the domain, enable auto-renew at any time prior to your expiration.
 
-For more details on renewals, refer to [Renew domains](/account-options/renew-domains).
+For more details on renewals, refer to [Renew domains](/registrar/account-options/renew-domains/).

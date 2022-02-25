@@ -1,6 +1,7 @@
 ---
-order: 21
 pcx-content-type: reference
+title: Changelog
+weight: 22
 ---
 
 # Changelog

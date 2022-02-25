@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Configure PagerDuty
 ---
 
 # Configure PagerDuty

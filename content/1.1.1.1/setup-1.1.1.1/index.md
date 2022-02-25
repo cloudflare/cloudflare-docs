@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: navigation
+title: Set up 1.1.1.1
+weight: 2
 ---
 
 # Set up 1.1.1.1

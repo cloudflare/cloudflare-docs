@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Enable Crawler Hints
 ---
 
 # Enable Crawler Hints

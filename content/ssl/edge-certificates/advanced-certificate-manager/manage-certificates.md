@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: Manage advanced certificates
+weight: 1
 ---
 
 import DCVDefinition from "../../\_partials/\_dcv-definition.md"
@@ -10,9 +11,9 @@ import CipherSuitesDefinition from "../../\_partials/\_cipher-suites-definition.
 
 ## Create a certificate
 
-If you are using an existing [Universal SSL certificate](/edge-certificates/universal-ssl), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
+If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
 
-Once you order a certificate, you can review the [certificate's status](/ssl-tls/certificate-statuses) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+Once you order a certificate, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
 
 ### Using the dashboard
 
@@ -68,7 +69,7 @@ To restart validation for a certificate in a `validation_timed_out` status, send
 
 <CipherSuitesDefinition/>
 
-For more details, refer to [Disable cipher suites](/ssl-tls/cipher-suites#disable-cipher-suites).
+For more details, refer to [Disable cipher suites](/ssl/ssl-tls/cipher-suites/#disable-cipher-suites).
 
 ***
 
@@ -78,10 +79,10 @@ For more details, refer to [Disable cipher suites](/ssl-tls/cipher-suites#disabl
 
 Normally, you only need to update DCV if you have your application on a partial setup (Cloudflare does not run your authoritative nameservers).
 
-For more information about DCV, refer to [DCV methods](/edge-certificates/changing-dcv-method).
+For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/).
 
 <Aside type="warning">
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl-tls/dcv-update).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
 
 </Aside>

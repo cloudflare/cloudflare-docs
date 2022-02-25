@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Web Crypto
 ---
 
 # Web Crypto
@@ -27,7 +28,7 @@ console.log(new Uint8Array(myDigest))
 
 Some common uses include:
 
-*   [Signing requests](/examples/signing-requests)
+*   [Signing requests](/workers/examples/signing-requests/)
 
 <Aside type="warning" header="Warning">
 
@@ -345,4 +346,4 @@ A checkmark (✓) indicates that this feature is believed to be fully supported 
 
 *   [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
 *   [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
-*   [Example: signing requests](/examples/signing-requests)
+*   [Example: signing requests](/workers/examples/signing-requests/)

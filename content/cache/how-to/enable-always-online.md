@@ -17,10 +17,10 @@ To use Cloudflare's Always Online cache without Internet Archive integration, sw
 
 Alternatives to globally enabling Always Online include:
 
-*   Using Cloudflare [Page Rules](/how-to/create-page-rules) to enable Always Online
+*   Using Cloudflare [Page Rules](/cache/how-to/create-page-rules/) to enable Always Online
 *   Allowing your origin web server to determine which content to cache for display if your origin web server is offline:
     1.  Disable **Always Online**.
-    2.  Set [Origin Cache Control](/about/cache-control) for your resources.
+    2.  Set [Origin Cache Control](/cache/about/cache-control/) for your resources.
     3.  Enable `stale-if-error` at your origin.
 
-For best practices and limitations for Always Online, see [Always Online Best Practices](/best-practices/always-online).
+For best practices and limitations for Always Online, see [Always Online Best Practices](/cache/best-practices/always-online/).

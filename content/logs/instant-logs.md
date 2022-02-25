@@ -1,6 +1,7 @@
 ---
-order: 115
 pcx-content-type: concept
+title: Instant Logs
+weight: 116
 ---
 
 # Instant Logs
@@ -29,7 +30,7 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 Create a session by sending a `POST` request to our Instant Logs job endpoint with the following parameters:
 
-*   **Fields** - List any field available in our [HTTP request dataset](https://developers.cloudflare.com/logs/reference/log-fields/zone/http_requests).
+*   **Fields** - List any field available in our [HTTP request dataset](/logs/reference/log-fields/zone/http_requests).
 
 *   **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 

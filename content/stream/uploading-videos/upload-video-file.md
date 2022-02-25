@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: Upload video file
+weight: 3
 ---
 
 # Upload video file
@@ -72,11 +73,11 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 *   `allowedorigins`
 
-    *   An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
+    *   An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](/stream/viewing-videos/securing-your-stream/#security-considerations) for the video.
 
 *   `thumbnailtimestamppct`
 
-    *   Specify the default thumbnail [timestamp percentage](/viewing-videos/displaying-thumbnails). Note that percentage is a floating point value between 0.0 and 1.0.
+    *   Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 *   `watermark`
 

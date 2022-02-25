@@ -2,6 +2,7 @@
 updated: 2021-03-23
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Connect through Cloudflare Access using a CLI
 ---
 
 # Connect through Cloudflare Access using a CLI

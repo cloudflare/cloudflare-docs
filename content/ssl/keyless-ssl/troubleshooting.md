@@ -1,7 +1,9 @@
 ---
 title: Troubleshooting
-order: 5
 pcx-content-type: faq
+weight: 6
+meta:
+  title: Troubleshooting Keyless SSL
 ---
 
 # Troubleshooting Keyless SSL

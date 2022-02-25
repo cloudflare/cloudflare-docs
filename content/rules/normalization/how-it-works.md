@@ -1,7 +1,9 @@
 ---
 title: How it works
 pcx-content-type: concept
-order: 2
+weight: 3
+meta:
+  title: How URL normalization works
 ---
 
 # How URL normalization works
@@ -34,4 +36,4 @@ URL                                  | Normalized URL
 
 </TableWrap>
 
-The exact URL normalization performed by Cloudflare varies according to the configured settings. For more information, refer to [URL normalization settings](/normalization/settings).
+The exact URL normalization performed by Cloudflare varies according to the configured settings. For more information, refer to [URL normalization settings](/rules/normalization/settings/).

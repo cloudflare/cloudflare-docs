@@ -1,13 +1,14 @@
 ---
-order: 0
 pcx-content-type: concept
+title: DNS policies
+weight: 1
 ---
 
 # DNS policies
 
 When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
-![Gateway DNS flow](../../../static/documentation/policies/gateway-dns-diagram.png)
+![Gateway DNS flow](/cloudflare-one/static/documentation/policies/gateway-dns-diagram.png)
 
 When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network.
 
@@ -32,7 +33,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 #### Identity-based selectors
 
-You can build DNS policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+You can build DNS policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/cloudflare-one/policies/filtering/identity-selectors/).
 
 #### DOH Subdomain
 
@@ -193,4 +194,4 @@ This setup ensures users will be blocked from accessing offensive sites using DN
 
 ## Custom block page
 
-When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/policies/filtering/configuring-block-page).
+When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/cloudflare-one/policies/filtering/configuring-block-page/).

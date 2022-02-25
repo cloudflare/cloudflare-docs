@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Kandji
+weight: 2
 ---
 
 # Kandji
@@ -27,7 +28,7 @@ First, you need to download the **custom configuration profile**. For the simple
     4.  Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
     5.  Save the custom profile.
 
-    ![Custom profile](../../../../../../static/documentation/connections/custom-profile.png)
+    ![Custom profile](/cloudflare-one/static/documentation/connections/custom-profile.png)
 
 4.  Next, add a custom app.
     1.  In the navigation bar on the left, click **Library**.
@@ -42,7 +43,7 @@ First, you need to download the **custom configuration profile**. For the simple
     4.  Copy the **Audit and Enforce Script** below and paste it into the **Audit Script** text field.
     5.  To enforce a minimum app version, update the **ENFORCED\_VERSION** variable in the audit script with the version number the audit script should enforce. (Example version number 1.5.207.0). If **ENFORCED\_VERSION** is left blank (““), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. (see script comments for more details)
     6.  In the Install Details section, select **Installer Package**.
-    7.  Under **Installer Package**, upload the Cloudflare Warp installer package. If you don’t already have the Cloudflare WARP installer package, [visit the Downloads page](/connections/connect-devices/warp/download-warp).
+    7.  Under **Installer Package**, upload the Cloudflare Warp installer package. If you don’t already have the Cloudflare WARP installer package, [visit the Downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/).
     8.  Click **Save**.
 
 ## Audit and Enforce Script

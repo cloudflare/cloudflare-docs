@@ -1,12 +1,14 @@
 ---
 title: Configure CSP reporting endpoint
-order: 5
 pcx-content-type: how-to
+weight: 6
+meta:
+  title: Configure the CSP reporting endpoint
 ---
 
 # Configure the CSP reporting endpoint
 
-When enabled, Page Shield uses a Content Security Policy (CSP) [report-only HTTP header](/reference/csp-header) to gather information about all the scripts running on your application.
+When enabled, Page Shield uses a Content Security Policy (CSP) [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
 
 By default, reports are sent to a Cloudflare-owned endpoint:
 

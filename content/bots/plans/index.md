@@ -1,8 +1,11 @@
 ---
 title: Plans
-order: 3
 type: overview
 pcx-content-type: navigation
+weight: 4
+layout: list
+meta:
+  title: Cloudflare bot plans
 ---
 
 import PlanIntro from "../\_partials/\_plan-intro.md"

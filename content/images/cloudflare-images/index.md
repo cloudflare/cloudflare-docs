@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: reference
+title: Cloudflare Images
+weight: 2
 ---
 
 # Cloudflare Images

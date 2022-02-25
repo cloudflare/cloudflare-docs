@@ -1,6 +1,8 @@
 ---
 title: Set caching levels
 pcx-content-type: concept
+meta:
+  title: Caching levels
 ---
 
 # Caching levels

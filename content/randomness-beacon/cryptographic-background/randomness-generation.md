@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Randomness Generation
+weight: 2
 ---
 
 # Randomness Generation

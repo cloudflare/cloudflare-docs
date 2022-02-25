@@ -1,12 +1,13 @@
 ---
 pcx-content-type: configuration
+title: ReadableStream
 ---
 
 # ReadableStream
 
 ## Background
 
-A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/runtime-apis/streams/transformstream). On the Workers platform, `ReadableStream`
+A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `ReadableStream`
 cannot be created directly using the `ReadableStream` constructor.
 
 ## Properties
@@ -28,7 +29,7 @@ cannot be created directly using the `ReadableStream` constructor.
 
 *   <Code>getReader(options<ParamType>Object</ParamType>)</Code> <TypeLink href="/runtime-apis/streams/readablestreamdefaultreader">ReadableStreamDefaultReader</TypeLink>
 
-    *   Gets an instance of `ReadableStreamDefaultReader` and locks the `ReadableStream` to that reader instance. This method accepts an object argument indicating options.  The only supported option is `mode`, which can be set to `byob` to create a [`ReadableStreamBYOBReader`](/runtime-apis/streams/readablestreambyobreader), as shown here:
+    *   Gets an instance of `ReadableStreamDefaultReader` and locks the `ReadableStream` to that reader instance. This method accepts an object argument indicating options.  The only supported option is `mode`, which can be set to `byob` to create a [`ReadableStreamBYOBReader`](/workers/runtime-apis/streams/readablestreambyobreader/), as shown here:
 
         ```js
         let reader = readable.getReader({ mode: "byob" })
@@ -52,6 +53,6 @@ cannot be created directly using the `ReadableStream` constructor.
 
 ## Related resources
 
-*   [Using Streams](/learning/using-streams)
+*   [Using Streams](/workers/learning/using-streams/)
 *   [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
 *   [MDN’s ReadableStream documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)

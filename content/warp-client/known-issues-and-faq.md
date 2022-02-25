@@ -1,7 +1,7 @@
 ---
 title: FAQ
-order: 4
 pcx-content-type: faq
+weight: 5
 ---
 
 # FAQ

@@ -1,7 +1,9 @@
 ---
-order: 
 type: overview
 pcx-content-type: reference
+title: JavaScript detections
+weight: 0
+layout: list
 ---
 
 # JavaScript detections
@@ -18,7 +20,7 @@ For Free customers (Bot Fight Mode), JavaScript detections are automatically ena
 
 For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional. To adjust your settings, go to **Firewall** > **Bots**.
 
-For more details on how to set up bot protection, see [Get started](../../get-started).
+For more details on how to set up bot protection, see [Get started](/bots/get-started/).
 
 ## Considerations
 

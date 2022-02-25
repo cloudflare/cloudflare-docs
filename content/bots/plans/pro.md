@@ -1,9 +1,11 @@
 ---
 title: Pro
-order: 1
 type: document
 pcx-content-type: reference
 hidden: true
+weight: 2
+meta:
+  title: Plans — Pro
 ---
 
 import PlanIntro from "../\_partials/\_plan-intro.md"

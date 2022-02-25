@@ -1,8 +1,11 @@
 ---
 title: Welcome
 pcx-content-type: overview
-order: 0
 type: overview
+weight: 1
+layout: list
+meta:
+  title: Cloudflare Time Services docs
 ---
 
 # Cloudflare Time Services docs

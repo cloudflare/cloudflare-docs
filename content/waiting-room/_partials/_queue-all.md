@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 To queue all visitors prior to a time-based offering:

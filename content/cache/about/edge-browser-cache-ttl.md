@@ -14,7 +14,7 @@ Edge Cache TTL (Time to Live) specifies how long to cache a resource in the Clou
 *   Business - 1 second
 *   Enterprise - 1 second
 
-For more information on creating page rules, see [Create page rules](/how-to/create-page-rules).
+For more information on creating page rules, see [Create page rules](/cache/how-to/create-page-rules/).
 
 ## Browser Cache TTL
 
@@ -25,4 +25,4 @@ The Browser Cache TTL sets the expiration for resources cached in a visitor’s 
 
 Unless specifically set in a page rule, Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**.
 
-For more information on setting the Browser Cache TTL, see [Set Browser Cache TTL](/how-to/set-browser-ttl).
+For more information on setting the Browser Cache TTL, see [Set Browser Cache TTL](/cache/how-to/set-browser-ttl/).

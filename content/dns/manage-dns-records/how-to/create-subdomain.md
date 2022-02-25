@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Create a subdomain
+weight: 3
 ---
 
 # Create a subdomain
@@ -11,7 +12,7 @@ Most subdomains serve a specific purpose within the overall context of your webs
 
 To create a new subdomain, you would first add the subdomain content at your host.
 
-Then, you would create a corresponding [A, AAAA, or CNAME record](/manage-dns-records/how-to/create-dns-records) for that subdomain (`blog`, `store`).
+Then, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) for that subdomain (`blog`, `store`).
 
 <Example>
 
@@ -23,13 +24,13 @@ Then, you would create a corresponding [A, AAAA, or CNAME record](/manage-dns-re
 
 ## Subdomain redirects
 
-For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/manage-subdomains#set-up-redirects).
+For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](/fundamentals/get-started/basic-tasks/manage-subdomains#set-up-redirects).
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`).
+If your main domain is using Cloudflare's [Universal SSL certificate](/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`).
 
-For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations#full-setup).
+For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](/ssl/edge-certificates/universal-ssl/limitations#full-setup).
 
 ## Customize subdomain behavior
 

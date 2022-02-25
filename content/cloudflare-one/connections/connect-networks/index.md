@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: navigation
+title: Connect networks
+weight: 2
 ---
 
 # Connect networks

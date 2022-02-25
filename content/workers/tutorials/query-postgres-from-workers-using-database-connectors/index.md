@@ -1,8 +1,9 @@
 ---
 updated: 2021-11-15
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Query Postgres from Workers using a database connector
 ---
 
 # Query Postgres from Workers using a database connector
@@ -53,7 +54,7 @@ Running this command will:
 
 <Aside type="warning" header="Warning">
 
-Cloudflare Tunnel will be accessible from the Internet once you run the following `docker compose` command. Cloudflare recommends that you secure your `TUNNEL_HOSTNAME` behind [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps) before you continue.
+Cloudflare Tunnel will be accessible from the Internet once you run the following `docker compose` command. Cloudflare recommends that you secure your `TUNNEL_HOSTNAME` behind [Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps) before you continue.
 
 </Aside>
 
@@ -161,7 +162,7 @@ In `wrangler.toml`, enter your Cloudflare account ID in the line containing `acc
 
 <Aside type="note">
 
-[Refer to Get started](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment) if you need help finding your Cloudflare account ID.
+[Refer to Get started](/workers/get-started/guide#7-configure-your-project-for-deployment) if you need help finding your Cloudflare account ID.
 
 </Aside>
 
@@ -186,7 +187,7 @@ $ wrangler publish
 
 ### Set secrets
 
-Create and save [a Client ID and a Client Secret](https://developers.cloudflare.com/cloudflare-one/identity/service-auth/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
+Create and save [a Client ID and a Client Secret](/cloudflare-one/identity/service-auth/service-tokens) to Worker secrets in case your Tunnel is protected by Cloudflare Access.
 
 ```sh
 $ wrangler secret put CF_CLIENT_ID
@@ -218,6 +219,6 @@ $ docker compose down
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-*   [Build a Slackbot](/tutorials/build-a-slackbot)
-*   [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)
+*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+*   [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
+*   [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

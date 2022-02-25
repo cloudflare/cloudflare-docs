@@ -1,7 +1,9 @@
 ---
-order: 1
 pcx-content-type: reference
 type: overview
+title: Configuration settings
+weight: 2
+layout: list
 ---
 
 # Configuration settings
@@ -109,6 +111,6 @@ Session duration improves user experience in two ways.
 
 First, it prevents visitors from having to pass through a waiting room twice for the same transaction. For example, a visitor might want to make a purchase at `example.com`. There's a lot of traffic at `example.com`, so they queue in the waiting room before entering the online store. After a period of time, they leave the waiting room and enter the online store. They make a purchase and leave the online store.
 
-However, they forgot to add a note to the order or request a receipt. As long as their [session cookie](/reference/waiting-room-cookie) is still valid (for the length of time specified by the `session duration`), they can re-enter your application without having to re-queue in the waiting room.
+However, they forgot to add a note to the order or request a receipt. As long as their [session cookie](/waiting-room/reference/waiting-room-cookie/) is still valid (for the length of time specified by the `session duration`), they can re-enter your application without having to re-queue in the waiting room.
 
 Second, session duration lets your waiting room create a dynamic outflow from your application (in addition to dynamic inflow). A user's session cookie expires after a period of inactivity, meaning that new spots can open up as soon as space becomes available and estimated wait times are lower and more accurate.

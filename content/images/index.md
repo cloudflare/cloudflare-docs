@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Image Optimization
 ---
 
 # Cloudflare Image Optimization
@@ -14,4 +16,4 @@ With Image Resizing you can use Cloudflare’s edge platform to resize, adjust q
 
 Cloudflare Polish is a one-click image optimization product that automatically optimizes images in your site.
 
-For more information about the differences between each product, refer to the [Frequently Asked Questions section](/faq).
+For more information about the differences between each product, refer to the [Frequently Asked Questions section](/images/faq/).

@@ -1,7 +1,9 @@
 ---
 title: Configure the cross-connect
-order: 4
 pcx-content-type: tutorial
+weight: 5
+meta:
+  title: Configure the network cross-connect
 ---
 
 # Configure the network cross-connect
@@ -17,7 +19,7 @@ To configure the network cross-connect for physical links, Cloudflare generates 
 
 <Aside type='note'>
 
-To review physical interconnection locations, see [Partners](/partners#physical-interconnection).
+To review physical interconnection locations, see [Partners](/network-interconnect/partners/#physical-interconnection).
 
 </Aside>
 
@@ -35,10 +37,10 @@ For more information, see the [Cloudflare Network Interconnect Partner Program](
 
 ### Follow your partner's instructions below
 
-*   [Console Connect](/partners/console-connect)
-*   [Equinix Fabric](/partners/equinix-fabric)
-*   [Megaport](/partners/megaport)
-*   [PacketFabric](/partners/packet-fabric)
+*   [Console Connect](/network-interconnect/partners/console-connect/)
+*   [Equinix Fabric](/network-interconnect/partners/equinix-fabric/)
+*   [Megaport](/network-interconnect/partners/megaport/)
+*   [PacketFabric](/network-interconnect/partners/packet-fabric/)
 *   CoreSite OCX (*coming soon*)
 *   Epsilon Infiny (*coming soon*)
 *   Zayo (*coming soon*)

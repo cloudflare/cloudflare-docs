@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Edit webhooks
 ---
 
 # Edit webhooks

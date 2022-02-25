@@ -1,6 +1,8 @@
 ---
 title: Reference
 pcx-content-type: reference
+meta:
+  title: Failures
 ---
 
 import Beta from "../\_partials/\_beta.md"
@@ -61,4 +63,4 @@ Customers can seek remediation by contacting the provider that they believe is s
 
 Certificate issues are also detectable through NEL. The `TLS.version`, `cipher_mismatch`, or other errors may present across multiple ISPs in multiple Cloudflare locations.
 
-If this is detected in NEL, the issue can be remediated by deploying new certificates or using [Cloudflare’s SSL management suite](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) to automatically deploy new certificates.
+If this is detected in NEL, the issue can be remediated by deploying new certificates or using [Cloudflare’s SSL management suite](/ssl/edge-certificates/advanced-certificate-manager) to automatically deploy new certificates.

@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 350
+title: Manage lists
+weight: 351
 ---
 
 # Manage lists
@@ -13,7 +14,7 @@ To create an IP List, follow these steps:
 
 The **Create new list** page displays.
 
-![Create new list](../../images/lists-create-new.png)
+![Create new list](/firewall/static/lists-create-new.png)
 
 1.  Enter a name for your list, observing the following guidelines:
 
@@ -30,9 +31,9 @@ The **Create new list** page displays.
 3.  Click **Create**.
 
 The **Add items to list** page displays.
-![Add items to list](../../images/lists-add-items-page.png)
+![Add items to list](/firewall/static/lists-add-items-page.png)
 
-To populate your list, refer to [Use IP Lists: Add items to a list](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
+To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
 ## Delete a list
 
@@ -50,7 +51,7 @@ To delete an IP List, follow these steps:
 
     *   When the list is used in a Firewall Rule, a tooltip displays with notification that you cannot delete the list:
 
-        ![Cannot Delete lists](../../images/lists-cannot-delete.png)
+        ![Cannot Delete lists](/firewall/static/lists-cannot-delete.png)
 
     *   When the list is not used in a Firewall Rule, **Delete** link highlights, indicating you can delete the list.
 
@@ -64,4 +65,4 @@ The **Lists** card displays the updated collection of lists.
 
 You can add and remove items from a list, but you cannot change the list name or type.
 
-For more information, refer to [Use IP Lists: Manage IP List items](/cf-dashboard/rules-lists/manage-items).
+For more information, refer to [Use IP Lists: Manage IP List items](/firewall/cf-dashboard/rules-lists/manage-items/).

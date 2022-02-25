@@ -1,7 +1,9 @@
 ---
-order: 1
 pcx-content-type: concept
 title: Zero Trust
+weight: 2
+meta:
+  title: Zero Trust policies
 ---
 
 # Zero Trust policies
@@ -61,10 +63,10 @@ Here is a list of all the criteria you can apply:
 *   **Country** – uses the IP address to determine country.
 *   **Valid Certificate** - the request will need to present any valid client certificate.
 *   **Common Name** - the request will need to present a valid certificate with an expected common name.
-*   **Any Access Service Token** - the request will need to present the headers for any [service token](/identity/service-auth/service-tokens) created for this account.
+*   **Any Access Service Token** - the request will need to present the headers for any [service token](/cloudflare-one/identity/service-auth/service-tokens/) created for this account.
 *   **Service Token** - the request will need to present the correct service token headers configured for the specific application
 *   **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
-*   **Authentication Method** - checks the [multifactor authentication](/policies/zero-trust/mfa-requirements) method used by the user, if supported by the identity provider.
+*   **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/zero-trust/mfa-requirements/) method used by the user, if supported by the identity provider.
 *   **Login Method** - checks the identity provider used at the time of login.
 
 ## Example scenarios

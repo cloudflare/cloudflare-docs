@@ -1,7 +1,8 @@
 ---
-order: 2
 pcx-content-type: how-to
 hidden: true
+title: Protect your origin server — Business
+weight: 3
 ---
 
 import OriginHealthOverview from "../../\_partials/\_origin-health-overview"

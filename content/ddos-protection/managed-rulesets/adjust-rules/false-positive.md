@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 1
+title: Handle a false positive
+weight: 2
 ---
 
 # Handle a false positive
@@ -61,14 +62,14 @@ The **DDoS** tab under **Firewall** is currently only available to the WAF/CDN c
 
 </Aside>
 
-Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/reference/analytics).
+Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
 ## Updating the adjusted rules at a later date
 
-Later, you can change the [sensitivity level](/managed-rulesets/network/override-parameters#sensitivity) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
+Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
 
 <Aside type="note" header="Recommendation: Enable DDoS alerts">
 
-Cloudflare recommends that you enable [DDoS alerts](/reference/alerts) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
+Cloudflare recommends that you enable [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare’s systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
 
 </Aside>

@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: reference
+title: Useful terms
+weight: 6
 ---
 
 # Useful terms
@@ -23,7 +24,7 @@ Users can create and configure a tunnel once and run it as multiple different `c
 
 ## Default `cloudflared` directory
 
-`cloudflared` uses a default directory when storing credentials files for your tunnels, as well as the `cert.pem` file it generates when you run `cloudflared login`. The default directory is also where `cloudflared` will look for a [configuration file](#configuration-file) if no other file path is [specified](/connections/connect-apps/configuration/configuration-file#storing-a-configuration-file) when running a tunnel.
+`cloudflared` uses a default directory when storing credentials files for your tunnels, as well as the `cert.pem` file it generates when you run `cloudflared login`. The default directory is also where `cloudflared` will look for a [configuration file](#configuration-file) if no other file path is [specified](/cloudflare-one/connections/connect-apps/configuration/configuration-file/#storing-a-configuration-file) when running a tunnel.
 
 | OS | Path to default directory |
 | -- | ---- |
@@ -32,22 +33,22 @@ Users can create and configure a tunnel once and run it as multiple different `c
 
 ## Configuration file
 
-This is a `.yaml` file that functions as the operating manual for `cloudflared`. `cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory), but you can store your configuration file in any directory. It is recommended to always specify the file path for your configuration file whenever you reference it. By creating a configuration file, you can have fine-grained control over how their instance of `cloudflared` will operate. This includes operations like what you want `cloudflared` to do with traffic (for example, proxy websockets to port `xxxx`, or ssh to port `yyyy`), where `cloudflared` should search for authorization (credentials file, tunnel token), and what mode it should run in (for example, [`warp-routing`](/connections/connect-networks/private-net)). In the absence of a configuration file, cloudflared will proxy outbound traffic through port `8080`. For more information on how to create, store, and structure a configuration file, refer to the [dedicated instructions](/connections/connect-apps/configuration/configuration-file).
+This is a `.yaml` file that functions as the operating manual for `cloudflared`. `cloudflared` will automatically look for the configuration file in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory), but you can store your configuration file in any directory. It is recommended to always specify the file path for your configuration file whenever you reference it. By creating a configuration file, you can have fine-grained control over how their instance of `cloudflared` will operate. This includes operations like what you want `cloudflared` to do with traffic (for example, proxy websockets to port `xxxx`, or ssh to port `yyyy`), where `cloudflared` should search for authorization (credentials file, tunnel token), and what mode it should run in (for example, [`warp-routing`](/cloudflare-one/connections/connect-networks/private-net/)). In the absence of a configuration file, cloudflared will proxy outbound traffic through port `8080`. For more information on how to create, store, and structure a configuration file, refer to the [dedicated instructions](/cloudflare-one/connections/connect-apps/configuration/configuration-file/).
 
 ## Ingress rule
 
-[Ingress rules](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
+[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
 
 ## Cert.pem
 
-This is the certificate file issued by Cloudflare when you run `cloudflared tunnel login`. This file uses a certificate to authenticate your instance of `cloudflared` and it is required when you create new tunnels, delete existing tunnels, change DNS records, or configure tunnel routing from cloudflared. This file is not required to perform actions such as running an existing tunnel or managing tunnel routing from the Cloudflare dashboard. Refer to the [Tunnel permissions page](/connections/connect-apps/install-and-setup/tunnel-permissions) for more details on when this file is needed.
+This is the certificate file issued by Cloudflare when you run `cloudflared tunnel login`. This file uses a certificate to authenticate your instance of `cloudflared` and it is required when you create new tunnels, delete existing tunnels, change DNS records, or configure tunnel routing from cloudflared. This file is not required to perform actions such as running an existing tunnel or managing tunnel routing from the Cloudflare dashboard. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-permissions/) for more details on when this file is needed.
 
 The `cert.pem` origin certificate is valid for at least 10 years, and the service token it contains is valid until revoked.
 
 ## Credentials file
 
-This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel’s credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/connections/connect-apps/install-and-setup/tunnel-permissions) for more details on when this file is needed.
+This file is created when you run `cloudflared tunnel create <NAME>`. It stores your tunnel’s credentials in JSON format, and is unique to each tunnel. This file functions as a token authenticating the tunnel it is associated with. Refer to the [Tunnel permissions page](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-permissions/) for more details on when this file is needed.
 
 ## Quick tunnels
 
-Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port 8080. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare’s network. Refer to [TryCloudflare](/connections/connect-apps/run-tunnel/trycloudflare) for more information on how to run quick tunnels.
+Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port 8080. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare’s network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare/) for more information on how to run quick tunnels.

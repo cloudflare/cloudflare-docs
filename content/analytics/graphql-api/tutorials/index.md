@@ -1,6 +1,7 @@
 ---
-order: 50
 pcx-content-type: navigation
+title: Tutorials
+weight: 51
 ---
 
 # Tutorials

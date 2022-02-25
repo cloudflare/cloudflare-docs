@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 0
 pcx-content-type: get-started
+weight: 1
+meta:
+  title: Get started with SSL for SaaS
 ---
 
 import IssueCertsPreamble from "../\_partials/\_issue-certs-preamble.md"
@@ -14,9 +16,9 @@ import CreateCustomHostnameAPI from "../\_partials/\_create-custom-hostname-api.
 
 ## Prerequisites
 
-Before you can start creating custom hostnames, you need to have access to [SSL for SaaS](/ssl-for-saas#availability).
+Before you can start creating custom hostnames, you need to have access to [SSL for SaaS](/ssl/ssl-for-saas/#availability).
 
-If you have not used the Cloudflare API previously, review our [API Quickstart](https://developers.cloudflare.com/api/).
+If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
 
 ***
 
@@ -64,8 +66,8 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
 Each Custom Hostname requires successful Certificate Validation and Hostname Verification.
 
-*   [Certificate Validation](/ssl-for-saas/common-tasks/certificate-validation-methods): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
-*   [Hostname Verification](/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+*   [Certificate Validation](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/): Upon successful validation, the certificates are deployed to Cloudflare’s edge network.
+*   [Hostname Verification](/ssl/ssl-for-saas/common-tasks/hostname-verification/): Upon successful validation, Cloudflare proxies traffic for this hostname.
 
 Depending on which method you select for each of these options, additional steps might be required for you and your customers.
 
@@ -105,13 +107,13 @@ With a CNAME in place, the entire process — from validation to issuance to edg
 
 ### Monitor certificate status
 
-For help tracking a certificate's status, refer to [Monitor certificates](/ssl-for-saas/common-tasks/issuing-certificates).
+For help tracking a certificate's status, refer to [Monitor certificates](/ssl/ssl-for-saas/common-tasks/issuing-certificates/).
 
 ### View certificates
 
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
 
-To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl-for-saas/common-tasks/certificate-validation-methods)).
+To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/)).
 
 ```sh
 $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com

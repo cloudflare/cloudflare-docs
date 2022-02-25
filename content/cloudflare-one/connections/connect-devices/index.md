@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: navigation
+title: Connect devices
+weight: 4
 ---
 
 # Connect devices

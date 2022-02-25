@@ -1,6 +1,8 @@
 ---
 title: WritableStream DefaultWriter
 pcx-content-type: configuration
+meta:
+  title: WritableStreamDefaultWriter
 ---
 
 <!-- The space in the title was introduced to create a pleasing line-break in the title in the sidebar. -->
@@ -9,7 +11,7 @@ pcx-content-type: configuration
 
 ## Background
 
-A writer is used when you want to write directly to a [`WritableStream`](/runtime-apis/streams/writablestream), rather than piping data to it from a [`ReadableStream`](/runtime-apis/streams/readablestream). For example:
+A writer is used when you want to write directly to a [`WritableStream`](/workers/runtime-apis/streams/writablestream/), rather than piping data to it from a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/). For example:
 
 ```js
 function writeArrayToStream(array, writableStream) {
@@ -44,7 +46,7 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 *   <Code>abort(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise\<void></Type>
 
-    *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
+    *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
       <Aside type="warning" header="Warning">
 
@@ -77,5 +79,5 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 ## Related resources
 
-*   [Using Streams](/learning/using-streams)
+*   [Using Streams](/workers/learning/using-streams/)
 *   [Writable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#ws-model)

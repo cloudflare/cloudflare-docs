@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: Edit tools and events
+weight: 7
 ---
 
 # Edit tools and events

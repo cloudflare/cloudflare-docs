@@ -1,8 +1,9 @@
 ---
 updated: 2020-06-01
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Deploy a React app with create‑react‑app
 ---
 
 import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
@@ -67,7 +68,7 @@ async function handleEvent(event) {
 
 ## Configure and publish
 
-To prepare your application for deployment, open the newly created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [Configuring your project section in Get started](/get-started/guide#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
+To prepare your application for deployment, open the newly created `wrangler.toml` file, which represents the configuration for your Workers application. Using the [Configuring your project section in Get started](/workers/get-started/guide/#6d-configuring-your-project) as a guide, populate `wrangler.toml` with your account ID, which will allow you to deploy your React application to your Cloudflare account.
 
 The `bucket` key in your `wrangler.toml` file indicates the build folder that Sites will deploy to Workers. While many front-end application and static site generators use the folder `public`, `create-react-app` uses the folder `build`. Change the `bucket` key in `wrangler.toml` to `build`:
 
@@ -95,7 +96,7 @@ $ wrangler publish
 
 After deploying your project, open your browser to review your static site.
 
-![Result](./media/demo.png)
+![Result](../media/demo.png)
 
 ## How it works
 
@@ -116,10 +117,10 @@ addEventListener("fetch", event => {
 
 When the script receives an incoming [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), it looks at the `pathname`, such as `/workers`, and looks up an associated file uploaded to Workers KV. If that file is found, a new [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) is generated, with a matching [MIME type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) in the `Content-Type` header of the response. For example, if the path `/workers.jpg` is requested, a new response is returned with the header `Content-type: image/jpeg`.
 
-After fetching assets from [Workers KV](/runtime-apis/kv), the static site template will cache them in Cloudflare’s CDN. When subsequent users request `/index.html`, Cloudflare’s CDN will transparently serve a cached version.
+After fetching assets from [Workers KV](/workers/runtime-apis/kv/), the static site template will cache them in Cloudflare’s CDN. When subsequent users request `/index.html`, Cloudflare’s CDN will transparently serve a cached version.
 
 ## Related resources
 
 In this tutorial, you built and published a static site to Workers. If you would like to see the full source code for this application, the final version of the codebase is available [in a GitHub repository](https://github.com/signalnerve/react-workers-template).
 
-If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).
+If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

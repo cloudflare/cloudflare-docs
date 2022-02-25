@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: One-time PIN login
+weight: 2
 ---
 
 # One-time PIN login
@@ -11,7 +12,7 @@ For example, if your team uses Okta® but you’re collaborating with someone ou
 
 ## Set up OTP
 
-To set up OTP to allow guest-user access, you simply add the guest user's email address to a [Zero Trust policy](/policies/zero-trust/policy-management#add-a-policy) and to the [group](/identity/users/groups) that allows your team to reach the application.
+To set up OTP to allow guest-user access, you simply add the guest user's email address to a [Zero Trust policy](/cloudflare-one/policies/zero-trust/policy-management/#add-a-policy) and to the [group](/cloudflare-one/identity/users/groups/) that allows your team to reach the application.
 
 This is the workflow for your guest user:
 
@@ -19,7 +20,7 @@ This is the workflow for your guest user:
 
 2.  Then, they will enter their email address and click **Send me a code**.
 
-    ![Login page](../static/documentation/identity/otp/otp1.png)
+    ![Login page](/cloudflare-one/static/documentation/identity/otp/otp1.png)
 
     Access will send a one-time PIN they can use to authenticate. This secure PIN expires 10 minutes after the initial request.
 
@@ -27,7 +28,7 @@ This is the workflow for your guest user:
 
 4.  Next, they will paste the PIN in the login page and click **Sign in**.
 
-    ![PIN field](../static/documentation/identity/otp/otp2.png)
+    ![PIN field](/cloudflare-one/static/documentation/identity/otp/otp2.png)
 
 Access will then log them in.
 

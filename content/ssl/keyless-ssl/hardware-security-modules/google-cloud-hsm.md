@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: tutorial
+title: Google Cloud HSM
+weight: 8
 ---
 
 # Google Cloud HSM

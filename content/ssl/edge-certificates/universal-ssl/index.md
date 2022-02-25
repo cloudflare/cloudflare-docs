@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: concept
+title: Universal SSL
+weight: 1
 ---
 
 import UniversalSSLDefinition from "../../\_partials/\_universal-ssl-definition.md"
@@ -11,7 +12,7 @@ import UniversalSSLDefinition from "../../\_partials/\_universal-ssl-definition.
 
 When you change your authoritative nameservers to point to Cloudflare, this process happens **automatically** and between **15 minutes to 24 hours** of domain activation. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
 
-If you **do not** use Cloudflare for your authoritative nameservers (a CNAME setup), you will need to perform the additional steps described in [Enable Universal SSL](enable-universal-ssl#non-authoritative-partial-domains).
+If you **do not** use Cloudflare for your authoritative nameservers (a CNAME setup), you will need to perform the additional steps described in [Enable Universal SSL](/ssl/enable-universal-ssl/#non-authoritative-partial-domains).
 
 <ButtonGroup>
     <Button type='primary' href='enable-universal-ssl'>Get started</Button>

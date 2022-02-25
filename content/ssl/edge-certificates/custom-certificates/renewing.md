@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Renewing
+weight: 3
 ---
 
 # Renewing
@@ -11,6 +12,6 @@ Cloudflare automatically sends email notification 30 and 14 days before your cus
 
 ## Expired certificates and Legacy Client Support
 
-For **Modern** custom certificates, Cloudflare removes expired certificates at expiration. Affected domains and subdomains will fall back to [Universal SSL](/edge-certificates/universal-ssl) (if enabled).
+For **Modern** custom certificates, Cloudflare removes expired certificates at expiration. Affected domains and subdomains will fall back to [Universal SSL](/ssl/edge-certificates/universal-ssl/) (if enabled).
 
-For **Legacy** custom certificates, Cloudflare removes expired certificates every day at 0245UTC. Affected domains and subdomains will fall back to [Universal SSL](/edge-certificates/universal-ssl) (if enabled).
+For **Legacy** custom certificates, Cloudflare removes expired certificates every day at 0245UTC. Affected domains and subdomains will fall back to [Universal SSL](/ssl/edge-certificates/universal-ssl/) (if enabled).

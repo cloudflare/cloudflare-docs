@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Tanium
+weight: 4
 ---
 
 # Tanium
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | Any OS supported by Tanium | WARP with Gateway | All plans |
 
@@ -52,17 +53,17 @@ Integrate your Tanium deployment with Cloudflare Access using public keys genera
 
 2.  Select the **Device posture** tab.
 
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-device-posture.png)
+    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-device-posture.png)
 
 3.  Click *+Add* to start configuring the Tanium integration.
 
 4.  Select **Tanium** from the list of providers.
 
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/add-posture-tanium.png)
+    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/add-posture-tanium.png)
 
 5.  In the next screen, give a name to the Tanium integration. *Tanium* will work, or, if you prefer, you can choose a more specific name.
 
-    ![Configuring Zero Trust Policy](../../static/documentation/identity/devices/tanium-setup.png)
+    ![Configuring Zero Trust Policy](/cloudflare-one/static/documentation/identity/devices/tanium-setup.png)
 
 6.  Input `17472` for the port value.
 
@@ -82,9 +83,9 @@ With Tanium integrated, you can build policies that enforce decisions using sign
 
 1.  On the Zero Trust dashboard, navigate to **Access > Applications**.
 
-2.  [Create a new application](/applications/) or edit an existing application.
+2.  [Create a new application](/cloudflare-one/applications/) or edit an existing application.
 
-3.  [Build a policy](/policies/zero-trust/policy-management) that contains a rule with an Allow action that includes identity.
+3.  [Build a policy](/cloudflare-one/policies/zero-trust/policy-management/) that contains a rule with an Allow action that includes identity.
 
 For example, a rule that allows users to connect if they are members of your team's email domain.
 

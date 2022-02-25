@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: navigation
+title: Service auth
+weight: 6
 ---
 
 # Service auth

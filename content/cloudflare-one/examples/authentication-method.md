@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow access based on the "amr" identifier.
 tags:
-- Authentication Method
+  - Authentication Method
+title: Authentication method
+weight: 4
+layout: example
 ---
 
 # Authentication method

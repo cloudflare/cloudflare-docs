@@ -1,6 +1,7 @@
 ---
-order: 15
 pcx-content-type: how-to
+title: Override HTTP Host headers
+weight: 16
 ---
 
 # Override HTTP Host headers
@@ -21,7 +22,7 @@ For example, you might have a pool with origins hosted in multiple AppEngine pro
 
 Since these examples require specific hostnames per origin, your load balancer will not properly route traffic *without* a `Host` header override.
 
-If you need an origin `Host` header override, add it when [creating](/how-to/create-pool) or editing a pool. For security reasons, this header must meet one of the following criteria:
+If you need an origin `Host` header override, add it when [creating](/load-balancing/how-to/create-pool/) or editing a pool. For security reasons, this header must meet one of the following criteria:
 
 *   Is a subdomain of a zone associated with this account
 *   Matches the origin address
@@ -54,4 +55,4 @@ For a list of origins that override a monitor's `Host` header:
 2.  Select **Advanced health check settings**.
 3.  If you have origin overrides, you will see **Origin host header overrides**.
 
-![List of origin host header overrides](../static/images/origin-host-header-override.png)
+![List of origin host header overrides](/load-balancing/static/images/origin-host-header-override.png)

@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: concept
+title: How authenticated origin pulls work
+weight: 1
 ---
 
 # How authenticated origin pulls work
@@ -23,8 +24,8 @@ Cloudflare enforces authenticated origin pulls by adding an extra layer of TLS c
 
 **Standard TLS handshake**
 
-![Standard TLS handshake](../../static/client-auth-tls-standard.png)
+![Standard TLS handshake](/ssl/static/client-auth-tls-standard.png)
 
 **TLS handshake with authenticated origin pulls**
 
-![Client authenticated TLS handshake](../../static/client-auth-tls-handshake.png)
+![Client authenticated TLS handshake](/ssl/static/client-auth-tls-handshake.png)

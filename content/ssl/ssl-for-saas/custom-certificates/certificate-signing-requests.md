@@ -1,7 +1,9 @@
 ---
 title: Certificate signing requests (CSRs)
-order: 6
 pcx-content-type: tutorial
+weight: 7
+meta:
+  title: Certificate signing requests (CSRs) — SSL for SaaS
 ---
 
 import CSRDefinition from "../../\_partials/\_csr-definition.md"

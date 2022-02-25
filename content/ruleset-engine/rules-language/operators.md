@@ -1,8 +1,11 @@
 ---
 title: Operators and grouping symbols
 pcx-content-type: reference
-order: 2
 type: overview
+weight: 3
+layout: list
+meta:
+  title: Rule operators and grouping symbols
 ---
 
 # Rule operators and grouping symbols
@@ -247,7 +250,7 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 <Aside type='warning' header='Important'>
 
-Only the [Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) does not.
+Only the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/) does not.
 
 </Aside>
 

@@ -1,23 +1,24 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Origin steering
+weight: 2
 ---
 
 # Origin steering
 
-Use **origin steering** to customize how each [pool](/understand-basics/pools) distributes traffic to its associated origins.
+Use **origin steering** to customize how each [pool](/load-balancing/understand-basics/pools/) distributes traffic to its associated origins.
 
 These distributions are the result of your origin steering [policy](#origin-steering-options) combined with the [weights](#weights) assigned to each origin.
 
 <Aside type="note">
 
-If an origin [becomes unhealthy](/understand-basics/health-details), your pool will also re-balance traffic according to its steering policy.
+If an origin [becomes unhealthy](/load-balancing/understand-basics/health-details/), your pool will also re-balance traffic according to its steering policy.
 
 </Aside>
 
 ## Origin steering options
 
-When you [create a pool](/how-to/create-pool), you have to choose an option for **Origin Steering**:
+When you [create a pool](/load-balancing/how-to/create-pool/), you have to choose an option for **Origin Steering**:
 
 *   **Random**: Sends requests to origins purely based on [origin weights](#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
 *   **Hash**: Cloudflare sends requests to origins based on a combination of [origin weights](#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same origin, but actual traffic distribution may differ from origin weights.
@@ -30,7 +31,7 @@ If you leave each origin with the default setting and choose a **Random** origin
 
 ### Customize weights
 
-To customize weights when you [create or edit a pool](/how-to/create-pool), set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on a combination of your origin steering policy and the following formula.
+To customize weights when you [create or edit a pool](/load-balancing/how-to/create-pool/), set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on a combination of your origin steering policy and the following formula.
 
 ```txt
 % of traffic to origin = origin weight ÷ sum of all weights in the pool
@@ -63,8 +64,8 @@ If an origin is used in multiple pools and has multiple weights assigned, the to
 
 ### Limitations
 
-If you choose **Hash** for your **Origin Steering** or enable [session affinity](/understand-basics/session-affinity), these options can affect traffic distribution.
+If you choose **Hash** for your **Origin Steering** or enable [session affinity](/load-balancing/understand-basics/session-affinity/), these options can affect traffic distribution.
 
 Additionally, session affinity takes precedence over any selected weight or origin steering policy.
 
-When using [DNS-only load balancing](/understand-basics/proxy-modes#gray-clouded-dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.
+When using [DNS-only load balancing](/load-balancing/understand-basics/proxy-modes/#gray-clouded-dns-only-load-balancing), DNS resolves may cache resolved IPs for clients and affect traffic distribution.

@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: faq
+title: FAQ
+weight: 5
 ---
 
 # FAQ
@@ -54,9 +55,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Available optimizations</summary>
 <div>
 
-**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](/cloudflare-images/resize-images).
+**CI** - For more information on Cloudflare Images optimizations refer to [Resize images](/images/cloudflare-images/resize-images/).
 
-**IR** - For more information on Image Resizing optimizations refer to [URL format options](/image-resizing/url-format#options).
+**IR** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
 
 </div>
 </details>
@@ -114,7 +115,7 @@ This is expected behaviour when upscaling a PNG file with transparency, due to t
 
 *   **Avoid adding transparent areas to images**. Image Resizing supports a background option that makes images opaque, which allows Image Resizing to convert images to JPEG. In turn, this creates images with much smaller files.
 *   **Do not use upscaling**. Keep the default `fit=scale-down` mode which never resizes images to bigger dimensions. This will prevent increases in file sizes. In most cases, this does not affect the presentation of images on the website, as they can be upscaled using CSS/HTML. As a rule, scaling down should be a server-side operation, and scaling up should a client-side operation.
-*   **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](https://developers.cloudflare.com/images/image-resizing/resize-with-workers#an-example-worker) to learn how to check the `Accept` header.
+*   **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](/images/image-resizing/resize-with-workers#an-example-worker) to learn how to check the `Accept` header.
 
 ***
 

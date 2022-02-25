@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: how-to
+title: Deploy  in GCPPrerequisitesCreate your environmentDeploying
+weight: 8
 ---
 
 # Deploy `cloudflared` in GCP
@@ -10,7 +11,7 @@ The purpose of this guide is to walk through some best practices for accessing p
 # Prerequisites
 
 *   Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
-*   [Enroll an end-user device](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) into your Cloudflare Zero Trust account.
+*   [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
 
 # Create your environment
 
@@ -139,4 +140,4 @@ systemctl start cloudflared
 systemctl status cloudflared
 ```
 
-Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Zero Trust policies](/policies/zero-trust) to secure your private resources.
+Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to secure your private resources.

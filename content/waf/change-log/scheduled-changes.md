@@ -1,7 +1,9 @@
 ---
 type: table
-order: 1
 pcx-content-type: changelog
+title: Scheduled changes
+weight: 2
+layout: list
 ---
 
 # Scheduled changes

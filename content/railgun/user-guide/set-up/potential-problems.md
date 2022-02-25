@@ -1,7 +1,9 @@
 ---
 title: Potential problems and common issues
-order: 7
 pcx-content-type: tutorial
+weight: 8
+meta:
+  title: Potential problems
 ---
 
 # Potential problems

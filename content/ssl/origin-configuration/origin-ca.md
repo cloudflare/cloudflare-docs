@@ -1,12 +1,14 @@
 ---
 title: Origin CA certificates
-order: 3
 pcx-content-type: how-to
+weight: 4
+meta:
+  title: Managing Cloudflare Origin CA certificates
 ---
 
 # Managing Cloudflare Origin CA certificates
 
-Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/origin-configuration/ssl-modes#strict).
+Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict).
 
 <Aside type="note">
 For more background information on Origin CA certificates, see the <a href="https://blog.cloudflare.com/cloudflare-ca-encryption-origin/">introductory blog post</a>.
@@ -82,14 +84,14 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
 
-*   [Cloudflare Origin ECC PEM](../static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
-*   [Cloudflare Origin RSA PEM](../static/origin_ca_rsa_root.pem)
+*   [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem/) (do not use with Apache cPanel)
+*   [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem/)
 
 ## Revoke an Origin CA certificate
 
 If you misplace your key material or do not want a certificate to be trusted, you may want to revoke your certificate. You cannot undo this process.
 
-To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/origin-configuration/ssl-modes) to **Full** or **Flexible** before revoking your certificate. Do this globally via the **SSL/TLS** app or for a specific hostname via a **Page Rule**.
+To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/ssl/origin-configuration/ssl-modes/) to **Full** or **Flexible** before revoking your certificate. Do this globally via the **SSL/TLS** app or for a specific hostname via a **Page Rule**.
 
 To revoke a certificate:
 

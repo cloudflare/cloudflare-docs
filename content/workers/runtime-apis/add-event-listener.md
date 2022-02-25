@@ -1,13 +1,14 @@
 ---
-order: 2
 pcx-content-type: configuration
+title: addEventListener
+weight: 3
 ---
 
 # addEventListener
 
 ## Background
 
-The `addEventListener` function defines triggers for a Worker script to execute. There are currently two types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/runtime-apis/fetch-event) and `"scheduled"` listeners which are sent a [`ScheduledEvent`](/runtime-apis/scheduled-event).
+The `addEventListener` function defines triggers for a Worker script to execute. There are currently two types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/) and `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
 
 ## Syntax
 
@@ -15,7 +16,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 *   <Code>addEventListener(type, listener)</Code> <Type>void</Type>
 
-    *   If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/runtime-apis/fetch-event#methods), the runtime delivers the event to the next registered listener.
+    *   If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/workers/runtime-apis/fetch-event/#methods), the runtime delivers the event to the next registered listener.
     *   A `"fetch"` listener and a `"scheduled"` listener can be registered in the same script.
     *   A script can have only one `"scheduled"` listener.
 
@@ -35,7 +36,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
         *   `event` <Type>FetchEvent</Type> or <Type>ScheduledEvent</Type>
 
-            *   The events dispatched to a Worker. Refer to [`FetchEvent`](/runtime-apis/fetch-event) or [`ScheduledEvent`](/runtime-apis/scheduled-event).
+            *   The events dispatched to a Worker. Refer to [`FetchEvent`](/workers/runtime-apis/fetch-event/) or [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
 
         </Definitions>
 

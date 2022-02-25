@@ -1,14 +1,16 @@
 ---
 title: Partners
-order: 3
 pcx-content-type: reference
+weight: 4
+meta:
+  title: Partner Program
 ---
 
 # Partner Program
 
 ## Virtual Private Interconnection
 
-Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible. During the [configure the cross-connect](/set-up-cni/configure-cross-connect) step, you'll initiate a connection from your chosen provider's admin portal.
+Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible. During the [configure the cross-connect](/network-interconnect/set-up-cni/configure-cross-connect/) step, you'll initiate a connection from your chosen provider's admin portal.
 
 <Aside type='note'>
 
@@ -17,10 +19,10 @@ the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com
 
 </Aside>
 
-*   [Console Connect](/partners/console-connect)
-*   [Equinix Fabric](/partners/equinix-fabric)
-*   [Megaport](/partners/megaport)
-*   [PacketFabric](/partners/packet-fabric)
+*   [Console Connect](/network-interconnect/partners/console-connect/)
+*   [Equinix Fabric](/network-interconnect/partners/equinix-fabric/)
+*   [Megaport](/network-interconnect/partners/megaport/)
+*   [PacketFabric](/network-interconnect/partners/packet-fabric/)
 *   CoreSite OCX (*coming soon*)
 *   Epsilon Infiny (*coming soon*)
 *   Zayo (*coming soon*)

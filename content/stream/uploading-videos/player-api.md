@@ -1,5 +1,6 @@
 ---
 hidden: true
+title: Player API
 ---
 
 # Player API
@@ -30,7 +31,7 @@ Multiple attributes can be used together, added one after each other like this:
 
 *   `controls` <Type>boolean</Type>
 
-    *   Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/recipes/custom-player-ui/)
+    *   Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
 
 *   `height` <Type>integer</Type>
 

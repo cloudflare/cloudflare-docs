@@ -1,7 +1,9 @@
 ---
-order:
 title: Windows
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: Set up 1.1.1.1 - Windows
 ---
 
 import CaptivePortals from "../\_partials/\_captive-portals.md"

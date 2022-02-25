@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Fetch
 ---
 
 # Fetch
@@ -10,7 +11,7 @@ The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [M
 
 <Aside type="note">
 
-Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/runtime-apis/fetch-event#methods). Learn more about [the Request context](/runtime-apis/request#the-request-context).
+Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/workers/runtime-apis/fetch-event/#methods). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
 </Aside>
 
@@ -59,7 +60,7 @@ async function eventHandler(event) {
 <Definitions>
 
 *   `request` <TypeLink href="/runtime-apis/request">Request</TypeLink> | <Type>string</Type>
-    *   The [`Request`](/runtime-apis/request) object or a string represents the URL to fetch.
+    *   The [`Request`](/workers/runtime-apis/request/) object or a string represents the URL to fetch.
 
 *   `init` <TypeLink href="/runtime-apis/request#requestinit">RequestInit</TypeLink>
     *   The content of the request.
@@ -70,7 +71,7 @@ async function eventHandler(event) {
 
 ## Related resources
 
-*   [Example: use `fetch` to respond with another site](/examples/respond-with-another-site)
-*   [Example: Fetch HTML](/examples/fetch-html)
-*   [Example: Fetch JSON](/examples/fetch-json)
-*   [Example: cache using Fetch](/examples/cache-using-fetch)
+*   [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)
+*   [Example: Fetch HTML](/workers/examples/fetch-html/)
+*   [Example: Fetch JSON](/workers/examples/fetch-json/)
+*   [Example: cache using Fetch](/workers/examples/cache-using-fetch/)

@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: tutorial
+title: Connecting Your Website
+weight: 4
 ---
 
 # Connecting Your Website

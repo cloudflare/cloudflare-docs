@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: SAML | PingIdentity®
+weight: 7
 ---
 
 # SAML | PingIdentity®
@@ -47,7 +48,7 @@ To set up PingIdentity (SAML) as your identity provider:
 
 11. Select SAML.
 
-12. In the **IdP Entity ID** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. In the **IdP Entity ID** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -71,7 +72,7 @@ To get your Cloudflare metadata file:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `<your-team-name>`  with your [team name](/glossary#team-name).
+    Replace `<your-team-name>`  with your [team name](/cloudflare-one/glossary/#team-name).
 
     The link returns a web page with your SAML SP data in XML format.
 

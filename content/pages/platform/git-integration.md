@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Git integration
+weight: 2
 ---
 
 # Git integration
@@ -13,7 +14,7 @@ If you have a custom Git workflow that makes use of specific branches for repres
 
 For example, imagine that you merge new code into the `main` branch. When it is time to deploy your project, you merge a set of commits into the `production` branch. In the Cloudflare Pages dashboard, you can set the default branch to `production`.
 
-You can also use [preview deployments](/platform/preview-deployments) to preview how the new version of your project looks before merging to `production`. To do this, make sure that preview deployments are enabled. You can check this by going to the Pages project's **Settings** > **Builds & deployments** > and verifying that automatic deployments are enabled and **Pause deployments** is unselected. With preview deployments, you will be able to access a deployed version of your `main` branch, or other branches that exist, whether created manually or through pull requests.
+You can also use [preview deployments](/pages/platform/preview-deployments/) to preview how the new version of your project looks before merging to `production`. To do this, make sure that preview deployments are enabled. You can check this by going to the Pages project's **Settings** > **Builds & deployments** > and verifying that automatic deployments are enabled and **Pause deployments** is unselected. With preview deployments, you will be able to access a deployed version of your `main` branch, or other branches that exist, whether created manually or through pull requests.
 
 ## Organizational access
 

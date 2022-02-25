@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # CDN-Cache-Control
 
-`CDN-Cache-Control` is a response header field set on the origin to separately control the behavior of CDN caches from other intermediaries that might handle a response. You can set the `CDN-Cache-Control` or `Cloudflare-CDN-Cache-Control` response header using the same directives used with the [Cache-Control](/about/cache-control).
+`CDN-Cache-Control` is a response header field set on the origin to separately control the behavior of CDN caches from other intermediaries that might handle a response. You can set the `CDN-Cache-Control` or `Cloudflare-CDN-Cache-Control` response header using the same directives used with the [Cache-Control](/cache/about/cache-control/).
 
 ## Header precedence
 
@@ -37,7 +37,7 @@ The origin returns the `Expires` response header which specifies the amount of t
 
 ### Cloudflare Default cache values
 
-In situations where Cloudflare does not receive `Cloudflare-CDN-Cache-Control`, `CDN-Cache-Control`, or `Cache-Control` values, cacheable assets use the general [default values](/about/default-cache-behavior).
+In situations where Cloudflare does not receive `Cloudflare-CDN-Cache-Control`, `CDN-Cache-Control`, or `Cache-Control` values, cacheable assets use the general [default values](/cache/about/default-cache-behavior/).
 
 ## When to use CDN-Cache-Control
 

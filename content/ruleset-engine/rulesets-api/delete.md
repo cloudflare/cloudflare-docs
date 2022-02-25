@@ -1,7 +1,9 @@
 ---
 pcx-content-type: reference
-order: 788
 type: overview
+title: Delete rulesets
+weight: 789
+layout: list
 ---
 
 # Delete rulesets

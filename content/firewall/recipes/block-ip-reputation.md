@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Block requests based on IP reputation
 ---
 
 # Block requests based on IP reputation

@@ -2,6 +2,7 @@
 updated: 2021-08-19
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Integrate Microsoft MCAS with Cloudflare Zero Trust
 ---
 
 # Integrate Microsoft MCAS with Cloudflare Zero Trust
@@ -29,7 +30,7 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=ban
 
 This will return a list of banned hostnames. In this case, Angie's List is the banned application.
 
-![Banned hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-domains.png)
+![Banned hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-domains.png)
 
 ### Processing the output
 
@@ -70,7 +71,7 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=all
 
 Your list is now ready to be referenced by Gateway HTTP policies.
 
-![List of hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-list.png)
+![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-list.png)
 
 ## Creating an HTTP policy
 
@@ -78,7 +79,7 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 2.  Click **Create a policy**.
 
-    ![List of hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
+    ![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
 
 3.  Set the expression to:
     *   Selector: `Host`
@@ -89,4 +90,4 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 
-![List of hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-block-page.png)
+![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-block-page.png)

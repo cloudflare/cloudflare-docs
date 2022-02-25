@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Upload images
+weight: 3
 ---
 
 # Upload images

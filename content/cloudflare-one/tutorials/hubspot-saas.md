@@ -2,6 +2,7 @@
 updated: 2021-09-20
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Configure a Hubspot account for Access for SaaS
 ---
 
 # Configure a Hubspot account for Access for SaaS
@@ -22,7 +23,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 2.  Set the **Application type** to *Hubspot*.
 
-    ![Add fields to the Zero Trust application](../static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
+    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
 
 3.  Use the following Hubspot field mappings:
 
@@ -33,7 +34,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
 4.  Next, set **NameID** to *Email*.
 
-5.  Add any desired [Zero Trust policies](/policies/zero-trust) to your application.
+5.  Add any desired [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to your application.
 
 6.  Copy SSO endpoint and Access Entity ID.
 
@@ -52,7 +53,7 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
     | Entity ID | Identity Provider Identifier |
     | Public key | Certificate |
 
-    ![Add fields to the Zero Trust application](../static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
+    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
 
 2.  Select **Verify** to validate the integration.
 

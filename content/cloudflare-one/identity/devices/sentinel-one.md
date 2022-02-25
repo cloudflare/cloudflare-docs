@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: SentinelOne
+weight: 4
 ---
 
 # SentinelOne
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | Minimum WARP version required | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | Minimum WARP version required | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---------- | ---- |
 | macOS, Windows | WARP with Gateway | macOS: 1.4.27, Windows: 1.4.25.0 | All plans |
 
@@ -26,7 +27,7 @@ Before you start, make sure SentinelOne is installed on your machine.
 
 2.  Select **+Add**.
 
-    ![Device posture attributes](../../static/documentation/identity/devices/device-posture-partners.png)
+    ![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
 
 3.  Select **SentinelOne**.
 

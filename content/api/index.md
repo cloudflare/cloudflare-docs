@@ -1,12 +1,14 @@
 ---
 title: Quickstart
-order: 0
 pcx-content-type: tutorial
+weight: 1
+meta:
+  title: Getting access to the Cloudflare API
 ---
 
 # Getting access to the Cloudflare API
 
-Using the Cloudflare API, requires authentication so that Cloudflare knows who is making requests and what permissions they have. An API Token can be created to grant access to the API to perform actions. See [creating an API Token](tokens/create) for more on this.
+Using the Cloudflare API, requires authentication so that Cloudflare knows who is making requests and what permissions they have. An API Token can be created to grant access to the API to perform actions. See [creating an API Token](/api/tokens/create/) for more on this.
 
 Legacy Note: Existing customers may be familiar with API Keys. These allow for less granular access and each user can only have one. For these reasons, we advice customers using API Keys to transition to using API Tokens.
 
@@ -26,6 +28,6 @@ The above example is just that, an example. Never send anyone or store you API T
 
 For specific guidance on making API calls, see the following:
 
-*   The specific [Developer Docs section](https://developers.cloudflare.com) for a service for how to guides.
+*   The specific [Developer Docs section](/) for a service for how to guides.
 *   [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
 *   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare) you can leverage our 1st party libraries to integrate with Cloudflare's API.

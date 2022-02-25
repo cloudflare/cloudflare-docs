@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: concept
+weight: 1
+meta:
+  title: Cache
 ---
 
 # Cache
@@ -10,11 +12,11 @@ Cloudflare makes customer websites faster by storing a copy of the website’s c
 
 Cloudflare caches static content based on the following factors:
 
-*   Cache level set at a zone or [page rule](/how-to/create-page-rules)
+*   Cache level set at a zone or [page rule](/cache/how-to/create-page-rules/)
 *   File extension
 *   Presence of query strings
 *   Origin cache-control headers
 *   Origin headers that indicate dynamic content
 *   Page rules that bypass cache on cookie
 
-Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) DNS records.
+Cloudflare only caches resources within the Cloudflare data center that serve the request. Cloudflare does not cache off-site or third-party resources, such as Facebook or Flickr, or content hosted on [unproxied (grey-clouded)](/dns/manage-dns-records/reference/proxied-dns-records) DNS records.

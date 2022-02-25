@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: overview
+title: GraphQL Analytics API
+weight: 3
 ---
 
 # GraphQL Analytics API

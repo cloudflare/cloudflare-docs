@@ -1,6 +1,7 @@
 ---
-order: 12
 pcx-content-type: concept
+title: Minimum TLS Version
+weight: 13
 ---
 
 import MinimumTLSDefinition from "../../\_partials/\_minimum-tls-definition.md"
@@ -13,7 +14,7 @@ Transport Layer Security (TLS) guarantees encrypted communications between a cli
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
 
-You can use the API to [configure cipher suites](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites).
+You can use the API to [configure cipher suites](/ssl/ssl-tls/cipher-suites).
 
 ## Using Minimum TLS Version in Cloudflare SSL/TLS
 

@@ -1,6 +1,7 @@
 ---
-order: 120
 pcx-content-type: concept
+title: Logpull
+weight: 121
 ---
 
 # Logpull

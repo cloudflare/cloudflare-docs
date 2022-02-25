@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 4
+title: Available expression fields
+weight: 5
 ---
 
 # Available expression fields
@@ -24,4 +25,4 @@ You can use the following fields in override expressions for the Network-layer D
 *   `udp.srcport`
 *   `udp.dstport`
 
-Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields) in the Rules language documentation for more information.
+Refer to [Fields](/ruleset-engine/rules-language/fields) in the Rules language documentation for more information.

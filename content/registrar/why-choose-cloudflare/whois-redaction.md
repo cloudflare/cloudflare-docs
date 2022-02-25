@@ -1,5 +1,6 @@
 ---
 pcx-content-type: reference
+title: WHOIS redaction
 ---
 
 # WHOIS redaction

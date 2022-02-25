@@ -1,7 +1,9 @@
 ---
 title: Pro
-order: 1
 pcx-content-type: get-started
+weight: 2
+meta:
+  title: Get started with Super Bot Fight Mode (Pro)
 ---
 
 import EnableSteps from "../\_partials/\_get-started-pro-biz-steps.md"
@@ -26,9 +28,9 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 
 Use the **Bot Report** to monitor bot traffic for the past 24 hours.
 
-To access the **Bot Report**, go to **Firewall** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](../bm-subscription) to save money on origin costs and protect your domain from large-scale attacks.
+To access the **Bot Report**, go to **Firewall** > **Bots**. If you see a double-digit percentage of automated traffic, you may want to upgrade to [Bot Management](/bots/bm-subscription/) to save money on origin costs and protect your domain from large-scale attacks.
 
-![Bot report traffic distribution](../images/bot-report-pro.png)
+![Bot report traffic distribution](/bots/static/bot-report-pro.png)
 
 ### Firewall events
 

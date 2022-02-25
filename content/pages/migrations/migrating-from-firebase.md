@@ -2,6 +2,7 @@
 updated: 2020-09-28
 difficulty: Beginner
 pcx-content-type: tutorial
+title: Migrating from Firebase
 ---
 
 # Migrating from Firebase
@@ -29,11 +30,11 @@ After you have found your build directory and build command, you can move your p
 
 ## Creating a new Pages project
 
-If you have not pushed your static site to GitHub before, you should do so before continuing. This will also give you access to features like automatic deployments, and [deployment previews](/platform/preview-deployments).
+If you have not pushed your static site to GitHub before, you should do so before continuing. This will also give you access to features like automatic deployments, and [deployment previews](/pages/platform/preview-deployments/).
 
 You can create a new repository by visiting [repo.new](https://repo.new) and following the instructions to push your project up to GitHub.
 
-Use the [Get started guide](/get-started) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
+Use the [Get started guide](/pages/get-started/) to add your project to Cloudflare Pages, using the **build command** and **build directory** that you saved earlier.
 
 ## Cleaning up your old application and assigning the domain
 

@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: concept
+title: HTTP policies
+weight: 4
 ---
 
 # HTTP policies
@@ -13,7 +14,7 @@ Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">
 
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
-![Gateway flow HTTP](../../../static/documentation/policies/gateway-identity-diagram.jpg)
+![Gateway flow HTTP](/cloudflare-one/static/documentation/policies/gateway-identity-diagram.jpg)
 
 Build an HTTP policy by configuring the following elements:
 
@@ -38,7 +39,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 #### Identity-based selectors
 
-You can build HTTP policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+You can build HTTP policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/cloudflare-one/policies/filtering/identity-selectors/).
 
 #### Host
 
@@ -171,11 +172,11 @@ Rules with Block actions block outbound traffic from reaching destinations you s
 
 ### Isolate
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/policies/browser-isolation).
+For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Isolate
 
-For more information on this action, refer to the documentation on [Browser Isolation policies](/policies/browser-isolation).
+For more information on this action, refer to the documentation on [Browser Isolation policies](/cloudflare-one/policies/browser-isolation/).
 
 ### Do Not Inspect
 

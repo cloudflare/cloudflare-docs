@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: concept
+title: Setup Phase
+weight: 1
 ---
 
 # Setup Phase

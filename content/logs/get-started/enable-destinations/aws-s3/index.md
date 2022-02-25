@@ -1,7 +1,9 @@
 ---
 title: Enable Amazon S3
-order: 55
 pcx-content-type: how-to
+weight: 56
+meta:
+  title: Enable Logpush to Amazon S3
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"

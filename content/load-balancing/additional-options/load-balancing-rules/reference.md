@@ -1,6 +1,7 @@
 ---
-order: 50
 pcx-content-type: reference
+title: Supported fields and operators
+weight: 51
 ---
 
 # Supported fields and operators
@@ -9,7 +10,7 @@ The fields available for load balancing rules depend on whether Cloudflare proxi
 
 If you use the wrong type of fields, you might see unexpected behavior from load balancing rules. For best results, always use the fields associated with your traffic's proxy status.
 
-![select load balancer fields based on the proxy status header](../../static/images/proxy-status.png)
+![select load balancer fields based on the proxy status header](/load-balancing/static/images/proxy-status.png)
 
 ## Fields supported regardless of proxy
 
@@ -65,9 +66,9 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 *   `Timestamp`
 *   `Header`
 
-For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
+For the most up to date list of these fields, [create a load balancing rule](/load-balancing/create-rules/) in the UI.
 
-For more details about the field type or properties, refer to the [Rules language documentation](https://developers.cloudflare.com/ruleset-engine/rules-language/fields).
+For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields).
 
 ## Unproxied traffic
 
@@ -132,4 +133,4 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 *   **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
-For examples and usage, refer to [Operators and grouping symbols](https://developers.cloudflare.com/ruleset-engine/rules-language/operators) in the Rules language documentation.
+For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators) in the Rules language documentation.

@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: About Web Analytics
+weight: 3
 ---
 
 # About Web Analytics

@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: faq
+title: FAQ
+weight: 4
 ---
 
 # FAQ
@@ -27,7 +28,7 @@ Cloudflare firewall rules specifying country- or region-level match criteria wil
 
 ### In the example, what happens when Cloudflare’s Minneapolis data center is removed from service for maintenance?
 
-The [example scenario](/about#example-scenario) still provides accurate geolocation data.
+The [example scenario](/client-ip-geolocation/about/#example-scenario) still provides accurate geolocation data.
 
 Geography-specific egress IPs are not tightly coupled to physical Cloudflare network locations. We continue using geography-specific egress IPs even if the geographically closest network location or locations are rerouted.
 
@@ -47,7 +48,7 @@ Cloudflare wants those using our consumer VPN and corporate forward-proxy servic
 
 ### What does this mean for me as a Cloudflare VPN user?
 
-If you use [Cloudflare WARP](https://developers.cloudflare.com/warp-client/) or [1.1.1.1](https://developers.cloudflare.com/1.1.1.1/), geolocation improves your user experience. Because we communicate your geographic location accurately (but still in a non-identifiable way), you should have accurate, geography-specific experiences and uninterrupted access to the content you are licensed to consume in your local geography.
+If you use [Cloudflare WARP](/warp-client/) or [1.1.1.1](/1.1.1.1/), geolocation improves your user experience. Because we communicate your geographic location accurately (but still in a non-identifiable way), you should have accurate, geography-specific experiences and uninterrupted access to the content you are licensed to consume in your local geography.
 
 We also maintain all of our [privacy commitments](https://www.cloudflare.com/trust-hub/privacy-and-data-protection/) regarding your use of our consumer application and will keep your Internet browsing private and secure.
 

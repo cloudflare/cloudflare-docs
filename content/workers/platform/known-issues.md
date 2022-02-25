@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Known issues
 ---
 
 # Known issues

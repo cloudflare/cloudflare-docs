@@ -2,17 +2,19 @@
 title: FAQ
 pcx-content-type: faq
 weight: 700
+meta:
+  title: Firewall Rules FAQ
 ---
 
 # Firewall Rules FAQ
 
 ## How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Entitlements](/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Entitlements](/firewall/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
 
 ## Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. Refer to [Entitlements](/cf-firewall-rules/#entitlements).
+No. The number of active rules is fixed based on customer plan. Refer to [Entitlements](/firewall/cf-firewall-rules/#entitlements).
 
 ## How are certain special and escaped characters handled?
 
@@ -22,7 +24,7 @@ An expression built using the **Visual Expression Editor** does not require you 
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
 
-![Escaped characters](../images/cf-firewall-rules-character-escaping-ann.png)
+![Escaped characters](/firewall/static/cf-firewall-rules-character-escaping-ann.png)
 
 ## Why isn't my regular expression pattern matching working?
 
@@ -386,7 +388,7 @@ Your application can use these status codes to handle unexpected challenges.
 
 No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a Firewall rule. Additionally, the Firewall may not have a record of every request with a failed challenge.
 
-Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/cf-firewall-rules#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
+Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/firewall/cf-firewall-rules/#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
 ## Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 

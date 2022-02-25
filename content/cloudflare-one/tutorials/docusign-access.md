@@ -2,6 +2,7 @@
 updated: 2021-09-27
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Protecting DocuSign with Access for SaaS
 ---
 
 # Protecting DocuSign with Access for SaaS
@@ -13,7 +14,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 *   Access for SaaS requires that you have Single Sign-On available in your DocuSign plan.
 *   A domain you own.
 *   See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
-*   A [SAML IdP](/identity/idp-integration/generic-saml) configured with SAML Attributes configured.
+*   A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
 
 **⏲️ Time to complete:** 10 minutes
 
@@ -34,7 +35,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
     *   Ensure you are collecting SAML attributes from your IdP:
 
-    ![DocuSign SAML Attributes](../static/zero-trust-security/docusign/saml-attributes.png)
+    ![DocuSign SAML Attributes](/cloudflare-one/static/zero-trust-security/docusign/saml-attributes.png)
 
 6.  These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
     *   Email
@@ -73,13 +74,13 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 6.  Configure your SAML Attribute mappings. The Attribute Names should match the values in **IdP Value** in your Access application.
 
-    ![DocuSign Custom Attributes mapping](../static/zero-trust-security/docusign/custom-attribute-mapping.png)
+    ![DocuSign Custom Attributes mapping](/cloudflare-one/static/zero-trust-security/docusign/custom-attribute-mapping.png)
 
 7.  Go back to the Identity Provider's screen and select **Actions** > **Endpoints**. Copy and save the following:
     *   Service Provider Issuer URL.
     *   Service Provider Assertion Consumer Service URL.
 
-![DocuSign SAML 2.0 Endpoints](../static/zero-trust-security/docusign/saml-endpoints.png)
+![DocuSign SAML 2.0 Endpoints](/cloudflare-one/static/zero-trust-security/docusign/saml-endpoints.png)
 
 ## Finalize your Cloudflare configuration
 

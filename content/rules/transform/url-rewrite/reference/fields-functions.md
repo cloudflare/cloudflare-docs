@@ -1,7 +1,9 @@
 ---
 title: Available fields and functions
-order: 2
 pcx-content-type: reference
+weight: 3
+meta:
+  title: Available fields and functions in URL Rewrite Rules
 ---
 
 import TransformPhaseFields from "../../../\_partials/transform/\_transform-phase-fields.md"
@@ -14,7 +16,7 @@ A URL Rewrite Rule filter expression (that is, the expression that defines which
 
 <TransformPhaseFields/>
 
-For information on the available functions, refer to [Functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions).
+For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions).
 
 ## Rewrite expressions
 
@@ -24,6 +26,6 @@ A rewrite expression (that is, the expression that defines the dynamic URL rewri
 *   `http.request.headers.*`
 *   `http.request.accepted_languages`
 
-Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields) for reference information on these fields.
+Refer to [Fields](/ruleset-engine/rules-language/fields) for reference information on these fields.
 
-The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, refer to [Transformation functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions#transformation-functions).
+The `concat()` and `regex_replace()` functions can appear only **once** in a rewrite expression. For more information on these functions, refer to [Transformation functions](/ruleset-engine/rules-language/functions#transformation-functions).

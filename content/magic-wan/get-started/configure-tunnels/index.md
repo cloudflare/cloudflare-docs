@@ -1,7 +1,7 @@
 ---
 title: Configure tunnels
-order: 3
 pcx-content-type: how-to
+weight: 4
 ---
 
 # Configure tunnels

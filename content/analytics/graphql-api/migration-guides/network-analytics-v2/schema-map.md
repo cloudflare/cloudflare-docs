@@ -1,7 +1,9 @@
 ---
 type: overview
 pcx-content-type: reference
-order: 4
+title: NAv1 to NAv2 schema map
+weight: 5
+layout: list
 ---
 
 # NAv1 to NAv2 schema map

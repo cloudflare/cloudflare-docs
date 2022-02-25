@@ -1,7 +1,9 @@
 ---
 title: Request Header Modification Rules
 pcx-content-type: concept
-order: 1
+weight: 2
+meta:
+  title: HTTP Request Header Modification Rules
 ---
 
 # HTTP Request Header Modification Rules
@@ -12,9 +14,9 @@ You can manipulate the headers of incoming HTTP requests through HTTP Request He
 *   Set the value of an HTTP request header according to an expression, overwriting its previous value or adding a new header to the request.
 *   Remove an HTTP header from the request.
 
-You can create an HTTP Request Header Modification Rule [in the dashboard](/transform/request-header-modification/create-dashboard) or [via API](/transform/request-header-modification/create-api).
+You can create an HTTP Request Header Modification Rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/) or [via API](/rules/transform/request-header-modification/create-api/).
 
-To modify HTTP headers in the **response**, refer to [HTTP Response Header Modification Rules](/transform/response-header-modification).
+To modify HTTP headers in the **response**, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).
 
 ## Important remarks
 

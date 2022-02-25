@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: reference
+title: Notification History
+weight: 6
 ---
 
 # Notification History

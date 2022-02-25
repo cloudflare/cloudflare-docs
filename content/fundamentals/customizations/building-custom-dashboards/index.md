@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: how-to
+title: Building custom views
+weight: 11
 ---
 
 # Building custom views

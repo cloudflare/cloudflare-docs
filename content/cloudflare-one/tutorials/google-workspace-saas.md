@@ -2,6 +2,7 @@
 updated: 2021-09-07
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Configure a Google Workspace account for Access for SaaS
 ---
 
 # Configure a Google Workspace account for Access for SaaS
@@ -14,7 +15,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
 
 1.  In your Google Workspace account, create an SSO third-party identity provider.
 
-    ![SSO profile on Google Workspace](../static/zero-trust-security/google-workspace-saas/sso-profile.png)
+    ![SSO profile on Google Workspace](/cloudflare-one/static/zero-trust-security/google-workspace-saas/sso-profile.png)
 
 2.  Select **Setup SSO with a third party identity provider**.
 
@@ -28,7 +29,7 @@ This tutorial covers how to use Cloudflare as a single sign on provider by setti
     *   Assertion Consumer Service URL: `https://google.com/a/your_domain.com/acs`
     *   Name ID: `Email`
 
-    ![Add fields to the Zero Trust application](../static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
+    ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/google-workspace-saas/teams-app-fields.png)
 
 3.  Click **Next** to create an Access policy and use the following mapping to set up your Workspace sign-in:
 

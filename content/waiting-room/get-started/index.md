@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: get-started
+title: Get started
+weight: 2
 ---
 
 import QueueAll from "../\_partials/\_queue-all.md"
@@ -14,8 +15,8 @@ import QueueSome from "../\_partials/\_queue-some.md"
 
 Before you start this tutorial, make sure you have:
 
-*   Completed the [prerequisites](/about#prerequisites).
-*   Reviewed your [rate limiting rules](https://developers.cloudflare.com/waf/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
+*   Completed the [prerequisites](/waiting-room/about/#prerequisites).
+*   Reviewed your [rate limiting rules](/waf/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
 ***
 
@@ -27,7 +28,7 @@ Before you create your waiting room, think about how you want it to appear and o
 
 Which page will you cover with a waiting room? You can only have one waiting room per page, so you need to identify the high-traffic areas of your website.
 
-Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/reference/configuration-settings).
+Specify the URL for your page by setting the `hostname` and `path` in your [configuration settings](/waiting-room/reference/configuration-settings/).
 
 ### Access method
 
@@ -45,7 +46,7 @@ When you [activate your waiting room](#step-3--activate-your-waiting-room), choo
 
 ### Appearance (optional)
 
-Some customers can [customize the design](/additional-options/customize-waiting-room) of their waiting room by editing the page HTML and CSS.
+Some customers can [customize the design](/waiting-room/additional-options/customize-waiting-room/) of their waiting room by editing the page HTML and CSS.
 
 If you have this ability, think about how you want the page to appear.
 
@@ -53,8 +54,8 @@ If you have this ability, think about how you want the page to appear.
 
 Create your waiting room by:
 
-*   Using the [dashboard](/how-to/create-via-dashboard).
-*   Using the [API](/how-to/create-via-api).
+*   Using the [dashboard](/waiting-room/how-to/create-via-dashboard/).
+*   Using the [API](/waiting-room/how-to/create-via-api/).
 
 ## Step 3 — Activate your waiting room
 
@@ -72,6 +73,6 @@ Depending on your [queue activation](#queue-activation), you may deploy your wai
 
 After you have created and deployed your first waiting room, you might also want to:
 
-*   [Test your waiting room](/additional-options/test-waiting-room) before it goes live.
-*   [Monitor your traffic](/how-to/monitor-waiting-room) in real time.
-*   [Troubleshoot](/troubleshooting) potential issues.
+*   [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before it goes live.
+*   [Monitor your traffic](/waiting-room/how-to/monitor-waiting-room/) in real time.
+*   [Troubleshoot](/waiting-room/troubleshooting/) potential issues.

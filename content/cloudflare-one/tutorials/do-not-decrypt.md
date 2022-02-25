@@ -3,6 +3,7 @@ updated: 2021-03-09
 category: 🛡️ Web Gateway
 difficulty: Beginner
 pcx-content-type: tutorial
+title: Skip inspection for groups of applications
 ---
 
 # Skip inspection for groups of applications
@@ -24,8 +25,8 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 ## Before you start
 
-1.  [Connect devices](/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
-2.  [Enable web inspection](/connections/connect-devices/warp/warp-settings#enable-proxy)
+1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/)
+2.  [Enable web inspection](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy)
 
 ## Build the policy
 
@@ -33,22 +34,22 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 2.  Name the policy and, optionally, provide a description.
 
-    ![Name Policy](../static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
+    ![Name Policy](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
 
 3.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
 
-    ![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
+    ![Selctor](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
 
 4.  Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
 
-    ![Action](../static/secure-web-gateway/exempt-cert-pinning/select-action.png)
+    ![Action](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-action.png)
 
 ## Change rule precedence
 
 New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-![Rule Order](../static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
+![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
 
 We do recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
 
-![Rule Order](../static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
+![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)

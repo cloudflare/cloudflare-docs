@@ -1,9 +1,10 @@
 ---
-order: 2
 pcx-content-type: faq
+title: General
+weight: 3
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/cloudflare-one/faq/)
 
 # General
 

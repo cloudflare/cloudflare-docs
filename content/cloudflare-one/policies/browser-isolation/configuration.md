@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Setup
+weight: 2
 ---
 
 # Setup
@@ -9,11 +10,11 @@ Browser Isolation is enabled through Secure Web Gateway HTTP policies. By defaul
 
 1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
 
-2.  Download the latest version of the [WARP client](/connections/connect-devices/warp/download-warp).
+2.  Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/).
 
-3.  Create a [Device enrollment rule](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions).
+3.  Create a [Device enrollment rule](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
 
-4.  Set up an [Isolation policy](/policies/filtering/http-policies/#isolate).
+4.  Set up an [Isolation policy](/cloudflare-one/policies/filtering/http-policies/#isolate).
 
 Cloudflare Browser Isolation integrates with your existing web browser. Once connected to Cloudflare WARP, open your browser and navigate to any websites you normally use.
 
@@ -29,21 +30,21 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 **Non-Cloudflare Root CA**. Non-Cloudflare for Teams root certificate indicates that Cloudflare did not proxy this webpage.
 
-![Non-Cloudflare for Teams Root CA](../../static/documentation/rbi/non-cloudflare-root-ca.png)
+![Non-Cloudflare for Teams Root CA](/cloudflare-one/static/documentation/rbi/non-cloudflare-root-ca.png)
 
 **Normal context menu**. Right-click context menu will have all normal options.
 
-![Normal right click menu](../../static/documentation/rbi/non-isolated-browser.png)
+![Normal right click menu](/cloudflare-one/static/documentation/rbi/non-isolated-browser.png)
 
 ### Isolated Browsing
 
 **Cloudflare Root CA**. Cloudflare for Teams + Gateway Intermediate indicates traffic was proxied through Cloudflare Gateway.
 
-![Cloudflare for Teams Root CA](../../static/documentation/rbi/cloudflare-gateway-root-ca.png)
+![Cloudflare for Teams Root CA](/cloudflare-one/static/documentation/rbi/cloudflare-gateway-root-ca.png)
 
 **Simplified context menu**. Right-click context menu be simplified.
 
-![Simplified right click menu](../../static/documentation/rbi/isolated-browser.png)
+![Simplified right click menu](/cloudflare-one/static/documentation/rbi/isolated-browser.png)
 
 ## Disconnecting Browser Isolation
 

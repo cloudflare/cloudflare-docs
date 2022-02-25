@@ -1,6 +1,7 @@
 ---
-order: 40
 pcx-content-type: how-to
+title: Kubernetes
+weight: 41
 ---
 
 # Kubernetes
@@ -11,8 +12,8 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 | Before you start |
 |---|
-| 1. [Enable Cloudflare Load Balancers](https://developers.cloudflare.com/load-balancing/create-load-balancer-ui)  |
-| 2. [Create a Tunnel](/connections/connect-apps/create-tunnel) |
+| 1. [Enable Cloudflare Load Balancers](/load-balancing/create-load-balancer-ui)  |
+| 2. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) |
 
 ## Deploy `cloudflared` to an upstream service
 
@@ -24,7 +25,7 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 4.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to the service IP of the upstream service. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-5.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Cloudflare Tunnel connections.
+5.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
 
 Once configured, you can update `cloudflared` by updating one deployment and then proceeding to the next one once you've verified the newly updated cloudflared pod is running and connected.
 
@@ -36,4 +37,4 @@ Once configured, you can update `cloudflared` by updating one deployment and the
 
 3.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to an ingress controller. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-4.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/connections/connect-apps/routing-to-tunnel/lb) to the two or more Cloudflare Tunnel connections.
+4.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.

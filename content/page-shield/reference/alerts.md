@@ -1,12 +1,14 @@
 ---
 title: Alerts
-order: 1
 pcx-content-type: reference
+weight: 2
+meta:
+  title: Page Shield alerts
 ---
 
 # Page Shield alerts
 
-Refer to [Configure Page Shield alerts](/use-dashboard/configure-alerts) for instructions on configuring alerts.
+Refer to [Configure Page Shield alerts](/page-shield/use-dashboard/configure-alerts/) for instructions on configuring alerts.
 
 ## New script alerts
 

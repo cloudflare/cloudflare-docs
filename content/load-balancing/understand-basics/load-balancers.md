@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Load balancers
+weight: 3
 ---
 
 import LBDefinition from "../\_partials/\_load-balancer-definition.md"
@@ -19,11 +20,11 @@ For more background information on what load balancers are and how they work, ch
 
 ## Common configurations
 
-For suggestions, refer to [Common load balancer configurations](/reference/common-configurations).
+For suggestions, refer to [Common load balancer configurations](/load-balancing/reference/common-configurations/).
 
 ## Load balancing and existing DNS records
 
-For details about DNS records, refer to [DNS records for load balancing](/reference/dns-records).
+For details about DNS records, refer to [DNS records for load balancing](/load-balancing/reference/dns-records/).
 
 ## HTTP keep-alive (persistent HTTP connection)
 
@@ -33,7 +34,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ### Session cookies
 
-**When using HTTP cookies to track and bind user sessions to a specific server**, configure [Session Affinity](../session-affinity) to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
+**When using HTTP cookies to track and bind user sessions to a specific server**, configure [Session Affinity](/load-balancing/session-affinity/) to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
 
 **For example, F5 BIG-IP load balancers set a session cookie at the beginning of a TCP connection** (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This tends to break session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection. Configuring the load balancer to parse HTTP requests by cookie headers avoids this issue.
 
@@ -41,7 +42,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ## Create load balancers
 
-For step-by-step guidance, refer to [Create a load balancer](/how-to/create-load-balancer).
+For step-by-step guidance, refer to [Create a load balancer](/load-balancing/how-to/create-load-balancer/).
 
 ***
 

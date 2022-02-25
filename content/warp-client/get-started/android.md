@@ -1,7 +1,9 @@
 ---
 title: Android
-order:
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: Android mobile client
 ---
 
 # Android mobile client

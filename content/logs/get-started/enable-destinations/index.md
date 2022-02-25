@@ -1,6 +1,7 @@
 ---
-order: 43
 pcx-content-type: navigation
+title: Enable destinations
+weight: 44
 ---
 
 # Enable destinations

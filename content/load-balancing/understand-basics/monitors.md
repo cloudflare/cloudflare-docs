@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Monitors
+weight: 2
 ---
 
 import MonitorDefinition from "../\_partials/\_monitor-definition.md"
@@ -10,7 +11,7 @@ import HealthCheckRegions from "../\_partials/\_health-check-regions.md"
 
 <MonitorDefinition/>
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](../static/images/load-balancer-components.png)
+![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 
@@ -30,13 +31,13 @@ For an up-to-date list of monitor properties, refer to [Monitor properties](http
 
 ## Create monitors
 
-For step-by-step guidance, refer to [Create monitors](/how-to/create-monitor).
+For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/create-monitor/).
 
 ***
 
 ## Health check regions
 
-When you [attach a monitor to a pool](/how-to/create-monitor#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
+When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
 
 <HealthCheckRegions/>
 
@@ -50,7 +51,7 @@ The same problem can occur when setting low values for a monitor's **Interval**.
 
 ## Host header prioritization
 
-When a load balancer runs health checks, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/additional-options/override-http-host-headers).
+When a load balancer runs health checks, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
 ***
 

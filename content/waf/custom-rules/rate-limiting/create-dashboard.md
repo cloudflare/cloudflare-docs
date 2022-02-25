@@ -1,7 +1,9 @@
 ---
 pcx-content-type: how-to
-order: 13
 type: overview
+title: Create Rate Limiting rules in the dashboard
+weight: 14
+layout: list
 ---
 
 # Create Rate Limiting rules in the dashboard
@@ -28,11 +30,11 @@ To create a new Rate Limiting rule:
 
 4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Rate Limiting rule page](../../images/custom-rules/rate-limiting-create.png)
+    ![Create Rate Limiting rule page](/waf/static/custom-rules/rate-limiting-create.png)
 
 5.  Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/custom-rules/rate-limiting/request-rate) for more information.
+6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-rate/) for more information.
 
 7.  Under **And rate exceeds**, define the rate limit and the time period to consider when determining the request rate.
 

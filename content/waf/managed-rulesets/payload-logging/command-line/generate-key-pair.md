@@ -1,8 +1,11 @@
 ---
 title: Generate a key pair
 pcx-content-type: how-to
-order: 1
 type: overview
+weight: 2
+layout: list
+meta:
+  title: Generate a key pair in the command line
 ---
 
 # Generate a key pair in the command line
@@ -31,4 +34,4 @@ Do the following:
     }
     ```
 
-After generating the key pair, copy the public key value and enter it in the [payload logging configuration](/managed-rulesets/payload-logging/configure).
+After generating the key pair, copy the public key value and enter it in the [payload logging configuration](/waf/managed-rulesets/payload-logging/configure/).

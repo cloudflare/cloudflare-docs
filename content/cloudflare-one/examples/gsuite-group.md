@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow members of a specific G Suite group.
 tags:
-- G Suite® Group
+  - G Suite® Group
+title: G Suite® Group
+weight: 4
+layout: example
 ---
 
 # G Suite® Group

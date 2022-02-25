@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
-For more information, refer to [Detecting malicious scripts](https://developers.cloudflare.com/page-shield/about/malicious-script-detection).
+For more information, refer to [Detecting malicious scripts](/page-shield/about/malicious-script-detection).

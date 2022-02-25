@@ -1,6 +1,8 @@
 ---
 title: Disconnecting
-order: 9
+weight: 10
+meta:
+  title: Disconnecting Browser Isolation
 ---
 
 # Disconnecting Browser Isolation

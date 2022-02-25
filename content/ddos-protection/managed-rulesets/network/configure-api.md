@@ -1,12 +1,14 @@
 ---
 title: Configure the Managed Ruleset via API
 pcx-content-type: concept
-order: 2
+weight: 3
+meta:
+  title: Configure Network-layer DDoS Attack Protection via API
 ---
 
 # Configure Network-layer DDoS Attack Protection via API
 
-Configure the Cloudflare Network-layer DDoS Attack Protection Managed Ruleset by defining overrides at the account level using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
+Configure the Cloudflare Network-layer DDoS Attack Protection Managed Ruleset by defining overrides at the account level using the [Rulesets API](/ruleset-engine/rulesets-api).
 
 Each account has the Network-layer DDoS Attack Protection Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l4` phase entry point ruleset explicitly. You only have to create a rule in the phase entry point to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -14,7 +16,7 @@ Each account has the Network-layer DDoS Attack Protection Managed Ruleset enable
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-When configuring the Network-layer DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity** from the default values. For more information on these rule parameters and the allowed values, refer to [Managed Ruleset parameters](/managed-rulesets/network/override-parameters).
+When configuring the Network-layer DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity** from the default values. For more information on these rule parameters and the allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/).
 
 \<Aside type='warning' header='Important'>
 
@@ -114,4 +116,4 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).

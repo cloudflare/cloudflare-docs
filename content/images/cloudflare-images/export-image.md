@@ -1,7 +1,9 @@
 ---
-order: 8
 pcx-content-type: how-to
 title: Export image
+weight: 9
+meta:
+  title: Export a single image
 ---
 
 # Export a single image

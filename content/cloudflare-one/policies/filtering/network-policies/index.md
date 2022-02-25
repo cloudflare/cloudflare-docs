@@ -1,17 +1,18 @@
 ---
-order: 3
 pcx-content-type: concept
+title: Network policies
+weight: 4
 ---
 
 # Network policies
 
 <Aside type="note">
 
-To enable this feature, download and deploy the [WARP client](/connections/connect-devices/warp/deployment) on your devices.
+To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
 
 </Aside>
 
-With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/identity/idp-integration), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they’re accessing that resource from.
+With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/cloudflare-one/identity/idp-integration/), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they’re accessing that resource from.
 
 Build a network policy by configuring the following elements:
 
@@ -67,7 +68,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 #### Identity-based selectors
 
-You can build Network policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/policies/filtering/identity-selectors).
+You can build Network policies using **identity-based selectors**. These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client and the user to be enrolled in the organization via the WARP client. For a list of identity-based selectors and API examples, please refer to the [dedicated section](/cloudflare-one/policies/filtering/identity-selectors/).
 
 #### Destination IP
 
@@ -156,7 +157,7 @@ The <code>in</code> operator allows you to specify IP addresses or networks usin
 
 You can set your protocol preferences in the **Protocol** card under **Settings** > **Network**.
 
-![Protocol settings](../../../static/documentation/policies/protocol-settings.png)
+![Protocol settings](/cloudflare-one/static/documentation/policies/protocol-settings.png)
 
 <Aside>
 

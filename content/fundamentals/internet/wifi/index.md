@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: concept
+title: Wi-Fi
+weight: 21
 ---
 
 # Wi-Fi
@@ -9,7 +10,7 @@ Wi-Fi is radio signal transmitted over the air that your phone can intercept and
 
 The radio transmission signal comes from your router.
 
-![radio-signal](../static/radio.jpg)
+![radio-signal](/fundamentals/static/radio.jpg)
 
 The reason why some parts of your home have better wifi signal than others is that wifi signal doesn’t travel well through walls. There are two radio bands that are allocated for wifi: 2.4 GHz and 5 GHz.
 If you have both at home, you may have noticed that the 5 GHz band provides slightly faster connection. There are 4 reasons for this:

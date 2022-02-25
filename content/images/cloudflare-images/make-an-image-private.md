@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: reference
+title: Make an image private
+weight: 5
 ---
 
 # Make an image private

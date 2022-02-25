@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: reference
+title: Downloads
+weight: 2
 ---
 
 # Downloads
@@ -67,9 +68,9 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
 
-1.  Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
+1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/create-tunnel/) a new Tunnel.
 2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3.  [Add the address](/connections/connect-apps/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
+3.  [Add the address](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
 4.  Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
 5.  Once confirmed, you can remove the older version from the Load Balancer pool.
 
@@ -77,9 +78,9 @@ You can update `cloudflared` without downtime by using Cloudflare's Load Balance
 
 If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
-1.  Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
+1.  Install a new instance of `cloudflared` and [create](/cloudflare-one/connections/connect-apps/create-tunnel/) a new Tunnel.
 2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3.  In the Cloudflare DNS dashboard, [replace](/connections/connect-apps/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
+3.  In the Cloudflare DNS dashboard, [replace](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
 4.  Remove the now-inactive instance of `cloudflared`.
 
 #### Running multiple instances in Windows
@@ -100,7 +101,7 @@ sc.exe start <unique-name>
 
 ## Deprecated versions
 
-Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation#updating-cloudflared).
+Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](/cloudflare-one/connections/connect-apps/install-and-setup/installation#updating-cloudflared).
 
 | Version(s) | Deprecation status |
 |---|---|

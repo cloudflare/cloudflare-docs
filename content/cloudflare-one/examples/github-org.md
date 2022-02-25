@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow members of a specific GitHub organization.
 tags:
-- GitHub™ Organization
+  - GitHub™ Organization
+title: GitHub™ Organization
+weight: 4
+layout: example
 ---
 
 # GitHub™ Organization

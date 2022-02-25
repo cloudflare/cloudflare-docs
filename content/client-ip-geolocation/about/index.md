@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: About
+weight: 2
 ---
 
 # About
@@ -37,7 +38,7 @@ Because our cell list includes Designated Market Areas in the United States, you
 
 Jane is a Cloudflare WARP user in Glendive, Montana, USA. She is interested in the privacy benefits of using a VPN. Her client IP address is `108.59.112.0`, which is owned by [Mid-Rivers Telephone Cooperative](https://bgp.he.net/AS11961) and geolocates to 47.0984,-104.7275 (with a location accuracy of 50km using MaxMind’s GeoIP service).
 
-![Cloudflare reports accurate location information, even over VPN](../static/client-ip-geolocation-example.png)
+![Cloudflare reports accurate location information, even over VPN](/client-ip-geolocation/static/client-ip-geolocation-example.png)
 
 Jane connects to Cloudflare’s edge using a secure tunnel. Cloudflare operates an anycast network and dictates VPN ingress by anycast. Jane’s VPN traffic lands in the Cloudflare Minneapolis data center, [930km from Glendive](http://www.gcmap.com/mapui?P=GDV-MSP).
 

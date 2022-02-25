@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Export GraphQL data to CSV
 ---
 
 # Export GraphQL data to CSV

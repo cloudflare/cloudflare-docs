@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: SAML | Centrify
+weight: 1
 ---
 
 # SAML | Centrify
@@ -13,7 +14,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Log in to your **Centrify** admin portal and click **Apps**.
 
-    ![Centrify Apps page](../../static/documentation/identity/saml-centrify/saml-centrify-1.png)
+    ![Centrify Apps page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-1.png)
 
 2.  Select **Add Web Apps**.
 
@@ -21,7 +22,7 @@ To set up SAML with Centrify as your identity provider:
 
 4.  Next to the **SAML** icon click **Add**.
 
-    ![Centrify Settings Add Application details page](../../static/documentation/identity/saml-centrify/saml-centrify-3.png)
+    ![Centrify Settings Add Application details page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-3.png)
 
 5.  Enter the required information for your application.
 
@@ -33,7 +34,7 @@ To set up SAML with Centrify as your identity provider:
 
 9.  Choose the **Manual Configuration** option.
 
-10. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+10. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -45,17 +46,17 @@ To set up SAML with Centrify as your identity provider:
 
 13. Click **Add**. The **Select Role** dialog displays.
 
-    ![Centrify Settings Select Role dialog](../../static/documentation/identity/saml-centrify/saml-centrify-6.png)
+    ![Centrify Settings Select Role dialog](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-6.png)
 
 14. Complete your roles access assignments. The Role rules display on the **User Access** card.
 
-    ![Centrify Added Roles list](../../static/documentation/identity/saml-centrify/saml-centrify-7.png)
+    ![Centrify Added Roles list](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-7.png)
 
 15. In the middle menu pane, select **SAML Response**.
 
 16. Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
-    ![Centrify Settings Email Attribute](../../static/documentation/identity/saml-centrify/saml-centrify-9.png)
+    ![Centrify Settings Email Attribute](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-9.png)
 
 17. Enter the user email addresses in the **Attribute Value** field.
 
@@ -89,7 +90,7 @@ To get your Cloudflare metadata file:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
     ```
 
-    Replace `<your-team-name>`  with your [team name](/glossary#team-name).
+    Replace `<your-team-name>`  with your [team name](/cloudflare-one/glossary/#team-name).
 
 2.  Save the file in XML format.
 

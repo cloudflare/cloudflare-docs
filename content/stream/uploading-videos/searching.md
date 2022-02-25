@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Searching over videos
 ---
 
 # Searching over videos

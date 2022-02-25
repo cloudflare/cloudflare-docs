@@ -1,14 +1,15 @@
 ---
 pcx-content-type: tutorial
+title: Querying Magic Transit Tunnel Health Check Results with GraphQL
 ---
 
 # Querying Magic Transit Tunnel Health Check Results with GraphQL
 
-In this example, you are going to use the GraphQL Analytics API to query Magic Transit Health check results which are aggregated from individual health checks carried out by Cloudflare servers to GRE tunnels you have set up to work with Magic Transit during the [onboarding process](https://developers.cloudflare.com/magic-transit/get-started). You can query up to one week of data for dates up to three months ago.
+In this example, you are going to use the GraphQL Analytics API to query Magic Transit Health check results which are aggregated from individual health checks carried out by Cloudflare servers to GRE tunnels you have set up to work with Magic Transit during the [onboarding process](/magic-transit/get-started). You can query up to one week of data for dates up to three months ago.
 
 The following API call will request a particular account's tunnel health checks over a one day period for a particular Cloudflare colo, and outputs the requested fields. Be sure to replace `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` with your email and API credentials, and adjust the `datetimeStart`, `datetimeEnd` and `accountTag` variables as needed.
 
-It will return the tunnel health check results by Cloudflare colo. The result for each colo is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](https://developers.cloudflare.com/magic-transit/about/health-checks#tunnel-health-checks). These states are used by Magic Transit for [routing](https://developers.cloudflare.com/magic-transit/about/health-checks#tunnel-health-checks). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
+It will return the tunnel health check results by Cloudflare colo. The result for each colo is aggregated from the healthchecks conducted on individual servers. The tunnel state field in the value represents the [state of the tunnel](/magic-transit/about/health-checks#tunnel-health-checks). These states are used by Magic Transit for [routing](/magic-transit/about/health-checks#tunnel-health-checks). The value `0` for the tunnel state represents it being down, the value `0.5` being degraded and the value `1` as healthy.
 
 ## API Call
 

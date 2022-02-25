@@ -1,7 +1,9 @@
 ---
 title: Overview
 pcx-content-type: overview
-order: 0
+weight: 1
+meta:
+  title: Network Error Logging (Beta)
 ---
 
 # Network Error Logging (Beta)
@@ -10,7 +12,7 @@ Network Error Logging (NEL) is a browser-based reporting system that allows user
 
 <Aside type="note" header="Note">
 
-Network Error Logging is currently in a closed beta for Enterprise users. To sign up for Network Error Logging, refer to [Get started](/get-started).
+Network Error Logging is currently in a closed beta for Enterprise users. To sign up for Network Error Logging, refer to [Get started](/network-error-logging/get-started/).
 
 </Aside>
 
@@ -18,7 +20,7 @@ Network Error Logging is currently in a closed beta for Enterprise users. To sig
 
 The last mile is the path from a user to the first point of ingress to the resource, whether that be a network like Cloudflare or directly to the origin server. The last mile is important because it is in the critical path of the request for a resource: if the last mile has issues, users cannot connect to their resources. When Network Error Logging is enabled, you can receive alerts about issues in the last mile — which are typically difficult to detect — to learn what the problem is and how to fix it.
 
-![The last mile diagram](./static/last-mile.png)
+![The last mile diagram](/network-error-logging/static/last-mile.png)
 
 ## Privacy
 

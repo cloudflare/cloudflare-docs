@@ -1,9 +1,10 @@
 ---
-order: 3
 pcx-content-type: faq
+title: Troubleshooting
+weight: 4
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Troubleshooting
 
@@ -13,12 +14,12 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, see our documentation about [CORS settings](/policies/zero-trust/cors#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, see our documentation about [CORS settings](/cloudflare-one/policies/zero-trust/cors/#list-of-cors-settings).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow the steps found [here](/connections/connect-devices/warp/install-cloudflare-cert).
+To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
 
 ## I see a Cloudflare Gateway error page when browsing to a website.
 
@@ -46,7 +47,7 @@ If you see this page, providing as much information as possible to the local IT 
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![Overview empty](../static/documentation/faq/gateway-dash-overview-empty.png)
+![Overview empty](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 
@@ -57,7 +58,7 @@ You may not see analytics on the Overview page for the following reasons:
 
 ## I see a "No Browsers Available" alert.
 
-If you encounter this error please [file feedback](/policies/browser-isolation/known-limitations) via the WARP client and we will investigate.
+If you encounter this error please [file feedback](/cloudflare-one/policies/browser-isolation/known-limitations/) via the WARP client and we will investigate.
 
 ## I see a "Maximum Sessions Reached" alert.
 
@@ -85,18 +86,18 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#6-run-the-tunnel).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
 ## I see `Error 0: Bad Request. Please create a ca for application.` when attempting to connect to SSH with a short-lived certificate.
 
-This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/identity/users/short-lived-certificates).
+This error will appear if a certificate has not been generated for the Access application users are attempting to connect to. For more information on how to generate a certificate for the application on the Access Service Auth SSH page, refer to [these instructions](/cloudflare-one/identity/users/short-lived-certificates/).
 
 ## Mobile applications warn of an invalid certificate, even though I installed the Cloudflare certificate on my system.
 
-These mobile applications may use [certificate pinning](/glossary#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
+These mobile applications may use [certificate pinning](/cloudflare-one/glossary/#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
 ## My tunnel fails to authenticate.
@@ -126,7 +127,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 *   Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
 *   WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 *   Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
-*   Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
+*   Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
 
 ## Connections are timing out after 270 seconds
 

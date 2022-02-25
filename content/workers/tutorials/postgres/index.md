@@ -1,8 +1,9 @@
 ---
 updated: 2021-06-10
 difficulty: Intermediate
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Build data-driven applications with Workers and PostgreSQL
 ---
 
 # Build data-driven applications with Workers and PostgreSQL
@@ -13,7 +14,7 @@ Many applications for the web are built using industry standards like [PostgreSQ
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
-![Example GIF](./example.gif)
+![Example GIF](/workers/example.gif)
 
 ## Prerequisites
 
@@ -143,7 +144,7 @@ $ wrangler publish
  https://postgrest-worker-example.signalnerve.workers.dev
 ```
 
-To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/cli-wrangler/commands#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/platform/environment-variables#adding-secrets-via-wrangler):
+To correctly configure the function, set a `POSTGREST_ENDPOINT` secret, which tells Workers where to actually route requests to. [`wrangler secret`](/workers/cli-wrangler/commands/#secret) is a command that sets an encrypted value, or a secret, that is [only available inside of the Workers function](/workers/platform/environment-variables/#adding-secrets-via-wrangler):
 
 ```sh
 $ wrangler secret put POSTGREST_ENDPOINT
@@ -380,6 +381,6 @@ In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Worker
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-*   [Build a Slackbot](/tutorials/build-a-slackbot)
-*   [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)
+*   [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/)
+*   [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
+*   [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)

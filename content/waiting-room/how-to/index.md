@@ -1,7 +1,9 @@
 ---
 title: How to
-order: 3
 pcx-content-type: navigation
+weight: 4
+meta:
+  title: Common tasks
 ---
 
 # Common tasks

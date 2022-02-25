@@ -1,13 +1,14 @@
 ---
-order: 7
 pcx-content-type: concept
+title: Headers
+weight: 8
 ---
 
 # Headers
 
 <Aside type="note">
 
-Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](https://developers.cloudflare.com/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](https://developers.cloudflare.com/pages/platform/functions#adding-middleware)  for shared behavior.
+Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](/pages/platform/functions#adding-middleware)  for shared behavior.
 
 </Aside>
 
@@ -60,7 +61,7 @@ If a header is applied twice in the `_headers` file, the values are joined with 
 
 ### Matching
 
-The same URL matching features that [`_redirects`](/platform/redirects) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
+The same URL matching features that [`_redirects`](/pages/platform/redirects/) offers is also available to the `_headers` file. Note, however, that redirects are applied before headers, when a request matches both a redirect and a header, the redirect takes priority.
 
 #### Splats
 

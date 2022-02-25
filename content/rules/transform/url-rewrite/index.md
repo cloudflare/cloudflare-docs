@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 0
+title: URL Rewrite Rules
+weight: 1
 ---
 
 # URL Rewrite Rules
@@ -10,7 +11,7 @@ A URL Rewrite Rule can perform a static rewrite or a dynamic rewrite:
 *   A **static rewrite** replaces a given part of a request URL (path or query string) with a static string.
 *   A **dynamic rewrite** supports more advanced scenarios where you use a rewrite expression to define the resulting path or query string.
 
-You can create a URL Rewrite Rule [in the dashboard](/transform/url-rewrite/create-dashboard) or [via API](/transform/url-rewrite/create-api).
+You can create a URL Rewrite Rule [in the dashboard](/rules/transform/url-rewrite/create-dashboard/) or [via API](/rules/transform/url-rewrite/create-api/).
 
 ## Rewrites and redirects
 

@@ -1,10 +1,11 @@
 ---
 pcx-content-type: how-to
+title: Activate Polish
 ---
 
 # Activate Polish
 
-Images in the [cache must be purged](https://developers.cloudflare.com/cache/how-to/purge-cache) or expired before seeing any changes in Polish settings.
+Images in the [cache must be purged](/cache/how-to/purge-cache) or expired before seeing any changes in Polish settings.
 
 <Aside type="warning">
 

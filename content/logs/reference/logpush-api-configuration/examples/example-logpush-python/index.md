@@ -1,6 +1,7 @@
 ---
-order: 88
 pcx-content-type: how-to
+title: Manage Logpush with Python
+weight: 89
 ---
 
 # Manage Logpush with Python

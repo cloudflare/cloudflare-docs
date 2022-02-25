@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Registrant contact updates
 ---
 
 # Registrant contact updates

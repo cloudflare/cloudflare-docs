@@ -1,13 +1,15 @@
 ---
 title: Troubleshooting and FAQ
-order: 7
+weight: 8
+meta:
+  title: Frequently asked questionsIn-Browser alerts
 ---
 
 # Frequently asked questions
 
 ## What are the recommended isolation and L7 firewall policies?
 
-See [isolated traffic](/usage/isolated-traffic) for the list of example isolation policies.
+See [isolated traffic](/browser-isolation/usage/isolated-traffic/) for the list of example isolation policies.
 
 ## How do L7 HTTP policies work with DNS resolver locations?
 
@@ -39,7 +41,7 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 
 ## Why do I see a "No Browsers Available" alert?
 
-If you encounter this error please [file feedback](/feedback) via the WARP client and we will investigate.
+If you encounter this error please [file feedback](/browser-isolation/feedback/) via the WARP client and we will investigate.
 
 ## Why do I see a "Maximum Sessions Reached"?
 
@@ -51,4 +53,4 @@ In practise this generally means that you can open both Chrome and Firefox to us
 
 To release a browser session please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-**Safari** is more susceptible to presenting this error. [See workaround](/feedback/known-limitations#safari).
+**Safari** is more susceptible to presenting this error. [See workaround](/browser-isolation/feedback/known-limitations/#safari).

@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: SSO integration
+weight: 3
 ---
 
 # SSO integration
@@ -41,7 +42,7 @@ To test if an IdP is correctly configured, navigate to **Settings** > **Authenti
 
 If your provider is connected, another window will open in your browser, with this message:
 
-![Connected IdP](../../static/documentation/identity/connected-idp.png)
+![Connected IdP](/cloudflare-one/static/documentation/identity/connected-idp.png)
 
 ### Your provider is not connected
 

@@ -1,6 +1,7 @@
 ---
 pcx-content-type: configuration
-order: 3
+title: URL rewrite examples
+weight: 4
 ---
 
 # URL rewrite examples
@@ -76,7 +77,7 @@ sort-by=date
 
 Additionally, set the path rewrite action of the same rule to *Preserve* so that the URL path does not change.
 
-![Rule configuration for query rewrite in the blog example](../../images/transform/use-case-blog.png)
+![Rule configuration for query rewrite in the blog example](/rules/static/transform/use-case-blog.png)
 
 ### Rewrite path of archived blog posts
 

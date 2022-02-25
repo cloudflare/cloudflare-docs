@@ -1,7 +1,9 @@
 ---
 title: Overview
 pcx-content-type: overview
-order: 1
+weight: 2
+meta:
+  title: Cloudflare Rules
 ---
 
 # Cloudflare Rules
@@ -20,5 +22,5 @@ Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers o
 
 The following Cloudflare products also allow you to define rules for different purposes:
 
-*   [Firewall Rules](https://developers.cloudflare.com/firewall/)
-*   [Custom Rules](https://developers.cloudflare.com/waf/custom-rules), which includes Custom Firewall rules and Rate Limiting rules
+*   [Firewall Rules](/firewall/)
+*   [Custom Rules](/waf/custom-rules), which includes Custom Firewall rules and Rate Limiting rules

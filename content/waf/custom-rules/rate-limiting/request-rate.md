@@ -1,7 +1,9 @@
 ---
 pcx-content-type: concept
-order: 11
 type: overview
+title: Determining the request rate
+weight: 12
+layout: list
 ---
 
 # Determining the request rate
@@ -23,7 +25,7 @@ In this case, two incoming requests with the **same** value for the HTTP header 
 
 <Aside type='warning' header='Important'>
 
-The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting rules via API](/custom-rules/rate-limiting/create-api).
+The Cloudflare **data center ID** is a mandatory characteristic of every Rate Limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating Rate Limiting rules via API](/waf/custom-rules/rate-limiting/create-api/).
 
 </Aside>
 
@@ -54,7 +56,7 @@ Mitigation timeout: *10 minutes*
 
 The following diagram shows how Cloudflare handles four incoming requests in the context of the above Rate Limiting rule.
 
-![Rate Limiting rule example diagram](../../images/custom-rules/rate-limiting-example.png)
+![Rate Limiting rule example diagram](/waf/static/custom-rules/rate-limiting-example.png)
 
 Since request 1 matches the rule expression, the Rate Limiting rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the Rate Limiting rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests per period**, the request is allowed.
 

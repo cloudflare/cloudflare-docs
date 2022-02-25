@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: how-to
+title: Reverse zones and PTR records
+weight: 0
 ---
 
 # Reverse zones and PTR records
@@ -11,7 +12,7 @@ Enterprise customers who control their own IP prefix(es) can set up reverse zone
 
 PTR records specify the allowed hosts for a given IP address. They are the opposite of [**A** records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record) and used for reverse DNS lookups.
 
-Historically, PTR records prevented outbound SMTP servers from being blocked by spam filters. However, more modern DNS records — [SPF, DKIM, and DMARC](/manage-dns-records/how-to/email-records#prevent-domain-spoofing) — provide better verifications of domain ownership.
+Historically, PTR records prevented outbound SMTP servers from being blocked by spam filters. However, more modern DNS records — [SPF, DKIM, and DMARC](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) — provide better verifications of domain ownership.
 
 Now, PTR records are primarily useful for those who own a dedicated IP space. They can help populate trace routes and security tools with human-readable domain names.
 

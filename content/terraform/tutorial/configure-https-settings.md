@@ -1,7 +1,9 @@
 ---
 title: 3 – Configure HTTPs settings
-order: 3
 pcx-content-type: tutorial
+weight: 4
+meta:
+  title: Configure HTTPs settings
 ---
 
 # Configure HTTPs settings
@@ -12,7 +14,7 @@ You will use a new git branch for the changes and then merge it into master befo
 
 ## 1. Create a new branch and append the new zone settings
 
-In this step, modify the Terraform configuration to enable the following settings: [TLS 1.3](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/tls-13), [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https), [Strict SSL mode](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#strict), and the [Cloudflare WAF](https://developers.cloudflare.com/waf/). Strict mode requires a valid SSL certificate on your origin, so be sure to use the [Cloudflare Origin CA](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) to generate one.
+In this step, modify the Terraform configuration to enable the following settings: [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13), [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https), [Strict SSL mode](/ssl/origin-configuration/ssl-modes#strict), and the [Cloudflare WAF](/waf/). Strict mode requires a valid SSL certificate on your origin, so be sure to use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca) to generate one.
 
 ```sh
 $ git checkout -b step3-https

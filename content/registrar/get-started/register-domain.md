@@ -1,13 +1,14 @@
 ---
 pcx-content-type: how-to
-order: 3
+title: Register a new domain
+weight: 4
 ---
 
 import VerifyEmail from "../\_partials/\_email-verification.md"
 
 # Register a new domain
 
-Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](https://developers.cloudflare.com/dns/zone-setups)).
+Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups)).
 
 <VerifyEmail />
 
@@ -15,7 +16,7 @@ Cloudflare Registrar is only available for customers that use Cloudflare as thei
 
 2.  In the search box, enter the domain name you wish to register. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.
 
-If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/faq#additional-requirements-for-us-domains) before proceeding.
+If you are registering a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/faq/#additional-requirements-for-us-domains) before proceeding.
 
 1.  Click **Purchase** on the domain you wish to register. In rare instances, a domain that is not available for registration may appear in the search results. After clicking **Purchase**, a definitive availability check will be performed to confirm that the domain is actually available for registration.
 
@@ -80,4 +81,4 @@ The registration process may take up to 30 seconds to complete. Once the registr
 
 ## Next steps
 
-To improve the security of your domain, enable [Domain Name System Security Extensions](/account-options/enable-dnssec) to create a secure layer with a cryptographic signature.
+To improve the security of your domain, enable [Domain Name System Security Extensions](/registrar/account-options/enable-dnssec/) to create a secure layer with a cryptographic signature.

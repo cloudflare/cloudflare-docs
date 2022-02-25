@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Google Chrome
 ---
 
 # Google Chrome

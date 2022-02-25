@@ -1,7 +1,9 @@
 ---
 title: Change log
-order: 6
 pcx-content-type: changelog
+weight: 7
+meta:
+  title: Change log for
 ---
 
 # Change log for `beacon.min.js`

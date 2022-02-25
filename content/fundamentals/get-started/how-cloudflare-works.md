@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: How Cloudflare works
+weight: 2
 ---
 
 # How Cloudflare works
@@ -44,7 +45,7 @@ Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com
 
 <Aside type="note">
 
-Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cloudflare network. As a result, Cloudflare does not offer dedicated or exclusive IP addresses. To reduce the number of Cloudflare IPs that your domain shares with other Cloudflare customer domains, upgrade to a [Business or Enterprise plan and upload a Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates).
+Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cloudflare network. As a result, Cloudflare does not offer dedicated or exclusive IP addresses. To reduce the number of Cloudflare IPs that your domain shares with other Cloudflare customer domains, upgrade to a [Business or Enterprise plan and upload a Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
 
 </Aside>
 

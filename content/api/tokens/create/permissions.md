@@ -1,7 +1,9 @@
 ---
-order: 10
 type: overview
 pcx-content-type: reference
+title: API token permissions
+weight: 11
+layout: list
 ---
 
 # API token permissions

@@ -3,6 +3,7 @@ updated: 2020-12-29
 category: 🌐 Connections
 difficulty: Advanced
 pcx-content-type: tutorial
+title: MongoDB SSH
 ---
 
 # MongoDB SSH
@@ -28,7 +29,7 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-1.  Follow [these instructions](/setup) to set up Cloudflare Access in your account.
+1.  Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
 2.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
@@ -36,11 +37,11 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
+![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-1.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
+1.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
 
-![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
 1.  Click **Next** again and add the application.
 
@@ -199,7 +200,7 @@ done;
 
 ## Configure Cloudflare Tunnel
 
-Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`.
+Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare Tunnel. Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`.
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
@@ -207,17 +208,17 @@ Once installed, run the following command to authenticate the instance of `cloud
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-![Choose Site](../static/secure-origin-connections/share-new-site/pick-site.png)
+![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](../static/secure-origin-connections/share-new-site/cert-download.png)
+![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -225,13 +226,13 @@ Run the following command to create a Tunnel. You can replace `mongodb` with any
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](../static/secure-origin-connections/share-new-site/create.png)
+![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ### Delete the `cert.pem` file
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/connections/connect-apps/create-tunnel).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/cloudflare-one/connections/connect-apps/create-tunnel/).
 
 Store the `JSON` file as a Kubernetes secret.
 
@@ -325,4 +326,4 @@ This is a one-time step. When you next attempt to make an SSH connection to the 
 
 You can then set MongoDB Compass to connect to `localhost:27000`.
 
-![Compass Config](../static/secure-origin-connections/mongodb-tunnel/compass-config.png)
+![Compass Config](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/compass-config.png)

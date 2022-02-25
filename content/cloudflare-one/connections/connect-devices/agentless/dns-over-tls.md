@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: DNS over TLS
+weight: 3
 ---
 
 # DNS over TLS
@@ -20,13 +21,13 @@ Each Gateway location has a unique DoT hostname. Locations and corresponding DoT
 3.  If you have more than one location set up, you will see a list of all your locations.
 4.  Expand the location card for the location whose DoT hostname you'd like to retrieve.
 
-![Expand location card](../../../static/documentation/connections/expand-locations-card.png)
+![Expand location card](/cloudflare-one/static/documentation/connections/expand-locations-card.png)
 
 4.  Get the **DoT hostname** for the location.
 
 In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
-![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
+![Get unique subdomain](/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
 
 5.  Take note of the **DoT hostname**.
 

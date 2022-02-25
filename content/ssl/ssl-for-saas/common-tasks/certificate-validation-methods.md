@@ -1,7 +1,9 @@
 ---
 title: Validate certificates
-order: 3
 pcx-content-type: configuration
+weight: 4
+meta:
+  title: Validate certificates — SSL for SaaS
 ---
 
 import DCVDefinition from "../../\_partials/\_dcv-definition.md"
@@ -67,7 +69,7 @@ HTTP adds a DCV token to your origin. You can either add that token [manually](#
 
 <Aside type="warning">
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl-tls/dcv-update).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates. For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
 
 </Aside>
 
@@ -103,7 +105,7 @@ On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete
 
 If you value simplicity and your customers can handle a few minutes of downtime, you can rely on Cloudflare automatic HTTP validation.
 
-Once you create a new hostname [via the dashboard](/ssl-for-saas/common-tasks/issuing-certificates#via-the-dashboard) or [via the API](/ssl-for-saas/common-tasks/issuing-certificates#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
+Once you create a new hostname [via the dashboard](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-dashboard) or [via the API](/ssl/ssl-for-saas/common-tasks/issuing-certificates/#via-the-api) and choose the `http` validation method, all your customers have to do is add a CNAME to your `$CNAME_TARGET` and Cloudflare will take care of the rest.
 
 <details>
 <summary>What happens after you create the custom hostname</summary>
@@ -119,7 +121,7 @@ Once you create a new hostname [via the dashboard](/ssl-for-saas/common-tasks/is
 
 Cloudflare is able to serve a random token from our edge due to the fact that `site.example.com` has a CNAME in place to `$CNAME_TARGET`, which ultimately resolves to Cloudflare IPs. If your customer has not yet added the CNAME, the CA will not be able to retrieve the token and the process will not complete.
 
-We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl-tls/validation-backoff-schedule) for more details.
+We will attempt to retry this validation check for a finite period before timing out. Refer to [Validation Retry Schedule](/ssl/ssl-tls/validation-backoff-schedule/) for more details.
 
 </Aside>
 

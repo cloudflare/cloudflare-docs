@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 2
+title: View the payload content in the dashboard
+weight: 3
 ---
 
 # View the payload content in the dashboard
@@ -13,7 +14,7 @@ View the content of the matched rule payload in the dashboard by entering your p
 
 3.  Under **Payload match**, select **Decrypt payload log**.
 
-    ![Firewall event with payload match available](../../images/transform-rules/payload-logging-example.png)
+    ![Firewall event with payload match available](/waf/static/transform-rules/payload-logging-example.png)
 
 4.  Enter your private key in the pop-up window and select **Decrypt**.
 
@@ -25,4 +26,4 @@ View the content of the matched rule payload in the dashboard by entering your p
 
 If the private key you entered decrypts the encrypted payload successfully, the **Payload match** card displays the payload content in clear text.
 
-![View the decrypted payload in the dashboard](../../images/transform-rules/payload-decrypted.png)
+![View the decrypted payload in the dashboard](/waf/static/transform-rules/payload-decrypted.png)

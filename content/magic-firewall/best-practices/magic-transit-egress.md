@@ -1,11 +1,12 @@
 ---
 pcx-content-type: concept
-order: 3
+title: Magic Transit egress
+weight: 4
 ---
 
 # Magic Transit egress
 
-The suggestions in the [Minimal ruleset](/best-practices/minimal-ruleset) and [Extended ruleset](/best-practices/extended-ruleset) are recommendations for ingress traffic.
+The suggestions in the [Minimal ruleset](/magic-firewall/best-practices/minimal-ruleset/) and [Extended ruleset](/magic-firewall/best-practices/extended-ruleset/) are recommendations for ingress traffic.
 
 For Magic Transit egress traffic, consider the following information:
 

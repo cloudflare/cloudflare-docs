@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Known limitations
+weight: 4
 ---
 
 # Known limitations

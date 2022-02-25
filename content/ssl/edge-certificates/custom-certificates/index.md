@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Custom certificates
+weight: 3
 ---
 
 import CustomCertificateDefinition from "../../\_partials/\_custom-certificates-definition.md"
@@ -9,19 +10,19 @@ import CustomCertificateDefinition from "../../\_partials/\_custom-certificates-
 
 <CustomCertificateDefinition/>
 
-Custom certificates require that you [upload the certificate](uploading), [manually renew these certificates](renewing), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
+Custom certificates require that you [upload the certificate](/ssl/uploading/), [manually renew these certificates](/ssl/renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
 
 Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
 
-If you have first-level hostnames not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/edge-certificates/universal-ssl), if enabled.
+If you have first-level hostnames not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), if enabled.
 
 ## Certificate Signing Requests (CSRs)
 
-As part of this custom certificate process, you may also want to [generate a Certificate Signing Request (CSR)](/edge-certificates/additional-options/certificate-signing-requests) so you can maintain control of your private key on Cloudflare.
+As part of this custom certificate process, you may also want to [generate a Certificate Signing Request (CSR)](/ssl/edge-certificates/additional-options/certificate-signing-requests/) so you can maintain control of your private key on Cloudflare.
 
 ## Keyless SSL
 
-Typically, customers will upload both the SSL certificate and the private key. Those that wish to [retain their private keys on their own infrastructure may wish to use Keyless SSL](/keyless-ssl).
+Typically, customers will upload both the SSL certificate and the private key. Those that wish to [retain their private keys on their own infrastructure may wish to use Keyless SSL](/ssl/keyless-ssl/).
 
 ## Geo Key Manager (private key restriction)
 

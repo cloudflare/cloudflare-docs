@@ -1,6 +1,7 @@
 ---
-order: 72
 pcx-content-type: concept
+title: TCP
+weight: 73
 ---
 
 # TCP

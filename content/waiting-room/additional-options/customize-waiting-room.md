@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Customize a waiting room
+weight: 2
 ---
 
 # Customize a waiting room
@@ -13,7 +14,7 @@ Cloudflare offers options to customize the appearance of your waiting room:
 *   [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
     *   Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
     *   Edit content directly in the dashboard or import relevant files.
-*   [Support mobile app traffic](/additional-options/mobile-traffic): Toggle to also enable a JSON response with a user's status in the waiting room.
+*   [Support mobile app traffic](/waiting-room/additional-options/mobile-traffic/): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ## Default waiting room
 
@@ -111,7 +112,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Rooms**.
-2.  Either [create a waiting room](/how-to/create-via-dashboard) or [edit an existing one](/how-to/edit-delete-waiting-room).
+2.  Either [create a waiting room](/waiting-room/how-to/create-via-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Click **Preview Waiting Room**:
 

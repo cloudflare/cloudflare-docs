@@ -2,7 +2,10 @@
 title: Available settings
 type: overview
 pcx-content-type: reference
-order: 4
+weight: 5
+layout: list
+meta:
+  title: URL normalization settings
 ---
 
 # URL normalization settings

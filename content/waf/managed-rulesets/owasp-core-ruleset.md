@@ -1,6 +1,7 @@
 ---
 pcx-content-type: configuration
-order: 2
+title: Cloudflare OWASP Core Ruleset
+weight: 3
 ---
 
 # Cloudflare OWASP Core Ruleset
@@ -22,21 +23,21 @@ You can configure the following settings of the Cloudflare OWASP Core Ruleset in
 *   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Legacy CAPTCHA*.
 *   **Disable specific rules or rules with specific tags.**
 *   **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
-*   **Configure [payload logging](/managed-rulesets/payload-logging/configure)**.
+*   **Configure [payload logging](/waf/managed-rulesets/payload-logging/configure/)**.
 
-For details on configuring a Managed Ruleset in the dashboard, refer to [Configure a Managed Ruleset](/managed-rulesets/deploy-zone-dashboard#configure-a-managed-ruleset).
+For details on configuring a Managed Ruleset in the dashboard, refer to [Configure a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 ## Configure via API
 
-To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/deploy-managed-ruleset).
+To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset).
 
-To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset) using the Rulesets API. You can perform the following configurations:
+To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset) using the Rulesets API. You can perform the following configurations:
 
 *   Enable all the rules up to a specific paranoia level.
 *   Configure the score threshold.
 *   Specify the action to perform when the threat score is greater than the threshold.
 
-You can also disable specific rules in the Managed Ruleset using [rule overrides](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
+You can also disable specific rules in the Managed Ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset).
 
 ### Setting the paranoia level
 
@@ -150,7 +151,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
      </div>
      </details>
 
-3.  Update the rule you just identified using the [Patch individual rule](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule) method, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you just identified using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule) method, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
      <details>
      <summary>Request</summary>
@@ -189,7 +190,7 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
      </div>
      </details>
 
-For more information on creating overrides, refer to [Override a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on creating overrides, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
 
 ### Configuring the score threshold and the action
 
@@ -361,7 +362,7 @@ This example configures the Managed Ruleset score threshold and the performed ac
      </div>
      </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Patch individual rule](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule) method, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4.  Update the rule you just identified in the entry point ruleset using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule) method, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
     *   `"score_threshold": 60`
     *   `"action": "managed_challenge"`
@@ -402,4 +403,4 @@ This example configures the Managed Ruleset score threshold and the performed ac
 
 ### Additional resources
 
-For more API examples, refer to [Workflow examples](https://developers.cloudflare.com/ruleset-engine/common-use-cases) in the Ruleset Engine documentation.
+For more API examples, refer to [Workflow examples](/ruleset-engine/common-use-cases) in the Ruleset Engine documentation.

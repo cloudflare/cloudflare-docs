@@ -1,7 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
-title: OS Version 
+title: OS Version
+weight: 5
 ---
 
 # OS Version
@@ -10,7 +10,7 @@ title: OS Version
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | Windows, Mac | WARP with Gateway | All plans |
 

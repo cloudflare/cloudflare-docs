@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: concept
+title: AV scanning
+weight: 7
 ---
 
 # AV scanning
@@ -21,7 +22,7 @@ To enable AV scanning:
 
 When a file is blocked due to the presence of malware, it is logged as a Block decision:
 
-![Blocked action in logs](../../../static/documentation/policies/blocked-decision.png)
+![Blocked action in logs](/cloudflare-one/static/documentation/policies/blocked-decision.png)
 
 ## How Gateway determines if a file should be scanned
 
@@ -55,7 +56,7 @@ The following files cannot be scanned and will be blocked or allowed based on wh
 
 ## Opt content out from scanning
 
-When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. All [HTTP selectors](https://developers.cloudflare.com/cloudflare-one/policies/filtering/http-policies#selectors) can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
+When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. All [HTTP selectors](/cloudflare-one/policies/filtering/http-policies#selectors) can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
 | Selector | Operator | Value | Acton |
 | - | - | - | - | - |

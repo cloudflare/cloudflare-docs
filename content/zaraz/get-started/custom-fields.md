@@ -1,7 +1,9 @@
 ---
-order: 5
 pcx-content-type: how-to
 title: Custom fields
+weight: 6
+meta:
+  title: Add custom fields to third-party tools
 ---
 
 # Add custom fields to third-party tools

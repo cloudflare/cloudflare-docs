@@ -1,11 +1,14 @@
 ---
-order: 1000
 type: example
-summary: Create a modified request with edited properties based off of an incoming request.
+summary: Create a modified request with edited properties based off of an
+  incoming request.
 tags:
   - Middleware
   - Headers
 pcx-content-type: configuration
+title: Modify request property
+weight: 1001
+layout: example
 ---
 
 # Modify request property

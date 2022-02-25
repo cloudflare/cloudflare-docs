@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: concept
+title: Page Rules
+weight: 0
 ---
 
 # Page Rules

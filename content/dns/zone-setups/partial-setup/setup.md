@@ -1,7 +1,9 @@
 ---
 title: Setup
-order: 0
 pcx-content-type: tutorial
+weight: 1
+meta:
+  title: Set up a partial (CNAME) zone
 ---
 
 import PartialSetupDefinition from "../../\_partials/\_partial-setup-definition.md"
@@ -30,7 +32,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 5.  For **Advanced Actions**, click **Convert to CNAME DNS Setup**.
 
-    ![On your domain's overview page, click Convert to CNAME DNS Setup](../../static/dns_cname_setup.png)
+    ![On your domain's overview page, click Convert to CNAME DNS Setup](/dns/static/dns_cname_setup.png)
 
 6.  Click **Convert**.
 
@@ -46,13 +48,13 @@ That record must remain in place for as long as your domain is active on the par
 
 ## Optional — Provision an SSL certificate
 
-To provision a Universal SSL certificate through Cloudflare, follow [these instructions](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains).
+To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains).
 
 ***
 
 ## Step 3 — Add DNS records
 
-1.  In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/manage-dns-records/how-to/create-dns-records).
+1.  In Cloudflare, [add an **A**, **AAAA**, or **CNAME** record](/dns/manage-dns-records/how-to/create-dns-records/).
 2.  At your authoritative DNS provider:
 
     1.  Remove any existing **A**, **AAAA**, or **CNAME** records on the hostname you want to proxy to Cloudflare.

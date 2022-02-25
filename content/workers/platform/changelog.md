@@ -1,5 +1,6 @@
 ---
 pcx-content-type: changelog
+title: Changelog
 ---
 
 # Changelog

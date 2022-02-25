@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: tutorial
+title: Create CNAME records
+weight: 0
 ---
 
 # Create CNAME records

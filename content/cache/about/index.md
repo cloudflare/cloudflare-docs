@@ -1,7 +1,9 @@
 ---
 title: About
-order: 1
 pcx-content-type: navigation
+weight: 2
+meta:
+  title: About Cache
 ---
 
 # About Cache

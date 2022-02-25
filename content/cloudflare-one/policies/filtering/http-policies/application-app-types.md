@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: Applications and app types
+weight: 5
 ---
 
 # Applications and app types
@@ -15,7 +16,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 2.  Navigate to the **HTTP tab**.
 
-3.  [Create a new rule](/policies/filtering/http-policies), or edit an existing one.
+3.  [Create a new rule](/cloudflare-one/policies/filtering/http-policies/), or edit an existing one.
 
 4.  In the **Selector** drop-down menu, select the *Application* option.
 
@@ -23,7 +24,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 6.  In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
-![Applications](../../../static/documentation/policies/http-applications-operator.png)
+![Applications](/cloudflare-one/static/documentation/policies/http-applications-operator.png)
 
 1.  Next, select an [**Action**](#supported-actions-for-applications) for your rule.
 
@@ -33,7 +34,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 ### Applications
 
-A full list of supported applications and their respective app types are available to download [here](../../../static/documentation/applications.csv).
+A full list of supported applications and their respective app types are available to download [here](/cloudflare-one/static/documentation/applications.csv/).
 
 ### App types
 
@@ -67,11 +68,11 @@ Some applications are incompatible with TLS decryption for a variety of reasons,
 
 This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
-Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/policies/filtering/http-policies/application-app-types), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action to *Do Not Inspect*.
+Gateway automatically groups applications incompatible with TLS decryption into the *Do Not Decrypt* app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/cloudflare-one/policies/filtering/http-policies/application-app-types/), select *Application* as a **Selector**, *in* as an **Operator**, and check the *Do Not Decrypt* app type in the **Value** field. Then, set the rule action to *Do Not Inspect*.
 
 Gateway periodically updates the *Do Not Decrypt* app type to include new applications. By creating this *Do Not Inspect* rule and selecting all applications within the *Do Not Decrypt* app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
 
-![Do not decrypt HTTP rule](../../../static/documentation/faq/do-not-decrypt.png)
+![Do not decrypt HTTP rule](/cloudflare-one/static/documentation/faq/do-not-decrypt.png)
 
 <Aside>
 

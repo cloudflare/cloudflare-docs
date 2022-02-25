@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: concept
+title: WARP sessions for Gateway policies
+weight: 7
 ---
 
 # WARP sessions for Gateway policies

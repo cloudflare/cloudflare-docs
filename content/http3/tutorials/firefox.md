@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Mozilla Firefox
 ---
 
 # Mozilla Firefox

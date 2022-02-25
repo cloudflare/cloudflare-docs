@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 |Region code|Region name|

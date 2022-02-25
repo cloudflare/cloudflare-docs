@@ -1,7 +1,9 @@
 ---
 title: Best Practices
-order: 3
 pcx-content-type: navigation
+weight: 4
+meta:
+  title: Best practices
 ---
 
 # Best practices

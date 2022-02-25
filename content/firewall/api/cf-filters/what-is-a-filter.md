@@ -1,7 +1,7 @@
 ---
 title: What is a filter?
 pcx-content-type: concept
-order: 445
+weight: 446
 ---
 
 # What is a filter?
@@ -39,4 +39,4 @@ This filter expression has a `(this or that) and not this` structure designed to
 
 Imagine that this is an IP for your office. This expression demonstrates a filter that might be used (in a Firewall Rule) to block access to the WordPress login when accessed outside the office network.
 
-For more information on rule expressions, refer to [Expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions) in the Rules language documentation.
+For more information on rule expressions, refer to [Expressions](/ruleset-engine/rules-language/expressions) in the Rules language documentation.

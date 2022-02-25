@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: navigation
+title: Platform
+weight: 6
 ---
 
 # Platform

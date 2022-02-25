@@ -1,6 +1,7 @@
 ---
-order: 100
 pcx-content-type: how-to
+title: Google Cloud
+weight: 101
 ---
 
 # Google Cloud
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 
 This tutorial covers how to configure certain Google Cloud Platform (GCP) components so that you can analyze your Cloudflare Logs data.
 
-Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](https://developers.cloudflare.com/logs/get-started/enable-destinations/google-cloud-storage) to ensure your log data is available for analyzing.
+Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage) to ensure your log data is available for analyzing.
 
 The components we'll use in this tutorial include:
 
@@ -19,7 +20,7 @@ The components we'll use in this tutorial include:
 
 The following diagram depicts how data flows from Cloudflare Logs through the different components of the Google Cloud Platform discussed in this tutorial.
 
-![Cloudflare Logpush to Google Cloud Platform](../../../static/images/google/cf-logpush-to-google-cloud-platform.png)
+![Cloudflare Logpush to Google Cloud Platform](/fundamentals/static/images/google/cf-logpush-to-google-cloud-platform.png)
 
 <Aside type="info" header="Info">
 
@@ -123,7 +124,7 @@ With Google Data Studio, you can generate graphs and charts from a Google BigQue
 
 Cloudflare has published a [Logs Insights Template](https://datastudio.google.com/u/0/reporting/1ez3m7Yf8AZLfM6aYRjfgF0pPpRvOwhTh/page/mAzI/preview) in the **Google Data Studio Report Gallery**.
 
-![Cloudflare Logs Insights Template on Google Data Studio Gallery](../../../static/images/cf-logs-insights-template.png)
+![Cloudflare Logs Insights Template on Google Data Studio Gallery](/fundamentals/static/images/cf-logs-insights-template.png)
 
 The Cloudflare Insights Template features several dashboards, or report pages, to help you analyze your Cloudflare Logs data. You can also use filters within the dashboards to narrow down the analysis by date and time, device type, country, user agent, client IP, hostname, and more. These insights further help with debugging and tracing.
 

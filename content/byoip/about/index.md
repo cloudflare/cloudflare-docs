@@ -1,7 +1,7 @@
 ---
 title: About
 pcx-content-type: navigation
-order: 1
+weight: 2
 ---
 
 # About

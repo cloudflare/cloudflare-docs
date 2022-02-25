@@ -1,10 +1,12 @@
 ---
-order: 1000
 type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
   - Originless
 pcx-content-type: configuration
+title: Country code redirect
+weight: 1001
+layout: example
 ---
 
 # Country code redirect

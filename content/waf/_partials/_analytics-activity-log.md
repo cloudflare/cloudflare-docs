@@ -1,9 +1,13 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 The **Activity log** summarizes Firewall events by date to show the action taken and the applied Cloudflare security feature.
 
-![Example of Activity log events](../images/analytics-activity-log.png)
+![Example of Activity log events](/waf/static/analytics-activity-log.png)
 
 Firewall Events are shown by individual event rather than by request.  For example, if a single request triggers three different Firewall features, the Firewall Events will show three individual events in the **Activity log**.
 
@@ -17,7 +21,7 @@ For example, if you are diagnosing a bot-related issue, you may want to see the 
 
 ### Event actions
 
-For a description of the actions that may appear in the **Activity Log**, refer to [Actions](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
+For a description of the actions that may appear in the **Activity Log**, refer to [Actions](/ruleset-engine/rules-language/actions).
 
 When the *Connection Close* action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
 

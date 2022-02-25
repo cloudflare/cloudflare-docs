@@ -1,14 +1,16 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Network Interconnect
 ---
 
 # Cloudflare Network Interconnect
 
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
 
-![Cloudflare Network Interconnect docs home illustration](./static/home.png)
+![Cloudflare Network Interconnect docs home illustration](/network-interconnect/static/home.png)
 
 ## CNI benefits
 

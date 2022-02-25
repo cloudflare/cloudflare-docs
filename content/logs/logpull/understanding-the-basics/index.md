@@ -1,6 +1,7 @@
 ---
-order: 11
 pcx-content-type: reference
+title: Understanding the basics
+weight: 12
 ---
 
 # Understanding the basics

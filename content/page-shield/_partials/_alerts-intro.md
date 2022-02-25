@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 Once you have activated Page Shield, you can set up multiple alerts for your domain.

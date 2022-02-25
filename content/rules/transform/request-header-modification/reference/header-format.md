@@ -1,7 +1,9 @@
 ---
 title: Format of header names and values
 pcx-content-type: reference
-order: 1
+weight: 2
+meta:
+  title: Format of HTTP request header names and values
 ---
 
 import HeaderValidNames from "../../../\_partials/transform/\_header-valid-names.md"

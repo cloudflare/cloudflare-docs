@@ -1,6 +1,7 @@
 ---
-order: 8
 pcx-content-type: navigation
+title: Additional options
+weight: 9
 ---
 
 import AlwaysUseHTTPSDefinition from "../../\_partials/\_always-use-https-definition.md"
@@ -16,11 +17,11 @@ import CSRDefinition from "../../\_partials/\_csr-definition.md"
 
 Once you set up SSL/TLS on your application, you can adjust the following settings in **SSL/TLS** > **Edge Certificates**:
 
-*   [Always Use HTTPS](always-use-https): <AlwaysUseHTTPSDefinition/>
-*   [HTTP Strict Transport Security (HSTS)](http-strict-transport-security): <HSTSDefinition/>
-*   [Minimum TLS Version](minimum-tls): <MinimumTLSDefinition/>
-*   [Opportunistic Encryption](opportunistic-encryption): <OpportunisticEncryptionDefinition/>
-*   [TLS 1.3](tls-13): <TLS13Definition/>
-*   [Automatic HTTPS Rewrites](automatic-https-rewrites): <AutomaticHTTPSRewritesDefinition/>
-*   [Certificate Transparency Monitoring](certificate-transparency-monitoring): <CertTransparencyDefinition/>
-*   [Certificate Signing Requests (CSR)](certificate-signing-requests): <CSRDefinition/>
+*   [Always Use HTTPS](/ssl/always-use-https/): <AlwaysUseHTTPSDefinition/>
+*   [HTTP Strict Transport Security (HSTS)](/ssl/http-strict-transport-security/): <HSTSDefinition/>
+*   [Minimum TLS Version](/ssl/minimum-tls/): <MinimumTLSDefinition/>
+*   [Opportunistic Encryption](/ssl/opportunistic-encryption/): <OpportunisticEncryptionDefinition/>
+*   [TLS 1.3](/ssl/tls-13/): <TLS13Definition/>
+*   [Automatic HTTPS Rewrites](/ssl/automatic-https-rewrites/): <AutomaticHTTPSRewritesDefinition/>
+*   [Certificate Transparency Monitoring](/ssl/certificate-transparency-monitoring/): <CertTransparencyDefinition/>
+*   [Certificate Signing Requests (CSR)](/ssl/certificate-signing-requests/): <CSRDefinition/>

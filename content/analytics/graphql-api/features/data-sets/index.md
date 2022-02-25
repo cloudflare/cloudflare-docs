@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Datasets (tables)
+weight: 3
 ---
 
 # Datasets (tables)
@@ -13,9 +14,9 @@ Cloudflare Analytics offers a range of datasets, including both general and prod
 
 *   **Raw data** - Raw data nodes, such as `loadBalancingRequests`, are not aggregated and so do not incorporate the `Groups` suffix. Raw data returns in arrays containing objects of the relevant data type. For example, a query to `loadBalancingRequests` returns an array of `LoadBalancingRequest` objects.
 
-*   **Adaptive Sampling** - Nodes that represent data acquired using adaptive sampling incorporate the `Adaptive` suffix. (For details, refer to [Sampling](/graphql-api/sampling/)).
+*   **Adaptive Sampling** - Nodes that represent data acquired using adaptive sampling incorporate the `Adaptive` suffix. (For details, refer to [Sampling](/analytics/graphql-api/sampling/)).
 
-Detailed descriptions of nodes, their structure, and supported queries are available directly from the GraphQL Analytics API via **introspection** (refer to [Get started: Querying basics](/graphql-api/getting-started/querying-basics)). For more on using introspection to ask a GraphQL schema for information about the queries it supports, refer to the [GraphQL documentation](https://graphql.org/learn/introspection/).
+Detailed descriptions of nodes, their structure, and supported queries are available directly from the GraphQL Analytics API via **introspection** (refer to [Get started: Querying basics](/analytics/graphql-api/getting-started/querying-basics/)). For more on using introspection to ask a GraphQL schema for information about the queries it supports, refer to the [GraphQL documentation](https://graphql.org/learn/introspection/).
 
 ## Available datasets
 

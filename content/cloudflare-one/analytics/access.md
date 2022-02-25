@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Shadow IT Discovery
+weight: 2
 ---
 
 # Shadow IT Discovery
@@ -11,16 +12,16 @@ On the Shadow IT Discovery page, you can gather information on the [application 
 
 Shadow IT Discovery can be found under **Analytics > Access**.
 
-![Shadow IT Discovery](../static/documentation/shadow-it.png)
+![Shadow IT Discovery](/cloudflare-one/static/documentation/shadow-it.png)
 
 ## Shadow IT view
 
 To see an in-depth breakdown of SaaS applications your users have visited, click on **Review all** in the **Shadow IT Discovery** chart. From this page, you can search for a specific application, or you can click **View** to see a full profile for that application.
 
-![Shadow IT view](../static/documentation/shadow-it-review.png)
+![Shadow IT view](/cloudflare-one/static/documentation/shadow-it-review.png)
 
 *   **Application**. This field shows each SaaS application's name and logo.
-*   **Application type**. This field shows the [application type](/policies/filtering/http-policies/application-app-types#app-types) Cloudflare Zero Trust has assigned to each application.
+*   **Application type**. This field shows the [application type](/cloudflare-one/policies/filtering/http-policies/application-app-types/#app-types) Cloudflare Zero Trust has assigned to each application.
 *   **Application status**. This field shows an [application's status](#application-status).
 *   **Secured**. This field shows whether the application is currently secured behind Access.
 *   **Users**. This field shows how many users have connected to the application over the period of time you have specified in the Shadow IT Discovery overview page.
@@ -46,7 +47,7 @@ You may need to update an application's status based on your organization's pref
 
 1.  From the **Application profile** view, click the status button under the application name.
 
-    ![Shadow IT application status](../static/documentation/shadow-it-profile.png)
+    ![Shadow IT application status](/cloudflare-one/static/documentation/shadow-it-profile.png)
 
 2.  Select the status you want to assign to your application.
 

@@ -1,7 +1,9 @@
 ---
 title: FAQ
-order: 3
 pcx-content-type: faq
+weight: 4
+meta:
+  title: FAQs — DNS Firewall
 ---
 
 # FAQs — DNS Firewall

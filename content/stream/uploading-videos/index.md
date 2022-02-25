@@ -1,7 +1,7 @@
 ---
 title: Upload videos
-order: 1
 pcx-content-type: navigation
+weight: 2
 ---
 
 # Upload videos

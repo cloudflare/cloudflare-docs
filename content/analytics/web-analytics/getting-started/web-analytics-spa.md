@@ -1,6 +1,8 @@
 ---
 title: Web Analytics for SPAs
 pcx-content-type: reference
+meta:
+  title: Web Analytics for Single Page Applications (SPAs)
 ---
 
 # Web Analytics for Single Page Applications (SPAs)

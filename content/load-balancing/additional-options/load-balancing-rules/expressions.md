@@ -1,12 +1,14 @@
 ---
 title: Expressions
-order: 20
 pcx-content-type: reference
+weight: 21
+meta:
+  title: Load Balancing expressions
 ---
 
 # Load Balancing expressions
 
-[Load Balancing rules](/additional-options/load-balancing-rules) use two kinds of expressions:
+[Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/) use two kinds of expressions:
 
 *   [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (*equals* or *less than*, for example).
 
@@ -36,7 +38,7 @@ In general, simple expressions use this pattern:
 <field> <operator> <value>
 ```
 
-For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
+For more details, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/).
 
 ***
 
@@ -59,7 +61,7 @@ In general, compound expressions use this pattern:
 
 A compound expression can be an operand of a logical operator. This allows multiple operators to construct a compound expression from many individual expressions.
 
-For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
+For more details, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/).
 
 ***
 
@@ -75,7 +77,7 @@ Compound expressions are easier to scan when displayed in the Expression Builder
 
 This Expression Builder screenshot shows the example compound expression described earlier. Compound expressions are easier to scan when displayed in the Expression Builder’s visual interface.
 
-![Expression Builder in Load Balancing tab of Traffic app](../../static/images/rules-builder-1.png)
+![Expression Builder in Load Balancing tab of Traffic app](/load-balancing/static/images/rules-builder-1.png)
 
 The **Expression Preview** displays the expression in text:
 
@@ -84,7 +86,7 @@ The **Expression Preview** displays the expression in text:
 and (http.request.uri.query contains "webserver")
 ```
 
-For a walkthrough, refer to [Creating Load Balancing rules](/additional-options/load-balancing-rules/create-rules).
+For a walkthrough, refer to [Creating Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/create-rules/).
 
 ### Expression Editor
 
@@ -92,11 +94,11 @@ The Expression Editor is a text-only interface for creating Load Balancing expre
 
 To access the Expression Editor in the **Traffic** app, click **Edit expression** in the **Create Custom Rule** dialog:
 
-![Edit expression link in Create Custom Rule dialog](../../static/images/rules-builder-edit-expression-link.png)
+![Edit expression link in Create Custom Rule dialog](/load-balancing/static/images/rules-builder-edit-expression-link.png)
 
 The Expression Editor displays:
 
-![Expression Editor in Load Balancing tab of Traffic app](../../static/images/rules-editor-1.png)
+![Expression Editor in Load Balancing tab of Traffic app](/load-balancing/static/images/rules-editor-1.png)
 
 To return to the builder, click **Use expression builder**.
 
@@ -108,4 +110,4 @@ For example, you might create a list of known office IP addresses and use it in 
 
 Cloudflare stores your lists at the account level and sends to the edge, so you can view, manage, and incorporate them into firewall rules for any of your zones.
 
-For more details, refer to [IP Lists](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) in the Firewall Rules documentation.
+For more details, refer to [IP Lists](/firewall/cf-firewall-rules/rules-lists) in the Firewall Rules documentation.

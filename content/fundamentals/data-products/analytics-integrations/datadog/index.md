@@ -1,6 +1,7 @@
 ---
-order: 97
 pcx-content-type: how-to
+title: Datadog
+weight: 98
 ---
 
 # Datadog
@@ -25,7 +26,7 @@ To install the Cloudflare App for Datadog:
 2.  Click the **Integrations** tab.
 
 3.  In the **search box**, start typing *Cloudflare*. The app tile should appear below the search box.
-    ![Datadog Integrations search for Cloudflare App](../../../static/images/datadog/screenshots/datadog-integrations.png)
+    ![Datadog Integrations search for Cloudflare App](/fundamentals/static/images/datadog/screenshots/datadog-integrations.png)
 
 4.  Click the **Cloudflare** tile to begin the installation.
 
@@ -38,7 +39,7 @@ To install the Cloudflare App for Datadog:
     *   **API Key**: Enter your Cloudflare Global API key.
 
 6.  Click **Install Integration**.
-    ![Datadog configure and install integration](../../../static/images/datadog/screenshots/cloudflare-tile-datadog-fill-details.png)
+    ![Datadog configure and install integration](/fundamentals/static/images/datadog/screenshots/cloudflare-tile-datadog-fill-details.png)
 
 The Cloudflare App for Datadog should be installed now and you can view the dashboard.
 
@@ -57,4 +58,4 @@ The dashboard displays the following metrics:
 *   **Search Engine Bot Traffic**
 *   **DNS** (DNS queries, response time, top hostnames, queries by type, stale vs. uncached queries)
 
-![Cloudflare dashboard datadog](../../../static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)
+![Cloudflare dashboard datadog](/fundamentals/static/images/datadog/dashboards/cloudflare-dashboard-datadog.png)

@@ -1,7 +1,7 @@
 ---
 title: Zone-scoped datasets
-order: 10
 pcx-content-type: navigation
+weight: 11
 ---
 
 # Zone-scoped datasets

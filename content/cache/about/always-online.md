@@ -27,4 +27,4 @@ When the requested page is not in the Always Online cache and Internet Archive i
 
 Visitors who interact with dynamic parts of a website, such as a shopping cart or comment box, will see an error page caused by the offline origin web server.
 
-To enable Always Online, see [Enable Always Online](/how-to/enable-always-online).
+To enable Always Online, see [Enable Always Online](/cache/how-to/enable-always-online/).

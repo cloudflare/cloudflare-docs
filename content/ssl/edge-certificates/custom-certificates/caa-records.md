@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: Add CAA records
+weight: 7
 ---
 
 import CAADefinition from "../../\_partials/\_caa-records-definition.md"
@@ -9,7 +10,7 @@ import CAADefinition from "../../\_partials/\_caa-records-definition.md"
 
 <CAADefinition/>
 
-For additional security, set up [Certificate Transparency Monitoring](/edge-certificates/additional-options/certificate-transparency-monitoring) as well.
+For additional security, set up [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/) as well.
 
 <Aside type="note" header="Note">
 
@@ -29,7 +30,7 @@ You should [create CAA records](#create-caa-records) for your domain in Cloudfla
 
 You **do not** need to create CAA records in Cloudflare if your domain falls into one of the following categories:
 
-*   You have [Universal SSL](/edge-certificates/universal-ssl) or [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled (Cloudflare automatically adds CAA records for each our CA providers).
+*   You have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled (Cloudflare automatically adds CAA records for each our CA providers).
 *   Your custom origin server certificate is self-signed.
 *   You are using a [CNAME setup](https://support.cloudflare.com/hc/articles/360020348832) (CAA records should be added to your authoritative DNS provider).
 

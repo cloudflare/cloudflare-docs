@@ -1,7 +1,9 @@
 ---
 title: Expressions
 pcx-content-type: reference
-order: 1
+weight: 2
+meta:
+  title: Rule expressions
 ---
 
 # Rule expressions
@@ -24,15 +26,15 @@ Simple expressions have the following syntax:
 
 Where:
 
-*   [Fields](/rules-language/fields) specify properties associated with an HTTP request.
+*   [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
 
-*   [Comparison operators](/rules-language/operators#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
+*   [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
 
-*   [Values](/rules-language/values) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+*   [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
 
 ## Compound expressions
 
-**Compound expressions** use [logical operators](/rules-language/operators#logical-operators) such as `and` to combine two or more expressions into a single expression.
+**Compound expressions** use [logical operators](/ruleset-engine/rules-language/operators/#logical-operators) such as `and` to combine two or more expressions into a single expression.
 
 For example, this expression uses the `and` operator to target requests to `www.example.com` that are not on ports 80 or 443:
 
@@ -52,6 +54,6 @@ Compound expressions allow you to generate sophisticated, highly targeted rules.
 
 You can also use the following Rules language features in your expressions:
 
-*   [Grouping symbols](/rules-language/operators#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
+*   [Grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols) allow you to explicitly group expressions that should be evaluated together.
 
-*   [Functions](/rules-language/functions) allow you to manipulate and validate values in expressions.
+*   [Functions](/ruleset-engine/rules-language/functions/) allow you to manipulate and validate values in expressions.

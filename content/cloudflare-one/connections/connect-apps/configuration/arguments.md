@@ -1,11 +1,12 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Command-line options
+weight: 3
 ---
 
 # Command-line options
 
-Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/connections/connect-apps/configuration/configuration-file/ingress) in your configuration file.
+Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) in your configuration file.
 
 For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
 
@@ -133,7 +134,7 @@ Allows you to choose the regions to which connections are established. Omit or l
 |--|--|
 | `logfile value` | `TUNNEL_LOGFILE` |
 
-Saves application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/faq/cloudflare-tunnels-faq).
+Saves application log to this file. Mainly useful for reporting issues. For more details on what information you need when contacting Cloudflare support, refer to [this guide](/cloudflare-one/faq/cloudflare-tunnels-faq/).
 
 ## `loglevel`
 

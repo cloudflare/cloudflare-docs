@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: concept
+title: About Logpush
+weight: 21
 ---
 
 # About Logpush

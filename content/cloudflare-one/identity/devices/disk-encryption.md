@@ -1,7 +1,9 @@
 ---
-order: 15
 pcx-content-type: how-to
 title: Disk Encryption
+weight: 16
+meta:
+  title: Disk Encryption (beta)
 ---
 
 # Disk Encryption (beta)
@@ -10,7 +12,7 @@ title: Disk Encryption
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Status | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --- | ----------------- | --------- | ---- |
 | Beta | macOS, Windows, Linux | WARP with Gateway | All plans |
 

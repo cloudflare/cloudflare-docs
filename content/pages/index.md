@@ -1,8 +1,11 @@
 ---
 title: Overview
-order: 0
 type: overview
 pcx-content-type: overview
+weight: 1
+layout: list
+meta:
+  title: Cloudflare Pages documentation
 ---
 
 <ContentColumn>
@@ -21,8 +24,8 @@ Get started deploying your first site using our **Get started** guide below, or 
 
 ## Popular pages
 
-*   [Deploy a React application](/framework-guides/deploy-a-react-application)
-*   [Build configuration](/platform/build-configuration)
+*   [Deploy a React application](/pages/framework-guides/deploy-a-react-application/)
+*   [Build configuration](/pages/platform/build-configuration/)
 
 ***
 
@@ -34,6 +37,6 @@ You can [connect with the Pages community on Discord](https://discord.gg/cloudfl
 
 ***
 
-These docs are built with the [Cloudflare Docs engine](https://developers.cloudflare.com/docs-engine/).
+These docs are built with the [Cloudflare Docs engine](/docs-engine/).
 
 </ContentColumn>

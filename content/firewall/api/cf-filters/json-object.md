@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 450
+title: JSON object
+weight: 451
 ---
 
 # JSON object

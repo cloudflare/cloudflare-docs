@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Add the necessary CORS headers to a third party API response.
 tags:
   - Security
   - Headers
 pcx-content-type: configuration
+title: CORS header proxy
+weight: 1001
+layout: example
 ---
 
 # CORS header proxy

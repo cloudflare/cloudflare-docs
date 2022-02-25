@@ -1,12 +1,15 @@
 ---
-order: 1000
 type: example
-summary: Determine how to cache a resource by setting TTLs, custom cache keys, and cache headers in a fetch request.
+summary: Determine how to cache a resource by setting TTLs, custom cache keys,
+  and cache headers in a fetch request.
 tags:
   - Caching
   - Cache API
   - Middleware
 pcx-content-type: configuration
+title: Cache using fetch
+weight: 1001
+layout: example
 ---
 
 # Cache using fetch
@@ -67,7 +70,7 @@ This feature is available only to Enterprise customers.
 
 </Aside>
 
-A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](https://developers.cloudflare.com/cache/how-to/create-cache-keys/index.d425772ab3.html) documentation.
+A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/create-cache-keys/index.d425772ab3.html) documentation.
 
 ```js
 // Set cache key for this request to "some-string".
@@ -113,6 +116,6 @@ fetch(request, {
 })
 ```
 
-This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/runtime-apis/request#requestinitcfproperties).
+This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#requestinitcfproperties).
 
 </ContentColumn>

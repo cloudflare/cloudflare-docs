@@ -1,7 +1,7 @@
 ---
 title: FAQs
-order: 15
 pcx-content-type: faq
+weight: 16
 ---
 
 # FAQs
@@ -39,4 +39,4 @@ Yes, Google Fonts are also optimized when APO is activated. You can confirm the 
 
 ## Can I customize query string caching with APO?
 
-For more information on query parameters, see [Query parameters and cached responses](/reference/query-parameters).
+For more information on query parameters, see [Query parameters and cached responses](/automatic-platform-optimization/reference/query-parameters/).

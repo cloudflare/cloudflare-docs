@@ -1,15 +1,17 @@
 ---
 title: Troubleshooting
 pcx-content-type: reference
+meta:
+  title: Troubleshooting Domain Control Validation
 ---
 
 # Troubleshooting Domain Control Validation
 
-When performing Domain Control Validation (DCV) for partial domains using Universal SSL certificates, you might experience issues with certificate issuance and renewal using [HTTP DCV](/edge-certificates/changing-dcv-method#http).
+When performing Domain Control Validation (DCV) for partial domains using Universal SSL certificates, you might experience issues with certificate issuance and renewal using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/#http).
 
 If these issues occur while using HTTP DCV, review the following settings:
 
-*   **Cloudflare Firewall Rules**: Review your [Firewall Rules](https://developers.cloudflare.com/firewall/) to ensure that your rules *do not*:
+*   **Cloudflare Firewall Rules**: Review your [Firewall Rules](/firewall/) to ensure that your rules *do not*:
 
     *   Block requests from the United States
     *   Block requests from the issuing Certificate Authority's IP addresses

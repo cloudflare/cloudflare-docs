@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Securing your Stream
+weight: 4
 ---
 
 # Securing your Stream

@@ -1,6 +1,7 @@
 ---
-order: 8
 pcx-content-type: how-to
+title: Edit a Notification
+weight: 9
 ---
 
 # Edit a Notification

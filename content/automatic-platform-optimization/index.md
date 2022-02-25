@@ -1,7 +1,7 @@
 ---
 title: Welcome
-order: 0
 pcx-content-type: overview
+weight: 1
 ---
 
 # Welcome

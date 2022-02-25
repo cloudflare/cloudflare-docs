@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 ### Add filters
@@ -21,4 +25,4 @@ Take the following into account when entering filter values:
 
 To adjust report duration, select the desired duration from the dropdown in **Firewall Events**.
 
-The available report duration values depend on your Cloudflare plan. Refer to [Availability](/analytics#availability) for details.
+The available report duration values depend on your Cloudflare plan. Refer to [Availability](/waf/analytics/#availability) for details.

@@ -1,6 +1,7 @@
 ---
-order: 9
 pcx-content-type: tutorial
+title: Getting Live Webhooks
+weight: 10
 ---
 
 # Getting Live Webhooks
@@ -31,32 +32,32 @@ The `event_type` property of the data object will either be `live_input.connecte
 
 1.  Log in to your Cloudflare account and click  **Notifications**.
 
-![Click on Notifications](./stream-live-webhooks-notifications-tab.png)
+![Click on Notifications](/stream/stream-live-webhooks-notifications-tab.png)
 
 1.  From the **Notifications** page, click the **Destinations** tab.
-    ![Click on Destinations](./stream-live-webhooks-destination-page.png)
+    ![Click on Destinations](/stream/stream-live-webhooks-destination-page.png)
 
 2.  On the **Destinations** page under **Webhooks**, click **Create**.
 
 3.  Enter the information for your webhook and click **Save and Test**.
-    ![Configure Destination](./stream-live-webhooks-add-destination.png)
+    ![Configure Destination](/stream/stream-live-webhooks-add-destination.png)
 
 4.  To create the notification, from the **Notifications** page, click the **All Notifications** tab.
 
 5.  Next to **Notifications**, click **Add**.
-    ![Click Add on Notificatons page](./stream-live-webhooks-add-notifications-1.png)
+    ![Click Add on Notificatons page](/stream/stream-live-webhooks-add-notifications-1.png)
 
 6.  Under the list of products, locate **Stream** and and click **Select**.
-    ![Select Stream](./stream-live-webhooks-add-notifications-2.png)
+    ![Select Stream](/stream/stream-live-webhooks-add-notifications-2.png)
 
 7.  Enter a name and optional description.
 
 8.  Under **Webhooks**, click **Add webhook** and click your newly created webhook.
 
 9.  Click **Next**.
-    ![Configure Notification](./stream-live-webhooks-add-notifications-3.png)
+    ![Configure Notification](/stream/stream-live-webhooks-add-notifications-3.png)
 
 10. By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma delimited list of Input IDs in the text field.
-    ![Finish Notification Setup](./stream-live-webhooks-add-notifications-4.png)
+    ![Finish Notification Setup](/stream/stream-live-webhooks-add-notifications-4.png)
 
 11. When you are done, click **Create**.

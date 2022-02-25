@@ -3,7 +3,8 @@ title: Work with Managed Rulesets
 pcx-content-type: navigation
 type: overview
 alwaysopen: true
-order: 750
+weight: 751
+layout: list
 ---
 
 # Work with Managed Rulesets
@@ -22,8 +23,8 @@ There are several Cloudflare products that provide you with Managed Rulesets. Ch
 
 ## Get started
 
-To view available Managed Rulesets, see [View rulesets](/basic-operations/view-rulesets).
+To view available Managed Rulesets, see [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-To deploy a Managed Ruleset to a phase, see [Deploy a Managed Ruleset](/managed-rulesets/deploy-managed-ruleset).
+To deploy a Managed Ruleset to a phase, see [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-You cannot edit the rules in a Managed Ruleset, but you can customize the Managed Ruleset behavior by using overrides. Refer to [Override a Managed Ruleset](/managed-rulesets/override-managed-ruleset) for more information.
+You cannot edit the rules in a Managed Ruleset, but you can customize the Managed Ruleset behavior by using overrides. Refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) for more information.

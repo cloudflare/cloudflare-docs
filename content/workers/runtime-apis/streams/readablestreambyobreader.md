@@ -1,6 +1,8 @@
 ---
 title: ReadableStream BYOBReader
 pcx-content-type: configuration
+meta:
+  title: ReadableStreamBYOBReader
 ---
 
 <!-- The space in the title was introduced to create a pleasing line-break in the title in the sidebar. -->
@@ -13,9 +15,9 @@ pcx-content-type: configuration
 
 `BYOB` is an abbreviation of bring your own buffer. A `ReadableStreamBYOBReader` allows reading into a developer-supplied buffer, thus minimizing copies.
 
-An instance of `ReadableStreamBYOBReader` is functionally identical to [`ReadableStreamDefaultReader`](/runtime-apis/streams/readablestreamdefaultreader) with the exception of the `read` method.
+An instance of `ReadableStreamBYOBReader` is functionally identical to [`ReadableStreamDefaultReader`](/workers/runtime-apis/streams/readablestreamdefaultreader/) with the exception of the `read` method.
 
-A `ReadableStreamBYOBReader` is not instantiated via its constructor. Rather, it is retrieved from a [`ReadableStream`](/runtime-apis/streams/readablestream):
+A `ReadableStreamBYOBReader` is not instantiated via its constructor. Rather, it is retrieved from a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/):
 
 ```js
 const { readable, writable } = new TransformStream()
@@ -50,5 +52,5 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 
 ## Related resources
 
-*   [Using Streams](/learning/using-streams)
+*   [Using Streams](/workers/learning/using-streams/)
 *   [Background about BYOB readers in the Streams API WHATWG specification](https://streams.spec.whatwg.org/#byob-readers)

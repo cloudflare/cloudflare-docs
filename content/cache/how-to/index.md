@@ -1,7 +1,7 @@
 ---
 title: How to
-order: 2
 pcx-content-type: navigation
+weight: 3
 ---
 
 # How to

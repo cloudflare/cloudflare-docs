@@ -1,13 +1,14 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: Secure the Server
+weight: 7
 ---
 
 # Secure the Server
 
 <Aside type='note' header='Before you start'>
 
-Make sure you follow our [guide](/connections/connect-apps/install-and-setup/tunnel-guide) to create, configure, and run a tunnel.
+Make sure you follow our [guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) to create, configure, and run a tunnel.
 
 </Aside>
 
@@ -17,7 +18,7 @@ Once you can successfully run a tunnel to proxy incoming traffic to any number o
 
 If you host your services on a Virtual Machine (VM) instance by a Cloud provider such as Google Cloud Platform (GCP), you may set up instance-level firewall rules to disallow all ingress traffic and allow only egress traffic. For example, on GCP, you may delete all ingress rules, leaving only the relevant egress rules. This is because GCP's firewall defaults to “Block” unless a rule explicitly allows certain traffic.
 
-![GCP firewall](../../../static/documentation/connections/gcp-firewall.png)
+![GCP firewall](/cloudflare-one/static/documentation/connections/gcp-firewall.png)
 
 ## OS-level firewall
 
@@ -67,4 +68,4 @@ Run your tunnel and check that all the services specified in `config.yml` should
 
 You can also:
 
-*   [Secure your application with Cloudflare Access](/applications/configure-apps/self-hosted-apps)
+*   [Secure your application with Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/)

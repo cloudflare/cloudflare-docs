@@ -1,5 +1,4 @@
 ---
-order: 1000
 type: example
 summary: Cache POST requests using the Cache API.
 tags:
@@ -7,6 +6,9 @@ tags:
   - Caching
   - Cache API
 pcx-content-type: configuration
+title: Cache POST requests
+weight: 1001
+layout: example
 ---
 
 # Cache POST requests

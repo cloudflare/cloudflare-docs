@@ -1,7 +1,9 @@
 ---
-order: 3
 pcx-content-type: how-to
 title: Device posture
+weight: 4
+meta:
+  title: Device posture attributes
 ---
 
 # Device posture attributes
@@ -32,4 +34,4 @@ On desktop clients, you can always verify which device posture checks are active
 
 This will show a list of active device posture checks.
 
-![Device posture attributes](../../static/documentation/identity/devices/device-posture-client-ui.png)
+![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-client-ui.png)

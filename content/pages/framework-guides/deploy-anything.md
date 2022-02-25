@@ -1,12 +1,13 @@
 ---
 pcx-content-type: how-to
+title: Deploying your site
 ---
 
 import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploying your site
 
-Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/framework-guides), you can still deploy it using this guide.
+Cloudflare supports deploying any static HTML website to Cloudflare Pages. If you manage your website without using a framework or static site generator, or if your framework is not listed in [Framework guides](/pages/framework-guides/), you can still deploy it using this guide.
 
 <TutorialsBeforeYouStart/>
 
@@ -40,12 +41,12 @@ After configuring your site, you can begin your first deploy. Your custom build 
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 </Aside>
 
-After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your site on Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
+By completing this guide, you have successfully deployed your site on Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

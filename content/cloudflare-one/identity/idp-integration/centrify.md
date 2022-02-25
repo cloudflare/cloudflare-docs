@@ -1,6 +1,7 @@
 ---
-order: 12
 pcx-content-type: how-to
+title: Centrify
+weight: 13
 ---
 
 # Centrify
@@ -15,7 +16,7 @@ These steps help you set up Centrify as your identity provider:
 
 2.  Click **Apps**.
 
-    ![Centrify Security Overview](../../static/documentation/identity/centrify/centrify-1.png)
+    ![Centrify Security Overview](/cloudflare-one/static/documentation/identity/centrify/centrify-1.png)
 
 3.  Click **Add Web Apps**.
 
@@ -23,11 +24,11 @@ These steps help you set up Centrify as your identity provider:
 
 5.  On the **Add Web App** screen click **Yes** to create an OpenID Connect application.
 
-    ![Add Web App screen](../../static/documentation/identity/centrify/centrify-3.png)
+    ![Add Web App screen](/cloudflare-one/static/documentation/identity/centrify/centrify-3.png)
 
 6.  Enter an **Application ID**.
 
-    ![Centrify Settings](../../static/documentation/identity/centrify/centrify-4.png)
+    ![Centrify Settings](/cloudflare-one/static/documentation/identity/centrify/centrify-4.png)
 
 7.  Click **Save**.
 
@@ -39,9 +40,9 @@ These steps help you set up Centrify as your identity provider:
 
 11. Under **Authorized Redirect URIs** click **Add**.
 
-    ![Centrify OpenID Connect](../../static/documentation/identity/centrify/centrify-5.png)
+    ![Centrify OpenID Connect](/cloudflare-one/static/documentation/identity/centrify/centrify-5.png)
 
-12. Under **Authorized Redirect URIs** enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+12. Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -49,7 +50,7 @@ These steps help you set up Centrify as your identity provider:
 
 13. Click **Save**.
 
-    ![Centrify Trust](../../static/documentation/identity/centrify/centrify-6.png)
+    ![Centrify Trust](/cloudflare-one/static/documentation/identity/centrify/centrify-6.png)
 
 14. Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
@@ -63,7 +64,7 @@ These steps help you set up Centrify as your identity provider:
 
 16. Select the roles to grant access to your application.
 
-    ![Centrify User Access](../../static/documentation/identity/centrify/centrify-7.png)
+    ![Centrify User Access](/cloudflare-one/static/documentation/identity/centrify/centrify-7.png)
 
 17. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

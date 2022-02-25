@@ -1,5 +1,6 @@
 ---
 pcx-content-type: navigation
+title: Workers Sites
 ---
 
 # Workers Sites
@@ -36,6 +37,6 @@ If you already have an application deployed to Workers, this guide will show you
 
 <Aside type="note">
 
-Workers Sites is built on Workers KV, and usage rates may apply. Refer to [Pricing](/platform/pricing) to learn more.
+Workers Sites is built on Workers KV, and usage rates may apply. Refer to [Pricing](/workers/platform/pricing/) to learn more.
 
 </Aside>

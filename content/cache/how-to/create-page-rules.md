@@ -131,11 +131,11 @@ Enterprise domains can cache content by device type to target visitors with cont
 
 Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, or `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
-To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/how-to/purge-cache#purge-using-cache-tags).
+To purge resources using Cache By Device Type, you must [purge by Cache-Tag](/cache/how-to/purge-cache/#purge-using-cache-tags).
 
 ## Cache Everything
 
-Caching additional content at Cloudflare requires a **Cache Everything** Page Rule.  Without creating a Cache Everything Page Rule, dynamic assets are never cached even if a [public Cache-Control header](/about/cache-control) is returned. When combined with an Edge Cache TTL > 0, **Cache Everything** removes cookies from the origin web server response.
+Caching additional content at Cloudflare requires a **Cache Everything** Page Rule.  Without creating a Cache Everything Page Rule, dynamic assets are never cached even if a [public Cache-Control header](/cache/about/cache-control/) is returned. When combined with an Edge Cache TTL > 0, **Cache Everything** removes cookies from the origin web server response.
 
 <Aside type="warning" header="Warning">
 
@@ -151,6 +151,6 @@ Do not use **Cache Everything** for admin sections of your website or for pages 
 6.  Under **Then the settings are**, choose **Cache Level**.
 7.  For **Select Cache Level**, choose the **Cache Everything** submenu setting.
 8.  Click **Save and Deploy**.
-9.  Verify your resources are cached by checking the [cache response returned by Cloudflare](/about/default-cache-behavior#cloudflare-cache-responses).
+9.  Verify your resources are cached by checking the [cache response returned by Cloudflare](/cache/about/default-cache-behavior/#cloudflare-cache-responses).
 
-Cloudflare caches XML responses when using Cache Everything. By default, jquery's getScript explicitly bypasses cache by appending a timestamp query string [unless the behavior is disabled](http://api.jquery.com/jQuery.getScript/). For further details on how to adjust Cloudflare’s behavior for query strings, refer to our article on [Caching Levels](/how-to/set-caching-levels).
+Cloudflare caches XML responses when using Cache Everything. By default, jquery's getScript explicitly bypasses cache by appending a timestamp query string [unless the behavior is disabled](http://api.jquery.com/jQuery.getScript/). For further details on how to adjust Cloudflare’s behavior for query strings, refer to our article on [Caching Levels](/cache/how-to/set-caching-levels/).

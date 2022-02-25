@@ -1,7 +1,7 @@
 ---
 title: Account-scoped datasets
-order: 20
 pcx-content-type: navigation
+weight: 21
 ---
 
 # Account-scoped datasets

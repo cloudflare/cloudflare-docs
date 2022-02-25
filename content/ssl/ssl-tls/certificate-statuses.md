@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: reference
+title: Certificate statuses
+weight: 8
 ---
 
 # Certificate statuses
@@ -19,10 +20,10 @@ Once you issue a certificate, it should be in **Pending Validation**, but change
 
 Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://api.cloudflare.com/#certificate-packs-get-certificate-pack).
 
-For more details on certificate validation, refer to [Changing DCV method](/edge-certificates/changing-dcv-method).
+For more details on certificate validation, refer to [Changing DCV method](/ssl/edge-certificates/changing-dcv-method/).
 
 ## SSL for SaaS
 
 Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details).
 
-For more details on certificate validation, refer to [Changing DCV method](/ssl-for-saas/common-tasks/certificate-validation-methods).
+For more details on certificate validation, refer to [Changing DCV method](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/).

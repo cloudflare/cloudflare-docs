@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Build an API for your front end using Cloudflare Workers
 ---
 
 # Build an API for your front end using Cloudflare Workers
@@ -16,7 +17,7 @@ If you are interested in a more comprehensive approach to building applications 
 
 ### Generating a new project
 
-Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Get started guide](https://developers.cloudflare.com/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
+Begin by creating a new Cloudflare Workers project. If you have not used Cloudflare Workers, or installed [Wrangler](/workers/cli-wrangler/install-update), the command-line tool for managing and publishing Workers projects, refer to the [Get started guide](/workers/get-started/guide) in the Workers documentation. Once you have configured Wrangler and authenticated it with your Cloudflare account, return here to generate your API codebase.
 
 You will use the Workers TypeScript template to generate our project. If you do not know TypeScript — you will not be writing any complicated types, and if you are using VS Code or another editor with TypeScript support, your code will be validated and checked by the editor as you build your application. Run `wrangler generate` in your terminal to create a new project using the template:
 

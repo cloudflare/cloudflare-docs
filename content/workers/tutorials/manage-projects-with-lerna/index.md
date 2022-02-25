@@ -1,8 +1,9 @@
 ---
 updated: 2020-08-13
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Managing multiple Workers projects with Lerna
 ---
 
 import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"

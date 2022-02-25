@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: Profiling Workers
+weight: 0
 ---
 
 # Profiling Workers
@@ -11,7 +12,7 @@ As part of the Workers platform's integration with Chrome Developer Tools, you c
 
 <StreamVideo id="f11809a382160334e9be9a2aedf13d1d" />
 
-`wrangler inspect` is only available in Wrangler v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update).
+`wrangler inspect` is only available in Wrangler v1.19.3 or later. Check what version you have before continuing. If you need to update Wrangler, refer to the guide on [upgrading Wrangler](/workers/cli-wrangler/install-update).
 
 ## Profiling an example project
 
@@ -65,7 +66,7 @@ $ wrangler dev --inspect
 
 Open a new tab in Chrome and enter `chrome://inspect` in the Chrome address bar to open Chrome's DevTools. Select **Configure...** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
 
-![Chrome Inspect](./media/chrome-inspect.png)
+![Chrome Inspect](../media/chrome-inspect.png)
 
 Select **inspect** to open DevTools.
 
@@ -87,7 +88,7 @@ There are three ways to view the CPU profiling data:
 
 To find slow functions, enter the **Chart** view and search for the last long function in a stack.
 
-![CPU Flame chart](./media/devtools-chart.png)
+![CPU Flame chart](../media/devtools-chart.png)
 
 A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest **Self Time**, or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
 

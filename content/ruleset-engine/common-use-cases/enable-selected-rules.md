@@ -2,22 +2,24 @@
 title: Enable only selected rules
 pcx-content-type: configuration
 alwaysopen: true
-order: 773
+weight: 774
+meta:
+  title: Use rulesets and rule overrides to only enable selected rules
 ---
 
 # Use rulesets and rule overrides to only enable selected rules
 
 Use a ruleset override and a rule override in a phase entry point ruleset to execute only selected rules in a Managed Ruleset.
 
-1.  [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
-2.  [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-3.  [Configure a rule override](/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to execute.
+1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a Managed Ruleset.
+2.  [Configure a ruleset override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that disables all rules in the Managed Ruleset.
+3.  [Configure a rule override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to set an action for the rules you want to execute.
 
 <details>
 <summary>Example: Configure ruleset and rule overrides at the zone level</summary>
 <div>
 
-The following `PUT` request uses the [Update ruleset](/rulesets-api/update) operation at the zone level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
+The following `PUT` request uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation at the zone level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
 
 In this example:
 
@@ -64,7 +66,7 @@ curl -X PUT \
 <summary>Example: Configure ruleset and rule overrides at the account level</summary>
 <div>
 
-The following `PUT` request uses the [Update ruleset](/rulesets-api/update) operation at the account level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
+The following `PUT` request uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation at the account level to execute only two rules from a Managed Ruleset in the `http_request_firewall_managed` phase.
 
 In this example:
 

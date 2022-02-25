@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 1
 pcx-content-type: get-started
+weight: 2
+meta:
+  title: Get started with Cloudflare Page Shield
 ---
 
 import AlertsIntro from "../\_partials/\_alerts-intro.md"
@@ -17,7 +19,7 @@ To enable Page Shield:
 2.  Go to **Firewall** > **Page Shield**.
 3.  Click **Enable Page Shield**.
 
-For guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor scripts](/use-dashboard/monitor-scripts).
+For guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor scripts](/page-shield/use-dashboard/monitor-scripts/).
 
 ## Configure alerts
 

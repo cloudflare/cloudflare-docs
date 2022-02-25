@@ -1,7 +1,9 @@
 ---
-title: Overview 
-order: 0
+title: Overview
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Fundamentals
 ---
 
 # Cloudflare Fundamentals

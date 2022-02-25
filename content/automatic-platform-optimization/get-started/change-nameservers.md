@@ -1,7 +1,7 @@
 ---
 title: Change nameservers
-order: 6
 pcx-content-type: how-to
+weight: 7
 ---
 
 # Change nameservers

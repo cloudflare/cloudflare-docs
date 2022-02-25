@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: navigation
+title: Features
+weight: 21
 ---
 
 # Features

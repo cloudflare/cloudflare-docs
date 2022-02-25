@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: reference
+title: Release notes
+weight: 0
 ---
 
 # Release notes

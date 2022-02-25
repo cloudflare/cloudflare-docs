@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: SAML | Jumpcloud
+weight: 5
 ---
 
 # SAML | Jumpcloud
@@ -42,7 +43,7 @@ To set up JumpCloud SAML as your identity provider:
 
 2.  In JumpCloud, select **Applications** in the left-side menu.
 
-    ![JumpCloud Add Application](../../static/documentation/identity/jumpcloud/jumpcloud-saml-1.png)
+    ![JumpCloud Add Application](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-1.png)
 
 3.  Click the + icon at the top-left of the screen to add an application.
 
@@ -54,7 +55,7 @@ To set up JumpCloud SAML as your identity provider:
 
 7.  At the prompt, enter the IdP private key and IdP certificate you previously generated.
 
-8.  Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `<your-team-name>` is your Cloudflare [team name](/glossary#team-name):
+8.  Set both the **SP entity ID** and **ACS URL** to the following callback URL, where `<your-team-name>` is your Cloudflare [team name](/cloudflare-one/glossary/#team-name):
 
     ```text
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -76,7 +77,7 @@ To set up JumpCloud SAML as your identity provider:
 
     Remember to assign this application to users or groups.
 
-    ![JumpCloud Application dialog](../../static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
+    ![JumpCloud Application dialog](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
 14. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

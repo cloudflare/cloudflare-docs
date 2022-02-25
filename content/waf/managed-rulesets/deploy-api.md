@@ -1,11 +1,12 @@
 ---
 pcx-content-type: how-to
-order: 5
+title: Deploy rulesets via API
+weight: 6
 ---
 
 # Deploy rulesets via API
 
-Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api) to deploy and configure rulesets at the account level or at the zone level.
+Use the [Rulesets API](/ruleset-engine/rulesets-api) to deploy and configure rulesets at the account level or at the zone level.
 
 ## Deploying Managed Rulesets
 
@@ -21,7 +22,7 @@ You can define overrides to customize the behavior of the rules included in a Ma
 
 *   You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 
-To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](https://developers.cloudflare.com/ruleset-engine/managed-rulesets).
+To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets).
 
 <Aside type="warning" header="Important">
 
@@ -45,4 +46,4 @@ Currently, you can only deploy custom rulesets to a phase at the account level.
 
 </Aside>
 
-To learn more about creating and deploying custom rulesets using the Rulesets API, refer to [Work with custom rulesets](https://developers.cloudflare.com/ruleset-engine/custom-rulesets).
+To learn more about creating and deploying custom rulesets using the Rulesets API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets).

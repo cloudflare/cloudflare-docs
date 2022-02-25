@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: reference
+title: Useful commands
+weight: 7
 ---
 
 # Useful commands

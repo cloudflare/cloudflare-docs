@@ -1,7 +1,7 @@
 ---
 title: Stream Live
-order: 5
 pcx-content-type: navigation
+weight: 6
 ---
 
 # Stream Live

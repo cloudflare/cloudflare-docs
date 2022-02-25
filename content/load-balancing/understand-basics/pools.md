@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: concept
+title: Pools
+weight: 1
 ---
 
 import PoolDefinition from "../\_partials/\_pool-definition.md"
@@ -13,7 +14,7 @@ If you are familiar with DNS terminology, think of a pool as a “record set,”
 
 <Aside>
 
-For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/understand-basics/health-details).
+For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
 
 </Aside>
 
@@ -27,13 +28,13 @@ For an up-to-date list of pool properties, refer to [Pool properties](https://ap
 
 ## Create pools
 
-For step-by-step guidance, refer to [Create pools](/how-to/create-pool).
+For step-by-step guidance, refer to [Create pools](/load-balancing/how-to/create-pool/).
 
 ***
 
 ## Per origin Host header override
 
-When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks. For more details, refer to [Override HTTP Host headers](/additional-options/override-http-host-headers).
+When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks. For more details, refer to [Override HTTP Host headers](/load-balancing/additional-options/override-http-host-headers/).
 
 ***
 

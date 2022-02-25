@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Getting started
+weight: 2
 ---
 
 # Getting started

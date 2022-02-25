@@ -1,6 +1,7 @@
 ---
 pcx-content-type: changelog
-order: 3
+title: Release notes
+weight: 4
 ---
 
 # Release notes

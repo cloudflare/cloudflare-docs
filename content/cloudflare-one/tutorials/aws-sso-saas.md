@@ -3,6 +3,7 @@ updated: 2021-08-03
 category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx-content-type: tutorial
+title: Configure AWS SSO with Access for SaaS
 ---
 
 # Configure AWS SSO with Access for SaaS
@@ -27,7 +28,7 @@ For this tutorial, you will need:
 
 1.  In the AWS admin panel, search for `SSO`.
 
-    ![AWS SSO](../static/zero-trust-security/aws-sso-saas/aws-sso-search.png)
+    ![AWS SSO](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-sso-search.png)
 
 2.  Add **AWS Single Sign** on to your AWS account.
 
@@ -37,7 +38,7 @@ For this tutorial, you will need:
 
 5.  Click **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
 
-    ![AWS metadata](../static/zero-trust-security/aws-sso-saas/aws-metadata.png)
+    ![AWS metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-metadata.png)
 
 6.  Copy the **AWS SSO ACS URL**.
 
@@ -56,17 +57,17 @@ For this tutorial, you will need:
 
     The **Name ID Format** must be set to: Email.
 
-    ![AWS application](../static/zero-trust-security/aws-sso-saas/aws-application.png)
+    ![AWS application](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-application.png)
 
 4.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 
 5.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration:
 
-    ![AWS Cloudflare metadata](../static/zero-trust-security/aws-sso-saas/aws-cloudflare-metadata.png)
+    ![AWS Cloudflare metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-cloudflare-metadata.png)
 
 6.  Click **Next**.
 
-7.  Now create a [Zero Trust policy](/policies/zero-trust) to determine who has access to your application.
+7.  Now create a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to determine who has access to your application.
 
 8.  Save your policy and return to the AWS SSO dashboard.
 
@@ -95,7 +96,7 @@ For this tutorial, you will need:
 
 3.  Set Provisioning to *Manual*.
 
-    ![AWS settings](../static/zero-trust-security/aws-sso-saas/aws-settings.png)
+    ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
      <Aside type='Warning' header='Important'>
 
@@ -111,4 +112,4 @@ For this tutorial, you will need:
 
 User should now be able to successfully log in. To test your connection, open the user portal URL.
 
-![AWS portal](../static/zero-trust-security/aws-sso-saas/aws-portal.png)
+![AWS portal](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-portal.png)

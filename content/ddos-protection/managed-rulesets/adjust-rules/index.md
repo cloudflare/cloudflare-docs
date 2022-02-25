@@ -1,6 +1,7 @@
 ---
 pcx-content-type: navigation
-order: 5
+title: Adjusting DDoS rules
+weight: 6
 ---
 
 # Adjusting DDoS rules

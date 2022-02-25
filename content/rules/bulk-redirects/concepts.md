@@ -1,7 +1,9 @@
 ---
 title: Concepts
-order: 2
 pcx-content-type: concept
+weight: 3
+meta:
+  title: Bulk Redirect concepts
 ---
 
 # Bulk Redirect concepts
@@ -12,11 +14,11 @@ Bulk Redirects involve the following elements:
 
 *   **Bulk Redirect List**: A list, similar to an IP List, containing one or more URL Redirects. To enable all the URL Redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-*   **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/transform). A Bulk Redirect Rule has an associated Bulk Redirect List.
+*   **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL Redirects.
 
-![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](../images/bulk-redirects/concepts-diagram.png)
+![Diagram outlining the hierarchy relationship between Bulk Redirect Rules, Bulk Redirect Lists, and URL Redirects](/rules/static/bulk-redirects/concepts-diagram.png)
 
 The following example defines a Bulk Redirect List named `list_b` with two URL Redirects:
 
@@ -46,7 +48,7 @@ The following Bulk Redirect Rule, named `Rule 2`, enables the URL Redirects in t
 
 A URL Redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
 
-When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL Redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How it works](/bulk-redirects/how-it-works).
+When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL Redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How it works](/rules/bulk-redirects/how-it-works/).
 
 URL Redirects are the list items of Bulk Redirect Lists.
 
@@ -80,7 +82,7 @@ The default expression of a Bulk Redirect Rule is the following:
 http.request.full_uri in $<LIST_NAME>
 ```
 
-This expression means that the request URL, after some basic normalization (if [URL normalization](/normalization) is enabled), should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
+This expression means that the request URL, after some basic normalization (if [URL normalization](/rules/normalization/) is enabled), should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
 You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Bulk Redirect Rule to the following expression, there will only be a match for requests coming from the United Kingdom:
 
@@ -88,7 +90,7 @@ You can use an expression different from the default one to increase the specifi
 ip.src.country == "GB" and http.request.full_uri in $<LIST_NAME>
 ```
 
-For more information on the available fields, refer to [Available fields and functions](/bulk-redirects/reference/fields-functions).
+For more information on the available fields, refer to [Available fields and functions](/rules/bulk-redirects/reference/fields-functions/).
 
 <Aside type="note" header="Note">
 
@@ -97,7 +99,7 @@ At the left of the `in` operator you can only use fields directly and not values
 *   `http.request.full_uri`
 *   `raw.http.request.full_uri`
 
-Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields) for more information.
+Refer to [Fields](/ruleset-engine/rules-language/fields) for more information.
 
 </Aside>
 

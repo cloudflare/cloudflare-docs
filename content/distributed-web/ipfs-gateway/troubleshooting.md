@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: reference
+title: Troubleshooting
+weight: 11
 ---
 
 # Troubleshooting

@@ -1,6 +1,7 @@
 ---
-order: 11
 pcx-content-type: reference
+title: Zone Analytics to GraphQL Analytics
+weight: 12
 ---
 
 # Zone Analytics to GraphQL Analytics
@@ -505,6 +506,6 @@ As you can see from the response, Zone Analytics returns metrics along many dime
 </div>
 </details>
 
-Notice that you can specify the request time period using a data set filter (refer to [Filtering](/graphql-api/features/filtering/)). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it is available.
+Notice that you can specify the request time period using a data set filter (refer to [Filtering](/analytics/graphql-api/features/filtering/)). The `continuous` parameter is no longer needed because GraphQL Analytics is designed to provide data as soon as it is available.
 
 Also, if you want to get the totals for a particular period, rather than a breakdown by time period, simply remove the `datetimeMinute` field under `dimensions`.

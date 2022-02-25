@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: Block page
+weight: 7
 ---
 
 # Block page
@@ -32,13 +33,13 @@ Now you will need to add the certificate to your system. This ensures your web b
 
 The certificate is now listed in the **Keychain Access** application.
 
-![Keychain](../../static/documentation/policies/listed-in-keychain.png)
+![Keychain](/cloudflare-one/static/documentation/policies/listed-in-keychain.png)
 
 1.  Double-click on the certificate.
 
 2.  Click **Trust**.
 
-![Keychain](../../static/documentation/policies/cert-click-on-trust.png)
+![Keychain](/cloudflare-one/static/documentation/policies/cert-click-on-trust.png)
 
 1.  Select **Always Trust** from the drop-down menu for **When using this certificate**.
 
@@ -60,7 +61,7 @@ Follow the instructions below to finish configuring the block page:
 
 The block page is automatically enabled for all HTTP policies. When a user is blocked at the HTTP layer, the block page is displayed. As you configure a policy with a Block action, you can specify a policy-specific block message.
 
-![Enable HTTP block page](../../static/documentation/policies/http-block.png)
+![Enable HTTP block page](/cloudflare-one/static/documentation/policies/http-block.png)
 
 ## Enable the block page for DNS policies
 
@@ -72,7 +73,7 @@ For DNS policies:
 4.  Scroll down to find the **Configure policy settings** step.
 5.  Toggle the **Display block page** switch.
 
-![Enable block page](../../static/documentation/policies/block-page-toggle.png)
+![Enable block page](/cloudflare-one/static/documentation/policies/block-page-toggle.png)
 
 1.  Click **Save**.
 
@@ -82,7 +83,7 @@ Your block page is now enabled for this policy.
 
 If your users are seeing the following error when navigating to a blocked page, double-check that you have downloaded the Cloudflare certificate and you have added it correctly to your system.
 
-![Block page](../../static/documentation/policies/https-browser-error.png)
+![Block page](/cloudflare-one/static/documentation/policies/https-browser-error.png)
 
 </Aside>
 
@@ -104,8 +105,8 @@ All of these elements will display in addition to two fields specific to the pol
 
 To apply customizations to your block page, navigate to the **Block page** card under **Settings > General**.
 
-![Block page](../../static/documentation/policies/customize-settings-page.png)
+![Block page](/cloudflare-one/static/documentation/policies/customize-settings-page.png)
 
 Once you have completed your customization, click **Save**. Your customers will now see your custom block page when navigating to a blocked website.
 
-![Final block page](../../static/documentation/policies/final-block-page.png)
+![Final block page](/cloudflare-one/static/documentation/policies/final-block-page.png)

@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: tutorial
+title: AWS cloud HSM
+weight: 2
 ---
 
 # AWS cloud HSM

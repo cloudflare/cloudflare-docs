@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: concept
+title: Rollbacks
+weight: 6
 ---
 
 # Rollbacks
@@ -15,5 +16,5 @@ In order to perform a rollback, go to **Deployments** in your Pages project. Bro
 
 ## Related resources
 
-*   [Preview Deployments](/platform/preview-deployments)
-*   [Pausing Automatic Builds](/platform/git-integration#pausing-automatic-builds)
+*   [Preview Deployments](/pages/platform/preview-deployments/)
+*   [Pausing Automatic Builds](/pages/platform/git-integration/#pausing-automatic-builds)

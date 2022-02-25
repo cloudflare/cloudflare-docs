@@ -1,7 +1,7 @@
 ---
 title: Activate the Cloudflare WordPress plugin
-order: 7
 pcx-content-type: tutorial
+weight: 8
 ---
 
 # Activate the Cloudflare WordPress plugin
@@ -35,7 +35,7 @@ We also recommend clearing the server cache for the WP Rocket Cache plugin, W3 T
 
 ## Activate APO
 
-To create the connection between WordPress and Cloudflare, you will create an API token from your Cloudflare dashboard and add it to WordPress. To set up APO on a subdomain, refer to [Subdomains and subdirectories](/reference/subdomain-subdirectories).
+To create the connection between WordPress and Cloudflare, you will create an API token from your Cloudflare dashboard and add it to WordPress. To set up APO on a subdomain, refer to [Subdomains and subdirectories](/automatic-platform-optimization/reference/subdomain-subdirectories/).
 
 ## Create the API token from Cloudflare
 
@@ -63,4 +63,4 @@ Copy and paste your API token into a document saved on your computer to easily r
 6.  For **Apply Recommended Cloudflare Settings for WordPress**, select **Apply**.
 7.  For **Automatic Platform Optimization**, switch the toggle to **On** to enable APO.
 
-To verify APO is working, see [Verify APO works](/get-started/verify-apo-works).
+To verify APO is working, see [Verify APO works](/automatic-platform-optimization/get-started/verify-apo-works/).

@@ -1,7 +1,7 @@
 ---
 title: Origin server
-order: 7
 pcx-content-type: navigation
+weight: 8
 ---
 
 # Origin server

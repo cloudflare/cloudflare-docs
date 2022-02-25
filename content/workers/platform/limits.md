@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Limits
 ---
 
 # Limits
@@ -61,7 +62,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 ### Bundled Usage Model
 
-Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
 
 <Aside type="note" header="No limit* for duration">
 
@@ -71,7 +72,7 @@ There is no hard limit for duration. However, after 30 seconds, there is a highe
 
 ### Unbound Usage Model
 
-The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/platform/pricing#usage-models).
+The Workers Unbound Usage Model has a significantly higher limit than the Bundled Usage Model and is intended for use cases up to 30 seconds of CPU time for HTTP requests and up to 15 minutes of CPU time for Cron Triggers. [Duration](#duration) is not capped but after 30 seconds there is a slightly higher chance of eviction. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
 
 ## KV limits
 
@@ -94,7 +95,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 <Aside type="note" header="Free vs. Paid plan pricing">
 
-Refer to [KV pricing](/platform/pricing#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
+Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
 
 </Aside>
 
@@ -142,7 +143,7 @@ Accounts using the Workers Free plan are subject to a burst rate limit of 1000 r
 
 ### Daily request
 
-Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/platform/routes) in two modes: 1) Fail open and 2) Fail closed.
+Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/routes/) in two modes: 1) Fail open and 2) Fail closed.
 
 #### Fail open
 
@@ -156,29 +157,29 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare network edge servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
+Only one Workers instance runs on each of the many global Cloudflare network edge servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
 If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*.
 
-Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
+Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
 ***
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10 ms on the Free plan and up to 50 ms for Bundled Workers on the Paid Plan. The Paid Plan also offers up to a 30 second [duration](/platform/limits#duration) for increased compute time. The 10 ms allowance on the Free plan is enough execution time for most use cases including application hosting.
+Most Workers requests consume less than a millisecond. It is rare to find a normally operating Workers script that exceeds the CPU time limit. A Worker may consume up to 10 ms on the Free plan and up to 50 ms for Bundled Workers on the Paid Plan. The Paid Plan also offers up to a 30 second [duration](/workers/platform/limits/#duration) for increased compute time. The 10 ms allowance on the Free plan is enough execution time for most use cases including application hosting.
 
-There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/runtime-apis/fetch-event) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
+There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
 ***
 
 ## Duration
 
-Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128 MB of [memory](/platform/limits#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
+Duration is the measurement of wall-clock time. This is measured in Gigabyte-seconds (GB-s). When a Worker is executed, it is allocated 128 MB of [memory](/workers/platform/limits/#memory). As the Worker continues to execute that memory remains allocated, even during network IO requests.
 
-For example, when a Worker executes via a [scheduled event](/runtime-apis/scheduled-event), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
+For example, when a Worker executes via a [scheduled event](/workers/runtime-apis/scheduled-event/), it executes for four seconds, including network-bound IO time: `4s x 0.125GB (or 128Mb) = .5 GB-s`.
 
-Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan) and [Durable Objects](/learning/using-durable-objects).
+Duration is most applicable to Unbound Workers on the [Paid plan](/workers/platform/pricing/#paid-plan) and [Durable Objects](/workers/learning/using-durable-objects/).
 
 ***
 
@@ -186,7 +187,7 @@ Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pric
 
 ### Can a Workers script make subrequests to load other sites on the Internet?
 
-Yes. Use the [Fetch API](/runtime-apis/fetch) to make arbitrary requests to other Internet resources.
+Yes. Use the [Fetch API](/workers/runtime-apis/fetch/) to make arbitrary requests to other Internet resources.
 
 ### How many subrequests can I make?
 
@@ -198,7 +199,7 @@ For subrequests to internal services like Workers KV and Durable Objects, the su
 
 There is no set limit on the amount of real time a Worker may use. As long as the client which sent a request remains connected, the Worker may continue processing, making subrequests, and setting timeouts on behalf of that request.
 
-When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/runtime-apis/fetch-event), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
+When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/workers/runtime-apis/fetch-event/), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
 
 ***
 
@@ -206,9 +207,9 @@ When the client disconnects, all tasks associated with that client’s request a
 
 While handling a request, each Worker script is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
 
-*   the `fetch()` method of the [Fetch API](/runtime-apis/fetch).
-*   `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/runtime-apis/kv).
-*   `put()`, `match()`, and `delete()` methods of [Cache objects](/runtime-apis/cache).
+*   the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
+*   `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
+*   `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 

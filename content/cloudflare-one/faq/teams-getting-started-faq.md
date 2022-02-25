@@ -1,9 +1,10 @@
 ---
-order: 1
 pcx-content-type: faq
+title: Getting started with Cloudflare Zero Trust
+weight: 2
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Getting started with Cloudflare Zero Trust
 
@@ -13,7 +14,7 @@ You can sign up today at [this link](https://dash.cloudflare.com/sign-up/teams).
 
 ## What's a team domain/team name?
 
-Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/applications/app-launcher) — and will be able to make login requests to them.  The customizable portion of your team domain is called **team name**. You can change this name at any time in the Zero Trust dashboard, under the **Authentication** tab.
+Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Zero Trust configuration. This is where your users will find the apps you've secured behind Cloudflare Zero Trust — displayed in the [App Launcher](/cloudflare-one/applications/app-launcher/) — and will be able to make login requests to them.  The customizable portion of your team domain is called **team name**. You can change this name at any time in the Zero Trust dashboard, under the **Authentication** tab.
 
 | team name | team domain |
 |-------------|-----------|

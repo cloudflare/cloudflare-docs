@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: How the Cache works
+weight: 0
 ---
 
 # How the Cache works
@@ -17,11 +18,11 @@ Since Cloudflare Workers can run before, and after the cache, a Worker can also 
 
 Conceptually, there are two ways to interact with Cloudflare’s Cache using a Worker:
 
-*   Call to [`fetch()`](/runtime-apis/fetch) in a Workers script. Requests proxied through Cloudflare are cached even without Workers according to a zone’s default or configured behavior (for example, static assets like files ending in `.jpg` are cached by default). Workers can further customize this behavior by:
+*   Call to [`fetch()`](/workers/runtime-apis/fetch/) in a Workers script. Requests proxied through Cloudflare are cached even without Workers according to a zone’s default or configured behavior (for example, static assets like files ending in `.jpg` are cached by default). Workers can further customize this behavior by:
 
-    *   Setting Cloudflare cache rules (that is, operating on the `cf` object of a [request](/runtime-apis/request)).
+    *   Setting Cloudflare cache rules (that is, operating on the `cf` object of a [request](/workers/runtime-apis/request/)).
 
-*   Store responses using the [Cache API](/runtime-apis/cache) from a Workers script. This allows caching responses that did not come from an origin and also provides finer control by:
+*   Store responses using the [Cache API](/workers/runtime-apis/cache/) from a Workers script. This allows caching responses that did not come from an origin and also provides finer control by:
 
     *   Customizing cache behavior of any asset by setting headers such as `Cache-Control` on the response passed to `cache.put()`.
 
@@ -37,21 +38,21 @@ Other means to control Cloudflare’s cache that are not mentioned in this docum
 
 <Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">
 
-For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no back end (that is, the entire project is on Workers as in [Workers Sites](/platform/sites)) the Cache API is the only option to customize caching.
+For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no back end (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
 
 </Aside>
 
 ### `fetch`
 
-In the context of Workers, a [`fetch`](/runtime-apis/fetch) provided by the runtime communicates with the Cloudflare cache. First, `fetch` checks to see if the URL matches a different zone. If it does, it reads through that zone’s cache (or Worker). Otherwise, it reads through its own zone’s cache, even if the URL is for a non-Cloudflare site. Cache settings on `fetch` automatically apply caching rules based on your Cloudflare settings. `fetch` does not allow you to modify or inspect objects before they reach the cache, but does allow you to modify how it will cache.
+In the context of Workers, a [`fetch`](/workers/runtime-apis/fetch/) provided by the runtime communicates with the Cloudflare cache. First, `fetch` checks to see if the URL matches a different zone. If it does, it reads through that zone’s cache (or Worker). Otherwise, it reads through its own zone’s cache, even if the URL is for a non-Cloudflare site. Cache settings on `fetch` automatically apply caching rules based on your Cloudflare settings. `fetch` does not allow you to modify or inspect objects before they reach the cache, but does allow you to modify how it will cache.
 
 When a response fills the cache, the response header contains `CF-Cache-Status: HIT`. You can tell an object is attempting to cache if one sees the `CF-Cache-Status` at all.
 
-This [template](/examples/cache-using-fetch) shows ways to customize Cloudflare cache behavior on a given request using fetch.
+This [template](/workers/examples/cache-using-fetch/) shows ways to customize Cloudflare cache behavior on a given request using fetch.
 
 ### Cache API
 
-The [Cache API](/runtime-apis/cache) can be thought of as an ephemeral key-value store, whereby the `Request` object (or more specifically, the request URL) is the key, and the `Response` is the value.
+The [Cache API](/workers/runtime-apis/cache/) can be thought of as an ephemeral key-value store, whereby the `Request` object (or more specifically, the request URL) is the key, and the `Response` is the value.
 
 There are two types of cache namespaces available to the Cloudflare Cache:
 
@@ -64,4 +65,4 @@ When to use the Cache API:
 
 *   When you want to programmatically access a Response from a cache without relying on a `fetch` request. For example, you can check to see if you have already cached a `Response` for the `https://example.com/slow-response` endpoint. If so, you can avoid the slow request.
 
-This [template](/examples/cache-api) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/platform/limits#cache-api-limits).
+This [template](/workers/examples/cache-api/) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/workers/platform/limits/#cache-api-limits).

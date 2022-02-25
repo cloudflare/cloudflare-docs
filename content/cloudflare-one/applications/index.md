@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: navigation
+title: Applications
+weight: 6
 ---
 
 # Applications

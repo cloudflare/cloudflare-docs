@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Cache
 ---
 
 # Cache
@@ -10,11 +11,11 @@ The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows f
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
-However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/learning/playground) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
+However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/learning/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
 
 <Aside type="note">
 
-This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the Cache Works](/learning/how-the-cache-works).
+This individualized zone cache object differs from Cloudflare’s Global CDN. For details, refer to [How the Cache Works](/workers/learning/how-the-cache-works/).
 
 </Aside>
 
@@ -45,7 +46,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 <Definitions>
 
 *   `Cache-Control`
-    *   Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](https://developers.cloudflare.com/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](https://developers.cloudflare.com/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
+    *   Controls caching directives. This is consistent with [Cloudflare Cache-Control Directives](/cache/about/cache-control#cache-control-directives). Refer to [Edge TTL](/cache/how-to/configure-cache-status-code#edge-ttl) for a list of HTTP response codes and their TTL when `Cache-Control` directives are not present.
 *   `Cache-Tag`
     *   Allows resource purging by tag(s) later (Enterprise only).
 *   `ETag`
@@ -96,10 +97,10 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 <Definitions>
 
 *   `request` <Type>string</Type> | <TypeLink href="/runtime-apis/request">Request</TypeLink>
-    *   Either a string or a [`Request`](/runtime-apis/request) object to serve as the key. If a string is passed, it is interpreted as the URL for a new Request object.
+    *   Either a string or a [`Request`](/workers/runtime-apis/request/) object to serve as the key. If a string is passed, it is interpreted as the URL for a new Request object.
 
 *   `response` <TypeLink href="/runtime-apis/response">Response</TypeLink>
-    *   A [`Response`](/runtime-apis/response) object to store under the given key.
+    *   A [`Response`](/workers/runtime-apis/response/) object to store under the given key.
 
 </Definitions>
 
@@ -141,7 +142,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 *   `request` <Type>string</Type> | <TypeLink href="/runtime-apis/request">Request</TypeLink>
 
-    *   The string or [`Request`](/runtime-apis/request) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
+    *   The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 *   `options`
     *   Can contain one possible property: `ignoreMethod` (Boolean). When `true`, the request is considered to be a `GET` request regardless of its actual value.
@@ -195,7 +196,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 *   `request` <Type>string</Type> | <TypeLink href="/runtime-apis/request">Request</TypeLink>
 
-    *   The string or [`Request`](/runtime-apis/request) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
+    *   The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 <!-- What type is this? -->
 
@@ -208,7 +209,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 ## Related resources
 
-*   [How the Cache works](/learning/how-the-cache-works)
-*   [Configure your CDN](/tutorials/configure-your-cdn)
-*   [Example: using the Cache API](/examples/cache-api)
-*   [Example: caching POST requests](/examples/cache-post-request)
+*   [How the Cache works](/workers/learning/how-the-cache-works/)
+*   [Configure your CDN](/workers/tutorials/configure-your-cdn/)
+*   [Example: using the Cache API](/workers/examples/cache-api/)
+*   [Example: caching POST requests](/workers/examples/cache-post-request/)

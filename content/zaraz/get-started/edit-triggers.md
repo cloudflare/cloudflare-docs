@@ -1,7 +1,9 @@
 ---
-order: 7
 pcx-content-type: how-to
 title: Edit triggers
+weight: 8
+meta:
+  title: Edit a trigger
 ---
 
 # Edit a trigger

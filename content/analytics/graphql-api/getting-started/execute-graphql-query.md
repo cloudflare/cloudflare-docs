@@ -1,11 +1,12 @@
 ---
-order: 60
 pcx-content-type: how-to
+title: Use curl to query the Analytics API
+weight: 61
 ---
 
 # Use curl to query the Analytics API
 
-You can submit a [query built with the GraphiQL client](/graphql-api/getting-started/compose-graphql-query) as the payload in the `data` field of a POST request to the Analytics API.
+You can submit a [query built with the GraphiQL client](/analytics/graphql-api/getting-started/compose-graphql-query/) as the payload in the `data` field of a POST request to the Analytics API.
 
 The advantage of executing a request with [curl](https://curl.se/) is that you can redirect the response to a file and execute other post processing methods.
 

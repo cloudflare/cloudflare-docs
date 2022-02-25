@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: IPFS Gateway
+weight: 3
 ---
 
 # IPFS Gateway
@@ -10,7 +11,7 @@ the InterPlanetary File System (IPFS) quickly and easily, without downloading
 any special software or giving up any storage space on your computer.
 
 Cloudflare's gateway is hosted at https://cloudflare-ipfs.com/. You can find the
-basics on IPFS and [how to serve your website](/ipfs-gateway/connecting-website) through our gateway there. These
+basics on IPFS and [how to serve your website](/distributed-web/ipfs-gateway/connecting-website/) through our gateway there. These
 docs are going to get further into the weeds.
 
 <Aside type="warning">

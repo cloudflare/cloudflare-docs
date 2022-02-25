@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: reference
+title: Browser compatibility
+weight: 6
 ---
 
 # Browser compatibility

@@ -1,7 +1,9 @@
 ---
 title: Enable Datadog
-order: 58
 pcx-content-type: how-to
+weight: 59
+meta:
+  title: Enable Logpush to Datadog
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
@@ -71,8 +73,8 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
 ```
 
-*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
-*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).
 
 Example request using cURL:
 

@@ -1,7 +1,9 @@
 ---
 title: Business
-order: 2
 pcx-content-type: get-started
+weight: 3
+meta:
+  title: Get started with Super Bot Fight Mode (Business)
 ---
 
 import EnableSteps from "../\_partials/\_get-started-pro-biz-steps.md"
@@ -28,7 +30,7 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 
 ## Analytics
 
-For more on analytics, see [Bot Analytics](/bot-analytics/biz-and-ent/).
+For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).
 
 ## Ruleset Engine
 

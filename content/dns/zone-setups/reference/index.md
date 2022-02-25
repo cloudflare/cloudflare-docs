@@ -1,7 +1,9 @@
 ---
 title: Reference
-order: 5
 pcx-content-type: reference
+weight: 6
+meta:
+  title: Reference — Zone setups
 ---
 
 # Reference — Zone setups

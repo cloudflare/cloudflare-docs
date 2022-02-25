@@ -1,8 +1,10 @@
 ---
 type: overview
 hideChildren: true
-order: 2
 pcx-content-type: navigation
+title: Tutorials
+weight: 3
+layout: list
 ---
 
 import DocsTutorial from "../components/content-table"

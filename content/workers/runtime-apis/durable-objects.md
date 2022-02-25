@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Durable Objects
 ---
 
 # Durable Objects
@@ -12,7 +13,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 Durable Objects consist of two components: a class that defines a template for creating Durable Objects and a Workers script that instantiates and uses those Durable Objects. The class and the Workers script are linked together with a binding.
 
-Learn more about [using Durable Objects](/learning/using-durable-objects).
+Learn more about [using Durable Objects](/workers/learning/using-durable-objects/).
 
 ***
 
@@ -61,9 +62,9 @@ export class DurableObject {
 
 ### Durable Object lifespan
 
-A Durable Object remains active until all asynchronous I/O, including Promises, within the Durable Object has resolved. This is true for all HTTP and/or WebSocket connections, except for failure scenarios, which may include unhandled runtime exceptions or exceeding the [CPU limit](/platform/limits#durable-objects).
+A Durable Object remains active until all asynchronous I/O, including Promises, within the Durable Object has resolved. This is true for all HTTP and/or WebSocket connections, except for failure scenarios, which may include unhandled runtime exceptions or exceeding the [CPU limit](/workers/platform/limits/#durable-objects).
 
-From a Workers perspective, this is similar to enqueuing tasks with [`FetchEvent.waitUntil`](/runtime-apis/fetch-event). For example, in order to send a POST request without delaying a `Response`, a Worker script may include the following code:
+From a Workers perspective, this is similar to enqueuing tasks with [`FetchEvent.waitUntil`](/workers/runtime-apis/fetch-event/). For example, in order to send a POST request without delaying a `Response`, a Worker script may include the following code:
 
 ```js
 ---
@@ -204,7 +205,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 *   <Code>list()</Code> <Type>Promise\<Map\<string, any>></Type>
 
-    *   Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/platform/limits). If that is a concern, pass options to `list` as documented below.
+    *   Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
 *   <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise\<Map\<string, any>></Type>
 
@@ -276,7 +277,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 The system calls the `fetch()` method of a Durable Object namespace when an HTTP request is sent to the Object. These requests are not sent from the public Internet, but from other [Workers using a Durable Object namespace binding](#accessing-a-durable-object-from-a-worker).
 
-The method takes a [`Request`](/runtime-apis/request) as the parameter and returns a [`Response`](/runtime-apis/response) (or a `Promise` for a `Response`).
+The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter and returns a [`Response`](/workers/runtime-apis/response/) (or a `Promise` for a `Response`).
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
@@ -414,7 +415,7 @@ let response = await stub.fetch(request)
 let response = await stub.fetch(url, options)
 ```
 
-The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/runtime-apis/fetch). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the stub points.
+The `fetch()` method of a stub has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Durable Object to which the stub points.
 
 Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be propagated to the caller's `fetch()` promise.
 
@@ -424,4 +425,4 @@ The Cloudflare REST API supports retrieving a [list of Durable Objects](https://
 
 ## Related resources
 
-*   [Learn how to use Durable Objects](/learning/using-durable-objects)
+*   [Learn how to use Durable Objects](/workers/learning/using-durable-objects/)

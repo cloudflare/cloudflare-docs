@@ -1,7 +1,9 @@
 ---
 title: "3: Enabling services"
-order: 3
 pcx-content-type: get-started
+weight: 4
+meta:
+  title: "Step 3: Enabling services"
 ---
 
 # Step 3: Enabling services

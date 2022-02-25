@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: JumpCloud
+weight: 2
 ---
 
 # JumpCloud
@@ -13,7 +14,7 @@ pcx-content-type: how-to
 
 3.  Select the *Windows* tab, then click (+).
 
-    ![JumpCloud Software Management for Windows](../../../../../../static/documentation/connections/jumpcloud.png)
+    ![JumpCloud Software Management for Windows](/cloudflare-one/static/documentation/connections/jumpcloud.png)
 
 4.  Enter a unique display name in the *Software Name* field.
 
@@ -55,7 +56,7 @@ pcx-content-type: how-to
 
 3.  Select the *Apple* tab, then click (+).
 
-    ![JumpCloud Software Management for Mac](../../../../../../static/documentation/connections/jumpcloud.png)
+    ![JumpCloud Software Management for Mac](/cloudflare-one/static/documentation/connections/jumpcloud.png)
 
 4.  On the *Details* tab, enter a unique display name in **Software Description**.
 

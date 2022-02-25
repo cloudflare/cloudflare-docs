@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Push static assets to a client's browser without waiting for HTML to render.
 tags:
   - Middleware
   - Headers
 pcx-content-type: configuration
+title: HTTP2 server push
+weight: 1001
+layout: example
 ---
 
 # HTTP2 server push

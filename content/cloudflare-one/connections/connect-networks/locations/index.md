@@ -1,13 +1,14 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Locations
+weight: 3
 ---
 
 # Locations
 
 <Aside type="Warning" header="Warning">
 
-Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/connections/connect-devices/warp) to connect your devices to Cloudflare Zero Trust.
+Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to connect your devices to Cloudflare Zero Trust.
 
 </Aside>
 
@@ -22,13 +23,13 @@ Locations are usually physical entities like offices, homes, retail stores, movi
 
 If you want to send your DNS queries over an encrypted connection, you can use the hostname that we provide in the dashboard to send queries using DNS over HTTPS.
 
-*   [Add a location](/connections/connect-networks/locations/configuring-a-location)
+*   [Add a location](/cloudflare-one/connections/connect-networks/locations/configuring-a-location/)
 
 ## How Gateway matches queries to locations
 
 Gateway uses different ways to match a DNS query to locations depending on the type of request and network. This is how Gateway determines the location of a DNS query:
 
-![Determine location](../../../static/documentation/policies/gateway-determine-location-dns.png)
+![Determine location](/cloudflare-one/static/documentation/policies/gateway-determine-location-dns.png)
 
 1.  **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname.
 
@@ -52,13 +53,13 @@ Gateway uses the public source IPv4 address of your network to identify your loc
 
 Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Zero Trust dashboard.
 
-![Editable IP address](../../../static/documentation/policies/editable-ip-address.png)
+![Editable IP address](/cloudflare-one/static/documentation/policies/editable-ip-address.png)
 
 <Aside type='note' header='Your IPv4 address is taken'>
 
 When trying to configure a location over IPv4, you may run into this error:
 
-![Source IP taken](../../../static/documentation/connections/source-ip-taken.png)
+![Source IP taken](/cloudflare-one/static/documentation/connections/source-ip-taken.png)
 
 This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
@@ -72,7 +73,7 @@ When you create a location, your location will receive a unique IPv6 address. Cl
 
 On your router/device/forwarder/daemon forward DNS queries to the corresponding IPv6 address for the location.
 
-See how you can start sending DNS queries by visiting the [setup instructions](/connections/connect-networks/locations/configuring-a-location/).
+See how you can start sending DNS queries by visiting the [setup instructions](/cloudflare-one/connections/connect-networks/locations/configuring-a-location/).
 
 ### DNS over TLS
 
@@ -80,7 +81,7 @@ Each location has a unique hostname for DNS over TLS.
 
 Cloudflare Gateway will identify your location based on the DNS over TLS hostname.
 
-![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
+![Get unique subdomain](/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
 
 ### DNS over HTTPS
 
@@ -88,7 +89,7 @@ Each location has a unique hostname for DNS over HTTPS.
 
 Cloudflare Gateway will identify your location based on the DNS over HTTPS hostname.
 
-![DNS over HTTPS hostname](../../../static/documentation/policies/location-with-dns-over-https-hostname.png)
+![DNS over HTTPS hostname](/cloudflare-one/static/documentation/policies/location-with-dns-over-https-hostname.png)
 
 #### DoH subdomain
 

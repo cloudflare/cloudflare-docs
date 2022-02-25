@@ -1,12 +1,14 @@
 ---
 pcx-content-type: how-to
 type: overview
-order: 3
+title: Deploy rulesets
+weight: 4
+layout: list
 ---
 
 # Deploy rulesets
 
-Use the [Rulesets API](/rulesets-api) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a phase entry point ruleset, specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
 A rule that executes a ruleset consists of:
 
@@ -81,8 +83,8 @@ header: Response
 }
 ```
 
-See [Work with Managed Rulesets](/managed-rulesets) and [Work with custom rulesets](/custom-rulesets) for more information.
+See [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) and [Work with custom rulesets](/ruleset-engine/custom-rulesets/) for more information.
 
-For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/rulesets-api/update).
+For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/ruleset-engine/rulesets-api/update/).
 
-For examples of deploying rulesets, see [Workflow examples](/common-use-cases).
+For examples of deploying rulesets, see [Workflow examples](/ruleset-engine/common-use-cases/).

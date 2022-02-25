@@ -1,14 +1,16 @@
 ---
 title: Containerized applications
-order: 8
 pcx-content-type: how-to
+weight: 9
+meta:
+  title: Deploy containerized applications
 ---
 
 # Deploy containerized applications
 
 Cloudflare’s Load Balancer distributes global traffic intelligently across Google Kubernetes Engine (GKE) and Amazon Web Services EC2 (AWS). Cloudflare’s native Kubernetes support provides a multi-cloud deployment that is transparent to end users.
 
-![Application deployed across Google Kubernetes Engine and AWS](../static/images/best-practices-2.png)
+![Application deployed across Google Kubernetes Engine and AWS](/load-balancing/static/images/best-practices-2.png)
 
 ## Prerequisites
 
@@ -27,7 +29,7 @@ You will be using [Google Cloud Shell](https://cloud.google.com/shell/) interfac
 
 Go to the [Kubernetes Engine](https://console.cloud.google.com/kubernetes?_ga=2.151836153.-1932148812.1510627946). Click the **Activate Google Cloud Shell** button at the top of the console window. A Cloud Shell session with a command prompt will open in a new frame at the bottom of the console.
 
-![Use the Cloud Shell in Google Kubernetes Engine](../static/images/best-practices-3.png)
+![Use the Cloud Shell in Google Kubernetes Engine](/load-balancing/static/images/best-practices-3.png)
 
 Set default configuration values by running the following commands:
 

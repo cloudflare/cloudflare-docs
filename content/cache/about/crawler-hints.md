@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Crawler Hints
 ---
 
 # Crawler Hints
@@ -10,4 +11,4 @@ Search engines and similar services operate massive networks of bots that crawl 
 
 With Crawler Hints, Cloudflare can proactively tell a crawler about the best time to index or when content changes. Additionally, Crawler Hints supports [IndexNow](https://www.indexnow.org/), which allows websites to notify search engines whenever content on their website content is created, updated, or deleted.
 
-To enable Crawler Hints, refer to [Enable Crawler Hints](/how-to/enable-crawler-hints).
+To enable Crawler Hints, refer to [Enable Crawler Hints](/cache/how-to/enable-crawler-hints/).

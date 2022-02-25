@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Challenge Solve Rate (CSR)
+weight: 2
 ---
 
 # Challenge Solve Rate (CSR)

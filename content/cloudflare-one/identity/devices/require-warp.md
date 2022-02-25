@@ -1,7 +1,9 @@
 ---
-order: 2
 title: WARP
 pcx-content-type: how-to
+weight: 3
+meta:
+  title: Require WARP
 ---
 
 # Require WARP
@@ -10,7 +12,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans |
 
@@ -28,13 +30,13 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 The process involves two steps:
 
 1.  Setting up **Require WARP** as a device posture check.
-2.  Adding the check to new or existing [Zero Trust policies](/policies/zero-trust) to enforce the check for one or more of your applications.
+2.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
 
 ## Set up a device posture check
 
 1.  On your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **My Team > Devices > Device Posture**.
 
-    ![Device Posture](../../static/documentation/identity/devices/device-posture.png)
+    ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 
 2.  Select **WARP**.
 

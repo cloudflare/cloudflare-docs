@@ -1,7 +1,9 @@
 ---
 title: Advanced TCP Protection
-order: 4
 pcx-content-type: concept
+weight: 5
+meta:
+  title: Cloudflare Advanced TCP Protection Managed Ruleset
 ---
 
 # Cloudflare Advanced TCP Protection Managed Ruleset
@@ -40,7 +42,7 @@ When you enable Advanced TCP Protection in Mitigation mode without first using M
 
 ### Enabling and disabling the ruleset
 
-To enable or disable the Cloudflare Advanced TCP Protection Managed Ruleset, [use the Cloudflare dashboard](/managed-rulesets/tcp-protection/configure-dashboard) or the [Advanced TCP Protection API](/managed-rulesets/tcp-protection/configure-api).
+To enable or disable the Cloudflare Advanced TCP Protection Managed Ruleset, [use the Cloudflare dashboard](/ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/) or the [Advanced TCP Protection API](/ddos-protection/managed-rulesets/tcp-protection/configure-api/).
 
 ### Adjusting the sensitivity threshold
 

@@ -1,6 +1,7 @@
 ---
-order: 123
 pcx-content-type: reference
+title: Firewall fields
+weight: 124
 ---
 
 # Firewall fields

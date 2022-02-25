@@ -1,6 +1,8 @@
 ---
 title: Enable DNSSEC
 pcx-content-type: tutorial
+meta:
+  title: Domain Name System Security Extensions
 ---
 
 # Domain Name System Security Extensions
@@ -11,14 +13,14 @@ DNSSEC creates a secure layer to the domain name system by adding cryptographic 
 
 ## Enabling DNSSEC
 
-Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](https://developers.cloudflare.com/dns/zone-setups/full-setup).
+Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup).
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account and domain you want to configure.
 2.  Navigate to **DNS**.
 3.  Scroll down to **DNSSEC** and click **Enable DNSSEC**.
 4.  You will be presented with DS record details specific to your domain. You do not need to copy these or manually enter them when you are using Cloudflare Registrar. Instead, select **Confirm**.
 
-![Enable button image](../static/enable-button.png)
+![Enable button image](/registrar/static/enable-button.png)
 
 Cloudflare will publish those DS details in the form of CDS and CDNSKEY records for a domain delegated to Cloudflare. The Cloudflare Registrar scans those records at regular intervals. When Cloudflare notices you have enabled DNSSEC, Cloudflare gathers those details and sends them to your domain’s registry.
 

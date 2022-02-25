@@ -1,12 +1,14 @@
 ---
-order: 2
 type: overview
 pcx-content-type: reference
+title: Bot Tags
+weight: 3
+layout: list
 ---
 
 # Bot Tags
 
-Bot Tags provide more detail about *why* Cloudflare assigned a [bot score](/concepts/bot-score) to a request.
+Bot Tags provide more detail about *why* Cloudflare assigned a [bot score](/bots/concepts/bot-score/) to a request.
 
 Use these tags to learn more about your bot traffic and better inform security settings.
 
@@ -36,7 +38,7 @@ The following values are **examples** of what may be present in the `BotTags` lo
 
 ## Enable bot tags
 
-To enable bot tags, include the `BotTags` log field when using our [Logpush service](https://developers.cloudflare.com/logs/about).
+To enable bot tags, include the `BotTags` log field when using our [Logpush service](/logs/about).
 
 ## Limitations
 

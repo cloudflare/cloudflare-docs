@@ -1,12 +1,14 @@
 ---
 title: Configure the Managed Ruleset via API
 pcx-content-type: concept
-order: 2
+weight: 3
+meta:
+  title: Configure HTTP DDoS Attack Protection via API
 ---
 
 # Configure HTTP DDoS Attack Protection via API
 
-Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api).
+Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides using the [Rulesets API](/ruleset-engine/rulesets-api).
 
 Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -14,7 +16,7 @@ Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default
 
 You can define overrides at the ruleset, tag, and rule level for all Managed Rulesets.
 
-When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/managed-rulesets/http/override-parameters).
+When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
 \<Aside type='warning' header='Important'>
 
@@ -112,4 +114,4 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](https://developers.cloudflare.com/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).

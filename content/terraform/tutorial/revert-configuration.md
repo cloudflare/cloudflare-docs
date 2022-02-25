@@ -1,7 +1,9 @@
 ---
 title: 7 – Revert configuration
-order: 7
 pcx-content-type: tutorial
+weight: 8
+meta:
+  title: Revert configuration
 ---
 
 # Revert configuration
@@ -196,7 +198,7 @@ index 9f25a0c..b92cb6f 100644
 
 ## 3. Redeploy the previous configuration
 
-Assume that shortly after you deployed the Page Rules from [step 6](/tutorial/add-page-rules), you are told the URL is no longer needed, and the security setting and redirect should be dropped.
+Assume that shortly after you deployed the Page Rules from [step 6](/terraform/tutorial/add-page-rules/), you are told the URL is no longer needed, and the security setting and redirect should be dropped.
 
 While you can always edit the config file directly and delete those entries, you can use `git` to do that for you. First, tell git to revert the last commit without rewriting history.
 

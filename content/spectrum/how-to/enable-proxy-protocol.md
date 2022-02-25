@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: configuration
+title: Enable Proxy protocol
+weight: 0
 ---
 
 # Enable Proxy protocol
@@ -117,4 +118,4 @@ To enable it, click **Configure** on a Spectrum application and toggle the setti
 
 Simple Proxy Protocol dictates that your origin must also prepend packets meant for the client with the same header, including original client source information. This is done to validate that packets coming in are in fact intended for the client.
 
-For more information about Simple Proxy Protocol headers, refer to [Simple Proxy Protocol headers](/reference/simple-proxy-protocol-header).
+For more information about Simple Proxy Protocol headers, refer to [Simple Proxy Protocol headers](/spectrum/reference/simple-proxy-protocol-header/).

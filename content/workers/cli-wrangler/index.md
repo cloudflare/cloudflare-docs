@@ -1,7 +1,9 @@
 ---
 title: CLI (Wrangler)
-order: 7
 pcx-content-type: navigation
+weight: 8
+meta:
+  title: Command-line (Wrangler)
 ---
 
 # Command-line (Wrangler)

@@ -1,7 +1,9 @@
 ---
 title: About
-order: 2
 pcx-content-type: concept
+weight: 3
+meta:
+  title: About Cloudflare Page Shield
 ---
 
 # About Cloudflare Page Shield
@@ -14,11 +16,11 @@ But, more code brings greater security risks. Attackers can add or change existi
 
 Page Shield simplifies external script management by tracking existing dependencies and providing alerts when new ones are added or when malicious code is detected.
 
-When turned on, Page Shield uses a [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) deployed with a [report-only directive](/reference/csp-header) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application.
+When turned on, Page Shield uses a [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) (CSP) deployed with a [report-only directive](/page-shield/reference/csp-header/) to collect information from the browser. This allows Cloudflare to provide you with a list of all scripts running on your application.
 
 You can check the list of detected scripts in the Script Monitor dashboard. Since the scripts list is based on sampling, there may be a small delay between script deployment and appearance.
 
-If you are a customer with an add-on to your Enterprise plan, Cloudflare will apply additional mechanisms to detect and report any potentially malicious scripts in your domain. For more information, refer to [Review changed scripts](/use-dashboard/review-changed-scripts) and [Detecting malicious scripts](/about/malicious-script-detection).
+If you are a customer with an add-on to your Enterprise plan, Cloudflare will apply additional mechanisms to detect and report any potentially malicious scripts in your domain. For more information, refer to [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/) and [Detecting malicious scripts](/page-shield/about/malicious-script-detection/).
 
 ## Learn more
 

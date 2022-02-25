@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 3
+title: Manage Transform Rules
+weight: 4
 ---
 
 # Manage Transform Rules
@@ -16,15 +17,15 @@ The **Transform Rules** dashboard interface lets you:
 *   Delete rules.
 *   Reorder rules.
 
-![Available operations in Transform Rules tab](../images/transform/transform-rules-tab.png)
+![Available operations in Transform Rules tab](/rules/static/transform/transform-rules-tab.png)
 
 ## Create rules
 
 In the **Transform Rules** tab you can:
 
-*   [Create a URL Rewrite Rule](/transform/url-rewrite/create-dashboard)
-*   [Create an HTTP Request Header Modification Rule](/transform/request-header-modification/create-dashboard)
-*   [Create an HTTP Response Header Modification Rule](/transform/response-header-modification/create-dashboard)
+*   [Create a URL Rewrite Rule](/rules/transform/url-rewrite/create-dashboard/)
+*   [Create an HTTP Request Header Modification Rule](/rules/transform/request-header-modification/create-dashboard/)
+*   [Create an HTTP Response Header Modification Rule](/rules/transform/response-header-modification/create-dashboard/)
 
 Refer to each linked section for details on creating each rule type.
 
@@ -32,7 +33,7 @@ Refer to each linked section for details on creating each rule type.
 
 You can manage your existing Transform Rules at any time using the buttons located on the right of the rule you want to change, or by using the handle located on the left of the rule.
 
-![Available rule operations in the Rules List](../images/transform/rule-operations.png)
+![Available rule operations in the Rules List](/rules/static/transform/rule-operations.png)
 
 ### Enable or disable a rule
 

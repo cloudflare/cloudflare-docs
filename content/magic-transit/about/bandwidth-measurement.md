@@ -1,6 +1,7 @@
 ---
-order: 
-pcx-content-type: concept 
+pcx-content-type: concept
+title: Bandwidth measurement
+weight: 0
 ---
 
 # Bandwidth measurement

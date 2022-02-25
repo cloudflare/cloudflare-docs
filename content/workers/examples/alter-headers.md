@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Change the headers sent in a request or returned in a response.
 tags:
   - Headers
   - Middleware
 pcx-content-type: configuration
+title: Alter headers
+weight: 1001
+layout: example
 ---
 
 # Alter headers

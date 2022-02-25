@@ -3,6 +3,7 @@ updated: 2020-11-28
 category: 🛡️ Web Gateway
 difficulty: Beginner
 pcx-content-type: tutorial
+title: Review Gateway blocks
 ---
 
 # Review Gateway blocks
@@ -21,8 +22,8 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 
 ## Before you start
 
-1.  [Add Gateway to your account](/setup)
-2.  Deploy Gateway rules to a network or group of [devices](/policies/filtering/dns-policies)
+1.  [Add Gateway to your account](/cloudflare-one/setup/)
+2.  Deploy Gateway rules to a network or group of [devices](/cloudflare-one/policies/filtering/dns-policies/)
 
 ***
 
@@ -30,27 +31,27 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 
 In this example, a Cloudflare Gateway DNS filtering rule has been applied to all locations to block social media.
 
-![Policies](../static/secure-web-gateway/review-gateway-block/block-social.png)
+![Policies](/cloudflare-one/static/secure-web-gateway/review-gateway-block/block-social.png)
 
 Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in the Zero Trust dashboard.
 
 Navigate to the `Logs` section of the sidebar and choose `Gateway`.
 
-![Logs](../static/secure-web-gateway/review-gateway-block/logs-page.png)
+![Logs](/cloudflare-one/static/secure-web-gateway/review-gateway-block/logs-page.png)
 
 Click the **Filter** action to filter by date range, user, action, and policy. In this example, choose `Blocked` as the action taken.
 
-![Blocked](../static/secure-web-gateway/review-gateway-block/blocked.png)
+![Blocked](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked.png)
 
-You can expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/connections/connect-devices).
+You can expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
 
-![Blocked Expand](../static/secure-web-gateway/review-gateway-block/blocked-expand.png)
+![Blocked Expand](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked-expand.png)
 
 ## Review block reason
 
 Review details about the domain blocked by Cloudflare by clicking **View domain details in Radar**. Cloudflare Radar provides information like site ranking, certificate history, and WHOIS information. If you believe the site was not categorized appropriately, click `Submit Categorization Feedback` beneath the `Content Categories` section.
 
-![Facebook Radar](../static/secure-web-gateway/review-gateway-block/facebook-radar.png)
+![Facebook Radar](/cloudflare-one/static/secure-web-gateway/review-gateway-block/facebook-radar.png)
 
 ## Override a rule
 
@@ -60,12 +61,12 @@ Return to the `Policies` page in the `Gateway` section. Add a new policy by clic
 
 Choose `DNS Domain` and input the domain to be allowed as the value.  Select `Allow` as the action and create the policy.
 
-![Facebook Allow](../static/secure-web-gateway/review-gateway-block/allow-rule.png)
+![Facebook Allow](/cloudflare-one/static/secure-web-gateway/review-gateway-block/allow-rule.png)
 
 Cloudflare Gateway enforces policies in an order from top-to-bottom. Drag the new policy to the top of the list.
 
-![Initial Order](../static/secure-web-gateway/review-gateway-block/before-order.png)
+![Initial Order](/cloudflare-one/static/secure-web-gateway/review-gateway-block/before-order.png)
 
 Once added to the top of the list, DNS queries to this host will be allowed based on the first matching rule before DNS queries to other social media sites are blocked with the subsequent rules.
 
-![Saved Order](../static/secure-web-gateway/review-gateway-block/after-order.png)
+![Saved Order](/cloudflare-one/static/secure-web-gateway/review-gateway-block/after-order.png)

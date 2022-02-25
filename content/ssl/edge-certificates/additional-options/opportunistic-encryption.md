@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Opportunistic Encryption
 ---
 
 import OpportunisticEncryptionDefinition from "../../\_partials/\_opportunistic-encryption-definition.md"

@@ -1,8 +1,11 @@
 ---
 title: Overview
-order: 0
 type: overview
 pcx-content-type: overview
+weight: 1
+layout: list
+meta:
+  title: Cloudflare Workers documentation
 ---
 
 <ContentColumn>
@@ -32,7 +35,7 @@ or install with yarn:
 $ yarn global add @cloudflare/wrangler
 ```
 
-Read more about [installing `wrangler`](/cli-wrangler/install-update).
+Read more about [installing `wrangler`](/workers/cli-wrangler/install-update/).
 
 ***
 
@@ -59,10 +62,10 @@ async function handleRequest(request) {
 
 ## Popular pages
 
-*   [Learning: How Workers works](/learning/how-workers-works) – learn how Cloudflare’s global network powers Workers
-*   [Pricing](/platform/pricing) – learn about the Free and Bundled plans
-*   [Reference: HTMLRewriter](/runtime-apis/html-rewriter) – parse and transform HTML from inside a Worker
-*   [Limits](/platform/limits) – learn about plan limits (Free plans get 100,000 req/day)
+*   [Learning: How Workers works](/workers/learning/how-workers-works/) – learn how Cloudflare’s global network powers Workers
+*   [Pricing](/workers/platform/pricing/) – learn about the Free and Bundled plans
+*   [Reference: HTMLRewriter](/workers/runtime-apis/html-rewriter/) – parse and transform HTML from inside a Worker
+*   [Limits](/workers/platform/limits/) – learn about plan limits (Free plans get 100,000 req/day)
 
 ***
 
@@ -76,6 +79,6 @@ async function handleRequest(request) {
 
 ***
 
-These docs are built with the [Cloudflare Docs Engine](https://developers.cloudflare.com/docs-engine/).
+These docs are built with the [Cloudflare Docs Engine](/docs-engine/).
 
 </ContentColumn>

@@ -1,14 +1,16 @@
 ---
-order: 5
 type: overview
 pcx-content-type: reference
+title: API token templates
+weight: 6
+layout: list
 ---
 
 # API token templates
 
 <ContentColumn>
 
-Below is a table of the currently available API token templates and the default [token permissions](/tokens/create/permissions) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
+Below is a table of the currently available API token templates and the default [token permissions](/api/tokens/create/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
 </ContentColumn>
 

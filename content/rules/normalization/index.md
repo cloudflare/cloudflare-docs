@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 3
+title: URL normalization
+weight: 4
 ---
 
 # URL normalization
@@ -17,4 +18,4 @@ URL normalization is available in all Cloudflare plans.
 
 ## Get started
 
-Learn more about [URL normalization](/normalization/how-it-works) and how to [configure URL normalization](/normalization/manage) in the Cloudflare dashboard.
+Learn more about [URL normalization](/rules/normalization/how-it-works/) and how to [configure URL normalization](/rules/normalization/manage/) in the Cloudflare dashboard.

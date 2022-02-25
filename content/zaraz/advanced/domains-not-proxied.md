@@ -1,7 +1,9 @@
 ---
-order:
 pcx-content-type: reference
 title: Domains not proxied by Cloudflare
+weight: 0
+meta:
+  title: Use Zaraz on domains not proxied by Cloudflare
 ---
 
 # Use Zaraz on domains not proxied by Cloudflare

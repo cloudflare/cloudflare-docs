@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: reference
+title: Data layer compatibility mode
+weight: 0
 ---
 
 # Data layer compatibility mode

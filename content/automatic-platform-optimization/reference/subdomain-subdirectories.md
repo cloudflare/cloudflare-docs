@@ -1,7 +1,7 @@
 ---
 title: Subdomains and subdirectories
-order: 13
 pcx-content-type: how-to
+weight: 14
 ---
 
 # Subdomains and subdirectories

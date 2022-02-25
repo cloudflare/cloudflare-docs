@@ -1,7 +1,9 @@
 ---
 title: IRR entries
-order: 6
 pcx-content-type: reference
+weight: 7
+meta:
+  title: Best practices for IRR entry updates
 ---
 
 # Best practices for IRR entry updates

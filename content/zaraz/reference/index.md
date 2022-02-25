@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: navigation
+title: Reference
+weight: 5
 ---
 
 # Reference

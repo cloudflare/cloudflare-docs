@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 1
 pcx-content-type: navigation
+weight: 2
+meta:
+  title: General documentation for end users
 ---
 
 # General documentation for end users

@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: navigation
+title: Analytics
+weight: 3
 ---
 
 # Analytics

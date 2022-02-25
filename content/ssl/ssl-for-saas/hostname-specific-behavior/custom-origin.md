@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: concept
+title: Custom origin server
+weight: 4
 ---
 
 import CustomOriginDefinition from "../../\_partials/\_custom-origin-server-definition.md"
@@ -21,13 +22,13 @@ To use a custom origin server, you need to meet the following requirements:
 
 ## Use a custom origin
 
-To use a custom origin, select that option when [creating a new custom hostname](/ssl-for-saas/common-tasks/issuing-certificates) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+To use a custom origin, select that option when [creating a new custom hostname](/ssl/ssl-for-saas/common-tasks/issuing-certificates/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
 
 ## SNI rewrites
 
-When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) will both be the value of the original custom hostname.
+When Cloudflare establishes a connection to your default origin server, the `Host` header and [SNI](/fundamentals/glossary#server-name-indication-sni) will both be the value of the original custom hostname.
 
-However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/origin-configuration/ssl-modes#full-strict) on your origins.
+However, if you configure that custom hostname with a custom origin, the value of the SNI will be that of the custom origin and the `Host` header will be the original custom hostname. Since these values will not match, you will not be able to use the [Full (strict)](/ssl/origin-configuration/ssl-modes/#full-strict) on your origins.
 
 To solve this problem, you can contact your account team to request an entitlement for **SNI rewrites**.
 
@@ -54,7 +55,7 @@ Currently, SNI Rewrite is not supported for **wildcard** custom hostnames. Subdo
 
 ### Set an SNI rewrite
 
-To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/ssl-for-saas/common-tasks/issuing-certificates).
+To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/ssl/ssl-for-saas/common-tasks/issuing-certificates/).
 
 To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
 

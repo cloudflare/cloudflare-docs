@@ -1,13 +1,14 @@
 ---
-order: 11
 pcx-content-type: how-to
+title: Generic OIDC
+weight: 12
 ---
 
 # Generic OIDC
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
-At the moment, Access does not support sending custom parameters to identity providers. If you need to send custom parameters to your identity provider, consider setting it up through [SAML](/identity/idp-integration/generic-saml).
+At the moment, Access does not support sending custom parameters to identity providers. If you need to send custom parameters to your identity provider, consider setting it up through [SAML](/cloudflare-one/identity/idp-integration/generic-saml/).
 
 ## Setting up a generic OIDC
 
@@ -15,7 +16,7 @@ To set up a generic OIDC:
 
 1.  Visit your identity provider and create a client/app.
 
-2.  When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+2.  When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

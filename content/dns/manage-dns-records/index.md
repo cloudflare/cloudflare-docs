@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: DNS records
+weight: 4
 ---
 
 # DNS records

@@ -1,7 +1,9 @@
 ---
 title: License agreement
-order: 20
 pcx-content-type: reference
+weight: 21
+meta:
+  title: License
 ---
 
 # License

@@ -1,6 +1,8 @@
 ---
 title: Renew domains
 pcx-content-type: how-to
+meta:
+  title: Renew domains with Cloudflare Registrar
 ---
 
 # Renew domains with Cloudflare Registrar

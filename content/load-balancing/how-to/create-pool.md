@@ -1,7 +1,9 @@
 ---
 title: Manage pools
-order: 1
 pcx-content-type: how-to
+weight: 2
+meta:
+  title: Manage origin server pools
 ---
 
 import PoolDefinition from "../\_partials/\_pool-definition.md"
@@ -12,7 +14,7 @@ import PoolCreateAPI from "../\_partials/\_pool-create-api.md"
 
 <PoolDefinition/>
 
-For more background information on pools, refer to [Origin pools](/understand-basics/pools).
+For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
 
 ***
 

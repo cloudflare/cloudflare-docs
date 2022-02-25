@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: concept
+title: Kill Switches
+weight: 6
 ---
 
 # Kill Switches

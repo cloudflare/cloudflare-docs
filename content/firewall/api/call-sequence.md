@@ -1,7 +1,7 @@
 ---
 title: Call sequence
 pcx-content-type: reference
-order: 497
+weight: 498
 ---
 
 # Call sequence
@@ -10,7 +10,7 @@ The API call examples in this site illustrate the **recommended sequence** of ca
 
 The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
-![Recommended flow](../images/recommended-flow.png)
+![Recommended flow](/firewall/static/recommended-flow.png)
 
 Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently. Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple Firewall Rules as well as in other future Cloudflare products and features.
 
@@ -18,7 +18,7 @@ For example, a filter that matches all traffic for your API (that is, `http.requ
 
 However, for a `POST` operation, the **simplified sequence** — shown below — allows you to create both a filter and rule in the same call. In this case, the filter and rule only refer to each other.
 
-![Simple flow](../images/simple-flow.png)
+![Simple flow](/firewall/static/simple-flow.png)
 
 In this sequence, a single `POST` request to the `/firewall/rules` endpoint takes the filter object in the JSON to create the filter in the Filters API (also via a `POST` request). If successful, the Firewall Rule is created.
 

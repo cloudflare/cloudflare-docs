@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 4
+title: Test your exposed credentials checks configuration
+weight: 5
 ---
 
 # Test your exposed credentials checks configuration

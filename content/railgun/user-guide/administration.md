@@ -1,6 +1,7 @@
 ---
-order: 9
 pcx-content-type: how-to
+title: Administration
+weight: 10
 ---
 
 # Administration

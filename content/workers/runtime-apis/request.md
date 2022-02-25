@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Request
 ---
 
 # Request
@@ -43,7 +44,7 @@ The global `fetch` method itself invokes the `Request` constructor. The [`Reques
 
 <Aside header="Learn more">
 
-Review the [`FetchEvent` documentation](/runtime-apis/fetch-event) for a deeper understanding of these fundamental Workers concepts.
+Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for a deeper understanding of these fundamental Workers concepts.
 
 </Aside>
 
@@ -205,7 +206,7 @@ All plans have access to:
 
 *   `botManagement` <Type>Object | null</Type>
 
-    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
+    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
 
 *   `colo` <Type>string</Type>
 
@@ -321,7 +322,7 @@ These methods are only available on an instance of a `Request` object or through
 
 The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the request context.
 
-The request context is available inside of the [`FetchEvent` handler](/runtime-apis/fetch-event/):
+The request context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
 
 ```js
 addEventListener("fetch", event => {
@@ -332,7 +333,7 @@ addEventListener("fetch", event => {
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/runtime-apis/fetch-event/#methods) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {
@@ -362,6 +363,6 @@ This code snippet will throw during script startup, and the `"fetch"` event list
 
 ## Related resources
 
-*   [Examples: Modify request property](/examples/modify-request-property)
-*   [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
-*   [Reference: `Response`](/runtime-apis/response)
+*   [Examples: Modify request property](/workers/examples/modify-request-property/)
+*   [Examples: Accessing the `cf` object](/workers/examples/accessing-the-cloudflare-object/)
+*   [Reference: `Response`](/workers/runtime-apis/response/)

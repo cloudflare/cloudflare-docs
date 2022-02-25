@@ -1,10 +1,13 @@
 ---
-order: 1000
 type: example
-summary: Redirect requests to certain URLs based on a mapped object to the request's URL.
+summary: Redirect requests to certain URLs based on a mapped object to the
+  request's URL.
 tags:
   - Middleware
 pcx-content-type: configuration
+title: Bulk redirects
+weight: 1001
+layout: example
 ---
 
 # Bulk redirects

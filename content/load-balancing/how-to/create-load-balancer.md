@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Manage load balancers
+weight: 4
 ---
 
 import LBDefinition from "../\_partials/\_load-balancer-definition.md"
@@ -11,7 +12,7 @@ import LBCreateAPI from "../\_partials/\_load-balancer-create-api.md"
 
 <LBDefinition/>
 
-For more details about load balancers, refer to [Load balancers](/understand-basics/load-balancers).
+For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
 
 ## Create a load balancer
 
@@ -25,7 +26,7 @@ For more details about load balancers, refer to [Load balancers](/understand-bas
 
 ### Sharing your load balancer with other sites
 
-You can share your load balancer with other sites in your account by [creating a canonical name (CNAME) record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records). This is useful for sharing configurations with multiple other domains so you do not have to create new load balancers for each site.
+You can share your load balancer with other sites in your account by [creating a canonical name (CNAME) record](/dns/manage-dns-records/how-to/create-dns-records). This is useful for sharing configurations with multiple other domains so you do not have to create new load balancers for each site.
 
 You can also configure separate load balancers for each domain and reuse monitors and pools. This is especially useful for changing the failover order for different domains, such as when your `example.co.uk` server has a different failover priority from `example.com` or `example.com.au`.
 
@@ -50,7 +51,7 @@ To update specific settings without having to resubmit the entire configuration,
 
 ## Delete a load balancer
 
-If you delete or disable a load balancer, your origin's response to requests will depend on your [existing DNS records](/reference/dns-records#disabling-a-load-balancer).
+If you delete or disable a load balancer, your origin's response to requests will depend on your [existing DNS records](/load-balancing/reference/dns-records/#disabling-a-load-balancer).
 
 ### Via the dashboard
 

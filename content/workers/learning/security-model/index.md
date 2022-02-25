@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: Security model
+weight: 0
 ---
 
 # Security model
@@ -23,7 +24,7 @@ Beginning with a quick overview of the Workers runtime architecture:
 
 <div className="security-page-workers-architecture-diagram">
 
-![Workers architecture diagram](./media/Workers-architecture.svg)
+![Workers architecture diagram](../media/Workers-architecture.svg)
 
 </div>
 <style dangerouslySetInnerHTML={{__html: `
@@ -93,7 +94,7 @@ As a result, the Workers patch gap is now under 24 hours. A patch published by V
 
 ## Spectre: Introduction
 
-![Spectre-vulnerability-@2x](./media/Spectre-vulnerability-@2x.png)
+![Spectre-vulnerability-@2x](../media/Spectre-vulnerability-@2x.png)
 
 The V8 team at Google has stated that [V8 itself cannot defend against Spectre](https://arxiv.org/abs/1902.05178). Workers does not need to depend on V8 for this. The Workers environment presents many alternative approaches to mitigating Spectre.
 
@@ -161,7 +162,7 @@ What can be done to slow down Spectre attacks to the point of meaninglessness?
 
 ## Freezing a Spectre attack
 
-![freeze-Spectre@2x](./media/freeze-Spectre@2x.png)
+![freeze-Spectre@2x](../media/freeze-Spectre@2x.png)
 
 ### Step 0: Do not allow native code
 

@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: Quiche HTTP/3 client
 ---
 
 # Quiche HTTP/3 client

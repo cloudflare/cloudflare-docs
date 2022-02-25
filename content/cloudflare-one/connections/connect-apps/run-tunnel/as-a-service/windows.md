@@ -1,7 +1,9 @@
 ---
-order: 30
 pcx-content-type: how-to
-title: "Windows"
+title: Windows
+weight: 31
+meta:
+  title: Run as a service on Windows
 ---
 
 # Run as a service on Windows
@@ -10,7 +12,7 @@ You can install `cloudflared` as a system service on Windows.
 
 ## Configuring `cloudflared` as a service
 
-By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#configuration-file). The available options are documented on the [configuration file reference](/connections/connect-apps/configuration/configuration-file/ingress), but at a minimum you must specify the following arguments to run as a service:
+By default, Cloudflare Tunnel expects all of the configuration to exist in the `%USERPROFILE%\.cloudflared\config.yml` [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file). The available options are documented on the [configuration file reference](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/), but at a minimum you must specify the following arguments to run as a service:
 
 | Argument | Description |
 |---|---|
@@ -19,7 +21,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Running `cloudflared` as a service
 
-1.  [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
+1.  [Download the latest `cloudflared` version](/cloudflare-one/connections/connect-apps/install-and-setup/installation/).
 
 2.  Create a new directory:
 
@@ -61,9 +63,9 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     cloudflared.exe tunnel create <Tunnel Name>
     ```
 
-    This will generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file) in `.json` format.
+    This will generate a [credentials file](/cloudflare-one/connections/connect-apps/tunnel-useful-terms/#credentials-file) in `.json` format.
 
-10. [Create a configuration file](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file) with the following content:
+10. [Create a configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file) with the following content:
 
     ```text
     tunnel: <Tunnel ID>
@@ -86,7 +88,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
      <Aside type='Note'>
 
-    If you haven't created a config.yml file, follow [these instructions](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file).
+    If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
 
      </Aside>
 

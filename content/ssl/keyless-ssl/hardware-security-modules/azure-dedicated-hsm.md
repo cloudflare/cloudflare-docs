@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: tutorial
+title: Azure Dedicated HSM
+weight: 3
 ---
 
 # Azure Dedicated HSM
@@ -126,7 +127,7 @@ Using "CKM_SHA256_RSA_PKCS" Mechanism
 
 ## 3. Obtain and upload a signed certificate from your Certificate Authority (CA)
 
-Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration#step-2--upload-keyless-ssl-certificates).
+Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/ssl/keyless-ssl/configuration/#step-2--upload-keyless-ssl-certificates).
 
 ***
 

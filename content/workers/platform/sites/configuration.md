@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: configuration
+title: Workers Sites configuration
+weight: 4
 ---
 
 # Workers Sites configuration
@@ -56,7 +57,7 @@ To learn more about the optional `include` and `exclude` fields, refer to [Ignor
 
 <Aside type="note">
 
-If your project uses [environments](/platform/environments), make sure to place `site` above any environment-specific configuration blocks.
+If your project uses [environments](/workers/platform/environments/), make sure to place `site` above any environment-specific configuration blocks.
 
 </Aside>
 
@@ -94,7 +95,7 @@ For very exceptionally large pages, Workers Sites might not work for you. There 
 
 ## Ignoring subsets of static assets
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) - make sure to use the [latest version](/cli-wrangler/install-update#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) - make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
 
 There are cases where users may not want to upload certain static assets to their Workers Sites.
 In this case, Workers Sites can also be configured to ignore certain files or directories using logic
@@ -146,4 +147,4 @@ Learn more about the standard patterns used for include and exclude in the [giti
 
 ## Customizing your build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/cli-wrangler/webpack#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/workers/cli-wrangler/webpack/#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.

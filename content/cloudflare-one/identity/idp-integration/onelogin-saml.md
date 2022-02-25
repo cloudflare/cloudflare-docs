@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: SAML | OneLogin
+weight: 4
 ---
 
 # SAML | OneLogin
@@ -19,7 +20,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 4.  Select the result sponsored by **Cloudflare, Inc**.
 
-    ![OneLogin SAML Find Applications](../../static/documentation/identity/onelogin/onelogin-saml-2.png)
+    ![OneLogin SAML Find Applications](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-2.png)
 
     You can customize the name or logo.
 
@@ -27,17 +28,17 @@ To set up OneLogin (SAML) as your identity provider:
 
 6.  Select the **Configuration** tab.
 
-7.  In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/glossary#team-domain).
+7.  In the **Cloudflare Access Authorization Domain** field, paste your [team domain](/cloudflare-one/glossary/#team-domain).
 
 8.  Select the **Parameters** tab, click **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
-    ![OneLogin SAML Application Parameters](../../static/documentation/identity/onelogin/onelogin-saml-5.png)
+    ![OneLogin SAML Application Parameters](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-5.png)
 
 9.  Select the **Access** tab
 
 10. In Roles, use the mapping to programmatically and automatically assign users that can access the application.
 
-    ![OneLogin SAML Application Access](../../static/documentation/identity/onelogin/onelogin-saml-6.png)
+    ![OneLogin SAML Application Access](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-6.png)
 
 11. Select the **SSO** tab.
 
@@ -47,7 +48,7 @@ To set up OneLogin (SAML) as your identity provider:
 
 14. Copy the **X.509 Certificate** to the Cloudflare **Signing Certificate**.
 
-    ![OneLogin SAML Application SSO](../../static/documentation/identity/onelogin/onelogin-saml-7.png)
+    ![OneLogin SAML Application SSO](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-7.png)
 
 15. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
@@ -69,7 +70,7 @@ OneLogin SAML allows administrators to upload metadata files from the service pr
 
 To add a metadata file to your OneLogin SAML configuration:
 
-1.  Download your unique SAML metadata file at the following URL, replacing `<your-team-name>` with your [team name](/glossary#team-name):
+1.  Download your unique SAML metadata file at the following URL, replacing `<your-team-name>` with your [team name](/cloudflare-one/glossary/#team-name):
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata

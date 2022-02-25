@@ -1,6 +1,7 @@
 ---
-order: 12
 pcx-content-type: reference
+title: Zone Analytics Colos Endpoint to GraphQL Analytics
+weight: 13
 ---
 
 # Zone Analytics Colos Endpoint to GraphQL Analytics
@@ -80,7 +81,7 @@ How do we get the same result using the GraphQL API?
 
 The GraphQL API allows us to be much more specific about the data that we want to retrieve. While the colos endpoint forces us to retrieve all the information about the breakdown of requests and bandwidth per colo, using the GraphQL API allows us to fetch only the information we are interested in.
 
-The data we want is about HTTP requests. Hence, we use the canonical source for HTTP request data, also known as `httpRequestsAdaptiveGroups`. This node in GraphQL API allows you to filter and group by almost any dimension of an HTTP request imaginable. It is [Adaptive](/graphql-api/migration-guides/network-analytics-v2/about#adaptive-bitrate-sampling) so responses will be fast since it is driven by our [ABR technology](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
+The data we want is about HTTP requests. Hence, we use the canonical source for HTTP request data, also known as `httpRequestsAdaptiveGroups`. This node in GraphQL API allows you to filter and group by almost any dimension of an HTTP request imaginable. It is [Adaptive](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#adaptive-bitrate-sampling) so responses will be fast since it is driven by our [ABR technology](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
 
 The following is a GraphQL API query to retrieve the data we need to answer the question: "What is the number of requests for ZHR per hour?"
 

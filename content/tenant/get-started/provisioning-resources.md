@@ -1,7 +1,9 @@
 ---
 title: "1: Provisioning resources"
-order: 1
 pcx-content-type: get-started
+weight: 2
+meta:
+  title: "Step 1: Provisioning resources"
 ---
 
 # Step 1: Provisioning resources

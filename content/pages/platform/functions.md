@@ -1,13 +1,14 @@
 ---
-order: 6
 pcx-content-type: concept
+title: Functions (beta)
+weight: 7
 ---
 
 # Functions (beta)
 
 <Aside type="note" header="Functions is currently in beta">
 
-You can track current issues that the Pages team is fixing in [Known Issues](/platform/known-issues). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
 
 </Aside>
 
@@ -53,7 +54,7 @@ The following routes will be generated based on the file structure, mapping the 
 
 ### Path segments
 
-In the [example above](/platform/functions#functions-routing):
+In the [example above](/pages/platform/functions/#functions-routing):
 
 *   A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
 *   A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
@@ -91,7 +92,7 @@ export async function onRequest(context) {
 }
 ```
 
-When migrating from a [Module Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
+When migrating from a [Module Worker](/workers/runtime-apis/fetch-event#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
 
 In the previous example, an `onRequest` function was exported. This is a generic name because it generically handles all HTTP requests. However, to react to specific HTTP request methods, you may use the method name as a suffix to the exported function. For example, a handler that should only receive `GET` requests should be named `onRequestGet`. The following other handlers are supported:
 
@@ -316,7 +317,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally).
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](/pages/platform/functions#develop-and-preview-locally).
 
 ### KV namespace
 
@@ -337,7 +338,7 @@ export async function onRequest({ env }) {
 
 ### Durable Object namespace
 
-Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](https://developers.cloudflare.com/workers/learning/using-durable-objects#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
+Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
@@ -349,7 +350,7 @@ Just as you can access kv with `-k`or `-kv` you can access durable objects in yo
 
 ### Environment variable
 
-An [environment variable](https://developers.cloudflare.com/workers/platform/environment-variables) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
+An [environment variable](/workers/platform/environment-variables) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
@@ -393,7 +394,7 @@ export const onRequest = [
 
 In some cases, the built-in routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event#syntax-module-worker).
 
 If you have never used module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
@@ -427,7 +428,7 @@ Then after placing your `_worker.js` file in your output directory, deploy your 
 
 ## Migrating from Workers
 
-When migrating a Worker into the Pages platform, the simplest path is to target the [advanced mode](#advanced-mode) of Functions. To do this, ensure your Worker is in the [Module Worker format](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#syntax-module-worker). Then call `env.ASSETS` when you want to serve static assets. Failure to do so will result in broken and/or unwanted behavior.
+When migrating a Worker into the Pages platform, the simplest path is to target the [advanced mode](#advanced-mode) of Functions. To do this, ensure your Worker is in the [Module Worker format](/workers/runtime-apis/fetch-event#syntax-module-worker). Then call `env.ASSETS` when you want to serve static assets. Failure to do so will result in broken and/or unwanted behavior.
 
 ## Develop and preview locally
 
@@ -468,4 +469,4 @@ In the future, you can expect billing to reflect that of the Workers Bundled pla
 
 ## Demo
 
-To get started with your first Pages project with Functions, refer to the [demo blog post on how to build an image sharing application](http://blog.cloudflare.com/building-full-stack-with-pages). In this demo, you will build a JSON API with Functions (storing data on KV and Durable Objects), integrate with [Cloudflare Images](https://developers.cloudflare.com/images/) and [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/), and use React for your front end.
+To get started with your first Pages project with Functions, refer to the [demo blog post on how to build an image sharing application](http://blog.cloudflare.com/building-full-stack-with-pages). In this demo, you will build a JSON API with Functions (storing data on KV and Durable Objects), integrate with [Cloudflare Images](/images/) and [Cloudflare Access](/cloudflare-one/), and use React for your front end.

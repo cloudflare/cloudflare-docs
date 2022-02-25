@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: reference
+title: WARP with Firewall
+weight: 11
 ---
 
 # WARP with Firewall

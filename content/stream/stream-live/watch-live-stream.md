@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: tutorial
+title: Watch live streams
+weight: 8
 ---
 
 # Watch live streams

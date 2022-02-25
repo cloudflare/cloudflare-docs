@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: tutorial
+title: Connect to 1.1.1.1 using DoH clients
+weight: 0
 ---
 
 # Connect to 1.1.1.1 using DoH clients
@@ -11,7 +12,7 @@ There are several DoH clients you can use to connect to 1.1.1.1.
 
 Follow this quick guide to start a DNS over HTTPS proxy to 1.1.1.1.
 
-1.  Download and install the [`cloudflared` daemon](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1.  Download and install the [`cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 
 2.  Verify that the `cloudflared` daemon is installed by entering the following command:
 

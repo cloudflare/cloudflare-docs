@@ -1,6 +1,7 @@
 ---
-order: 41
 pcx-content-type: navigation
+title: Get started
+weight: 42
 ---
 
 # Get started

@@ -1,7 +1,9 @@
 ---
 title: Custom CSRs
-order: 2
 pcx-content-type: reference
+weight: 3
+meta:
+  title: Custom Certificate Signing Requests
 ---
 
 # Custom Certificate Signing Requests

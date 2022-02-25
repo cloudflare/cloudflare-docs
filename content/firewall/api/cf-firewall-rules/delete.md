@@ -1,14 +1,14 @@
 ---
 title: DELETE examples
 pcx-content-type: reference
-order: 435
+weight: 436
 ---
 
 # DELETE examples
 
 <Aside type='note' header='Note'>
 
-The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/api/cf-filters).
+The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/firewall/api/cf-filters/).
 
 </Aside>
 

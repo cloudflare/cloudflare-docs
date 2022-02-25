@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: reference
+title: Validation backoff schedule
+weight: 8
 ---
 
 # Validation backoff schedule

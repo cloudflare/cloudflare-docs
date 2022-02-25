@@ -1,7 +1,9 @@
 ---
 title: Reference
-order: 9
 pcx-content-type: navigation
+weight: 10
+meta:
+  title: Reference — SSL/TLS
 ---
 
 # Reference — SSL/TLS

@@ -1,8 +1,11 @@
 ---
-title: "2021-12-14 – Emergency"
+title: 2021-12-14 – Emergency
 type: table
-order: 923
 pcx-content-type: changelog
+weight: 924
+layout: list
+meta:
+  title: 2021-12-14 – Emergency Release
 ---
 
 # 2021-12-14 – Emergency Release

@@ -1,6 +1,8 @@
 ---
 title: Ruleset logic
 pcx-content-type: concept
+meta:
+  title: Magic Firewall ruleset logic
 ---
 
 # Magic Firewall ruleset logic
@@ -20,7 +22,7 @@ Traffic is matched in order of the configured rules. As soon as traffic is match
 
 For example, permitting all TCP traffic in a rule #4 would mean all TCP traffic is permitted. A rule #5 to block traffic for IP address `x.x.x.x` would not be checked.
 
-For best practices when configuring your security policy, refer to [Best practices](/best-practices).
+For best practices when configuring your security policy, refer to [Best practices](/magic-firewall/best-practices/).
 
 ## Magic Firewall rules and Magic Transit endpoint health checks
 

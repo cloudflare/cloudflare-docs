@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 0
 pcx-content-type: get-started
+weight: 1
+meta:
+  title: Get started with Keyless SSL
 ---
 
 # Get started with Keyless SSL
@@ -58,7 +60,7 @@ Key server label|Any unique identifier for your key server|“test-keyless”, �
 Key server hostname|The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier).|11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com
 Key server port|Set to 2407 unless you have changed this on the key server.|2407
 SSL Certificate|The valid X509v3 SSL certificate (in PEM form) for which you hold the private key.| (PEM bytes)
-Bundle method|This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/edge-certificates/custom-certificates/bundling-methodologies) for more details.|Compatible
+Bundle method|This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details.|Compatible
 
 ***
 
@@ -68,7 +70,7 @@ Finally, you need to install the key server on your infrastructure, populate it 
 
 <Aside type="note">
 
-If you plan to run Keyless SSL in a [high availability setup](../reference/high-availability), you may need to set up additional infrastructure (load balancing and health checks).
+If you plan to run Keyless SSL in a [high availability setup](/ssl/reference/high-availability/), you may need to set up additional infrastructure (load balancing and health checks).
 
 </Aside>
 
@@ -110,7 +112,7 @@ To activate, restart your keyless instance:
 *   systemd: `sudo service gokeyless restart`
 *   upstart/sysvinit: `sudo /etc/init.d/gokeyless restart`
 
-If this command fails, try troubleshooting by [checking the logs](/keyless-ssl/troubleshooting/).
+If this command fails, try troubleshooting by [checking the logs](/ssl/keyless-ssl/troubleshooting/).
 
 ### Allow incoming connections from Cloudflare
 

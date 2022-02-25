@@ -1,7 +1,9 @@
 ---
-order:
 pcx-content-type: how-to
 title: Block Zaraz
+weight: 0
+meta:
+  title: Block Zaraz on specific pages or domains
 ---
 
 # Block Zaraz on specific pages or domains
@@ -19,6 +21,6 @@ Refer to [Understanding and configuring Cloudflare Page Rules](https://support.c
 
 <Aside type='note'>
 
-If you need to block just one or more events from firing in a tool, we recommend you use [Blocking Triggers](/get-started/create-trigger#blocking-triggers).
+If you need to block just one or more events from firing in a tool, we recommend you use [Blocking Triggers](/zaraz/get-started/create-trigger/#blocking-triggers).
 
 </Aside>

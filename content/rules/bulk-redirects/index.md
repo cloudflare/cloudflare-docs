@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 4
+title: Bulk Redirects (beta)
+weight: 5
 ---
 
 # Bulk Redirects (beta)

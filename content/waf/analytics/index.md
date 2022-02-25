@@ -1,8 +1,11 @@
 ---
 title: Analytics
-order: 6
 pcx-content-type: concept
 type: overview
+weight: 7
+layout: list
+meta:
+  title: Firewall Analytics
 ---
 
 # Firewall Analytics

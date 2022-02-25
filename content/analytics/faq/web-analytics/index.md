@@ -1,5 +1,6 @@
 ---
 pcx-content-type: faq
+title: Web Analytics FAQ
 ---
 
 # Web Analytics FAQ

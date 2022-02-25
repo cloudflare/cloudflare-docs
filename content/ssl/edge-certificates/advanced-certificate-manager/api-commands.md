@@ -1,11 +1,12 @@
 ---
-order: 4
 pcx-content-type: reference
+title: API commands
+weight: 5
 ---
 
 # API commands
 
-Use the following API commands to manage advanced certificates. If you are using our API for the first time, review our [API Quickstart](https://developers.cloudflare.com/api).
+Use the following API commands to manage advanced certificates. If you are using our API for the first time, review our [API Quickstart](/api).
 
 <table>
   <thead>

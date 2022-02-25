@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 1
 pcx-content-type: navigation
+weight: 2
+meta:
+  title: Get started with Cloudflare bot solutions
 ---
 
 # Get started with Cloudflare bot solutions

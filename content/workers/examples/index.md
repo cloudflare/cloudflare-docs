@@ -1,8 +1,10 @@
 ---
 type: overview
 hideChildren: true
-order: 2
 pcx-content-type: navigation
+title: Examples
+weight: 3
+layout: list
 ---
 
 import DocsCodeExamplesOverview from "../../components/docs-code-examples-overview"

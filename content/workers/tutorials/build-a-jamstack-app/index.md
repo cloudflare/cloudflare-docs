@@ -1,8 +1,9 @@
 ---
 updated: 2020-03-09
 difficulty: Beginner
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Build a todo list JAMstack application
 ---
 
 import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
@@ -13,9 +14,9 @@ import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-sta
 
 ## Overview
 
-In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/runtime-apis/kv).
+In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
 
-![Preview](./media/finished.png)
+![Preview](../media/finished.png)
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
@@ -38,7 +39,7 @@ $ wrangler generate todos
 $ cd todos
 ```
 
-Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/examples).
+Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/examples/).
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: Workers Services
+weight: 0
 ---
 
 # Workers Services
@@ -29,7 +30,7 @@ You can create and switch between environments in the dashboard:
 2.  Choose your **Worker**.
 3.  Select **production** > **Create environment**.
 
-![production-button](./media/create-environment.png)
+![production-button](../media/create-environment.png)
 
 ## Service environments
 
@@ -56,7 +57,7 @@ Unlike Wrangler environments, Workers Service environments do not create extra W
 3.  Choose your **Worker**.
 4.  Select **Quick edit**.
 
-![Quick edit](./media/quick-edit.png)
+![Quick edit](../media/quick-edit.png)
 
 A common workflow is to create an environment for a test feature, edit the code via the quick editor until you are satisfied with it, and then promote it to production when the code is ready.
 
@@ -76,7 +77,7 @@ Workers Service bindings are in closed beta as of January 2022. Go to the [Worke
 
 </Aside>
 
-![service bindings settings](./media/service-bindings.png)
+![service bindings settings](../media/service-bindings.png)
 
 A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code; Workers Service bindings allow for much more composability on the Workers platform. In the example below, requests are validated by an authentication Workers Service.
 
@@ -99,9 +100,9 @@ export default {
 }
 ```
 
-![service binding diagram](./media/app-workers-dev.png)
+![service binding diagram](../media/app-workers-dev.png)
 
-Workers Service bindings use the standard [Fetch API](/runtime-apis/fetch). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
+Workers Service bindings use the standard [Fetch API](/workers/runtime-apis/fetch/). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
 
 In the next example, 1% of requests are routed to a `CANARY` deployment of a Worker. If a request to the `CANARY` fails, it is sent to the production deployment for another chance.
 
@@ -124,7 +125,7 @@ export default {
 
 While the interface among Workers Services is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Workers Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
-![service bindings comparison](./media/service-bindings-comparison.png)
+![service bindings comparison](../media/service-bindings-comparison.png)
 
 Workers Service bindings allow you to:
 
@@ -157,15 +158,15 @@ This authentication Workers Service does not need to have a `*.workers.dev` or o
 
 ### Gateway Worker and Service bindings usage
 
-In order to bind and call the [authentication Workers Service above](/#authentication-service), the application Workers Service needs to set up a Workers Service binding. You can manage Workers Service bindings in **Workers** > select your **Worker** > **Settings**> **Variables** > **Service Bindings** > **Edit variables**.
+In order to bind and call the [authentication Workers Service above](/workers/#authentication-service), the application Workers Service needs to set up a Workers Service binding. You can manage Workers Service bindings in **Workers** > select your **Worker** > **Settings**> **Variables** > **Service Bindings** > **Edit variables**.
 
-![Workers service bindings](./media/service-bindings.png)
+![Workers service bindings](../media/service-bindings.png)
 
 Once added, the application Workers Service can access the Workers Service binding directly from the code, as in the example below.
 
 <Aside type="note">
 
-Note that [Requests](/runtime-apis/request) can only be read once. If you need to use a Request object multiple times, clone your incoming Request objects.
+Note that [Requests](/workers/runtime-apis/request/) can only be read once. If you need to use a Request object multiple times, clone your incoming Request objects.
 
 </Aside>
 

@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.
 
-Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/about/default-cache-behavior) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/how-to/create-page-rules#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
+Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/about/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/cache/how-to/create-page-rules/#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
 ## Caching limits
 
@@ -27,7 +27,7 @@ By default, Cloudflare caches certain HTTP response codes with the following Ed
 
 ## Set cache TTL by response status via the Cloudflare dashboard
 
-To set cache TTL by response status, [create a Page Rule](/how-to/create-page-rules#create-a-page-rule) for **Cache TTL by status code**.
+To set cache TTL by response status, [create a Page Rule](/cache/how-to/create-page-rules/#create-a-page-rule) for **Cache TTL by status code**.
 
 ## Set cache TTL by response status via the Cloudflare API
 

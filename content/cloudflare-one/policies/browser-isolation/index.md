@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: concept
+title: Browser Isolation
+weight: 5
 ---
 
 # Browser Isolation
@@ -15,18 +16,18 @@ Cloudflare Browser Isolation complements the Secure Web Gateway and Zero Trust N
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated.
 
-![Diagram of how Browser Isolation integrates with WARP and Gateway](../../static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
+![Diagram of how Browser Isolation integrates with WARP and Gateway](/cloudflare-one/static/documentation/rbi/cloudflare-one-browser-diagram-background.png)
 
 Just like Gateway allows you to define policies to filter traffic based on content categories or security threats, with Browser Isolation you can define policies to dynamically isolate websites based on identity, security threats, or content. To build Browser Isolation policies, navigate to **Policies** > **HTTP policies** on the Zero Trust Dashboard. In the rule builder, choose the *Isolate* or *Do not Isolate* actions to enable or disable isolation for certain websites or content.
 
-![Browser isolation policy](../../static/documentation/policies/bi-policy.png)
+![Browser isolation policy](/cloudflare-one/static/documentation/policies/bi-policy.png)
 
 ## Prerequisites
 
 To start protecting your users through remote browsing, you need:
 
 *   A Zero Trust Standard or Enterprise plan, and a Browser Isolation add-on subscription
-*   The [WARP client](/connections/connect-devices/warp) installed on your devices
+*   The [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on your devices
 
 ## Isolate policies
 
@@ -105,4 +106,4 @@ This option does not prevent files from being downloaded into the remote browser
 
 ## Privacy
 
-Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare Root CA](/connections/connect-devices/warp/install-cloudflare-cert). Traffic logs are retained as per the [Gateway Logs](/analytics/gateway) documentation.
+Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare Root CA](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). Traffic logs are retained as per the [Gateway Logs](/cloudflare-one/analytics/gateway/) documentation.

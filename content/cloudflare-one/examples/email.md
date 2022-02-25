@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow a specific email address.
 tags:
-- Email
+  - Email
+title: Email
+weight: 4
+layout: example
 ---
 
 # Email

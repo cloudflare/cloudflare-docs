@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Accessibility
+weight: 2
 ---
 
 # Accessibility

@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: concept
+title: Full setup
+weight: 1
 ---
 
 import FullSetupDefinition from "../../\_partials/\_full-setup-definition.md"
@@ -11,7 +12,7 @@ import FullSetupDefinition from "../../\_partials/\_full-setup-definition.md"
 
 ## How to
 
-For more details, refer to [Set up a full domain](setup).
+For more details, refer to [Set up a full domain](/dns/setup/).
 
 ## Availability
 

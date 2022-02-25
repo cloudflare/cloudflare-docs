@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Improve SEO
+weight: 3
 ---
 
 # Improve SEO
@@ -31,8 +32,8 @@ Since search engines use HTTPS as [a ranking signal](https://webmasters.googlebl
 
 To make sure your domain is accessible over HTTPS:
 
-1.  Get an [SSL/TLS certificate](https://developers.cloudflare.com/ssl/get-started) for your domain.
-2.  [Redirect visitors](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) to the HTTPS version of your domain.
+1.  Get an [SSL/TLS certificate](/ssl/get-started) for your domain.
+2.  [Redirect visitors](/ssl/edge-certificates/additional-options/always-use-https) to the HTTPS version of your domain.
 
 ## Troubleshooting
 
@@ -40,8 +41,8 @@ Depending on your domain's security settings, you might accidentally block searc
 
 If you notice SEO issues, make sure your:
 
-*   [Firewall rules](https://developers.cloudflare.com/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
-*   [Bot protection](https://developers.cloudflare.com/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
+*   [Firewall rules](/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
+*   [Bot protection](/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
 
 If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](https://support.cloudflare.com/hc/articles/200169806).
 

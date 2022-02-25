@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 3
+title: NAv2 node reference
+weight: 4
 ---
 
 # NAv2 node reference
@@ -39,7 +40,7 @@ The sample rate is 1/10,000 packets.
 
 <Aside type="note" header="Adjusting attack mitigation">  
 
-To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network).
+To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network).
 
 </Aside>
 
@@ -66,7 +67,7 @@ The sample rate is dynamic and based on the volume of packets, ranging from 1/10
 
 ### `magicFirewallNetworkAnalyticsAdaptiveGroups`
 
-This node is only available to Magic Transit customers. Provides information about packets that were matched against customer-configured [Magic Firewall](https://developers.cloudflare.com/magic-firewall/) rules.
+This node is only available to Magic Transit customers. Provides information about packets that were matched against customer-configured [Magic Firewall](/magic-firewall/) rules.
 
 Each row represents a packet sample that matches a Magic Firewall rule.
 

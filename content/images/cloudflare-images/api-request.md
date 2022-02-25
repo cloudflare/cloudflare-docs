@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Make your first API request
+weight: 3
 ---
 
 # Make your first API request
@@ -21,7 +22,7 @@ To make your first request to the Images API, you must obtain these pieces of in
 <summary>Your Global API Key or API Token</summary>
 <div>
 
-Refer to [API tokens](/cloudflare-images/upload-images/api-token).
+Refer to [API tokens](/images/cloudflare-images/upload-images/api-token/).
 
 </div>
 </details>

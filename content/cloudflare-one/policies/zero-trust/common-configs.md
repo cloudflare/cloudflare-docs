@@ -1,13 +1,14 @@
 ---
-order: 2
 pcx-content-type: configuration
+title: Common configurations
+weight: 3
 ---
 
 # Common configurations
 
 This section addresses a few common policy configurations and best practices.
 
-For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [policy management page](/policies/zero-trust/policy-management).
+For a basic overview of how to create, edit, and delete Policies on the dashboard, please see the [policy management page](/cloudflare-one/policies/zero-trust/policy-management/).
 
 ## Allow
 
@@ -93,7 +94,7 @@ When setting up a Require rule for an Access policy, keep in mind that any value
 
 the policy will only grant access to people reaching the application from both the United States `and` Portugal, and who have both an email ending in `@cloudflare.com` `and` in `@contractors.com`. Therefore, nobody will have access to the application.
 
-Instead, you can address this need by using [Access groups](/identity/users/groups). First, you can set up a group (we will call it `My Access Group`) that `includes` users in Portugal `or` in the United States:
+Instead, you can address this need by using [Access groups](/cloudflare-one/identity/users/groups/). First, you can set up a group (we will call it `My Access Group`) that `includes` users in Portugal `or` in the United States:
 
 | Rule | Criteria | Value |
 | ---- | -------- | ----- |

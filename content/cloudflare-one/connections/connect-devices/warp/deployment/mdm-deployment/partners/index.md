@@ -1,7 +1,9 @@
 ---
-order: 0
 pcx-content-type: navigation
-title: "Partners"
+title: Partners
+weight: 1
+meta:
+  title: Deploy WARP with partners
 ---
 
 # Deploy WARP with partners

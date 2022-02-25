@@ -1,7 +1,9 @@
 ---
 title: Background
-order: 1
 pcx-content-type: concept
+weight: 2
+meta:
+  title: Where did it all begin?
 ---
 
 # Where did it all begin?

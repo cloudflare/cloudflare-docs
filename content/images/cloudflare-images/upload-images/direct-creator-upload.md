@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Direct Creator Upload
+weight: 4
 ---
 
 # Direct Creator Upload

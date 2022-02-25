@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: how-to
+title: Debug mode
+weight: 0
 ---
 
 # Debug mode
@@ -28,4 +29,4 @@ To activate the **Preserve Log** option in Google Chrome:
 2.  Go to **Console**.
 3.  Select the **Console settings** cog > **Preserve logs**.
 
-![Chrome's console panel to access preserve logs](../static/console-settings.png)
+![Chrome's console panel to access preserve logs](/zaraz/static/console-settings.png)

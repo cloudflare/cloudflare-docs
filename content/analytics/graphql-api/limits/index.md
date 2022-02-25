@@ -1,6 +1,7 @@
 ---
-order: 30
 pcx-content-type: reference
+title: Limits
+weight: 31
 ---
 
 # Limits
@@ -15,7 +16,7 @@ Use the table below to identify which data nodes are included in your customer p
 
 <Aside type="note" header="Note">
 
-Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only available to Enterprise customers using Cloudflare [Magic Transit](https://www.cloudflare.com/magic-transit/) or [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/).
+Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only available to Enterprise customers using Cloudflare [Magic Transit](https://www.cloudflare.com/magic-transit/) or [Cloudflare Spectrum](/spectrum/).
 
 </Aside>
 
@@ -52,7 +53,7 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 
 </TableWrap>
 
-\* These nodes are deprecated. Refer to [Deprecated data nodes](/graphql-api/features/data-sets#deprecated-data-nodes) for more information.
+\* These nodes are deprecated. Refer to [Deprecated data nodes](/analytics/graphql-api/features/data-sets/#deprecated-data-nodes) for more information.
 
 ### Query settings for account limits
 

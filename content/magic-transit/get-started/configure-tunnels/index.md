@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: navigation
+title: Configure tunnels
+weight: 0
 ---
 
 # Configure tunnels

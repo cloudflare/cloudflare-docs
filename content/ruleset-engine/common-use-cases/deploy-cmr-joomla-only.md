@@ -2,22 +2,24 @@
 title: Enable only Joomla rules
 pcx-content-type: configuration
 alwaysopen: true
-order: 772
+weight: 773
+meta:
+  title: Use category overrides to enable Joomla rules
 ---
 
 # Use category overrides to enable Joomla rules
 
-Use the [Rulesets API](/rulesets-api) to configure the execution of a Managed Ruleset and override its behavior. By default, enabled rules perform the actions defined by the Managed Ruleset issuer. This example uses overrides to ensure that only rules with a specific tag are enabled.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure the execution of a Managed Ruleset and override its behavior. By default, enabled rules perform the actions defined by the Managed Ruleset issuer. This example uses overrides to ensure that only rules with a specific tag are enabled.
 
 Follow the steps below to configure the execution of a Managed Ruleset with two overrides for enabling only the rules tagged with `joomla`.
 
-1.  [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
-2.  [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
+1.  [Add a rule](/ruleset-engine/basic-operations/deploy-rulesets/) to a phase entry point ruleset that executes a Managed Ruleset.
+2.  [Configure a ruleset override](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that disables all rules in the Managed Ruleset.
 3.  Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/rulesets-api/update) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+The example below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>

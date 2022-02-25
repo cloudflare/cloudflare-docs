@@ -1,11 +1,13 @@
 ---
-order: 0
 type: example
 summary: Deliver an HTML page from an HTML string directly inside the Worker script.
 demo: https://returning-html.workers-sites-examples.workers.dev
 tags:
   - Originless
 pcx-content-type: configuration
+title: Return small HTML page
+weight: 1
+layout: example
 ---
 
 # Return small HTML page

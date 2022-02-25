@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 Your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server) is a physical or virtual machine that is not owned by Cloudflare and hosts your application content (data, webpages, etc.).

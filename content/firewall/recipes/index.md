@@ -1,6 +1,7 @@
 ---
 pcx-content-type: navigation
-order: 500
+title: Common use cases
+weight: 501
 ---
 
 # Common use cases

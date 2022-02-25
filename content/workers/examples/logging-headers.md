@@ -1,10 +1,12 @@
 ---
-order: 1000
 type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
 pcx-content-type: configuration
+title: Logging headers to console
+weight: 1001
+layout: example
 ---
 
 # Logging headers to console

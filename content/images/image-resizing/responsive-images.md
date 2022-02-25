@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Responsive images
+weight: 4
 ---
 
 # Responsive images
@@ -89,6 +90,6 @@ HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
-*   You can enable the automatic [WebP conversion in Polish](/polish/activate-polish). This will convert all images on the site.
+*   You can enable the automatic [WebP conversion in Polish](/images/polish/activate-polish/). This will convert all images on the site.
 
 *   Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.

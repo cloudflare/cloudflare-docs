@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: reference
+title: Filtering
+weight: 11
 ---
 
 # Filtering

@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Get all geolocation data fields and display them in HTML.
 tags:
   - Originless
   - Geolocation
 pcx-content-type: configuration
+title: "Geolocation: Hello World"
+weight: 1001
+layout: example
 ---
 
 # Geolocation: Hello World

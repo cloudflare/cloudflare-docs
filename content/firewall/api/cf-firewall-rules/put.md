@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 430
+title: PUT examples
+weight: 431
 ---
 
 # PUT examples
@@ -41,7 +42,7 @@ curl -X PUT \
 
 `PUT` does not update the filter specified. It only looks at the filter ID (`<FILTER_ID>`) to update the rule with a new filter.
 
-To update the filter, use the [Filters API](/api/cf-filters).
+To update the filter, use the [Filters API](/firewall/api/cf-filters/).
 
 </Aside>
 

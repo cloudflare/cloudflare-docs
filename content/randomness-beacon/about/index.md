@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: About Drand
+weight: 2
 ---
 
 # About Drand

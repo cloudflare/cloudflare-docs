@@ -1,6 +1,7 @@
 ---
-order: 122
 pcx-content-type: reference
+title: Pathing status
+weight: 123
 ---
 
 # Pathing status

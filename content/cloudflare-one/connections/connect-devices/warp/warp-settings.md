@@ -1,13 +1,14 @@
 ---
-order: 6
 pcx-content-type: reference
+title: WARP settings
+weight: 7
 ---
 
 # WARP settings
 
 <Aside type="note">
 
-If you are deploying [WARP in managed mode](/connections/connect-devices/warp/deployment/mdm-deployment), refer to this [list of parameters](/connections/connect-devices/warp/deployment/mdm-deployment/parameters) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by the local policy deployed by your management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
+If you are deploying [WARP in managed mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), refer to this [list of parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by the local policy deployed by your management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
 
 </Aside>
 
@@ -19,7 +20,7 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
@@ -52,7 +53,7 @@ Users will then need to open the WARP client on their devices, navigate to **Pre
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | Any mode | All plans |
 
@@ -72,7 +73,7 @@ Cloudflare Zero Trust allows you to establish which users in your organization c
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows | WARP with Gateway | All plans |
 
@@ -89,14 +90,14 @@ When the toggle is enabled, the WARP client will automatically turn off when it 
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | WARP with Gateway | All plans |
 
 </div>
 </details>
 
-When the toggle is enabled, users have the option to turn off the [Gateway with WARP](/connections/connect-devices/warp#gateway-with-warp-default) mode and switch to [Gateway with DoH mode](/connections/connect-devices/warp#gateway-with-doh). When the toggle is disabled, end users will not be able to switch between WARP modes.
+When the toggle is enabled, users have the option to turn off the [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default) mode and switch to [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/#gateway-with-doh). When the toggle is disabled, end users will not be able to switch between WARP modes.
 
 ## Lock WARP switch
 
@@ -104,7 +105,7 @@ When the toggle is enabled, users have the option to turn off the [Gateway with 
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
@@ -119,7 +120,7 @@ When the toggle is enabled, users are prevented from turning off the connected s
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
@@ -134,7 +135,7 @@ When the toggle is enabled, users who manually logged into their organization on
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
@@ -149,14 +150,14 @@ When the toggle is enabled, users will receive update notifications when a new v
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
 </div>
 </details>
 
-When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/connections/connect-devices/warp/warp-settings#lock-warp-switch) above.
+When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
 
 ## Allow device to leave organization
 
@@ -164,7 +165,7 @@ When the toggle is enabled, the client will automatically reconnect if it has be
 <summary>Support URL</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
@@ -182,14 +183,14 @@ When the toggle is enabled, the **Send Feedback** button in the WARP client appe
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | macOS, Windows, Linux | Any mode | All plans |
 
 </div>
 </details>
 
-Allows you to choose the operational mode of the client. See [WARP Modes](/connections/connect-devices/warp#warp-client-modes) for a detailed description of each mode.
+Allows you to choose the operational mode of the client. See [WARP Modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) for a detailed description of each mode.
 
 *   **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP.
 *   **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.

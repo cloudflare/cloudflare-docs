@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: TransformStream
 ---
 
 # TransformStream
@@ -37,5 +38,5 @@ let { readable, writable } = new TransformStream()
 
 ## See also
 
-*   [Using Streams.](/learning/using-streams)
+*   [Using Streams.](/workers/learning/using-streams/)
 *   [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)

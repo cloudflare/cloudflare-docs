@@ -1,7 +1,9 @@
 ---
 pcx-content-type: reference
-order: 786
 type: overview
+title: Add rule to ruleset
+weight: 787
+layout: list
 ---
 
 # Add rule to ruleset
@@ -23,7 +25,7 @@ Include the rule definition in the request body. The rule will be added to the e
 
 ## Example
 
-The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List rulesets](/rulesets-api/view#list-existing-rulesets) method, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) method, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 <details open>
 <summary>Request</summary>

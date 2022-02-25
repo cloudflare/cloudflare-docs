@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 4
 pcx-content-type: get-started
+weight: 5
+meta:
+  title: Get started with APO
 ---
 
 # Get started with APO

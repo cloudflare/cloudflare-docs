@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Privacy
+weight: 4
 ---
 
 # Privacy

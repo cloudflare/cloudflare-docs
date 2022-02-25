@@ -3,6 +3,7 @@ updated: 2021-08-03
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
+title: Configure Zendesk SSO with Access for SaaS
 ---
 
 # Configure Zendesk SSO with Access for SaaS
@@ -45,11 +46,11 @@ For this tutorial, you will need:
      This step is optional. If the name is not provided, Zendesk will [use the user’s email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v))
      </Aside>
 
-    ![Zendesk attributes](../static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
+    ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
 6.  Create an Access policy to determine who can access Zendesk.
 
-    ![Zendesk policy](../static/zero-trust-security/zendesk-sso-saas/zendesk-policy.png)
+    ![Zendesk policy](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-policy.png)
 
 7.  Copy the Cloudflare IdP values and add them to the following Zendesk Fields:
 
@@ -68,10 +69,10 @@ For this tutorial, you will need:
 
      </Aside>
 
-    ![Zendesk fingerprint](../static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
+    ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
 8.  Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
-    ![Zendesk external authentication](../static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
+    ![Zendesk external authentication](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
 
 Users should now be able to log into Zendesk if their Email address exists in the Zendesk user list.

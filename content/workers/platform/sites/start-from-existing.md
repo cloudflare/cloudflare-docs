@@ -1,11 +1,12 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: Start from existing
+weight: 1
 ---
 
 # Start from existing
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/cli-wrangler/install-update#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler) — make sure to use the [latest version](/workers/cli-wrangler/install-update/#update).
 
 To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works well with all static site generators. For a quick-start, review the following projects:
 
@@ -13,7 +14,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 *   [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
 *   [Jekyll](https://jekyllrb.com/docs/), requires Ruby
 *   [Eleventy](https://www.11ty.io/#quick-start), requires Node
-*   [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/tutorials/deploy-a-static-wordpress-site))
+*   [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
 
 After you have generated a site, follow these steps:
 
@@ -40,7 +41,7 @@ The default directories for the most popular static site generators are listed b
     - Jekyll: `_site`
     - Eleventy: `_site`
 
-3\. Add your `account_id` to your `wrangler.toml`. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > **choose your website** > **Overview** > **Account ID** For more details on finding your `account_id`, refer to the [Gett started guide](/get-started/guide#6a-obtaining-your-account-id-and-zone-id).
+3\. Add your `account_id` to your `wrangler.toml`. You can find your `account_id` by logging into the Cloudflare dashboard **Account Home** > **choose your website** > **Overview** > **Account ID** For more details on finding your `account_id`, refer to the [Gett started guide](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id).
 
 4.  You can preview your site by running:
 
@@ -48,7 +49,7 @@ The default directories for the most popular static site generators are listed b
 $ wrangler dev
 ```
 
-5.  Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/get-started/guide#configure-for-deploying-to-workersdev) or a [custom domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone.
+5.  Decide if you would like to publish your site to a [`*.workers.dev` subdomain](/workers/get-started/guide/#configure-for-deploying-to-workersdev) or a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone.
 
 Then update your `wrangler.toml`:
 
@@ -61,7 +62,7 @@ route = "example.com/*"
 
 **`*.workers.dev`**: Set `workers_dev` to true. This is the default.
 
-Learn more about [configuring your project](/get-started/guide#6-configure-your-project-for-deployment).
+Learn more about [configuring your project](/workers/get-started/guide/#6-configure-your-project-for-deployment).
 
 6.  Run:
 

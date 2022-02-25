@@ -1,6 +1,7 @@
 ---
-order: 150
 pcx-content-type: navigation
+title: Troubleshooting
+weight: 151
 ---
 
 # Troubleshooting

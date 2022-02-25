@@ -1,7 +1,9 @@
 ---
-order:
 title: iOS
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: Set up 1.1.1.1 - iOS
 ---
 
 import CaptivePortals from "../\_partials/\_captive-portals.md"
@@ -10,7 +12,7 @@ import CaptivePortals from "../\_partials/\_captive-portals.md"
 
 [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) is the preferred method of setting up 1.1.1.1 DNS resolver in iOS devices. It allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to, and solves iOS inability of using an alternative DNS resolver in cellular connections.
 
-The app also allows you to enable encryption for DNS queries or enable [WARP mode](https://developers.cloudflare.com/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
+The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
 
 You can select between these two options in 1.1.1.1: Faster Internet's settings. By default, 1.1.1.1:Faster Internet is configured to WARP mode.
 

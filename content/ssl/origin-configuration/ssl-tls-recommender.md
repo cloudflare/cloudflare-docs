@@ -1,11 +1,12 @@
 ---
-order: 3
 pcx-content-type: concept
+title: SSL/TLS Recommender
+weight: 4
 ---
 
 # SSL/TLS Recommender
 
-The **SSL/TLS Recommender** helps you choose which [Encryption mode](/origin-configuration/ssl-modes) is best for your application.
+The **SSL/TLS Recommender** helps you choose which [Encryption mode](/ssl/origin-configuration/ssl-modes/) is best for your application.
 
 <Aside type="note">
 
@@ -33,7 +34,7 @@ To manually re-trigger a new scan, disable and then [re-enable SSL/TLS recommend
 
 Once enabled, the SSL/TLS Recommender runs an origin scan using the user agent `Cloudflare-SSLDetector` and ignores your `robots.txt` file (except for rules explicitly targeting the user agent).
 
-Based on this initial scan, the Recommender may decide that you could use a stronger [SSL encryption mode](/origin-configuration/ssl-modes). It will never recommend a weaker option than what is currently configured.
+Based on this initial scan, the Recommender may decide that you could use a stronger [SSL encryption mode](/ssl/origin-configuration/ssl-modes/). It will never recommend a weaker option than what is currently configured.
 
 If so, it will send the zone owner an email with the recommended option and add a *Recommended by Cloudflare* tag to that option on the **SSL/TLS** page. You are not required to use this recommendation.
 

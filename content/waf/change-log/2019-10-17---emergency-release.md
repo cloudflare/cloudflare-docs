@@ -1,8 +1,11 @@
 ---
-title: "2019-10-17 – Emergency"
+title: 2019-10-17 – Emergency
 type: table
-order: 995
 pcx-content-type: changelog
+weight: 996
+layout: list
+meta:
+  title: 2019-10-17 – Emergency release
 ---
 
 # 2019-10-17 – Emergency release

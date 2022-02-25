@@ -1,17 +1,18 @@
 ---
 pcx-content-type: how-to
-order: 370
+title: Use lists in expressions
+weight: 371
 ---
 
 # Use lists in expressions
 
 ## Expression Builder
 
-To use an IP List in the [Expression Builder](/cf-dashboard/create-edit-delete-rules/):
+To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/):
 
 1.  Select *is in list* or *is not in list* from the **Operator** drop-down list.
 
-    ![Managed open proxies list](../../images/cf-open-proxies-list.png)
+    ![Managed open proxies list](/firewall/static/cf-open-proxies-list.png)
 
 2.  Select an IP List from the **Value** drop-down list.
 
@@ -19,7 +20,7 @@ To use an IP List in the [Expression Builder](/cf-dashboard/create-edit-delete-r
 
 ## Expression Editor
 
-To use an IP List in the [Expression Editor](/cf-dashboard/expression-preview-editor) specify the `in` operator and use *$\<list\_name>* to specify the name of the list.
+To use an IP List in the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) specify the `in` operator and use *$\<list\_name>* to specify the name of the list.
 
 This expression filters requests from IP addresses that are in an IP List named *office\_network*:
 
@@ -29,7 +30,7 @@ This expression filters requests from IP addresses that are in an IP List named 
 
 Note that names for IP Lists can only include lowercase letters, numbers, and the underscore (`_`) character.
 
-For more on creating lists, refer to [Use IP Lists: Manage lists](/cf-dashboard/rules-lists/manage-lists).
+For more on creating lists, refer to [Use IP Lists: Manage lists](/firewall/cf-dashboard/rules-lists/manage-lists/).
 
 To create a new rule via API using the Cloudflare Open Proxies Managed List, use the following expression:
 

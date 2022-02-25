@@ -1,8 +1,11 @@
 ---
-title: "2021-03-05 – Emergency"
+title: 2021-03-05 – Emergency
 type: table
-order: 946
 pcx-content-type: changelog
+weight: 947
+layout: list
+meta:
+  title: 2021-03-05 – Emergency release
 ---
 
 # 2021-03-05 – Emergency release

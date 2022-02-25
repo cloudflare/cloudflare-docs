@@ -1,11 +1,14 @@
 ---
-order: 11
 type: example
-summary: Respond to the Worker request with the response from another website (example.com in this example).
+summary: Respond to the Worker request with the response from another website
+  (example.com in this example).
 demo: https://respond-with-another-site.workers-sites-examples.workers.dev
 tags:
   - Middleware
 pcx-content-type: configuration
+title: Respond with another site
+weight: 12
+layout: example
 ---
 
 # Respond with another site

@@ -1,19 +1,21 @@
 ---
 title: Create static routes
-order: 
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: Assign tunnel route priorities
 ---
 
 # Assign tunnel route priorities
 
-Magic WAN uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](https://developers.cloudflare.com/magic-transit/about/tunnels-and-encapsulation) from Cloudflare’s edge to your locations
+Magic WAN uses a static configuration to route your traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation) from Cloudflare’s edge to your locations
 
 You must assign a route priority to each Anycast GRE or IPsec tunnel–subnet pair in your GRE configuration, as follows:
 
 *   Lower values have greater priority.
 *   When the priority values for prefix entries match—as illustrated by the 103.21.244.0/24 subnet in the example routing configuration (in boldface)—Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
 
-For more on how Cloudflare uses ECMP packet forwarding, see [Traffic steering](https://developers.cloudflare.com/magic-transit/about/traffic-steering).
+For more on how Cloudflare uses ECMP packet forwarding, see [Traffic steering](/magic-transit/about/traffic-steering).
 
 For an example edge routing configuration, refer to this table:
 

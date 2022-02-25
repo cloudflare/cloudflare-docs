@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
   - Logging
 pcx-content-type: configuration
+title: Debugging logs
+weight: 1001
+layout: example
 ---
 
 # Debugging logs

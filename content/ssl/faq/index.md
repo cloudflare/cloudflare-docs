@@ -1,7 +1,9 @@
 ---
 title: FAQ
-order: 201
 pcx-content-type: navigation
+weight: 202
+meta:
+  title: General FAQs
 ---
 
 # General FAQs

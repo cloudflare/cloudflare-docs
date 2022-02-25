@@ -1,6 +1,7 @@
 ---
-order: 18
 pcx-content-type: configuration
+title: Railguns via IP ranges
+weight: 19
 ---
 
 # Railguns via IP ranges

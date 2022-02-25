@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: navigation
+title: Account options
+weight: 4
 ---
 
 # Account options

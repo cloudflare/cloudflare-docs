@@ -1,6 +1,7 @@
 ---
-order: 73
 pcx-content-type: concept
+title: TLS
+weight: 74
 ---
 
 # TLS
@@ -25,7 +26,7 @@ The TLS protocol evolved from the Secure Sockets Layer (SSL) protocol which was 
 
 There are two main types of handshakes in TLS: one based on [RSA](http://en.wikipedia.org/wiki/RSA_\(cryptosystem\)), and one based on [Diffie-Hellman](http://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). RSA and Diffie-Hellman were the two algorithms which ushered in the era of modern cryptography, and brought cryptography to the masses. These two handshakes differ only in how the two goals of key establishment and authentication are achieved:
 
-![ssl-table](../static/ssl-table.png)
+![ssl-table](/fundamentals/static/ssl-table.png)
 
 The RSA and DH handshakes both have their advantages and disadvantages. The RSA handshake only uses one public key algorithm operation, RSA. A DH handshake with an RSA certificate requires the same RSA operation, but with an additional DH operation. Given that the certificate is RSA, the RSA handshake is faster to compute. Public key algorithms like RSA and DH use a lot of CPU and are the slowest part of the TLS handshake. A laptop can only perform a couple hundred RSA encryptions a second versus around ten million per second of the symmetric cipher AES.
 
@@ -78,7 +79,7 @@ With these definitions in hand, let’s walk through an RSA handshake.
 
 Note that none of the messages in the handshake are encrypted with a session key; they are all sent in the clear.
 
-![rsa-handshake](../static/ssl_handshake_rsa.jpg)
+![rsa-handshake](/fundamentals/static/ssl_handshake_rsa.jpg)
 
 ### Message 1: “Client Hello”
 
@@ -118,7 +119,7 @@ This doesn't work well with regular numbers because g<sup>ab</sup> can get reall
 
 Now let’s go through a Diffie-Hellman handshake:
 
-![dh-handshake](../static/ssl_handshake_diffie_hellman.jpg)
+![dh-handshake](/fundamentals/static/ssl_handshake_diffie_hellman.jpg)
 
 ### Message 1: “Client Hello”
 

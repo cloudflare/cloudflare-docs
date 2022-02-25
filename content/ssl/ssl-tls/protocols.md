@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: TLS protocols
+weight: 3
 ---
 
 # TLS protocols

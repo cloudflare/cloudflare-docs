@@ -1,6 +1,7 @@
 ---
-order: 30
 pcx-content-type: reference
+title: Authenticate with a Cloudflare API key
+weight: 31
 ---
 
 # Authenticate with a Cloudflare API key

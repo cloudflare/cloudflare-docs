@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: reference
+title: Resize with Cloudflare Workers
+weight: 5
 ---
 
 # Resize with Cloudflare Workers
@@ -13,7 +14,7 @@ Here are a few examples of the flexibility Workers give you:
 *   **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
 *   **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
-The resizing feature is accessed via the [options](https://developers.cloudflare.com/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch).
+The resizing feature is accessed via the [options](/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch).
 
 ## Fetch options
 
@@ -203,7 +204,7 @@ if (response.ok || response.redirected) {
 
 ## An example worker
 
-Assuming you [set up a Worker](https://developers.cloudflare.com/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
+Assuming you [set up a Worker](/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
 
 ```js
 addEventListener("fetch", event => {

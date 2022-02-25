@@ -1,7 +1,9 @@
 ---
 title: Extended ruleset
 pcx-content-type: configuration
-order: 2
+weight: 3
+meta:
+  title: Extended suggested ruleset
 ---
 
 # Extended suggested ruleset
@@ -17,7 +19,7 @@ For each item above, consider the requirements in terms of their permitted Inter
 
 ## Create lists for using Magic Firewall rules
 
-For more information on lists, refer to [Use rule lists](/how-to/use-rules-list).
+For more information on lists, refer to [Use rule lists](/magic-firewall/how-to/use-rules-list/).
 
 You can also create a list from the dashboard from **Configurations** > **Lists** on your **Account Home**.
 
@@ -70,7 +72,7 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 
 Follow the best practices for internal routers or firewall interface IP addresses on your MT prefixes below.
 
-1.  Create [a list](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists), **Internal routers** for example, list your IP addresses.
+1.  Create [a list](/firewall/cf-dashboard/rules-lists), **Internal routers** for example, list your IP addresses.
 2.  Block ICMP if it is not needed.
 3.  Permit GRE/ESP as needed if the devices have GRE/IPSEC tunnels via the Internet.
 
@@ -100,7 +102,7 @@ Where possible, permit the required destination IP addresses and ports for web s
 
 The following is an example of suggested rules, but you should only make changes based on your specific requirements. For example, if you are not proxied by Cloudflare Layer 7 protection and you expect traffic sourced from the web towards your web servers:
 
-1.  Create [a list](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists), **web servers** for example, to list IP addresses for your web servers.
+1.  Create [a list](/firewall/cf-dashboard/rules-lists), **web servers** for example, to list IP addresses for your web servers.
 2.  Permit traffic for the web server traffic inbound from the Internet.
 3.  Permit traffic for the infrastructure or client traffic flows from the Internet, for example DNS and NTP.
 4.  Block all other traffic destined for the web server IP addresses.

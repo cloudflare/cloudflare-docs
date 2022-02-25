@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: reference
+title: Updating your Website for IPFS
+weight: 5
 ---
 
 # Updating your Website for IPFS

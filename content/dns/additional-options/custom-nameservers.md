@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Custom nameservers
+weight: 2
 ---
 
 # Custom nameservers
@@ -36,7 +37,7 @@ When you choose the names for your account-level nameservers, each hostname must
 
 ### Cloudflare Registrar
 
-If you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers, you have a simpler setup process.
+If you are using [Cloudflare Registrar](/registrar) for the zone that provides the hostnames for the account-level custom nameservers, you have a simpler setup process.
 
 #### Add account nameservers
 
@@ -52,7 +53,7 @@ To remove account-level nameservers and their associated DNS records from a zone
 
 ### Non-Cloudflare Registrar
 
-If you are **not** using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
+If you are **not** using [Cloudflare Registrar](/registrar) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
 
 #### Add account nameservers
 
@@ -86,7 +87,7 @@ To add custom nameservers to a specific zone:
 2.  Go to **DNS**.
 3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (like ns1, ns2, ns3).
 4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated **A** or **AAAA** records (visible after you refresh the page).
-5.  The next step depends on whether you are using [Cloudflare Registrar](https://developers.cloudflare.com/registrar) for your domain:
+5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar) for your domain:
     *   If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
     *   If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
 

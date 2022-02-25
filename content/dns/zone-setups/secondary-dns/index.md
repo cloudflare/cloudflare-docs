@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Secondary DNS
+weight: 3
 ---
 
 # Secondary DNS

@@ -1,7 +1,11 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
-For a full list of properties, refer to [Create Pool](https://api.cloudflare.com/#account-load-balancer-pools-create-pool). If you need help with API authentication, refer to [Cloudflare API Quickstart](https://developers.cloudflare.com/api/).
+For a full list of properties, refer to [Create Pool](https://api.cloudflare.com/#account-load-balancer-pools-create-pool). If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
 
 ```json
 ---

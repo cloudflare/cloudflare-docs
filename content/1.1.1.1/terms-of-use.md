@@ -1,6 +1,7 @@
 ---
-order: 9
 pcx-content-type: reference
+title: Terms of Use
+weight: 10
 ---
 
 # Terms of Use

@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: how-to
+title: Certificate Signing Requests (CSRs)
+weight: 11
 ---
 
 import CSRDefinition from "../../\_partials/\_csr-definition.md"
@@ -13,7 +14,7 @@ A CSR contains information about your domain: your organization name and address
 
 <Aside type="note">
 
-At the moment, CSRs are only available to Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/edge-certificates/advanced-certificate-manager).
+At the moment, CSRs are only available to Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
 
 </Aside>
 
@@ -40,7 +41,7 @@ To use a CSR:
 2.  On **Certificate Signing Request (CSR)**, select the record you just created.
 3.  Copy (or click **Click to copy**) the value for **Certificate Signing Request**.
 4.  Obtain a certificate from the Certificate Authority (CA) of your choice using your CSR.
-5.  When you [upload the custom certificate](/edge-certificates/custom-certificates/uploading) to Cloudflare, select an **Encoding mode** of **Certificate Signing Request (CSR)** and enter the associated value.
+5.  When you [upload the custom certificate](/ssl/edge-certificates/custom-certificates/uploading/) to Cloudflare, select an **Encoding mode** of **Certificate Signing Request (CSR)** and enter the associated value.
 
      <Aside type="note">
 

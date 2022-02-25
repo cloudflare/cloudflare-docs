@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: concept
+title: Gateway
+weight: 3
 ---
 
 # Gateway

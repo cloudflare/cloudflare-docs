@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: reference
+title: DNS Categories
+weight: 6
 ---
 
 # DNS Categories

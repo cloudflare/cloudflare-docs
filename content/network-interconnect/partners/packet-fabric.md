@@ -1,7 +1,9 @@
 ---
 title: PacketFabric
-order: 4
 pcx-content-type: tutorial
+weight: 5
+meta:
+  title: PacketFabric Users
 ---
 
 # PacketFabric Users

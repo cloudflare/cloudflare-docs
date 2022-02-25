@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Policy management
+weight: 2
 ---
 
 # Policy management
@@ -21,13 +22,13 @@ To create a Zero Trust policy for an existing application:
 
 3.  Click **Add a Rule**.
 
-![Add rule](../../static/documentation/policies/add-rule.png)
+![Add rule](/cloudflare-one/static/documentation/policies/add-rule.png)
 
 1.  Select a **Rule name**. This name will identify your policy in the list of application policies.
 
-2.  Select a **[Rule action](/policies/zero-trust#actions)**.
+2.  Select a **[Rule action](/cloudflare-one/policies/zero-trust/#actions)**.
 
-3.  Configure as many **[Rules](/policies/zero-trust#rules)** as needed.
+3.  Configure as many **[Rules](/cloudflare-one/policies/zero-trust/#rules)** as needed.
 
 4.  Click **Save rule**.
 
@@ -43,7 +44,7 @@ To make any changes to an application’s policies:
 
 3.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-![Policies section](../../static/documentation/policies/policies-section.png)
+![Policies section](/cloudflare-one/static/documentation/policies/policies-section.png)
 
 1.  Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
 

@@ -1,7 +1,9 @@
 ---
 title: Bot Analytics
-order: 4
 pcx-content-type: navigation
+weight: 5
+meta:
+  title: Cloudflare Bot Analytics
 ---
 
 # Cloudflare Bot Analytics

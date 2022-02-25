@@ -1,7 +1,7 @@
 ---
 title: About
-order: 1
 pcx-content-type: concept
+weight: 2
 ---
 
 # About

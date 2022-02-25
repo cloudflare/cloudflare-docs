@@ -1,6 +1,7 @@
 ---
-order: 13
 pcx-content-type: concept
+title: Automatic HTTPS Rewrites
+weight: 14
 ---
 
 import AutomaticHTTPSRewritesDefinition from "../../\_partials/\_automatic-https-rewrites-definition.md"

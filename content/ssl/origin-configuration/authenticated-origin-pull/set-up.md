@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Set up authenticated origin pulls
+weight: 2
 ---
 
 # Set up authenticated origin pulls
@@ -11,7 +12,7 @@ Set up authenticated origin pulls via one of the following options:
 *   [Zone-Level Authenticated Origin Pull using **customer** certificates](#zone-level--customer-certificates)
 *   [Per-Hostname Authenticated Origin Pull using customer certificates](#per-hostname--customer-certificates)
 
-Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](/origin-configuration/ssl-modes) is set to **Off** or **Flexible**.
+Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 
 ***
 
@@ -116,7 +117,7 @@ To enable Authenticated Origin Pull globally on a zone:
 ## Zone-Level — customer certificates
 
 1.  For your **SSL/TLS encryption mode**, select **Full**.
-2.  Upload a custom certificate following [these instructions](/edge-certificates/custom-certificates/uploading#using-the-api), but use the [`origin_tls_client_auth` endpoint](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate).
+2.  Upload a custom certificate following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`origin_tls_client_auth` endpoint](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate).
 3.  Enable **Authenticated Origin Pulls**:
 
     *   In the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/origin), go to **Authenticated Origin Pulls** and select **On**.
@@ -128,7 +129,7 @@ To enable Authenticated Origin Pull globally on a zone:
 
 When enabling Authenticated Origin Pull per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. Customers can use client certificates from their Private PKI to authenticate connections from Cloudflare.
 
-1.  Upload a custom certificate following [these instructions](/edge-certificates/custom-certificates/uploading#using-the-api), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
+1.  Upload a custom certificate following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](https://api.cloudflare.com/#per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
   <Aside type='note' header='Note'>
 

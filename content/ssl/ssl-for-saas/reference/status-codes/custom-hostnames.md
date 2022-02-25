@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: reference
+title: Custom hostnames
+weight: 2
 ---
 
 # Custom hostnames
@@ -76,7 +77,7 @@ pcx-content-type: reference
 | 401              | 1005           | JWT token does not have required claims                                                                                                                                                                                                                                                                                                                              |
 | 403              | 1404           | No quota has been allocated for this zone. If you are already a paid SSL for SaaS customer, contact your Customer Success Manager for additional provisioning. If you are not yet enrolled, [fill out this contact form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will reach out to you.                                   |
 | 403              | 1405           | Quota exceeded. If you are already a paid SSL for SaaS customer, contact your Customer Success Manager for additional provisioning. If you are not yet enrolled, [fill out this contact form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will reach out to you.                                                              |
-| 403              | 1413           | No [custom metadata](/ssl-for-saas/hostname-specific-behavior/custom-metadata) access has been allocated for this zone. If you are already a paid SSL for SaaS customer, contact your Customer Success Manager for additional provisioning. If you are not yet enrolled, [fill out this contact form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will reach out to you.                  |
+| 403              | 1413           | No [custom metadata](/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/) access has been allocated for this zone. If you are already a paid SSL for SaaS customer, contact your Customer Success Manager for additional provisioning. If you are not yet enrolled, [fill out this contact form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will reach out to you.                  |
 | 403              | 1414           | Access to setting a custom origin server has not been granted for this zone. If you are already a paid SSL for SaaS customer, contact your Customer Success Manager for additional provisioning. If you are not yet enrolled, [fill out this contact form](https://www.cloudflare.com/plans/enterprise/contact/) and our sales team will reach out to you. |
 | 409              | 1406           | Duplicate custom hostname found.                                                                                                                                                                                                                                                                                                                                     |
 | 500              | 1500           | Internal Server Error                                                                                                                                                                                                                                                                                                                                                |

@@ -1,6 +1,7 @@
 ---
-order: 105
 pcx-content-type: how-to
+title: Sumo Logic
+weight: 106
 ---
 
 # Sumo Logic
@@ -9,9 +10,9 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you have not used Cloudflare Logs before, refer to the [Logs documentation](https://developers.cloudflare.com/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and the [AWS S3 source collector](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source) to get logs into Sumo Logic. To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](https://developers.cloudflare.com/logs/get-started/enable-destinations/aws-s3). Alternatively, you can use [Logpull](https://developers.cloudflare.com/logs/logpull) to get logs to your Sumo Logic instance directly and skip Task 1.
+This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and the [AWS S3 source collector](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source) to get logs into Sumo Logic. To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](/logs/get-started/enable-destinations/aws-s3). Alternatively, you can use [Logpull](/logs/logpull) to get logs to your Sumo Logic instance directly and skip Task 1.
 
 ### Prerequisites
 
@@ -19,7 +20,7 @@ Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 
 *   Have an existing Sumo Logic account
 *   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-*   Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
+*   Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
 *   Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
 <Aside type="note" header="Note">
@@ -42,7 +43,7 @@ To enable Cloudflare Logpush in Sumo Logic:
 
 3.  Provide the *HTTP Source Address (URL)* required by the Cloudflare Logpush API or Cloudflare dashboard UI.
 
-4.  Enable [Cloudflare Logpush to Sumo Logic](https://developers.cloudflare.com/logs/get-started/enable-destinations/sumo-logic).
+4.  Enable [Cloudflare Logpush to Sumo Logic](/logs/get-started/enable-destinations/sumo-logic).
 
 ### 1.2 Send log data via AWS S3
 
@@ -58,14 +59,14 @@ If you have [Cloudflare Workers](https://www.cloudflare.com/products/cloudflare-
 
 Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is *true*, as illustrated below:
 
-![Sumo Logic Processing Rules for Logs](../../../static/images/sumo-logic/screenshots/exclude_Workers-sumo_logic.png)
+![Sumo Logic Processing Rules for Logs](/fundamentals/static/images/sumo-logic/screenshots/exclude_Workers-sumo_logic.png)
 
 ## Task 3 - Install the Cloudflare App
 
 To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare):
 
 1.  In the Sumo Logic UI, click **App Catalog** and search for *Cloudflare*.
-    ![Sumo Logic Cloudflare in App Catalog](../../../static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
+    ![Sumo Logic Cloudflare in App Catalog](/fundamentals/static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
 
 2.  Click **Add to Library** and specify the **Source** category *Cloudflare*, which was completed in Step 1.
 
@@ -80,47 +81,47 @@ There are nine dashboards to help you analyze Cloudflare logs. You can also use 
 #### Cloudflare - Snapshot
 
 Get a quick overview of the most important metrics from your websites and applications on the Cloudflare network.
-![Sumo Logic dashboard Cloudflare Snapshot](../../../static/images/sumo-logic/dashboards/cloudflare-snapshot-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Snapshot](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-snapshot-dashboard-sumo-logic.png)
 
 #### Cloudflare - Reliability
 
 Get insights on the availability of your websites and Applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
-![Sumo Logic dashboard Cloudflare Reliability](../../../static/images/sumo-logic/dashboards/cloudflare-reliability-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Reliability](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-reliability-dashboard-sumo-logic.png)
 
 #### Cloudflare - Security (Overview)
 
 Get insights on threats to your websites and applications, including number of threats stopped, threats over time, top threat countries, and more.
-![Sumo Logic dashboard Cloudflare Security Overview](../../../static/images/sumo-logic/dashboards/cloudflare-security-overview-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Security Overview](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-security-overview-dashboard-sumo-logic.png)
 
 #### Cloudflare - Security (WAF)
 
 Get insights on threat identification and mitigation by our Web Application Firewall, including events like SQL injections, XSS, and more. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
-![Sumo Logic dashboard Cloudflare Security WAF](../../../static/images/sumo-logic/dashboards/cloudflare-security-waf-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Security WAF](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-security-waf-dashboard-sumo-logic.png)
 
 #### Cloudflare - Security (Rate Limiting)
 
 Get insights on rate limiting protection against denial-of-service attacks, brute-force login attempts, and other types of abusive behavior targeted at your websites or applications.
-![Sumo Logic dashboard Cloudflare Security Rate Limiting](../../../static/images/sumo-logic/dashboards/cloudflare-security-rate-limiting-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Security Rate Limiting](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-security-rate-limiting-dashboard-sumo-logic.png)
 
 #### Cloudflare - Security (Bot Management)
 
 Investigate bot activity on your website to prevent content scraping, checkout fraud, spam registration and other malicious activities.
-![Sumo Logic dashboard Cloudflare Security Bot Management](../../../static/images/sumo-logic/dashboards/cloudflare-security-bot-management-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Security Bot Management](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-security-bot-management-dashboard-sumo-logic.png)
 
 #### Cloudflare - Performance (Requests, Bandwidth, Cache)
 
 Identify and address performance issues and caching misconfigurations. Metrics include total vs. cached bandwidth, saved bandwidth, total requests, cache ratio, top uncached requests, and more.
-![Sumo Logic dashboard Cloudflare Performance Requests, Bandwidth, Cache](../../../static/images/sumo-logic/dashboards/cloudflare-performance-requests-bandwidth-cache-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Performance Requests, Bandwidth, Cache](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-performance-requests-bandwidth-cache-dashboard-sumo-logic.png)
 
 #### Cloudflare - Performance (Hostname, Content Type, Request Methods, Connection Type)
 
 Get insights into your most popular hostnames, most requested content types, breakdown of request methods, and connection type.
-![Sumo Logic dashboard Cloudflare Performance Hostname, Content Type, Request Methods, Connection Type](../../../static/images/sumo-logic/dashboards/cloudflare-performance-hostname-content-type-request-methods-connection-type-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare Performance Hostname, Content Type, Request Methods, Connection Type](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-performance-hostname-content-type-request-methods-connection-type-dashboard-sumo-logic.png)
 
 #### Cloudflare - Performance (Static vs. Dynamic Content)
 
 Get insights into the performance of your static and dynamic content, including slowest URLs.
-![Sumo Logic dashboard Cloudflare - Performance Static vs. Dynamic Content](../../../static/images/sumo-logic/dashboards/cloudflare-performance-static-vs-dynamic-content-dashboard-sumo-logic.png)
+![Sumo Logic dashboard Cloudflare - Performance Static vs. Dynamic Content](/fundamentals/static/images/sumo-logic/dashboards/cloudflare-performance-static-vs-dynamic-content-dashboard-sumo-logic.png)
 
 ### Filters
 
@@ -128,7 +129,7 @@ All dashboards have a set of filters that you can apply to the entire dashboard,
 
 Click the **funnel icon** in the top dashboard menu bar to display a scrollable list of filters that are applied across the entire dashboard.
 
-![Sumo Logic dashboard filtering](../../../static/images/sumo-logic/screenshots/filter-sumo-logic.png)
+![Sumo Logic dashboard filtering](/fundamentals/static/images/sumo-logic/screenshots/filter-sumo-logic.png)
 
 <Aside type="note" header="Note">
 

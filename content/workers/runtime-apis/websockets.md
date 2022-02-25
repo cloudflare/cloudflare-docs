@@ -1,5 +1,6 @@
 ---
 pcx-content-type: configuration
+title: WebSockets
 ---
 
 # WebSockets
@@ -51,7 +52,7 @@ let [client, server] = Object.values(new WebSocketPair())
 
 *   `event` <TypeLink href="#events">WebSocketEvent</TypeLink>
 
-    *   The WebSocket event (refer to [Events](/runtime-apis/websockets#events) to listen to.
+    *   The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events) to listen to.
 
 *   <Code>callbackFunction(message<TypeLink href="#message">Message</TypeLink>) <Type>Function</Type></Code>
 

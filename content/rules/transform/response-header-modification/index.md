@@ -1,7 +1,9 @@
 ---
 title: Response Header Modification Rules
 pcx-content-type: concept
-order: 2
+weight: 3
+meta:
+  title: HTTP Response Header Modification Rules
 ---
 
 # HTTP Response Header Modification Rules
@@ -12,9 +14,9 @@ You can manipulate the headers included in the HTTP response through HTTP Respon
 *   Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response.
 *   Remove an HTTP header from the response.
 
-You can create an HTTP Response Header Modification Rule [in the dashboard](/transform/response-header-modification/create-dashboard) or [via API](/transform/response-header-modification/create-api).
+You can create an HTTP Response Header Modification Rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/) or [via API](/rules/transform/response-header-modification/create-api/).
 
-To modify HTTP headers in the **request**, refer to [HTTP Request Header Modification Rules](/transform/request-header-modification).
+To modify HTTP headers in the **request**, refer to [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/).
 
 ## Important remarks
 

@@ -1,7 +1,9 @@
 ---
 pcx-content-type: reference
-order: 480
 type: table
+title: Expression validation
+weight: 481
+layout: list
 ---
 
 # Expression validation

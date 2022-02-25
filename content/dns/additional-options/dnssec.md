@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: how-to
+title: Set up DNSSEC
+weight: 3
 ---
 
 # Set up DNSSEC

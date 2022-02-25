@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Use a pre-existing Access group.
 tags:
-- Access group
+  - Access group
+title: Access group
+weight: 4
+layout: example
 ---
 
 # Access group

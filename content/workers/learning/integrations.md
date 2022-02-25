@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: Integrations
+weight: 0
 ---
 
 # Integrations
@@ -13,7 +14,7 @@ Integrate Workers to your existing services and platforms to optimize your conti
 
 ## Lerna
 
-*   [Lerna](https://lerna.js.org/) allows you to easily [manage multiple Workers projects in one repository](/tutorials/manage-projects-with-lerna).
+*   [Lerna](https://lerna.js.org/) allows you to easily [manage multiple Workers projects in one repository](/workers/tutorials/manage-projects-with-lerna/).
 
 ## Terraform
 

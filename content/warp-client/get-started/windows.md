@@ -1,7 +1,9 @@
 ---
 title: Windows
-order:
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: Windows desktop client
 ---
 
 # Windows desktop client
@@ -11,7 +13,7 @@ pcx-content-type: how-to
 3.  Open `Cloudflare_WARP_Release-x64.msi`.
 4.  Follow the instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
-![Windows system tray](../static/windowsSysTray.png)
+![Windows system tray](/warp-client/static/windowsSysTray.png)
 
 ## What Cloudflare places on your device
 

@@ -1,6 +1,7 @@
 ---
-order:
 pcx-content-type: concept
+title: FTP
+weight: 0
 ---
 
 # FTP
@@ -37,7 +38,7 @@ Configuring Spectrum to protect your FTP server requires creating a set of Spect
 
 The control plane runs on port 21 by default, and there is nothing special that needs to be to protect this part of the FTP server. In the example below, replace 198.51.100.1 with the IP of the origin server.
 
-![Control plane port](../img/ftp/ftp-control-plane-app.png)
+![Control plane port](/spectrum/img/ftp/ftp-control-plane-app.png)
 
 This configuration proxies incoming connections to the origin. However, if clients issue a PASV command, they will still receive the IP of the actual origin for the data connection. This is not preferred, as this exposes the origin's IP to the client instead of being masked behind Spectrum. Steps to prevent this are documented in sections below.
 

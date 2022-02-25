@@ -15,7 +15,7 @@ First, determine whether to focus on Requests or Data Transfer. The default view
 
 You can toggle between Requests and Data Transfer while keeping other analytics filters enabled.
 
-For best practices related to Cache Analytics, refer to [Cache performance](/best-practices/cache-performance).
+For best practices related to Cache Analytics, refer to [Cache performance](/cache/best-practices/cache-performance/).
 
 ## Add filters
 
@@ -33,7 +33,7 @@ For **Data Transfer**, **Revalidated** requests are considered **Served by Cloud
 
 **Cache status** graphs help explain why traffic is served from Cloudflare versus the origin web server. The graph shows analytics by content-type to portray how different components of your website perform:
 
-For a list of cache statuses and their descriptions, refer to [Cloudflare cache responses](/about/default-cache-behavior#cloudflare-cache-responses).
+For a list of cache statuses and their descriptions, refer to [Cloudflare cache responses](/cache/about/default-cache-behavior/#cloudflare-cache-responses).
 
 ## Review requests by source
 

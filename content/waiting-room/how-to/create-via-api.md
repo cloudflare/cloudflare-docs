@@ -1,7 +1,9 @@
 ---
 title: Create via API
-order: 1
 pcx-content-type: how-to
+weight: 2
+meta:
+  title: Create a waiting room via the API
 ---
 
 # Create a waiting room via the API
@@ -101,7 +103,7 @@ The response for the request above is:
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
-In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/additional-options/customize-waiting-room):
+In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/waiting-room/additional-options/customize-waiting-room/):
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"

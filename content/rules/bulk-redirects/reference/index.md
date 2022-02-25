@@ -1,7 +1,9 @@
 ---
 title: Reference
-order: 8
 pcx-content-type: navigation
+weight: 9
+meta:
+  title: Bulk Redirects reference
 ---
 
 # Bulk Redirects reference

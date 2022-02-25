@@ -1,14 +1,15 @@
 ---
 pcx-content-type: configuration
+title: WritableStream
 ---
 
 # WritableStream
 
 ## Background
 
-A `WritableStream` is the `writable` property of a [`TransformStream`](/runtime-apis/streams/transformstream). On the Workers platform, `WritableStream` cannot be directly created using the `WritableStream` constructor.
+A `WritableStream` is the `writable` property of a [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `WritableStream` cannot be directly created using the `WritableStream` constructor.
 
-A typical way to write to a `WritableStream` is to simply pipe a [`ReadableStream`](/runtime-apis/streams/readablestream) to it.
+A typical way to write to a `WritableStream` is to simply pipe a [`ReadableStream`](/workers/runtime-apis/streams/readablestream/) to it.
 
 ```js
 readableStream.pipeTo(writableStream)
@@ -23,7 +24,7 @@ const writer = writableStream.getWriter()
 writer.write(data)
 ```
 
-Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamdefaultwriter) documentation for further detail.
+Refer to the [WritableStreamDefaultWriter](/workers/runtime-apis/streams/writablestreamdefaultwriter/) documentation for further detail.
 
 ## Properties
 
@@ -41,7 +42,7 @@ Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamd
 
 *   <Code>abort(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise\<void></Type>
 
-    *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
+    *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
     <Aside type="warning" header="Warning">
 
@@ -57,5 +58,5 @@ Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamd
 
 ## Related resources
 
-*   [Using Streams.](/learning/using-streams)
+*   [Using Streams.](/workers/learning/using-streams/)
 *   [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)

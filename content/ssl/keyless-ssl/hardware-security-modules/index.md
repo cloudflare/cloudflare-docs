@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Hardware security modules
+weight: 2
 ---
 
 # Hardware security modules
@@ -23,7 +24,7 @@ The key server communicates with HSMs via PKCS#11, so any HSM supporting the sta
 
 ### Initial configuration
 
-For more details on initializing your PKCS#11 token, refer to [Configuration](/keyless-ssl/hardware-security-modules/configuration).
+For more details on initializing your PKCS#11 token, refer to [Configuration](/ssl/keyless-ssl/hardware-security-modules/configuration/).
 
 ### Compatibility
 
@@ -36,10 +37,10 @@ We have verified interoperability with the following modules:
 
 We’ve also tested with the following Cloud HSM offerings:
 
-*   [AWS CloudHSM](aws-cloud-hsm)
-*   [IBM Cloud HSM](ibm-cloud-hsm)
-*   [Azure Dedicated HSM](azure-dedicated-hsm)
-*   [Azure Managed HSM](azure-managed-hsm)
-*   [Google Cloud HSM](google-cloud-hsm)
+*   [AWS CloudHSM](/ssl/aws-cloud-hsm/)
+*   [IBM Cloud HSM](/ssl/ibm-cloud-hsm/)
+*   [Azure Dedicated HSM](/ssl/azure-dedicated-hsm/)
+*   [Azure Managed HSM](/ssl/azure-managed-hsm/)
+*   [Google Cloud HSM](/ssl/google-cloud-hsm/)
 
 If you have deployed Keyless SSL with an HSM model not listed above, please email keyless@cloudflare.com with details.

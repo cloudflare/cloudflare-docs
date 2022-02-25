@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Staging environment (Beta)
+weight: 6
 ---
 
 # Staging environment (Beta)
@@ -27,7 +28,7 @@ To upload custom (modern) certificates to your staging environment:
 
 1.  Navigate to **SSL/TLS** > **Staging Certificates**.
 2.  Click **Upload Custom Staging Certificate**.
-3.  Upload your custom (modern) certificate ([detailed instructions](/edge-certificates/custom-certificates/uploading)).
+3.  Upload your custom (modern) certificate ([detailed instructions](/ssl/edge-certificates/custom-certificates/uploading/)).
 4.  Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
 
 ### Step 2 — Test certificate

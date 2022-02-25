@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 5
+title: Transfer a .UK domain to Cloudflare
+weight: 6
 ---
 
 # Transfer a .UK domain to Cloudflare

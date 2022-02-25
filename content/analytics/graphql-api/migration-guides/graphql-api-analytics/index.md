@@ -1,7 +1,9 @@
 ---
 title: HTTP Requests by Colo Groups to HTTP Requests by Adaptive Groups
-order: 10
 pcx-content-type: reference
+weight: 11
+meta:
+  title: to
 ---
 
 # `httpRequests1mByColoGroups/httpRequests1dByColoGroups` to `httpRequestsAdaptiveGroups`

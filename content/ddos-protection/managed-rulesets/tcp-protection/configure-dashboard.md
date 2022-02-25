@@ -1,6 +1,7 @@
 ---
 pcx-content-type: how-to
-order: 1
+title: Configure Advanced TCP Protection in the dashboard
+weight: 2
 ---
 
 # Configure Advanced TCP Protection in the dashboard

@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 1
 pcx-content-type: concept
+weight: 2
+meta:
+  title: Magic Firewall
 ---
 
 # Magic Firewall

@@ -1,7 +1,9 @@
 ---
 title: Verify requirements
-order: 2
 pcx-content-type: how-to
+weight: 3
+meta:
+  title: Requirements
 ---
 
 # Requirements
@@ -18,7 +20,7 @@ Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit pack
 
 ## Set maximum segment size
 
-![Packet flow diagram](../images/mss-values-and-packet.png)
+![Packet flow diagram](/magic-wan/static/mss-values-and-packet.png)
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 

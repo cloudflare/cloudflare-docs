@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Applying watermarks
+weight: 6
 ---
 
 # Applying watermarks
@@ -32,7 +33,7 @@ tus-upload --chunk-size 5242880 \
 
 ### Step 3: Done
 
-![Watermarked Video](./cat.png)
+![Watermarked Video](/stream/cat.png)
 
 ## Profiles
 

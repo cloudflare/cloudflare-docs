@@ -3,13 +3,14 @@ updated: 2021-03-16
 category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
+title: Output an app's token to a variable with one command
 ---
 
 # Output an app's token to a variable with one command
 
-You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applications and servers to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections.
+You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network. Cloudflare Tunnel relies on a piece of software, `cloudflared`, to create those connections.
 
-You can also secure those applications with [Cloudflare Access](/applications/configure-apps/self-hosted-apps). With Cloudflare Access, you can build Zero Trust rules which restrict who can reach your application based on signals like identity, multifactor method, device posture, and geography.
+You can also secure those applications with [Cloudflare Access](/cloudflare-one/applications/configure-apps/self-hosted-apps/). With Cloudflare Access, you can build Zero Trust rules which restrict who can reach your application based on signals like identity, multifactor method, device posture, and geography.
 
 When users authenticate to the applications secured by Cloudflare Access, Cloudflare generates a JSON Web Token (JWT) that contains the user's information and permits the user to reach the application. In web-based use cases, the browser stores the JWT as a cookie.
 
@@ -28,7 +29,7 @@ You can also use `cloudflared` to quickly gather the JWT from an application and
 
 ## Install `cloudflared`
 
-Start by [downloading and installing](/connections/connect-apps/install-and-setup/installation) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
+Start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 
 `$ brew install cloudflare/cloudflare/cloudflared`
 

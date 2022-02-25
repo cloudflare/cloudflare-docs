@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: reference
+title: Roles and permissions
+weight: 21
 ---
 
 # Roles and permissions

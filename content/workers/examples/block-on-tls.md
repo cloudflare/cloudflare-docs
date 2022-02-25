@@ -1,11 +1,13 @@
 ---
-order: 1000
 type: example
 summary: Inspects the incoming request's TLS version and blocks if under TLSv1.2.
 tags:
   - Security
   - Middleware
 pcx-content-type: configuration
+title: Block on TLS
+weight: 1001
+layout: example
 ---
 
 # Block on TLS

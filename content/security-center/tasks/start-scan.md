@@ -1,11 +1,12 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Start a new scan
+weight: 4
 ---
 
 # Start a new scan
 
-Once you enable Security Insights, Cloudflare performs scans at a [regular frequency](/about#scan-frequency), according to your Cloudflare plan.
+Once you enable Security Insights, Cloudflare performs scans at a [regular frequency](/security-center/about/#scan-frequency), according to your Cloudflare plan.
 
 Additionally, if your account has at least one Business or Enterprise zone, or if your account is on the Teams Standard or Teams Enterprise plan, you can manually start a new scan.
 

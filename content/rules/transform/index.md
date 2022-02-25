@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 2
+title: Transform Rules
+weight: 3
 ---
 
 # Transform Rules
@@ -21,7 +22,7 @@ To configure Transform Rules in the dashboard, use the **Transform Rules** tab i
 
 Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
 
-Request and response fields are immutable within each [phase](https://developers.cloudflare.com/ruleset-engine/about#phases) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](https://developers.cloudflare.com/ruleset-engine/about#rule-evaluation-and-field-values).
+Request and response fields are immutable within each [phase](/ruleset-engine/about#phases) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about#rule-evaluation-and-field-values).
 
 ## Availability
 
@@ -46,14 +47,14 @@ A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/h
 
 To get started building your own Transform Rules in the dashboard, refer to the following pages:
 
-*   [Create a URL Rewrite Rule](/transform/url-rewrite/create-dashboard)
-*   [Create an HTTP Request Header Modification Rule](/transform/request-header-modification/create-dashboard)
-*   [Create an HTTP Response Header Modification Rule](/transform/response-header-modification/create-dashboard)
+*   [Create a URL Rewrite Rule](/rules/transform/url-rewrite/create-dashboard/)
+*   [Create an HTTP Request Header Modification Rule](/rules/transform/request-header-modification/create-dashboard/)
+*   [Create an HTTP Response Header Modification Rule](/rules/transform/response-header-modification/create-dashboard/)
 
 You can also create Transform Rules via API:
 
-*   [Create a URL Rewrite Rule via API](/transform/url-rewrite/create-api)
-*   [Create an HTTP Request Header Modification Rule via API](/transform/request-header-modification/create-api)
-*   [Create an HTTP Response Header Modification Rule via API](/transform/response-header-modification/create-api)
+*   [Create a URL Rewrite Rule via API](/rules/transform/url-rewrite/create-api/)
+*   [Create an HTTP Request Header Modification Rule via API](/rules/transform/request-header-modification/create-api/)
+*   [Create an HTTP Response Header Modification Rule via API](/rules/transform/response-header-modification/create-api/)
 
-Refer to [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language) for more information on building expressions for Transform Rules.
+Refer to [Rules language](/ruleset-engine/rules-language) for more information on building expressions for Transform Rules.

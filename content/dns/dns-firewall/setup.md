@@ -1,7 +1,9 @@
 ---
-order: 0
 title: Setup
 pcx-content-type: how-to
+weight: 1
+meta:
+  title: Set up DNS Firewall
 ---
 
 # Set up DNS Firewall

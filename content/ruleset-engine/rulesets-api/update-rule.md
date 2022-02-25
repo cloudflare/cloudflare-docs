@@ -1,8 +1,9 @@
 ---
 title: Update a rule in a ruleset
 pcx-content-type: reference
-order: 786
 type: overview
+weight: 787
+layout: list
 ---
 
 # Update a rule in a ruleset

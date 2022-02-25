@@ -1,6 +1,7 @@
 ---
-order: 7
 pcx-content-type: reference
+title: Delete variants
+weight: 8
 ---
 
 # Delete variants

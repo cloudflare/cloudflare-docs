@@ -1,5 +1,6 @@
 ---
 pcx-content-type: concept
+title: Cache Deception Armor
 ---
 
 # Cache Deception Armor
@@ -20,7 +21,7 @@ You can protect users from Web Cache Deception attacks by adding a Cache Decepti
 
 In the newsfeed example above, if `http://www.example.com/newsfeed` is a script that outputs a web page, the `Content-Type` is `text/html`. On the other hand, `http://www.example.com/newsfeed/foo.jpg` is expected to have `image/jpeg` as `Content-Type`. When a mismatch that could result in a Web Cache Deception attack is found, Cloudflare does not cache the response.
 
-To enable Cache Deception Armor, refer to [Enable Cache Deception Armor](/how-to/enable-cache-deception-armor).
+To enable Cache Deception Armor, refer to [Enable Cache Deception Armor](/cache/how-to/enable-cache-deception-armor/).
 
 ### Exceptions
 

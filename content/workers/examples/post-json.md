@@ -1,10 +1,12 @@
 ---
-order: 1000
 type: example
 summary: Send a POST request with JSON data. Use to share data with external servers.
 tags:
   - Originless
 pcx-content-type: configuration
+title: Post JSON
+weight: 1001
+layout: example
 ---
 
 # Post JSON

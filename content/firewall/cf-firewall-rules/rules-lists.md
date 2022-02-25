@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 240
+title: IP Lists
+weight: 241
 ---
 
 # IP Lists
@@ -73,13 +74,13 @@ The following user roles have access to the List management functionality:
 
 ## Managing lists
 
-*   To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/cf-dashboard/rules-lists).
-*   To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/api/cf-lists/).
+*   To manage and edit IP Lists from your Cloudflare account interface, refer to [Use IP Lists](/firewall/cf-dashboard/rules-lists/).
+*   To manage and edit IP Lists using the Cloudflare API, refer to [Lists API](/firewall/api/cf-lists/).
 
 ## Using lists in expressions
 
 Both the Cloudflare dashboard and the Cloudflare API support IP Lists.
 
-To use IP Lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/cf-dashboard/rules-lists/use-lists-in-expressions).
+To use IP Lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/).
 
-To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: Lists](https://developers.cloudflare.com/ruleset-engine/rules-language/values#lists) in the Rules language reference.
+To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values#lists) in the Rules language reference.

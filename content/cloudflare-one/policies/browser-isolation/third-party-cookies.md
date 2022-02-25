@@ -1,7 +1,8 @@
 ---
-order: 3
 pcx-content-type: how-to
 hidden: true
+title: Enable third-party cookies
+weight: 4
 ---
 
 # Enable third-party cookies

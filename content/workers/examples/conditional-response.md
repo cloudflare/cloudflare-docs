@@ -1,10 +1,13 @@
 ---
-order: 1000
 type: example
-summary: Return a response based on the incoming request's URL, HTTP method, User Agent, IP address, ASN or device type.
+summary: Return a response based on the incoming request's URL, HTTP method,
+  User Agent, IP address, ASN or device type.
 tags:
   - Middleware
 pcx-content-type: configuration
+title: Conditional response
+weight: 1001
+layout: example
 ---
 
 # Conditional response

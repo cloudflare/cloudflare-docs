@@ -1,6 +1,7 @@
 ---
-order: 71
 pcx-content-type: concept
+title: DNS
+weight: 72
 ---
 
 # DNS
@@ -32,7 +33,7 @@ Raw DNS request:
 
 Wireshark’s interpretation:
 
-![dns-wireshark](../static/dns-wireshark.jpg)
+![dns-wireshark](/fundamentals/static/dns-wireshark.jpg)
 
 Raw DNS Response:
 
@@ -44,15 +45,15 @@ Raw DNS Response:
 
 Wireshark’s interpretation:
 
-![dns-wireshark](../static/dns-wireshark-response.jpg)
+![dns-wireshark](/fundamentals/static/dns-wireshark-response.jpg)
 
 ## How DNS works
 
-DNS is a distributed key/value database. The values returned can in theory be anything but in practice need to fit into well known types, such as addresses, mail exchanges, sever lists, free format text records etc. The keys consist of a name, type, and class. The name space is hierarchical (see below) and DNS information is “published” by Authoritative Servers. DNS Resolvers will locate the information requested by asking the appropriate authoritative servers by following the naming hierarchy from one Authoritative DNS server to the next one. The ISP typically provides a Recursive Resolver that will perform resolution on behalf of customers. You can also use a public resolver like the ones provided by Cloudflare [(1.1.1.1, 1.0.0.1)](https://developers.cloudflare.com/1.1.1.1/), Google (8.8.8.8, 8.8.4.4) or OpenDNS (208.67.222.222, 208.67.220.220).
+DNS is a distributed key/value database. The values returned can in theory be anything but in practice need to fit into well known types, such as addresses, mail exchanges, sever lists, free format text records etc. The keys consist of a name, type, and class. The name space is hierarchical (see below) and DNS information is “published” by Authoritative Servers. DNS Resolvers will locate the information requested by asking the appropriate authoritative servers by following the naming hierarchy from one Authoritative DNS server to the next one. The ISP typically provides a Recursive Resolver that will perform resolution on behalf of customers. You can also use a public resolver like the ones provided by Cloudflare [(1.1.1.1, 1.0.0.1)](/1.1.1.1/), Google (8.8.8.8, 8.8.4.4) or OpenDNS (208.67.222.222, 208.67.220.220).
 
 Web-enabled applications like browsers use something called a Stub Resolver to interact with the DNS. Once the application or browser has obtained the IP address of the website, they can access it using the HTTP or HTTPS protocols.
 
-![dns-diagram](../static/dns-diagram.jpg)
+![dns-diagram](/fundamentals/static/dns-diagram.jpg)
 
 ## The DNS Namespace
 
@@ -104,7 +105,7 @@ The DS record is a hash of a DNSKEY. The .com zone stores this record for each z
 
 The ultimate root of trust is the KSK DNSKEY for the DNS root. This key is universally known and published.
 
-![dns-trust-anchor](../static/dnstrustanchor.jpg)
+![dns-trust-anchor](/fundamentals/static/dnstrustanchor.jpg)
 
 By following the chain of DNSKEY, DS and RRSIG records to the root, any record can be trusted.
 
@@ -154,7 +155,7 @@ Of the requests above, message number 3 is a good target to attack. This is beca
 
 If one of your malicious—acceptable—responses arrives ahead of the real response, the recursive resolver will believe your record and cache it for as long as the TTL is set. Then any other clients asking for the poisoned record will be directed to your malicious servers.
 
-![dns-diagram](../static/kaminsky-1.jpg)
+![dns-diagram](/fundamentals/static/kaminsky-1.jpg)
 
 There are some complications that make this harder than it sounds in practice. For example, you have to guess:
 

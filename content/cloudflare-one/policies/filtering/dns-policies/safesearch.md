@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: SafeSearch
+weight: 7
 ---
 
 # SafeSearch
@@ -11,7 +12,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 
-1.  Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/policies/filtering/dns-policies/policy-management).
+1.  Navigate to the **Policies** tab. If you don't have a policy, create one following [these instructions](/cloudflare-one/policies/filtering/dns-policies/policy-management/).
 
 2.  Navigate to the **Overview** tab.
 
@@ -19,7 +20,7 @@ To enable SafeSearch for Cloudflare Gateway, follow the steps below:
 
 4.  Enable the switch inside the **SafeSearch** card.
 
-![SafeSearch Card](../../../static/documentation/policies/safesearch-card.png)
+![SafeSearch Card](/cloudflare-one/static/documentation/policies/safesearch-card.png)
 
 5.  Hit **Save**.
 
@@ -31,22 +32,22 @@ You can test if SafeSearch is working by performing dig on the search engines. I
 
 Google will return `forcesafesearch.google.com`.
 
-![SafeSearch Google](../../../static/documentation/policies/google-safesearch.png)
+![SafeSearch Google](/cloudflare-one/static/documentation/policies/google-safesearch.png)
 
 ### YouTube
 
 YouTube will return `restrict.youtube.com`.
 
-![SafeSearch Youtube](../../../static/documentation/policies/youtube-safesearch.png)
+![SafeSearch Youtube](/cloudflare-one/static/documentation/policies/youtube-safesearch.png)
 
 ### Bing
 
 Bing will return `strict.bing.com`.
 
-![SafeSearch Bing](../../../static/documentation/policies/bing-safesearch.png)
+![SafeSearch Bing](/cloudflare-one/static/documentation/policies/bing-safesearch.png)
 
 ### DuckDuckGo
 
 DuckDuckGo will return `safe.duckduckgo.com`.
 
-![SafeSearch DuckDuckGo](../../../static/documentation/policies/duckduckgo-safesearch.png)
+![SafeSearch DuckDuckGo](/cloudflare-one/static/documentation/policies/duckduckgo-safesearch.png)

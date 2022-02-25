@@ -1,7 +1,9 @@
 ---
 title: Common use cases
 pcx-content-type: configuration
-order: 19
+weight: 20
+meta:
+  title: Common rate limiting use cases
 ---
 
 # Common rate limiting use cases

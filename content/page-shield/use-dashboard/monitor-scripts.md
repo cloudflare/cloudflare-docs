@@ -1,20 +1,22 @@
 ---
 title: Monitor scripts
-order: 1
 pcx-content-type: how-to
+weight: 2
+meta:
+  title: Monitor scripts on your site
 ---
 
 # Monitor scripts on your site
 
-Once you have [activated Page Shield](/get-started), review the **Script Monitor dashboard** to see which scripts are running on your domain. Scripts on the dashboard appear in close to real time, so use the dashboard when proactively looking for scripts. The dashboard only displays scripts last seen within past 30 days.
+Once you have [activated Page Shield](/page-shield/get-started/), review the **Script Monitor dashboard** to see which scripts are running on your domain. Scripts on the dashboard appear in close to real time, so use the dashboard when proactively looking for scripts. The dashboard only displays scripts last seen within past 30 days.
 
 If you see unexpected scripts on the dashboard, check them for signs of malicious activity.
 
 Depending on your Cloudflare plan, you may also be able to:
 
 *   [View the details of each script](#view-script-details)
-*   [Review scripts marked as malicious](/use-dashboard/review-malicious-scripts)
-*   [Review changed scripts](/use-dashboard/review-changed-scripts)
+*   [Review scripts marked as malicious](/page-shield/use-dashboard/review-malicious-scripts/)
+*   [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/)
 
 ## Use the Script Monitor dashboard
 

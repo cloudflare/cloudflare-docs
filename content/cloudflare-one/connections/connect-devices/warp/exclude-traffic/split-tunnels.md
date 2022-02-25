@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Split Tunnels
+weight: 6
 ---
 
 # Split Tunnels
@@ -9,7 +10,7 @@ pcx-content-type: how-to
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
 | All systems | WARP with Gateway | All plans |
 
@@ -61,7 +62,7 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 
 1.  Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
 2.  You may inadvertently exclude or include additional hostnames that happen to share an IP address.
-3.  Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/policies/filtering/http-policies/application-app-types), you will need to ensure you add all domains used by a particular app or service.
+3.  Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/http-policies/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
 4.  If a DNS result has been previously cached it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
 
 </Aside>

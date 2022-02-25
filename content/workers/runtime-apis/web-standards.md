@@ -1,6 +1,8 @@
 ---
 title: Web standards
 pcx-content-type: configuration
+meta:
+  title: JavaScript and web standards
 ---
 
 # JavaScript and web standards
@@ -63,7 +65,7 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 <Aside type="note">
 
-Timers are only available inside of [the Request Context](/runtime-apis/request#the-request-context).
+Timers are only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
 
 </Aside>
 
@@ -81,13 +83,13 @@ The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortCo
 
 *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch">fetch()</TypeLink>
 
-    *   Starts the process of fetching a resource from the network. Refer to [Fetch API](/runtime-apis/fetch).
+    *   Starts the process of fetching a resource from the network. Refer to [Fetch API](/workers/runtime-apis/fetch/).
 
 </Definitions>
 
 <Aside type="note">
 
-The Fetch API is only available inside of [the Request Context](/runtime-apis/request#the-request-context).
+The Fetch API is only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
 
 </Aside>
 
@@ -109,6 +111,6 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 <Aside type="note">
 
-The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/cli-wrangler/webpack/#shimming-globals).
+The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
 
 </Aside>

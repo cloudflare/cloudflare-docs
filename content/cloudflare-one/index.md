@@ -1,8 +1,11 @@
 ---
 title: Overview
-order: 0
 type: overview
 pcx-content-type: overview
+weight: 1
+layout: list
+meta:
+  title: Cloudflare Zero Trust documentation
 ---
 
 # Cloudflare Zero Trust documentation
@@ -29,6 +32,6 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 *   Mitigate the impact of attacks
 *   Seamless, lightning-fast end user experience
 
-![Cloudflare Zero Trust illustration](/static/documentation/teams-no-background.png)
+![Cloudflare Zero Trust illustration](/cloudflare-one/static/documentation/teams-no-background.png)
 
 </ContentColumn>

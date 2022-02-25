@@ -1,6 +1,7 @@
 ---
-order: 22
 pcx-content-type: reference
+title: Increase logging for Railgun
+weight: 23
 ---
 
 # Increase logging for Railgun

@@ -1,13 +1,14 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: SaaS applications
+weight: 2
 ---
 
 # SaaS applications
 
 Cloudflare Access allows you to integrate your SaaS products by acting as an identity aggregator, or proxy. This way, users cannot login to SaaS applications without first meeting the criteria you want to introduce.
 
-![SaaS applications diagram](../../static/documentation/applications/diagram-saas.jpg)
+![SaaS applications diagram](/cloudflare-one/static/documentation/applications/diagram-saas.jpg)
 
 ## 1. Add your application
 
@@ -17,7 +18,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 3.  Select **SaaS**.
 
-![Access Saas and Self-Hosted](../../static/documentation/applications/add-saas-application.png)
+![Access Saas and Self-Hosted](/cloudflare-one/static/documentation/applications/add-saas-application.png)
 
 1.  In the **Configure app** section, select an application from the Application drop-down menu. If your application is not listed, type its name in the textbox and select it.
 
@@ -28,7 +29,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 4.  If your SaaS application requires additional SAML statements, add the mapping of your IdP’s attributes you would like to include in the SAML statement sent to the SaaS application.
 
-![Custom SaaS statements](../../static/documentation/applications/custom-saas-statements.png)
+![Custom SaaS statements](/cloudflare-one/static/documentation/applications/custom-saas-statements.png)
 
 1.  Scroll down to the **Application visibility** card.
 
@@ -41,7 +42,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 2.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
-![Setup SaaS IdPs](../../static/documentation/applications/saas-idp.png)
+![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-idp.png)
 
 1.  Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
@@ -51,7 +52,7 @@ Cloudflare Access allows you to integrate your SaaS products by acting as an ide
 
 You can now configure a policy to control who can access your app.
 
-To learn more about how policies work, read our [Policies](/policies/).
+To learn more about how policies work, read our [Policies](/cloudflare-one/policies/).
 
 1.  First, specify a name for your rule. This is a mandatory field.
 2.  Specify a policy action.
@@ -68,6 +69,6 @@ Before you begin using your application through Access, your last step is to int
 *   Your Access Entity ID or Issuer
 *   Your Public key
 
-![Setup SaaS IdPs](../../static/documentation/applications/saas-integrate.png)
+![Setup SaaS IdPs](/cloudflare-one/static/documentation/applications/saas-integrate.png)
 
 1.  Click **Done** to see your application listed on your Applications tab.

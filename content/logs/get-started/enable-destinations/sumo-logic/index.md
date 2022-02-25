@@ -1,7 +1,9 @@
 ---
 title: Enable Sumo Logic
-order: 65
 pcx-content-type: how-to
+weight: 66
+meta:
+  title: Enable Logpush to Sumo Logic
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"

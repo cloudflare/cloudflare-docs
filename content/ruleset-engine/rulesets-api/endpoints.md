@@ -1,7 +1,7 @@
 ---
 title: Endpoints
 pcx-content-type: reference
-order: 782
+weight: 783
 ---
 
 # Endpoints

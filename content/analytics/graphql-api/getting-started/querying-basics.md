@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: reference
+title: Querying basics
+weight: 21
 ---
 
 # Querying basics
@@ -159,7 +160,7 @@ This is only an example. You must specify the <code>zoneTag</code> for your doma
 
 The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
 
-For an introduction to browsing the Analytics GraphQL API, refer to [Explore the Analytics schema with GraphiQL](/graphql-api/getting-started/explore-graphql-schema).
+For an introduction to browsing the Analytics GraphQL API, refer to [Explore the Analytics schema with GraphiQL](/analytics/graphql-api/getting-started/explore-graphql-schema/).
 
 ## Helpful Resources
 

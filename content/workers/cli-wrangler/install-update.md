@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: how-to
+title: Install / Update
+weight: 1
 ---
 
 # Install / Update

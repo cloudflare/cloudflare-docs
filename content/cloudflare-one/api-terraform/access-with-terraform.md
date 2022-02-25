@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Terraform
+weight: 4
 ---
 
 # Terraform
@@ -33,14 +34,14 @@ Here is an example configuration:
       session_duration = "24h"
     }
 
-2.  Next, we need to export our environment variables and secrets:
+2\.  Next, we need to export our environment variables and secrets:
 
 <!---->
 
     $ export CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
     $ export CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
 
-3.  Now we can run a `terraform plan` which will output any proposed changes. Make sure to review the plan carefully:
+3\.  Now we can run a `terraform plan` which will output any proposed changes. Make sure to review the plan carefully:
 
 <!---->
 
@@ -77,7 +78,7 @@ Here is an example configuration:
     can't guarantee that exactly these actions will be performed if
     "terraform apply" is subsequently run.
 
-4.  Apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
+4\.  Apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
 
 <!---->
 
@@ -150,7 +151,7 @@ To do so:
     can't guarantee that exactly these actions will be performed if
     "terraform apply" is subsequently run.
 
-2.  Next, apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
+2\.  Next, apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
 
 <!---->
 

@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Access groups
+weight: 2
 ---
 
 # Access groups
@@ -22,11 +23,11 @@ Imagine you want to grant access to your applications to your team based in Lisb
 *   an Include rule granting access to everyone in Portugal, and
 *   a Require rule restricting access to users whose email ends in `@team.com`.
 
-![Groups](../../static/documentation/identity/users/access-groups.png)
+![Groups](/cloudflare-one/static/documentation/identity/users/access-groups.png)
 
 Once the group is set up, you can use it to configure rules within your applications as follows:
 
-![Access Groups with Policies](../../static/documentation/identity/users/access-groups-setup.png)
+![Access Groups with Policies](/cloudflare-one/static/documentation/identity/users/access-groups-setup.png)
 
 ## Create a group
 
@@ -38,7 +39,7 @@ To create and manage groups:
 4.  Enter a name for the group.
 5.  Specify as many rules as needed to define your user group.
 
-![Group Rules](../../static/documentation/identity/users/group-rules.png)
+![Group Rules](/cloudflare-one/static/documentation/identity/users/group-rules.png)
 
 6.  Click **Save**.
 
@@ -46,7 +47,7 @@ To create and manage groups:
 
 Group criteria determine whether or not a user is a member of a particular group.
 
-Groups follow the same [logic](/policies/) as rules for Zero Trust policies in Access.
+Groups follow the same [logic](/cloudflare-one/policies/) as rules for Zero Trust policies in Access.
 
 Group criteria help define whether to include or exclude a team member from a  group. Here is a list of criteria and examples:
 

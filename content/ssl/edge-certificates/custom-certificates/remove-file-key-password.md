@@ -1,6 +1,7 @@
 ---
-order: 6
 pcx-content-type: how-to
+title: Remove key file password
+weight: 7
 ---
 
 # Remove key file password
@@ -31,7 +32,7 @@ The process for removing the password depends on your operating system. The foll
 
 5.  When prompted in the console window, enter the original key password.
 
-6.  [Upload the file contents](../uploading#upload-a-custom-certificate) to Cloudflare.
+6.  [Upload the file contents](/ssl/uploading/#upload-a-custom-certificate) to Cloudflare.
 
 </div>
 </details>
@@ -54,7 +55,7 @@ The process for removing the password depends on your operating system. The foll
 
 5.  Enter the original key password when prompted by the **openssl.exe** command window.
 
-6.  [Upload](../uploading#upload-a-custom-certificate) the contents of the `key.pem` file to Cloudflare.
+6.  [Upload](/ssl/uploading/#upload-a-custom-certificate) the contents of the `key.pem` file to Cloudflare.
 
 </div>
 </details>

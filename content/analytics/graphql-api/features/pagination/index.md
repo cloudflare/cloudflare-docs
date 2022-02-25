@@ -1,6 +1,7 @@
 ---
-order: 14
 pcx-content-type: reference
+title: Pagination
+weight: 15
 ---
 
 # Pagination

@@ -1,8 +1,11 @@
 ---
 title: Decrypt the payload content
 pcx-content-type: how-to
-order: 2
 type: overview
+weight: 3
+layout: list
+meta:
+  title: Decrypt the payload content in the command line
 ---
 
 # Decrypt the payload content in the command line

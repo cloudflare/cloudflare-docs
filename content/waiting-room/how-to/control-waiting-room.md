@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Control waiting room traffic
+weight: 4
 ---
 
 import QueueAll from "../\_partials/\_queue-all.md"
@@ -33,4 +34,4 @@ However, if you want all visitors to be queued — in preparation for a product 
 
 ## Queueing method
 
-For more details about queueing method, refer to [Queueing methods](/reference/queueing-methods).
+For more details about queueing method, refer to [Queueing methods](/waiting-room/reference/queueing-methods/).

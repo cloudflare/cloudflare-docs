@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: tutorial
+title: Browsing Content on IPFS
+weight: 2
 ---
 
 # Browsing Content on IPFS
@@ -9,7 +10,7 @@ Browsing IPFS using Cloudflare's gateway requires two things: a browser
 connected to the Internet, and the address of something on IPFS that you want to
 view.
 
-As mentioned on the [introduction](/ipfs-gateway/) page, every file added to the
+As mentioned on the [introduction](/distributed-web/ipfs-gateway/) page, every file added to the
 IPFS network is given a unique address based on its contents which is called a
 Content Identifier, or CID. So if you have an image stored on IPFS, its CID
 would be based on the hash of the bits that compose that image.

@@ -1,7 +1,9 @@
 ---
 title: Equinix Fabric
-order: 2
 pcx-content-type: tutorial
+weight: 3
+meta:
+  title: Equinix Users
 ---
 
 # Equinix Users

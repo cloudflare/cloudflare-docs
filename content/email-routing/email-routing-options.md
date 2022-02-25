@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Email Routing options
+weight: 3
 ---
 
 # Email Routing options

@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: get-started
+title: Get started
+weight: 2
 ---
 
 # Get started
@@ -15,15 +16,15 @@ Starting with an initial kickoff call, Cloudflare engages with your organization
 
 *Duration:* Less than one business day
 
-After your call with Cloudflare, verify that you meet the [onboarding requirements](/get-started/requirements/).
+After your call with Cloudflare, verify that you meet the [onboarding requirements](/magic-transit/get-started/requirements/).
 
-## 2. [Configure tunnels](/get-started/configure-tunnels)
+## 2. [Configure tunnels](/magic-transit/get-started/configure-tunnels/)
 
 Cloudflare sets up Anycast tunnels for Magic Transit based on configuration details you supply.
 
 *Duration:* ~4 business days
 
-Provide the information specified in [Specify GRE Tunnel Endpoints](/get-started/configure-tunnels/specify-gre-tunnel-endpoints/) so that Cloudflare can set up your tunnels.
+Provide the information specified in [Specify GRE Tunnel Endpoints](/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/) so that Cloudflare can set up your tunnels.
 
 ## 3. Run pre-flight checks
 
@@ -52,7 +53,7 @@ You control the edge router advertisement, which dictates whether Cloudflare’s
 
 You must put the appropriate MSS clamps in place before routing changes are made. Failure to apply an MSS clamp can result in dropped packets and hard-to-debug connectivity issues.
 
-When using [Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/) with Magic Transit, you must set the MSS clamp size to 1332 bytes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
+When using [Cloudflare Network Interconnect](/network-interconnect/) with Magic Transit, you must set the MSS clamp size to 1332 bytes to accommodate additional overhead from the foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the data center where traffic is ingested (close to the end user) to the facility with the CNI link.
 
 </Aside>
 

@@ -1,7 +1,9 @@
 ---
 title: iOS
-order:
 pcx-content-type: how-to
+weight: 0
+meta:
+  title: iOS mobile client
 ---
 
 # iOS mobile client

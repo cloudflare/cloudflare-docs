@@ -1,7 +1,9 @@
 ---
 title: Enable other providers
-order: 65
 pcx-content-type: how-to
+weight: 66
+meta:
+  title: Enable Logpush to other providers
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
@@ -12,7 +14,7 @@ Cloudflare Logpush supports pushing logs to a limited set of services providers.
 
 ## Manage via the Cloudflare dashboard
 
-Refer to [Enable destinations](/get-started/enable-destinations/) for the list of services you can configure to use with Logpush through the Cloudflare dashboard. Interested in a different service? Take this [survey](https://docs.google.com/forms/d/e/1FAIpQLScwOSabROywVajpMX2ZYCVl3saYs11cP4NIC8QR-wmOAnxOtA/viewform).
+Refer to [Enable destinations](/logs/get-started/enable-destinations/) for the list of services you can configure to use with Logpush through the Cloudflare dashboard. Interested in a different service? Take this [survey](https://docs.google.com/forms/d/e/1FAIpQLScwOSabROywVajpMX2ZYCVl3saYs11cP4NIC8QR-wmOAnxOtA/viewform).
 
 ## Manage via API
 
@@ -30,4 +32,4 @@ To get started:
     *   Zone ID
     *   Destination access details for your cloud service provider
 
-2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/reference/logpush-api-configuration).
+2.  Configure your Logpush job. For more information on how to configure a Logpush job, refer to [Logpush API configuration](/logs/reference/logpush-api-configuration/).

@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: navigation
+title: Concepts
+weight: 4
 ---
 
 # Concepts

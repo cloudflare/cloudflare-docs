@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: tutorial
+title: Azure Managed HSM
+weight: 4
 ---
 
 # Azure Managed HSM
@@ -26,7 +27,7 @@ Create a VM where you will deploy the keyless daemon.
 
 ## 2. Deploy the keyless server
 
-Follow [these instructions](/keyless-ssl/configuration##step-3--set-up-and-activate-key-server) to deploy your keyless server.
+Follow [these instructions](/ssl/keyless-ssl/configuration/##step-3--set-up-and-activate-key-server) to deploy your keyless server.
 
 ***
 

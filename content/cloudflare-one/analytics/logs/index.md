@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: navigation
+title: Zero Trust logs
+weight: 6
 ---
 
 # Zero Trust logs

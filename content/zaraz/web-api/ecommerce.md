@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Zaraz Ecommerce
+weight: 6
 ---
 
 # Zaraz Ecommerce

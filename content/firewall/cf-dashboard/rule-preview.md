@@ -2,7 +2,10 @@
 title: Preview rules
 pcx-content-type: concept
 type: table
-order: 330
+weight: 331
+layout: list
+meta:
+  title: Preview Firewall Rules
 ---
 
 # Preview Firewall Rules
@@ -28,13 +31,13 @@ To test a Firewall Rule with Rule Preview:
 1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
 2.  Click **Test rule** to trigger the test.
 
-![Expression Builder Test Rule button](../images/firewall-rules-preview-1.png)
+![Expression Builder Test Rule button](/firewall/static/firewall-rules-preview-1.png)
 
 The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression.
 
 In this screenshot, a rule that matches all User-Agents that contain the string `Mozilla` would block about 8% of requests to the zone:
 
-![Example rule preview results chart](../images/cf-firewall-rules-preview-rule-plot-chart.png)
+![Example rule preview results chart](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
 
 ## Important Notes
 
@@ -42,7 +45,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Rule Preview does not take into account other Cloudflare Firewall Rules** that you have already configured. In effect, Rule Preview tests a single Firewall Rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test Firewall Rules that reference [IP Lists](/cf-dashboard/rules-lists)**.
+**You cannot test Firewall Rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 

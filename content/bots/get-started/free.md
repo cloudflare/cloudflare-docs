@@ -1,7 +1,9 @@
 ---
 title: Free
-order: 0
 pcx-content-type: get-started
+weight: 1
+meta:
+  title: Get started with Bot Fight Mode
 ---
 
 # Get started with Bot Fight Mode

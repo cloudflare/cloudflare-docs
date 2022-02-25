@@ -1,7 +1,9 @@
 ---
 title: Confirm DNS Records
-order: 5
 pcx-content-type: how-to
+weight: 6
+meta:
+  title: Confirm DNS records
 ---
 
 # Confirm DNS records

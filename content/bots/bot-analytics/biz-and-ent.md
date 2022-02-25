@@ -1,7 +1,9 @@
 ---
 title: Business
-order: 2
 pcx-content-type: reference
+weight: 3
+meta:
+  title: Super Bot Fight Mode (Business) Analytics
 ---
 
 import AnalyticsFeatures from "../\_partials/\_analytics-features.md"
@@ -14,7 +16,7 @@ Business and Enterprise customers without Bot Management can use **Bot Analytics
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **Bots**.
 
-![Bot Analytics on Dashboard](../images/bot-analytics-dashboard-biz.png)
+![Bot Analytics on Dashboard](/bots/static/bot-analytics-dashboard-biz.png)
 
 ## Features
 
@@ -36,4 +38,4 @@ Business and Enterprise customers without Bot Management can use Bot Analytics t
 *   Study recent attacks to find trends and detailed information
 *   Learn more about Cloudflare’s detection engines with real data
 
-For more details and granular control over bot traffic, consider upgrading to [Bot Management for Enterprise](../bm-subscription/).
+For more details and granular control over bot traffic, consider upgrading to [Bot Management for Enterprise](/bots/bm-subscription/).

@@ -1,10 +1,11 @@
 ---
 pcx-content-type: how-to
+title: Enable Cache Deception Armor
 ---
 
 # Enable Cache Deception Armor
 
-To enable Cache Deception Armor, create a Page Rule. Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/about/cache-control). A `Cache-Control` header from the origin or [Edge Cache TTL Page Rule](/about/edge-browser-cache-ttl) will override this protection.
+To enable Cache Deception Armor, create a Page Rule. Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/about/cache-control/). A `Cache-Control` header from the origin or [Edge Cache TTL Page Rule](/cache/about/edge-browser-cache-ttl/) will override this protection.
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 2.  Click **Rules**.

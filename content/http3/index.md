@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare HTTP/3
 ---
 
 # Cloudflare HTTP/3
@@ -14,4 +16,4 @@ HTTP is a well established protocol that has several versions, and each version 
 
 Prior to RFC publication, the [standardization activity](https://blog.cloudflare.com/http-3-from-root-to-tip/) released incremental draft versions of specifications which clients and servers were encouraged to actively experiment with. For example, HTTP/3 draft 29 relies on QUIC draft 29 and is identified using the label "h3-29".
 
-Cloudflare supports HTTP/3. To use HTTP/3 on your website, refer to, [Get started with HTTP/3](/get-started/).
+Cloudflare supports HTTP/3. To use HTTP/3 on your website, refer to, [Get started with HTTP/3](/http3/get-started/).

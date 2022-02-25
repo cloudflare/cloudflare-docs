@@ -2,6 +2,8 @@
 title: Third party licenses
 hidden: true
 pcx-content-type: reference
+meta:
+  title: Third party licensesMozilla Public License Version 2.0
 ---
 
 # Third party licenses
@@ -2315,7 +2317,7 @@ All license text:
           same "printed page" as the copyright notice for easier
           identification within third-party archives.
 
-    Copyright 2014-2018 David Henningsson <diwic@ubuntu.com> and other contributors
+    Copyright 2014-2018 David Henningsson [diwic@ubuntu.com](/warp-client/iwic@ubuntu.com/) and other contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -6248,7 +6250,7 @@ All license text:
     same "printed page" as the copyright notice for easier
     identification within third-party archives.
 
-    Copyright 2019-2020 CreepySkeleton <creepy-skeleton@yandex.ru>
+    Copyright 2019-2020 CreepySkeleton [creepy-skeleton@yandex.ru](/warp-client/reepy-skeleton@yandex.ru/)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -6456,7 +6458,7 @@ All license text:
     same "printed page" as the copyright notice for easier
     identification within third-party archives.
 
-    Copyright 2019-2020 CreepySkeleton <creepy-skeleton@yandex.ru>
+    Copyright 2019-2020 CreepySkeleton [creepy-skeleton@yandex.ru](/warp-client/reepy-skeleton@yandex.ru/)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -10224,7 +10226,7 @@ All license text:
     The MIT License (MIT)
 
     Copyright (c) 2015 Danny Guo
-    Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
+    Copyright (c) 2016 Titus Wormer [tituswormer@gmail.com](/warp-client/ituswormer@gmail.com/)
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal

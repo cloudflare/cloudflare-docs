@@ -1,8 +1,11 @@
 ---
 title: Actions
-order: 30
 type: overview
 pcx-content-type: reference
+weight: 31
+layout: list
+meta:
+  title: Load Balancing actions
 ---
 
 # Load Balancing actions
@@ -13,7 +16,7 @@ Each load balancing rule includes one or more actions.
 
 ## Supported Actions
 
-This table lists the actions available for Load Balancing rules. For a walkthrough, refer to [Create Load Balancing rules](../create-rules).
+This table lists the actions available for Load Balancing rules. For a walkthrough, refer to [Create Load Balancing rules](/load-balancing/create-rules/).
 
 <table style='width:100%'>
   <thead>

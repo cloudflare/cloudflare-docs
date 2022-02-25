@@ -1,20 +1,22 @@
 ---
 title: Troubleshooting
-order: 6
 pcx-content-type: reference
+weight: 7
+meta:
+  title: Troubleshooting zone setups
 ---
 
 # Troubleshooting zone setups
 
 ## Nameservers
 
-If you see unexpected results when [changing your nameservers](/zone-setups/full-setup/setup), review the following troubleshooting questions.
+If you see unexpected results when [changing your nameservers](/dns/zone-setups/full-setup/setup/), review the following troubleshooting questions.
 
 ### Is a **DS** record present at your registrar?
 
 You need to remove any pre-Cloudflare **DS** records at your registrar to update your authoritative nameservers. This will disable DNSSEC and allow Cloudflare to resolve your domain name.
 
-You can then [re-enable DNSSEC](/zone-setups/full-setup/setup#step-4--re-enable-dnssec-using-cloudflare) in Cloudflare and at your registrar after you have changed your nameservers.
+You can then [re-enable DNSSEC](/dns/zone-setups/full-setup/setup/#step-4--re-enable-dnssec-using-cloudflare) in Cloudflare and at your registrar after you have changed your nameservers.
 
 ### Do the nameservers at your registrar exactly match the values provided by Cloudflare?
 

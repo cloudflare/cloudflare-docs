@@ -1,9 +1,10 @@
 ---
-order: 3
 pcx-content-type: faq
+title: Identity
+weight: 4
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Identity
 
@@ -13,7 +14,7 @@ Yes. Your team can simultaneously use multiple providers, reducing friction when
 
 ## What if the identity provider my team uses is not listed?
 
-You can add your preferred identity providers to Cloudflare Access even if you do not see them listed on the Zero Trust dashboard, as long as these providers support SAML 2.0 or [OpenID Connect (OIDC)](/identity/idp-integration/generic-oidc).
+You can add your preferred identity providers to Cloudflare Access even if you do not see them listed on the Zero Trust dashboard, as long as these providers support SAML 2.0 or [OpenID Connect (OIDC)](/cloudflare-one/identity/idp-integration/generic-oidc/).
 
 ## How do end users log out of an application protected by Access?
 

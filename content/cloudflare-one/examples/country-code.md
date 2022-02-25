@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow a specific country.
 tags:
-- Country Code
+  - Country Code
+title: Country Code
+weight: 4
+layout: example
 ---
 
 # Country Code

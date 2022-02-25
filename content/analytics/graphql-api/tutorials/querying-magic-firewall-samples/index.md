@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Querying Magic Firewall Samples with GraphQL
 ---
 
 # Querying Magic Firewall Samples with GraphQL

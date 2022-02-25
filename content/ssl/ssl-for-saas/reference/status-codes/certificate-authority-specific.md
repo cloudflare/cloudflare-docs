@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Certificate authority specific
+weight: 4
 ---
 
 # Certificate authority specific

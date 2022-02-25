@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 1
+title: How exposed credentials checks work
+weight: 2
 ---
 
 # How exposed credentials checks work

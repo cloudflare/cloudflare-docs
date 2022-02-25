@@ -1,7 +1,9 @@
 ---
 type: overview
-order: 2
 pcx-content-type: get-started
+title: Quickstarts
+weight: 3
+layout: list
 ---
 
 import WorkerStarter from "../../components/worker-starter"
@@ -19,7 +21,7 @@ $ wrangler generate <new-project-name> <github-repo-url>
 <Definitions>
 
 *   `new-project-name`
-    *   A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/cli-wrangler/configuration).
+    *   A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
 
 *   `github-repo-url`
     *   This is the URL of the GitHub repo starter, as below.

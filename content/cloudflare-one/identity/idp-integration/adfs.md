@@ -1,11 +1,12 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: SAML | Active Directory®
+weight: 6
 ---
 
 # SAML | Active Directory®
 
-Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ([SAML](/glossary#saml)).
+Active Directory is a directory service developed by Microsoft for Windows domain networks. It is included in most Windows Server operating systems as a set of processes and services. Active Directory integrates with Cloudflare Access for using Security Assertion Markup Language ([SAML](/cloudflare-one/glossary/#saml)).
 
 ## Before you start
 
@@ -32,7 +33,7 @@ To create a Relying Party Trust:
 
 3.  On the **Actions** sidebar, select **Add Relying Party Trust**. The **Add Relying Party Trust Wizard** launches.
 
-    ![Add Relying Party Trust Wizard](../../static/documentation/identity/adfs/adfs-1.png)
+    ![Add Relying Party Trust Wizard](/cloudflare-one/static/documentation/identity/adfs/adfs-1.png)
 
 4.  In the left menu, choose **Select Data Source**.
 
@@ -52,11 +53,11 @@ To create a Relying Party Trust:
 
 12. Click **Next**. The **Configure URL** step displays.
 
-    ![Configure URL](../../static/documentation/identity/adfs/adfs-6.png)
+    ![Configure URL](/cloudflare-one/static/documentation/identity/adfs/adfs-6.png)
 
 13. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
-14. In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+14. In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -64,23 +65,23 @@ To create a Relying Party Trust:
 
 15. Click **Next**. The **Configure Identifiers** step displays.
 
-    ![Configure Identifiers](../../static/documentation/identity/adfs/adfs-7.png)
+    ![Configure Identifiers](/cloudflare-one/static/documentation/identity/adfs/adfs-7.png)
 
 16. Paste your callback URL in the **Relying party trust identifier** field.
 
 17. Click **Next**. In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication. Our example does not configure multi-factor authentication.
 
-    ![Configure Multi-factor Authentication Now?](../../static/documentation/identity/adfs/adfs-8.png)
+    ![Configure Multi-factor Authentication Now?](/cloudflare-one/static/documentation/identity/adfs/adfs-8.png)
 
 18. Click **Next**. The **Choose Issuance Authorization Rules** step displays.
 
-    ![Choose Issuance Authorization Rules](../../static/documentation/identity/adfs/adfs-9.png)
+    ![Choose Issuance Authorization Rules](/cloudflare-one/static/documentation/identity/adfs/adfs-9.png)
 
 19. Select the **Permit all users to access this relying party** option.
 
 20. Click **Next**. The **Ready to Add Trust** step displays.
 
-    ![Ready to Add Trust](../../static/documentation/identity/adfs/adfs-10.png)
+    ![Ready to Add Trust](/cloudflare-one/static/documentation/identity/adfs/adfs-10.png)
 
 21. Review your settings.
 
@@ -90,7 +91,7 @@ The **Edit Claim Rules for CF Login** screen automatically displays.
 
 ## Create claim rules
 
-Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/policies/zero-trust).
+Now create 2 Claim Rules so that ADFS can take information from Cloudflare and return it to create [Zero Trust policies](/cloudflare-one/policies/zero-trust/).
 
 If you closed the Add Relying Trust wizard, use Explorer to find the **Relying Party Trusts** folder, select the newly created RPT file, and click **Edit Claim Rules** in the **Action** sidebar.
 
@@ -102,7 +103,7 @@ To create Claim Rules:
 
 3.  Click **Next**. The **Edit Rule — Send Email** step displays.
 
-    ![Edit Rule — Send Email](../../static/documentation/identity/adfs/adfs-13.png)
+    ![Edit Rule — Send Email](/cloudflare-one/static/documentation/identity/adfs/adfs-13.png)
 
 4.  Enter a descriptive **Claim rule name**.
 
@@ -116,7 +117,7 @@ To create Claim Rules:
 
 9.  Click **Next**. The **Edit - Create Transient Name Identifier** window displays.
 
-    ![Edit - Create Transient Name Identifier](../../static/documentation/identity/adfs/adfs-15.png)
+    ![Edit - Create Transient Name Identifier](/cloudflare-one/static/documentation/identity/adfs/adfs-15.png)
 
 10. Enter a descriptive **Claim rule name**.
 
@@ -142,17 +143,17 @@ To export the certificate:
 
 2.  In the **Certificates** card, right-click on **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
-    ![Certificates card](../../static/documentation/identity/adfs/adfs-16.png)
+    ![Certificates card](/cloudflare-one/static/documentation/identity/adfs/adfs-16.png)
 
 3.  Click the **Details** tab, and select the **Copy to File** option.
 
 4.  The **Certificate Export Wizard** displays.
 
-    ![Certificate Export Wizard](../../static/documentation/identity/adfs/adfs-17.png)
+    ![Certificate Export Wizard](/cloudflare-one/static/documentation/identity/adfs/adfs-17.png)
 
 5.  Click **Next**. The **Export File Format** window displays.
 
-    ![Export File Format](../../static/documentation/identity/adfs/adfs-18.png)
+    ![Export File Format](/cloudflare-one/static/documentation/identity/adfs/adfs-18.png)
 
 6.  Select the **Base-64 encoded X.509 (.CER)** option.
 
@@ -194,7 +195,7 @@ To enable Cloudflare Zero Trust to accept the claims and assertions sent from AD
 
     This is the default location. You can find your federation service identifier in ADFS.
 
-6.  In the **IdP Entity ID or Issuer URL** field, enter your [team domain](/glossary#team-domain), and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+6.  In the **IdP Entity ID or Issuer URL** field, enter your [team domain](/cloudflare-one/glossary/#team-domain), and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -214,7 +215,7 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1.  Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own [team name](/glossary#team-name)):
+1.  Download your unique SAML metadata file at the following URL (replace `<your-team-name>` in this example with your own [team name](/cloudflare-one/glossary/#team-name)):
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata

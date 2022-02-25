@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Import and export records
+weight: 2
 ---
 
 import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
@@ -29,7 +30,7 @@ To import a zone file using the dashboard:
 2.  Go to **DNS**.
 3.  Click **Advanced**.
 4.  For **Import DNS records**, select your [formatted file](#format-your-zone-file).
-5.  If you do not want [applicable records](/manage-dns-records/reference/proxied-dns-records) proxied, unselect **Proxy imported DNS records**.
+5.  If you do not want [applicable records](/dns/manage-dns-records/reference/proxied-dns-records/) proxied, unselect **Proxy imported DNS records**.
 
 #### Using the API
 

@@ -1,9 +1,10 @@
 ---
-order: 5
 pcx-content-type: faq
+title: Devices
+weight: 6
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Devices
 
@@ -34,7 +35,7 @@ Deploying new software can come with unexpected issues. This section covers the 
 
 ### Is the Cloudflare root certificate installed in all the places?
 
-Installing and trusting the [Cloudflare root cert](/connections/connect-devices/warp/install-cloudflare-cert) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
+Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
 
 In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
@@ -44,11 +45,11 @@ As a last resort, add the application to a **Do Not Decrypt** policy in Gateway.
 
 ### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
 
-You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Decrypt applications](/policies/filtering/http-policies/application-app-types#do-not-decrypt-applications).
+You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Decrypt applications](/cloudflare-one/policies/filtering/http-policies/application-app-types/#do-not-decrypt-applications).
 
 ### Do you, your ISP, or your country have policies in place that would block the WARP client?
 
-Ensure that you do not have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](/connections/connect-devices/warp/deployment/firewall).
+Ensure that you do not have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
 In particular, Microsoft Intune’s default security policy creates a Firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
 
@@ -58,9 +59,9 @@ Some countries explicitly block the use of VPN or VPN-like software that intenti
 
 Running VPNs or firewalls alongside the WARP client may interfere with some of its functionalities. Please refer to the following documentation on how to use WARP alongside a VPN, or on how to exclude traffic from the WARP client:
 
-[❯ Use WARP alongside a VPN](/connections/connect-devices/warp/exclude-traffic#use-warp-alongside-a-vpn)
+[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/#use-warp-alongside-a-vpn)
 
-[❯ Exclude traffic from WARP](/connections/connect-devices/warp/exclude-traffic)
+[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/)
 
 The most common places we see interference with WARP from these products are:
 
@@ -68,7 +69,7 @@ The most common places we see interference with WARP from these products are:
 
 *   **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
-*   If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/connections/connect-devices/warp/exclude-traffic/split-tunnels) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+*   If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 

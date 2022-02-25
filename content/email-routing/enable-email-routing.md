@@ -1,7 +1,9 @@
 ---
 title: Get started
-order: 1
 pcx-content-type: get-started
+weight: 2
+meta:
+  title: Enable Email Routing
 ---
 
 # Enable Email Routing

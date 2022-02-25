@@ -1,7 +1,9 @@
 ---
 title: Functions
 pcx-content-type: reference
-order: 6
+weight: 7
+meta:
+  title: Functions reference
 ---
 
 # Functions reference
@@ -23,7 +25,7 @@ In the expression below, the`lower()` function transforms `http.host` values to 
 lower(http.host) == "www.cloudflare.com"
 ```
 
-Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/rules-language/values#arrays) for more information.
+Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
 
 The Rules language supports these transformation functions:
 
@@ -64,7 +66,7 @@ The Rules language supports these transformation functions:
 
         <Aside type='warning'>
 
-        **Warning:** The `ends_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
+        **Warning:** The `ends_with()` function is not available in [Firewall Rules](/firewall/).
 
         </Aside>
 
@@ -110,7 +112,7 @@ The Rules language supports these transformation functions:
 
         <Aside type='warning'>
 
-        **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
+        **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
 
         </Aside>
 
@@ -131,7 +133,7 @@ The Rules language supports these transformation functions:
 
         <Aside type='warning'>
 
-        **Warning:** The `starts_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
+        **Warning:** The `starts_with()` function is not available in [Firewall Rules](/firewall/).
 
         </Aside>
 
@@ -148,7 +150,7 @@ The Rules language supports these transformation functions:
 
         <Aside type='warning'>
 
-        **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform).
+        **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform).
 
         </Aside>
 
@@ -248,7 +250,7 @@ http.host == "download.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](https://developers.cloudflare.com/firewall/recipes).
+For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](/firewall/recipes).
 
 ### MessageMAC
 

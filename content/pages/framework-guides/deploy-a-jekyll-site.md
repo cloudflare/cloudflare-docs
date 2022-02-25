@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Deploy a Jekyll site
 ---
 
 import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
@@ -10,7 +11,7 @@ import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.
 
 <Aside type="note">
 
-If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/migrations/migrating-jekyll-from-github-pages).
+If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migration guide](/pages/migrations/migrating-jekyll-from-github-pages/).
 
 </Aside>
 
@@ -87,13 +88,13 @@ After configuring your site, you can begin your first deployment. You should see
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to [the Get started guide](/pages/get-started/).
 
 </Aside>
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Jekyll site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Jekyll site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
+By completing this guide, you have successfully deployed your Jekyll site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

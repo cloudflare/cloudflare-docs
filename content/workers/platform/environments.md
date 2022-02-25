@@ -1,12 +1,13 @@
 ---
 pcx-content-type: concept
+title: Environments
 ---
 
 # Environments
 
 <Aside type="note">
 
-You can only use environments with [Wrangler](/cli-wrangler).
+You can only use environments with [Wrangler](/workers/cli-wrangler/).
 
 </Aside>
 
@@ -20,7 +21,7 @@ These environments are utilized with the `--env` or `-e` flag on `wrangler build
 
 ## Usage
 
-You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](/cli-wrangler/commands#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](https://developers.cloudflare.com/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](/cli-wrangler/configuration#keys).
+You will likely use environments to deploy Workers to a staging subdomain before your production environment. `wrangler publish` will determine its destination by the top-level configuration in your `wrangler.toml` [file](/workers/cli-wrangler/commands/#generate). You can create other environments beneath the top-level configuration in the `wrangler.toml` file by adding an [`[env.name]` configuration](/workers/cli-wrangler/configuration#environments) and specifying additional keys and values. For details on what keys are inherited by environments from the top-level configuration, see [`wrangler.toml` configuration](/workers/cli-wrangler/configuration/#keys).
 
 The layout of a top-level configuration in a `wrangler.toml` file is displayed below:
 
@@ -133,7 +134,7 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/cli-wrangler/configuration#keys) for each environment.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/cli-wrangler/configuration/#keys) for each environment.
 
 ```toml
 ---
@@ -182,7 +183,7 @@ With this configuration, Wrangler will behave in the following manner:
 ✨  Successfully published your script to example.com/*
 ```
 
-Any defined [environment variables](/platform/environment-variables) (the [`vars`](/cli-wrangler/configuration#vars) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/cli-wrangler/configuration/#vars) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
@@ -228,7 +229,7 @@ With this configuration, Wrangler will behave in the following manner:
 
 ### workers.dev as a first-class target
 
-If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each given its own set of [environment variables](/platform/environment-variables), secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
+If you want to connect multiple environments to your `*.workers.dev` subdomain, you must assign a different `name` per environment. This allows your Worker to be uploaded as different scripts, each given its own set of [environment variables](/workers/platform/environment-variables/), secrets, and KV namespaces. Configure your `wrangler.toml` file like the example below:
 
 ```toml
 ---

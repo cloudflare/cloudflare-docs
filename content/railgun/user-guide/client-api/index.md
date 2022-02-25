@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: reference
+title: Client API
+weight: 11
 ---
 
 # Client API

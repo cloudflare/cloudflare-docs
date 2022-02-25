@@ -1,7 +1,9 @@
 ---
-order: 1
 pcx-content-type: how-to
 title: Require Purpose Justification
+weight: 2
+meta:
+  title: Require Purpose Justification after login
 ---
 
 # Require Purpose Justification after login
@@ -20,4 +22,4 @@ Configuring a purpose justification screen is done as part of configuring an Acc
 6.  (Optional) set a custom purpose justification message. This will appear on the purpose justification screen and will be visible to the user.
 7.  Once configured, a user will see the following screen:
 
-![Purpose Justification](../../static/documentation/policies/purpose-justification.png)
+![Purpose Justification](/cloudflare-one/static/documentation/policies/purpose-justification.png)

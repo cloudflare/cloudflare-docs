@@ -1,6 +1,7 @@
 ---
-order: 19
 pcx-content-type: configuration
+title: Using cURL with the API
+weight: 20
 ---
 
 # Using cURL with the API

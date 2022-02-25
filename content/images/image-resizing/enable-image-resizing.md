@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: Enable Image Resizing
+weight: 2
 ---
 
 # Enable Image Resizing

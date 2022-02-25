@@ -1,12 +1,14 @@
 ---
 title: API parameter reference
 pcx-content-type: reference
-order: 1
+weight: 2
+meta:
+  title: URL rewrite API parameter reference
 ---
 
 # URL rewrite API parameter reference
 
-Create a [static or dynamic URL rewrite](/transform/url-rewrite) based on the parameter name provided in the `action_parameters` field:
+Create a [static or dynamic URL rewrite](/rules/transform/url-rewrite/) based on the parameter name provided in the `action_parameters` field:
 
 *   Define the `value` parameter to specify a static URL rewrite.
 *   Define the `expression` parameter to specify the expression that defines the dynamic URL rewrite to perform.

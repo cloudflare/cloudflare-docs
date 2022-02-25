@@ -1,7 +1,7 @@
 ---
 title: Glossary
-order: 1
 pcx-content-type: glossary
+weight: 2
 ---
 
 # Glossary
@@ -58,10 +58,10 @@ The number of requests served from Cloudflare without having to hit the origin s
 
 ## certificate
 
-SSL certificates enable encryption over HTTPS for traffic between a client and a website. SSL certificates contain the website's public key and the website's identity along with related information. Devices attempting to communicate with the origin web server reference the SSL certificate to obtain the public key and verify the server's identity. Cloudflare provides a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) for each active Cloudflare domain.
+SSL certificates enable encryption over HTTPS for traffic between a client and a website. SSL certificates contain the website's public key and the website's identity along with related information. Devices attempting to communicate with the origin web server reference the SSL certificate to obtain the public key and verify the server's identity. Cloudflare provides a [Universal SSL certificate](/ssl/edge-certificates/universal-ssl) for each active Cloudflare domain.
 
 **Related terms:** SSL certificate, CAA record, Certificate Authority, EV certificate, intermediate certificate, primary certificate, root certificate\
-**Relevant links:** [Cloudflare SSL documentation](https://developers.cloudflare.com/ssl/)
+**Relevant links:** [Cloudflare SSL documentation](/ssl/)
 
 ## Certificate Authority (CA)
 
@@ -88,7 +88,7 @@ Certificate pinning is a security mechanism used to prevent on-path attacks on t
 
 A set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
 
-**Relevant links:** [cipher suites documentation](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)
+**Relevant links:** [cipher suites documentation](/ssl/ssl-tls/cipher-suites)
 
 ## cloud
 
@@ -98,7 +98,7 @@ A network of remote servers used to store and maintain data.
 
 `cloudflared` is the software that powers Cloudflare Tunnel. `cloudflared` runs alongside origin servers to connect to Cloudflare's network, as well as client devices for non-HTTP traffic from user endpoints.
 
-**Relevant links:** [Connect applications with Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps)
+**Relevant links:** [Connect applications with Cloudflare Tunnel](/cloudflare-one/connections/connect-apps)
 
 ## content delivery network (CDN)
 
@@ -225,7 +225,7 @@ The Internet is a global system of computer networks that provides a wide range 
 
 Locations in Cloudflare for Teams are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
-**Relevant links:** [Locations](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/locations)
+**Relevant links:** [Locations](/cloudflare-one/connections/connect-networks/locations)
 
 ## member or user
 
@@ -238,7 +238,7 @@ A member or user is an email account in Cloudflare that you can grant access to 
 mTLS is a common security practice that uses client TLS certificates to provide an additional layer of protection, allowing to cryptographically verify the client information.
 
 **Related terms:** TLS
-**Relevant links:** [Enable mTLS](https://developers.cloudflare.com/ssl/client-certificates/enable-mtls)
+**Relevant links:** [Enable mTLS](/ssl/client-certificates/enable-mtls)
 
 ## nameserver
 
@@ -263,7 +263,7 @@ The amount of data transferred from the origin server to Cloudflare within a cer
 A Cloudflare Origin Certificate is a free TLS certificate issued by Cloudflare that can be installed on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 **Related terms:** TLS
-**Relevant links:** [Cloudflare Origin Certificates](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)
+**Relevant links:** [Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca)
 
 ## origin request
 
@@ -348,7 +348,7 @@ Some examples include products and services such as Argo, Access, Load Balancing
 
 Your team domain is a unique subdomain assigned to your Cloudflare account; for example, `<your-team-name>.cloudflareaccess.com`. Setting up a team domain is an essential step in your Teams configuration. This is where your users will find the apps you've secured behind Teams — displayed in the App Launcher — and will be able to make login requests to them.
 
-**Relevant links:** [App Launcher](https://developers.cloudflare.com/cloudflare-one/applications/app-launcher)
+**Relevant links:** [App Launcher](/cloudflare-one/applications/app-launcher)
 
 ## team name
 
@@ -373,7 +373,7 @@ The security levels and the challenge display criteria are:
 *   *Low* - for scores greater than 24
 *   *Essentially off* - for scores greater than 49
 
-**Relevant links:** [Cloudflare Logs documentation](https://developers.cloudflare.com/logs/)
+**Relevant links:** [Cloudflare Logs documentation](/logs/)
 
 ## total bandwidth (total egress bandwidth, edge bandwidth)
 
@@ -409,7 +409,7 @@ Within subscriptions, certain products are charged based on usage. This is refer
 
 A WAF is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the Internet.
 
-**Relevant links:** [Cloudflare WAF](https://developers.cloudflare.com/waf/)
+**Relevant links:** [Cloudflare WAF](/waf/)
 
 ## Zero Trust Security
 

@@ -1,9 +1,11 @@
 ---
 title: Enterprise Bot Management
-order: 3
 type: document
 pcx-content-type: reference
 hidden: true
+weight: 4
+meta:
+  title: Plans — Bot Management for Enterprise
 ---
 
 import PlanIntro from "../\_partials/\_plan-intro.md"

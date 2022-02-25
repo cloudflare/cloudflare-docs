@@ -1,7 +1,7 @@
 ---
 title: List types
 pcx-content-type: concept
-order: 2
+weight: 3
 ---
 
 # List types

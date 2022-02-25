@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: High availability
+weight: 3
 ---
 
 # High availability

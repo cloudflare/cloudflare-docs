@@ -1,10 +1,12 @@
 ---
-order: 1000
 type: example
 summary: Set a Cron Trigger for your Worker.
 tags:
   - Middleware
 pcx-content-type: configuration
+title: Setting Cron Triggers
+weight: 1001
+layout: example
 ---
 
 # Setting Cron Triggers

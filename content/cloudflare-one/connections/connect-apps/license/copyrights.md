@@ -1,6 +1,7 @@
 ---
-order: 101
 pcx-content-type: reference
+title: Copyrights
+weight: 102
 ---
 
 # Copyrights
@@ -674,7 +675,7 @@ THE SOFTWARE.
 
 https://github.com/pkg/errors
 
-Copyright (c) 2015, Dave Cheney <dave@cheney.net>
+Copyright (c) 2015, Dave Cheney [dave@cheney.net](/cloudflare-one/ave@cheney.net/)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

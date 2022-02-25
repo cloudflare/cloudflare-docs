@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: tutorial
+title: Preparing the Environment
+weight: 5
 ---
 
 # Preparing the Environment

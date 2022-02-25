@@ -1,5 +1,6 @@
 ---
 pcx-content-type: how-to
+title: Deploy an Eleventy site
 ---
 
 import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
@@ -44,13 +45,13 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 <Aside type="note">
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 </Aside>
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+Every time you commit new code to your Eleventy site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Eleventy site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/framework-guides).
+By completing this guide, you have successfully deployed your Eleventy site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

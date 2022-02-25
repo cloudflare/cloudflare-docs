@@ -1,7 +1,9 @@
 ---
 pcx-content-type: how-to
-order: 1
 type: overview
+title: Create Custom Firewall rules in the dashboard
+weight: 2
+layout: list
 ---
 
 # Create Custom Firewall rules in the dashboard
@@ -28,7 +30,7 @@ To create a new Custom Firewall rule:
 
 5.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Custom Firewall rule page](../../images/custom-rules/firewall-custom-rule-create.png)
+    ![Create Custom Firewall rule page](/waf/static/custom-rules/firewall-custom-rule-create.png)
 
 6.  Under **If incoming requests match...**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 

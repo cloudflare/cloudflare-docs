@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Create a trigger
+weight: 4
 ---
 
 # Create a trigger
@@ -13,9 +14,9 @@ pcx-content-type: how-to
 
 4.  In **Trigger Name** enter a descriptive name for your trigger.
 
-5.  In **Rule type**, choose from the actions available in the drop-down menu to start building your rule. Refer to [Triggers and rules](/reference/triggers) for more information on what each rule type means.
+5.  In **Rule type**, choose from the actions available in the drop-down menu to start building your rule. Refer to [Triggers and rules](/zaraz/reference/triggers/) for more information on what each rule type means.
 
-6.  In **Variable name**, input the variable you want as the trigger. For example, use the `{{ client.__zarazTrack }}` variable if you are [using `zaraz.track()` in your website](/web-api/zaraz-track).
+6.  In **Variable name**, input the variable you want as the trigger. For example, use the `{{ client.__zarazTrack }}` variable if you are [using `zaraz.track()` in your website](/zaraz/web-api/zaraz-track/).
 
 7.  Use the **Match operation** drop-down list to choose a comparison operator. For an expression to match, the value in **Variable name** and **Match string** must satisfy the comparison operator.
 
@@ -45,6 +46,6 @@ To create Blocking Triggers, start by [creating the trigger](#create-a-trigger) 
 
 <Aside type='note'>
 
-Blocking Triggers are useful if you wish to block specific events, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, we recommend using [Page Rules to block Zaraz](/advanced/block-zaraz).
+Blocking Triggers are useful if you wish to block specific events, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, we recommend using [Page Rules to block Zaraz](/zaraz/advanced/block-zaraz/).
 
 </Aside>

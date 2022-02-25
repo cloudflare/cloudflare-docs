@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: configuration
+title: Interacting with Ethereum
+weight: 5
 ---
 
 # Interacting with Ethereum

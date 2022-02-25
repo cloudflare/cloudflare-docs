@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: how-to
+title: DNS over HTTPS
+weight: 2
 ---
 
 # DNS over HTTPS
@@ -21,7 +22,7 @@ If you want to disable DoH for your organization so that Gateway can be enforced
 
 | Before you start |
 | ---------------- |
-| Obtain a location's [DoH subdomain](/glossary#doh-subdomain) (previously known as a unique id). |
+| Obtain a location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) (previously known as a unique id). |
 
 </TableWrap>
 

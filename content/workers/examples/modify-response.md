@@ -1,11 +1,14 @@
 ---
-order: 1000
 type: example
-summary: Fetch and modify response properties which are immutable by creating a copy first.
+summary: Fetch and modify response properties which are immutable by creating a
+  copy first.
 tags:
   - Middleware
   - Headers
 pcx-content-type: configuration
+title: Modify response
+weight: 1001
+layout: example
 ---
 
 # Modify response

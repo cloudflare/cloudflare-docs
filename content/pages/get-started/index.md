@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: get-started
+title: Get started
+weight: 2
 ---
 
 # Get started
@@ -23,7 +24,7 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
 
-You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/platform/preview-deployments).
+You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/pages/platform/preview-deployments/).
 
 <Aside type="note">
 
@@ -43,7 +44,7 @@ If using GitLab, you can select a project from your personal account or from a G
 
 <Aside type="note">
 
-If you do not have a project repository to choose from yet, refer to our extensive [How to section](/how-to) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
+If you do not have a project repository to choose from yet, refer to our extensive [How to section](/pages/how-to/) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
 
 </Aside>
 
@@ -53,7 +54,7 @@ Once you have selected a repository, select **Install & Authorize** and **Begin 
 
 Your **project name** will be used to generate your project's hostname. By default, this matches your GitHub/GitLab project name.
 
-**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/platform/preview-deployments).
+**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/pages/platform/preview-deployments/).
 
 <Aside type="note">
 
@@ -61,19 +62,19 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 
 </Aside>
 
-![Configuration](./images/configuration.png)
+![Configuration](/pages/static/configuration.png)
 
 #### Build settings
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **build output directory** to tell Cloudflare Pages how to deploy your site. The contents of this directory are uploaded to Cloudflare Pages as your website's contents.
 
-Our deployment dashboard provides a number of framework-specific presets, which provide the default values for the selected framework. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/platform/build-configuration). If you do not need a build step, leave the **Build command** field blank.
+Our deployment dashboard provides a number of framework-specific presets, which provide the default values for the selected framework. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
-![Build settings](./images/build-settings.png)
+![Build settings](/pages/static/build-settings.png)
 
 Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
 
-![Root directory](./images/root-directory.png)
+![Root directory](/pages/static/root-directory.png)
 
 <details>
 <summary>Understanding your build configuration</summary>
@@ -85,7 +86,7 @@ The build directory is generated from the build command. Each framework has its 
 
 The root directory is where your site’s content lives. If not specified, Cloudflare assumes that your linked git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
 
-Refer to [Build configuration](/platform/build-configuration) for more information.
+Refer to [Build configuration](/pages/platform/build-configuration/) for more information.
 
 </div>
 </details>
@@ -100,7 +101,7 @@ After you have chosen your *Framework preset*, configured **Root directory (adva
 
 Once you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
 
-![Deploy log](./images/deploy-log.png)
+![Deploy log](/pages/static/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
@@ -108,13 +109,13 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
-![Site dashboard](./images/site-dashboard.png)
+![Site dashboard](/pages/static/site-dashboard.png)
 
 ### Adding a custom domain
 
 While every Cloudflare Pages site receives a custom subdomain during deployment, you may also wish to point custom domains (or subdomains) to your site. To do this, select the **Custom domains** section in your site dashboard.
 
-![Domains](./images/domains.png)
+![Domains](/pages/static/domains.png)
 
 Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
@@ -136,7 +137,7 @@ If your site is already managed as a Cloudflare zone, the CNAME record will be a
 
 <Aside type="note">
 
-To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/get-started#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Adding a custom domain](/pages/get-started/#adding-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
 </Aside>
 
@@ -176,7 +177,7 @@ To delete your Pages project:
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your git configuration, or updating your build command or build directory.
 
-![Settings](./images/settings.png)
+![Settings](/pages/static/settings.png)
 
 ### Access policies
 

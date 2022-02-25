@@ -1,7 +1,9 @@
 ---
 title: Enterprise Bot Management
-order: 3
 pcx-content-type: reference
+weight: 4
+meta:
+  title: Bot Management for Enterprise Analytics
 ---
 
 import AnalyticsFeatures from "../\_partials/\_analytics-features.md"
@@ -14,7 +16,7 @@ Enterprise customers with Bot Management can use **Bot Analytics** to dynamicall
 
 To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **Bots**.
 
-![Bot Analytics on Dashboard](../images/bot-analytics-dashboard-ent.png)
+![Bot Analytics on Dashboard](/bots/static/bot-analytics-dashboard-ent.png)
 
 ## Features
 
@@ -33,13 +35,13 @@ Bot Analytics shows up to one week of data at a time and can display data up to 
 
 Bot Management customers can use Bot Analytics to:
 
-*   Understand traffic during [your onboarding phase](../../get-started/bm-subscription#enable-bot-management-for-enterprise)
+*   Understand traffic during [your onboarding phase](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise)
 *   Tune Firewall Rules to be effective but not overly aggressive
 *   Study recent attacks to find trends and detailed information
 *   Learn more about Cloudflare’s detection engines with real data
 
 ## API
 
-Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, [Bot Tags](/concepts/cloudflare-bot-tags), and bot *decisions* (*automated*, *likely automated*, etc.).
+Data from Bot Analytics is also available via the GraphQL API. You can access bot scores, bot sources, [Bot Tags](/bots/concepts/cloudflare-bot-tags/), and bot *decisions* (*automated*, *likely automated*, etc.).
 
-Read the [GraphQL Analytics API documentation](https://developers.cloudflare.com/analytics/graphql-api) for more information about GraphQL and basic querying.
+Read the [GraphQL Analytics API documentation](/analytics/graphql-api) for more information about GraphQL and basic querying.

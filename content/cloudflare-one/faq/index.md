@@ -1,8 +1,10 @@
 ---
-order: 100
 type: overview
 pcx-content-type: navigation
 hideChildren: true
+title: FAQ
+weight: 101
+layout: list
 ---
 
 # FAQ

@@ -1,7 +1,9 @@
 ---
 title: Enable Google Cloud Storage
-order: 60
 pcx-content-type: how-to
+weight: 61
+meta:
+  title: Enable Logpush to Google Cloud Storage
 ---
 
 import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"

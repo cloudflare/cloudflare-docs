@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Revoke a client certificate
+weight: 6
 ---
 
 # Revoke a client certificate
@@ -16,6 +17,6 @@ You can revoke a client certificate you previously generated.
 
 After revoking a certificate, you must update any mTLS rules that check for the presence of a client certificate so that they block all requests that include a revoked certificate.
 
-For more information, see [Check for revoked certificates](https://developers.cloudflare.com/firewall/cf-dashboard/create-mtls-rule#check-for-revoked-certificates).
+For more information, see [Check for revoked certificates](/firewall/cf-dashboard/create-mtls-rule#check-for-revoked-certificates).
 
 </Aside>

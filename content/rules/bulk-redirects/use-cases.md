@@ -1,7 +1,9 @@
 ---
 title: Use cases
-order: 7
 pcx-content-type: configuration
+weight: 8
+meta:
+  title: Common Bulk Redirect use cases
 ---
 
 # Common Bulk Redirect use cases

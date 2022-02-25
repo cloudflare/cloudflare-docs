@@ -1,20 +1,21 @@
 ---
 pcx-content-type: how-to
+title: Add custom HTTP headers
 ---
 
 # Add custom HTTP headers
 
 <Aside type="note">
 
-Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](https://developers.cloudflare.com/pages/platform/headers) for more information.
+Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/platform/headers) for more information.
 
 </Aside>
 
 More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/).
 
-If you have not deployed a Worker before, get started with our [tutorial](https://developers.cloudflare.com/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page.
+If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page.
 
-Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/getting-started#adding-a-custom-domain).
 
 ## Writing a Workers function
 
@@ -51,15 +52,15 @@ async function handleRequest(request) {
 
 ## Deploying a Workers function in the dashboard
 
-The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](https://developers.cloudflare.com/workers/examples).
+The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log into your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples).
 
-Click **Save and Deploy** when your script is ready and set a [route](https://developers.cloudflare.com/workers/platform/routes/) in your domain's zone settings.
+Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/routes/) in your domain's zone settings.
 
-For example, [here is a Workers script](https://developers.cloudflare.com/workers/examples/security-headers) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
+For example, [here is a Workers script](/workers/examples/security-headers) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
 
 ## Deploying a Workers function using the CLI
 
-If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update), the Workers CLI tool.
+If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](/workers/cli-wrangler/install-update), the Workers CLI tool.
 
 ```sh
 ---
@@ -84,7 +85,7 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](https://developers.cloudflare.com/workers/get-started/guide#7-configure-your-project-for-deployment).
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](/workers/get-started/guide#7-configure-your-project-for-deployment).
 
 Once you have configured your `wrangler.toml`, run `wrangler publish` in your terminal to deploy your Worker:
 

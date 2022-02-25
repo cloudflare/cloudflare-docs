@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare Page Shield
 ---
 
 # Cloudflare Page Shield

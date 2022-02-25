@@ -1,6 +1,7 @@
 ---
-order: 50
 pcx-content-type: reference
+title: License
+weight: 51
 ---
 
 # License

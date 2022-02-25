@@ -1,6 +1,7 @@
 ---
-order: 0
 pcx-content-type: navigation
+title: Deploying
+weight: 1
 ---
 
 # Deploying `cloudflared`

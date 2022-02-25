@@ -1,6 +1,7 @@
 ---
-order: 14
 pcx-content-type: reference
+title: Optimized partner API
+weight: 15
 ---
 
 # Optimized partner API

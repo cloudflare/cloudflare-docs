@@ -1,6 +1,7 @@
 ---
-order: 2
 pcx-content-type: reference
+title: Using own player
+weight: 3
 ---
 
 # Using own player
@@ -105,5 +106,5 @@ If you need complete control over the video element's CSS you can use a third pa
 
 ## Limitations
 
-*   [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
+*   [Analytics](/stream/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
 *   Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.

@@ -1,7 +1,9 @@
 ---
 title: Configure alerts
-order: 2
 pcx-content-type: how-to
+weight: 3
+meta:
+  title: Configure Page Shield alerts
 ---
 
 import AlertsIntro from "../\_partials/\_alerts-intro.md"

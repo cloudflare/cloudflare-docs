@@ -1,6 +1,7 @@
 ---
-order: 20
 pcx-content-type: reference
+title: Technical limitations
+weight: 21
 ---
 
 # Technical limitations

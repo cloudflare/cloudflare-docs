@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: tutorial
+title: Installation
+weight: 4
 ---
 
 # Installation

@@ -1,7 +1,7 @@
 ---
 title: Log fields
-order: 50
 pcx-content-type: navigation
+weight: 51
 ---
 
 # Log fields
@@ -13,7 +13,7 @@ Zone-scoped HTTP requests are available in both Logpush and Logpull. All other d
 
 Unless otherwise noted, fields are available in both Logpush v1 (Logpush prior to mid-2020) and Logpush v2 (all Logpush jobs after mid-2020).
 
-For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags) to classify IPs.
+For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](/bots/about/cloudflare-bot-tags) to classify IPs.
 
 ## Zone-scoped datasets
 
@@ -23,4 +23,4 @@ For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](https://
 
 <DirectoryListing path="/reference/log-fields/account"/>
 
-For more information on logs available in Cloudflare for Teams, refer to [Teams logs](https://developers.cloudflare.com/cloudflare-one/analytics/logs).
+For more information on logs available in Cloudflare for Teams, refer to [Teams logs](/cloudflare-one/analytics/logs).

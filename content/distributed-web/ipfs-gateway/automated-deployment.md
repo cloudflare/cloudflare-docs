@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: reference
+title: Automated Deployment
+weight: 6
 ---
 
 # Automated Deployment

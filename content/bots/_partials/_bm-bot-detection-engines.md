@@ -1,4 +1,8 @@
 ---
+_build:
+  publishResources: false
+  render: never
+  list: never
 ---
 
 import BotsHeuristics from "../\_partials/\_bots-heuristics.md"

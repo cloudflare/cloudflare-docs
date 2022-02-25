@@ -1,15 +1,16 @@
 ---
-order: 
 pcx-content-type: concept
+title: Tunnels & encapsulation
+weight: 0
 ---
 
 # Tunnels & encapsulation
 
-Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up GRE tunnel endpoints on edge servers inside your network namespace, and you [set up tunnel endpoints](/get-started/configure-tunnels/specify-gre-tunnel-endpoints) on routers at your data center.
+Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up GRE tunnel endpoints on edge servers inside your network namespace, and you [set up tunnel endpoints](/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/) on routers at your data center.
 
 This diagram illustrates the flow of traffic with Magic Transit.
 
-![GRE tunnel flow](../static/mt-gre-tunnel-flow.png)
+![GRE tunnel flow](/magic-transit/static/mt-gre-tunnel-flow.png)
 
 <Aside type='note' header='Note'>
 
@@ -23,7 +24,7 @@ Magic Transit [encapsulates IP packets](https://www.cloudflare.com/learning/netw
 
 In the diagram below, Magic Transit encapsulates packets at the Cloudflare edge and transmits them to a customer’s — Acme for example — tunnel endpoint router.
 
-![Encapsulation diagram](../static/magic-transit-anycast-1.png)
+![Encapsulation diagram](/magic-transit/static/magic-transit-anycast-1.png)
 
 <Aside type='note' header='Note'>
 
@@ -31,7 +32,7 @@ To accommodate additional header data introduced by encapsulation, the maximum s
 
 Because egress packets are routed via your ISP interface, not Cloudflare, you must set this value at your physical egress interfaces (not the GRE tunnel interfaces).
 
-For instructions, refer to [Set Maximum Segment Size](/get-started/requirements/#set-maximum-segment-size).
+For instructions, refer to [Set Maximum Segment Size](/magic-transit/get-started/requirements/#set-maximum-segment-size).
 
 </Aside>
 
@@ -43,4 +44,4 @@ This works because the GRE protocol is stateless—each packet is processed inde
 
 Cloudflare’s Anycast GRE architecture provides a conduit to your GRE tunnel for every server in every data center on Cloudflare’s global edge network as shown in the image below.
 
-![Cloudflare Anycast GRE](../static/magic-transit-anycast-2.png)
+![Cloudflare Anycast GRE](/magic-transit/static/magic-transit-anycast-2.png)

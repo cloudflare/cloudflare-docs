@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 1
 pcx-content-type: overview
+weight: 2
+meta:
+  title: Cloudflare Web Application Firewall
 ---
 
 # Cloudflare Web Application Firewall
@@ -32,4 +34,4 @@ The new Cloudflare WAF announced in March 2021 is available for selected custome
 
 For more information on the previous WAF implementation, also known as Managed Rules, refer to [Understanding the Cloudflare Web Application Firewall (WAF)](https://support.cloudflare.com/hc/articles/200172016) in the Support KB.
 
-For more information on Firewall Rules, refer to [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/).
+For more information on Firewall Rules, refer to [Cloudflare Firewall Rules](/firewall/).

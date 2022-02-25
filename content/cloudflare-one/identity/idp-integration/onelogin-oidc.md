@@ -1,6 +1,7 @@
 ---
-order: 11
 pcx-content-type: how-to
+title: OneLogin OIDC
+weight: 12
 ---
 
 # OneLogin OIDC
@@ -15,7 +16,7 @@ To set up OneLogin as your identity provider:
 
 2.  Select **Apps > Custom Connectors**.
 
-    ![OneLogin OIDC](../../static/documentation/identity/onelogin/onelogin-oidc-1.png)
+    ![OneLogin OIDC](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-1.png)
 
     The *Custom Connectors* card displays.
 
@@ -23,11 +24,11 @@ To set up OneLogin as your identity provider:
 
 4.  Name the connector. The *connector name* card displays. Our example uses `access-oidc` for the connector name.
 
-    ![OneLogin OIDC Application Basic Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-3.png)
+    ![OneLogin OIDC Application Basic Configuration page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
 5.  In **Sign-On Method**, select the **OpenID Connect** option.
 
-6.  In the **Redirect URI** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+6.  In the **Redirect URI** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -37,7 +38,7 @@ To set up OneLogin as your identity provider:
 
 8.  Select **More Actions > Add App to Connector**.
 
-    ![OneLogin OIDC Application Basic Configuration page More Actions menu](../../static/documentation/identity/onelogin/onelogin-oidc-4.png)
+    ![OneLogin OIDC Application Basic Configuration page More Actions menu](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-4.png)
 
 9.  In the **Portal** section, enter a name for your application in the **Display Name** field.
 
@@ -45,13 +46,13 @@ To set up OneLogin as your identity provider:
 
 11. Select the **Access** tab.
 
-    ![OneLogin OIDC Add Application Access page](../../static/documentation/identity/onelogin/onelogin-oidc-6.png)
+    ![OneLogin OIDC Add Application Access page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-6.png)
 
 12. Add the **Roles** that can access this application.
 
 13. Select the **SSO** tab.
 
-    ![OneLogin OIDC Add Application SSO page](../../static/documentation/identity/onelogin/onelogin-oidc-7.png)
+    ![OneLogin OIDC Add Application SSO page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-7.png)
 
 14. Click **Show client secret**.
 

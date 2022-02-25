@@ -1,6 +1,8 @@
 ---
 title: Secure Web Gateway
 pcx-content-type: tutorial
+meta:
+  title: Connect to Secure Web Gateway with Magic WAN
 ---
 
 # Connect to Secure Web Gateway with Magic WAN
@@ -29,7 +31,7 @@ For the purpose of this tutorial, setup will reference a scenario where an enter
 
 Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`. The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
 
-![Tunnel configuration](../images/tunnel-config-values.png)
+![Tunnel configuration](/magic-wan/static/tunnel-config-values.png)
 
 ## Add Anycast GRE or IPsec tunnel
 
@@ -43,7 +45,7 @@ Each site's private network has an on-ramp to Cloudflare's Anycast network using
 
 In keeping with the example scenario, the list of tunnels should match the example below.
 
-![Tunnel configuration](../images/gre-tunnel-values.png)
+![Tunnel configuration](/magic-wan/static/gre-tunnel-values.png)
 
 ## Add static routes
 
@@ -55,10 +57,10 @@ In keeping with the example scenario, the list of tunnels should match the examp
 
 In keeping with the example scenario, the list of static routes should match the example below.
 
-![Tunnel configuration](../images/static-route-values.png)
+![Tunnel configuration](/magic-wan/static/static-route-values.png)
 
 ## Secure Web Gateway
 
-After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering).
+After setting up the Anycast GRE and static routes, configure the policies for Secure Web Gateway in the Teams dashboard. To set up the policies, refer to [Secure Web Gateway policies](/cloudflare-one/policies/filtering).
 
 After you configured Secure Web Gateway, enterprise users and devices from each of the sites mentioned in the example scenario would be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.

@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: overview
+title: Keyless SSL
+weight: 6
 ---
 
 import KeylessSSLDefinition from "../\_partials/\_keyless-ssl-definition.md"

@@ -1,13 +1,14 @@
 ---
-order: 6
 pcx-content-type: tutorial
+title: Configuration and activation
+weight: 7
 ---
 
 # Configuration and activation
 
-Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, `memcached.servers`, a space separated list of `host:port` memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for memcached. Using a socket file is recommended for best performance if your memcached does not require network communication. Make sure at least one memcached instance is defined. Full details on the available options [can be found in the Railgul Execution docs](/user-guide/railgun-execution).
+Railgun is configured in `/etc/railgun/railgun.conf` (GNU/Linux). The most important directives are `wan.port`, which specifies the port Railgun listens on, `memcached.servers`, a space separated list of `host:port` memcached instances for Railgun to utilize. It is also possible to specify the full path to a single socket file for memcached. Using a socket file is recommended for best performance if your memcached does not require network communication. Make sure at least one memcached instance is defined. Full details on the available options [can be found in the Railgul Execution docs](/railgun/user-guide/railgun-execution/).
 
-If you will be using Railgun in combination with a website hosted behind the same NAT scheme, then you will also need to configure static IP mapping. In other words, if your website and Railgun node are running behind the same router or firewall, there are extra configuration steps necessary to properly route requests. More details in the [Potential problems and common issues](/user-guide/set-up/potential-problems) section. Contact support for assistance, or you can use the examples in `/etc/railgun/railgun-nat.conf` to define one yourself.
+If you will be using Railgun in combination with a website hosted behind the same NAT scheme, then you will also need to configure static IP mapping. In other words, if your website and Railgun node are running behind the same router or firewall, there are extra configuration steps necessary to properly route requests. More details in the [Potential problems and common issues](/railgun/user-guide/set-up/potential-problems/) section. Contact support for assistance, or you can use the examples in `/etc/railgun/railgun-nat.conf` to define one yourself.
 
 Railgun requires an activation step before usage. To activate, you will need to update the configuration file with the external IP address or a hostname which resolves to the external IP of your Railgun instance for `activation.public_ip` and your activation token for `activation.token`. You can determine the external IP address of a server with the following command:
 
@@ -17,7 +18,7 @@ $ curl icanhazip.com
 
 By default, Railgun will listen on all interfaces. It is best practice to specify the interface you would like Railgun to use. You can do that by setting the wan.ip option to the IP address of the interface you would like Railgun to listen on. **This is especially important if you have a local link IPv6 address, as Railgun will prefer that to an IPv4 address and may not work as a result.**
 
-Business and Enterprise users can find the Railgun activation token listed on the [Account Settings page](https://www.cloudflare.com/a/account/my-account). Details on this page can be found in the Administration documentation. Optimized Partners must use the [init](/user-guide/optimized-partner-api/manage-railguns#get-init) API method to acquire an activation token (`rtkn`). Business and Enterprise users should add a Railgun on the listing page, if you haven’t already. It can be named anything you like. After adding a Railgun, the token will be listed on the page and you can toggle the Railgun to ‘On.’ The token is a 32 character hash of numbers and letters. Copy this hash into the `activation.token` option in your Railgun configuration file. If your public IP and activation token are properly configured, the first time you start Railgun it will register and download a newly generated SSL certificate to encrypt traffic. To make sure that activation works properly, check your logs for a successful activation response when starting Railgun:
+Business and Enterprise users can find the Railgun activation token listed on the [Account Settings page](https://www.cloudflare.com/a/account/my-account). Details on this page can be found in the Administration documentation. Optimized Partners must use the [init](/railgun/user-guide/optimized-partner-api/manage-railguns/#get-init) API method to acquire an activation token (`rtkn`). Business and Enterprise users should add a Railgun on the listing page, if you haven’t already. It can be named anything you like. After adding a Railgun, the token will be listed on the page and you can toggle the Railgun to ‘On.’ The token is a 32 character hash of numbers and letters. Copy this hash into the `activation.token` option in your Railgun configuration file. If your public IP and activation token are properly configured, the first time you start Railgun it will register and download a newly generated SSL certificate to encrypt traffic. To make sure that activation works properly, check your logs for a successful activation response when starting Railgun:
 
 ```sh
 $  tail -f /var/log/messages
@@ -26,7 +27,7 @@ Oct 27 22:29:41 www rg-listener: [Activation] Assigned Railgun ID: 1
 Oct 27 22:29:41 www rg-listener: [Activation] Acquired cert from server
 ```
 
-If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/user-guide/set-up/preparing-environment) so that Railgun may connect securely back to Cloudflare’s activation servers.
+If there is a certificate error in the system log or during startup, ensure that the necessary certificate bundle is installed as described in [Preparing the Environment](/railgun/user-guide/set-up/preparing-environment/) so that Railgun may connect securely back to Cloudflare’s activation servers.
 
 As an example, we are going to use domain port2408.net. The newly generated certificate is signed against the port2408.net domain and our system will automatically set your new port2408.net subdomain to resolve to the IP specified by `activation.public_ip`. You can use this hostname to test Railgun without enabling the service for all users. More details are in the [Testing Railgun](#testing-railgun) section below.
 
@@ -95,4 +96,4 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 
 It is recommended that you consult the [Testing Railgun](#testing-railgun) section before enabling Railgun for all visitors to your site.
 
-When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn\_set](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_set) with `mode` set to `0` or [conn\_setmode\_enabled](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn\_set](/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/#get-conn_set) with `mode` set to `0` or [conn\_setmode\_enabled](/railgun/user-guide/optimized-partner-api/enable-and-disable-connections/#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.

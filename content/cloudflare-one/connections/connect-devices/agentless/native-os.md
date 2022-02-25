@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Native OS
+weight: 4
 ---
 
 # Native OS
@@ -13,7 +14,7 @@ Enrolling devices using static IP addresses may prevent users from connecting to
 2.  Connect to the Wi-Fi network.
 3.  Once the connection has been established, add the static IP addresses back.
 
-Alternatively, you can look into using the [WARP client](/connections/connect-devices) to connect your devices to Cloudflare Zero Trust.
+Alternatively, you can look into using the [WARP client](/cloudflare-one/connections/connect-devices/) to connect your devices to Cloudflare Zero Trust.
 
 </Aside>
 

@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: reference
+title: Configuration examples
+weight: 0
 ---
 
 # Configuration examples

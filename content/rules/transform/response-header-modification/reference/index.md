@@ -1,7 +1,9 @@
 ---
 title: Reference
 pcx-content-type: navigation
-order: 5
+weight: 6
+meta:
+  title: Response Header Modification Rules reference
 ---
 
 # Response Header Modification Rules reference

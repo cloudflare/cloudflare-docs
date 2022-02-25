@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: navigation
+title: Connections
+weight: 5
 ---
 
 # Connections
@@ -13,16 +14,16 @@ Learn how you can connect your applications, devices, and networks to Cloudflare
 
 ### Connect applications
 
-*   [Share development environments](/tutorials/share-new-site)
-*   [Connect multiple HTTP origins](/tutorials/multi-origin)
-*   [Connect SSH and HTTP origins for GitLab](/tutorials/gitlab)
-*   [Connect MongoDB management panel](/tutorials/mongodb-tunnel)
+*   [Share development environments](/cloudflare-one/tutorials/share-new-site/)
+*   [Connect multiple HTTP origins](/cloudflare-one/tutorials/multi-origin/)
+*   [Connect SSH and HTTP origins for GitLab](/cloudflare-one/tutorials/gitlab/)
+*   [Connect MongoDB management panel](/cloudflare-one/tutorials/mongodb-tunnel/)
 
 ### Connect networks
 
-*   [Filter DNS on a network](/tutorials/secure-dns-network)
+*   [Filter DNS on a network](/cloudflare-one/tutorials/secure-dns-network/)
 
 ### Connect devices
 
-*   [Filter DNS on devices](/tutorials/secure-dns-devices)
-*   [Inspect HTTP and block file uploads](/tutorials/block-uploads)
+*   [Filter DNS on devices](/cloudflare-one/tutorials/secure-dns-devices/)
+*   [Inspect HTTP and block file uploads](/cloudflare-one/tutorials/block-uploads/)

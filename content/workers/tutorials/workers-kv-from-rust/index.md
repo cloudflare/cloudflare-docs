@@ -1,8 +1,9 @@
 ---
 updated: 2021-07-28
 difficulty: Intermediate
-content_type: "📝 Tutorial"
+content_type: 📝 Tutorial
 pcx-content-type: tutorial
+title: Use Workers KV directly from Rust
 ---
 
 # Use Workers KV directly from Rust
@@ -322,7 +323,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-You can use [`wrangler dev`](/cli-wrangler/commands#dev) to test the Worker:
+You can use [`wrangler dev`](/workers/cli-wrangler/commands/#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'

@@ -1,10 +1,13 @@
 ---
-order: 2
 type: example
-summary: Send a request to a remote server, read HTML from the response, and serve that HTML.
+summary: Send a request to a remote server, read HTML from the response, and
+  serve that HTML.
 tags:
   - Originless
 pcx-content-type: configuration
+title: Fetch HTML
+weight: 3
+layout: example
 ---
 
 # Fetch HTML

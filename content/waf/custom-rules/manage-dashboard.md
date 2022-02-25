@@ -1,6 +1,7 @@
 ---
-order: 5
 pcx-content-type: how-to
+title: Manage Custom Rules in the dashboard
+weight: 6
 ---
 
 # Manage Custom Rules in the dashboard
@@ -15,13 +16,13 @@ This feature is only available for selected customers on an Enterprise plan.
 
 The Custom Rules interface allows you to:
 
-*   [Create Custom Firewall rules](/custom-rules/custom-firewall/create-dashboard)
-*   [Create Rate Limiting rules](/custom-rules/rate-limiting/create-dashboard)
+*   [Create Custom Firewall rules](/waf/custom-rules/custom-firewall/create-dashboard/)
+*   [Create Rate Limiting rules](/waf/custom-rules/rate-limiting/create-dashboard/)
 *   Browse and filter rules
 *   Edit and delete rules
 *   Enable or disable rules
 
-![Custom Rules tab](../images/custom-rules/custom-rules-tab.png)
+![Custom Rules tab](/waf/static/custom-rules/custom-rules-tab.png)
 
 ## Manage Custom Rules
 

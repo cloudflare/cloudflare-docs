@@ -1,7 +1,9 @@
 ---
 title: API parameter reference
 pcx-content-type: reference
-order: 3
+weight: 4
+meta:
+  title: Response header modification API parameter reference
 ---
 
 # Response header modification API parameter reference
@@ -50,7 +52,7 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP respon
 
 <Aside type='note'>
 
-Check the [available fields and functions](/transform/request-header-modification/reference/fields-functions) you can use in an expression.
+Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/) you can use in an expression.
 
 </Aside>
 

@@ -1,7 +1,9 @@
 ---
 title: Drand Project
-order: 0
 pcx-content-type: concept
+weight: 1
+meta:
+  title: What is drand?
 ---
 
 # What is drand?

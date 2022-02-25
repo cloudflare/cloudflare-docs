@@ -1,9 +1,11 @@
 ---
-order: 3
 type: example
 summary: Allow users with specific SAML attributes.
 tags:
-- SAML Attribute
+  - SAML Attribute
+title: SAML Attribute
+weight: 4
+layout: example
 ---
 
 # SAML Attribute

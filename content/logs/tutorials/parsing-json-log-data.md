@@ -1,6 +1,7 @@
 ---
-order: 85
 pcx-content-type: tutorial
+title: Parse Cloudflare Logs JSON data
+weight: 86
 ---
 
 # Parse Cloudflare Logs JSON data

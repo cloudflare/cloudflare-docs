@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Review scripts considered malicious
+weight: 4
 ---
 
 # Review scripts considered malicious
@@ -25,8 +26,8 @@ To review the scripts considered malicious:
     *   **Malicious URL**: Whether the script URL is known to be malicious according to threat intelligence feeds.
     *   **Malicious Domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
 
-    For more information, refer to [Detecting malicious scripts](/about/malicious-script-detection).
+    For more information, refer to [Detecting malicious scripts](/page-shield/about/malicious-script-detection/).
 
-4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/use-dashboard/monitor-scripts#view-script-details), review and update the pages where the malicious script was detected.
+4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/use-dashboard/monitor-scripts/#view-script-details), review and update the pages where the malicious script was detected.
 
-You can configure alerts for detected malicious scripts. Refer to [Alerts](/reference/alerts) for more information on the available alert types.
+You can configure alerts for detected malicious scripts. Refer to [Alerts](/page-shield/reference/alerts/) for more information on the available alert types.

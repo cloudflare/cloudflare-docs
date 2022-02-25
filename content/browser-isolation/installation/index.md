@@ -1,14 +1,14 @@
 ---
 title: Installation
-order: 1
+weight: 2
 ---
 
 # Installation
 
-Before installing and setting up the WARP Client, ensure that your device meets the [system requirements](https://developers.cloudflare.com/warp-client/requirements) needed for client installation.
+Before installing and setting up the WARP Client, ensure that your device meets the [system requirements](/warp-client/requirements) needed for client installation.
 
 If your device meets the system requirements, follow the setup instructions for your device:
 
-*   [Windows](/installation/windows)
-*   [macOS](/installation/macos)
-*   [ChromeOS](/installation/chromeos)
+*   [Windows](/browser-isolation/installation/windows/)
+*   [macOS](/browser-isolation/installation/macos/)
+*   [ChromeOS](/browser-isolation/installation/chromeos/)

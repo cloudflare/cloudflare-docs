@@ -1,5 +1,6 @@
 ---
-order: 1
+title: Uninstall
+weight: 2
 ---
 
 # Uninstall
@@ -23,7 +24,7 @@ order: 1
 2.  Search "*Cloudflare for Teams ECC Certificate Authority*" in search input (top right).
 3.  Right-click *Cloudflare for Teams ECC Certificate Authority* and select **Delete "Cloudflare for Teams ECC Certificate Authority"**.
 
-![Recording of Windows express installation](../static/macos-remove-root-ca.png)
+![Recording of Windows express installation](/browser-isolation/static/macos-remove-root-ca.png)
 
 ### Windows
 

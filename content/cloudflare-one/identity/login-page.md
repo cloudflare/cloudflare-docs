@@ -1,6 +1,7 @@
 ---
-order: 10
 pcx-content-type: concept
+title: Login page
+weight: 11
 ---
 
 # Login page
@@ -13,4 +14,4 @@ Any changes you make will be reflected in real time in the **Preview** card. Onc
 
 Your login page will now reflect your changes.
 
-![Customized Login](../static/documentation/identity/devices/customized-login.png)
+![Customized Login](/cloudflare-one/static/documentation/identity/devices/customized-login.png)

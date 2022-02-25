@@ -1,6 +1,7 @@
 ---
-order: 1
 pcx-content-type: concept
+title: Custom metadata
+weight: 2
 ---
 
 import PlanLimitation from "../../\_partials/\_ssl-for-saas-plan-limitation.md"
@@ -9,7 +10,7 @@ import PlanLimitation from "../../\_partials/\_ssl-for-saas-plan-limitation.md"
 
 You may wish to configure per-hostname (customer) settings beyond the scale of Page Rules or Rate Limiting, which have a maximum of 125 rules each.
 
-To do this, you will first need to reach out to your account team to enable access to [Cloudflare Workers](https://developers.cloudflare.com/workers/) and Custom Metadata. Once you have access, you may use Cloudflare Workers to define per-hostname behavior by reading the metadata JSON from the Worker.
+To do this, you will first need to reach out to your account team to enable access to [Cloudflare Workers](/workers/) and Custom Metadata. Once you have access, you may use Cloudflare Workers to define per-hostname behavior by reading the metadata JSON from the Worker.
 
 <PlanLimitation/>
 

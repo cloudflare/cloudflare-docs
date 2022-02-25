@@ -1,6 +1,7 @@
 ---
 pcx-content-type: reference
-order: 3
+title: Values
+weight: 4
 ---
 
 # Values
@@ -29,7 +30,7 @@ Note in this example that the first and last `"` characters in `"token-type=\"JW
 
 Since the evaluation of expressions using string values is case-sensitive, consider writing more than one simple expression to capture variants.
 
-Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
+Cloudflare Business and Enterprise customer plans have access to the `matches` [comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) which supports regular expressions, so that you can capture multiple variants of a value with a single expression.
 
 ## Boolean values
 
@@ -49,7 +50,7 @@ not ssl
 
 ## Arrays
 
-The Cloudflare Rules language includes [fields](/rules-language/fields) of `Array` type and [functions](/rules-language/functions) with `Array` arguments and return values.
+The Cloudflare Rules language includes [fields](/ruleset-engine/rules-language/fields/) of `Array` type and [functions](/ruleset-engine/rules-language/functions/) with `Array` arguments and return values.
 
 You can access individual array elements using an index (a non-negative value) between square brackets (`[]`). Array indexes start at `0` (zero).
 
@@ -84,19 +85,19 @@ Accessing an out-of-bounds array index produces a "missing value". A missing val
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
-The Rules language [operators](/rules-language/operators) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
+The Rules language [operators](/ruleset-engine/rules-language/operators/) do not directly support arrays or the `[*]` operator — however, they support indexed array elements like `array_value[0]`. For example, you cannot use `[*]` with the `==` operator outside the context of an enclosing function call:
 
 *   `http.request.headers.names[*] == "Content-Type"` — **Invalid** expression
 *   `any(http.request.headers.names[*] == "Content-Type")` — **Valid** expression
 
 ## Lists
 
-[Lists](https://developers.cloudflare.com/firewall/cf-firewall-rules/rules-lists) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of Lists that support different kinds of list items.
+[Lists](/firewall/cf-firewall-rules/rules-lists) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of Lists that support different kinds of list items.
 
-To refer to a List in a rule expression, use `$<list_name>` and specify the `in` [operator](/rules-language/operators). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
+To refer to a List in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
 
 ```sql
 (ip.src in $office_network)
 ```
 
-Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](https://developers.cloudflare.com/firewall/cf-dashboard/rules-lists/manage-lists).
+Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](/firewall/cf-dashboard/rules-lists/manage-lists).

@@ -1,7 +1,9 @@
 ---
-order: 0
 title: Getting started
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare StreamGetting started
 ---
 
 # Cloudflare Stream
@@ -68,7 +70,7 @@ This cURL command tells the Stream API to download the MP4 file and make it avai
 
 ### Step 2: Wait until the video is ready to stream
 
-Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/uploading-videos/using-webhooks) to be notified when a video is ready for streaming.
+Because Stream must download and process the video, the video might not be available for a few seconds depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
 
 Use the video UID from the first step to poll the video:
 
@@ -107,7 +109,7 @@ highlight: [6]
 
 ### Step 3: Stream the video!
 
-The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/viewing-videos/using-the-stream-player).
+The `uid` of the video can be used refer to the video after uploading and can be used to play it using the [Stream video player](/stream/viewing-videos/using-the-stream-player/).
 
 ```html
 <iframe
@@ -140,7 +142,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
 ### Next steps
 
-*   [Securing your Stream](/viewing-videos/securing-your-stream)
-*   [Displaying thumbnails to your video](/viewing-videos/securing-your-stream)
-*   [Programmatically controlling the video player](/viewing-videos/using-the-player-api)
-*   [Uploading without a API token](/uploading-videos/direct-creator-uploads)
+*   [Securing your Stream](/stream/viewing-videos/securing-your-stream/)
+*   [Displaying thumbnails to your video](/stream/viewing-videos/securing-your-stream/)
+*   [Programmatically controlling the video player](/stream/viewing-videos/using-the-player-api/)
+*   [Uploading without a API token](/stream/uploading-videos/direct-creator-uploads/)

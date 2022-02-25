@@ -1,5 +1,6 @@
 ---
 pcx-content-type: tutorial
+title: Import Cloudflare resources
 ---
 
 # Import Cloudflare resources
@@ -9,7 +10,7 @@ An important point to understand about Terraform is that it can only manage conf
 *   A [configuration file](https://www.terraform.io/docs/configuration/index.html) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
 *   A local [state file](https://www.terraform.io/docs/state/) that maps the resource names defined in your configuration file, e.g., cloudflare\_load\_balancer.www-lb to the resources that exist in Cloudflare.
 
-When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/tutorial), it persists those IDs to a state file. By default, the `terraform.tfstate` file in your directory is used, but this can also be a [remote location](https://www.terraform.io/docs/state/remote.html). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
+When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/terraform/tutorial/), it persists those IDs to a state file. By default, the `terraform.tfstate` file in your directory is used, but this can also be a [remote location](https://www.terraform.io/docs/state/remote.html). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
 
 If you configured Cloudflare through other means, for example, by logging into the Cloudflare Dashboard or making `curl` calls to api.cloudflare.com, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
 
@@ -101,7 +102,7 @@ resource "cloudflare_record" "mitigateddos_net_a123_mitigateddos_net_2" {
 }
 ```
 
-Calling terraform `plan` now will attempt to create these resources as if they did not exist, which is not preferred. To fix this, [import the real state of those resources](/advanced-topics/import-cloudflare-resources#import-resources-into-terraform-state) from Cloudflare into the Terraform state file (`.tfstate`) via Terraform import.
+Calling terraform `plan` now will attempt to create these resources as if they did not exist, which is not preferred. To fix this, [import the real state of those resources](/terraform/advanced-topics/import-cloudflare-resources/#import-resources-into-terraform-state) from Cloudflare into the Terraform state file (`.tfstate`) via Terraform import.
 
 ```sh
 $ terraform plan

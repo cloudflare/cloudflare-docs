@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: reference
+title: Scaling and benchmarking
+weight: 4
 ---
 
 # Scaling and benchmarking

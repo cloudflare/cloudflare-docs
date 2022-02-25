@@ -1,8 +1,11 @@
 ---
 title: Supported URL components
-order: 3
 type: overview
 pcx-content-type: reference
+weight: 4
+layout: list
+meta:
+  title: Supported URL components in Bulk Redirects
 ---
 
 # Supported URL components in Bulk Redirects

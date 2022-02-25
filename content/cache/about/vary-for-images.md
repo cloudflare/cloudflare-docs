@@ -34,4 +34,4 @@ You can use vary for images on the file extensions below if the origin server se
 </div>
 </details>
 
-To begin using Vary for Images, refer to [Enable Vary for Images](/how-to/enable-vary-for-images). To learn more about purging varied images, refer to [Purge varied images](/how-to/purge-cache#purge-varied-images).
+To begin using Vary for Images, refer to [Enable Vary for Images](/cache/how-to/enable-vary-for-images/). To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).

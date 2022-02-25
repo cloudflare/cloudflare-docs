@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: concept
+title: CORS
+weight: 4
 ---
 
 # CORS
@@ -27,7 +28,7 @@ To handle CORS headers for the policy protecting the path that requires CORS, na
 
 </Aside>
 
-If you have two sites protected by Cloudflare Access, `app1.site.com` and `app2.hostname.com`, requests made between the two will be subject to CORS checks. Users who login to `app1.site.com` will be issued cookies for `app1.site.com` and your Cloudflare Access [team domain](/glossary#team-domain).
+If you have two sites protected by Cloudflare Access, `app1.site.com` and `app2.hostname.com`, requests made between the two will be subject to CORS checks. Users who login to `app1.site.com` will be issued cookies for `app1.site.com` and your Cloudflare Access [team domain](/cloudflare-one/glossary/#team-domain).
 
 When the user's browser requests `app2.hostname.com`, the cookie will not be present for that domain so the request will be sent to the login page. However, the user will have a cookie for their Cloudflare Access session, which will redirect them successfully to `app2.hostname.com` if they are permitted to reach it.
 

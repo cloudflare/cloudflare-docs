@@ -1,8 +1,11 @@
 ---
 title: Overview
-order: 0
 type: overview
 pcx-content-type: overview
+weight: 1
+layout: list
+meta:
+  title: Cloudflare Distributed Web docs
 ---
 
 # Cloudflare Distributed Web docs

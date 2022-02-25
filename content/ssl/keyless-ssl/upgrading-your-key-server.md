@@ -1,6 +1,7 @@
 ---
-order: 3
 pcx-content-type: how-to
+title: Upgrade your key server
+weight: 4
 ---
 
 # Upgrade your key server
@@ -19,6 +20,6 @@ To upgrade your key server:
 
 <Aside type="warning">
 
-If you are running a [high availability configuration](/keyless-ssl/reference/high-availability), upgrade one server at a time as new TLS connections will fail to terminate at Cloudflare’s edge without a functioning key server.
+If you are running a [high availability configuration](/ssl/keyless-ssl/reference/high-availability/), upgrade one server at a time as new TLS connections will fail to terminate at Cloudflare’s edge without a functioning key server.
 
 </Aside>

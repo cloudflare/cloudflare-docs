@@ -2,6 +2,7 @@
 updated: 2021-06-14
 category: 🔐 Zero Trust
 pcx-content-type: tutorial
+title: Connect through Cloudflare Access over RDP
 ---
 
 # Connect through Cloudflare Access over RDP
@@ -31,25 +32,25 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 3.  Click **Add application**.
 
-![App List](../static/zero-trust-security/ssh/app-list.png)
+![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 1.  Choose **Self-hosted** on the next page.
 
-![Add App](../static/zero-trust-security/ssh/add-app.png)
+![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
 
 1.  Input a subdomain where your application will be available to users.
 
-![Configure](../static/zero-trust-security/ssh/configure-app.png)
+![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 1.  Next, create rules that control who can reach the application.
 
-![Add Rules](../static/zero-trust-security/ssh/app-rules.png)
+![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 1.  Finally, click **Save** to save the policy.
 
 You can always edit the policy to change who should be allowed access to the application, or to change which authentication providers can be used to access the application.
 
-![Save](../static/zero-trust-security/ssh/save-app.png)
+![Save](/cloudflare-one/static/zero-trust-security/ssh/save-app.png)
 
 ## Install `cloudflared`
 
@@ -105,7 +106,7 @@ copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\system
 
 ## Create a Tunnel
 
-Next, [create a Tunnel](/connections/connect-apps/create-tunnel) with the command below.
+Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with the command below.
 
 ```sh
 $ cloudflared tunnel create <NAME>
@@ -121,7 +122,7 @@ C:\Cloudflared\bin\cloudflared.exe tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the Tunnel](/connections/connect-apps/configuration) to serve traffic.
+You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/) to serve traffic.
 
 1.  Create a `YAML` file that `cloudflared` can reach. By default `cloudflared` will look for the file in the `C:\Users\%USERNAME%\.cloudflared\` folder of your Windows machine.
 
@@ -153,15 +154,15 @@ with `%USERNAME%` being your Windows username (this is your user folder).
 
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
 
-![Enable WebSockets](../static/zero-trust-security/ssh/enable-websockets.png)
+![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
 </Aside>
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/connections/connect-apps/configuration/configuration-file/ingress).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/).
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
-![DNS List](../static/zero-trust-security/ssh/dns-list.png)
+![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
 
 1.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
 
@@ -169,7 +170,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1.  Click **Save**.
 
-![Add DNS](../static/zero-trust-security/ssh/add-dns.png)
+![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 
@@ -179,13 +180,13 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/connections/connect-apps/run-tunnel/run-as-service) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 
 ### Install `cloudflared` on the client machine
 
-[Download and install](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
+[Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
 
 ### Connect to the remote desktop
 

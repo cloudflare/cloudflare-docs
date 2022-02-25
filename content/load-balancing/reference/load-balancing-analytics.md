@@ -1,7 +1,9 @@
 ---
 title: Analytics
-order: 45
 pcx-content-type: how-to
+weight: 46
+meta:
+  title: Load balancing analytics
 ---
 
 # Load balancing analytics
@@ -52,7 +54,7 @@ To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics*
 
 ## GraphQL Analytics
 
-For more flexibility, get load balancing metrics directly from the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api).
+For more flexibility, get load balancing metrics directly from the [GraphQL Analytics API](/analytics/graphql-api).
 
 Get started with a sample query:
 

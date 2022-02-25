@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 5
+title: Core Web Vitals
+weight: 6
 ---
 
 # Core Web Vitals
@@ -37,7 +38,7 @@ Each table — LCP, FID, and CLS — also shows you the performance of these ele
 
 These numbers refer to how an element performs relatively to others in your page. For example, if an element takes 3,900 ms to load and is in the 75 percentile, this means that it is slower to load than 75% of the elements in your page.
 
-![Debug view](../../../static/images/core-web-vitals-debug-view.png)
+![Debug view](/analytics/static/images/core-web-vitals-debug-view.png)
 
 ## Information collected
 

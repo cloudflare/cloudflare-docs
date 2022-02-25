@@ -1,13 +1,14 @@
 ---
-order: 8
 pcx-content-type: tutorial
+title: Simulcasting
+weight: 9
 ---
 
 # Simulcasting
 
 Simulcasting lets you forward your live stream to third-party platforms such as YouTube Live and Facebook Live. To begin simulcasting, select an input and add one or more Outputs:
 
-![Begin simulcasting](./simulcasting.png)
+![Begin simulcasting](/stream/simulcasting.png)
 
 ## Add an Output using the API
 

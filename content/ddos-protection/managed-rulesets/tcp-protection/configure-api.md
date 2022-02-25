@@ -1,7 +1,9 @@
 ---
 type: overview
 pcx-content-type: reference
-order: 2
+title: Advanced TCP Protection API
+weight: 3
+layout: list
 ---
 
 # Advanced TCP Protection API

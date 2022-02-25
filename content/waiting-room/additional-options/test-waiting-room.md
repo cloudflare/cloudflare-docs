@@ -1,6 +1,7 @@
 ---
-order: 
 pcx-content-type: tutorial
+title: Test a waiting room
+weight: 0
 ---
 
 # Test a waiting room
@@ -17,9 +18,9 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 
-*   Fulfilled all the [prerequisites](../../about#prerequisites)
-*   Previously [created a waiting room](/get-started)
-*   Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/additional-options/customize-waiting-room) of your waiting room)
+*   Fulfilled all the [prerequisites](/waiting-room/about/#prerequisites)
+*   Previously [created a waiting room](/waiting-room/get-started/)
+*   Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/waiting-room/additional-options/customize-waiting-room/) of your waiting room)
 
 ***
 
@@ -108,10 +109,10 @@ Once the script finishes running, it creates a CSV file with the following field
 
 To visualize your results, open your CSV file within a spreadsheet application. For example, here is a basic chart that shows the amount of time a user waited verses the time they first tried to get to the web service:
 
-![Visualize waiting room test data by using a graphing tool](../static/test-waiting-room.png)
+![Visualize waiting room test data by using a graphing tool](/waiting-room/static/test-waiting-room.png)
 
 In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
 
 ## 4. Adjust waiting room (optional)
 
-Based on the results of your test, you may want to adjust [the settings](/reference/configuration-settings) of your waiting room.
+Based on the results of your test, you may want to adjust [the settings](/waiting-room/reference/configuration-settings/) of your waiting room.

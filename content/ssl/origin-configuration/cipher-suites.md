@@ -1,12 +1,14 @@
 ---
 title: Cipher suites
-order: 3
 pcx-content-type: reference
+weight: 4
+meta:
+  title: Cipher suites — Origin
 ---
 
 # Cipher suites — Origin
 
-Below are the cipher suites that we present to origins during an SSL/TLS handshake. We also have a list of [cipher suites that we support at our edge](/ssl-tls/cipher-suites/), i.e., that are presented to browsers and other user agents.
+Below are the cipher suites that we present to origins during an SSL/TLS handshake. We also have a list of [cipher suites that we support at our edge](/ssl/ssl-tls/cipher-suites/), i.e., that are presented to browsers and other user agents.
 
 Note that the cipher suites below are ordered based on how they appear in the ClientHello, communicating our preference to the origin.
 

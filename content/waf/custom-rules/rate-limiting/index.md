@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
-order: 2
+title: Rate Limiting rules
+weight: 3
 ---
 
 # Rate Limiting rules
@@ -19,7 +20,7 @@ For guidance on the previous version of Rate Limiting rules, refer to [Configuri
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, Rate Limiting rules have an associated **expression** and an **action**.
 
-The **expression** specifies the criteria you are matching traffic on using the [Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting rules, the action occurs when the request rate reaches the specified limit.
+The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of Rate Limiting rules, the action occurs when the request rate reaches the specified limit.
 
 Besides these two parameters, Rate Limiting rules require the following additional parameters:
 
@@ -28,14 +29,14 @@ Besides these two parameters, Rate Limiting rules require the following addition
 *   **Requests per period** — The number of requests over the period of time that will trigger the Rate Limiting rule.
 *   **Mitigation timeout** — Once the request rate is reached, the Rate Limiting rule blocks further requests for the period of time defined in this field.
 
-Refer to [Rate limiting parameters](/custom-rules/rate-limiting/parameters) for more details on these parameters.
+Refer to [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more details on these parameters.
 
-Refer to [Determining the request rate](/custom-rules/rate-limiting/request-rate) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ***
 
 ## Getting started
 
-To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, refer to [Create Rate Limiting rules in the dashboard](/custom-rules/rate-limiting/create-dashboard).
+To configure Rate Limiting rules using the Cloudflare dashboard, use the **Custom Rules** tab in the **Firewall** app. For more information, refer to [Create Rate Limiting rules in the dashboard](/waf/custom-rules/rate-limiting/create-dashboard/).
 
-You can also configure Rate Limiting rules using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). Refer to [Create Rate Limiting rules via API](/custom-rules/rate-limiting/create-api) for more information.
+You can also configure Rate Limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api). Refer to [Create Rate Limiting rules via API](/waf/custom-rules/rate-limiting/create-api/) for more information.

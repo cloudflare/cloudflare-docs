@@ -1,7 +1,9 @@
 ---
 title: Overview
-order: 0
 pcx-content-type: overview
+weight: 1
+meta:
+  title: Cloudflare bot solutions
 ---
 
 # Cloudflare bot solutions
@@ -16,7 +18,7 @@ If you have a smaller domain and have identified a bot problem, we recommend Bot
 
 If you have a large domain with a lot of traffic, we recommend Bot Management for Enterprise, especially for customers in ecommerce, banking, and security. To enable Bot Management for Enterprise and write rules to customize your bot protection, contact your account team.
 
-To see the differences in features and functionality, visit [Plans](/plans/).
+To see the differences in features and functionality, visit [Plans](/bots/plans/).
 
 ## Next steps
 

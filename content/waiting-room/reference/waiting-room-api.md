@@ -1,5 +1,6 @@
 ---
 pcx-content-type: reference
+title: API commands
 ---
 
 # API commands

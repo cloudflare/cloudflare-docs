@@ -1,5 +1,4 @@
 ---
-order: 1000
 type: example
 summary: Shows how to restrict access using the HTTP Basic schema.
 tags:
@@ -7,6 +6,9 @@ tags:
   - Originless
   - Authentication
 pcx-content-type: configuration
+title: HTTP Basic Authentication
+weight: 1001
+layout: example
 ---
 
 # HTTP Basic Authentication

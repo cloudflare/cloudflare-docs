@@ -1,6 +1,7 @@
 ---
-order: 4
 pcx-content-type: how-to
+title: Displaying thumbnails
+weight: 5
 ---
 
 # Displaying thumbnails
@@ -17,7 +18,7 @@ A thumbnail from your video can be generated using a special link where you spec
 
 </Example>
 
-Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/security/signed-urls/) are required, you must use signed URL instead of video IDs.
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/security/signed-urls/) are required, you must use signed URL instead of video IDs.
 
 ```html
 <iframe

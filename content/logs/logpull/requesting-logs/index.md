@@ -1,6 +1,7 @@
 ---
-order: 14
 pcx-content-type: reference
+title: Requesting logs
+weight: 15
 ---
 
 # Requesting logs
@@ -109,4 +110,4 @@ curl -s \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2017-07-18T22:00:00Z&end=2017-07-18T22:01:00Z&count=1&fields=$(curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
-Refer to [HTTP request fields](/reference/log-fields/#http-requests) for the currently available fields.
+Refer to [HTTP request fields](/logs/reference/log-fields/#http-requests) for the currently available fields.

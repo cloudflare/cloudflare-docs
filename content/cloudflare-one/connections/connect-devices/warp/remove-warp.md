@@ -1,6 +1,7 @@
 ---
-order: 15
 pcx-content-type: how-to
+title: Remove WARP
+weight: 16
 ---
 
 # Remove WARP
