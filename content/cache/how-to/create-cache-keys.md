@@ -25,4 +25,4 @@ Creating custom cache keys is limited to Enterprise users only.
     - `User Features`
 9.  Choose a save option:
     - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
-    - \*\*Save and Deploy \*\*to save the rule and enable it immediately.
+    - **Save and Deploy** to save the rule and enable it immediately.

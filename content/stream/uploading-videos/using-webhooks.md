@@ -67,9 +67,9 @@ To verify a signature, you need to retrieve your webhook signing secret. This va
 
 To verify the signature, get the value of the `Webhook-Signature` header. It will look like this:
 
-```
+`
 Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404
-```
+`
 
 ### Step 1: Parse the signature
 
