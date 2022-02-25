@@ -6,20 +6,16 @@ pcx-content-type: get-started
 
 # R2 (beta) get started guide
 
+Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the large egress bandwidth fees associated with typical cloud storage services.
+
 {{<Aside type="note" header="Beta registration">}}
 
 As of February 2022, R2 is currently under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
 
 {{</Aside>}}
 
-Cloudflare R2 Storage 
+This guide will instruct you through setting up Wrangler to deploying your first R2 bucket.
 
-<!--
-R2 product and bucket description
-
-// User creates buckets and decides how to access (HTTP/Worker/CLI).
-
--->
 ## 1. Install Wrangler
 
 To create your R2 bucket, install [Wrangler](/get-started/guide#2-install-the-workers-cli), the Workers CLI.
@@ -121,18 +117,9 @@ bucket_name = '<your_bucket_name>'
 
 Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration).
 
-<!--
-// Buckets API 
-// User downloads a file.
--->
-
 ## 5. Accessing your R2 bucket from your Worker
 
 Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
-
-<!--
-Add links to the READ, WRITE, LIST.... reference
--->
 
 An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an example of all operations below using the Service Worker syntax. Add the following snippet into your project's `index.js` file:
 
@@ -168,9 +155,6 @@ async function handleRequest(request) {
   }
 }
 ```
-<!--
-// User decides whether to make the bucket public.
--->
 
 ## 6. Bucket access and privacy
 
