@@ -21,7 +21,7 @@ Cloudflare Load Balancing provides several benefits:
 
 {{<Aside type="note" header="Note">}}
 
-If you are only interested in monitoring server health — and not in distributing traffic according to server health — check out our <a href="https://support.cloudflare.com/hc/articles/4404867308429">standalone Health Checks</a>.
+If you are only interested in monitoring server health — and not in distributing traffic according to server health — check out our [standalone Health Checks](https://support.cloudflare.com/hc/articles/4404867308429).
 
 {{</Aside>}}
 
