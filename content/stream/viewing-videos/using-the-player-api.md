@@ -62,7 +62,7 @@ The SDK provides an API for programmatically controlling the player and listenin
 
     {{<Aside>}}
 
-Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, review the [iOS video policies](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
     {{</Aside>}}
 
