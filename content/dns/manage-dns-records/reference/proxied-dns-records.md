@@ -34,7 +34,7 @@ This means that pending domains cannot take advantage of Cloudflare caching and 
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records. 
 
-To solve this issue, we recommend using [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/).
+To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/).
 
 ## When to use unproxied records
 
