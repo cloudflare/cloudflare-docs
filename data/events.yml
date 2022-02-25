@@ -1,0 +1,10 @@
+
+meta:
+  title: Cloudflare Events
+  description: Join us for special Cloudflare events.
+  author: "@cloudflare"
+  image: https://www.cloudflare.com/img/cf-twitter-card.png
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com

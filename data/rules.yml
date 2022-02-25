@@ -1,0 +1,21 @@
+logo: <svg width="48" height="48" viewBox="0 0 48 48"
+  xmlns="http://www.w3.org/2000/svg"><path d="M39 4.5H9L7.5 6V41.85L9
+  43.35H39L40.5 41.85V6L39 4.5ZM37.5 40.35H10.5V7.5H37.5V40.35Z" /><path
+  d="M23.895 11.0325H13.89V14.0325H23.895V11.0325Z" /><path d="M34.0275
+  17.3025H13.89V20.3025H34.0275V17.3025Z" /><path d="M34.0275
+  23.5725H13.89V26.5725H34.0275V23.5725Z" /></svg>
+
+meta:
+  title: Cloudflare Rules docs
+  description: Create rules that adjust incoming HTTP requests at the edge.
+  author: "@cloudflare"
+  image: https://www.cloudflare.com/img/cf-twitter-card.png
+
+algolia:
+  index: developers-cloudflare
+  apikey: b23088ab4d346409f9d3ece6606344c3
+  filters: '["project:rules"]'
+
+externals:
+  - title: Cloudflare homepage
+    url: https://cloudflare.com

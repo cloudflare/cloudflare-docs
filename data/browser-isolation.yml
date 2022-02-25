@@ -1,0 +1,10 @@
+
+meta:
+  title: Browser Isolation
+  description: Cloudflare Browser Isolation
+  author: "@cloudflare"
+  image: https://www.cloudflare.com/img/cf-twitter-card.png
+
+externals:
+  - title: Cloudflare
+    url: https://www.cloudflare.com/teams/browser-isolation/

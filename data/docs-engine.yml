@@ -1,0 +1,13 @@
+
+meta:
+  title: Cloudflare Docs Engine docs
+  description: Documentation for the open-source Cloudflare Documentation engine
+    which powers Cloudflare's open-source documentation.
+  author: "@cloudflare"
+  image: https://www.cloudflare.com/img/cf-twitter-card.png
+
+externals:
+  - title: Docs Engine on GitHub
+    url: https://github.com/cloudflare/cloudflare-docs-engine
+  - title: Cloudflare Developer documentation
+    url: https://developers.cloudflare.com/docs
