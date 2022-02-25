@@ -1,7 +1,9 @@
 import * as events from './events';
 import * as timeago from './timeago';
 
-timeago.init();
+(function () {
+  timeago.init();
 
-events.focus();
-events.mobile();
+  events.focus();
+  events.mobile();
+})();
