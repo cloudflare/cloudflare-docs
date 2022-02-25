@@ -33,8 +33,11 @@ The following table summarizes the available operations:
 | [Get a script][4] | `GET zones/<ZONE_ID>/script_monitor/scripts/<SCRIPT_ID>` | Fetch the details of a currently monitored script.
 
 [1]: https://api.cloudflare.com/#script-monitor-get-script-monitor-settings
+
 [2]: https://api.cloudflare.com/#script-monitor-update-script-monitor-settings
+
 [3]: https://api.cloudflare.com/#script-monitor-list-script-monitor-scripts
+
 [4]: https://api.cloudflare.com/#script-monitor-get-a-script
 
 ## API notes

@@ -57,13 +57,13 @@ let request = new Request(input [, init])
 
 <Definitions>
 
-- `input` <Type>string | Request</Type>
+*   `input` <Type>string | Request</Type>
 
-  - Either a string that contains a URL, or an existing `Request` object.
+    *   Either a string that contains a URL, or an existing `Request` object.
 
-- `init` <TypeLink href="#requestinit">RequestInit</TypeLink> <PropMeta>optional</PropMeta>
+*   `init` <TypeLink href="#requestinit">RequestInit</TypeLink> <PropMeta>optional</PropMeta>
 
-  - Optional options object that contains settings to apply to the `Request`.
+    *   Optional options object that contains settings to apply to the `Request`.
 
 </Definitions>
 
@@ -71,25 +71,25 @@ let request = new Request(input [, init])
 
 <Definitions>
 
-- `cf` <TypeLink href="#requestinitcfproperties">RequestInitCfProperties</TypeLink> <PropMeta>optional</PropMeta>
+*   `cf` <TypeLink href="#requestinitcfproperties">RequestInitCfProperties</TypeLink> <PropMeta>optional</PropMeta>
 
-  - Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s edge handles the request.
+    *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s edge handles the request.
 
-- `method` <Type>string</Type> <PropMeta>optional</PropMeta>
+*   `method` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - The HTTP request method. The default is `GET`.
+    *   The HTTP request method. The default is `GET`.
 
-- `headers` <Type>Headers</Type> <PropMeta>optional</PropMeta>
+*   `headers` <Type>Headers</Type> <PropMeta>optional</PropMeta>
 
-  - A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
+    *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
-- `body` <Type>string | ReadableStream | FormData | URLSearchParams</Type> <PropMeta>optional</PropMeta>
+*   `body` <Type>string | ReadableStream | FormData | URLSearchParams</Type> <PropMeta>optional</PropMeta>
 
-  - The request body, if any.
+    *   The request body, if any.
 
-- `redirect` <Type>string</Type> <PropMeta>optional</PropMeta>
+*   `redirect` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - The redirect mode to use: `follow`, `error`, or `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
+    *   The redirect mode to use: `follow`, `error`, or `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
 </Definitions>
 
@@ -106,50 +106,50 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 <Definitions>
 
-- `apps` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `apps` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
+    *   Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
-- `cacheEverything` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `cacheEverything` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`. 
-  This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
+        This option applies to `GET` and `HEAD` request methods only.
 
-- `cacheKey` <Type>string</Type> <PropMeta>optional</PropMeta>
+*   `cacheKey` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+    *   A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
 
-- `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
+*   `cacheTtl` <Type>number</Type> <PropMeta>optional</PropMeta>
 
-  - This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](https://support.cloudflare.com/hc/en-us/articles/200168376-What-does-edge-cache-expire-TTL-mean-) and [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
 
-- `cacheTtlByStatus` <Type>{ [key: string]: number }</Type> <PropMeta>optional</PropMeta>
+*   `cacheTtlByStatus` <Type>{ \[key: string]: number }</Type> <PropMeta>optional</PropMeta>
 
-  - This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
+    *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
 
-- `minify` <Type>{ javascript?: boolean; css?: boolean; html?: boolean; }</Type> <PropMeta>optional</PropMeta>
+*   `minify` <Type>{ javascript?: boolean; css?: boolean; html?: boolean; }</Type> <PropMeta>optional</PropMeta>
 
-  - Enables or disables [AutoMinify](https://www.cloudflare.com/website-optimization/) for various file types. For example: `{ javascript: true, css: true, html: false }`.
+    *   Enables or disables [AutoMinify](https://www.cloudflare.com/website-optimization/) for various file types. For example: `{ javascript: true, css: true, html: false }`.
 
-- `mirage` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `mirage` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - Whether [Mirage](https://www.cloudflare.com/website-optimization/mirage/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
+    *   Whether [Mirage](https://www.cloudflare.com/website-optimization/mirage/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
 
-- `polish` <Type>string</Type> <PropMeta>optional</PropMeta>
+*   `polish` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - Sets [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/) mode. The possible values are `lossy`, `lossless` or `off`.
+    *   Sets [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/) mode. The possible values are `lossy`, `lossless` or `off`.
 
-- `resolveOverride` <Type>string</Type> <PropMeta>optional</PropMeta>
+*   `resolveOverride` <Type>string</Type> <PropMeta>optional</PropMeta>
 
-  - Directs the request to an alternate origin server by overriding the DNS lookup. The value of `resolveOverride` specifies an alternate hostname which will be used when determining the origin IP address, instead of using the hostname specified in the URL. The `Host` header of the request will still match what is in the URL. Thus, `resolveOverride` allows a request to be sent to a different server than the URL / `Host` header specifies. However, `resolveOverride` will only take effect if both the URL host and the host specified by `resolveOverride` are within your zone. If either specifies a host from a different zone / domain, then the option will be ignored for security reasons. If you need to direct a request to a host outside your zone (while keeping the `Host` header pointing within your zone), first create a CNAME record within your zone pointing to the outside host, and then set `resolveOverride` to point at the CNAME record. Note that, for security reasons, it is not possible to set the `Host` header to specify a host outside of your zone unless the request is actually being sent to that host.
+    *   Directs the request to an alternate origin server by overriding the DNS lookup. The value of `resolveOverride` specifies an alternate hostname which will be used when determining the origin IP address, instead of using the hostname specified in the URL. The `Host` header of the request will still match what is in the URL. Thus, `resolveOverride` allows a request to be sent to a different server than the URL / `Host` header specifies. However, `resolveOverride` will only take effect if both the URL host and the host specified by `resolveOverride` are within your zone. If either specifies a host from a different zone / domain, then the option will be ignored for security reasons. If you need to direct a request to a host outside your zone (while keeping the `Host` header pointing within your zone), first create a CNAME record within your zone pointing to the outside host, and then set `resolveOverride` to point at the CNAME record. Note that, for security reasons, it is not possible to set the `Host` header to specify a host outside of your zone unless the request is actually being sent to that host.
 
-- `scrapeShield` <Type>boolean</Type> <PropMeta>optional</PropMeta>
+*   `scrapeShield` <Type>boolean</Type> <PropMeta>optional</PropMeta>
 
-  - Whether [ScrapeShield](https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
+    *   Whether [ScrapeShield](https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Properties
 
@@ -157,33 +157,33 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
 <Definitions>
 
-- `body` <Type>ReadableStream</Type> <PropMeta>read-only</PropMeta>
+*   `body` <Type>ReadableStream</Type> <PropMeta>read-only</PropMeta>
 
-  - Stream of the body contents.
+    *   Stream of the body contents.
 
-- `bodyUsed` <Type>Boolean</Type> <PropMeta>read-only</PropMeta>
+*   `bodyUsed` <Type>Boolean</Type> <PropMeta>read-only</PropMeta>
 
-  - Declares whether the body has been used in a response yet.
+    *   Declares whether the body has been used in a response yet.
 
-- `cf` <TypeLink href="#incomingrequestcfproperties">IncomingRequestCfProperties</TypeLink> <PropMeta>read-only</PropMeta>
+*   `cf` <TypeLink href="#incomingrequestcfproperties">IncomingRequestCfProperties</TypeLink> <PropMeta>read-only</PropMeta>
 
-  - An object containing properties about the incoming request provided by Cloudflare’s edge network.
+    *   An object containing properties about the incoming request provided by Cloudflare’s edge network.
 
-- `headers` <Type>Headers</Type> <PropMeta>read-only</PropMeta>
+*   `headers` <Type>Headers</Type> <PropMeta>read-only</PropMeta>
 
-  - A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
+    *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
-- `method` <Type>string</Type> <PropMeta>read-only</PropMeta>
+*   `method` <Type>string</Type> <PropMeta>read-only</PropMeta>
 
-  - Contains the request’s method, for example, `GET`, `POST`, etc.
+    *   Contains the request’s method, for example, `GET`, `POST`, etc.
 
-- `redirect` <Type>string</Type> <PropMeta>read-only</PropMeta>
+*   `redirect` <Type>string</Type> <PropMeta>read-only</PropMeta>
 
-  - Contains the mode for how redirects are handled. It may be one of `follow`, `error`, or `manual`.
+    *   Contains the mode for how redirects are handled. It may be one of `follow`, `error`, or `manual`.
 
-- `url` <Type>string</Type> <PropMeta>read-only</PropMeta>
+*   `url` <Type>string</Type> <PropMeta>read-only</PropMeta>
 
-  - Contains the URL of the request.
+    *   Contains the URL of the request.
 
 </Definitions>
 
@@ -195,85 +195,85 @@ All plans have access to:
 
 <Definitions>
 
-- `asn` <Type>string</Type>
+*   `asn` <Type>string</Type>
 
-  - ASN of the incoming request, for example, `395747`.
+    *   ASN of the incoming request, for example, `395747`.
 
-- `asOrganization` <Type>string</Type>
+*   `asOrganization` <Type>string</Type>
 
-  - The organization which owns the ASN of the incoming request, for example, `Google Cloud`.
+    *   The organization which owns the ASN of the incoming request, for example, `Google Cloud`.
 
-- `botManagement` <Type>Object | null</Type>
+*   `botManagement` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
+    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](https://developers.cloudflare.com/bots/reference/bot-management-variables) for more details.
 
-- `colo` <Type>string</Type>
+*   `colo` <Type>string</Type>
 
-  - The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
+    *   The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
 
-- `country` <Type>string | null</Type>
+*   `country` <Type>string | null</Type>
 
-  - Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, for example, `"US"`.
+    *   Country of the incoming request. The two-letter country code in the request. This is the same value as that provided in the `CF-IPCountry` header, for example, `"US"`.
 
-- `isEUCountry` <Type>string | null</Type>
+*   `isEUCountry` <Type>string | null</Type>
 
-  - If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
+    *   If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
 
-- `httpProtocol` <Type>string</Type>
+*   `httpProtocol` <Type>string</Type>
 
-  - HTTP Protocol, for example, `"HTTP/2"`.
+    *   HTTP Protocol, for example, `"HTTP/2"`.
 
-- `requestPriority` <Type>string | null</Type>
+*   `requestPriority` <Type>string | null</Type>
 
-  - The browser-requested prioritization information in the request object, for example, `"weight=192;exclusive=0;group=3;group-weight=127"`.
+    *   The browser-requested prioritization information in the request object, for example, `"weight=192;exclusive=0;group=3;group-weight=127"`.
 
-- `tlsCipher` <Type>string</Type>
+*   `tlsCipher` <Type>string</Type>
 
-  - The cipher for the connection to Cloudflare, for example, `"AEAD-AES128-GCM-SHA256"`.
+    *   The cipher for the connection to Cloudflare, for example, `"AEAD-AES128-GCM-SHA256"`.
 
-- `tlsClientAuth` <Type>Object | null</Type>
+*   `tlsClientAuth` <Type>Object | null</Type>
 
-  - Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+    *   Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
 
-- `tlsVersion` <Type>string</Type>
+*   `tlsVersion` <Type>string</Type>
 
-  - The TLS version of the connection to Cloudflare, for example, `TLSv1.3`.
+    *   The TLS version of the connection to Cloudflare, for example, `TLSv1.3`.
 
-- `city` <Type>string | null</Type>
+*   `city` <Type>string | null</Type>
 
-  - City of the incoming request, for example, `"Austin"`.
+    *   City of the incoming request, for example, `"Austin"`.
 
-- `continent` <Type>string | null</Type>
+*   `continent` <Type>string | null</Type>
 
-  - Continent of the incoming request, for example, `"NA"`.
+    *   Continent of the incoming request, for example, `"NA"`.
 
-- `latitude` <Type>string | null</Type>
+*   `latitude` <Type>string | null</Type>
 
-  - Latitude of the incoming request, for example, `"30.27130"`.
+    *   Latitude of the incoming request, for example, `"30.27130"`.
 
-- `longitude` <Type>string | null</Type>
+*   `longitude` <Type>string | null</Type>
 
-  - Longitude of the incoming request, for example, `"-97.74260"`.
+    *   Longitude of the incoming request, for example, `"-97.74260"`.
 
-- `postalCode` <Type>string | null</Type>
+*   `postalCode` <Type>string | null</Type>
 
-  - Postal code of the incoming request, for example, `"78701"`.
+    *   Postal code of the incoming request, for example, `"78701"`.
 
-- `metroCode` <Type>string | null</Type>
+*   `metroCode` <Type>string | null</Type>
 
-  - Metro code (DMA) of the incoming request, for example, `"635"`.
+    *   Metro code (DMA) of the incoming request, for example, `"635"`.
 
-- `region` <Type>string | null</Type>
+*   `region` <Type>string | null</Type>
 
-  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request, for example, `"Texas"`.
+    *   If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) name for the first level region associated with the IP address of the incoming request, for example, `"Texas"`.
 
-- `regionCode` <Type>string | null</Type>
+*   `regionCode` <Type>string | null</Type>
 
-  - If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first-level region associated with the IP address of the incoming request, for example, `"TX"`.
+    *   If known, the [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for the first-level region associated with the IP address of the incoming request, for example, `"TX"`.
 
-- `timezone` <Type>string</Type>
+*   `timezone` <Type>string</Type>
 
-  - Timezone of the incoming request, for example, `"America/Chicago"`.
+    *   Timezone of the incoming request, for example, `"America/Chicago"`.
 
 </Definitions>
 
@@ -283,7 +283,7 @@ The `request.cf` object is not available in the Cloudflare Workers dashboard or 
 
 </Aside>
 
---------------------------------
+***
 
 ## Methods
 
@@ -293,29 +293,29 @@ These methods are only available on an instance of a `Request` object or through
 
 <Definitions>
 
-- `clone()` <Type>Promise&lt;Request></Type>
+*   `clone()` <Type>Promise\<Request></Type>
 
-  - Creates a copy of the `Request` object.
+    *   Creates a copy of the `Request` object.
 
-- `arrayBuffer()` <Type>Promise&lt;ArrayBuffer></Type>
+*   `arrayBuffer()` <Type>Promise\<ArrayBuffer></Type>
 
-  - Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
+    *   Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
-- `formData()` <Type>Promise&lt;FormData></Type>
+*   `formData()` <Type>Promise\<FormData></Type>
 
-  - Returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) representation of the request body.
+    *   Returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) representation of the request body.
 
-- `json()` <Type>Promise&lt;Object></Type>
+*   `json()` <Type>Promise\<Object></Type>
 
-  - Returns a promise that resolves with a JSON representation of the request body.
+    *   Returns a promise that resolves with a JSON representation of the request body.
 
-- `text()` <Type>Promise&lt;string></Type>
+*   `text()` <Type>Promise\<string></Type>
 
-  - Returns a promise that resolves with a string (text) representation of the request body.
+    *   Returns a promise that resolves with a string (text) representation of the request body.
 
 </Definitions>
 
---------------------------------
+***
 
 ## The request context
 
@@ -358,10 +358,10 @@ async function eventHandler(event){..}
 
 This code snippet will throw during script startup, and the `"fetch"` event listener will never be registered.
 
---------------------------------
+***
 
 ## Related resources
 
-- [Examples: Modify request property](/examples/modify-request-property)
-- [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
-- [Reference: `Response`](/runtime-apis/response)
+*   [Examples: Modify request property](/examples/modify-request-property)
+*   [Examples: Accessing the `cf` object](/examples/accessing-the-cloudflare-object)
+*   [Reference: `Response`](/runtime-apis/response)

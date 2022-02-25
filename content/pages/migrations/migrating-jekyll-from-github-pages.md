@@ -10,10 +10,10 @@ In this tutorial, you will learn how to to migrate an existing [GitHub Pages sit
 
 This tutorial will guide you through:
 
-1. Adding the necessary dependencies used by GitHub Pages to your project configuration.
-2. Creating a new Cloudflare Pages site, connected to your existing GitHub repository.
-3. Building and deploying your site on Cloudflare Pages.
-4. (Optional) Migrating your custom domain.
+1.  Adding the necessary dependencies used by GitHub Pages to your project configuration.
+2.  Creating a new Cloudflare Pages site, connected to your existing GitHub repository.
+3.  Building and deploying your site on Cloudflare Pages.
+4.  (Optional) Migrating your custom domain.
 
 Including build times, this tutorial should take you less than 15 minutes to complete.
 
@@ -27,10 +27,10 @@ If you have a Jekyll-based site not deployed on GitHub Pages, refer to [the Jeky
 
 This tutorial assumes:
 
-1. You have an existing GitHub Pages site using [Jekyll](https://jekyllrb.com/)
-2. You have some familiarity with running Ruby's command-line tools, and have both `gem` and `bundle` installed.
-3. You know how to use a few basic Git operations, including `add`, `commit`, `push`, and `pull`.
-4. You have read the [Get Started](/getting-started) guide for Cloudflare Pages.
+1.  You have an existing GitHub Pages site using [Jekyll](https://jekyllrb.com/)
+2.  You have some familiarity with running Ruby's command-line tools, and have both `gem` and `bundle` installed.
+3.  You know how to use a few basic Git operations, including `add`, `commit`, `push`, and `pull`.
+4.  You have read the [Get Started](/getting-started) guide for Cloudflare Pages.
 
 If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
 
@@ -144,6 +144,6 @@ Refer to the [adding a custom domain](/getting-started#adding-a-custom-domain) s
 
 ## What's next?
 
-* Learn how to [customize HTTP response headers](/how-to/add-custom-http-headers) for your Pages site using Cloudflare Workers.
-* Understand how to [rollback a potentially broken deployment](/platform/rollbacks) to a previously working version.
-* [Configure redirects](/platform/redirects) so that visitors are always directed to your 'canonical' custom domain.
+*   Learn how to [customize HTTP response headers](/how-to/add-custom-http-headers) for your Pages site using Cloudflare Workers.
+*   Understand how to [rollback a potentially broken deployment](/platform/rollbacks) to a previously working version.
+*   [Configure redirects](/platform/redirects) so that visitors are always directed to your 'canonical' custom domain.

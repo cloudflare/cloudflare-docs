@@ -7,16 +7,16 @@ pcx-content-type: faq
 
 Below you will find answers to our most commonly asked questions on Cloudflare Registrar, namely about billing, domain transfers, and how to troubleshoot common issues you may come across. If you cannot find the answer you are looking for, heading over to our [community page](https://community.cloudflare.com/) is always a good idea.
 
-* [Domain transfers](#domain-transfers)
-* [Domain registrations](#domain-registrations)
-* [Additional requirements for .US domains](#additional-requirements-for-us-domains)
-* [Billing](#billing)
+*   [Domain transfers](#domain-transfers)
+*   [Domain registrations](#domain-registrations)
+*   [Additional requirements for .US domains](#additional-requirements-for-us-domains)
+*   [Billing](#billing)
 
 ## Domain transfers
 
 ### Why did my transfer fail?
 
-Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](https://support.cloudflare.com/hc/articles/4424747060109) for more information on what might have happened and how to solve the issue. 
+Domain transfers sometimes fail. Refer to [Registrar: troubleshoot stalled domain transfers](https://support.cloudflare.com/hc/articles/4424747060109) for more information on what might have happened and how to solve the issue.
 
 If you cannot solve the issue, open a support ticket or contact your account team.
 
@@ -58,7 +58,7 @@ If you enter an incorrect auth code (also referred to as authentication code or 
 
 No. A domain cannot have more than 10 years on the term. If you registered your domain for 10 years, you will get 10 years upon transferring it to Cloudflare.
 
----
+***
 
 ## Domain registrations
 
@@ -82,13 +82,13 @@ Cloudflare currently offers a 40-day grace period for most top-level domains (TL
 
 In summary, here is what will happen after a domain expires:
 
-* **Day 0:**	Expiration Date.
-* **Day 1 - 30:** Grace Period (domain resolves normally).
-* **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
-* **Day 41 - 70:** Redemption Period.
-* **Day 71 - 75:** Pending Delete Period.
+*   **Day 0:**	Expiration Date.
+*   **Day 1 - 30:** Grace Period (domain resolves normally).
+*   **Day 31 - 40:** Suspension Period (domains resolves to suspension page).
+*   **Day 41 - 70:** Redemption Period.
+*   **Day 71 - 75:** Pending Delete Period.
 
----
+***
 
 ## Additional requirements for .US domains
 
@@ -100,7 +100,7 @@ Registrants of `.us` domains must have a genuine connection to the United States
 
 **C11**: A natural person who is a United States Citizen; or
 
-**C12**: A natural person who is a permanent resident of the United States of America, or any of its possessions or territories. 
+**C12**: A natural person who is a permanent resident of the United States of America, or any of its possessions or territories.
 
 </div>
 </details>
@@ -131,11 +131,11 @@ The nexus category information will be supplied to the .US registry. Failure to 
 
 In addition to nexus information, registrants must also identify their intended use of the domain name. The possible options are:
 
-* Personal use
-* For-profit business
-* Non-profit business or organization
-* Government
-* Education
+*   Personal use
+*   For-profit business
+*   Non-profit business or organization
+*   Government
+*   Education
 
 ### .US WHOIS requirements
 
@@ -147,7 +147,7 @@ Transferring a `.us` domain works in a similar way to other domains, but always 
 
 Refer to [Transfer your domain to Cloudflare](/get-started/transfer-domain-to-cloudflare) for more information.
 
----
+***
 
 ## Billing
 

@@ -4,17 +4,17 @@ pcx-content-type: reference
 title: Paid plans
 ---
 
-import FilterReportDuration from "../_partials/_analytics-filter-report-duration.md"
-import CreateFirewallRule from "../_partials/_analytics-create-firewall-rule.md"
-import ShareFilters from "../_partials/_analytics-share-url.md"
-import ActivityLog from "../_partials/_analytics-activity-log.md"
-import ExportData from "../_partials/_analytics-export-data.md"
+import FilterReportDuration from "../\_partials/\_analytics-filter-report-duration.md"
+import CreateFirewallRule from "../\_partials/\_analytics-create-firewall-rule.md"
+import ShareFilters from "../\_partials/\_analytics-share-url.md"
+import ActivityLog from "../\_partials/\_analytics-activity-log.md"
+import ExportData from "../\_partials/\_analytics-export-data.md"
 
 # Firewall Analytics — Paid plans
 
 ## Adjusting displayed data
 
-You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs, except for the **Denial-of-service attacks mitigated** graph.  
+You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs, except for the **Denial-of-service attacks mitigated** graph.
 
 ![Add a new filter in Firewall Analytics](../images/analytics-add-filter.png)
 

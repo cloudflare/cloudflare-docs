@@ -5,10 +5,10 @@ pcx-content-type: reference
 
 # Tunnel permissions
 
-Cloudflare Tunnel requires two files: 
+Cloudflare Tunnel requires two files:
 
-* An [account certificate](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem) (the `cert.pem`)
-* A tunnel [credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) (`<TUNNEL-UUID>.json`) for each tunnel
+*   An [account certificate](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem) (the `cert.pem`)
+*   A tunnel [credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) (`<TUNNEL-UUID>.json`) for each tunnel
 
 The account certificate (`cert.pem`) gives power to manage Tunnels to the admin of the account for which it is issued. As an admin, make sure you are intentional about the locations and machines you store this certificate on, as this certificate allows users to create and manage any number of tunnels for that account.
 
@@ -25,8 +25,8 @@ Refer to the table below for a comparison between the two files and the purposes
 | **Scope** | Account-wide | Tunnel-specific |
 | **File type** | `.pem` | `.json` |
 | **Stored in** | [Default directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory) | [Default directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory) |
-| **Issued when running** | `cloudflared tunnel login` | `cloudflared tunnel create <NAME>` | 
-| **Valid for** | At least 10 years, and the service token it contains is valid until revoked | Does not expire | 
+| **Issued when running** | `cloudflared tunnel login` | `cloudflared tunnel create <NAME>` |
+| **Valid for** | At least 10 years, and the service token it contains is valid until revoked | Does not expire |
 | **Needed to** | Manage tunnels (for example, create, delete and list tunnels) | Run a tunnel. Create a config file. |
 
 </TableWrap>

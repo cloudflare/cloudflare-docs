@@ -11,29 +11,29 @@ Use the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets
 
 When creating an HTTP Request Header Modification Rule via API, make sure you:
 
-* Set the rule action to `rewrite`.
-* Define the [header modification parameters](/transform/request-header-modification/reference/parameters) in the `action_parameters` field according to the operation to perform (set or remove header).
-* Deploy the rule to the `http_request_late_transform` phase at the zone level.
+*   Set the rule action to `rewrite`.
+*   Define the [header modification parameters](/transform/request-header-modification/reference/parameters) in the `action_parameters` field according to the operation to perform (set or remove header).
+*   Deploy the rule to the `http_request_late_transform` phase at the zone level.
 
----
+***
 
 Follow this workflow to create an HTTP Request Header Modification Rule for a given zone via API:
 
-1. Use the [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_late_transform` phase at the zone level.
+1.  Use the [List existing rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view#list-existing-rulesets) method to check if there is already a ruleset for the `http_request_late_transform` phase at the zone level.
 
-1. If the phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) method with the zone-level endpoint. In the new ruleset properties, set the following values:
+2.  If the phase ruleset does not exist, create it using the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) method with the zone-level endpoint. In the new ruleset properties, set the following values:
 
-    * **kind**: `zone`
-    * **phase**: `http_request_late_transform`
+    *   **kind**: `zone`
+    *   **phase**: `http_request_late_transform`
 
-1. Use the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method to add an HTTP Request Header Modification Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) request mentioned in the previous step.
+3.  Use the [Update ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) method to add an HTTP Request Header Modification Rule to the list of ruleset rules (check the examples below). Alternatively, include the rule in the [Create ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/create) request mentioned in the previous step.
 
 ## Required API token permissions
 
 The API token used in API requests to manage HTTP Request Header Modification Rules must have at least the following permissions:
 
-* Transform Rules: Edit
-* Account Rulesets: Read
+*   Transform Rules: Edit
+*   Account Rulesets: Read
 
 ## Examples
 

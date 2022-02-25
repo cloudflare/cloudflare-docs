@@ -7,17 +7,17 @@ pcx-content-type: how-to
 
 You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
-* [Connect through Access using a CLI](/tutorials/cli)
-* [Connect through Access over RDP](/tutorials/rdp)
-* [Connect through Access over SSH](/tutorials/ssh)
-* [Connect through Access using kubectl](/tutorials/kubectl)
-* [Connect through Access over SMB](/tutorials/smb)
+*   [Connect through Access using a CLI](/tutorials/cli)
+*   [Connect through Access over RDP](/tutorials/rdp)
+*   [Connect through Access over SSH](/tutorials/ssh)
+*   [Connect through Access using kubectl](/tutorials/kubectl)
+*   [Connect through Access over SMB](/tutorials/smb)
 
 ## Rendering in the browser
 
 <Aside type='note'>
-  
-  SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
+
+SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
 
 </Aside>
 
@@ -46,7 +46,7 @@ This should only be enabled if a [service token](/identity/service-auth/service-
 
 </TableWrap>
 
-When you log into Access through `cloudflared`, your browser prompts you to allow access by 
+When you log into Access through `cloudflared`, your browser prompts you to allow access by
 displaying this page:
 
 ![Access browser page](../../static/documentation/applications/non-http/access-screen.png)

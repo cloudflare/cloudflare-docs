@@ -10,7 +10,6 @@ In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Wo
 
 Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-module-worker) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
 
-
 ## Syntax: Service Worker
 
 In the Service Worker format, events are handled by using `addEventListener` to assign a handler to an event name. Additionally, the Service Worker specification assigns network requests to the `"fetch"` event, using the [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) interface.
@@ -29,30 +28,29 @@ addEventListener("fetch", event => {
 
 <Definitions>
 
-- `event.type` <Type>string</Type>
-    - The type of event. This will always return `"fetch"`.
+*   `event.type` <Type>string</Type>
+    *   The type of event. This will always return `"fetch"`.
 
-- `event.request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
-    - The incoming HTTP request.
+*   `event.request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
+    *   The incoming HTTP request.
 
--  <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
+*   <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|\<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
 
-    - Refer to [`respondWith`](#respondwith).
+    *   Refer to [`respondWith`](#respondwith).
 
-- <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+*   <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - Refer to [`waitUntil`](#waituntil).
+    *   Refer to [`waitUntil`](#waituntil).
 
-- <Code>event.passThroughOnException()</Code> <Type>void</Type>
+*   <Code>event.passThroughOnException()</Code> <Type>void</Type>
 
-    - Refer to [`passThroughOnException`](#passthroughonexception).
+    *   Refer to [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 
 ### Bindings
 
 When a Worker is deployed using the Service Worker syntax, any [bindings](/platform/environment-variables) will be made available as global runtime variables.
-
 
 ## Syntax: Module Worker
 
@@ -72,26 +70,25 @@ export default {
 
 <Definitions>
 
-- `request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
-    - The incoming HTTP request.
+*   `request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
+    *   The incoming HTTP request.
 
-- `env` <Type>object</Type>
-    - The [bindings](/platform/environment-variables) assigned to the Worker.
+*   `env` <Type>object</Type>
+    *   The [bindings](/platform/environment-variables) assigned to the Worker.
 
-- <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+*   <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
 
-    - Refer to [`waitUntil`](#waituntil).
+    *   Refer to [`waitUntil`](#waituntil).
 
-- <Code>context.passThroughOnException()</Code> <Type>void</Type>
+*   <Code>context.passThroughOnException()</Code> <Type>void</Type>
 
-    - Refer to [`passThroughOnException`](#passthroughonexception).
+    *   Refer to [`passThroughOnException`](#passthroughonexception).
 
 </Definitions>
 
 ### Bindings
 
 When deploying a Module Worker, any [bindings](/platform/environment-variables) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
-
 
 ## Lifecycle methods
 
@@ -127,7 +124,6 @@ addEventListener("fetch", event => {
   )
 })
 ```
-
 
 ### `waitUntil`
 
@@ -198,7 +194,6 @@ export default {
   }
 }
 ```
-
 
 ### `passThroughOnException`
 

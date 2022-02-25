@@ -15,7 +15,7 @@ On the other hand, you can choose which fields of the underlying type you want f
 
 For example, given arrays like this:
 
-````javascript
+```javascript
 type SubRequest {
     url: String!
     status: Int
@@ -26,10 +26,11 @@ type Request {
     datetime: DateTime!
     subRequests: [SubRequest!]!
 }
-````
+```
 
 You can run a query to get the status by subrequest:
-````javascript
+
+```javascript
 {
     requests {
         date
@@ -39,10 +40,11 @@ You can run a query to get the status by subrequest:
         }
     }
 }
-````
+```
 
 The results would be:
-````javascript
+
+```javascript
 {
     "requests": [
         {
@@ -55,14 +57,15 @@ The results would be:
         }
     ]
 }
-````
+```
 
 ## Maps
 
 Maps behave like arrays, but can be grouped using the `sum` function. They are used in aggregated datasets, such as `httpRequest1dGroups`.
 
 Example maps:
-````javascript
+
+```javascript
 type URLStatsMapElem {
     url: String!
     requests: Int
@@ -74,10 +77,11 @@ type Request {
     datetime: DateTime!
     urlStatsMap: [URLStatsMapElem!]!
 }
-````
+```
 
 Query:
-````javascript
+
+```javascript
 {
     requests {
         sum {
@@ -92,10 +96,11 @@ Query:
         }
     }
 }
-````
+```
 
 Response:
-````javascript
+
+```javascript
 {
     "requests": [
         {
@@ -120,12 +125,13 @@ Response:
         ...
     ]
 }
-````
+```
 
 ## Examples
 
 Query array fields in raw datasets:
-````javascript
+
+```javascript
 query NestedFields($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
       viewer {
         zones(filter: {zoneTag: $zoneTag}) {
@@ -139,10 +145,11 @@ query NestedFields($zoneTag: string, $dateStart: string, $dateEnd: string, $date
         }
       }
 }
-````
+```
 
 Example response:
-````javascript
+
+```javascript
 {
   "data": {
     "viewer": {
@@ -170,10 +177,11 @@ Example response:
   },
   "errors": null
 }
-````
+```
 
 Query maps fields in aggregated datasets:
-````javascript
+
+```javascript
 query MapCapacity($zoneTag: string, $dateStart: string, $dateEnd: string, $datetimeStart: string, $datetimeEnd: string) {
     viewer {
         zones(filter: {zoneTag: $zoneTag}) {
@@ -195,10 +203,11 @@ query MapCapacity($zoneTag: string, $dateStart: string, $dateEnd: string, $datet
         }
     }
 }
-````
+```
 
 Example response:
-````javascript
+
+```javascript
 {
   "data": {
     "viewer": {
@@ -234,4 +243,4 @@ Example response:
   },
   "errors": null
 }
-````
+```

@@ -6,8 +6,9 @@ pcx-content-type: how-to
 # Support mobile app traffic
 
 If you need to manage mobile app traffic, Cloudflare provides a JSON-friendly waiting room that sits in front of your API endpoints:
-1. When a user [is queued](/about#how-it-works), we return our own [JSON response](#integrate-waiting-room-variables).
-1. When a user leaves the waiting room, we forward their request to your origin server and return your default JSON.
+
+1.  When a user [is queued](/about#how-it-works), we return our own [JSON response](#integrate-waiting-room-variables).
+2.  When a user leaves the waiting room, we forward their request to your origin server and return your default JSON.
 
 Since the format of the waiting room response is controlled by an HTTP header (`Accept: application/json` or `Accept: text/html`), a single waiting room can handle both mobile and web traffic.
 
@@ -17,13 +18,13 @@ Only certain customers can support mobile traffic with their waiting rooms. For 
 
 </Aside>
 
----
+***
 
 ## Before you begin
 
 This tutorial assumes you have previously [planned out](/get-started) and [created](/how-to/create-via-dashboard) a waiting room.
 
----
+***
 
 ## Step 1 — Prepare your mobile app
 
@@ -39,20 +40,18 @@ Since a waiting room [requires cookies](/reference/waiting-room-cookie), your mo
 
 To receive a JSON response, you first need to enable that option on your waiting room:
 
-- **Via the dashboard**: When [customizing a waiting room](/additional-options/customize-waiting-room), toggle **JSON Response** to **On**.
-- **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to `true`.
+*   **Via the dashboard**: When [customizing a waiting room](/additional-options/customize-waiting-room), toggle **JSON Response** to **On**.
+*   **Via the API**: When [creating a waiting room](https://api.cloudflare.com/#waiting-room-create-waiting-room), set `json_response_enabled` to `true`.
 
 ## Step 3 — Get JSON data
 
 To get the JSON data associated with a waiting room, make a request to that endpoint with the header `Accept: application/json`.
 
-```
----
-header: Request
----
-curl -X GET "https://example.com/waitingroom" \
-    -H "Accept: application/json"
-```
+    ---
+    header: Request
+    ---
+    curl -X GET "https://example.com/waitingroom" \
+        -H "Accept: application/json"
 
 ```json
 ---

@@ -13,36 +13,36 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 **🗺️ This tutorial covers how to:**
 
-* Create a Cloudflare Access rule to secure a MongoDB deployment
-* Configure a StatefulSet and service definition for the deployment
-* Configure an Cloudflare Tunnel connection to Cloudflare's edge
-* Create an SSH configuration file for the client
+*   Create a Cloudflare Access rule to secure a MongoDB deployment
+*   Configure a StatefulSet and service definition for the deployment
+*   Configure an Cloudflare Tunnel connection to Cloudflare's edge
+*   Create an SSH configuration file for the client
 
 **⏲️ Time to complete:**
 
 50 minutes
 
----
+***
 
 ## Configure Cloudflare Access
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-1. Follow [these instructions](/setup) to set up Cloudflare Access in your account.
+1.  Follow [these instructions](/setup) to set up Cloudflare Access in your account.
 
-1. Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+2.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
-1. Click **Add an application** and choose `Self-hosted`.
+3.  Click **Add an application** and choose `Self-hosted`.
 
-1. Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-  ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
+![Apps](../static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
-1. Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
+1.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/tutorials/okta-u2f), or [country](/tutorials/country-rules).
 
-  ![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+![Apps](../static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
-1. Click **Next** again and add the application.
+1.  Click **Next** again and add the application.
 
 ## Configure the Kubernetes deployment
 
@@ -138,6 +138,7 @@ spec:
             path: authorized_keys
             mode: 0400
 ```
+
 </details>
 
 The corresponding service definition should also specify the the ports and target ports for the containers (in this case, the database service and the SSH proxy service).
@@ -177,6 +178,7 @@ spec:
       port: 22
       targetPort: 22
 ```
+
 </details>
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
@@ -304,6 +306,7 @@ data:
         bastionMode: true
     - service: http_status:404
 ```
+
 </details>
 
 ## Connect from a client

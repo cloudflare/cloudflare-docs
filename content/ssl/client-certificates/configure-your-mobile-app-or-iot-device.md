@@ -88,7 +88,7 @@ addEventListener('fetch', event => {
 })
 ```
 
---------
+***
 
 ## Step 1 — Validate API
 
@@ -131,7 +131,7 @@ $ curl -s https://shield.upinatoms.com/temps | jq .
 ]
 ```
 
---------
+***
 
 ## Step 2 — Create Cloudflare-issued certificates
 
@@ -251,7 +251,7 @@ $ curl -H 'X-Auth-Email: YOUR_EMAIL' -H 'X-Auth-Key: YOUR_API_KEY' -H 'Content-T
 
 ```
 
---------
+***
 
 ## Step 3 — Embed the client certificate in your mobile app
 
@@ -269,15 +269,15 @@ In a real-world deployment, a bootstrap certificate should only be used in conju
 
 ### Embed the client certificate in an Android app
 
-The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in ``AndroidManifest.xml`` to allow an Internet connection.
+The following is an example of how you may use a client certificate in an Android app to make HTTP calls. You need to add the following permission in `AndroidManifest.xml` to allow an Internet connection.
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-For demonstration purposes, the certificate in this example is stored in ``app/src/main/res/raw/cert.pem`` and the private key is stored in ``app/src/main/res/raw/key.pem``. You may also store these files in other secure manners. 
+For demonstration purposes, the certificate in this example is stored in `app/src/main/res/raw/cert.pem` and the private key is stored in `app/src/main/res/raw/key.pem`. You may also store these files in other secure manners.
 
-The following example uses an ``OkHttpClient``, but you may also use other clients such as ``HttpURLConnection`` in similar ways. The key is to use the ``SSLSocketFactory``.
+The following example uses an `OkHttpClient`, but you may also use other clients such as `HttpURLConnection` in similar ways. The key is to use the `SSLSocketFactory`.
 
 ```java
 private OkHttpClient setUpClient() {
@@ -338,9 +338,9 @@ private OkHttpClient setUpClient() {
 }
 ```
 
-The above function returns an ``OkHttpClient`` embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.
+The above function returns an `OkHttpClient` embedded with the client certificate. You can now use this client to make HTTP requests to your API endpoint protected with mTLS.
 
---------
+***
 
 ## Step 4 — Embed the client certificate on your IoT device
 
@@ -400,13 +400,13 @@ Request body:  {"temperature": "36.5", "time": "2020-09-28T15:56:45Z"}
 Response status code: 201
 ```
 
---------
+***
 
 ## Step 5 — Enable mTLS
 
 After creating Cloudflare-issued certificates, the next step is to [enable mTLS](../enable-mtls) for the hosts you want to protect with API Shield.
 
---------
+***
 
 ## Step 6 — Configure API Shield to require client certificates
 

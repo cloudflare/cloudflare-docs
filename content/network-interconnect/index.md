@@ -10,7 +10,7 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 
 ![Cloudflare Network Interconnect docs home illustration](./static/home.png)
 
-## CNI benefits 
+## CNI benefits
 
 Use CNI with other products in Cloudflare's suite for additional benefits.
 

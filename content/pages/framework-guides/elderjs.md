@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy an Elder.js site
 
@@ -20,7 +20,6 @@ $ cd elderjs-app
 ```
 
 The Elder.js template includes a number of pages and examples showing how to build your static site, but by simply generating the project, it is already ready to be deployed to Cloudflare Pages.
-
 
 <TutorialsBeforeYouStart/>
 

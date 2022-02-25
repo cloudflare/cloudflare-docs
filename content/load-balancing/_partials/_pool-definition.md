@@ -1,1 +1,4 @@
-A pool is a group of origin servers, with each origin identified by its IP address or hostname. 
+---
+---
+
+A pool is a group of origin servers, with each origin identified by its IP address or hostname.

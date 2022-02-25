@@ -11,7 +11,7 @@ pcx-content-type: how-to
 
 | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| macOS, Windows, Linux | WARP with Gateway | All plans | 
+| macOS, Windows, Linux | WARP with Gateway | All plans |
 
 </div>
 </details>
@@ -26,21 +26,27 @@ The Application Check device posture attribute checks that a specific applicatio
 
 To enable Application Check:
 
-1. On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
-1. Click **+Add**.
-1. Select **Application Check**.
-1. Enter a descriptive name for the check.
-1. Select your operating system.
-1. Enter a file path (for example, `c:\my folder\myfile.exe`).
-1. Next, you can choose to enter a [**Signing certificate thumbprint**](#determine-the-signing-thumbprint). 
+1.  On the Zero Trust Dashboard, navigate to **My Team** > **Devices** > **Device posture**.
 
-    Adding this information will enable the check to ensure that the application was signed by the expected software developer. 
+2.  Click **+Add**.
 
-1. You can also opt to enter a [**SHA-256** value](#determine-the-sha-256-value). 
+3.  Select **Application Check**.
+
+4.  Enter a descriptive name for the check.
+
+5.  Select your operating system.
+
+6.  Enter a file path (for example, `c:\my folder\myfile.exe`).
+
+7.  Next, you can choose to enter a [**Signing certificate thumbprint**](#determine-the-signing-thumbprint).
+
+    Adding this information will enable the check to ensure that the application was signed by the expected software developer.
+
+8.  You can also opt to enter a [**SHA-256** value](#determine-the-sha-256-value).
 
     This enables the check to ensure the integrity of the binary file on the device.
 
-1. Click **Save**.
+9.  Click **Save**.
 
 Your device posture attribute is now visible on the **Device posture** page.
 
@@ -50,7 +56,7 @@ The process to determine the signing thumbprint of an application varies dependi
 
 ### On macOS
 
-1. Create a directory.
+1.  Create a directory.
 
     ```sh
     $ ~/Desktop % mkdir tmp
@@ -58,13 +64,13 @@ The process to determine the signing thumbprint of an application varies dependi
     $ ~/Desktop % cd tmp
     ```
 
-1. Run the following command to extract certificates for the WARP application:
+2.  Run the following command to extract certificates for the WARP application:
 
     ```sh
     $ ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
     ```
 
-1. Next, run the following command to extract the SHA1 thumbprint:
+3.  Next, run the following command to extract the SHA1 thumbprint:
 
     ```sh
     $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :                              
@@ -73,8 +79,8 @@ The process to determine the signing thumbprint of an application varies dependi
 
 ### On Windows
 
-1. Open a PowerShell window.
-1. Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
+1.  Open a PowerShell window.
+2.  Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
 
 ```txt
 Get-AuthenticodeSignature -FilePath c:\myfile.exe
@@ -82,12 +88,12 @@ Get-AuthenticodeSignature -FilePath c:\myfile.exe
 
 ## Determine the SHA-256 value
 
-The SHA-256 value almost always changes between versions of a file/application. 
+The SHA-256 value almost always changes between versions of a file/application.
 
 ### On macOS
 
-1. Open a Terminal window.
-1. Use the `shasum` command to find the SHA256 value of the file. For example:
+1.  Open a Terminal window.
+2.  Use the `shasum` command to find the SHA256 value of the file. For example:
 
 ```sh
 $ shasum -a 256 myfile
@@ -95,8 +101,8 @@ $ shasum -a 256 myfile
 
 ### On Windows
 
-1. Open a PowerShell window.
-1. Use the `get-filehash` command to find the SHA256 value of the file. For example:
+1.  Open a PowerShell window.
+2.  Use the `get-filehash` command to find the SHA256 value of the file. For example:
 
 ```txt
 get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list

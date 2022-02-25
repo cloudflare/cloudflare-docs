@@ -11,5 +11,5 @@ To open the **Infrastructure** tab, go to **Account Home** > **Security Center**
 
 You can perform the following actions:
 
-* Filter the displayed information
-* Print or download a PDF report
+*   Filter the displayed information
+*   Print or download a PDF report

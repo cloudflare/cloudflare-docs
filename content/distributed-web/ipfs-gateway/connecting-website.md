@@ -13,10 +13,10 @@ served over HTTPS. Here's how to set that all up.
 
 Prerequisites:
 
-1. A domain that you own.
-2. Access to your domain's DNS records.
-3. All of the content for your website collected into one folder, with the
-   homepage in a file called `index.html`.
+1.  A domain that you own.
+2.  Access to your domain's DNS records.
+3.  All of the content for your website collected into one folder, with the
+    homepage in a file called `index.html`.
 
 A few notes about content: IPFS is currently best for static content, and this
 guide assumes that all of the files for your website are static. Also, all links
@@ -53,15 +53,13 @@ First off, if you haven’t already, download IPFS by following the instructions
 
 Once you've downloaded the IPFS software, open a terminal window and connect
 your IPFS node to the network by typing:
-```
-ipfs daemon
-```
+
+    ipfs daemon
 
 When the daemon says it’s ready, open another terminal window and add your
 content, which is the IPFS address of your content.
-```
-ipfs add -r /path/to/folder-with-your-content
-```
+
+    ipfs add -r /path/to/folder-with-your-content
 
 The `-r` tells IPFS to recursively add everything in the folder. If you’re
 just uploading a single file you can ignore the `-r`.
@@ -74,9 +72,7 @@ told your node you'd like to keep. To ensure that your node doesn’t garbage
 collect your content, you need to pin it to your node. This will tell your node
 to cache that content permanently.
 
-```
-ipfs pin add -r /ipfs/<hash_of_folder>
-```
+    ipfs pin add -r /ipfs/<hash_of_folder>
 
 Once you've done this your content will be officially on IPFS. However, you're
 still responsible for keeping your node up and running if you want to make sure
@@ -100,8 +96,8 @@ We'll go over how to do that now.
 First, go to the DNS settings for your domain. When you're there, add the
 following two records:
 
-1. CNAME for `your.website` pointing to `cloudflare-ipfs.com`
-2. TXT record for `_dnslink.your.website` with the value `dnslink=/ipfs/<your_hash_here>`
+1.  CNAME for `your.website` pointing to `cloudflare-ipfs.com`
+2.  TXT record for `_dnslink.your.website` with the value `dnslink=/ipfs/<your_hash_here>`
 
 Now any request to `your.website` will resolve to
 `cloudflare-ipfs.com/ipfs/<your_hash_here>`.
@@ -109,13 +105,13 @@ Now any request to `your.website` will resolve to
 When you want to update your content, just repeat the steps we've outlined
 above.
 
-1. Collect all of your updated content into a folder
-2. Upload the content to a pinning service or upload it to your own node. If
-   you're uploading it to your own node, remember to do both
-   `ipfs add -r /path/to/folder-with-your-content` and
-   `ipfs pin add -r /ipfs/<hash_of_folder>`.
-3. Edit your TXT record for `_dnslink.your.website` to
-   `dnslink=/ipfs/<your_NEW_hash_here>`.
+1.  Collect all of your updated content into a folder
+2.  Upload the content to a pinning service or upload it to your own node. If
+    you're uploading it to your own node, remember to do both
+    `ipfs add -r /path/to/folder-with-your-content` and
+    `ipfs pin add -r /ipfs/<hash_of_folder>`.
+3.  Edit your TXT record for `_dnslink.your.website` to
+    `dnslink=/ipfs/<your_NEW_hash_here>`.
 
 If your website is on Cloudflare, the DNS settings are accessible from your
 dashboard and can be managed through [our

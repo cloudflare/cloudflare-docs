@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Zola site
 
@@ -60,13 +60,16 @@ With Zola installed, create a new project by running the `zola init` command in 
 $ zola init my-zola-project
 ```
 
-Upon running `zola init`, you will prompted with  three questions: 
-1. What is the URL of your site? (https://example.com): 
-You can leave this one blank for now.
+Upon running `zola init`, you will prompted with  three questions:
 
-2. Do you want to enable Sass compilation? [Y/n]: Y
-3. Do you want to enable syntax highlighting? [y/N]: y
-4. Do you want to build a search index of the content? [y/N]: y
+1.  What is the URL of your site? (https://example.com):
+    You can leave this one blank for now.
+
+2.  Do you want to enable Sass compilation? \[Y/n]: Y
+
+3.  Do you want to enable syntax highlighting? \[y/N]: y
+
+4.  Do you want to build a search index of the content? \[y/N]: y
 
 <TutorialsBeforeYouStart/>
 
@@ -94,7 +97,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 </TableLayout>
 
-Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`. 
+Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`.
 
 For example, `ZOLA_VERSION`: `0.14.0`.
 
@@ -112,12 +115,13 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 
-You can now add that subdomain as the `base_url` in your  `config.toml` file. 
+You can now add that subdomain as the `base_url` in your  `config.toml` file.
 
-For example: 
-``` yaml
+For example:
+
+```yaml
 # The URL the site will be built for
 base_url = "https://my-zola-project.pages.dev"
 ```

@@ -5,18 +5,18 @@ pcx-content-type: concept
 
 # DNS policies
 
-When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection. 
+When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
 ![Gateway DNS flow](../../../static/documentation/policies/gateway-dns-diagram.png)
 
-When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. 
+When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network.
 
 Build a DNS policy by configuring the following elements:
 
-* [Expressions](#expressions)
-* [Selectors](#selectors)
-* [Operators](#operators)
-* [Actions](#actions)
+*   [Expressions](#expressions)
+*   [Selectors](#selectors)
+*   [Operators](#operators)
+*   [Actions](#actions)
 
 <Aside>
 Unless a more specific selector is configured in a policy (e.g., <code>user email</code> or <code>source IP address</code> for a registered location), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
@@ -24,7 +24,7 @@ Unless a more specific selector is configured in a policy (e.g., <code>user emai
 
 ## Expressions
 
-Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. 
+Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field.
 
 ### Selectors
 
@@ -141,11 +141,11 @@ Just like actions in HTTP policies, actions in DNS policies allow you to choose 
 
 These are the action types you can choose from:
 
-* [Allow](#allow)
-* [Block](#block)
-* [Override](#override)
-* [SafeSearch](#safesearch)
-* [Youtube Restricted Mode](#youtube-restricted-mode)
+*   [Allow](#allow)
+*   [Block](#block)
+*   [Override](#override)
+*   [SafeSearch](#safesearch)
+*   [Youtube Restricted Mode](#youtube-restricted-mode)
 
 ### Allow
 
@@ -194,4 +194,3 @@ This setup ensures users will be blocked from accessing offensive sites using DN
 ## Custom block page
 
 When choosing the Block action, toggle the **Display custom block page** setting to respond to queries with a block page, and to specify the message you want to display to users who navigate to blocked websites. If disabled, Gateway will respond to blocked queries with `0.0.0.0`. For more information, see the dedicated documentation on [customizing the block page](/policies/filtering/configuring-block-page).
-

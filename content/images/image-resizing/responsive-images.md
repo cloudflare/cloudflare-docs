@@ -11,8 +11,8 @@ The `srcset` [feature of HTML](https://developer.mozilla.org/en-US/docs/Learn/HT
 
 There are two different scenarios where it is useful to use `srcset`:
 
-* Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
-* Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
+*   Images with a fixed size in terms of CSS pixels, but adapting to high-DPI screens (also known as Retina displays). These images take the same amount of space on the page regardless of screen size, but are sharper on high-resolution displays. This is appropriate for icons, thumbnails, and most images on pages with fixed-width layouts.
+*   Responsive images that stretch to fill a certain percentage of the screen (usually full width). This is best for hero images and pages with fluid layouts, including pages using media queries to adapt to various screen sizes.
 
 ## `srcset` for high-DPI displays
 
@@ -51,9 +51,10 @@ By default, the browser assumes the image will be stretched to the full width of
 
 In the previous case, the number followed by `x` described *screen* density. In this case the number followed by `w` describes the *image* size. There is no need to specify screen density here (`2x`, etc.), because the browser automatically takes it into account and picks a higher-resolution image when necessary.
 
-If the image is not displayed at full width of the screen (or browser window), you have two options: 
-* If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
-* If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
+If the image is not displayed at full width of the screen (or browser window), you have two options:
+
+*   If the image is displayed at full width of a fixed-width column, use the first technique that uses one specific image size.
+*   If it takes a specific percentage of the screen, or stretches to full width only sometimes (using CSS media queries), then add the `sizes` attribute as described below.
 
 ### The `sizes` attribute
 
@@ -88,6 +89,6 @@ HTML also [supports the `<picture>` element](https://developer.mozilla.org/en-US
 
 If you want to use WebP images, but do not need resizing, you have two options:
 
-* You can enable the automatic [WebP conversion in Polish](/polish/activate-polish). This will convert all images on the site.
+*   You can enable the automatic [WebP conversion in Polish](/polish/activate-polish). This will convert all images on the site.
 
-* Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.
+*   Alternatively, you can change specific image paths on the site to start with `/cdn-cgi/image/format=auto/`. For example, change `https://example.com/assets/hero.jpg` to `https://example.com/cdn-cgi/image/format=auto/assets/hero.jpg`.

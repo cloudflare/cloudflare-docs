@@ -1,3 +1,6 @@
+---
+---
+
 <table>
   <thead>
    <tr>
@@ -37,4 +40,4 @@
   </tbody>
 </table>
 
-*When users purchase Bot Management for Enterprise, Cloudflare automatically replaces and disables other bot products to prevent overlap.
+\*When users purchase Bot Management for Enterprise, Cloudflare automatically replaces and disables other bot products to prevent overlap.

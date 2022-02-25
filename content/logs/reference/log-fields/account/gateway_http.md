@@ -23,7 +23,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | DestinationIP | Destination ip of the request | string |
 | DestinationPort | Destination port of the request | string |
 | DeviceID | UUID of the device where the HTTP request originated from | string |
-| DownloadedFileNames | List of files downloaded in the HTTP request | array[string] |
+| DownloadedFileNames | List of files downloaded in the HTTP request | array\[string] |
 | Email | Email used to authenticate the client | string |
 | HTTPHost | Content of the host header in the HTTP request | string |
 | HTTPMethod | HTTP request method | string |
@@ -35,7 +35,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | SourceIP | Source ip of the request | string |
 | SourcePort | Source port of the request | string |
 | URL | HTTP request URL | string |
-| UploadedFileNames | List of files uploaded in the HTTP request | array[string] |
+| UploadedFileNames | List of files uploaded in the HTTP request | array\[string] |
 | UserAgent | Contents of the user agent header in the HTTP request | string |
 | UserID | User identity where the HTTP request originated from | string |
 

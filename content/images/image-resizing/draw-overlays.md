@@ -35,35 +35,35 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 
 <Definitions>
 
-- **`url`**
-  - Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
+*   **`url`**
+    *   Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
 
-- **`width`** and **`height`**
-  - Maximum size of the overlay image, in pixels. It must be an integer.
+*   **`width`** and **`height`**
+    *   Maximum size of the overlay image, in pixels. It must be an integer.
 
-- **`fit`** and **`gravity`**
-  - Affects interpretation of `width` and `height`. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
+*   **`fit`** and **`gravity`**
+    *   Affects interpretation of `width` and `height`. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
 
-- **`opacity`**
-  - Floating-point number between `0` (transparent) and `1` (opaque). For example, `opacity: 0.5` makes overlay semitransparent.
+*   **`opacity`**
+    *   Floating-point number between `0` (transparent) and `1` (opaque). For example, `opacity: 0.5` makes overlay semitransparent.
 
-- **`repeat`**
-  - If set to `true`, the overlay image will be tiled to cover the entire area. This is useful for stock-photo-like watermarks.
-  - If set to `"x"`, the overlay image will be tiled horizontally only (form a line).
-  - If set to `"y"`, the overlay image will be tiled vertically only (form a line).
+*   **`repeat`**
+    *   If set to `true`, the overlay image will be tiled to cover the entire area. This is useful for stock-photo-like watermarks.
+    *   If set to `"x"`, the overlay image will be tiled horizontally only (form a line).
+    *   If set to `"y"`, the overlay image will be tiled vertically only (form a line).
 
-- **`top`**, **`left`**, **`bottom`**, **`right`**
-  - Position of the overlay image relative to a given edge. Each property is an offset in pixels. `0` aligns exactly to the edge. For example, `left: 10` positions left side of the overlay 10 pixels from the left edge of the image it is drawn over. `bottom: 0` aligns bottom of the overlay with bottom of the background image.
+*   **`top`**, **`left`**, **`bottom`**, **`right`**
+    *   Position of the overlay image relative to a given edge. Each property is an offset in pixels. `0` aligns exactly to the edge. For example, `left: 10` positions left side of the overlay 10 pixels from the left edge of the image it is drawn over. `bottom: 0` aligns bottom of the overlay with bottom of the background image.
 
-    Setting both `left` and `right`, or both `top` and `bottom` is an error.
+        Setting both `left` and `right`, or both `top` and `bottom` is an error.
 
-    If no position is specified, the image will be centered.
+        If no position is specified, the image will be centered.
 
-- `background`
-  - Background color to add underneath the overlay image. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
+*   `background`
+    *   Background color to add underneath the overlay image. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
 
-- `rotate`
-  - Number of degrees to rotate the overlay image by. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
+*   `rotate`
+    *   Number of degrees to rotate the overlay image by. Same as [for the main image](/image-resizing/resize-with-workers/#fetch-options).
 
 </Definitions>
 

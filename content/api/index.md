@@ -26,6 +26,6 @@ The above example is just that, an example. Never send anyone or store you API T
 
 For specific guidance on making API calls, see the following:
 
-* The specific [Developer Docs section](https://developers.cloudflare.com) for a service for how to guides.
-* [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
-* If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare) you can leverage our 1st party libraries to integrate with Cloudflare's API.
+*   The specific [Developer Docs section](https://developers.cloudflare.com) for a service for how to guides.
+*   [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
+*   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare) you can leverage our 1st party libraries to integrate with Cloudflare's API.

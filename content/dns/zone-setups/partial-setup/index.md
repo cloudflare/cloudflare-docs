@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: concept
 ---
 
-import PartialSetupDefinition from "../../_partials/_partial-setup-definition.md"
+import PartialSetupDefinition from "../../\_partials/\_partial-setup-definition.md"
 
 # Partial (CNAME) setup
 
@@ -11,8 +11,8 @@ import PartialSetupDefinition from "../../_partials/_partial-setup-definition.md
 
 ## How to
 
-- [Set up a partial domain](setup)
-- [Convert a partial domain to a full domain](convert-partial-to-full)
+*   [Set up a partial domain](setup)
+*   [Convert a partial domain to a full domain](convert-partial-to-full)
 
 ## Availability
 

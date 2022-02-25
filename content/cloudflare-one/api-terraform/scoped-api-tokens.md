@@ -9,23 +9,23 @@ The administrators managing policies and groups in Cloudflare Access might be di
 
 ## Creating a scoped API token
 
-1. In the [Cloudflare for Infrastructure](https://dash.cloudflare.com/) dashboard, click the user icon in the top right and navigate to "My Profile".
+1.  In the [Cloudflare for Infrastructure](https://dash.cloudflare.com/) dashboard, click the user icon in the top right and navigate to "My Profile".
 
-2. Select the **API Tokens** tab. The existing tokens will display.
+2.  Select the **API Tokens** tab. The existing tokens will display.
 
 ![Create Token](../static/documentation/api-terraform/create-token.png)
 
-3. Click **Create Token**.
+3.  Click **Create Token**.
 
-4. Click **Get started** next to **Create Custom Token**.
+4.  Click **Get started** next to **Create Custom Token**.
 
-5. Select **Account** and **Access: Organizations, Identity Providers, and Groups** in the drop-downs under **Permissions**. You can configure the token to be Read or Write in the third drop-down.
+5.  Select **Account** and **Access: Organizations, Identity Providers, and Groups** in the drop-downs under **Permissions**. You can configure the token to be Read or Write in the third drop-down.
 
 ![Edit Token](../static/documentation/api-terraform/edit-token.png)
 
-6. In the final section, the token can be applied to a single account or multiple if you are an administrator of multiple Cloudflare accounts.
+6.  In the final section, the token can be applied to a single account or multiple if you are an administrator of multiple Cloudflare accounts.
 
-7. Click **Continue to summary**. The next page will display the token details and instructions on how to use it.
+7.  Click **Continue to summary**. The next page will display the token details and instructions on how to use it.
 
 ## Review tokens
 

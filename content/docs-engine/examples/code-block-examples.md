@@ -8,7 +8,7 @@ Code blocks inside [Docs Engine Markdown](/reference/markdown) offer a variety o
 
 Learn more about [using code blocks inside Markdown](/reference/markdown#code-blocks).
 
---------------------------------
+***
 
 ## JavaScript with filename and highlight
 

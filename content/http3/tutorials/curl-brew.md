@@ -16,16 +16,16 @@ This process replaces your current curl installation. Run the following commands
 
 ### Uninstall curl
 
-  ```sh
-  $ brew remove -f curl
-  ```
+```sh
+$ brew remove -f curl
+```
 
-###  Build curl with quiche
+### Build curl with quiche
 
-  ```sh
-  $ curl -O https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
-  $ brew install --HEAD -s curl.rb
-  ```
+```sh
+$ curl -O https://raw.githubusercontent.com/cloudflare/homebrew-cloudflare/master/curl.rb
+$ brew install --HEAD -s curl.rb
+```
 
 When the build is finished, curl binary will be installed on `/usr/local/opt/curl/bin`. You will need to add to your `$PATH`.
 

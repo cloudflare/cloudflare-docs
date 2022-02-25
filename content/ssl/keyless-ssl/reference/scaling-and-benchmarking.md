@@ -11,7 +11,7 @@ Each key server uses a worker pool model, with incoming client connections handl
 
 Where needed, multiple key servers can be deployed and balanced between using your preferred ingress load balancing configuration. For full high availability, make sure to deploy sufficient key servers to handle twice the expected workload.
 
---------
+***
 
 ## Key type
 
@@ -21,7 +21,7 @@ ECDSA signing can be broken down into two steps. Since the first step — genera
 
 Additional details can be found in the [gokeyless server readme file](https://github.com/cloudflare/gokeyless#readme) file.
 
---------
+***
 
 ## Benchmarks
 

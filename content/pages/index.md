@@ -21,18 +21,18 @@ Get started deploying your first site using our **Get started** guide below, or 
 
 ## Popular pages
 
-- [Deploy a React application](/framework-guides/deploy-a-react-application)
-- [Build configuration](/platform/build-configuration)
+*   [Deploy a React application](/framework-guides/deploy-a-react-application)
+*   [Build configuration](/platform/build-configuration)
 
---------------------------------
+***
 
 ## Community
 
-You can [connect with the Pages community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers. 
+You can [connect with the Pages community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers.
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
----
+***
 
 These docs are built with the [Cloudflare Docs engine](https://developers.cloudflare.com/docs-engine/).
 

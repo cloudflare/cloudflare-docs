@@ -27,7 +27,7 @@ For more guidance on redirecting a subdomain — either to your main domain or a
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`). 
+If your main domain is using Cloudflare's [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`).
 
 For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations#full-setup).
 

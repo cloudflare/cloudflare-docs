@@ -63,7 +63,7 @@ offset_days = 1
 historical_days = 7
 ```
 
-## Calculate the date _n_ days ago
+## Calculate the date *n* days ago
 
 The `get_past_date()` function takes a number of days (`num_days`), subtracts
 that value from today's date, and returns the date `num_days` ago.
@@ -89,12 +89,12 @@ API. The headers will include the data for authentication.
 The payload contains the GraphQL query. In this query, we would like to get a
 list of the next fields for a given account and time range:
 
-* attack ID
-* attack type
-* start time
-* end time
-* mitigation type
-* avg, max rate of packets per second
+*   attack ID
+*   attack type
+*   start time
+*   end time
+*   mitigation type
+*   avg, max rate of packets per second
 
 To get started with GraphQL queries, please refer to [Querying basics][3].
 
@@ -358,8 +358,13 @@ else:
 ```
 
 [1]: /graphql-api/features/data-sets
+
 [2]: /graphql-api/getting-started/authentication/api-token-auth
+
 [3]: /graphql-api/getting-started/querying-basics
-[4]: <https://pandas.pydata.org/pandas-docs/stable/index.html>
+
+[4]: https://pandas.pydata.org/pandas-docs/stable/index.html
+
 [5]: /graphql-api/migration-guides/network-analytics-v2
-[6]: <https://www.splunk.com>
+
+[6]: https://www.splunk.com

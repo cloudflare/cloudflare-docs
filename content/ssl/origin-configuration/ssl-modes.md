@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: reference
 ---
 
-import SSLModeErrors from "../_partials/_ssl-mode-errors.md"
+import SSLModeErrors from "../\_partials/\_ssl-mode-errors.md"
 
 # Encryption modes
 
@@ -19,17 +19,17 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
 
 </Aside>
 
----
+***
 
 ## Update your encryption mode
 
 To change your encryption mode:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-1. Navigate to **SSL/TLS**.
-1. Choose a new encryption mode.
+1.  Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
+2.  Navigate to **SSL/TLS**.
+3.  Choose a new encryption mode.
 
----
+***
 
 ## Off
 
@@ -47,9 +47,9 @@ There is no required set up for this option.
 
 When you set your encryption mode to **Off**, your application:
 
-- Leaves your visitors and your application [vulnerable to attacks](https://www.cloudflare.com/learning/ssl/why-use-https/).
-- Will be marked as "not secure" by Chrome and other browsers, reducing visitor trust.
-- Will be penalized in [SEO rankings](https://webmasters.googleblog.com/2014/08/https-as-ranking-signal.html).
+*   Leaves your visitors and your application [vulnerable to attacks](https://www.cloudflare.com/learning/ssl/why-use-https/).
+*   Will be marked as "not secure" by Chrome and other browsers, reducing visitor trust.
+*   Will be penalized in [SEO rankings](https://webmasters.googleblog.com/2014/08/https-as-ranking-signal.html).
 
 ![SSL Encryption set to off](../static/ssl-encryption-mode-off.png)
 
@@ -59,7 +59,7 @@ When you set your SSL/TLS encryption mode to **Off**, you will not see the optio
 
 </Aside>
 
----
+***
 
 ## Flexible
 
@@ -79,7 +79,7 @@ If your application contains sensitive information (personalized data, user logi
 
 ![SSL Encryption set to Flexible](../static/ssl-encryption-mode-flexible.png)
 
---------
+***
 
 ## Full
 
@@ -103,7 +103,7 @@ Without using [**Full (strict)**](#full-strict), a malicious party could technic
 
 ![SSL Encryption set to Full](../static/ssl-encryption-mode-full.png)
 
----
+***
 
 ## Full (strict)
 
@@ -111,13 +111,13 @@ When you set your encryption mode to **Full (strict)**, Cloudflare does everythi
 
 ### Use when
 
-For the best security, choose **Full (strict)** mode whenever possible (unless your are an [Enterprise customer](#strict-ssl-only-origin-pull)). 
+For the best security, choose **Full (strict)** mode whenever possible (unless your are an [Enterprise customer](#strict-ssl-only-origin-pull)).
 
 Your origin needs to be able to support an SSL certificate that is:
 
-- Unexpired, meaning the certificate notBeforeDate < now() < notAfterDate.
-- Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/origin-configuration/origin-ca).
-- Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
+*   Unexpired, meaning the certificate notBeforeDate < now() < notAfterDate.
+*   Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/origin-configuration/origin-ca).
+*   Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
 
 ### Required setup
 
@@ -129,7 +129,7 @@ Before enabling **Full (strict)** mode, make sure your origin allows HTTPS conne
 
 ![SSL Encryption set to Full (strict)](../static/ssl-encryption-mode-full-strict.png)
 
----
+***
 
 ## Strict (SSL-Only Origin Pull)
 
@@ -151,6 +151,6 @@ The setup is the same as [**Full (strict)** mode](#full-strict), but you select 
 
 <SSLModeErrors/>
 
-## ERR_SSL_VERSION_OR_CIPHER_MISMATCH
+## ERR\_SSL\_VERSION\_OR\_CIPHER\_MISMATCH
 
 If you are experiencing `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` errors, refer to this [community thread](https://community.cloudflare.com/t/community-tip-fixing-err-ssl-version-or-cipher-mismatch-in-google-chrome/42162).

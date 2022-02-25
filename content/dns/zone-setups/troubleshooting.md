@@ -10,7 +10,7 @@ pcx-content-type: reference
 
 If you see unexpected results when [changing your nameservers](/zone-setups/full-setup/setup), review the following troubleshooting questions.
 
-### Is a **DS** record present at your registrar? 
+### Is a **DS** record present at your registrar?
 
 You need to remove any pre-Cloudflare **DS** records at your registrar to update your authoritative nameservers. This will disable DNSSEC and allow Cloudflare to resolve your domain name.
 

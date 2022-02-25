@@ -33,27 +33,28 @@ For help removing an active domain from Cloudflare, refer to [our Support guide]
 
 If you have an alias domain that simply forwards traffic to another domain, you can set up redirects directly within Cloudflare.
 
-1. [Add](#add-a-domain-to-Cloudflare) your alias domain (`previous.com`) to Cloudflare.
-1. Make sure that your alias domain has a proxied [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
+1.  [Add](#add-a-domain-to-Cloudflare) your alias domain (`previous.com`) to Cloudflare.
 
-    <Example>
+2.  Make sure that your alias domain has a proxied [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
+
+     <Example>
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `@` | `192.0.2.1`| Proxied |
     | A | `www` | `192.0.2.1`| Proxied |
 
-    </Example>
+     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
+3.  Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
 
-    <Example>
-    
+     <Example>
+
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
     | `previous.com` | `https://new.com` | 301 | *Include subdomains* and *Subpath matching* |
-    
-    </Example>
+
+     </Example>
 
 ## Get free SSL certificates
 

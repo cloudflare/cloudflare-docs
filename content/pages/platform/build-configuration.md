@@ -15,7 +15,7 @@ Build directories indicates where your project's build command outputs the built
 
 ## Framework presets
 
-Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools. 
+Cloudflare maintains a list of build configurations for popular frameworks and tools. These are accessible during project creation. Below are some standard build commands and directories for popular frameworks and tools.
 
 If you are not using a framework, leave the **Build command** field blank.
 
@@ -65,12 +65,11 @@ The following system environment variables are injected by default (but can be o
 
 ## Language support and tools
 
-Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go. 
+Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
 
-If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code. 
+If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
 Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
-
 
 | Framework | Default version | Environment variable | File                      |
 | --------- | --------------- | -------------------- | ------------------------- |

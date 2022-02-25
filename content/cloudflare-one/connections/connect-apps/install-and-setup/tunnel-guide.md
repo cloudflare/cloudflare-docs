@@ -8,8 +8,8 @@ pcx-content-type: how-to
 
 Follow this step-by-step guide to get your first tunnel up and running. Before you start, make sure you:
 
-1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-1. [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
 ## 1. Download and install `cloudflared`
 
@@ -51,9 +51,10 @@ Alternatively, you can [download the latest Darwin amd64 release](/connections/c
 
 First, download `cloudflared` on your machine. Visit the [downloads](/connections/connect-apps/install-and-setup/installation) page to find the right package for your OS.
 
-Next, install `cloudflared`. 
+Next, install `cloudflared`.
 
 ### .deb install
+
 Use the deb package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` is used in this example.
 
 ```sh
@@ -61,6 +62,7 @@ $ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/clo
 ```
 
 ### ​.rpm install
+
 Use the rpm package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` is used in this example.
 
 ```sh
@@ -100,8 +102,8 @@ $ cloudflared tunnel login
 
 Running this command will:
 
-* Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname. 
-* Generate an account certificate, the [cert.pem file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem), in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory).
+*   Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname.
+*   Generate an account certificate, the [cert.pem file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#cert-pem), in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory).
 
 ## 3. Create a tunnel and give it a name
 
@@ -110,9 +112,10 @@ $ cloudflared tunnel create <NAME>
 ```
 
 Running this command will:
-* Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet. 
-* Generate a [tunnel credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory). 
-* Create a subdomain of `.cfargotunnel.com`.
+
+*   Create a tunnel by establishing a persistent relationship between the [name you provide](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-name) and a [UUID](/connections/connect-apps/install-and-setup/tunnel-useful-terms#tunnel-uuid) for your tunnel. At this point, no connection is active within the tunnel yet.
+*   Generate a [tunnel credentials file](/connections/connect-apps/install-and-setup/tunnel-useful-terms#credentials-file) in the [default `cloudflared` directory](/connections/connect-apps/install-and-setup/tunnel-useful-terms#default-cloudflared-directory).
+*   Create a subdomain of `.cfargotunnel.com`.
 
 From the output of the command, take note of the tunnel’s UUID and the path to your tunnel’s credentials file.
 
@@ -153,7 +156,7 @@ $ cat config.yml
 
 ## 5. Start routing traffic
 
-Now assign a CNAME record that points traffic to your tunnel subdomain. 
+Now assign a CNAME record that points traffic to your tunnel subdomain.
 
 **If you are connecting an application**
 
@@ -175,9 +178,9 @@ You can confirm that the route has been successfully established by running:
 $ cloudflared tunnel route ip show 
 ```
 
-## 6. Run the tunnel 
+## 6. Run the tunnel
 
-Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin. 
+Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin.
 
 ```bash
 $ cloudflared tunnel run <UUID or NAME>

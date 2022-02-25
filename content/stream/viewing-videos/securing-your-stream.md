@@ -11,9 +11,9 @@ By default, videos on  Stream can be viewed by anyone with just a video id. If y
 
 Here are some common use cases for using signed URLs:
 
-* Restricting access so only logged in members can watch a particular video
-* Let users watch your video for a limited time period (ie. 24 hours)
-* Restricting access based on geolocation 
+*   Restricting access so only logged in members can watch a particular video
+*   Let users watch your video for a limited time period (ie. 24 hours)
+*   Restricting access based on geolocation
 
 ### Making a video require signed URLs
 
@@ -26,6 +26,7 @@ curl -X POST -H "Authorization: Bearer $TOKEN" "https://api.cloudflare.com/clien
 ```
 
 Response:
+
 ```json
 ---
 highlight: [8]
@@ -49,9 +50,9 @@ highlight: [8]
 
 You can program your app to generate token in two ways:
 
-* **Using the /token endpoint to generate signed tokens:** The simplest way to create a signed url token is by calling the /token endpoint. This is recommended for testing purposes or if you are generating less than 10,000 tokens per day.
+*   **Using the /token endpoint to generate signed tokens:** The simplest way to create a signed url token is by calling the /token endpoint. This is recommended for testing purposes or if you are generating less than 10,000 tokens per day.
 
-* **Using an open-source library:** If you have tens of thousands of daily users and need to generate a high-volume of tokens without calling the /token endpoint *each time*, you can create tokens yourself. This way, you do not need to call a Stream endpoint each time you need to generate a token.
+*   **Using an open-source library:** If you have tens of thousands of daily users and need to generate a high-volume of tokens without calling the /token endpoint *each time*, you can create tokens yourself. This way, you do not need to call a Stream endpoint each time you need to generate a token.
 
 ## Option 1: Using the /token endpoint
 
@@ -119,12 +120,12 @@ async function handleRequest(request) {
 }
 ```
 
-The returned token will expire after 12 hours. 
+The returned token will expire after 12 hours.
 
 Let's take this a step further and add 2 additional restrictions:
 
-* Allow the signed URL token to be used for MP4 downloads (assuming the video has downloads enabled)
-* Block users from US and Mexico from viewing or downloading the video
+*   Allow the signed URL token to be used for MP4 downloads (assuming the video has downloads enabled)
+*   Block users from US and Mexico from viewing or downloading the video
 
 To achieve this, we can specify additional restrictions in the `signed_url_restrictions` object in our sample code:
 
@@ -157,9 +158,9 @@ async function handleRequest(request) {
 }
 ```
 
-## Option 2: Generating signed tokens without calling the `/token` endpoint 
+## Option 2: Generating signed tokens without calling the `/token` endpoint
 
-If you are generating a high-volume of tokens, it is best to generate new tokens without needing to call the Stream API each time. 
+If you are generating a high-volume of tokens, it is best to generate new tokens without needing to call the Stream API each time.
 
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
@@ -182,11 +183,11 @@ The response will return `pem` and `jwk` values.
   "messages": []
 }
 ```
- 
- Save these values as they won't be shown again. You will use these values later to generate the tokens. The pem and jwk fields are base64-encoded, you must decode them before using them (an example of this is shown in step 2). 
- 
- ### Step 2: Generate tokens using the key
- 
+
+Save these values as they won't be shown again. You will use these values later to generate the tokens. The pem and jwk fields are base64-encoded, you must decode them before using them (an example of this is shown in step 2).
+
+### Step 2: Generate tokens using the key
+
 Once you generate the key in step 1, you can use the `pem` or `jwk` values to generate self-signing URLs on your own. Using this method, you do not need to call the Stream API each time you are creating a new token.
 
 Here's an example Cloudflare Worker script which generates tokens that expire in 60 minutes and only work for users accessing the video from UK. In lines 2 and 3, you will configure the `id` and `jwk` values from step 1:
@@ -264,7 +265,7 @@ function objectToBase64url(payload) {
 }
 ```
 
-### Step 3: Rendering the video 
+### Step 3: Rendering the video
 
 If you are using the Stream Player, insert the token returned by the Worker in Step 2 in place of the video id:
 
@@ -293,6 +294,7 @@ Once revoked all tokens created with that key will be invalidated.
   "messages": []
 }
 ```
+
 ## Supported Restrictions
 
 <TableWrap>
@@ -302,33 +304,30 @@ Once revoked all tokens created with that key will be invalidated.
 | exp | Expiration. A unix epoch timestamp after which the token will stop working. Cannot be greater than 24 hours in the future from when the token is signed|
 | nbf | *Not Before* value. A unix epoch timestamp before which the token will not work |
 | downloadable | if true, the token can be used to download the mp4 (assuming the video has downloads enabled) |
-| accessRules | An array that specifies one or more ip and geo restrictions. accessRules are evaluated first-to-last. If a Rule matches, the associated action is applied and no further rules are evaluated. A token may have at most 5 members in the accessRules array. |
-</TableWrap>
+| accessRules | An array that specifies one or more ip and geo restrictions. accessRules are evaluated first-to-last. If a Rule matches, the associated action is applied and no further rules are evaluated. A token may have at most 5 members in the accessRules array. | </TableWrap>
 
 ### accessRules Schema
 
 Each accessRule must include 2 required properties:
 
-* `type`: supported values are `any`, `ip.src` and `ip.geoip.country`
-* `action`: support values are `allow` and `block`
+*   `type`: supported values are `any`, `ip.src` and `ip.geoip.country`
+*   `action`: support values are `allow` and `block`
 
 Depending on the rule type, accessRules support 2 additional properties:
 
-* `country`: an array of 2-letter country codes in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search) format.
-* `ip`: an array of ip ranges. It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address. CIDRs should be preferred over specific IP addresses. Some devices, such as mobile, may change their IP over the course of a view. Video Access Control are evaluated continuously while a video is being viewed. As a result, overly strict IP rules may disrupt playback.
-
+*   `country`: an array of 2-letter country codes in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search) format.
+*   `ip`: an array of ip ranges. It is recommended to include both IPv4 and IPv6 variants in a rule if possible. Having only a single variant in a rule means that rule will ignore the other variant. For example, an IPv4-based rule will never be applicable to a viewer connecting from an IPv6 address. CIDRs should be preferred over specific IP addresses. Some devices, such as mobile, may change their IP over the course of a view. Video Access Control are evaluated continuously while a video is being viewed. As a result, overly strict IP rules may disrupt playback.
 
 ***Example 1: Block views from a specific country***
-```
-...
-"accessRules": [
-	{
-		"type": "ip.geoip.country",
-		"action": "block",
-		"country": ["US", "DE", "MX"],
-	},
-]
-```
+
+    ...
+    "accessRules": [
+    	{
+    		"type": "ip.geoip.country",
+    		"action": "block",
+    		"country": ["US", "DE", "MX"],
+    	},
+    ]
 
 The first rule matches on country, US, DE, and MX here. When that rule matches, the block action will have the token considered invalid. If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
 
@@ -351,7 +350,7 @@ The first rule matches on country, US, DE, and MX here. When that rule matches, 
 		"action": "block",
 	},
 ]
-````
+```
 
 The first rule matches on country, US and MX here. When that rule matches, the allow action will have the token considered valid. If it doesn't match we continue evaluating rules
 
@@ -367,10 +366,10 @@ By default, Stream embed codes can be used on any domain. If needed, you can lim
 
 In the dashboard, you will see a text box by each video labeled `Enter allowed origin domains separated by commas`. If you click on it, you can list the domains that the Stream embed code should be able to be used on.
 
-  * `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and badtortilla.com
-  * `example.com` does not cover www.example.com or any subdomain of example.com
-  * `localhost` requires a port if it is not being served over https on port 80 or over https on port 443
-  * There's no path support - `example.com` covers example.com/*
+*   `*.badtortilla.com` covers a.badtortilla.com, a.b.badtortilla.com and badtortilla.com
+*   `example.com` does not cover www.example.com or any subdomain of example.com
+*   `localhost` requires a port if it is not being served over https on port 80 or over https on port 443
+*   There's no path support - `example.com` covers example.com/\*
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
@@ -385,4 +384,3 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ### Signed URLs
 
 Combining signed URLs with embedding restrictions allows you to strongly control how your videos are viewed. This lets you serve only trusted users while preventing the signed URL from being hosted on an unknown site.
-

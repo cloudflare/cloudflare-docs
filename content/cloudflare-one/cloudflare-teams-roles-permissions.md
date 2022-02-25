@@ -24,7 +24,7 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 
 ## Protecting Personally Identifiable Information (PII)
 
-By default, Super Administrators can access end users' PII, such as Device IDs, Source IPs, or usernames. No other roles will have the ability to read PII unless Super Administrators explicitly assign the **Cloudflare for Teams PII** role to them. 
+By default, Super Administrators can access end users' PII, such as Device IDs, Source IPs, or usernames. No other roles will have the ability to read PII unless Super Administrators explicitly assign the **Cloudflare for Teams PII** role to them.
 
 The Cloudflare for Teams + PII role should be considered add-on role to be combined with any other roles from the table above. For example, Super Administrators may decide to assign the Cloudflare Gateway Admin role to a user, and add the Cloudflare for Teams + PII role to allow that user to access PII in the Gateway logs.
 
@@ -32,9 +32,9 @@ The Cloudflare for Teams + PII role should be considered add-on role to be combi
 
 To check the list of members in your account, or to manage roles and permissions:
 
-1. Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com).
-1. From your Account Home, navigate to Members.
-1. Enter a member’s email address to add them to your account, and click **Invite**.
-1. Alternatively, scroll down to the Members card to find a list of members with their status and role.
+1.  Navigate to the [Cloudflare Dashboard](https://dash.cloudflare.com).
+2.  From your Account Home, navigate to Members.
+3.  Enter a member’s email address to add them to your account, and click **Invite**.
+4.  Alternatively, scroll down to the Members card to find a list of members with their status and role.
 
 For more information on managing roles within your Cloudflare account, visit the [help center](https://support.cloudflare.com/hc/en-us/articles/205065067-Setting-up-Multi-User-accounts-on-Cloudflare#2K2NLky0NgEtThpHOwrgx8).

@@ -9,7 +9,7 @@ Cloudflare limits the number of sites for which you can track web analytics as w
 
 ## Site Limits
 
-Cloudflare limits the number of sites for which you can track web analytics. Limits depend on whether a site uses Cloudflare's proxy.  
+Cloudflare limits the number of sites for which you can track web analytics. Limits depend on whether a site uses Cloudflare's proxy.
 
 <TableWrap>
 

@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Origin Cache Control
 
-Set `Cache-Control` headers to tell Cloudflare how to handle content from the origin. 
+Set `Cache-Control` headers to tell Cloudflare how to handle content from the origin.
 
 When a user sends an HTTP request, the user’s request URL is matched against a [list of cacheable file extensions](/about/default-cache-behavior#default-cached-file-extensions). If the request matches an extension on this list, Cloudflare serves the resource from cache if it is present. If the content is stale in Cloudflare’s cache, Cloudflare attempts to revalidate the content with the origin before serving the response to the client.
 
@@ -31,9 +31,9 @@ Directives can be broken down into four groups: cacheability, expiration, revali
 
 Cacheability refers to whether or not a resource should enter a cache, and the directives below indicate a resource’s cacheability.
 
-- `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
-- `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
-- `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
+*   `public` — Indicates any cache may store the response, even if the response is normally non-cacheable or cacheable only within a private cache.
+*   `private` — Indicates the response message is intended for a single user (e.g. a browser cache) and must not be stored by a shared cache like Cloudflare or a corporate proxy.
+*   `no-store` — Indicates any cache (i.e., a client or proxy cache) must not store any part of either the immediate request or response.
 
 ### Expiration
 
@@ -47,9 +47,9 @@ When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to c
 
 </Aside>
 
-- `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
-- `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
-- `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
+*   `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
+*   `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.
+*   `no-cache` — Indicates the response cannot be used to satisfy a subsequent request without successful validation on the origin server. This allows an origin server to prevent a cache from using the origin to satisfy a request without contacting it, even by caches that have been configured to send stale responses.
 
 Ensure the HTTP `Expires` header is set in your origin server to use Greenwich Mean Time (GMT) as stipulated in [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3 "3.3.1 Full Date").
 
@@ -57,20 +57,20 @@ Ensure the HTTP `Expires` header is set in your origin server to use Greenwich M
 
 Revalidation determines how the cache should behave when a resource expires, and the directives below affect the revalidation behavior.
 
-- `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
-- `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
-- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
+*   `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
+*   `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
+*   `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/about/always-online) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
+*   `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](https://developers.cloudflare.com/workers/platform/limits#cache-api).
 
 The `stale-if-error` directive is ignored if [Always Online](/about/always-online) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 
-### Other 
+### Other
 
 Additional directives that influence cache behavior are listed below.
 
-- `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload
-- `vary` — Cloudflare does not consider vary values in caching decisions.
-- `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
+*   `no-transform` — Indicates that an intermediary — regardless of whether it implements a cache — must not transform the payload
+*   `vary` — Cloudflare does not consider vary values in caching decisions.
+*   `immutable` — Indicates to clients the response body does not change over time. The resource, if unexpired, is unchanged on the server. The user should not send a conditional revalidation for it (e.g., `If-None-Match` or `If-Modified-Since`) to check for updates, even when the user explicitly refreshes the page. This directive has no effect on public caches like Cloudflare, but does change browser behavior.
 
 ## Origin Cache-Control behavior
 
@@ -325,7 +325,8 @@ Review the examples below to learn which directives to use with the Cache-Contro
   <div>
     <code>Cache-Control: public, no-transform</code>
 
-  This configuration also disables transformation like gzip or brotli compression from our edge to your visitors if the original payload was served uncompressed.
+This configuration also disables transformation like gzip or brotli compression from our edge to your visitors if the original payload was served uncompressed.
+
   </div>
 </details>
 
@@ -336,7 +337,8 @@ Review the examples below to learn which directives to use with the Cache-Contro
   <div>
     <code>Cache-Control: public, max-age=3600, stale-if-error=60</code>
 
-  With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (one hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of one minute beyond the expiration of the resource.
+With this configuration, Cloudflare attempts to revalidate the content with the origin server after it has been in cache for 3600 seconds (one hour). If the server returns an error instead of proper revalidation responses, Cloudflare continues serving the stale resource for a total of one minute beyond the expiration of the resource.
+
   </div>
 </details>
 
@@ -357,20 +359,24 @@ Review the examples below to learn which directives to use with the Cache-Contro
     <code>Cache-Control: max-age=600, stale-while-revalidate=30</code>
 
 This configuration indicates the asset is fresh for 600 seconds. The asset can be served stale for up to an additional 30 seconds to parallel requests for the same resource while the initial synchronous revalidation is attempted.
+
   </div>
 </details>
 
 ## Interaction with other Cloudflare features
 
-### [Edge Cache TTL](/about/edge-browser-cache-ttl#edge-cache-ttl) 
+### [Edge Cache TTL](/about/edge-browser-cache-ttl#edge-cache-ttl)
 
 Edge Cache TTL Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
 
 ### [Browser Cache TTL](/about/edge-browser-cache-ttl#browser-cache-ttl)
+
 Browser Cache TTL Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
 ### [Polish](https://developers.cloudflare.com/images/polish)
+
 Polish is disabled when the `no-transform` directive is present.
 
 ### Gzip and Other Compression
+
 Compression is disabled when the `no-transform` directive is present. If the original asset fetched from the origin is compressed, it is served compressed to the visitor. If the original asset is uncompressed, compression is not applied.

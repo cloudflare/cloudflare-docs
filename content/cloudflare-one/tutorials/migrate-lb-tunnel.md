@@ -14,8 +14,8 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 
 **🗺️ This tutorial covers how to:**
 
-* Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
-* Use Cloudflare Load Balancer to perform a zero downtime migration
+*   Migrate a Legacy Argo Tunnel deployment to Named Argo Tunnel model
+*   Use Cloudflare Load Balancer to perform a zero downtime migration
 
 **⏲️ Time to complete:**
 
@@ -23,7 +23,7 @@ If you are using Legacy Argo Tunnel today you can migrate to Named Argo Tunnel d
 
 See additional documentation for working with [Kubernetes](/connections/connect-apps/routing-to-tunnel/kubernetes).
 
----
+***
 
 ## Creating a Legacy Argo Tunnel with Cloudflare Load Balancer
 
@@ -47,8 +47,8 @@ $ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 
 
 However, the Legacy Argo Tunnel mode has some downsides, including:
 
-* You cannot manage these connections from the Cloudflare dashboard.
-* When `cloudflared` restarts, it will attempt to register these connections as new connections which can lead to service disruption.
+*   You cannot manage these connections from the Cloudflare dashboard.
+*   When `cloudflared` restarts, it will attempt to register these connections as new connections which can lead to service disruption.
 
 The Named Tunnel, documented below, model provides easier management and greater stability.
 

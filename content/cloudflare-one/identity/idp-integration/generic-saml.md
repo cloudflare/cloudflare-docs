@@ -7,12 +7,12 @@ pcx-content-type: how-to
 
 Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on the Zero Trust Dashboard, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
-Most identity providers allow users to create an **application**. In this context, an application is a set of parameters that the identity provider will then pass on to Cloudflare to establish an integration. 
+Most identity providers allow users to create an **application**. In this context, an application is a set of parameters that the identity provider will then pass on to Cloudflare to establish an integration.
 
 Minimum requirements for identity providers:
 
-* The IdP must conform to SAML 2.0 
-* The IdP must provide: A Single Sign on URL, an Entity ID, and a signing certificate
+*   The IdP must conform to SAML 2.0
+*   The IdP must provide: A Single Sign on URL, an Entity ID, and a signing certificate
 
 Depending on the identity provider you would like to integrate, the following steps may happen in a different order.
 
@@ -20,20 +20,20 @@ Depending on the identity provider you would like to integrate, the following st
 
 The typical setup requirements are:
 
-1. Create a new integration in the identity provider with the type set as **SAML**.
-1. Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
-1. Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
-1. Set the Name ID/Email format to `emailAddress`.
-1. [Optional] Set the signature policy to *Always Sign*.
-1. [Optional] If your identity provider supports metadata file configuration, use the endpoint:  `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
+1.  Create a new integration in the identity provider with the type set as **SAML**.
+2.  Set the Entity/Issuer ID to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
+3.  Set the Single Sign On URL (or similarly named) to: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`, where `<your-team-name>` should be your Cloudflare Zero Trust [team name](/glossary#team-name).
+4.  Set the Name ID/Email format to `emailAddress`.
+5.  \[Optional] Set the signature policy to *Always Sign*.
+6.  \[Optional] If your identity provider supports metadata file configuration, use the endpoint:  `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
 
 ## Add a SAML identity provider to the Zero Trust Dashboard
 
-1. On the Zero Trust Dashboard, navigate to **Settings** > **Authentication**.
-1. In the Login methods card, click **Add new** and select *SAML*.
-1. Choose a descriptive name for your identity provider.
-1. Enter the Single Sign on URL, IdP Entity ID or Issuer URL, and Signing certificate.
-1. If you do not wish to enter any of the [additional SAML configurations](#additional-saml-configurations), click **Save**.
+1.  On the Zero Trust Dashboard, navigate to **Settings** > **Authentication**.
+2.  In the Login methods card, click **Add new** and select *SAML*.
+3.  Choose a descriptive name for your identity provider.
+4.  Enter the Single Sign on URL, IdP Entity ID or Issuer URL, and Signing certificate.
+5.  If you do not wish to enter any of the [additional SAML configurations](#additional-saml-configurations), click **Save**.
 
 ## Additional SAML configurations
 
@@ -63,7 +63,6 @@ Example in Okta:
 How to receive these Attributes in Cloudflare:
 
 ![SAML dialog](../../static/documentation/identity/attributes-cloudflare.png)
-
 
 ### SAML header attributes
 

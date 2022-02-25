@@ -12,12 +12,10 @@ After establishing your connection, the next steps include provisioning the Gene
 
 Cloudflare sends a set of IPs that you assign to your connection before Cloudflare establishes the BGP connection. The set of IPs will look similar to the example below.
 
-```
-Cloudflare v4: 192.0.2.10/31
-Acme v4: 192.0.2.11/31
-Cloudflare v6: 2001:db8:12:3::7ac2:d64a/127
-Acme: 2001:db8:12:3::7ac2:d64b/127
-```
+    Cloudflare v4: 192.0.2.10/31
+    Acme v4: 192.0.2.11/31
+    Cloudflare v6: 2001:db8:12:3::7ac2:d64a/127
+    Acme: 2001:db8:12:3::7ac2:d64b/127
 
 Assign the set of IPs to your connection. Next, perform a series of ping tests to ensure the connection is established. Although you may see the green connection from [configuring the cross-connect](/set-up-cni/configure-cross-connect), the ping tests confirm packets are flowing over the link.
 
@@ -25,7 +23,7 @@ If you have a virtual link via Megaport, the IP provisioning may fail if you hav
 
 ## Configure the BGP
 
-After you provision the IPs and the ping tests confirm the connection, accept the routes from the BGP session Cloudflare configured. Configuring the BGP session on both the Cloudflare and user sides requires a BGP call and an approximately two hour maintenance window that you provide to Cloudflare. 
+After you provision the IPs and the ping tests confirm the connection, accept the routes from the BGP session Cloudflare configured. Configuring the BGP session on both the Cloudflare and user sides requires a BGP call and an approximately two hour maintenance window that you provide to Cloudflare.
 
 Cloudflare advertises all of its prefixes over the CNI, but the process occurs over a private link from Cloudflare to the customer data center.
 

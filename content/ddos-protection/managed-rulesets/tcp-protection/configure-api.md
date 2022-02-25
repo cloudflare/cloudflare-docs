@@ -25,7 +25,7 @@ The `<ACCOUNT_ID>` argument is the account ID (a hexadecimal string). You can fi
 The following table summarizes the available operations.
 
 Operation | Method + Endpoint | Description
-----------|-------------------|------------
+\----------|-------------------|------------
 Get Advanced TCP Protection status | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection` | Gets the global feature status (enabled or disabled).
 Update Advanced TCP Protection status | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection` | Enables or disables the Advanced TCP Protection feature.
 

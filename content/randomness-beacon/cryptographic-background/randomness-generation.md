@@ -13,11 +13,12 @@ First, we explain pairing-based cryptography (PBC), which has become quite popul
 
 Pairing-based cryptography is based on bilinear groups `(𝔾1,𝔾2,𝔾𝑡)`, where `𝔾1`, `𝔾2`, and `𝔾𝑡` are cyclic groups of prime order `𝑝` with generators `𝑔1`, `𝑔2`, and `𝑔𝑡`, respectively, and a pairing operation `𝑒:𝔾1×𝔾2→𝔾𝑡` with these properties:
 
-- **Bilinearity:** `∀𝑎,𝑏∈ℤ∗𝑝,∀𝑃∈𝔾1,∀𝑄∈𝔾2,` we have `𝑒(𝑎𝑃,𝑏𝑄)=𝑒(𝑃,𝑄)𝑎𝑏`
+*   **Bilinearity:** `∀𝑎,𝑏∈ℤ∗𝑝,∀𝑃∈𝔾1,∀𝑄∈𝔾2,` we have `𝑒(𝑎𝑃,𝑏𝑄)=𝑒(𝑃,𝑄)𝑎𝑏`
 
-- **Non-degeneracy:** `𝑒≠1`
-- **Computability:** There exists an efficient algorithm to compute `𝑒`.
-	drand currently uses the Barreto-Naehrig curve BN256.
+*   **Non-degeneracy:** `𝑒≠1`
+
+*   **Computability:** There exists an efficient algorithm to compute `𝑒`.
+    drand currently uses the Barreto-Naehrig curve BN256.
 
 ## BLS Signatures
 

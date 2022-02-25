@@ -17,26 +17,26 @@ In Chrome, click the padlock to the left of your address bar and select "Certifi
 
 ### Normal Browsing
 
-** Non-Cloudflare Root CA **
+\*\* Non-Cloudflare Root CA \*\*
 
 Non-Cloudflare for Teams root certificate indicates that Cloudflare did not proxy this webpage.
 ![Non-Cloudflare for Teams Root CA](../static/non-cloudflare-root-ca.png)
 
-** Normal context menu **
+\*\* Normal context menu \*\*
 
 Right-click context menu will have all normal options.
 ![Normal right click menu](../static/non-isolated-browser.png)
 
 ### Isolated Browsing
 
-** Cloudflare Root CA **
+\*\* Cloudflare Root CA \*\*
 
 Cloudflare for Teams + Gateway Intermediate indicates traffic was proxied through Cloudflare Gateway.
 
 ![Cloudflare for Teams Root CA](../static/cloudflare-gateway-root-ca.png)
 
-** Simplified context menu **
+\*\* Simplified context menu \*\*
 
-Right-click context menu be simplified. 
+Right-click context menu be simplified.
 
 ![Simplified right click menu](../static/isolated-browser.png)

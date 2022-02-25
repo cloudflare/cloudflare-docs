@@ -11,21 +11,23 @@ The Server Message Block (SMB) protocol allows users to access, read, and write 
 You can set up this connection by downloading and installing the Cloudflare daemon, `cloudflared`, on the machine hosting the file share and on the client machine. `cloudflared` will maintain a secure, persistent, outbound-only connection from the machine to Cloudflare. SMB traffic will then be proxied over this connection using [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/).
 
 🗺️ This walkthrough covers how to:
-1. [How to connect the machine hosting the file share to Cloudflare](#host-machine)
-2. [How to connect from a client machine](#client-machine)
+
+1.  [How to connect the machine hosting the file share to Cloudflare](#host-machine)
+2.  [How to connect from a client machine](#client-machine)
 
 ## Before you start
-1. Create a Cloudflare account
-1. Add an active zone to Cloudflare
-1. [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/tunnel-guide) on the host and client machines
 
----
+1.  Create a Cloudflare account
+2.  Add an active zone to Cloudflare
+3.  [Install the `cloudflared` daemon](/connections/connect-apps/install-and-setup/tunnel-guide) on the host and client machines
+
+***
 
 ## Connect the machine hosting the file share to Cloudflare
 
-1. Make sure `cloudflared` is installed on the machine hosting the file share.
+1.  Make sure `cloudflared` is installed on the machine hosting the file share.
 
-1. Run the following command to authenticate `cloudflared` into your Cloudflare account.
+2.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
 ```bash
 \cloudflared.exe tunnel login
@@ -35,13 +37,13 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
-2. Once you login, Cloudflare will display the sites that you added to your account.
+2.  Once you login, Cloudflare will display the sites that you added to your account.
 
-3. Select the site where you will create a subdomain to represent the SMB file share.
+3.  Select the site where you will create a subdomain to represent the SMB file share.
 
-4. For example, if you plan to share the drive at `smb.site.com` select site.com from the list.
+4.  For example, if you plan to share the drive at `smb.site.com` select site.com from the list.
 
-5. Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
+5.  Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
 
 ## Secure the subdomain with Cloudflare Access
 
@@ -62,18 +64,19 @@ Run the following command to connect the drive to Cloudflare, replacing the `smb
 
 ## Connect a local machine to access the file share
 
-1. Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
+1.  Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
 
-1. Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
+2.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
 ```bash
 \cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445
 ```
+
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
-1. Open your SMB client and configure the client to point to `tcp:localhost:8445`. Do not input the hostname.
+1.  Open your SMB client and configure the client to point to `tcp:localhost:8445`. Do not input the hostname.
 
-1. When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
+2.  When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
 ## Windows-specific requirements
 
@@ -88,5 +91,3 @@ On the Windows machine, locate the Server process, likely called `Server` and ru
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `2244`, otherwise cloudflared will return an error.
 
 </Aside>
-
-

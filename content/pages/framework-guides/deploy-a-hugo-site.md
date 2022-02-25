@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Hugo site
 
@@ -39,6 +39,7 @@ If you use the package manager [Chocolatey](https://chocolatey.org/), run the `c
 ```sh
 $ choco install hugo --confirm
 ```
+
 ### Windows (Scoop)
 
 If you use the package manager [Scoop](https://scoop.sh/), run the `scoop install` command in your terminal to install Hugo:
@@ -52,7 +53,6 @@ $ scoop install hugo
 The Hugo GitHub repository contains pre-built versions of the Hugo command-line tool for various operating systems, which can be found on [the Releases page](https://github.com/gohugoio/hugo/releases).
 
 For more instruction on installing these releases, refer to [Hugo's install guide](https://gohugo.io/getting-started/installing/).
-
 
 <TutorialsBeforeYouStart/>
 
@@ -192,7 +192,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Hugo site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Using a specific Hugo version

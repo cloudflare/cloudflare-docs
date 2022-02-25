@@ -25,8 +25,8 @@ For a quick start, you will use Docker to run a local instance of Postgres and P
 
 To get started:
 
-1. Run the following `git` command to clone a basic [Postgres database connector](https://github.com/cloudflare/worker-template-postgres) project.
-1. After running the `git clone` command, `cd` into the new project.
+1.  Run the following `git` command to clone a basic [Postgres database connector](https://github.com/cloudflare/worker-template-postgres) project.
+2.  After running the `git clone` command, `cd` into the new project.
 
 ```sh
 $ git clone https://github.com/cloudflare/worker-template-postgres/
@@ -35,7 +35,7 @@ $ cd worker-template-postgres
 
 ## Cloudflare Tunnel authentication
 
-To create and manage secure Cloudflare Tunnels, you first need to authenticate `cloudflared` CLI. 
+To create and manage secure Cloudflare Tunnels, you first need to authenticate `cloudflared` CLI.
 Skip this step if you already have authenticated `cloudflared` locally.
 
 ```sh
@@ -43,8 +43,9 @@ $ docker run -v ~/.cloudflared:/etc/cloudflared cloudflare/cloudflared:2021.11.0
 ```
 
 Running this command will:
-* Prompt you to select your Cloudflare account and hostname.
-* Download credentials and allow `cloudflared` to create Tunnels and DNS records.
+
+*   Prompt you to select your Cloudflare account and hostname.
+*   Download credentials and allow `cloudflared` to create Tunnels and DNS records.
 
 ## Start and prepare Postgres database
 
@@ -56,10 +57,11 @@ Cloudflare Tunnel will be accessible from the Internet once you run the followin
 
 </Aside>
 
-You can find a prepared `docker-compose` file that does not require any changes in `scripts/postgres` with the following services: 
-1. **postgres**
-1. **pgbouncer** - Placed in front of Postgres to provide connection pooling.
-1. **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
+You can find a prepared `docker-compose` file that does not require any changes in `scripts/postgres` with the following services:
+
+1.  **postgres**
+2.  **pgbouncer** - Placed in front of Postgres to provide connection pooling.
+3.  **cloudflared** - Allows your applications to connect securely, through a encrypted tunnel, without opening any local ports.
 
 Run the following commands to start all services. Replace `postgres-tunnel.example.com` with a hostname on your Cloudflare zone to route traffic through this tunnel.
 
@@ -71,8 +73,8 @@ $ docker compose up
 # Alternative: Run `docker compose up -D` to start docker-compose detached
 ```
 
-`docker-compose` will spin up and configure all the services for you, including the creation of the Tunnel's DNS record. 
-The DNS record will point to the Cloudflare Tunnel, which keeps a secure connection between a local instance of `cloudflared` and the Cloudflare network. 
+`docker-compose` will spin up and configure all the services for you, including the creation of the Tunnel's DNS record.
+The DNS record will point to the Cloudflare Tunnel, which keeps a secure connection between a local instance of `cloudflared` and the Cloudflare network.
 
 ### Import example dataset
 
@@ -216,6 +218,6 @@ $ docker compose down
 
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-- [Build a Slackbot](/tutorials/build-a-slackbot)
-- [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)
+*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+*   [Build a Slackbot](/tutorials/build-a-slackbot)
+*   [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)

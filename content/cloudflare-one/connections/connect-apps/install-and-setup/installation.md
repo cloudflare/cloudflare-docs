@@ -9,7 +9,7 @@ Cloudflare Tunnel requires the installation of a lightweight server-side daemon,
 
 Releases can be [found on GitHub](https://github.com/cloudflare/cloudflared/releases). Downloads are available as standalone binaries or packages like Debian and RPM.
 
-Detailed release notes can be found on the [GitHub RELEASE_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
+Detailed release notes can be found on the [GitHub RELEASE\_NOTES file](https://github.com/cloudflare/cloudflared/blob/master/RELEASE_NOTES).
 
 ## Linux
 
@@ -20,7 +20,7 @@ Alternatively, download the latest release directly.
 <TableWrap>
 
 Type   | amd64 / x86-64 | x86 (32-bit) | ARM  | ARM64 |
--------|----------------|--------------|------|-------|
+\-------|----------------|--------------|------|-------|
 Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64) |
 .deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb) |
 .rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
@@ -40,7 +40,7 @@ Alternatively, [download the latest Darwin amd64 release directly](https://githu
 ## Windows
 
 Type   | 32-bit | 64-bit |
--------|----------------|-----|
+\-------|----------------|-----|
 Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
 <Aside>
@@ -67,20 +67,20 @@ The update will cause `cloudflared` to restart which would impact traffic curren
 
 You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
 
-1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
-2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3. [Add the address](/connections/connect-apps/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
-4. Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
-5. Once confirmed, you can remove the older version from the Load Balancer pool.
+1.  Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
+2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
+3.  [Add the address](/connections/connect-apps/routing-to-tunnel/lb) of the new instance of `cloudflared` into your Load Balancer pool as priority 2.
+4.  Swap the priority such that the new instance is now priority 1 and monitor to confirm traffic is being served.
+5.  Once confirmed, you can remove the older version from the Load Balancer pool.
 
 ### Updating with multiple `cloudflared` instances
 
 If you are not using Cloudflare's Load Balancer, you can use multiple instances of `cloudflared` to update without the risk of downtime.
 
-1. Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
-2. Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
-3. In the Cloudflare DNS dashboard, [replace](/connections/connect-apps/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
-4. Remove the now-inactive instance of `cloudflared`.
+1.  Install a new instance of `cloudflared` and [create](/connections/connect-apps/create-tunnel) a new Tunnel.
+2.  Configure the instance to point traffic to the same locally-available service as your current, active instance of `cloudflared`.
+3.  In the Cloudflare DNS dashboard, [replace](/connections/connect-apps/routing-to-tunnel/dns) the address of the current instance of `cloudflared` with the address of the new instance. Save the record.
+4.  Remove the now-inactive instance of `cloudflared`.
 
 #### Running multiple instances in Windows
 

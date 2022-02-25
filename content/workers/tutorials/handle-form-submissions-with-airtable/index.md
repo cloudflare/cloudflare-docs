@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Handle form submissions with Airtable
 
@@ -19,13 +19,13 @@ In this tutorial, you will use Workers and [Airtable](https://airtable.com) to p
 
 ![Example GIF of complete Airtable and serverless function integration](./example.gif)
 
-[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form). Note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)) and a serverless function for handling the interaction with Airtable. 
+[The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form). Note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)) and a serverless function for handling the interaction with Airtable.
 
 [The front-end portion of this site](https://airtable-form-example.pages.dev) does not require any specific React experience. It uses a basic HTML5 form, showing that you can use Workers to handle any kind of form, whether entirely in HTML, or client-side, JavaScript-heavy forms, such as with React or other front-end frameworks.
 
 ## Create a form
 
-For this tutorial, you will be building a contact form. You can customize the fields, but the form this tutorial references will collect a first name, last name, email address, phone number, subject, and a message. 
+For this tutorial, you will be building a contact form. You can customize the fields, but the form this tutorial references will collect a first name, last name, email address, phone number, subject, and a message.
 
 If this is your first time building a form and you would like to follow a tutorial to create a form with Cloudflare Pages, refer to the [HTML forms](https://developers.cloudflare.com/pages/tutorials/forms) Pages tutorial. Then continue with [Create a serverless function](/tutorials/handle-form-submissions-with-airtable).
 
@@ -84,7 +84,7 @@ The `<form>` used in the example front-end UI builds on these basics, adding som
 
 ![The completed form in the front-end user interface](./ui.png)
 
-The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit information using the [HTTP `POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) method. 
+The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit information using the [HTTP `POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) method.
 
 Code is provided as an example below, including the first `<input>`, to show that the `name` is set to the value `first_name`, as well as the standard `button` with `type="submit"`:
 
@@ -115,7 +115,7 @@ Code is provided as an example below, including the first `<input>`, to show tha
 </form>
 ```
 
-If you would like to follow along with this example, you can directly copy the `<form>` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial. 
+If you would like to follow along with this example, you can directly copy the `<form>` code from the [`Form` component](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js) into your own project, or use the codebase and plug in your own serverless function, following the next section in the tutorial.
 
 ## Create a serverless function
 
@@ -187,7 +187,7 @@ Further down the page, you will begin to see example requests, showing you how t
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](./api-key.png)
 
-To make this API key available in your codebase, use the [`wrangler secret`](/cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users. 
+To make this API key available in your codebase, use the [`wrangler secret`](/cli-wrangler/commands#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
 Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
 
@@ -204,9 +204,9 @@ Enter the secret text you would like assigned to the variable AIRTABLE_API_KEY o
 
 Before you continue, review the keys that you should have from Airtable:
 
-1. **Airtable Table Name:** the name for your table, like Form Submissions.
-2. **Airtable Base ID:** the alphanumeric base ID found at the top of your base's API page.
-3. **Airtable API Key:** the private API key found in example API requests on the Airtable API documentation page.
+1.  **Airtable Table Name:** the name for your table, like Form Submissions.
+2.  **Airtable Base ID:** the alphanumeric base ID found at the top of your base's API page.
+3.  **Airtable API Key:** the private API key found in example API requests on the Airtable API documentation page.
 
 ## Submit data to Airtable
 
@@ -278,7 +278,7 @@ const submitHandler = async request => {
 }
 ```
 
-While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405). 
+While the majority of this function is concerned with parsing the request body (the data being sent as part of the request), there are two important things to note. First, if the HTTP method sent to this function is not `POST`, you will return a new response with the status code of [`405 Method Not Allowed`](https://httpstatuses.com/405).
 
 The variable `reqBody` represents a collection of fields, which are key-value pairs for each column in your Airtable table. By formatting `reqBody` as an object with a collection of fields, you are creating a new record in your table with a value for each field.
 
@@ -302,7 +302,7 @@ const createAirtableRecord = body => {
 }
 ```
 
-To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/cli-wrangler/configuration#vars) feature to pass public environment variables from your `wrangler.toml` file. 
+To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/cli-wrangler/configuration#vars) feature to pass public environment variables from your `wrangler.toml` file.
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 
@@ -353,7 +353,7 @@ You can find the source for this project — both the front-end UI and the serve
 
 ## Related resources
 
-- [Build a Slackbot](https://developers.cloudflare.com/workers/tutorials/build-a-slackbot)
-- [Build a To-Do List Jamstack App](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)
-- [Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages](https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity)
-- [James Quick's video on building a Cloudflare Workers + Airtable integration](https://www.youtube.com/watch?v=tFQ2kbiu1K4)
+*   [Build a Slackbot](https://developers.cloudflare.com/workers/tutorials/build-a-slackbot)
+*   [Build a To-Do List Jamstack App](https://developers.cloudflare.com/workers/tutorials/build-a-jamstack-app)
+*   [Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages](https://developers.cloudflare.com/pages/tutorials/build-a-blog-using-nuxt-and-sanity)
+*   [James Quick's video on building a Cloudflare Workers + Airtable integration](https://www.youtube.com/watch?v=tFQ2kbiu1K4)

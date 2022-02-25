@@ -13,9 +13,9 @@ The GraphQL filter is represented by the [GraphQL Input Object](https://graphql.
 
 You can use filters as an argument on the following resources:
 
-- zones
-- accounts
-- tables (datasets)
+*   zones
+*   accounts
+*   tables (datasets)
 
 ### Zone filter
 

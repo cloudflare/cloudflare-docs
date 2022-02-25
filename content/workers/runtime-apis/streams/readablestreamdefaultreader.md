@@ -2,6 +2,7 @@
 title: ReadableStream DefaultReader
 pcx-content-type: configuration
 ---
+
 <!-- The space in the title was introduced to create a pleasing line-break in the title in the sidebar. -->
 
 # ReadableStreamDefaultReader
@@ -21,9 +22,9 @@ const reader = readable.getReader()
 
 <Definitions>
 
-- `closed` <Type>Promise</Type>
+*   `closed` <Type>Promise</Type>
 
-  -  A promise indicating if the reader is closed. The promise is fulfilled when the reader stream closes and is rejected if there is an error in the stream.
+    *   A promise indicating if the reader is closed. The promise is fulfilled when the reader stream closes and is rejected if there is an error in the stream.
 
 </Definitions>
 
@@ -31,27 +32,27 @@ const reader = readable.getReader()
 
 <Definitions>
 
-- `read()` <Type>Promise</Type>
+*   `read()` <Type>Promise</Type>
 
-  - A promise that returns the next available chunk of data being passed through the reader queue.
+    *   A promise that returns the next available chunk of data being passed through the reader queue.
 
-- <Code>cancel(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>void</Type>
+*   <Code>cancel(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>void</Type>
 
-  - Cancels the stream. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying source’s cancel algorithm -- if this readable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its cancel algorithm causes the transform’s writable side to become errored with `reason`.
+    *   Cancels the stream. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying source’s cancel algorithm -- if this readable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its cancel algorithm causes the transform’s writable side to become errored with `reason`.
 
-    <Aside type="warning" header="Warning">
+        <Aside type="warning" header="Warning">
 
-    Any data not yet read is lost.
+        Any data not yet read is lost.
 
-    </Aside>
+        </Aside>
 
-- `releaseLock()` <Type>void</Type>
+*   `releaseLock()` <Type>void</Type>
 
-  - Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
+    *   Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
 
 </Definitions>
 
 ## Related resources
 
-- [Using Streams](/learning/using-streams)
-- [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
+*   [Using Streams](/learning/using-streams)
+*   [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)

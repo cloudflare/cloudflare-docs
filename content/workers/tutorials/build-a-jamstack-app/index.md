@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Build a todo list JAMstack application
 
@@ -19,8 +19,8 @@ In this tutorial, you will build a todo list application using HTML, CSS, and Ja
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 
-1. How building with Workers makes it easy to focus on writing code and ship finished products. 
-2. How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
+1.  How building with Workers makes it easy to focus on writing code and ship finished products.
+2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
 If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/signalnerve/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
@@ -61,7 +61,7 @@ async function handleRequest(request) {
 }
 ```
 
-In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network). 
+In your default `index.js` file, you can see that request/response pattern in action. The `handleRequest` constructs a new `Response` with the body text `"Hello worker!"`, as well as an explicit `200` status code. When a Worker receives a `fetch` event, the script must use `event.respondWith` to return the newly constructed response to the client. This means that your Cloudflare Worker script will serve new responses directly from [Cloudflare's edge network](https://www.cloudflare.com/network).
 
 If you compare this with more traditional architectures, where an origin server would accept requests and return responses, Cloudflare Workers allows you to do the same work without managing hardware and closer to the client, resulting in reduced cost and latencies.
 
@@ -71,9 +71,9 @@ The code provided by the default Wrangler template generates a simple text respo
 
 The work needed to create this application is split into three tasks:
 
-1. Write data to KV.
-2. Rendering data from KV.
-3. Adding todos from the application UI.
+1.  Write data to KV.
+2.  Rendering data from KV.
+3.  Adding todos from the application UI.
 
 For the remainder of this tutorial you will complete each task, iterating on your application, and then publish it to your own domain.
 
@@ -568,7 +568,7 @@ The final result of your code is a system that checks the `todos` variable, upda
 
 ## Conclusions and next steps
 
-By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's edge network. 
+By completing this tutorial, you have built a static HTML, CSS, and JavaScript application that is transparently powered by Workers and Workers KV, which take full advantage of Cloudflare's edge network.
 
 If you would like to keep improving on your project, you can implement a better design (you can refer to a live version available at [todos.signalnerve.workers.dev](https://todos.signalnerve.workers.dev/)), or make additional improvements to security and speed.
 

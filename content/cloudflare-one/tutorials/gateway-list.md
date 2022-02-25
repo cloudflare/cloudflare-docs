@@ -15,15 +15,13 @@ You can upload and manage lists of objects to use in Gateway rules. These lists 
 |URL|`https://foo.app.com/admin`|
 |Email| `user@cloudflare.com` |
 
-
 You can then use these lists in Gateway policies to block, allow, isolate or exclude from decryption.
-
 
 **🗺️ This walkthrough covers how to:**
 
-* Upload a CSV of hostnames into a list
-* Manage the list in the Zero Trust dashboard
-* Use the list in a Gateway policy
+*   Upload a CSV of hostnames into a list
+*   Manage the list in the Zero Trust dashboard
+*   Use the list in a Gateway policy
 
 **⏲️ Time to complete:**
 
@@ -33,13 +31,13 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 
 You can manually create a list or upload a CSV to Cloudflare Zero Trust.
 
-1. To begin, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
+1.  To begin, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
 
 ![List Create](../static/secure-web-gateway/gateway-list/lists.png)
 
-1. Click **Upload CSV** to add a CSV.
+1.  Click **Upload CSV** to add a CSV.
 
-1. Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
+2.  Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
 
     ![List Add](../static/secure-web-gateway/gateway-list/list-create.png)
 

@@ -21,13 +21,13 @@ To begin, go to the [Cloudflare Pages site](https://pages.dev) and sign in with 
 
 ### Connect to your git provider
 
-Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**. 
+Pages offers support for [GitHub](https://github.com/) and [GitLab](https://gitlab.com/). After logging into your Cloudflare account, in **Account Home** > go to **Pages** > **Create a project**.
 
-You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/platform/preview-deployments). 
+You will be prompted to sign in with your preferred git provider which allows [Cloudflare Pages](https://pages.dev) to deploy your projects, and update your PRs with [preview deployments](/platform/preview-deployments).
 
 <Aside type="note">
 
-Signing in with GitLab will grant Pages access to all repositories on your account. Additionally, if you are a part of a multi-user Cloudflare account, and you sign in with GitLab, other members will also have the ability to deploy your repositories to Pages. 
+Signing in with GitLab will grant Pages access to all repositories on your account. Additionally, if you are a part of a multi-user Cloudflare account, and you sign in with GitLab, other members will also have the ability to deploy your repositories to Pages.
 
 </Aside>
 
@@ -39,7 +39,7 @@ You can select a GitHub project from your personal account or an organization yo
 
 ### Selecting your GitLab repository
 
-If using GitLab, you can select a project from your personal account or from a GitLab group you belong to. This allows you to choose a GitLab repository to deploy using Pages. Both private and public repositories are supported. 
+If using GitLab, you can select a project from your personal account or from a GitLab group you belong to. This allows you to choose a GitLab repository to deploy using Pages. Both private and public repositories are supported.
 
 <Aside type="note">
 
@@ -94,7 +94,7 @@ Refer to [Build configuration](/platform/build-configuration) for more informati
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
+After you have chosen your *Framework preset*, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
 
 ## Your first deploy
 
@@ -116,7 +116,7 @@ While every Cloudflare Pages site receives a custom subdomain during deployment,
 
 ![Domains](./images/domains.png)
 
-Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**. 
+Select **Set up a domain**, provide the domain that you would like to serve your Cloudflare Pages site on and select **Continue**.
 
 If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and configure your nameservers. If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone — you will need to add a custom CNAME record to point the domain to your Cloudflare Pages site.
 
@@ -141,33 +141,36 @@ To ensure a custom domain is added successfully, you must go through the [Adding
 </Aside>
 
 ### Deleting a custom domain
- 
+
 To detach a custom domain from your Pages project, you must modify your zone's DNS records.
- 
+
 Log in to the Cloudflare dashboard > **Account Home** > select your website > **DNS**.
- 
+
 In **DNS**:
-1. Locate your Pages project's CNAME record.
-2. Select **Edit**.
-3. Select **Delete**.
- 
+
+1.  Locate your Pages project's CNAME record.
+2.  Select **Edit**.
+3.  Select **Delete**.
+
 Next, in the **Pages** dashboard:
-1. Select **your Pages project**.
-2. Go to **Custom domains**.
-3. Select the **three dot icon** next to your custom domain > **Remove domain**.
- 
+
+1.  Select **your Pages project**.
+2.  Go to **Custom domains**.
+3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
+
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
- 
+
 ### Deleting a project
- 
+
 For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](#deleting-a-custom-domain) for instructions.
- 
+
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
- 
+
 To delete your Pages project:
-1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
-2. Select **Pages**.
-3. Remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
+
+1.  Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
+2.  Select **Pages**.
+3.  Remove your project by selecting your **Pages project** > **Settings** > **Delete project**.
 
 ## Advanced project settings
 

@@ -15,7 +15,7 @@ To get started with Stream, simply visit the Stream Dashboard in your Cloudflare
   <Button type="secondary" href="https://api.cloudflare.com/#stream-videos-properties">View API reference</Button>
 </ButtonGroup>
 
-----------
+***
 
 # Getting started
 
@@ -23,10 +23,11 @@ To get started with Stream, simply visit the Stream Dashboard in your Cloudflare
 
 To make your first request to the Stream API, you must obtain these pieces of information:
 
-1. Your Cloudflare Account ID
-1. A Cloudflare Account API Token
+1.  Your Cloudflare Account ID
+2.  A Cloudflare Account API Token
 
 ### Step 1: Uploading your first video
+
 Stream provides multiple ways to upload videos. For this example, we will upload an MP4 file that is stored in a storage bucket onto Stream. The MP4 file can be found here:
 
 To make your first request, simply take the cURL command below and replace the API token, and account id placeholders with your credentials.
@@ -124,6 +125,7 @@ Stream player is also available as a [React](https://www.npmjs.com/package/@clou
 Update to Stream component once available
 https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 -->
+
 <figure data-type="stream">
   <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
     <iframe
@@ -138,7 +140,7 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
 
 ### Next steps
 
- - [Securing your Stream](/viewing-videos/securing-your-stream)
- - [Displaying thumbnails to your video](/viewing-videos/securing-your-stream)
- - [Programmatically controlling the video player](/viewing-videos/using-the-player-api)
- - [Uploading without a API token](/uploading-videos/direct-creator-uploads)
+*   [Securing your Stream](/viewing-videos/securing-your-stream)
+*   [Displaying thumbnails to your video](/viewing-videos/securing-your-stream)
+*   [Programmatically controlling the video player](/viewing-videos/using-the-player-api)
+*   [Uploading without a API token](/uploading-videos/direct-creator-uploads)

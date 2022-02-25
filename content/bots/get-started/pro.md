@@ -4,17 +4,17 @@ order: 1
 pcx-content-type: get-started
 ---
 
-import EnableSteps from "../_partials/_get-started-pro-biz-steps.md"
-import RulesetEngine from "../_partials/_bfm-ruleset-engine.md"
+import EnableSteps from "../\_partials/\_get-started-pro-biz-steps.md"
+import RulesetEngine from "../\_partials/\_bfm-ruleset-engine.md"
 
 # Get started with Super Bot Fight Mode (Pro)
 
 Super Bot Fight Mode is included in your Pro subscription. When enabled, the product:
 
-- Identifies traffic matching patterns of known bots
-- Can challenge or block bots
-- Offers protection for static resources
-- Provides limited analytics to help you understand bot traffic
+*   Identifies traffic matching patterns of known bots
+*   Can challenge or block bots
+*   Offers protection for static resources
+*   Provides limited analytics to help you understand bot traffic
 
 ## Enable Super Bot Fight Mode
 

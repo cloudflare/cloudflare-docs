@@ -3,9 +3,9 @@ order: 3
 pcx-content-type: how-to
 ---
 
-import LBDefinition from "../_partials/_load-balancer-definition.md"
-import LBCreate from "../_partials/_load-balancer-create.md"
-import LBCreateAPI from "../_partials/_load-balancer-create-api.md"
+import LBDefinition from "../\_partials/\_load-balancer-definition.md"
+import LBCreate from "../\_partials/\_load-balancer-create.md"
+import LBCreateAPI from "../\_partials/\_load-balancer-create-api.md"
 
 # Manage load balancers
 
@@ -29,7 +29,7 @@ You can share your load balancer with other sites in your account by [creating a
 
 You can also configure separate load balancers for each domain and reuse monitors and pools. This is especially useful for changing the failover order for different domains, such as when your `example.co.uk` server has a different failover priority from `example.com` or `example.com.au`.
 
----
+***
 
 ## Edit a load balancer
 
@@ -37,16 +37,16 @@ You can also configure separate load balancers for each domain and reuse monitor
 
 To edit a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-1. On a specific load balancer, click **Edit**.
-1. While going through the [creation workflow](#create-a-load-balancer), update settings as needed.
-1. On the **Review** step, click **Save**.
+1.  Go to **Traffic** > **Load Balancing**.
+2.  On a specific load balancer, click **Edit**.
+3.  While going through the [creation workflow](#create-a-load-balancer), update settings as needed.
+4.  On the **Review** step, click **Save**.
 
 ### Via the API
 
 To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://api.cloudflare.com/#load-balancers-update-load-balancer) request.
 
----
+***
 
 ## Delete a load balancer
 
@@ -56,10 +56,9 @@ If you delete or disable a load balancer, your origin's response to requests wil
 
 To delete a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-1. On a specific load balancer, click **Delete**.
+1.  Go to **Traffic** > **Load Balancing**.
+2.  On a specific load balancer, click **Delete**.
 
 ### Via the API
 
 To delete a load balancer using the API, send a [DELETE](https://api.cloudflare.com/#load-balancers-delete-load-balancer) request.
-

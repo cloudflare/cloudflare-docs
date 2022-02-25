@@ -7,8 +7,8 @@ pcx-content-type: concept
 
 API Tokens can be restricted at runtime in two ways:
 
-1. [IP Address Range Filtering](#ip-address-range-filtering)
-2. [Time To Live (TTL) constraints](#time-to-live)
+1.  [IP Address Range Filtering](#ip-address-range-filtering)
+2.  [Time To Live (TTL) constraints](#time-to-live)
 
 ## IP address range filtering
 

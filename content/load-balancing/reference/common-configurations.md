@@ -11,11 +11,12 @@ An **active-passive failover** sends traffic to the servers in your active pool 
 This setup ensures uninterrupted service and helps with planned outtages, but it might lead to slower traffic overall.
 
 To set up a load balancer with **active-passive failover**:
-1. Create a load balancer with two origin pools (`primary` and `secondary`).
-1. In the list of origin pools, set the following order:
-    1. `primary`
-    1. `secondary`
-1. For **Traffic Steering**, select [**Off**](/understand-basics/traffic-steering/pool-level-steering#off---standard-failover).
+
+1.  Create a load balancer with two origin pools (`primary` and `secondary`).
+2.  In the list of origin pools, set the following order:
+    1.  `primary`
+    2.  `secondary`
+3.  For **Traffic Steering**, select [**Off**](/understand-basics/traffic-steering/pool-level-steering#off---standard-failover).
 
 With this setup, your load balancer will direct all traffic to `primary` until `primary` has fewer available origins than specified in its **Health Threshold**. Only then will your load balancer direct traffic to `secondary`.
 
@@ -28,8 +29,9 @@ An **active-active failover** distributes traffic to servers in the same pool un
 This setup speeds up overall requests, but is more vulnerable to planned or unplanned outtages.
 
 To set up a load balancer with **active-active failover**, either:
-- Create a load balancer with a single origin pool (`primary`) with multiple origins (`origin-1` and `origin-2`) and set the same [**Weight**](/understand-basics/traffic-steering/origin-level-steering#weights) for each origin.
-- Create a load balancer with two origin pools (`primary` and `secondary`) and — for [**Traffic Steering**](/understand-basics/traffic-steering/pool-level-steering) — select any option except for **Off**. 
+
+*   Create a load balancer with a single origin pool (`primary`) with multiple origins (`origin-1` and `origin-2`) and set the same [**Weight**](/understand-basics/traffic-steering/origin-level-steering#weights) for each origin.
+*   Create a load balancer with two origin pools (`primary` and `secondary`) and — for [**Traffic Steering**](/understand-basics/traffic-steering/pool-level-steering) — select any option except for **Off**.
 
 <Aside type='note'>
 

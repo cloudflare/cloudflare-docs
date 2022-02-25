@@ -26,5 +26,5 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 
 The values of these fields are subject to change by Cloudflare at any time and are irrelevant for customer data analysis:
 
-- WAFFlags
-- WAFMatchedVar
+*   WAFFlags
+*   WAFMatchedVar

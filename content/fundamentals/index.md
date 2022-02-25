@@ -6,4 +6,4 @@ pcx-content-type: overview
 
 # Cloudflare Fundamentals
 
-Cloudflare Fundamentals provides information about features that span Cloudflare products. 
+Cloudflare Fundamentals provides information about features that span Cloudflare products.

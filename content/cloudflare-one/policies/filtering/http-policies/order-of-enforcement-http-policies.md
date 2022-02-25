@@ -7,9 +7,9 @@ pcx-content-type: concept
 
 Gateway evaluates HTTP policies as follows:
 
-1. First, it evaluates all Do Not Inspect policies in order of precedence.
-1. If no policies match, it evaluates all Isolate policies in order of precedence.
-1. If no policies match, it evaluates all Allow, Block and Do Not Scan rules in order of precedence.
+1.  First, it evaluates all Do Not Inspect policies in order of precedence.
+2.  If no policies match, it evaluates all Isolate policies in order of precedence.
+3.  If no policies match, it evaluates all Allow, Block and Do Not Scan rules in order of precedence.
 
 This order of enforcement allows Gateway to determine first if decryption should occur.
 

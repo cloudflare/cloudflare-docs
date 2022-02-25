@@ -15,65 +15,65 @@ Create a `docs-config.js` file which exports (by setting `module.exports`) a Jav
 
 <Definitions>
 
-- `product` <Type>string</Type> <PropMeta>required</PropMeta>
-  - The title of the project, e.g. `"My Docs"`. Displayed inside the sidebar navigation on desktop, the header on mobile, and concatenated into a few tooltips.
+*   `product` <Type>string</Type> <PropMeta>required</PropMeta>
+    *   The title of the project, e.g. `"My Docs"`. Displayed inside the sidebar navigation on desktop, the header on mobile, and concatenated into a few tooltips.
 
-- `pathPrefix` <Type>string</Type> <PropMeta>optional</PropMeta>
-  - A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/path-prefix/). Specifies a URL path prefix, e.g. `"/example"`, to deploy the site to. Specifying the empty string (`""`) to deploy to the root. Development is done at the root (`localhost:8000`) regardless of the value.
+*   `pathPrefix` <Type>string</Type> <PropMeta>optional</PropMeta>
+    *   A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/path-prefix/). Specifies a URL path prefix, e.g. `"/example"`, to deploy the site to. Specifying the empty string (`""`) to deploy to the root. Development is done at the root (`localhost:8000`) regardless of the value.
 
-- `productIconKey` <Type>string</Type> <PropMeta>optional</PropMeta>
-  - The logo for the docs site, specified as product icon found by key from [@cloudflare/cloudflare-brand-assets](https://github.com/cloudflare/cloudflare-brand-assets). One of `productIconKey` or `productLogoPathD` is required.
+*   `productIconKey` <Type>string</Type> <PropMeta>optional</PropMeta>
+    *   The logo for the docs site, specified as product icon found by key from [@cloudflare/cloudflare-brand-assets](https://github.com/cloudflare/cloudflare-brand-assets). One of `productIconKey` or `productLogoPathD` is required.
 
-- `productLogoPathD` <Type>string</Type> <PropMeta>optional</PropMeta>
-  - The logo for the docs site, specified directly as the SVG `<path/>` [`d` attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d) for an inline SVG element with `viewBox="0 0 48 48"`. The example `"M8 8h32v32h-32v-32z"` would draw a solid `32px` square centered inside the `48px` square space. One of `productLogoPathD` or `productIconKey` is required.
+*   `productLogoPathD` <Type>string</Type> <PropMeta>optional</PropMeta>
+    *   The logo for the docs site, specified directly as the SVG `<path/>` [`d` attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d) for an inline SVG element with `viewBox="0 0 48 48"`. The example `"M8 8h32v32h-32v-32z"` would draw a solid `32px` square centered inside the `48px` square space. One of `productLogoPathD` or `productIconKey` is required.
 
-- `contentRepo` <Type>string</Type> <PropMeta>required</PropMeta>
-  - The GitHub repo (e.g. `"cloudflare/cloudflare-docs"`) used to for example construct the the “Edit on GitHub” links displayed in each docs page’s footer.
+*   `contentRepo` <Type>string</Type> <PropMeta>required</PropMeta>
+    *   The GitHub repo (e.g. `"cloudflare/cloudflare-docs"`) used to for example construct the the “Edit on GitHub” links displayed in each docs page’s footer.
 
-- `contentRepoFolder` <Type>string</Type> <PropMeta>optional</PropMeta>
-  - By default the engine assumes that a docs site’s structure is placed in the root of a project repo. However, this whole structure can also be placed inside any sub-folder by setting this property. For example, this site’s content is inside the [`products/docs-engine` folder](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/docs-engine) of [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) so its `"products/docs-engine"`.
+*   `contentRepoFolder` <Type>string</Type> <PropMeta>optional</PropMeta>
+    *   By default the engine assumes that a docs site’s structure is placed in the root of a project repo. However, this whole structure can also be placed inside any sub-folder by setting this property. For example, this site’s content is inside the [`products/docs-engine` folder](https://github.com/cloudflare/cloudflare-docs/tree/4fd3a4af9507b20bb23fea4d7c4f4cd349c0f463/products/docs-engine) of [@cloudflare/cloudflare-docs](https://github.com/cloudflare/cloudflare-docs) so its `"products/docs-engine"`.
 
-- `externalLinks` <Type>array</Type> <PropMeta>required</PropMeta>
-  - An array of objects each specifying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
+*   `externalLinks` <Type>array</Type> <PropMeta>required</PropMeta>
+    *   An array of objects each specifying a `title` <Type>string</Type> and `url` <Type>string</Type>. Used to construct the external links menu inside the sidebar nav on desktop.
 
-- `search` <Type>object</Type> <PropMeta>required</PropMeta>
-  - Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, and `search.algoliaOptions` to the default empty filter, e.g.:
+*   `search` <Type>object</Type> <PropMeta>required</PropMeta>
+    *   Adds a search to the site, powered by Algolia DocSearch. To hide search, set `search.indexName` and `search.apiKey` to the empty string, and `search.algoliaOptions` to the default empty filter, e.g.:
 
-    ```js
-    search: {
-      indexName: "",
-      apiKey: "",
-      algoliaOptions: { "facetFilters": "" }
-    }
-    ```
+        ```js
+        search: {
+          indexName: "",
+          apiKey: "",
+          algoliaOptions: { "facetFilters": "" }
+        }
+        ```
 
-    For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/df657d2ef2983999128b9f83116080225bcdb8f2/products/workers/docs-config.js#L25-L29).
+        For an example of a project using search, see the [Workers config](https://github.com/cloudflare/cloudflare-docs/blob/df657d2ef2983999128b9f83116080225bcdb8f2/products/workers/docs-config.js#L25-L29).
 
-- `siteMetadata` <Type>object</Type> <PropMeta>required</PropMeta>
-  - A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/gatsby-config/#sitemetadata). Sub-properties:
+*   `siteMetadata` <Type>object</Type> <PropMeta>required</PropMeta>
+    *   A proxy to the Gatsby [property of the same name](https://www.gatsbyjs.com/docs/gatsby-config/#sitemetadata). Sub-properties:
 
-    <Definitions>
+        <Definitions>
 
-    - `title` <Type>string</Type>
-      - Used in meta tags for SEO.
+        *   `title` <Type>string</Type>
+            *   Used in meta tags for SEO.
 
-    - `description` <Type>string</Type>
-      - Used in description meta tags for SEO.
+        *   `description` <Type>string</Type>
+            *   Used in description meta tags for SEO.
 
-    - `author` <Type>string</Type>
-      - Used in author meta tags for SEO.
+        *   `author` <Type>string</Type>
+            *   Used in author meta tags for SEO.
 
-    - `url` <Type>string</Type>
-      - The URL of the final resulting site (including appending `pathPrefix`). Used to construct `rel="canonical"` meta tags for SEO.
+        *   `url` <Type>string</Type>
+            *   The URL of the final resulting site (including appending `pathPrefix`). Used to construct `rel="canonical"` meta tags for SEO.
 
-    - `image` <Type>string</Type>
-      - Used for the `og:image` meta tag for SEO and social media.
+        *   `image` <Type>string</Type>
+            *   Used for the `og:image` meta tag for SEO and social media.
 
-    </Definitions>
+        </Definitions>
 
 </Definitions>
 
---------------------------------
+***
 
 ## Examples
 

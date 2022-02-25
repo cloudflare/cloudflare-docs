@@ -11,24 +11,24 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
 
 <Definitions>
 
-- `wrangler generate proj --site`
-  - Creates a project with a Worker serving a generic HTML file and favicon with the directory structure:
+*   `wrangler generate proj --site`
+    *   Creates a project with a Worker serving a generic HTML file and favicon with the directory structure:
 
-    ```txt
-    ├── public # files to serve
-    |  ├── favicon.ico
-    |  └── index.html
-    ├── workers-site
-    |  ├── index.js # Workers script that serves the assets
-    |  ├── package-lock.json
-    |  └── package.json # defines dependencies used by Workers script
-    └── wrangler.toml
-    ```
+        ```txt
+        ├── public # files to serve
+        |  ├── favicon.ico
+        |  └── index.html
+        ├── workers-site
+        |  ├── index.js # Workers script that serves the assets
+        |  ├── package-lock.json
+        |  └── package.json # defines dependencies used by Workers script
+        └── wrangler.toml
+        ```
 
-  - Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
+    *   Auto-fills `wrangler.toml` with `entry-point` (defaults to `workers-site`) and `bucket` (defaults to `public`).
 
-- `wrangler init proj --site`
-  - Creates a `wrangler.toml` file and a `workers-site` directory. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
+*   `wrangler init proj --site`
+    *   Creates a `wrangler.toml` file and a `workers-site` directory. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
 
 </Definitions>
 
@@ -38,17 +38,17 @@ There are a few specific configuration settings for Workers Sites in your `wrang
 
 <Definitions>
 
-  - `bucket` <PropMeta>required</PropMeta>
-    - The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
+*   `bucket` <PropMeta>required</PropMeta>
+    *   The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
 
-  - `entry-point` <PropMeta>optional</PropMeta>
-    - The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
+*   `entry-point` <PropMeta>optional</PropMeta>
+    *   The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
 
-  - `include` <PropMeta>optional</PropMeta>
-    - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
+*   `include` <PropMeta>optional</PropMeta>
+    *   A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
 
-  - `exclude` <PropMeta>optional</PropMeta>
-    - A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
+*   `exclude` <PropMeta>optional</PropMeta>
+    *   A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
 
 </Definitions>
 
@@ -136,9 +136,9 @@ If you provide both `include` and `exclude` fields, the `include` field will be 
 
 Wrangler will always ignore:
 
-- `node_modules`
-- Hidden files and directories
-- Symlinks
+*   `node_modules`
+*   Hidden files and directories
+*   Symlinks
 
 #### More about include/exclude patterns
 

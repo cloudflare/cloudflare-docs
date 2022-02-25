@@ -18,7 +18,7 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 
 </Aside>
 
----
+***
 
 ## Examples
 

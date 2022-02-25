@@ -13,11 +13,11 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 <Definitions>
 
-- <Code>addEventListener(type, listener)</Code> <Type>void</Type>
+*   <Code>addEventListener(type, listener)</Code> <Type>void</Type>
 
-  - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/runtime-apis/fetch-event#methods), the runtime delivers the event to the next registered listener.
-  - A `"fetch"` listener and a `"scheduled"` listener can be registered in the same script.
-  - A script can have only one `"scheduled"` listener.
+    *   If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/runtime-apis/fetch-event#methods), the runtime delivers the event to the next registered listener.
+    *   A `"fetch"` listener and a `"scheduled"` listener can be registered in the same script.
+    *   A script can have only one `"scheduled"` listener.
 
 </Definitions>
 
@@ -25,19 +25,19 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 <Definitions>
 
-- `type` <Type>string</Type>
-  - The only types supported are `"fetch"` and `"scheduled"`.
+*   `type` <Type>string</Type>
+    *   The only types supported are `"fetch"` and `"scheduled"`.
 
-- `listener` <Type>function</Type>
-  - The function to handle incoming events to the Worker script. The listener is passed a single argument:
+*   `listener` <Type>function</Type>
+    *   The function to handle incoming events to the Worker script. The listener is passed a single argument:
 
-    <Definitions>
+        <Definitions>
 
-    - `event` <Type>FetchEvent</Type> or <Type>ScheduledEvent</Type>
+        *   `event` <Type>FetchEvent</Type> or <Type>ScheduledEvent</Type>
 
-      - The events dispatched to a Worker. Refer to [`FetchEvent`](/runtime-apis/fetch-event) or [`ScheduledEvent`](/runtime-apis/scheduled-event).
+            *   The events dispatched to a Worker. Refer to [`FetchEvent`](/runtime-apis/fetch-event) or [`ScheduledEvent`](/runtime-apis/scheduled-event).
 
-    </Definitions>
+        </Definitions>
 
 </Definitions>
 

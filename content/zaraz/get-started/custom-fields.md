@@ -14,25 +14,25 @@ If you add a custom field in the tool's configuration page, this field will be a
 
 ## Add a custom field at the tool level
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
-1. Click **Zaraz**.
-1. Locate the third-party tool where you want to add the custom field and click **Edit**.
-1. Click **Settings** > **Add Field**.
-1. Choose the desired field from the drop-down menu, and click **Add**.
-1. Enter the variable you wish to pass to the tool.
-1. Click **Save**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+2.  Click **Zaraz**.
+3.  Locate the third-party tool where you want to add the custom field and click **Edit**.
+4.  Click **Settings** > **Add Field**.
+5.  Choose the desired field from the drop-down menu, and click **Add**.
+6.  Enter the variable you wish to pass to the tool.
+7.  Click **Save**.
 
 The new field will now be attached to every event that belongs to the tool.
 
 ## Add a custom field to a specific event
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
-1. Click **Zaraz**.
-1. Locate the third-party tool where you want to add the custom field and click **Edit**.
-1. Click the event you wish to modify.
-1. Click **Add Field**.
-1. Choose the desired field from the drop-down menu and click **Add**.
-1. Enter the variable you wish to pass to the event.
-1. Click **Save**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+2.  Click **Zaraz**.
+3.  Locate the third-party tool where you want to add the custom field and click **Edit**.
+4.  Click the event you wish to modify.
+5.  Click **Add Field**.
+6.  Choose the desired field from the drop-down menu and click **Add**.
+7.  Enter the variable you wish to pass to the event.
+8.  Click **Save**.
 
 The new field will now be used in this event.

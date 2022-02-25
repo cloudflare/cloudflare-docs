@@ -25,7 +25,7 @@ addEventListener("fetch", event => {
 })
 ```
 
---------------------------------
+***
 
 <ContentColumn>
 
@@ -79,9 +79,9 @@ console.log(new Map(request.headers))
 
 This works because:
 
-- `Map` objects can be constructed from iterables, like `Headers`.
+*   `Map` objects can be constructed from iterables, like `Headers`.
 
-- The `Map` object does store its entries in enumerable JavaScript properties, so the developer console can see into it.
+*   The `Map` object does store its entries in enumerable JavaScript properties, so the developer console can see into it.
 
 ### Spread headers into an array
 

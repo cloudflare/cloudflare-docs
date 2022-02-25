@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: concept
 ---
 
-import CustomCertificateDefinition from "../../_partials/_custom-certificates-definition.md"
+import CustomCertificateDefinition from "../../\_partials/\_custom-certificates-definition.md"
 
 # Custom certificates
 
@@ -29,7 +29,7 @@ By default, private keys will be encrypted and securely distributed to each data
 
 ## Certificate packs
 
-Certificates uploaded to Cloudflare will be automatically grouped together into a Certificate Pack before being deployed to the global edge. 
+Certificates uploaded to Cloudflare will be automatically grouped together into a Certificate Pack before being deployed to the global edge.
 
 A Certificate Pack is a group of certificates that share the same set of hostnames — for example, `example.com` and `*.example.com` — but use different signature algorithms. Each pack can include up to three certificates, with one from each of the following signature algorithms: `SHA-2/RSA`, `SHA-2/ECDSA`, and `SHA-1/RSA`. Each pack only counts as one SSL certificate against your custom certificate quota.
 

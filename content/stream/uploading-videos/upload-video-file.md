@@ -39,8 +39,9 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 Important: Cloudflare Stream requires a minimum chunk size of 5,242,880 bytes when using TUS, unless the entire file is less than this amount.
 
 We recommend increasing the chunk size to 52,428,800 bytes for better performance when the client connection is expected to be reliable.
-	
+
 Maximum chunk size can be 209,715,200 bytes.
+
 </Aside>
 
 <Aside>
@@ -61,25 +62,25 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 <Definitions>
 
-- `name`
+*   `name`
 
-  - Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
+    *   Setting this key will set `meta.name` in the API and display the value as the name of the video in the dashboard.
 
-- `requiresignedurls`
+*   `requiresignedurls`
 
-  - If this key is present, the video playback for this video will be required to use signed urls after upload.
+    *   If this key is present, the video playback for this video will be required to use signed urls after upload.
 
-- `allowedorigins`
+*   `allowedorigins`
 
-  - An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
+    *   An array of strings listing origins allowed to display the video. This will set the [allowed origins setting](../../viewing-videos/securing-your-stream#security-considerations) for the video.
 
-- `thumbnailtimestamppct`
+*   `thumbnailtimestamppct`
 
-  - Specify the default thumbnail [timestamp percentage](/viewing-videos/displaying-thumbnails). Note that percentage is a floating point value between 0.0 and 1.0.
+    *   Specify the default thumbnail [timestamp percentage](/viewing-videos/displaying-thumbnails). Note that percentage is a floating point value between 0.0 and 1.0.
 
-- `watermark`
+*   `watermark`
 
-  - The watermark profile UID.
+    *   The watermark profile UID.
 
 </Definitions>
 
@@ -91,9 +92,7 @@ Instead, the `stream-media-id` HTTP header in the response should be used to ret
 
 For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream` with the TUS protocol, the response will contain a HTTP header like this:
 
-```
-stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
-```
+    stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
 
 ### Command-line example
 
@@ -193,8 +192,8 @@ npm install tus-js-client
 
 Set up an index.js and configure:
 
-* API endpoint with your Cloudflare Account ID
-* Request headers to include a API token
+*   API endpoint with your Cloudflare Account ID
+*   Request headers to include a API token
 
 ```javascript
 var fs = require("fs");

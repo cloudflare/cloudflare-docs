@@ -16,8 +16,8 @@ The HTTP DDoS Attack Protection Managed Ruleset provides users with increased ob
 
 You can adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
-* The performed **action** when an attack is detected
-* The **sensitivity level** of attack detection mechanisms
+*   The performed **action** when an attack is detected
+*   The **sensitivity level** of attack detection mechanisms
 
 <Aside type="note" header="Note">
 
@@ -27,8 +27,8 @@ Certain actions or sensitivity levels may not be available to all Cloudflare pla
 
 To adjust rule behavior, do one of the following:
 
-* [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http/configure-dashboard).
-* [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/managed-rulesets/http/configure-api).
+*   [Configure HTTP DDoS Attack Protection in the dashboard](/managed-rulesets/http/configure-dashboard).
+*   [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/managed-rulesets/http/configure-api).
 
 For more information on the available configuration parameters, see [Managed Ruleset parameters](/managed-rulesets/http/override-parameters).
 

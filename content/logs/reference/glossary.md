@@ -81,10 +81,10 @@ Any event that can potentially cause serious damage and lead to site attacks. In
 
 The security levels and the challenge display criteria are:
 
-- **High** - for scores greater than 0
-- **Medium** - for scores greater than 14
-- **Low** - for scores greater than 24
-- **Essentially off** - for scores greater than 49
+*   **High** - for scores greater than 0
+*   **Medium** - for scores greater than 14
+*   **Low** - for scores greater than 24
+*   **Essentially off** - for scores greater than 49
 
 #### Total Threats Stopped
 
@@ -142,7 +142,7 @@ Requests made by a bot that failed to pass the Captcha challenge.
 
 Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app.
 
-### Traffic 
+### Traffic
 
 #### NoRecord
 

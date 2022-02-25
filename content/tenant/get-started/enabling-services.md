@@ -51,9 +51,9 @@ curl -X POST https://api.cloudflare.com/client/v4/zones/<zone id>/subscription \
 
 Allowed rate plans are:
 
-* PARTNERS_PRO
-* PARTNERS_BIZ
-* PARTNERS_ENT
+*   PARTNERS\_PRO
+*   PARTNERS\_BIZ
+*   PARTNERS\_ENT
 
 These are the same plans that customers buy in the dashboard. Additionally, depending on your agreement there may be additional services you can select such as `page_rules`. These are specified as `component_values` in the subscriptions creation request.
 
@@ -95,7 +95,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<account id>/subscrip
 
 Once you have added the necessary features, you or your customer can move on to configuring the various services and fine-tuning settings.
 
---------------------------------
+***
 
 ## Next step
 

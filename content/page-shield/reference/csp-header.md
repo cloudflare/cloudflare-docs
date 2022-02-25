@@ -20,4 +20,4 @@ content-security-policy-report-only: script-src 'none'; report-uri <YOUR_HOSTNAM
 
 ## Related resources
 
-* [Mozilla Developer Network's (MDN) documentation on Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)
+*   [Mozilla Developer Network's (MDN) documentation on Content-Security-Policy-Report-Only](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only)

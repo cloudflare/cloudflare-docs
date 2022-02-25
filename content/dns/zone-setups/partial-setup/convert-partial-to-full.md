@@ -26,9 +26,9 @@ At least 24 hours prior to converting your application, disable DNSSEC.
 
 In the Cloudflare dashboard:
 
-1. Go to **Overview** > **Advanced Actions**.
-1. Click **Convert to Full DNS setup** (this will not affect how your traffic is proxied).
-1. Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import unproxied (gray-clouded) records.
+1.  Go to **Overview** > **Advanced Actions**.
+2.  Click **Convert to Full DNS setup** (this will not affect how your traffic is proxied).
+3.  Import your records into Cloudflare DNS and verify that they have been configured correctly. Usually, you will want to import unproxied (gray-clouded) records.
 
 ## Step 4 — Activate full setup
 

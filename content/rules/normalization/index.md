@@ -9,7 +9,7 @@ Cloudflare provides a URL normalization feature to modify the URLs of incoming r
 
 When you enable URL normalization, all incoming URLs are normalized before they pass to subsequent Cloudflare edge features that accept a URL input, such as Page Rules, Firewall Rules, Workers, and Access. Rule expressions that filter traffic based on URLs will therefore trigger correctly, regardless of the format of the incoming URL. When URL normalization is disabled, Cloudflare forwards the URL to origin in its original form.
 
----
+***
 
 ## Availability
 

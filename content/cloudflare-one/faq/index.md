@@ -11,11 +11,11 @@ hideChildren: true
 
 Below you'll find answers to the most commonly asked questions on Cloudflare Zero Trust, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
 
-If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there. 
+If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there.
 
 </ContentColumn>
 
----------------
+***
 
 ## Getting started with Cloudflare Zero Trust
 

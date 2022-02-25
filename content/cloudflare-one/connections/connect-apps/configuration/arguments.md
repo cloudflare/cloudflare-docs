@@ -19,21 +19,21 @@ The following is a list of common command-line options you can use to configure 
 $ cloudflared tunnel help
 ```
 
-- [`config`](#config)
-- [`autoupdate-freq`](#autoupdate-freq)
-- [`no-autoupdate`](#no-autoupdate)
-- [`origincert`](#origincert)
-- [`metrics`](#metrics)
-- [`metrics-update-freq`](#metrics-update-freq)
-- [`tag`](#tag)
-- [`retries`](#retries)
-- [`pidfile`](#pidfile)
-- [`protocol`](#protocol)
-- [`help`](#help)
-- [`version`](#version)
-- [`logfile`](#logfile)
-- [`loglevel`](#loglevel)
-- [`transport-loglevel`](#transport-loglevel)
+*   [`config`](#config)
+*   [`autoupdate-freq`](#autoupdate-freq)
+*   [`no-autoupdate`](#no-autoupdate)
+*   [`origincert`](#origincert)
+*   [`metrics`](#metrics)
+*   [`metrics-update-freq`](#metrics-update-freq)
+*   [`tag`](#tag)
+*   [`retries`](#retries)
+*   [`pidfile`](#pidfile)
+*   [`protocol`](#protocol)
+*   [`help`](#help)
+*   [`version`](#version)
+*   [`logfile`](#logfile)
+*   [`loglevel`](#loglevel)
+*   [`transport-loglevel`](#transport-loglevel)
 
 ## `config`
 

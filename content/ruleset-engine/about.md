@@ -10,9 +10,9 @@ The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets
 
 There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
 
-* **Phase** — Defines a stage in the life of a request where you can execute rulesets.
-* **Ruleset** — Defines a versioned set of rules. You deploy rulesets to a phase, where they execute.
-* **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an `execute` action executes a ruleset.
+*   **Phase** — Defines a stage in the life of a request where you can execute rulesets.
+*   **Ruleset** — Defines a versioned set of rules. You deploy rulesets to a phase, where they execute.
+*   **Rule** — Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an `execute` action executes a ruleset.
 
 ## Phases
 
@@ -46,8 +46,8 @@ There are several types of rulesets. Cloudflare provides **Managed Rulesets** th
 
 The `kind` field of phase entry point rulesets has one of the following values:
 
-* `root` for phase entry point rulesets at the account level
-* `zone` for phase entry point rulesets at the zone level
+*   `root` for phase entry point rulesets at the account level
+*   `zone` for phase entry point rulesets at the zone level
 
 </Aside>
 
@@ -77,7 +77,7 @@ For more information on creating and deploying custom rulesets, check [Work with
 
 A **rule** defines a filter and an action to perform on the incoming requests that match the filter. The rule filter **expression** defines the scope of the rule and the rule **action** defines what happens when there’s a match for the expression. Rule filter expressions are defined using the [Rules language](/rules-language).
 
-For example, consider the following ruleset with four rules (R1, R2, R3, and R4). For a given incoming request, the expression of the first two rules matches the request properties. Therefore, the action for these rules runs (_Execute_ and _Log_, respectively). The action of the first rule executes a Managed Ruleset, which means that every rule in the Managed Ruleset is evaluated. The action of the second rule logs an event associated with the current phase. There is no match for the expressions of rules 3 and 4, so their actions do not run. Since no rule blocks the request, it proceeds to the next phase.
+For example, consider the following ruleset with four rules (R1, R2, R3, and R4). For a given incoming request, the expression of the first two rules matches the request properties. Therefore, the action for these rules runs (*Execute* and *Log*, respectively). The action of the first rule executes a Managed Ruleset, which means that every rule in the Managed Ruleset is evaluated. The action of the second rule logs an event associated with the current phase. There is no match for the expressions of rules 3 and 4, so their actions do not run. Since no rule blocks the request, it proceeds to the next phase.
 
 ![Rules execution example](./images/rulesets-rules-example.png)
 
@@ -88,11 +88,12 @@ Rules can have additional features through specific Cloudflare products. You may
 While evaluating rules for a given request/response, the values of all request and response [fields](/rules-language/fields) are immutable within each phase. However, field values may change between phases.
 
 For example:
-* If a [URL Rewrite Rule](https://developers.cloudflare.com/rules/transform/url-rewrite) #1 updates the URI path or the query string of a request, URL Rewrite Rule #2 will not take these earlier changes into consideration.
-* If a [HTTP Request Header Modification Rule](https://developers.cloudflare.com/rules/transform/request-header-modification) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
-* If a URL Rewrite Rule updates the URI path or query string of a request, the `http.request.uri`, `http.request.uri.*`, and `http.request.full_uri` fields will have a different value in phases after the `http_request_transform` phase (where URL Rewrite Rules are executed).
 
----
+*   If a [URL Rewrite Rule](https://developers.cloudflare.com/rules/transform/url-rewrite) #1 updates the URI path or the query string of a request, URL Rewrite Rule #2 will not take these earlier changes into consideration.
+*   If a [HTTP Request Header Modification Rule](https://developers.cloudflare.com/rules/transform/request-header-modification) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
+*   If a URL Rewrite Rule updates the URI path or query string of a request, the `http.request.uri`, `http.request.uri.*`, and `http.request.full_uri` fields will have a different value in phases after the `http_request_transform` phase (where URL Rewrite Rules are executed).
+
+***
 
 ## Get started
 

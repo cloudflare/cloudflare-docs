@@ -9,8 +9,8 @@ With Secondary DNS, you can keep your primary DNS provider and use Cloudflare as
 
 ## How to
 
-- [Initial setup](https://support.cloudflare.com/hc/articles/360001356152)
-- [Proxy secondary traffic (secondary DNS override)](https://support.cloudflare.com/hc/articles/360042169091)
+*   [Initial setup](https://support.cloudflare.com/hc/articles/360001356152)
+*   [Proxy secondary traffic (secondary DNS override)](https://support.cloudflare.com/hc/articles/360042169091)
 
 ## Availability
 

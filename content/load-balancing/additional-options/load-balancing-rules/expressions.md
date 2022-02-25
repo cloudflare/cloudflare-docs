@@ -8,19 +8,19 @@ pcx-content-type: reference
 
 [Load Balancing rules](/additional-options/load-balancing-rules) use two kinds of expressions:
 
-- [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (_equals_ or _less than_, for example).
+*   [Simple expressions](#simple-expressions) compare a value from an HTTP request to a value defined in the expression. A simple expression is identified by the presence of a **comparison operator** (*equals* or *less than*, for example).
 
-- [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (_and_, _or_, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
+*   [Compound expressions](#compound-expressions) combine two or more simple expressions into a single expression. Compound expression contains a **logical operator** (*and*, *or*, for example). With compound expressions you can tailor rules to specific use cases with a high degree of accuracy and precision.
 
----
+***
 
 ## Simple expressions
 
 Simple expressions are composed of three elements:
 
-1. A **field** that represents a property of an HTTP request.
-2. A representative **value** for that field which Cloudflare compares to the actual request value.
-3. A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return `true`.
+1.  A **field** that represents a property of an HTTP request.
+2.  A representative **value** for that field which Cloudflare compares to the actual request value.
+3.  A **comparison operator**, which specifies how the value defined in the expression must relate to the actual value from the request for the operator to return `true`.
 
 When the comparison operator returns `true`, the request matches the expression.
 
@@ -38,11 +38,11 @@ In general, simple expressions use this pattern:
 
 For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
 
----
+***
 
 ## Compound expressions
 
-A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
+A compound expression uses a **logical operator** (*and*, *or*, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
 The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
 
@@ -61,7 +61,7 @@ A compound expression can be an operand of a logical operator. This allows multi
 
 For more details, refer to [Supported fields and operators](/additional-options/load-balancing-rules/reference).
 
----
+***
 
 ## Working with expressions
 

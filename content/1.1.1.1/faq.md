@@ -13,7 +13,7 @@ Below you will find answers to our most commonly asked questions on 1.1.1.1 DNS 
 
 This specialized server is called a DNS recursive resolver. The resolver’s job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
 
-Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
+Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT\&T) if you’re on your home or wireless Internet, and by your network administrator if you’re connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
 
 ## How can I check if my computer / smartphone / tablet is connected to 1.1.1.1?
 
@@ -23,7 +23,7 @@ Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected
 
 DNS resolvers are like address books for the Internet. They translate the name of places to addresses so that your browser can figure out how to get there. DNS resolvers do this by working backwards from the top until they find the website your are looking for.
 
-Every resolver knows how to find the invisible ‘.’ at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the ‘.’ file, and resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/). 
+Every resolver knows how to find the invisible ‘.’ at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the ‘.’ file, and resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/).
 
 The resolver asks one of the root servers where to find the next link in the chain — the top-level domain (abbreviated to TLD) or domain ending. An example of a TLD is `.com` or `.org`. Luckily, the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
 
@@ -63,4 +63,4 @@ For decreased latency, reduced privacy leakage of queries and lower load on the 
 
 ## Can IPs used by 1.1.1.1 be allowlisted?
 
-Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
+Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at <https://www.cloudflare.com/ips/>.

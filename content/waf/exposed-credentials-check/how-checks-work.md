@@ -5,7 +5,7 @@ order: 1
 
 # How exposed credentials checks work
 
-WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`). 
+WAF rules can include a check for exposed credentials. When enabled in a given rule, exposed credentials checking happens when there is a match for the rule expression (that is, the rule expression evaluates to `true`).
 
 At this point, the WAF looks up the username/password pair in the request against a database of publicly available stolen credentials. When both the rule expression and the exposed credentials check are true, there is a rule match, and Cloudflare performs the action configured in the rule.
 
@@ -19,10 +19,11 @@ Rule expression:<br/>
 `http.request.method == "POST" and http.request.uri == "/login.php"`
 
 Exposed credentials check with the following configuration:
-* Username expression: `http.request.body.form["user_id"]`
-* Password expression: `http.request.body.form["password"]`
 
-Action: _Legacy CAPTCHA_
+*   Username expression: `http.request.body.form["user_id"]`
+*   Password expression: `http.request.body.form["password"]`
+
+Action: *Legacy CAPTCHA*
 
 </Example>
 

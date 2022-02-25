@@ -9,17 +9,17 @@ type: overview
 
 Use the `matched-data-cli` tool to decrypt a payload in the command line.
 
-1. [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
+1.  [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
 
-1. Extract the content of the downloaded `.tar.gz` file to a local folder.
+2.  Extract the content of the downloaded `.tar.gz` file to a local folder.
 
-1. Open a command line window and change to the local folder containing the `matched-data-cli` binary.
+3.  Open a command line window and change to the local folder containing the `matched-data-cli` binary.
 
     ```sh
     ~ $ cd matched-data-cli
     ```
 
-1. Create two files: one with your private key and another one with the encrypted payload:
+4.  Create two files: one with your private key and another one with the encrypted payload:
 
     ```sh
     ~/matched-data-cli $ printf "<PRIVATE_KEY>" > private_key.txt && chmod 400 private_key.txt
@@ -31,7 +31,7 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
 
     Note: The first `printf` command will make your private key visible in your command history.
 
-1. Run the following command to decrypt the payload:
+5.  Run the following command to decrypt the payload:
 
     ```sh
     ~/matched-data-cli $ ./matched-data-cli decrypt -k private_key.txt encrypted_payload.txt

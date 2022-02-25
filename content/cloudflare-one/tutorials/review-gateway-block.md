@@ -11,19 +11,20 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 
 **🗺️ This tutorial covers how to:**
 
-* Review DNS filtering logs in Cloudflare Gateway
-* Review the reason a domain was blocked in Cloudflare Radar
-* Submit categorization feedback
+*   Review DNS filtering logs in Cloudflare Gateway
+*   Review the reason a domain was blocked in Cloudflare Radar
+*   Submit categorization feedback
 
 **⏲️Time to complete:**
 
 5 minutes
 
 ## Before you start
-1. [Add Gateway to your account](/setup)
-2. Deploy Gateway rules to a network or group of [devices](/policies/filtering/dns-policies)
 
----
+1.  [Add Gateway to your account](/setup)
+2.  Deploy Gateway rules to a network or group of [devices](/policies/filtering/dns-policies)
+
+***
 
 ## Review Gateway events
 

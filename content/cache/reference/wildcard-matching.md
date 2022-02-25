@@ -6,20 +6,20 @@ pcx-content-type: navigation
 # Wildcard matching and referencing
 
 You can use the asterisk (`*`) in any URL segment to match certain patterns. For example,
-example.com/t*st would match:
+example.com/t\*st would match:
 
-- `example.com/test`
-- `example.com/toast`
-- `example.com/trust`
+*   `example.com/test`
+*   `example.com/toast`
+*   `example.com/trust`
 
 `example.com/foo/* `does not match `example.com/foo` but `example.com/foo*` does match.
 
 ## Helpful tips
 
-- To match both `http` and `https`, `write example.com`. Writing `*example.com` is unnecessary.
-- To match every page on a domain, write `example.com/*`. Writing `example.com` will not work.
-- To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` won’t work.
-- A wildcard (`*`) in a Page Rule URL will match even if no characters are present and may include any part of the URL, including the query string.
+*   To match both `http` and `https`, `write example.com`. Writing `*example.com` is unnecessary.
+*   To match every page on a domain, write `example.com/*`. Writing `example.com` will not work.
+*   To match every page on a domain and its subdomains, write `*example.com/*`. Writing `example.com` won’t work.
+*   A wildcard (`*`) in a Page Rule URL will match even if no characters are present and may include any part of the URL, including the query string.
 
 ## Referencing wildcard matches
 

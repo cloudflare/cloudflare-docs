@@ -7,9 +7,9 @@ order: 4
 
 The following examples illustrate how to perform response header modifications with Transform Rules:
 
-* [Add an HTTP response header with a static value](#add-an-http-response-header-with-a-static-value)
-* [Add an HTTP response header with the current bot score](#add-an-http-response-header-with-the-current-bot-score)
-* [Remove an HTTP response header](#remove-an-http-response-header)
+*   [Add an HTTP response header with a static value](#add-an-http-response-header-with-a-static-value)
+*   [Add an HTTP response header with the current bot score](#add-an-http-response-header-with-the-current-bot-score)
+*   [Remove an HTTP response header](#remove-an-http-response-header)
 
 ## Add an HTTP response header with a static value
 
@@ -23,7 +23,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify response header**: _Set static_
+Selected operation under **Modify response header**: *Set static*
 
 **Header name**: `X-Source`
 
@@ -43,7 +43,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/en/")
 ```
 
-Selected operation under **Modify response header**: _Set dynamic_
+Selected operation under **Modify response header**: *Set dynamic*
 
 **Header name**: `X-Bot-Score`
 
@@ -63,7 +63,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/private/")
 ```
 
-Selected operation under **Modify response header**: _Remove_
+Selected operation under **Modify response header**: *Remove*
 
 **Header name**: `cf-connecting-ip`
 

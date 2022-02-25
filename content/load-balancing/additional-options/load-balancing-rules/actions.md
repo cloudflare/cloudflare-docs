@@ -64,6 +64,6 @@ This table lists the actions available for Load Balancing rules. For a walkthrou
       <td><em>Terminates</em></td>
       <td>Stop processing Load Balancing rules and apply the current load balancing logic to the request.</td>
     </tr>
-    
+
   </tbody>
 </table>

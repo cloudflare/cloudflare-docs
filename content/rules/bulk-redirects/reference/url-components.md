@@ -14,10 +14,11 @@ In the reference table below, the provided URL component examples are based on t
 ```txt
 https://user:password@www.example.com:443/search?q=term#results
 ```
+
 <TableWrap>
 
 URL component | Supported in source URL | Supported in target URL
----|---|---
+\---|---|---
 **Scheme**<br/>(for example, `https`) | Yes, `http` or `https` only<br/>(optional) | Yes
 **User information**<br/>(for example, `user:password`) | No | Yes (optional)
 **Host**<br/>(for example, `www.example.com`) | Yes | Yes (optional)

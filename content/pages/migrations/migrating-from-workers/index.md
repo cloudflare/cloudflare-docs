@@ -18,9 +18,9 @@ If you did not need to customize a Workers Sites template, migrating your static
 
 Workers Sites projects consist of the following pieces:
 
-1. An application built with a [static site tool](/how-to) or a static collection of HTML, CSS and JavaScript
-2. If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JS
-3. A Workers application for serving that directory
+1.  An application built with a [static site tool](/how-to) or a static collection of HTML, CSS and JavaScript
+2.  If using a static site tool, a build directory (called `bucket` in `wrangler.toml`) where the static project builds HTML, CSS, and JS
+3.  A Workers application for serving that directory
 
 When moving to Cloudflare Pages, remove the Workers application, and any associated `wrangler.toml` configuration files or build output. Instead, note and record your **build command** (if you have one), and the `bucket` field, or **build directory**, from the `wrangler.toml` file in your project's directory.
 

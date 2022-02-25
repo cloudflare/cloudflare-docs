@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Hello World in Rust
 
@@ -133,8 +133,8 @@ In this tutorial, you built and published a Rust-generated WebAssembly serverles
 
 If you enjoyed this tutorial, below you can find other tutorials for building on Cloudflare Workers:
 
-- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-- [Build a JAMStack app](/tutorials/build-a-jamstack-app)
-- [Build a QR code generator](/tutorials/build-a-qr-code-generator)
+*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+*   [Build a JAMStack app](/tutorials/build-a-jamstack-app)
+*   [Build a QR code generator](/tutorials/build-a-qr-code-generator)
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/get-started/quickstarts).

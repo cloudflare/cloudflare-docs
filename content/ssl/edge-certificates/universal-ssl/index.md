@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-import UniversalSSLDefinition from "../../_partials/_universal-ssl-definition.md"
+import UniversalSSLDefinition from "../../\_partials/\_universal-ssl-definition.md"
 
 # Universal SSL
 

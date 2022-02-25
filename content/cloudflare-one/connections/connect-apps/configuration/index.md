@@ -7,5 +7,5 @@ pcx-content-type: navigation
 
 `cloudflared` uses a configuration file to determine how it proxies traffic to services. This section covers:
 
-* A list of general-purpose [configuration keys](/connections/connect-apps/configuration/configuration-file) and their descriptions
-* An explanation of the [Ingress Rules](/connections/connect-apps/configuration/configuration-file/ingress) which map incoming traffic to applications running on your origin
+*   A list of general-purpose [configuration keys](/connections/connect-apps/configuration/configuration-file) and their descriptions
+*   An explanation of the [Ingress Rules](/connections/connect-apps/configuration/configuration-file/ingress) which map incoming traffic to applications running on your origin

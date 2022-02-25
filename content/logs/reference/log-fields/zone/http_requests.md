@@ -13,9 +13,9 @@ The descriptions below detail the fields available for `http_requests`.
 | Field | Value | Type |
 | -- | -- | -- |
 | BotScore | Cloudflare Bot Score. Scores below 30 are commonly associated with automated traffic. Available for Bot Management customers (please contact your account team to enable). | int |
-| BotScoreSrc | Detection engine responsible for generating the Bot Score. <br />Possible values are <em>Not Computed</em> \| <em>Heuristics</em> \| <em>Machine Learning</em> \| <em>Behavioral Analysis</em> \| <em>Verified Bot</em> \| <em>JS Fingerprinting</em> \| <em>Cloudflare Service</em> | string |
-| BotTags | Type of bot traffic (if available). See [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags) for the list of potential values. Available in Logpush v2 only. | array[string] |
-| CacheCacheStatus | <em>unknown</em> \| <em>miss</em> \| <em>expired</em> \| <em>updating</em> \| <em>stale</em> \| <em>hit</em> \| <em>ignored</em> \| <em>bypass</em> \| <em>revalidated</em> \| <em>dynamic</em> \| <em>stream_hit</em> \| <em>deferred</em> | string |
+| BotScoreSrc | Detection engine responsible for generating the Bot Score. <br />Possible values are <em>Not Computed</em> | <em>Heuristics</em> | <em>Machine Learning</em> | <em>Behavioral Analysis</em> | <em>Verified Bot</em> | <em>JS Fingerprinting</em> | <em>Cloudflare Service</em> | string |
+| BotTags | Type of bot traffic (if available). See [Bot Tags](https://developers.cloudflare.com/bots/about/cloudflare-bot-tags) for the list of potential values. Available in Logpush v2 only. | array\[string] |
+| CacheCacheStatus | <em>unknown</em> | <em>miss</em> | <em>expired</em> | <em>updating</em> | <em>stale</em> | <em>hit</em> | <em>ignored</em> | <em>bypass</em> | <em>revalidated</em> | <em>dynamic</em> | <em>stream\_hit</em> | <em>deferred</em> | string |
 | CacheResponseBytes | Number of bytes returned by the cache | int |
 | CacheResponseStatus (deprecated) | HTTP status code returned by the cache to the edge. All requests (including non-cacheable ones) go through the cache. Also see CacheCacheStatus field. | int |
 | CacheTieredFill | Tiered Cache was used to serve this request | bool |
@@ -23,9 +23,9 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientCountry | Country of the client IP address | string |
 | ClientDeviceType | Client device type | string |
 | ClientIP | IP address of the client | string |
-| ClientIPClass | <em>unknown</em> \| <em>badHost</em> \| <em>searchEngine</em> \| <em>allowlist</em> \| <em>monitoringService</em> \| <em>noRecord</em> \| <em>scan</em> \| <em>tor</em> | string |
+| ClientIPClass | <em>unknown</em> | <em>badHost</em> | <em>searchEngine</em> | <em>allowlist</em> | <em>monitoringService</em> | <em>noRecord</em> | <em>scan</em> | <em>tor</em> | string |
 | ClientMTLSAuthCertFingerprint | The SHA256 fingerprint of the certificate presented by the client during mTLS authentication. Only populated on the first request on an mTLS connection. Available in Logpush v2 only. | string |
-| ClientMTLSAuthStatus | The status of mTLS authentication. Only populated on the first request on an mTLS connection. Available in Logpush v2 only. <br />Possible values are <em>unknown</em> \| <em>ok</em> \| <em>absent</em> \| <em>untrusted</em> \| <em>notyetvalid</em> \| <em>expired</em> | string |
+| ClientMTLSAuthStatus | The status of mTLS authentication. Only populated on the first request on an mTLS connection. Available in Logpush v2 only. <br />Possible values are <em>unknown</em> | <em>ok</em> | <em>absent</em> | <em>untrusted</em> | <em>notyetvalid</em> | <em>expired</em> | string |
 | ClientRequestBytes | Number of bytes in the client request | int |
 | ClientRequestHost | Host requested by the client | string |
 | ClientRequestMethod | HTTP method of client request | string |
@@ -48,7 +48,7 @@ The descriptions below detail the fields available for `http_requests`.
 | EdgePathingOp | Indicates what type of response was issued for this request (unknown = no specific action) | string |
 | EdgePathingSrc | Details how the request was classified based on security checks (unknown = no specific classification) | string |
 | EdgePathingStatus | Indicates what data was used to determine the handling of this request (unknown = no data) | string |
-| EdgeRateLimitAction | The action taken by the blocking rule; empty if no action taken. <br />Possible values are <em>unknown</em> \| <em>simulate</em> \| <em>ban</em> \| <em>challenge</em> \| <em>jsChallenge</em> | string |
+| EdgeRateLimitAction | The action taken by the blocking rule; empty if no action taken. <br />Possible values are <em>unknown</em> | <em>simulate</em> | <em>ban</em> | <em>challenge</em> | <em>jsChallenge</em> | string |
 | EdgeRateLimitID | The internal rule ID of the rate-limiting rule that triggered a block (ban) or log action. 0 if no action taken. | int |
 | EdgeRequestHost | Host header on the request from the edge to the origin | string |
 | EdgeResponseBodyBytes | Size of the HTTP response body returned to clients. Available in Logpush v2 only. | int |
@@ -59,9 +59,9 @@ The descriptions below detail the fields available for `http_requests`.
 | EdgeServerIP | IP of the edge server making a request to the origin | string |
 | EdgeStartTimestamp | Timestamp at which the edge received request from the client | int or string |
 | EdgeTimeToFirstByteMs | Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time. Available in Logpush v2 only. | int |
-| FirewallMatchesActions | Array of actions the Cloudflare firewall products performed on this request. The individual firewall products associated with this action be found in FirewallMatchesSources and their respective RuleIds can be found in FirewallMatchesRuleIDs. The length of the array is the same as FirewallMatchesRuleIDs and FirewallMatchesSources. <br />Possible actions are <em>unknown</em> \| <em>allow</em> \| <em>block</em> \| <em>challenge</em> \| <em>jschallenge</em> \| <em>log</em> \| <em>connectionClose</em> \| <em>challengeSolved</em> \| <em>challengeFailed</em> \| <em>challengeBypassed</em> \| <em>jschallengeSolved</em> \| <em>jschallengeFailed</em> \| <em>jschallengeBypassed</em> \| <em>bypass</em> \| <em>managedChallenge</em> \| <em>managedChallengeSkipped</em> \| <em>managedChallengeNonInteractiveSolved</em> \| <em>managedChallengeInteractiveSolved</em> \| <em>managedChallengeBypassed</em> | array[string] |
-| FirewallMatchesRuleIDs | Array of RuleIDs of the firewall product that has matched the request. The firewall product associated with the RuleID can be found in FirewallMatchesSources. The length of the array is the same as FirewallMatchesActions and FirewallMatchesSources. | array[string] |
-| FirewallMatchesSources | The firewall products that matched the request. The same product can appear multiple times, which indicates different rules or actions that were activated. The RuleIDs can be found in FirewallMatchesRuleIDs, the actions can be found in FirewallMatchesActions. The length of the array is the same as FirewallMatchesRuleIDs and FirewallMatchesActions. Validation matches only appear in Logpush and are not supported in Logpull. <br />Possible sources are <em>unknown</em> \| <em>asn</em> \| <em>country</em> \| <em>ip</em> \| <em>ipRange</em> \| <em>securityLevel</em> \| <em>zoneLockdown</em> \| <em>waf</em> \| <em>firewallRules</em> \| <em>uaBlock</em> \| <em>rateLimit</em> \| <em>bic</em> \| <em>hot</em> \| <em>l7ddos</em> \| <em>validation</em> \| <em>botFight</em> \| <em>apiShield</em> \| <em>botManagement</em> \| <em>dlp</em> \| <em>firewallManaged</em> \| <em>firewallCustom</em> | array[string] |
+| FirewallMatchesActions | Array of actions the Cloudflare firewall products performed on this request. The individual firewall products associated with this action be found in FirewallMatchesSources and their respective RuleIds can be found in FirewallMatchesRuleIDs. The length of the array is the same as FirewallMatchesRuleIDs and FirewallMatchesSources. <br />Possible actions are <em>unknown</em> | <em>allow</em> | <em>block</em> | <em>challenge</em> | <em>jschallenge</em> | <em>log</em> | <em>connectionClose</em> | <em>challengeSolved</em> | <em>challengeFailed</em> | <em>challengeBypassed</em> | <em>jschallengeSolved</em> | <em>jschallengeFailed</em> | <em>jschallengeBypassed</em> | <em>bypass</em> | <em>managedChallenge</em> | <em>managedChallengeSkipped</em> | <em>managedChallengeNonInteractiveSolved</em> | <em>managedChallengeInteractiveSolved</em> | <em>managedChallengeBypassed</em> | array\[string] |
+| FirewallMatchesRuleIDs | Array of RuleIDs of the firewall product that has matched the request. The firewall product associated with the RuleID can be found in FirewallMatchesSources. The length of the array is the same as FirewallMatchesActions and FirewallMatchesSources. | array\[string] |
+| FirewallMatchesSources | The firewall products that matched the request. The same product can appear multiple times, which indicates different rules or actions that were activated. The RuleIDs can be found in FirewallMatchesRuleIDs, the actions can be found in FirewallMatchesActions. The length of the array is the same as FirewallMatchesRuleIDs and FirewallMatchesActions. Validation matches only appear in Logpush and are not supported in Logpull. <br />Possible sources are <em>unknown</em> | <em>asn</em> | <em>country</em> | <em>ip</em> | <em>ipRange</em> | <em>securityLevel</em> | <em>zoneLockdown</em> | <em>waf</em> | <em>firewallRules</em> | <em>uaBlock</em> | <em>rateLimit</em> | <em>bic</em> | <em>hot</em> | <em>l7ddos</em> | <em>validation</em> | <em>botFight</em> | <em>apiShield</em> | <em>botManagement</em> | <em>dlp</em> | <em>firewallManaged</em> | <em>firewallCustom</em> | array\[string] |
 | OriginDNSResponseTimeMs | Time taken to receive a DNS response for an origin name. Usually 0, but may be longer if a CNAME record is used. Available in Logpush v2 only. | int |
 | OriginIP | IP of the origin server | string |
 | OriginRequestHeaderSendDurationMs | Time taken to send request headers to origin after establishing a connection. Note that this value is usually 0. Available in Logpush v2 only. | int |
@@ -81,9 +81,9 @@ The descriptions below detail the fields available for `http_requests`.
 | SmartRouteColoID | The Cloudflare datacenter used to connect to the origin server if Argo Smart Routing is used. Available in Logpush v2 only. | int |
 | UpperTierColoID | The "upper tier" datacenter that was checked for a cached copy if Tiered Cache is used. Available in Logpush v2 only. | int |
 | WAFAction | Action taken by the WAF, if triggered | string |
-| WAFFlags (deprecated) | Additional configuration flags: <em>simulate (0x1)</em> \| <em>null</em> | string |
+| WAFFlags (deprecated) | Additional configuration flags: <em>simulate (0x1)</em> | <em>null</em> | string |
 | WAFMatchedVar (deprecated) | The full name of the most-recently matched variable | string |
-| WAFProfile | <em>low</em> \| <em>med</em> \| <em>high</em> | string |
+| WAFProfile | <em>low</em> | <em>med</em> | <em>high</em> | string |
 | WAFRuleID | ID of the applied WAF rule | string |
 | WAFRuleMessage | Rule message associated with the triggered rule | string |
 | WorkerCPUTime | Amount of time in microseconds spent executing a worker, if any | int |

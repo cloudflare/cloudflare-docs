@@ -8,8 +8,8 @@ type: overview
 
 You can use the API to delete all the versions of a ruleset or delete a specific version of a ruleset.
 
-* [Delete ruleset (all versions)](#delete-ruleset)
-* [Delete ruleset version](#delete-ruleset-version)
+*   [Delete ruleset (all versions)](#delete-ruleset)
+*   [Delete ruleset version](#delete-ruleset-version)
 
 ## Delete ruleset
 
@@ -23,11 +23,12 @@ Use one of the following API endpoints:
 | [Delete zone ruleset][dr-zone]       | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
 
 [dr-account]: https://api.cloudflare.com/#account-rulesets-delete-account-ruleset
+
 [dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-zone-ruleset
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 You cannot delete a ruleset that is still referenced in other rules. For example, you cannot delete a custom ruleset that is being deployed in a rule with `execute` action.
 
@@ -60,13 +61,14 @@ Use one of the following API endpoints:
 | [Delete a version of a zone ruleset][drv-zone] | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
 
 [drv-account]: https://api.cloudflare.com/#account-rulesets-delete-a-version-of-an-account-ruleset
+
 [drv-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-version-of-a-zone-ruleset
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 
 Later updates to the ruleset will not reuse the version number of a deleted ruleset version.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 You cannot delete a ruleset version if it is the latest ruleset version and there is a rule with `execute` action deploying that ruleset.
 

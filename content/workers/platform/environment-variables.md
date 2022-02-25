@@ -76,7 +76,7 @@ workers_dev = true
 
 <Aside type="warning">
 
-\* __Warning:__ Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/cli-wrangler/commands#secret) instead.
+\* **Warning:** Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/cli-wrangler/commands#secret) instead.
 
 </Aside>
 
@@ -110,21 +110,21 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ### Adding environment variables via the dashboard
 
-Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**. 
+Add environment variables by logging into [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
 
 To add environment variables, such as `vars` and `secret`:
 
-1. Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
-2. Input a **Variable name** and its **value**, which will be made available to your Worker. 
-3. If your variable is a secret, select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard. 
-3. (Optional) To add multiple environment variables, select **Add variable**. 
-5. Select **Save** to implement your changes.
+1.  Go to your **Workers script** > **Settings** > **Add variable** under **Environment Variables**.
+2.  Input a **Variable name** and its **value**, which will be made available to your Worker.
+3.  If your variable is a secret, select  **Encrypt** to protect its value. This will prevent the value from being visible via `wrangler` and the dashboard.
+4.  (Optional) To add multiple environment variables, select **Add variable**.
+5.  Select **Save** to implement your changes.
 
 ![env variables dash](./media/env_variables_dash.png)
 
 <Aside type="warning" header="Plaintext strings and secrets">
 
-Do not select **Encrypt** when adding environment variables if your variable is not a secret. Skip step 3 if your variable's value is a plaintext string and does not need to be encrypted. 
+Do not select **Encrypt** when adding environment variables if your variable is not a secret. Skip step 3 if your variable's value is a plaintext string and does not need to be encrypted.
 
 </Aside>
 
@@ -132,18 +132,18 @@ Do not select **Encrypt** when adding environment variables if your variable is 
 
 To add KV namespace bindings:
 
-1. Go to your **Workers script** > **Settings** > **Add binding** under **KV Namespace Bindings**.
-2. Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker script. 
-3. Next, select a **KV namespace** from the dropdown. 
-4. Select **Add binding** to add multiple bindings. 
-5. When you are finished, select **Save** to implement your changes.
+1.  Go to your **Workers script** > **Settings** > **Add binding** under **KV Namespace Bindings**.
+2.  Choose a **Variable name**. This will be the way the variable name will be referenced in your Worker script.
+3.  Next, select a **KV namespace** from the dropdown.
+4.  Select **Add binding** to add multiple bindings.
+5.  When you are finished, select **Save** to implement your changes.
 
 ![kv namespace bindings](./media/kv_namespace_bindings.png)
 
-Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference. 
+Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference.
 
 ![env vars secret](./media/envvarssecret-detail-page.jpeg)
 
 ## Comparing secrets and environment variables
 
-Secrets are environment variables. The difference is secret values are not visible within `wrangler` or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined. 
+Secrets are environment variables. The difference is secret values are not visible within `wrangler` or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.

@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-import PoolDefinition from "../_partials/_pool-definition.md"
+import PoolDefinition from "../\_partials/\_pool-definition.md"
 
 # Pools
 
@@ -17,25 +17,25 @@ For more details about how origins and pools become unhealthy, refer to [Origin 
 
 </Aside>
 
----
+***
 
 ## Properties
 
 For an up-to-date list of pool properties, refer to [Pool properties](https://api.cloudflare.com/#load-balancer-pools-properties) in our API documentation.
 
----
+***
 
 ## Create pools
 
 For step-by-step guidance, refer to [Create pools](/how-to/create-pool).
 
----
+***
 
 ## Per origin Host header override
 
 When your application needs specialized routing (CNAME setup or custom hosts like Heroku), change the `Host` header used in health checks. For more details, refer to [Override HTTP Host headers](/additional-options/override-http-host-headers).
 
----
+***
 
 ## API commands
 

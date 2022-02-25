@@ -9,8 +9,8 @@ Magic Transit uses a static configuration to route your traffic through [Generic
 
 You must assign a route priority to each GRE tunnel–subnet pair in your GRE configuration using the following guidelines:
 
-- Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. You can refer to an example of this scenario with the **103.21.244.0/24** subnet in the edge routing configuration example below.
+*   Lower values have greater priority.
+*   When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. You can refer to an example of this scenario with the **103.21.244.0/24** subnet in the edge routing configuration example below.
 
 <details>
 <summary>
@@ -79,8 +79,8 @@ You must provide your prefixes and the tunnels they should be mapped to in order
 
 | Prefix          | GRE Tunnel |
 | --------------- | ---------- |
-| 103.21.244.0/29 | GRE_1_IAD  |
-| 103.21.244.8/29 | GRE_2_ATL  |
+| 103.21.244.0/29 | GRE\_1\_IAD  |
+| 103.21.244.8/29 | GRE\_2\_ATL  |
 
 The minimum advertising prefix is /24, but because Cloudflare uses GRE tunnels as an outer wrapper for your traffic, we can route prefixes within that /24 to different tunnel end points.
 
@@ -94,17 +94,17 @@ You can also create and edit static routes using [Magic Transit Static Routes AP
 
 ### Create a static route
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-1. Next to **Static routes configuration**, click **Configure**.
-1. On the **Static Routes** page, click **Create** to add a new route.
-1. Enter the information for your route.
-1. While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
-1. If your test was successful, click **Add routes** when you are done.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
+2.  Next to **Static routes configuration**, click **Configure**.
+3.  On the **Static Routes** page, click **Create** to add a new route.
+4.  Enter the information for your route.
+5.  While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
+6.  If your test was successful, click **Add routes** when you are done.
 
 ### Edit a static route
 
-1. After navigating to the **Static routes configuration** page, click **Edit** next to the route you want to modify.
-1. Enter the updated route information and click **Edit routes** when you are done.
+1.  After navigating to the **Static routes configuration** page, click **Edit** next to the route you want to modify.
+2.  Enter the updated route information and click **Edit routes** when you are done.
 
 ## Scoped routes for GRE tunnels
 
@@ -210,4 +210,3 @@ Cloudflare has nine geographic regions across the world which are listed below.
 </table>
 </div>
 </details>
-

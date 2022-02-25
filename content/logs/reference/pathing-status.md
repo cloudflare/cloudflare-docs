@@ -9,21 +9,21 @@ pcx-content-type: reference
 
 Cloudflare issues the following **Edge Pathing Statuses**:
 
-- **EdgePathingSrc** (pathing source): The stage that made the routing decision.
-- **EdgePathingOp** (pathing operation): The specific action or operation taken.
-- **EdgePathingStatus** (pathing status): Additional information complementing the **EdgePathingOp**.
+*   **EdgePathingSrc** (pathing source): The stage that made the routing decision.
+*   **EdgePathingOp** (pathing operation): The specific action or operation taken.
+*   **EdgePathingStatus** (pathing status): Additional information complementing the **EdgePathingOp**.
 
 ### EdgePathingSrc
 
 **EdgePathingSrc** refers to the system that last handled the request before an error occurred or the request was passed to the cache server. Typically, this will be the macro/reputation list. Possible pathing sources include:
 
-* `err`
-* `sslv` (SSL verification checker)
-* `bic` (browser integrity check)
-* `hot` (hotlink protection)
-* `macro` (the reputation list)
-* `skip` (Always Online or CDNJS resources)
-* `user` (user firewall rule)
+*   `err`
+*   `sslv` (SSL verification checker)
+*   `bic` (browser integrity check)
+*   `hot` (hotlink protection)
+*   `macro` (the reputation list)
+*   `skip` (Always Online or CDNJS resources)
+*   `user` (user firewall rule)
 
 For example:
 
@@ -38,10 +38,10 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 
 **EdgePathingOp** indicates how the request was handled. `wl` is a request that passed all checks and went to your origin server. Other possible values are:
 
-* `errHost` (host header mismatch, DNS errors, etc.)
-* `ban` (blocked by IP address, range, etc.)
-* `tempOk` (challenge successfully completed)
-* `chl` (challenge issued)
+*   `errHost` (host header mismatch, DNS errors, etc.)
+*   `ban` (blocked by IP address, range, etc.)
+*   `tempOk` (challenge successfully completed)
+*   `chl` (challenge issued)
 
 For example:
 
@@ -96,9 +96,9 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 
 The response status appears in three places in a request:
 
-* **edgeResponse**
-* **cacheResponse**
-* **originResponse**
+*   **edgeResponse**
+*   **cacheResponse**
+*   **originResponse**
 
 In your logs, the edge is what first accepts a visitor's request. The cache then accepts the request and either forwards it to your origin or responds from the cache. It is possible to have a request that has only an **edgeResponse** or a request that has an **edgeResponse** and a  **cacheResponse**, but no **originResponse**.
 
@@ -119,9 +119,9 @@ The information stored is broken down based on the following categories:
 
 These occur for requests that did not pass any of the validation performed by the Cloudflare network. Example cases include:
 
-- Whenever Cloudflare is unable to look up a domain or zone.
-- An attempt to improperly use the IP for an origin server.
-- Domain ownership is unclear (for example, the domain is not in Cloudflare).
+*   Whenever Cloudflare is unable to look up a domain or zone.
+*   An attempt to improperly use the IP for an origin server.
+*   Domain ownership is unclear (for example, the domain is not in Cloudflare).
 
 <TableWrap>
 
@@ -259,9 +259,9 @@ The macro stage is comprised of many different paths. They are categorized by th
 
 All other paths in the MACRO stage issue a challenge. Possible scenarios include:
 
-- A clean IP (acceptable threat level) with IUAM on will trigger the JS challenge.
-- A greylisted IP triggers the JS challenge (Managed Challenge if IUAM is on).
-- An IP with a bad reputation (also TOR) with a threat level above the accepted threshold triggers a Managed Challenge (JS challenge if IUAM is on).
+*   A clean IP (acceptable threat level) with IUAM on will trigger the JS challenge.
+*   A greylisted IP triggers the JS challenge (Managed Challenge if IUAM is on).
+*   An IP with a bad reputation (also TOR) with a threat level above the accepted threshold triggers a Managed Challenge (JS challenge if IUAM is on).
 
 ## Rate Limiting
 

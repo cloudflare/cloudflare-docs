@@ -3,7 +3,7 @@ order: 0
 pcx-content-type: concept
 ---
 
-import FullSetupDefinition from "../../_partials/_full-setup-definition.md"
+import FullSetupDefinition from "../../\_partials/\_full-setup-definition.md"
 
 # Full setup
 

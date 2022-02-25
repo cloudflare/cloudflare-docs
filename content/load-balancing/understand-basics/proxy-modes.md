@@ -7,11 +7,11 @@ pcx-content-type: concept
 
 You can load balance your traffic at different levels of the networking stack, including:
 
-- [Layer 7 or HTTP/HTTPS traffic](#layer-7-load-balancing-orange-clouded) (most common)
-- [DNS-only](#dns-only-load-balancing-gray-clouded)
-- [Layer 4 or TCP traffic](#layer-4-load-balancing)
+*   [Layer 7 or HTTP/HTTPS traffic](#layer-7-load-balancing-orange-clouded) (most common)
+*   [DNS-only](#dns-only-load-balancing-gray-clouded)
+*   [Layer 4 or TCP traffic](#layer-4-load-balancing)
 
----
+***
 
 ## Orange-clouded (layer 7 load balancing)
 
@@ -25,14 +25,14 @@ Cloudflare performs layer 7 load balancing when traffic to your hostname is **pr
 
 In comparison to [DNS-only load balancing](#gray-clouded-dns-only-load-balancing), layer 7 load balancing:
 
-- Protects origin servers from DDoS attacks by hiding their IP addresses.
-- Offers faster failover and more accurate routing, which can otherwise be affected by DNS caching.
-- Integrates with other Cloudflare features such as caching, Workers, WAF, etc.
-- Reduces authoritative queries against Cloudflare, which can potentially save money for customers with usage-based billing.
-- Supports customized [session affinity](/understand-basics/session-affinity) and [origin drain](/understand-basics/session-affinity#origin-drain).
-- More accurately geo-locates traffic, using data center associated with the user making the request instead of the data center associated with a user's recursive resolver.
+*   Protects origin servers from DDoS attacks by hiding their IP addresses.
+*   Offers faster failover and more accurate routing, which can otherwise be affected by DNS caching.
+*   Integrates with other Cloudflare features such as caching, Workers, WAF, etc.
+*   Reduces authoritative queries against Cloudflare, which can potentially save money for customers with usage-based billing.
+*   Supports customized [session affinity](/understand-basics/session-affinity) and [origin drain](/understand-basics/session-affinity#origin-drain).
+*   More accurately geo-locates traffic, using data center associated with the user making the request instead of the data center associated with a user's recursive resolver.
 
----
+***
 
 ## Gray-clouded (DNS-only load balancing)
 
@@ -50,14 +50,14 @@ If your load balancer is attached to a hostname used for an [MX, SRV, or TXT rec
 
 In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded), DNS-only load balancing:
 
-- Does not hide the IP addresses of your origin servers, leaving them vulnerable to DDoS attacks.
-- Performs slower failover and less accurate routing, because it has to rely on DNS resolvers and cache settings.
-- Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
-- Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
-- Supports standard [session affinity](/understand-basics/session-affinity).
-- Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/understand-basics/traffic-steering/pool-level-steering#dynamic-steering).
+*   Does not hide the IP addresses of your origin servers, leaving them vulnerable to DDoS attacks.
+*   Performs slower failover and less accurate routing, because it has to rely on DNS resolvers and cache settings.
+*   Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
+*   Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
+*   Supports standard [session affinity](/understand-basics/session-affinity).
+*   Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/understand-basics/traffic-steering/pool-level-steering#dynamic-steering).
 
----
+***
 
 ## Layer 4 load balancing
 

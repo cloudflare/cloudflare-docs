@@ -4,8 +4,8 @@ order: 6
 pcx-content-type: tutorial
 ---
 
-import CSRDefinition from "../../_partials/_csr-definition.md"
-import PlanLimitation from "../../_partials/_ssl-for-saas-plan-limitation.md"
+import CSRDefinition from "../../\_partials/\_csr-definition.md"
+import PlanLimitation from "../../\_partials/\_ssl-for-saas-plan-limitation.md"
 
 # Certificate signing requests (CSRs) — SSL for SaaS
 
@@ -15,13 +15,13 @@ Once the CSR has been generated, provide it to your customer. Your customer will
 
 <PlanLimitation/>
 
---------
+***
 
 ## Generate the private key and CSR
 
 ### Step 1 — Build the CSR payload
 
-All fields except for organizational_unit and key_type are required. If you do not specify a `key_type`, the default of `rsa2048` (RSA 2048 bit) will be used; the other option is `p256v1` (NIST P-256).
+All fields except for organizational\_unit and key\_type are required. If you do not specify a `key_type`, the default of `rsa2048` (RSA 2048 bit) will be used; the other option is `p256v1` (NIST P-256).
 
 Common names are restricted to 64 characters and subject alternative names (SANs) are limited to 255 characters, [per RFC 5280](https://tools.ietf.org/html/rfc5280). You must specify at least one SAN, and the list of SANs should include the common name.
 
@@ -114,7 +114,7 @@ EOF
 
 With the request body built, [create the Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
 
----
+***
 
 ## Other actions
 

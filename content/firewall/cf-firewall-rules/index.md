@@ -34,7 +34,7 @@ The **Rules List** gives you a snapshot of recent activity and allows you to man
 
 #### Challenge Solve Rate (CSR)
 
-The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with _Legacy CAPTCHA_ or _JS Challenge_ actions, and it is calculated as follows:
+The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with *Legacy CAPTCHA* or *JS Challenge* actions, and it is calculated as follows:
 
 <p><var>CSR</var> = <var>number of challenges solved</var> / <var>number of challenges issued</var></p>
 
@@ -46,14 +46,14 @@ A low CSR means that Cloudflare is issuing a low number of CAPTCHA challenges to
 
 You should aim for a low Challenge Solve Rate. Review the CSR of your CAPTCHA rules periodically and adjust them if necessary:
 
-* If the rate is higher than expected, for example regarding a Bot Management rule, consider relaxing the rule criteria so that you issue fewer challenges to human visitors.
-* If the rate is 0%, no CAPTCHA challenges are being solved. This means that you have no human visitors whose requests match the rule filter. Consider changing the rule action to _Block_.
+*   If the rate is higher than expected, for example regarding a Bot Management rule, consider relaxing the rule criteria so that you issue fewer challenges to human visitors.
+*   If the rate is 0%, no CAPTCHA challenges are being solved. This means that you have no human visitors whose requests match the rule filter. Consider changing the rule action to *Block*.
 
 <Aside type="warning" header="Important">
 
 Currently, Cloudflare does not calculate the CSR of Managed Challenges.
 
-For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action will use Managed Challenges. For more information, refer to [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+For customers on a Free plan, any rules configured with the *Legacy CAPTCHA* action will use Managed Challenges. For more information, refer to [Understanding Cloudflare Captchas and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
 
 </Aside>
 
@@ -63,7 +63,7 @@ Power users, particularly those who develop large numbers of Firewall Rules, can
 
 ## Entitlements
 
-Cloudflare Firewall Rules is available to all customers. However, the number of active Firewall Rules you can have and support for the _Log_ action and regular expressions depend on your Cloudflare plan.
+Cloudflare Firewall Rules is available to all customers. However, the number of active Firewall Rules you can have and support for the *Log* action and regular expressions depend on your Cloudflare plan.
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
@@ -123,6 +123,6 @@ To get started building your own Firewall Rules, refer to [Manage Firewall Rules
 
 Those eager to dive straight into the technical details can refer to these topics:
 
-* [Common use cases](/recipes)
-* [Manage Firewall Rules via the APIs](/api)
-* [Cloudflare Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language)
+*   [Common use cases](/recipes)
+*   [Manage Firewall Rules via the APIs](/api)
+*   [Cloudflare Rules language](https://developers.cloudflare.com/ruleset-engine/rules-language)

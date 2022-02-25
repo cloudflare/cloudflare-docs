@@ -1,19 +1,19 @@
 ---
 order: 1
 pcx-content-type: how-to
---- 
+---
 
 # Setup
 
 Browser Isolation is enabled through Secure Web Gateway HTTP policies. By default, no traffic is isolated until an Isolation policy has been added within HTTP policies. To start isolating your traffic, you need to:
 
-1. Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
+1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
 
-1. Download the latest version of the [WARP client](/connections/connect-devices/warp/download-warp).
+2.  Download the latest version of the [WARP client](/connections/connect-devices/warp/download-warp).
 
-1. Create a [Device enrollment rule](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions).
+3.  Create a [Device enrollment rule](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions).
 
-1. Set up an [Isolation policy](/policies/filtering/http-policies/#isolate).
+4.  Set up an [Isolation policy](/policies/filtering/http-policies/#isolate).
 
 Cloudflare Browser Isolation integrates with your existing web browser. Once connected to Cloudflare WARP, open your browser and navigate to any websites you normally use.
 
@@ -41,7 +41,7 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 
 ![Cloudflare for Teams Root CA](../../static/documentation/rbi/cloudflare-gateway-root-ca.png)
 
-**Simplified context menu**. Right-click context menu be simplified. 
+**Simplified context menu**. Right-click context menu be simplified.
 
 ![Simplified right click menu](../../static/documentation/rbi/isolated-browser.png)
 
@@ -50,12 +50,13 @@ In Chrome, click the padlock to the left of your address bar and select **Certif
 If you would like to temporarily disconnect Browser Isolation, you can do this by simply selecting the WARP agent and disconnecting the client.
 
 ### macOS
-1. Click on the Cloudflare Logo in the Menu Bar.
-1. Toggle the blue Connected switch into the Disconnected state.
-1. Refresh your webpage to return to the non-isolated page.
+
+1.  Click on the Cloudflare Logo in the Menu Bar.
+2.  Toggle the blue Connected switch into the Disconnected state.
+3.  Refresh your webpage to return to the non-isolated page.
 
 ### Windows
 
-1. Click on the Cloudflare Logo in the System Tray.
-1. Toggle the blue Connected switch into the Disconnected state.
-1. Refresh your webpage to return to the non-isolated page.
+1.  Click on the Cloudflare Logo in the System Tray.
+2.  Toggle the blue Connected switch into the Disconnected state.
+3.  Refresh your webpage to return to the non-isolated page.

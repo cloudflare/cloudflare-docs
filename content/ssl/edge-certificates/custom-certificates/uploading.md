@@ -3,8 +3,8 @@ order: 1
 pcx-content-type: how-to
 ---
 
-import CAADefinition from "../../_partials/_caa-records-definition.md"
-import CustomCertExample from "../../_partials/_custom-cert-file-example.md"
+import CAADefinition from "../../\_partials/\_caa-records-definition.md"
+import CustomCertExample from "../../\_partials/\_custom-cert-file-example.md"
 
 # Manage custom certificates
 
@@ -12,20 +12,20 @@ import CustomCertExample from "../../_partials/_custom-cert-file-example.md"
 
 Certificates are parsed and checked for validity before being accepted. Each certificate uploaded must:
 
-* Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
-* Not have a [key file password](../remove-file-key-password).
-* Not be expiring in less than 14 days from time of upload.
-* Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
-* Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
-* Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
-* Be one of the following certificate types:
+*   Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
+*   Not have a [key file password](../remove-file-key-password).
+*   Not be expiring in less than 14 days from time of upload.
+*   Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
+*   Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
+*   Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
+*   Be one of the following certificate types:
 
-	* Unified Communications Certificates (UCC)
-	* Extended Validation (EV)
-	* Domain Validated (DV)
-	* Organization Validated (OV)
+    *   Unified Communications Certificates (UCC)
+    *   Extended Validation (EV)
+    *   Domain Validated (DV)
+    *   Organization Validated (OV)
 
----
+***
 
 ## Upload a custom certificate
 
@@ -33,29 +33,36 @@ Certificates are parsed and checked for validity before being accepted. Each cer
 
 To upload a custom SSL certificate in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-1. Select your application.
-1. Navigate to **SSL/TLS**.
-1. In **Edge Certificates**, click **Upload Custom SSL Certificate**.
-1. Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**). 
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-	<Aside type="note">
+2.  Select your application.
 
-	If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
+3.  Navigate to **SSL/TLS**.
 
-	</Aside>
+4.  In **Edge Certificates**, click **Upload Custom SSL Certificate**.
 
-1. Choose the appropriate [**Bundle Method**](../bundling-methodologies).
-1. Select a value for [**Private Key Restriction**](/edge-certificates/custom-certificates#geo-key-manager-private-key-restriction).
-1. Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support:
+5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
 
-	- **Modern (recommended)**: SNI only
-	- **Legacy**: Supports non-SNI
+     <Aside type="note">
 
-1. Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
-1. (optional) [Add a CAA DNS record](../caa-records).
+    If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
 
----
+     </Aside>
+
+6.  Choose the appropriate [**Bundle Method**](../bundling-methodologies).
+
+7.  Select a value for [**Private Key Restriction**](/edge-certificates/custom-certificates#geo-key-manager-private-key-restriction).
+
+8.  Select a value for **Legacy Client Support**, which toggles [Server Name Indication (SNI)](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) support:
+
+    *   **Modern (recommended)**: SNI only
+    *   **Legacy**: Supports non-SNI
+
+9.  Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+
+10. (optional) [Add a CAA DNS record](../caa-records).
+
+***
 
 ### Using the API
 
@@ -90,6 +97,7 @@ $ request_body=$(< <(cat <<EOF
 }
 ))
 ```
+
 You can also enable support for legacy clients which do not include SNI in the TLS handshake.
 
 ```bash
@@ -104,7 +112,7 @@ $ request_body=$(< <(cat <<EOF
 ))
 ```
 
-`sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.  
+`sni_custom` is recommended by Cloudflare. Use `legacy_custom` when a specific client requires non-SNI support. The Cloudflare API treats all Custom SSL certificates as Legacy by default.
 
 #### Step 2 — Upload your certificate and key
 
@@ -127,12 +135,13 @@ For more guidance, refer to [Create a CAA record](../caa-records).
 ### Using the dashboard
 
 To update a certificate:
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-1. Select your application.
-1. Navigate to **SSL/TLS**.
-1. In **Edge Certificates**, locate a custom certificate.
-1. Click the wrench icon and click **Replace SSL certificate and key**.
-1. Follow the same steps as [create a new certificate](#upload-a-custom-certificate).
+
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2.  Select your application.
+3.  Navigate to **SSL/TLS**.
+4.  In **Edge Certificates**, locate a custom certificate.
+5.  Click the wrench icon and click **Replace SSL certificate and key**.
+6.  Follow the same steps as [create a new certificate](#upload-a-custom-certificate).
 
 <Aside type="note">
 
@@ -141,4 +150,5 @@ To update the **Private Key Restriction** setting of a certificate, delete and r
 </Aside>
 
 ### Using the API
+
 Use a [PATCH](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.

@@ -19,42 +19,43 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 ## Running `cloudflared` as a service
 
-1. [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
+1.  [Download the latest `cloudflared` version](/connections/connect-apps/install-and-setup/installation).
 
-1. Create a new directory:
+2.  Create a new directory:
 
     ```bash
     C:\Cloudflared\bin
     ```
 
-1. Copy the `.exe` file you downloaded in step 1 to the new directory and rename it to `cloudflared.exe`.
+3.  Copy the `.exe` file you downloaded in step 1 to the new directory and rename it to `cloudflared.exe`.
 
-1. Open the CMD as an administrator and navigate to `C:\Cloudflared\bin`.
+4.  Open the CMD as an administrator and navigate to `C:\Cloudflared\bin`.
 
-1. Run this command to install `cloudflared`:
+5.  Run this command to install `cloudflared`:
 
     ```bash
     cloudflared.exe service install
     ```
-1. Next, run this command to create another directory:
+
+6.  Next, run this command to create another directory:
 
     ```bash
     mkdir C:\Windows\System32\config\systemprofile\.cloudflared
     ```
 
-1. Now log in and authenticate `cloudflared`:
+7.  Now log in and authenticate `cloudflared`:
 
     ```bash
     cloudflared.exe login
     ```
 
-1. The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command:
+8.  The login command will generate a `cert.pem` file and save it to your user profile by default. Copy the file to the `.cloudflared` folder created in step 5 using this command:
 
     ```bash
     copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
     ```
 
-1. Next, create a tunnel:
+9.  Next, create a tunnel:
 
     ```bash
     cloudflared.exe tunnel create <Tunnel Name>
@@ -62,7 +63,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
     This will generate a [credentials file](/connections/connect-apps/tunnel-useful-terms#credentials-file) in `.json` format.
 
-1. [Create a configuration file](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file) with the following content:
+10. [Create a configuration file](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file) with the following content:
 
     ```text
     tunnel: <Tunnel ID>
@@ -77,35 +78,33 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     logfile:  C:\Cloudflared\cloudflared.log
     ```
 
-1. Copy the credentials file and the configuration file to the folder created in step 6:
+11. Copy the credentials file and the configuration file to the folder created in step 6:
 
     ```bash
     C:\Windows\System32\config\systemprofile\.cloudflared
     ```
 
-    <Aside type='Note'>
+     <Aside type='Note'>
 
     If you haven't created a config.yml file, follow [these instructions](/connections/connect-apps/install-and-setup/tunnel-guide#4-create-a-configuration-file).
 
-    </Aside>
+     </Aside>
 
-1. Validate the ingress rule entries in your configuration file using the command:
+12. Validate the ingress rule entries in your configuration file using the command:
 
     ```bash
     cloudflared.exe tunnel ingress validate
     ```
 
-1. Edit the registry to run `cloudflared` as a service and point the `cloudflared.exe` file, the config.yml file and the command to run the tunnel as explained below:
+13. Edit the registry to run `cloudflared` as a service and point the `cloudflared.exe` file, the config.yml file and the command to run the tunnel as explained below:
 
     Move the registry entry under `Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared`.
 
-1. Locate `imagepath` and modify it as shown below. Make sure that there are no extra spaces or characters while you modify the registry entry, as this could cause problems with starting the service.
+14. Locate `imagepath` and modify it as shown below. Make sure that there are no extra spaces or characters while you modify the registry entry, as this could cause problems with starting the service.
 
-    ```
-    C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml  tunnel run
-    ```
+        C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml  tunnel run
 
-1. If the service does not start, run the following command from `C:\Cloudflared\bin`:
+15. If the service does not start, run the following command from `C:\Cloudflared\bin`:
 
     ```bash
     sc start cloudflared tunnel run

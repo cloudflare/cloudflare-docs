@@ -11,9 +11,9 @@ Use the [Rulesets API](/rulesets-api) to configure the execution of a Managed Ru
 
 Follow the steps below to configure the execution of a Managed Ruleset with two overrides for enabling only the rules tagged with `joomla`.
 
-1. [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
-1. [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-1. Configure a tag override that enables only the rules with a given tag.
+1.  [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
+2.  [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
+3.  Configure a tag override that enables only the rules with a given tag.
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
@@ -50,9 +50,9 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
-* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for the specified zone (`<ZONE_ID>`).
+*   `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>
@@ -88,9 +88,9 @@ curl -X PUT \
 }'
 ```
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
-* `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
-* `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the ruleset of a phase that will apply the Cloudflare Managed Ruleset to requests for `example.com`.
+*   `"enabled": false` defines an override at the ruleset level that disables all rules in the Managed Ruleset.
+*   `"categories": [{"category": "joomla", "action": "block", "enabled": true}]` defines an override at the tag level that enables the Joomla rules and sets their action to `block`.
 
 </div>
 </details>

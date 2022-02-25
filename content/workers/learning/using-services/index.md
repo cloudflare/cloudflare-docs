@@ -17,17 +17,17 @@ Unlike a traditional Workers script, a Workers Service is composable, which allo
 
 <Aside type="note">
 
-To enable a seamless transition to Workers Services, all scripts have been automatically migrated to Services with one production environment. No action is needed from the user. 
+To enable a seamless transition to Workers Services, all scripts have been automatically migrated to Services with one production environment. No action is needed from the user.
 
 </Aside>
 
-Each Workers Service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and resource bindings, like KV namespaces and Durable Objects. 
+Each Workers Service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and resource bindings, like KV namespaces and Durable Objects.
 
 You can create and switch between environments in the dashboard:
 
-1. Go to **Workers**.
-2. Choose your **Worker**.
-3. Select **production** > **Create environment**.
+1.  Go to **Workers**.
+2.  Choose your **Worker**.
+3.  Select **production** > **Create environment**.
 
 ![production-button](./media/create-environment.png)
 
@@ -39,22 +39,22 @@ As of January 2022, the dashboard is the only way to interact with Workers Servi
 
 </Aside>
 
-Wrangler supports an older version of environments. With Wrangler environments, you create custom contexts for your code to run in by adding keys to your `wrangler.toml` file. Wrangler will then generate a separate Workers Service for each Wrangler environment. If you make a staging and production environment, for example, Wrangler will generate `my-worker-staging` and `my-worker-prod`. 
+Wrangler supports an older version of environments. With Wrangler environments, you create custom contexts for your code to run in by adding keys to your `wrangler.toml` file. Wrangler will then generate a separate Workers Service for each Wrangler environment. If you make a staging and production environment, for example, Wrangler will generate `my-worker-staging` and `my-worker-prod`.
 
 Workers Service environments take a cleaner approach. You can create and edit environments directly in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select your **Account**.
-3. Go to **Workers**. 
-4. Select your **Workers Service**.
-5. Select  **Quick edit**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2.  Select your **Account**.
+3.  Go to **Workers**.
+4.  Select your **Workers Service**.
+5.  Select  **Quick edit**.
 
 Unlike Wrangler environments, Workers Service environments do not create extra Workers Services. They are, however, able to connect to their own KV stores and Durable Objects. The code for any environment can be changed directly in the dashboard via the quick editor:
 
-1. Go to **Account Home**.
-2. Go to **Workers**. 
-3. Choose your **Worker**.
-4. Select **Quick edit**.
+1.  Go to **Account Home**.
+2.  Go to **Workers**.
+3.  Choose your **Worker**.
+4.  Select **Quick edit**.
 
 ![Quick edit](./media/quick-edit.png)
 
@@ -80,7 +80,6 @@ Workers Service bindings are in closed beta as of January 2022. Go to the [Worke
 
 A Workers Service binding allows you to send HTTP requests to another Worker without those requests going over the Internet. The request immediately invokes the downstream Worker, reducing latency as compared to a request to a third-party service. You can invoke other Workers directly from your code; Workers Service bindings allow for much more composability on the Workers platform. In the example below, requests are validated by an authentication Workers Service.
 
-
 ```js
 export default {
   async fetch(request, env) {
@@ -102,7 +101,7 @@ export default {
 
 ![service binding diagram](./media/app-workers-dev.png)
 
-Workers Service bindings use the standard [Fetch API](/runtime-apis/fetch). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service. 
+Workers Service bindings use the standard [Fetch API](/runtime-apis/fetch). You can continue to use your existing utilities and libraries - a Workers Service binding will trigger a `FetchEvent`. You can also change the environment of a Workers Service binding, so you can test a new version of a Service.
 
 In the next example, 1% of requests are routed to a `CANARY` deployment of a Worker. If a request to the `CANARY` fails, it is sent to the production deployment for another chance.
 
@@ -128,11 +127,12 @@ While the interface among Workers Services is HTTP, the networking is not. Unlik
 ![service bindings comparison](./media/service-bindings-comparison.png)
 
 Workers Service bindings allow you to:
-- Segment multiple use cases into separate Services that can be explicitly invoked from your code.
-- Achieve better composability on the Workers platform using Service-oriented architecture.
-- Create private microservices, to be conditionally invoked from other edge-facing Services.
 
---------------------------------
+*   Segment multiple use cases into separate Services that can be explicitly invoked from your code.
+*   Achieve better composability on the Workers platform using Service-oriented architecture.
+*   Create private microservices, to be conditionally invoked from other edge-facing Services.
+
+***
 
 ## Composing an example Worker
 
@@ -192,4 +192,4 @@ In this setup, only the Gateway Worker is exposed to the Internet and privately 
 
 ## Related resources
 
-- [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)
+*   [Services introduction blog post](https://blog.cloudflare.com/introducing-worker-services/)

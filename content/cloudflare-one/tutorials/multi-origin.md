@@ -13,21 +13,21 @@ You can deploy a single instance of `cloudflared` to proxy traffic to a single s
 
 **🗺️ This tutorial covers how to:**
 
-* Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
-* Give those applications hostnames where users can connect
+*   Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
+*   Give those applications hostnames where users can connect
 
 **⏲️ Time to complete:**
 
 10 minutes
 
----
+***
 
 ## Install `cloudflared`
 
 In this example, two resources are running and need to be connected to the Internet:
 
-* a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313`.
-* Grafana, a charting application. Grafana is available at `localhost:3000`
+*   a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313`.
+*   Grafana, a charting application. Grafana is available at `localhost:3000`
 
 Start by [downloading and installing](/connections/connect-apps/install-and-setup) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation](https://docs.brew.sh/Installation) to install it.
 

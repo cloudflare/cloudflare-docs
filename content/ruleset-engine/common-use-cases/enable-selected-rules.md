@@ -9,9 +9,9 @@ order: 773
 
 Use a ruleset override and a rule override in a phase entry point ruleset to execute only selected rules in a Managed Ruleset.
 
-1. [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
-1. [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
-1. [Configure a rule override](/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to execute.
+1.  [Add a rule](/basic-operations/deploy-rulesets) to a phase entry point ruleset that executes a Managed Ruleset.
+2.  [Configure a ruleset override](/managed-rulesets/override-managed-ruleset) that disables all rules in the Managed Ruleset.
+3.  [Configure a rule override](/managed-rulesets/override-managed-ruleset) to set an action for the rules you want to execute.
 
 <details>
 <summary>Example: Configure ruleset and rule overrides at the zone level</summary>
@@ -21,9 +21,9 @@ The following `PUT` request uses the [Update ruleset](/rulesets-api/update) oper
 
 In this example:
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests in the specified zone (`<ZONE_ID>`).
-* `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-* `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests in the specified zone (`<ZONE_ID>`).
+*   `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+*   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
 ```json
 curl -X PUT \
@@ -68,9 +68,9 @@ The following `PUT` request uses the [Update ruleset](/rulesets-api/update) oper
 
 In this example:
 
-* `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests addressed to `example.com`.
-* `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
-* `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
+*   `"id": "<MANAGED_RULESET_ID>"` adds a rule to the phase entry point ruleset to execute a Managed Ruleset for requests addressed to `example.com`.
+*   `"enabled": false` defines an override at the ruleset level to disable all rules in the Managed Ruleset.
+*   `"rules": [{"id": "<RULE_ID_1>", "action": "block", "enabled": true}, {"id": "<RULE_ID_2>", "action": "log", "enabled": true}]` defines a list of overrides at the rule level to enable two individual rules.
 
 ```json
 curl -X PUT \

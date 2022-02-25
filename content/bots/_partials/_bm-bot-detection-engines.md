@@ -1,8 +1,11 @@
-import BotsHeuristics from "../_partials/_bots-heuristics.md"
-import BotsJSD from "../_partials/_bots-jsd.md"
-import BotsML from "../_partials/_bots-ml.md"
-import BotsAD from "../_partials/_bots-ad.md"
-import BotCookie from "../_partials/_bots-cookie.md"
+---
+---
+
+import BotsHeuristics from "../\_partials/\_bots-heuristics.md"
+import BotsJSD from "../\_partials/\_bots-jsd.md"
+import BotsML from "../\_partials/\_bots-ml.md"
+import BotsAD from "../\_partials/\_bots-ad.md"
+import BotCookie from "../\_partials/\_bots-cookie.md"
 
 ### Heuristics
 

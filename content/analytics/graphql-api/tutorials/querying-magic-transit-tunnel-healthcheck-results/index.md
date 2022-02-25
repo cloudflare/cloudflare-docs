@@ -12,92 +12,88 @@ It will return the tunnel health check results by Cloudflare colo. The result fo
 
 ## API Call
 
-```
-CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
-CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
-PAYLOAD='{ "query":
-  "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string) {
-    {
-      viewer {
-        accounts(filter: {accountTag: $accountTag}) {
-          magicTransitTunnelHealthChecksAdaptiveGroups(
-            limit: 100,
-            filter: {
-              datetime_geq: $datetimeStart,
-              datetime_lt:  $datetimeEnd,
-            }
-          ) {
-            avg {
-              tunnelState
-            }
-            dimensions {
-              tunnelName
-              edgeColoName
+    CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
+    CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
+    PAYLOAD='{ "query":
+      "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string) {
+        {
+          viewer {
+            accounts(filter: {accountTag: $accountTag}) {
+              magicTransitTunnelHealthChecksAdaptiveGroups(
+                limit: 100,
+                filter: {
+                  datetime_geq: $datetimeStart,
+                  datetime_lt:  $datetimeEnd,
+                }
+              ) {
+                avg {
+                  tunnelState
+                }
+                dimensions {
+                  tunnelName
+                  edgeColoName
+                }
+              }
             }
           }
         }
-      }
-    }
-  }",
-    "variables": {
-      "accountTag": "90f518ca7113dc0a91513972ba243ba5",
-      "datetimeStart": "2020-05-04T00:00:00.000Z",
-      "datetimeEnd": "2020-05-04T00:00:00.000Z"
-    }
-  }'
+      }",
+        "variables": {
+          "accountTag": "90f518ca7113dc0a91513972ba243ba5",
+          "datetimeStart": "2020-05-04T00:00:00.000Z",
+          "datetimeEnd": "2020-05-04T00:00:00.000Z"
+        }
+      }'
 
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/
-```
+    curl \
+      -X POST \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
+      -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+      --data "$(echo $PAYLOAD)" \
+      https://api.cloudflare.com/client/v4/graphql/
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, like in the following example:
 
-```
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
-  {
-    "data": {
-      "viewer": {
-        "accounts": [
-          {
-            "conduitEdgeTunnelHealthChecks": [
+    curl \
+      -X POST \
+      -H "Content-Type: application/json" \
+      -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
+      -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+      --data "$(echo $PAYLOAD)" \
+      https://api.cloudflare.com/client/v4/graphql/ | jq .
+      {
+        "data": {
+          "viewer": {
+            "accounts": [
               {
-                {
-                  "avg": {
-                    "tunnelState": 1
-                  },
-                  "dimensions": {
-                    "edgeColoName": "mel01",
-                    "tunnelName": "tunnel_01",
-                    "tunnelState": 0.5
-                  }
-                },
-                {
-                  "avg": {
-                    "tunnelState": 0.5
-                  },
-                  "count": 310,
-                  "dimensions": {
-                    "edgeColoName": "mel01",
-                    "tunnelName": "tunnel_02",
-                    "tunnelState": 0.5
-                  }
-                }
+                "conduitEdgeTunnelHealthChecks": [
+                  {
+                    {
+                      "avg": {
+                        "tunnelState": 1
+                      },
+                      "dimensions": {
+                        "edgeColoName": "mel01",
+                        "tunnelName": "tunnel_01",
+                        "tunnelState": 0.5
+                      }
+                    },
+                    {
+                      "avg": {
+                        "tunnelState": 0.5
+                      },
+                      "count": 310,
+                      "dimensions": {
+                        "edgeColoName": "mel01",
+                        "tunnelName": "tunnel_02",
+                        "tunnelState": 0.5
+                      }
+                    }
+                ]
+              }
             ]
           }
-        ]
+        },
+        "errors": null
       }
-    },
-    "errors": null
-  }
-```

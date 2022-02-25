@@ -7,9 +7,9 @@ pcx-content-type: faq
 
 Below you will find answers to our most commonly asked questions regarding Cloudflare Image Optimization, namely the differences between Cloudflare Images. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) for possible solutions to your query.
 
-* [Cloudflare Images](#cloudflare-images-faq)
-* [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
-* [Polish](#polish-faq)
+*   [Cloudflare Images](#cloudflare-images-faq)
+*   [Cloudflare Image Resizing](#cloudflare-image-resizing-faq)
+*   [Polish](#polish-faq)
 
 ## Cloudflare Images FAQ
 
@@ -92,7 +92,7 @@ Cloudflare Images supports common web-compatible file formats as input files: JP
 
 Yes. Based on the `Accept` HTTP request header Cloudflare Images will be served in AVIF or WebP format. The transformation of an image to AVIF is compute-intensive but leads to a significant benefit in file-size. We are always weighing cost and benefit when deciding on which format to serve.
 
----
+***
 
 ## Cloudflare Image Resizing FAQ
 
@@ -112,11 +112,11 @@ Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/h
 
 This is expected behaviour when upscaling a PNG file with transparency, due to the limitations of this file format. To make sure you do not end up with a file size much bigger than the original one:
 
-* **Avoid adding transparent areas to images**. Image Resizing supports a background option that makes images opaque, which allows Image Resizing to convert images to JPEG. In turn, this creates images with much smaller files.
-* **Do not use upscaling**. Keep the default `fit=scale-down` mode which never resizes images to bigger dimensions. This will prevent increases in file sizes. In most cases, this does not affect the presentation of images on the website, as they can be upscaled using CSS/HTML. As a rule, scaling down should be a server-side operation, and scaling up should a client-side operation.
-* **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](https://developers.cloudflare.com/images/image-resizing/resize-with-workers#an-example-worker) to learn how to check the `Accept` header.
+*   **Avoid adding transparent areas to images**. Image Resizing supports a background option that makes images opaque, which allows Image Resizing to convert images to JPEG. In turn, this creates images with much smaller files.
+*   **Do not use upscaling**. Keep the default `fit=scale-down` mode which never resizes images to bigger dimensions. This will prevent increases in file sizes. In most cases, this does not affect the presentation of images on the website, as they can be upscaled using CSS/HTML. As a rule, scaling down should be a server-side operation, and scaling up should a client-side operation.
+*   **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](https://developers.cloudflare.com/images/image-resizing/resize-with-workers#an-example-worker) to learn how to check the `Accept` header.
 
----
+***
 
 ## Polish FAQ
 

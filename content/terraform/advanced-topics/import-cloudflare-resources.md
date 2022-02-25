@@ -6,8 +6,8 @@ pcx-content-type: tutorial
 
 An important point to understand about Terraform is that it can only manage configuration it created or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources it manages. It relies on two types of files to understand what resources it controls and what state they are in. Terraform determines when and how to make changes from the following:
 
-- A [configuration file](https://www.terraform.io/docs/configuration/index.html) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
-- A local [state file](https://www.terraform.io/docs/state/) that maps the resource names defined in your configuration file, e.g., cloudflare_load_balancer.www-lb to the resources that exist in Cloudflare.
+*   A [configuration file](https://www.terraform.io/docs/configuration/index.html) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
+*   A local [state file](https://www.terraform.io/docs/state/) that maps the resource names defined in your configuration file, e.g., cloudflare\_load\_balancer.www-lb to the resources that exist in Cloudflare.
 
 When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/tutorial), it persists those IDs to a state file. By default, the `terraform.tfstate` file in your directory is used, but this can also be a [remote location](https://www.terraform.io/docs/state/remote.html). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
 
@@ -15,17 +15,19 @@ If you configured Cloudflare through other means, for example, by logging into t
 
 ## cf-terraforming
 
-The goal with [cf-terraforming](https://github.com/cloudflare/cf-terraforming) is to help existing Cloudflare customers get started with Terraform. Currently, cf-terraforming helps to generate the terraform config state by fetching all the resources of a specified type from the account and/or domain of your choosing. 
+The goal with [cf-terraforming](https://github.com/cloudflare/cf-terraforming) is to help existing Cloudflare customers get started with Terraform. Currently, cf-terraforming helps to generate the terraform config state by fetching all the resources of a specified type from the account and/or domain of your choosing.
 
 First, `go get` cf-terraforming with `GO111MODULE=on go get -u github.com/cloudflare/cf-terraforming/...`
 
 You can use `cf-terraforming` or `cf-terraforming -h` to view the help file, but to use cf-terraforming, specify the four items below:
 
-1. Your Cloudflare user email - `--email` or `-e`
-2. Your Cloudflare API token - `--token` or `-t`
-3. The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`
-  * Specifying an account will generate configuration for all resources from all zones in that account.
-4. The Cloudflare resources to generate config
+1.  Your Cloudflare user email - `--email` or `-e`
+2.  Your Cloudflare API token - `--token` or `-t`
+3.  The account and/or zone to pull resources from - `--account`/`--zone` or `-a`/`-z`
+
+*   Specifying an account will generate configuration for all resources from all zones in that account.
+
+4.  The Cloudflare resources to generate config
 
 The list of supported resources is available in the [Terraform README](https://github.com/cloudflare/cf-terraforming#supported-resources).
 
@@ -33,8 +35,8 @@ The list of supported resources is available in the [Terraform README](https://g
 
 To start managing existing Cloudflare resources in Terraform, for example, DNS records, you need:
 
-- The Terraform configuration of that resource (defined in a `.tf` file)
-- An accompanying Terraform state file of that resources state (defined in a `.tfstate` file)
+*   The Terraform configuration of that resource (defined in a `.tf` file)
+*   An accompanying Terraform state file of that resources state (defined in a `.tfstate` file)
 
 ### Generate Terraform configuration with cf-terraforming
 
@@ -54,9 +56,8 @@ Start by making a call to Cf-Terraforming to enumerate the Terraform configurati
 <Aside type="note" header="Note">
 
 The command below assumes you run the tool from `{GOPATH}/src/github.com/cloudflare/cf-terraforming`. If pulled with `go get` and if `$GOPATH/bin` is in your `$PATH` you should be able to just run the tool with `$ cf-terraforming <parameters>`.
-```
-$ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
-```
+
+    $ go run cmd/cf-terraforming/main.go --email $CLOUDFLARE_EMAIL --token $CLOUDFLARE_API_TOKEN -z 1109d899a5ff5fd74bc01e581693685a --resource-type cloudflare_record > importing-example.tf
 
 </Aside>
 

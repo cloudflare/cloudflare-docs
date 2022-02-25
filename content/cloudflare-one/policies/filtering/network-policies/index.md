@@ -15,10 +15,10 @@ With Cloudflare Zero Trust, you can configure policies to control network-level 
 
 Build a network policy by configuring the following elements:
 
-* [Actions](#actions)
-* [Expressions](#expressions)
-* [Selectors](#selectors)
-* [Operators](#operators)
+*   [Actions](#actions)
+*   [Expressions](#expressions)
+*   [Selectors](#selectors)
+*   [Operators](#operators)
 
 ## Actions
 
@@ -26,9 +26,9 @@ Just like actions in DNS and HTTP policies, actions in network policies define w
 
 These are the action types you can choose from:
 
-* [Allow](#allow)
-* [Block](#block)
-* [Network Override](#network-override)
+*   [Allow](#allow)
+*   [Block](#block)
+*   [Network Override](#network-override)
 
 ### Allow
 
@@ -47,7 +47,6 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 | --- | --- | --- | --- |
 | Destination Port | In | `443` | Block |
 
-
 ### Network Override
 
 Policies with Network Override actions do not inspect traffic directed to, or coming from, certain IPs or ports. For example, the following configuration overrides traffic to a public IP to a Private IP based on a user’s identity:
@@ -56,11 +55,11 @@ Policies with Network Override actions do not inspect traffic directed to, or co
 | --- | --- | --- | --- |
 | Destination IP | In | `95.92.143.151` | Network Override |
 | User Email | In | `*@example.com` | |
-| Override IP |  | 10.0.0.1 | | 
+| Override IP |  | 10.0.0.1 | |
 
-## Expressions 
+## Expressions
 
-Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. 
+Build expressions to determine the set of elements you want to impact with your policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field.
 
 ### Selectors
 
@@ -128,7 +127,7 @@ The domain whose Server Name Indication (SNI) header Gateway will filter traffic
 
 #### Device Posture
 
-With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device, and/or if the device or software are configured in a particular way. 
+With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device, and/or if the device or software are configured in a particular way.
 
 | UI name | API example |
 | --- | --- |
@@ -149,13 +148,13 @@ Operators are the way Gateway matches traffic to a selector. Matching happens as
 
 <Aside>
 
-The <code>in</code> operator allows you to specify IP addresses or networks using CIDR notation. 
+The <code>in</code> operator allows you to specify IP addresses or networks using CIDR notation.
 
 </Aside>
 
 ## Changing network protocol
 
-You can set your protocol preferences in the **Protocol** card under **Settings** > **Network**. 
+You can set your protocol preferences in the **Protocol** card under **Settings** > **Network**.
 
 ![Protocol settings](../../../static/documentation/policies/protocol-settings.png)
 

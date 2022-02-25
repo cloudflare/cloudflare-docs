@@ -143,7 +143,7 @@ For an example of this in practice, refer to the [`websocket-template`](https://
 
 ## Writing a WebSocket client
 
-A Worker can also establish a WebSocket connection to a remote server. 
+A Worker can also establish a WebSocket connection to a remote server.
 
 Cloudflare does not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the `Upgrade` header set.
 

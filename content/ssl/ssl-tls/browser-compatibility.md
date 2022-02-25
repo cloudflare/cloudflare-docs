@@ -10,7 +10,7 @@ Cloudflare attempts to provide compatibility for as wide a range of user agents 
 ## Universal SSL
 
 Feature/Zone Plan | Free | Pro | Business | Enterprise
-------|-------------|---------------|---------------|---------------
+\------|-------------|---------------|---------------|---------------
 Clients using ECDSA key exchange|✅|✅|✅|✅
 Clients using RSA key exchange|❌|✅|✅|✅
 
@@ -21,32 +21,33 @@ Cloudflare Universal SSL only supports browsers and API clients that use the [Se
 </Aside>
 
 ### Free plan
+
 Universal SSL certificates issued for Free plan zones require user agents that send Server Name Indication (SNI) and support the Elliptic Curve Digital Signature Algorithm (ECDSA). SNI and ECDSA certificates work with these modern browsers:
 
 **Desktop Browsers installed on Windows Vista or OS X 10.6 or later**:
 
-* Internet Explorer 7
-* Firefox 2
-* Opera 8 (with TLS 1.1 enabled)
-* Google Chrome v5.0.342.0
-* Safari 2.1
-* Mobile Browsers
+*   Internet Explorer 7
+*   Firefox 2
+*   Opera 8 (with TLS 1.1 enabled)
+*   Google Chrome v5.0.342.0
+*   Safari 2.1
+*   Mobile Browsers
 
 **Mobile Safari for iOS 4.0**:
 
-* Android 3.0 (Honeycomb) and later
-* Windows Phone 7
+*   Android 3.0 (Honeycomb) and later
+*   Windows Phone 7
 
 ### Paid plans
 
 Paid plans provide additional compatibility with older browsers/operating systems, such as Windows XP and Android 3.0 and earlier.
 
---------
+***
 
 ## Other products
 
 Feature/Product | Custom (Legacy IP) | Custom Certificates | Advanced Certificates | SSL for SaaS
-------|-------------|---------------|---------------|---------------
+\------|-------------|---------------|---------------|---------------
 Clients using ECDSA key exchange|✅|✅|✅|✅
 Clients using RSA key exchange|✅|✅|✅|✅
 Clients without SNI |✅|❌|❌|❌|❌

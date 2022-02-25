@@ -20,38 +20,44 @@ This feature is only available for customers on an Enterprise plan. Contact your
 
 To configure Schema Validation in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-1. Click **Firewall** > **API Shield**.
-1. In the **API Shield** card, click **Deploy API Shield**.
-1. For the **Shield properties**, enter a descriptive name and set up an expression to trigger your shield. 
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 
-    For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
+2.  Click **Firewall** > **API Shield**.
 
-    <Aside type="warning" note="Important">
-    
-    To validate the hostname, you must include the _Hostname_ field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+3.  In the **API Shield** card, click **Deploy API Shield**.
 
-    </Aside>
+4.  For the **Shield properties**, enter a descriptive name and set up an expression to trigger your shield.
 
-1. Click **Next**.
-1. In the **Schema Validation** card, switch the toggle to **On**.
-1. For **Upload API Schema**, upload your schema file.
-1. Click **Save** to validate the content of the schema file and deploy the Schema Validation rule. 
+    For example, if your API is available at `http://api.example.com/v1`, include a check for the *Hostname* field — equal to `api.example.com` — and a check for the *URI Path* field using a regular expression — matching the regex `^/v1`.
+
+     <Aside type="warning" note="Important">
+
+    To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
+
+     </Aside>
+
+5.  Click **Next**.
+
+6.  In the **Schema Validation** card, switch the toggle to **On**.
+
+7.  For **Upload API Schema**, upload your schema file.
+
+8.  Click **Save** to validate the content of the schema file and deploy the Schema Validation rule.
 
     If you get a validation error, make sure you are using one of the [supported file formats](/products/schema-validation#specifications) and that each endpoint and method pair has a [unique Operation ID](/products/schema-validation#operation-ids).
 
-1. After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
+9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
-    <div class="large-img"><img alt="Review your endpoints and associated actions before deploying your schema validation" src="../../images/api-shield-review-endpoints-step.png"/></div>
+     <div class="large-img"><img alt="Review your endpoints and associated actions before deploying your schema validation" src="../../images/api-shield-review-endpoints-step.png"/></div>
 
-1. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
+10. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 
-1. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
+11. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
 
-    <Aside type='warning'>
+     <Aside type='warning'>
 
     Currently, request body validations are not supported.
 
-    </Aside>
+     </Aside>
 
-1. Click **Done**.
+12. Click **Done**.

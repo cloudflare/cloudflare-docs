@@ -27,7 +27,7 @@ console.log(new Uint8Array(myDigest))
 
 Some common uses include:
 
-- [Signing requests](/examples/signing-requests)
+*   [Signing requests](/examples/signing-requests)
 
 <Aside type="warning" header="Warning">
 
@@ -39,21 +39,19 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
 <Definitions>
 
-- <Code>crypto.getRandomValues(buffer<ParamType>ArrayBufferView</ParamType>)</Code>
-  <Type>ArrayBufferView</Type>
+*   <Code>crypto.getRandomValues(buffer<ParamType>ArrayBufferView</ParamType>)</Code> <Type>ArrayBufferView</Type>
 
-  - Fills the passed <Code>ArrayBufferView</Code> with cryptographically sound random values and returns the <Code>buffer</Code>.
+    *   Fills the passed <Code>ArrayBufferView</Code> with cryptographically sound random values and returns the <Code>buffer</Code>.
 
-    __Parameters:__
+        **Parameters:**
 
-    - <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
+        *   <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
 
-      - Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array</Type></Code>.
+            *   Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array</Type></Code>.
 
-- <Code>crypto.randomUUID()</Code>
-  <Type>string</Type>
+*   <Code>crypto.randomUUID()</Code> <Type>string</Type>
 
-  - Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
+    *   Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
 
 </Definitions>
 
@@ -63,220 +61,236 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 <Definitions>
 
-- <Code>encrypt(algorithm, key, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+*   <Code>encrypt(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-  - Returns a Promise that fulfills with the encrypted data corresponding to the clear text,
-    algorithm, and key given as parameters.
+    *   Returns a Promise that fulfills with the encrypted data corresponding to the clear text,
+        algorithm, and key given as parameters.
 
-    __Parameters:__
+        **Parameters:**
 
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#Syntax).
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#Syntax).
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>data<ParamType>BufferSource</ParamType></Code>
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-- <Code>decrypt(algorithm, key, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+        *   <Code>data<ParamType>BufferSource</ParamType></Code>
 
-  - Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm,
-    and key given as parameters.
+*   <Code>decrypt(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-    __Parameters:__
+    *   Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm,
+        and key given as parameters.
 
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+        **Parameters:**
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/decrypt#Syntax).
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>data<ParamType>BufferSource</ParamType></Code>
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/decrypt#Syntax).
 
-- <Code>sign(algorithm, key, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-  - Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key
-    given as parameters.
+        *   <Code>data<ParamType>BufferSource</ParamType></Code>
 
-    __Parameters:__
+*   <Code>sign(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-    - <Code>algorithm<ParamType>string | object</ParamType></Code>
+    *   Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key
+        given as parameters.
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign#Syntax).
+        **Parameters:**
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
 
-- <Code>verify(algorithm, key, signature, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign#Syntax).
 
-  - Returns a Promise that fulfills with a Boolean value indicating if the signature given as a
-    parameter matches the text, algorithm, and key that are also given as parameters.
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-    __Parameters:__
+        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
 
-    - <Code>algorithm<ParamType>string | object</ParamType></Code>
+*   <Code>verify(algorithm, key, signature, data)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/verify#Syntax).
+    *   Returns a Promise that fulfills with a Boolean value indicating if the signature given as a
+        parameter matches the text, algorithm, and key that are also given as parameters.
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>signature<ParamType>ArrayBuffer</ParamType></Code>
-    - <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+        **Parameters:**
 
-- <Code>digest(algorithm, data)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
 
-  - Returns a Promise that fulfills with a digest generated from the algorithm and text given as
-    parameters.
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/verify#Syntax).
 
-    __Parameters:__
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-    - <Code>algorithm<ParamType>string | object</ParamType></Code>
+        *   <Code>signature<ParamType>ArrayBuffer</ParamType></Code>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
+        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
 
-    - <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+*   <Code>digest(algorithm, data)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-- <Code>generateKey(algorithm, extractable, keyUsages)</Code> <Type>Promise&lt;CryptoKey>&nbsp;|&nbsp;Promise&lt;CryptoKeyPair></Type>
+    *   Returns a Promise that fulfills with a digest generated from the algorithm and text given as
+        parameters.
 
-  - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms,
-    or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For
-    example, to generate a new AES-GCM key:
+        **Parameters:**
 
-    ```js
-    let keyPair = await crypto.subtle.generateKey(
-      {
-        name: "AES-GCM",
-        length: "256"
-      },
-      true,
-      ["encrypt", "decrypt"]
-    )
-    ```
+        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
 
-    __Parameters:__
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
 
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+*   <Code>generateKey(algorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey> | Promise\<CryptoKeyPair></Type>
 
-    - <Code>extractable<ParamType>bool</ParamType></Code>
-    - <Code>keyUsages<ParamType>Array</ParamType></Code>
+    *   Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms,
+        or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For
+        example, to generate a new AES-GCM key:
 
-      - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+        ```js
+        let keyPair = await crypto.subtle.generateKey(
+          {
+            name: "AES-GCM",
+            length: "256"
+          },
+          true,
+          ["encrypt", "decrypt"]
+        )
+        ```
 
-- <Code>deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</Code> <Type>Promise&lt;CryptoKey></Type>
+        **Parameters:**
 
-  - Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key
-    and specific algorithm given as parameters.
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-    __Parameters:__
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+        *   <Code>extractable<ParamType>bool</ParamType></Code>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
+        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
 
-    - <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
-    - <Code>derivedKeyAlgorithm<ParamType>object</ParamType></Code>
+            *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
-      - Defines the algorithm the derived key will be used for in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
+*   <Code>deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
 
-    - <Code>extractable<ParamType>bool</ParamType></Code>
-    - <Code>keyUsages<ParamType>Array</ParamType></Code>
+    *   Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key
+        and specific algorithm given as parameters.
 
-      - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
+        **Parameters:**
 
-- <Code>deriveBits(algorithm, baseKey, length)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-  - Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from
-    the base key and specific algorithm given as parameters. It returns a
-    Promise which will be fulfilled with an `ArrayBuffer` containing the derived bits. This method
-    is very similar to `deriveKey()`, except that `deriveKey()` returns a `CryptoKey` object rather
-    than an `ArrayBuffer`. Essentially, `deriveKey()` is composed of `deriveBits()` followed by
-    `importKey()`.
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
 
-    __Parameters:__
+        *   <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
 
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+        *   <Code>derivedKeyAlgorithm<ParamType>object</ParamType></Code>
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits#Syntax).
+            *   Defines the algorithm the derived key will be used for in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
 
-    - <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
-    - <Code>length<ParamType>int</ParamType></Code>
+        *   <Code>extractable<ParamType>bool</ParamType></Code>
 
-      - Length of the bit string to derive.
+        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
 
-- <Code>importKey(format, keyData, algorithm, extractable, keyUsages)</Code> <Type>Promise&lt;CryptoKey></Type>
+            *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
 
-  - Transform a key from some external, portable format into a `CryptoKey` for use with the Web
-    Crypto API.
+*   <Code>deriveBits(algorithm, baseKey, length)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-    __Parameters:__
+    *   Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from
+        the base key and specific algorithm given as parameters. It returns a
+        Promise which will be fulfilled with an `ArrayBuffer` containing the derived bits. This method
+        is very similar to `deriveKey()`, except that `deriveKey()` returns a `CryptoKey` object rather
+        than an `ArrayBuffer`. Essentially, `deriveKey()` is composed of `deriveBits()` followed by
+        `importKey()`.
 
-    - <Code>format<ParamType>string</ParamType></Code>
+        **Parameters:**
 
-      - Describes [the format of the key to be imported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-    - <Code>keyData<ParamType>ArrayBuffer</ParamType></Code>
-    - <Code>algorithm<ParamType>object</ParamType></Code>
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits#Syntax).
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
+        *   <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
 
-    - <Code>extractable<ParamType>bool</ParamType></Code>
-    - <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   <Code>length<ParamType>int</ParamType></Code>
 
-      - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax)
+            *   Length of the bit string to derive.
 
-- <Code>exportKey(format<ParamType>string</ParamType>, key<ParamType>CryptoKey</ParamType>)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+*   <Code>importKey(format, keyData, algorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
 
-  - Transform a `CryptoKey` into a portable format, if the `CryptoKey` is `extractable`.
+    *   Transform a key from some external, portable format into a `CryptoKey` for use with the Web
+        Crypto API.
 
-    __Parameters:__
+        **Parameters:**
 
-    - <Code>format<ParamType>string</ParamType></Code>
+        *   <Code>format<ParamType>string</ParamType></Code>
 
-      - Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey#Syntax).
+            *   Describes [the format of the key to be imported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   <Code>keyData<ParamType>ArrayBuffer</ParamType></Code>
 
-- <Code>wrapKey(format, key, wrappingKey, wrapAlgo)</Code> <Type>Promise&lt;ArrayBuffer></Type>
+        *   <Code>algorithm<ParamType>object</ParamType></Code>
 
-  - Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This
-    renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
+            *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
 
-    __Parameters:__
+        *   <Code>extractable<ParamType>bool</ParamType></Code>
 
-    - <Code>format<ParamType>string</ParamType></Code>
+        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
 
-      - Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax) before being encrypted.
+            *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax)
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>wrappingKey<ParamType>CryptoKey</ParamType></Code>
-    - <Code>wrapAlgo<ParamType>object</ParamType></Code>
+*   <Code>exportKey(format<ParamType>string</ParamType>, key<ParamType>CryptoKey</ParamType>)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-      - Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
+    *   Transform a `CryptoKey` into a portable format, if the `CryptoKey` is `extractable`.
 
-- <Code>unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>&nbsp;&nbsp;unwrappedKeyAlgo, extractable,
-  keyUsages)</Code> <Type>Promise&lt;CryptoKey></Type>
+        **Parameters:**
 
-  - Transform a key that was wrapped by `wrapKey()` back into a `CryptoKey`.
+        *   <Code>format<ParamType>string</ParamType></Code>
 
-    __Parameters:__
+            *   Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey#Syntax).
 
-    - <Code>format<ParamType>string</ParamType></Code>
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-      - Described the [data format of the key to be unwrapped](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+*   <Code>wrapKey(format, key, wrappingKey, wrapAlgo)</Code> <Type>Promise\<ArrayBuffer></Type>
 
-    - <Code>key<ParamType>CryptoKey</ParamType></Code>
-    - <Code>unwrappingKey<ParamType>CryptoKey</ParamType></Code>
-    - <Code>unwrapAlgo<ParamType>object</ParamType></Code>
+    *   Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This
+        renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
 
-      - Describes the algorithm that was used to encrypt the wrapped key, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+        **Parameters:**
 
-    - <Code>unwrappedKeyAlgo<ParamType>object</ParamType></Code>
+        *   <Code>format<ParamType>string</ParamType></Code>
 
-      - Describes the key to be unwrapped, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+            *   Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax) before being encrypted.
 
-    - <Code>extractable<ParamType>bool</ParamType></Code>
-    - <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
 
-      - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
+        *   <Code>wrappingKey<ParamType>CryptoKey</ParamType></Code>
+
+        *   <Code>wrapAlgo<ParamType>object</ParamType></Code>
+
+            *   Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
+
+*   <Code>unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>  unwrappedKeyAlgo, extractable,
+    keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
+
+    *   Transform a key that was wrapped by `wrapKey()` back into a `CryptoKey`.
+
+        **Parameters:**
+
+        *   <Code>format<ParamType>string</ParamType></Code>
+
+            *   Described the [data format of the key to be unwrapped](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+
+        *   <Code>unwrappingKey<ParamType>CryptoKey</ParamType></Code>
+
+        *   <Code>unwrapAlgo<ParamType>object</ParamType></Code>
+
+            *   Describes the algorithm that was used to encrypt the wrapped key, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+        *   <Code>unwrappedKeyAlgo<ParamType>object</ParamType></Code>
+
+            *   Describes the key to be unwrapped, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
+
+        *   <Code>extractable<ParamType>bool</ParamType></Code>
+
+        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
+
+            *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
 
 </Definitions>
 
@@ -286,8 +300,8 @@ Workers implements all operation of the [WebCrypto standard](https://www.w3.org/
 The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
 
 A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.
-[//]: #  An x (✘) indicates that this feature is part of the specification but not implemented.
-[//]: #  If a feature only implements the operation partially, details are listed.
+\[//]: #  An x (✘) indicates that this feature is part of the specification but not implemented.
+\[//]: #  If a feature only implements the operation partially, details are listed.
 
 <TableWrap>
 
@@ -314,19 +328,21 @@ A checkmark (✓) indicates that this feature is believed to be fully supported 
 
 </TableWrap>
 
-__Footnotes:__
+**Footnotes:**
 
-1. <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
-* Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
-* Unlike NodeJS, Cloudflare will not support raw import of private keys.
-* The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
-Any notable compatibility notes will be communicated in release notes and via this developer document.
-2. <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
+1.  <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
 
---------------------------------
+*   Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
+*   Unlike NodeJS, Cloudflare will not support raw import of private keys.
+*   The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
+    Any notable compatibility notes will be communicated in release notes and via this developer document.
+
+2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
+
+***
 
 ## Related resources
 
-- [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
-- [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
-- [Example: signing requests](/examples/signing-requests)
+*   [SubtleCrypto documentation on MDN.](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto)
+*   [SubtleCrypto documentation as part of the W3C Web Crypto API specification.](https://www.w3.org/TR/WebCryptoAPI/#subtlecrypto-interface)
+*   [Example: signing requests](/examples/signing-requests)

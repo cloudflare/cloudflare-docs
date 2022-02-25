@@ -33,13 +33,13 @@ If you need to create overlapping events, use different waiting rooms.
 
 Though most properties are identical to those on a [regular waiting room](https://api.cloudflare.com/#waiting-room-properties), there are a few unique to [creating an event](https://api.cloudflare.com/#waiting-room-create-event):
 
-- `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
-- `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
-- `event_end_time` (required): ISO 8601 timestamp that marks the end of the event.
-- `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`. Commonly used to ensure fairness if your event is using a [**FIFO** queueing method](#set-up-a-lottery).
-- `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
-- `description`: A text description providing more detail about the event.
-- `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's normal configuration.
+*   `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
+*   `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
+*   `event_end_time` (required): ISO 8601 timestamp that marks the end of the event.
+*   `shuffle_at_event_start`: If **true** and `prequeue_start_time` is not null, users in the prequeue will be shuffled randomly at the `event_start_time`. Commonly used to ensure fairness if your event is using a [**FIFO** queueing method](#set-up-a-lottery).
+*   `prequeue_start_time`: ISO 8601 timestamp that marks when to begin queueing all users before the event starts. Must occur at least **5 minutes before** `event_start_time`.
+*   `description`: A text description providing more detail about the event.
+*   `suspended`: If **true**, the event is ignored and traffic is handled based on the waiting room's normal configuration.
 
 ### Queueing methods
 
@@ -51,14 +51,14 @@ Set the waiting room's queueing method to [**Reject**](/reference/queueing-metho
 
 ## Set up a "lottery"
 
-Set up a "lottery" system to reward all users who enter into the queue prior to your event start time. 
+Set up a "lottery" system to reward all users who enter into the queue prior to your event start time.
 
 Users who reach your application **during the prequeue period** are [randomly assigned](/reference/queueing-methods#random) a place in line when the event starts. If the event uses [FIFO ordering](/reference/queueing-methods#first-in-first-out-fifo), users who reach your application **after the prequeue period** are assigned places after users from the prequeue.
 
 To set up a "lottery", include the [following parameters](#properties) in your API request:
 
-- `prequeue_start_time`
-- `shuffle_at_event_start`
+*   `prequeue_start_time`
+*   `shuffle_at_event_start`
 
 ## Preview an event configuration
 
@@ -74,12 +74,12 @@ To edit an event, use a [PATCH request](https://api.cloudflare.com/#waiting-room
 
 You can disable an event by setting its `suspended` parameter to `true`.
 
-Additionally, events will not become active if a waiting room itself is **Disabled**. 
+Additionally, events will not become active if a waiting room itself is **Disabled**.
 
 ## Other API commands
 
-Function | Command 
----------|---------
+Function | Command
+\---------|---------
 [Get event details](https://api.cloudflare.com/#waiting-room-event-details) | `GET`
 [List scheduled events](https://api.cloudflare.com/#waiting-room-list-events) | `GET`
 [Delete event](https://api.cloudflare.com/#waiting-room-delete-event) | `DELETE`

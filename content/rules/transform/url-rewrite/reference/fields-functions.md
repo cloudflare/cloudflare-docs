@@ -4,7 +4,7 @@ order: 2
 pcx-content-type: reference
 ---
 
-import TransformPhaseFields from "../../../_partials/transform/_transform-phase-fields.md"
+import TransformPhaseFields from "../../../\_partials/transform/\_transform-phase-fields.md"
 
 # Available fields and functions in URL Rewrite Rules
 
@@ -20,9 +20,9 @@ For information on the available functions, refer to [Functions](https://develop
 
 A rewrite expression (that is, the expression that defines the dynamic URL rewrite to perform) can only include the following fields:
 
-* `http.request.uri.*`
-* `http.request.headers.*`
-* `http.request.accepted_languages`
+*   `http.request.uri.*`
+*   `http.request.headers.*`
+*   `http.request.accepted_languages`
 
 Refer to [Fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields) for reference information on these fields.
 

@@ -12,9 +12,9 @@ Before you can begin using Magic WAN, verify that you meet Cloudflare's onboardi
 
 Magic WAN relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic WAN, the routers at your Anycast GRE or IPsec tunnel endpoints must:
 
-- Support Anycast GRE or IPsec tunnels
-- Allow configuration of at least one tunnel per Internet service provider (ISP)
-- Support maximum segment size (MSS) clamping
+*   Support Anycast GRE or IPsec tunnels
+*   Allow configuration of at least one tunnel per Internet service provider (ISP)
+*   Support maximum segment size (MSS) clamping
 
 ## Set maximum segment size
 

@@ -11,7 +11,7 @@ The Cloudflare Docs Engine renders pages with [MDX](https://mdxjs.com/).
 
 Pages can specify YAML frontmatter to configure a number of options.
 
---------------------------------
+***
 
 ## URL paths
 
@@ -21,7 +21,7 @@ The special filename `index.md` is equivalent to `(empty string).md`. Therefore,
 
 <Aside type="tip">
 
-__Tip:__ It’s common to use a folder to group a page with its media, e.g.:
+**Tip:** It’s common to use a folder to group a page with its media, e.g.:
 
 ```txt
 ---
@@ -47,7 +47,7 @@ https://example.com/page-3
 
 </Aside>
 
---------------------------------
+***
 
 ## Partials
 
@@ -60,6 +60,7 @@ To create a partial, simple prefix the name your file with an underscore (`_`).
 In the [Workers docs](https://developers.cloudflare.com/workers), there’s a partial used in the intro of all of the [Tutorials](https://developers.cloudflare.com/workers/tutorials), called “Before you start” which makes sure folks have the appropriate pre-requisites before starting a Workers tutorial ([source](https://github.com/cloudflare/cloudflare-docs/blob/4ba1e70d2a535c93ef6de42b0fc5178dabdb942b/products/workers/src/content/_partials/_tutorials-before-you-start.md)):
 
 <!-- TODO: we unfortunately cannot use the `markdown` syntax for this code block since it’s currently incompatible with code block frontmatter -->
+
 ```txt
 ---
 filename: src/content/_partials/_tutorials-before-you-start.md
@@ -72,6 +73,7 @@ All of the tutorials assume you’ve already gone through [Getting started](/lea
 Inside the tutorial it’s imported as you would any other MDX component ([source](https://github.com/cloudflare/cloudflare-docs/blob/4ba1e70d2a535c93ef6de42b0fc5178dabdb942b/products/workers/src/content/tutorials/build-a-qr-code-generator/index.md)):
 
 <!-- TODO: we unfortunately cannot use the `markdown` syntax for this code block since it’s currently incompatible with code block frontmatter -->
+
 ```markup
 ---
 filename: src/content/tutorials/build-a-qr-code-generator/index.md
@@ -90,7 +92,7 @@ In this tutorial, you’ll build and publish a serverless function that generate
 <!-- ... -->
 ```
 
---------------------------------
+***
 
 ## Frontmatter
 
@@ -147,11 +149,11 @@ By default, all pages (not at the top level of nav tree) will have breadcrumbs g
 
 <Definitions>
 
-- `updated` <Type>date</Type>
-  - Sets the updated date. This is currently used to sort the table.
+*   `updated` <Type>date</Type>
+    *   Sets the updated date. This is currently used to sort the table.
 
-- `difficulty` <Type>string</Type>
-  - One of `"Beginner"`, `"Advanced"`, or `"Expert"`.
+*   `difficulty` <Type>string</Type>
+    *   One of `"Beginner"`, `"Advanced"`, or `"Expert"`.
 
 </Definitions>
 
@@ -161,13 +163,13 @@ By default, all pages (not at the top level of nav tree) will have breadcrumbs g
 
 <Definitions>
 
-- `summary` <Type>string</Type>
-  - A summary of the example, no longer than \~100 characters in length.
+*   `summary` <Type>string</Type>
+    *   A summary of the example, no longer than ~100 characters in length.
 
-- `demo` <Type>string</Type> <PropMeta>(URL)</PropMeta>
-  - A URL to a working demo of the example.
+*   `demo` <Type>string</Type> <PropMeta>(URL)</PropMeta>
+    *   A URL to a working demo of the example.
 
-- `tags` <Type>array</Type>
-  - A list of tags to use for filtering on the Examples overview page.
+*   `tags` <Type>array</Type>
+    *   A list of tags to use for filtering on the Examples overview page.
 
 </Definitions>

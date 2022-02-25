@@ -19,11 +19,11 @@ Unlike publicly routable IP addresses, the subdomain will only proxy traffic for
 
 To add a Cloudflare Tunnel connection to a Cloudflare Load Balancer pool:
 
-1. Navigate to the Load Balancer page in the Cloudflare dashboard.
-2. Create or edit an existing Origin Pool. Add the tunnel subdomain as an Origin Address.
-3. Click **Save**.
+1.  Navigate to the Load Balancer page in the Cloudflare dashboard.
+2.  Create or edit an existing Origin Pool. Add the tunnel subdomain as an Origin Address.
+3.  Click **Save**.
 
-If you want to add a Monitor to your Cloudflare Load Balancer pool, you need to add a host header in the **Advanced Healthcheck Settings** section. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The Monitor will not work without the host header if you are using a config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo. 
+If you want to add a Monitor to your Cloudflare Load Balancer pool, you need to add a host header in the **Advanced Healthcheck Settings** section. The header will be similar to `Header Name: Host` and `Value: www.your-zone.com`. The Monitor will not work without the host header if you are using a config file that defines the `ingress` field like the example [cloudflared.yaml](https://github.com/cloudflare/argo-tunnel-examples/blob/adb44da43ec0aa65f7928613b762a47ae0d9b2b0/named-tunnel-k8s/cloudflared.yaml#L90) in this repo.
 
 ## Route traffic from the command line
 
@@ -51,13 +51,13 @@ Instead, set up a health check endpoint in `cloudflared` — for example, an [in
 
 ### Named Tunnels and replicas
 
-A load balancer maintains [session affinity](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas). 
+A load balancer maintains [session affinity](https://developers.cloudflare.com/load-balancing/understand-basics/session-affinity) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas).
 
 To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs.
 
 ### Local connection preference
 
-If you notice traffic imbalances across origin servers in different locations, you may have to adjust your load balancer setup. 
+If you notice traffic imbalances across origin servers in different locations, you may have to adjust your load balancer setup.
 
 `cloudflared` connections give preference to tunnels that terminate in the same data center (local connections). This behavior can impact how connections are weighted and traffic is distributed.
 

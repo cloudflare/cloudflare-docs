@@ -12,14 +12,14 @@ Documentation for the engine which powers [Cloudflare’s docs](https://github.c
 
 The engine uses [Gatsby](https://www.gatsbyjs.com/), and includes many [built-in MDX components](/reference/markdown).
 
-It’s __open-source__ and [available on GitHub](https://github.com/cloudflare/cloudflare-docs-engine).
+It’s **open-source** and [available on GitHub](https://github.com/cloudflare/cloudflare-docs-engine).
 
 <ButtonGroup>
   <Button type="primary" href="/how-it-works">How it works</Button>
   <Button type="secondary" href="/faq">FAQ</Button>
 </ButtonGroup>
 
---------------------------------
+***
 
 ## Sites built with the engine
 

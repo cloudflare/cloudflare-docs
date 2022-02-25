@@ -10,9 +10,9 @@ Use the [Rulesets API](/rulesets-api) to deploy a ruleset. To deploy a ruleset, 
 
 A rule that executes a ruleset consists of:
 
-* The **ID of the ruleset** you want to execute.
-* An **expression**.
-* An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
+*   The **ID of the ruleset** you want to execute.
+*   An **expression**.
+*   An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
 
 <Aside type='note'>
 

@@ -25,6 +25,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
   <div class="special-class" markdown="1">
 
 ![Magic Transit Tunnel health check packets](../static/tunnel-health-check-packets.png)
+
 </div>
 </details>
 
@@ -52,8 +53,8 @@ When all health checks or at least three samples in the last one second fail, Ma
 
 When Magic Transit identifies a route that is not healthy, it applies the these penalties:
 
-- Degraded: Add 500,000 to priority.
-- Down: Add 1,000,000 to priority.
+*   Degraded: Add 500,000 to priority.
+*   Down: Add 1,000,000 to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/get-started/configure-tunnels/assign-tunnel-route-priorities).
 
@@ -79,8 +80,8 @@ Cloudflare always attempts to send traffic over available tunnel routes with the
 
 Consider two tunnels and their associated routing priorities. Remember that lower route values have priority.
 
-- Tunnel 1, route priority 100
-- Tunnel 2, route priority 200
+*   Tunnel 1, route priority 100
+*   Tunnel 2, route priority 200
 
 When both tunnels are in a **Healthy** state, routing priority directs traffic exclusively to Tunnel 1 because its route priority of 100 beats that of Tunnel 2. Tunnel 2 does not receive any traffic, except for tunnel health check probes. Endpoint health checks only flow over Tunnel 1 to their destination inside the origin network.
 

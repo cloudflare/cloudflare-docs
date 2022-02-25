@@ -7,9 +7,9 @@ pcx-content-type: reference
 
 To serve images uploaded to Cloudflare Images, you need three pieces of information:
 
-* Your Images account hash.
-* Image ID.
-* Variant name.
+*   Your Images account hash.
+*   Image ID.
+*   Variant name.
 
 Assuming you have at least one image uploaded to Images, you will find the basic URL format on your Images Dashboard:
 
@@ -29,9 +29,9 @@ https://imagedelivery.net/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66ac
 
 In this example:
 
-- `ZWd9g1K7eljCn_KDTu_MWA` is the Images account hash.
-- `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID.
-- `public` is the variant name.
+*   `ZWd9g1K7eljCn_KDTu_MWA` is the Images account hash.
+*   `083eb7b2-5392-4565-b69e-aff66acddd00` is the image ID.
+*   `public` is the variant name.
 
 When a client requests an image, Cloudflare Images will pick the optimal format between WebP, PNG, JPEG and GIF. The format Cloudflare serves to the user is determined by client headers and the image type.
 
@@ -49,10 +49,10 @@ Example with a custom domain:
 https://example.com/cdn-cgi/imagedelivery/ZWd9g1K7eljCn_KDTu_MWA/083eb7b2-5392-4565-b69e-aff66acddd00/public
 ```
 
-In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different: 
+In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the same, but the hostname and prefix path is different:
 
-- `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
-- `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
-- `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
-- `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
-- `public`: The variant name.
+*   `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
+*   `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
+*   `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
+*   `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
+*   `public`: The variant name.

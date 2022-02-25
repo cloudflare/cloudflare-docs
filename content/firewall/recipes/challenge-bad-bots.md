@@ -15,21 +15,23 @@ Cloudflare’s Bot Management feature scores the likelihood that a request origi
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
-- `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
-- `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
-- `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint)
+
+*   `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
+*   `cf.bot_management.verified_bot` to identify requests from [known good bots](/known-issues-and-faq#bots-currently-detected)
+*   `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](https://developers.cloudflare.com/bots/concepts/ja3-fingerprint)
 
 ## Suggested rules
 
 For best results:
-- Use [Bot Analytics](https://developers.cloudflare.com/bots/get-started/bm-subscription#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
-- Start small and increase your bot threshold over time
+
+*   Use [Bot Analytics](https://developers.cloudflare.com/bots/get-started/bm-subscription#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
+*   Start small and increase your bot threshold over time
 
 Your rules may also vary based on the [nature of your site](https://developers.cloudflare.com/bots/get-started/bm-subscription#5-create-additional-firewall-rules) and your tolerance for false positives.
 
 ### Protect browser endpoints
 
-When a request is definitely automated (score of 1) or likely automated (scores 2 through 29) and is _not_ on the list of known good bots, Cloudflare **blocks** the request.
+When a request is definitely automated (score of 1) or likely automated (scores 2 through 29) and is *not* on the list of known good bots, Cloudflare **blocks** the request.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -66,7 +68,6 @@ This example offers the same protection as the browser-only rule, but allows aut
     </tr>
   </tbody>
 </table>
-
 
 ### Adjust for mobile traffic
 
@@ -113,11 +114,12 @@ Otherwise, you could set lower thresholds for mobile traffic. The following rule
 ### Layer rules
 
 If your domain saw mobile, browser, and API traffic, you would want to arrange these example rules in the following order:
-- API
-- Mobile:
-  - If consistent JA3 fingerprint, set *Allow* rule.
-  - If not, put the *Block* rule first and then the *Challenge* rule.
-- Browser - Block
+
+*   API
+*   Mobile:
+    *   If consistent JA3 fingerprint, set *Allow* rule.
+    *   If not, put the *Block* rule first and then the *Challenge* rule.
+*   Browser - Block
 
 ### Static resource protection
 

@@ -2,13 +2,13 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Remix site
 
 [Remix](https://remix.run/) is a framework that is focused on fully utilizing the power of the web. Like Cloudflare Workers, it uses modern JavaScript APIs, and it places emphasis on web fundamentals such as meaningful HTTP status codes, caching and optimizing for both usability and performance.
 
-In this guide, you will create a new Remix application and deploy to Cloudflare Pages. 
+In this guide, you will create a new Remix application and deploy to Cloudflare Pages.
 
 ## Setting up a new project
 
@@ -19,11 +19,11 @@ $ npx create-remix@latest
 
 ```
 
-After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses Cloudflare Pages. 
+After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses Cloudflare Pages.
 
-By selecting *Cloudflare Pages* as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](https://developers.cloudflare.com/pages/platform/functions#path-segments) to learn more.  
+By selecting *Cloudflare Pages* as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](https://developers.cloudflare.com/pages/platform/functions#path-segments) to learn more.
 
-After selecting your deployment option, change the directory to your project and render your project by running the following command: 
+After selecting your deployment option, change the directory to your project and render your project by running the following command:
 
 ```sh
 # choose Cloudflare Pages
@@ -42,6 +42,7 @@ $ git remote add origin https://github.com/yourgithubusername/githubrepo
 $ git branch -M main
 $ git push -u origin main
 ```
+
 ## Deploying with Cloudflare Pages
 
 Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
@@ -58,9 +59,9 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 </TableLayout>
 
 <Aside type="warning">
-  
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to *Settings* > *Environment Variables* > *Production* and add `NODE_VERSION = v16.7.0` in your production option. 
-  
+
+Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to *Settings* > *Environment Variables* > *Production* and add `NODE_VERSION = v16.7.0` in your production option.
+
 </Aside>
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `npm`, your project dependencies, and building your site before deploying it.

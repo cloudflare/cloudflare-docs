@@ -69,8 +69,8 @@ header: Response
 
 However, this approach has some disadvantages:
 
-- The Firewall Rules client has to implement error and exception handling for every potential failure occurring in both the Firewall Rules and the filters APIs.
-- To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
+*   The Firewall Rules client has to implement error and exception handling for every potential failure occurring in both the Firewall Rules and the filters APIs.
+*   To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
 
 By default, if either the filter or rule is invalid, neither will be created.
 

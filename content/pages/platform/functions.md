@@ -29,41 +29,39 @@ Using a `/functions` directory will generate a routing table based on the files 
 
 For example, assume this directory structure:
 
-```
-├── ...
-├── functions
-|   └── api
-│       ├── [[path]].ts
-│       ├── [username]
-│       │   └── profile.ts
-│       ├── time.ts
-│       └── todos
-│           ├── [[path]].ts
-│           ├── [id].ts
-│           └── index.ts
-└── ...
-```
+    ├── ...
+    ├── functions
+    |   └── api
+    │       ├── [[path]].ts
+    │       ├── [username]
+    │       │   └── profile.ts
+    │       ├── time.ts
+    │       └── todos
+    │           ├── [[path]].ts
+    │           ├── [id].ts
+    │           └── index.ts
+    └── ...
 
 The following routes will be generated based on the file structure, mapping the URL pattern to the `/functions` file that will be invoked:
 
-```
-/api/time => ./functions/api/time.ts
-/api/todos => ./functions/api/todos/index.ts
-/api/todos/* => ./functions/api/todos/[id].ts
-/api/todos/*/** => ./functions/api/todos/[[path]].ts
-/*/profile => ./functions/api/[username]/profile.ts
-/** => ./functions/api/[[path]].ts
-```
+    /api/time => ./functions/api/time.ts
+    /api/todos => ./functions/api/todos/index.ts
+    /api/todos/* => ./functions/api/todos/[id].ts
+    /api/todos/*/** => ./functions/api/todos/[[path]].ts
+    /*/profile => ./functions/api/[username]/profile.ts
+    /** => ./functions/api/[[path]].ts
 
 ### Path segments
 
 In the [example above](/platform/functions#functions-routing):
-* A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
-* A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
+
+*   A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
+*   A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
 
 When naming your files:
-* `[name]` is a placeholder for a single path segment.
-* `[[name]]` matches any depth of route below this point.
+
+*   `[name]` is a placeholder for a single path segment.
+*   `[[name]]` matches any depth of route below this point.
 
 <Aside type="note" header="Route specificity">
 
@@ -97,13 +95,12 @@ When migrating from a [Module Worker](https://developers.cloudflare.com/workers/
 
 In the previous example, an `onRequest` function was exported. This is a generic name because it generically handles all HTTP requests. However, to react to specific HTTP request methods, you may use the method name as a suffix to the exported function. For example, a handler that should only receive `GET` requests should be named `onRequestGet`. The following other handlers are supported:
 
-* `onRequestPost`
-* `onRequestPut`
-* `onRequestPatch`
-* `onRequestDelete`
-* `onRequestHead`
-* `onRequestOptions`
-
+*   `onRequestPost`
+*   `onRequestPut`
+*   `onRequestPatch`
+*   `onRequestDelete`
+*   `onRequestHead`
+*   `onRequestOptions`
 
 These are the requests you export to write your first function. For example, you can write a function to output "Hello World" when it hits a `/functions/hello-world.js` file:
 
@@ -117,6 +114,7 @@ export async function onRequestPost(request) {
   return new Response(`Hello world`);
 }
 ```
+
 Another helpful example for handling single path segments can be querying an API for data, for example, [Rick and Morty API](https://rickandmortyapi.com/documentation/#rest) for information on the show characters. You can write a function to show each character on request using the ID to identify them:
 
 ```js
@@ -133,6 +131,7 @@ export async function onRequestGet({ params }) {
 }
 
 ```
+
 The above will return each character at `/character/{id}` ID being associated with the character.
 
 ### Handling multiple requests in a single function
@@ -264,7 +263,7 @@ async function errorHandler(context) {
 export const onRequest = errorHandler;
 ```
 
-Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example: 
+Another use case for the `next` function is passing the request cycle from the current middleware function to the next function in the stack if the current function does not end the request-response cycle. Using the `next()` function will pass control to the next middleware function, depending on the order of execution. For example:
 
 ```js
 // Attach multiple handlers
@@ -317,7 +316,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally). 
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally).
 
 ### KV namespace
 
@@ -342,12 +341,11 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
-
 ![DO-Binding](DO-functions.png)
 
 ## Durable Objects locally
 
-Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class. 
+Just as you can access kv with `-k`or `-kv` you can access durable objects in your local builds with `-o`, `--do` followed by your Durable object name and class.
 
 ### Environment variable
 

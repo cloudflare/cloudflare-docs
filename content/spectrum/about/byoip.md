@@ -73,4 +73,4 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/ZONEID/spectrum/apps" \
     }'
 ```
 
-(replace ZONEID, USER_EMAIL and API_KEY with your actual values)
+(replace ZONEID, USER\_EMAIL and API\_KEY with your actual values)

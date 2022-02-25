@@ -9,15 +9,15 @@ pcx-content-type: how-to
 
 In Cloudflare’s system, you have a User that can have multiple Accounts and Zones. As a result, your User is configured globally on your machine via a single Cloudflare Token. Your Account(s) and Zone(s) will be configured per project, but will use your Cloudflare Token to authenticate all API calls. A configuration file is created in a `.wrangler` directory in your computer’s home directory.
 
---------------------------------
+***
 
 ### Using commands
 
 To set up `wrangler` to work with your Cloudflare user, use the following commands:
 
-- `login`: a command that opens a Cloudflare account login page to authorize Wrangler.
-- `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
-- `whoami`: run this command to confirm that your configuration is appropriately set up. When successful, this command will print out your account email and your `account_id` needed for your project's `wrangler.toml` file.
+*   `login`: a command that opens a Cloudflare account login page to authorize Wrangler.
+*   `config`: an alternative to `login` that prompts you to enter your `email` and `api` key.
+*   `whoami`: run this command to confirm that your configuration is appropriately set up. When successful, this command will print out your account email and your `account_id` needed for your project's `wrangler.toml` file.
 
 ### Using environment variables
 
@@ -39,22 +39,22 @@ You can also specify or override the target Zone ID by defining the `CF_ZONE_ID`
 
 Defining environment variables inline will override the default credentials stored in `wrangler config` or in your `wrangler.toml` file.
 
---------------------------------
+***
 
 ## Generate Tokens
 
 ### API token
 
-1. In **Overview**, select [**Get your API token**](https://developers.cloudflare.com/api/tokens/create).
-2. After being taken to the **Profile** page, select **Create token**.
-3. Under the **API token templates** section, find the **Edit Cloudflare Workers** template and select **Use template**.
-4. Fill out the rest of the fields and then select **Continue to summary**, where you can select **Create Token** and issue your token for use.
+1.  In **Overview**, select [**Get your API token**](https://developers.cloudflare.com/api/tokens/create).
+2.  After being taken to the **Profile** page, select **Create token**.
+3.  Under the **API token templates** section, find the **Edit Cloudflare Workers** template and select **Use template**.
+4.  Fill out the rest of the fields and then select **Continue to summary**, where you can select **Create Token** and issue your token for use.
 
 ### Global API Key
 
-1. In **Overview**, select **Get your API token**.
-2. After being taken to the **Profile** page, scroll to **API Keys**.
-3. Select **View** to copy your **Global API Key**.\*
+1.  In **Overview**, select **Get your API token**.
+2.  After being taken to the **Profile** page, scroll to **API Keys**.
+3.  Select **View** to copy your **Global API Key**.\*
 
 <Aside type="warning" header="Warning">
 
@@ -62,7 +62,7 @@ Defining environment variables inline will override the default credentials stor
 
 </Aside>
 
---------------------------------
+***
 
 ## Use Tokens
 

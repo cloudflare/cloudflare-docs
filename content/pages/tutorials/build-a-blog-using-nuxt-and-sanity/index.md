@@ -10,8 +10,8 @@ In this tutorial, you will build a blog application using Nuxt.js and Sanity.io 
 
 ## Prerequisites
 
-- A recent version of [NPM](https://www.npmjs.com/get-npm) on your computer
-- A [Sanity.io](https://www.sanity.io) account
+*   A recent version of [NPM](https://www.npmjs.com/get-npm) on your computer
+*   A [Sanity.io](https://www.sanity.io) account
 
 ## Creating a new Sanity project
 
@@ -59,10 +59,10 @@ $ sanity deploy
 
 Once you have deployed your Sanity studio:
 
-1. Go into Sanity's management panel ([manage.sanity.io](https://manage.sanity.io)).
-2. Find your project.
-3. Select **API**. 
-4. Add `http://localhost:3000` as an allowed CORS origin for your project.
+1.  Go into Sanity's management panel ([manage.sanity.io](https://manage.sanity.io)).
+2.  Find your project.
+3.  Select **API**.
+4.  Add `http://localhost:3000` as an allowed CORS origin for your project.
 
 This means that requests that come to your Sanity dataset from your Nuxt application will be whitelisted.
 
@@ -174,7 +174,7 @@ export default {
 </style>
 ```
 
-Vue SFCs, or _single file components_, are a unique Vue feature that allow you to combine JavaScript, HTML and CSS into a single file. In `pages/index.vue`, a `template` tag is provided, which represents the Vue component.
+Vue SFCs, or *single file components*, are a unique Vue feature that allow you to combine JavaScript, HTML and CSS into a single file. In `pages/index.vue`, a `template` tag is provided, which represents the Vue component.
 
 Importantly, `v-for` is used as a directive to tell Vue to render HTML for each `post` in an array of `posts`:
 
@@ -400,8 +400,8 @@ export default {
 
 There are many other things inside of your blog schema that you can add to your project. As an exercise, consider one of the following to continue developing your understanding of how to build with a headless CMS:
 
-- Create `pages/authors.vue`, and render a list of authors (similar to `pages/index.vue`, but for objects with `_type == "author"`)
-- Read the Sanity docs on [using references in GROQ](https://www.sanity.io/docs/how-queries-work#references-and-joins-db43dfd18d7d), and use it to render author information in a blog post page
+*   Create `pages/authors.vue`, and render a list of authors (similar to `pages/index.vue`, but for objects with `_type == "author"`)
+*   Read the Sanity docs on [using references in GROQ](https://www.sanity.io/docs/how-queries-work#references-and-joins-db43dfd18d7d), and use it to render author information in a blog post page
 
 ## Publishing with Cloudflare Pages
 
@@ -409,7 +409,7 @@ Publishing your project with Cloudflare Pages is an easy, two-step process: firs
 
 To push your project to GitHub, [create a new repo](https://repo.new), and follow the instructions to push your local Git repository to GitHub.
 
-After you've pushed your project to GitHub, deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
+After you've pushed your project to GitHub, deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose *Nuxt*. Pages will set the correct fields for you automatically.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 
@@ -423,7 +423,7 @@ Now, when you make a change to your Sanity.io dataset, Sanity will make a reques
 
 By completing this guide, you have successfully deployed your own blog, powered by Nuxt, Sanity.io, and Cloudflare Pages. You can find the source code for both codebases on GitHub:
 
-- Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
-- Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
+*   Blog front end: https://github.com/signalnerve/nuxt-sanity-blog
+*   Sanity dataset: https://github.com/signalnerve/sanity-blog-schema
 
 If you enjoyed this tutorial, you may be interested in learning how you can use Cloudflare Workers, our powerful serverless function platform, to augment your existing site. [Refer to the tutorial to learn more.](/tutorials/build-an-api-with-workers)

@@ -129,8 +129,8 @@ await fetch(new Request("https://cloudflare-eth.com", {
 });
 ```
 
-_(The actual command above will not work, you need to provide your own signed
-transaction!)_
+*(The actual command above will not work, you need to provide your own signed
+transaction!)*
 
 ## Cloudflare supported API
 
@@ -140,56 +140,56 @@ supported.
 
 | RPC API method | Cloudflare Distributed Web Gateway support |
 | --- | :---: |
-| web3_clientVersion | X |
-| web3_sha3 | X |
-| net_version | X |
-| net_peerCount | X |
-| net_listening | X |
-| eth_protocolVersion | X |
-| eth_syncing | X |
-| eth_coinbase | |
-| eth_mining | X |
-| eth_hashrate | X |
-| eth_gasPrice | X |
-| eth_accounts | X |
-| eth_blockNumber | X |
-| eth_chainId | X |
-| eth_getBalance* | X |
-| eth_getStorageAt* | X |
-| eth_getTransactionCount* | X |
-| eth_getBlockTransactionCountByHash | X |
-| eth_getBlockTransactionCountByNumber | X |
-| eth_getUncleCountByBlockHash | X |
-| eth_getUncleCountByBlockNumber | X |
-| eth_getCode* | X |
-| eth_sign | |
-| eth_sendTransaction | |
-| eth_sendRawTransaction | X |
-| eth_call* | X |
-| eth_estimateGas | X |
-| eth_getBlockByHash | X |
-| eth_getBlockByNumber | X |
-| eth_getTransactionByHash | X |
-| eth_getTransactionByBlockHashAndIndex | X |
-| eth_getTransactionByBlockNumberAndIndex | X |
-| eth_getTransactionReceipt | X |
-| eth_pendingTransactions | X |
-| eth_getUncleByBlockHashAndIndex | X |
-| eth_getUncleByBlockNumberAndIndex | X |
-| eth_getCompilers | |
-| eth_compileLLL | |
-| eth_compileSolidity | |
-| eth_compileSerpent | |
-| eth_newFilter | |
-| eth_newBlockFilter | |
-| eth_newPendingTransactionFilter | |
-| eth_uninstallFilter | |
-| eth_getFilterChanges | |
-| eth_getFilterLogs | |
-| eth_getLogs* | X |
-| eth_getWork | X |
-| eth_submitWork | X |
-| eth_submitHashrate | X |
-| eth_getProof | X |
+| web3\_clientVersion | X |
+| web3\_sha3 | X |
+| net\_version | X |
+| net\_peerCount | X |
+| net\_listening | X |
+| eth\_protocolVersion | X |
+| eth\_syncing | X |
+| eth\_coinbase | |
+| eth\_mining | X |
+| eth\_hashrate | X |
+| eth\_gasPrice | X |
+| eth\_accounts | X |
+| eth\_blockNumber | X |
+| eth\_chainId | X |
+| eth\_getBalance\* | X |
+| eth\_getStorageAt\* | X |
+| eth\_getTransactionCount\* | X |
+| eth\_getBlockTransactionCountByHash | X |
+| eth\_getBlockTransactionCountByNumber | X |
+| eth\_getUncleCountByBlockHash | X |
+| eth\_getUncleCountByBlockNumber | X |
+| eth\_getCode\* | X |
+| eth\_sign | |
+| eth\_sendTransaction | |
+| eth\_sendRawTransaction | X |
+| eth\_call\* | X |
+| eth\_estimateGas | X |
+| eth\_getBlockByHash | X |
+| eth\_getBlockByNumber | X |
+| eth\_getTransactionByHash | X |
+| eth\_getTransactionByBlockHashAndIndex | X |
+| eth\_getTransactionByBlockNumberAndIndex | X |
+| eth\_getTransactionReceipt | X |
+| eth\_pendingTransactions | X |
+| eth\_getUncleByBlockHashAndIndex | X |
+| eth\_getUncleByBlockNumberAndIndex | X |
+| eth\_getCompilers | |
+| eth\_compileLLL | |
+| eth\_compileSolidity | |
+| eth\_compileSerpent | |
+| eth\_newFilter | |
+| eth\_newBlockFilter | |
+| eth\_newPendingTransactionFilter | |
+| eth\_uninstallFilter | |
+| eth\_getFilterChanges | |
+| eth\_getFilterLogs | |
+| eth\_getLogs\* | X |
+| eth\_getWork | X |
+| eth\_submitWork | X |
+| eth\_submitHashrate | X |
+| eth\_getProof | X |
 
-> RPC API methods followed by "*" are only supported for the latest 128 blocks
+> RPC API methods followed by "\*" are only supported for the latest 128 blocks

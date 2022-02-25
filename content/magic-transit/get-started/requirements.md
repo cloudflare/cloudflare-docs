@@ -10,13 +10,13 @@ You  must meet the following onboarding requirements before using Magic Transit.
 
 ## Use compatible tunnel endpoint routers
 
-Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network. 
+Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network.
 
-The routers at your GRE tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit. 
+The routers at your GRE tunnel endpoints must meet the following requirements to ensure compatibility with Magic Transit.
 
-- Support GRE tunneling.
-- Allow configuration of at least one tunnel per Internet service provider (ISP).
-- Support maximum segment size (MSS) clamping.
+*   Support GRE tunneling.
+*   Allow configuration of at least one tunnel per Internet service provider (ISP).
+*   Support maximum segment size (MSS) clamping.
 
 ## Draft Letter of Authorization
 
@@ -40,7 +40,7 @@ The SYN-ACK packet sent to the client during TCP handshake encodes the value for
 
 Cloudflare uses GRE tunnels to deliver packets from our edge to your data centers, while Cloudflare Magic Transit encapsulates these packets, adding a new IP header and GRE protocol header.
 
-You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data. 
+You must set the MSS value to 1436 bytes at your physical egress interfaces — not the GRE tunnel interfaces — to accommodate the additional header data.
 
 <Aside type="warning" header="Important">
 

@@ -10,18 +10,19 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 **🗺️ This tutorial covers how to:**
 
-* Create a DNS filtering policy that secures devices by blocking malicious hostnames
-* Apply that policy to devices on any network
-* Enroll devices into a Cloudflare Gateway deployment
+*   Create a DNS filtering policy that secures devices by blocking malicious hostnames
+*   Apply that policy to devices on any network
+*   Enroll devices into a Cloudflare Gateway deployment
 
 **⏲️ Time to complete:**
 
 30 minutes
 
 ## Before you start
-1. [Add Gateway to your account](/setup)
 
----
+1.  [Add Gateway to your account](/setup)
+
+***
 
 ## Create a DNS filtering policy
 
@@ -55,13 +56,13 @@ Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authe
 
 ## Determine which devices can enroll
 
-Next, build a rule to decide which devices can enroll in your account. 
+Next, build a rule to decide which devices can enroll in your account.
 
-1. Navigate to **Settings > Devices > Device enrollment**.
+1.  Navigate to **Settings > Devices > Device enrollment**.
 
-1. Click **Manage**.
+2.  Click **Manage**.
 
-1. Click **Add a rule**.
+3.  Click **Add a rule**.
 
     ![Device Enrollment](../static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -69,7 +70,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](../static/secure-web-gateway/block-football/allow-cf-users.png)
 
-1. Click **Save**.
+4.  Click **Save**.
 
 ## Collect your Team domain
 

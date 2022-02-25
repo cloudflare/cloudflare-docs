@@ -25,7 +25,7 @@ pcx-content-type: concept
 
 URLs have a limit of 16 KB.
 
-Request headers observe a total limit of 32 KB, but each header is limited to 16 KB. 
+Request headers observe a total limit of 32 KB, but each header is limited to 16 KB.
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
@@ -52,10 +52,10 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 | Feature                     | Free                                                 | Bundled Usage Model                         | Unbound Usage Model                       |
 | --------------------------- | ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
-| [Request](#request)         | 100,000&nbsp;requests/day<br/>1000&nbsp;requests/min | none                                        | none                                      |
+| [Request](#request)         | 100,000 requests/day<br/>1000 requests/min | none                                        | none                                      |
 | [Worker memory](#memory)    | 128 MB                                               | 128 MB                                      | 128 MB                                    |
 | [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |                                           |
-| [Duration](#duration)       |                                                      |                                             | No limit* |
+| [Duration](#duration)       |                                                      |                                             | No limit\* |
 
 </TableWrap>
 
@@ -126,7 +126,7 @@ Refer to [KV pricing](/platform/pricing#workers-kv) to review the specific KV op
 
 </TableWrap>
 
----
+***
 
 ## Request
 
@@ -152,17 +152,17 @@ Routes in fail open mode will bypass the failing Worker and prevent it from oper
 
 Routes in fail closed mode will display a Cloudflare `1027` error page to visitors, signifying the Worker has been temporarily disabled. Cloudflare recommends this option if your Worker is performing security related tasks.
 
----
+***
 
 ## Memory
 
 Only one Workers instance runs on each of the many global Cloudflare network edge servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/runtime-apis/web-standards) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
-If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*. 
+If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine *Exceeded Resources*.
 
 Use the [TransformStream API](/runtime-apis/streams/transformstream) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
 
----
+***
 
 ## CPU runtime
 
@@ -170,7 +170,7 @@ Most Workers requests consume less than a millisecond. It is rare to find a norm
 
 There is no limit on the real runtime for a Workers script. As long as the client that sent the request remains connected, the Workers script can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/runtime-apis/fetch-event) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
----
+***
 
 ## Duration
 
@@ -180,7 +180,7 @@ For example, when a Worker executes via a [scheduled event](/runtime-apis/schedu
 
 Duration is most applicable to Unbound Workers on the [Paid plan](/platform/pricing#paid-plan) and [Durable Objects](/learning/using-durable-objects).
 
----
+***
 
 ## Subrequests
 
@@ -192,7 +192,7 @@ Yes. Use the [Fetch API](/runtime-apis/fetch) to make arbitrary requests to othe
 
 The limit for subrequests a Workers script can make is 50 per request. Each subrequest in a redirect chain counts against this limit. This means that the number of subrequests a Workers script makes could be greater than the number of `fetch(request)` calls in the script.
 
-For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request. 
+For subrequests to internal services like Workers KV and Durable Objects, the subrequest limit is 1000 per request.
 
 ### How long can a subrequest take?
 
@@ -200,21 +200,21 @@ There is no set limit on the amount of real time a Worker may use. As long as th
 
 When the client disconnects, all tasks associated with that client’s request are proactively canceled. If the Worker passed a promise to [`event.waitUntil()`](/runtime-apis/fetch-event), cancellation will be delayed until the promise has completed or until an additional 30 seconds have elapsed, whichever happens first.
 
----
+***
 
 ## Simultaneous open connections
 
 While handling a request, each Worker script is allowed to have up to six connections open simultaneously. The connections opened by the following API calls all count toward this limit:
 
-- the `fetch()` method of the [Fetch API](/runtime-apis/fetch).
-- `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/runtime-apis/kv).
-- `put()`, `match()`, and `delete()` methods of [Cache objects](/runtime-apis/cache).
+*   the `fetch()` method of the [Fetch API](/runtime-apis/fetch).
+*   `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/runtime-apis/kv).
+*   `put()`, `match()`, and `delete()` methods of [Cache objects](/runtime-apis/cache).
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
 If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker. If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
 
----
+***
 
 ## Environment variables
 
@@ -237,33 +237,33 @@ App Workers scripts do not count towards this limit.
 
 </Aside>
 
----
+***
 
 ## KV
 
 Workers KV supports:
 
-- Up to 100 Namespaces per account
-- Unlimited keys per namespace
-- Unlimited storage per namespace (except on the free tier, which is limited to 1 GB)
-- Keys of up to 512 bytes
-- Values of up to 25 MiB
-- Metadata of up to 1024 bytes per key
-- Unlimited reads per second
-- Unlimited writes per second, if they are to different keys
-- Up to one write per second to any particular key
+*   Up to 100 Namespaces per account
+*   Unlimited keys per namespace
+*   Unlimited storage per namespace (except on the free tier, which is limited to 1 GB)
+*   Keys of up to 512 bytes
+*   Values of up to 25 MiB
+*   Metadata of up to 1024 bytes per key
+*   Unlimited reads per second
+*   Unlimited writes per second, if they are to different keys
+*   Up to one write per second to any particular key
 
 Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
 
 Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds before reads in all edge locations are guaranteed to see the new value.
 
----
+***
 
 ## Cache API
 
-- 50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`
+*   50 total `put()`, `match()`, or `delete()` calls per-request, using the same quota as `fetch()`
 
-- 5 GBs total `put()` per-request
+*   5 GBs total `put()` per-request
 
 <Aside type="note">
 
@@ -271,24 +271,24 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 </Aside>
 
----
+***
 
 ## Durable Objects
 
-- Unlimited Durable Objects within an account or of a given class
+*   Unlimited Durable Objects within an account or of a given class
 
-- 10 GB total storage per account (can be raised by contacting Cloudflare)
+*   10 GB total storage per account (can be raised by contacting Cloudflare)
 
-- No storage limit per Durable Object separate from the account limit
+*   No storage limit per Durable Object separate from the account limit
 
-- No storage limit per Durable Object class separate from the account limit
+*   No storage limit per Durable Object class separate from the account limit
 
-- Storage keys of up to 2 KiB (2048 bytes)
+*   Storage keys of up to 2 KiB (2048 bytes)
 
-- Storage values of up to 128 KiB (131072 bytes)
+*   Storage values of up to 128 KiB (131072 bytes)
 
-- 30s of CPU time per request, including websocket messages
+*   30s of CPU time per request, including websocket messages
 
-Durable Objects scale well across Objects, but each object is inherently single-threaded.  A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload. 
+Durable Objects scale well across Objects, but each object is inherently single-threaded.  A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
 
 Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.

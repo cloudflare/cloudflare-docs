@@ -13,7 +13,7 @@ Email Routing (beta) [does not support IDNs](https://en.wikipedia.org/wiki/Inter
 
 ## Non-delivery reports (NDRs)
 
-Email Routing (beta) does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination. 
+Email Routing (beta) does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
 
 ## Subdomains are only supported for Enterprise customers
 

@@ -26,9 +26,9 @@ Once an API Token is created that can create other tokens, the next step is usin
 
 Creating a Token requires defining two sections of config and then sending the API request.
 
-1. Define the policy
-2. Define the restrictions
-3. Create the token
+1.  Define the policy
+2.  Define the restrictions
+3.  Create the token
 
 ### Define the Access Policy
 
@@ -61,13 +61,13 @@ Let's look at an example Token's policy. Each token can contain multiple policie
 
 Now to define each field of the policy:
 
-* `id` - This is a unique identifier for the policy generated after creation and is read-only
-* `effect` - Whether this policy is allowing or denying access. If only creating 1 policy then `allow` should be used. The evaluation order for policies is as follows:
-  1. Explicit `DENY` Policies
-  2. Explicit `ALLOW` Policies
-  3. Implicit `DENY ALL`
-* `resources` - This is where you define what resources are allowed to be configured. More detail below.
-* `permission_groups` - This defines what permissions will the policy grant to the included resources. More detail below.
+*   `id` - This is a unique identifier for the policy generated after creation and is read-only
+*   `effect` - Whether this policy is allowing or denying access. If only creating 1 policy then `allow` should be used. The evaluation order for policies is as follows:
+    1.  Explicit `DENY` Policies
+    2.  Explicit `ALLOW` Policies
+    3.  Implicit `DENY ALL`
+*   `resources` - This is where you define what resources are allowed to be configured. More detail below.
+*   `permission_groups` - This defines what permissions will the policy grant to the included resources. More detail below.
 
 #### Resources
 
@@ -79,16 +79,16 @@ Note: Each respective object's `tag` can be fetched by calling the appropriate `
 
 A **single account** or **all accounts** can be included in a token policy.
 
-* A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
-* **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
+*   A **single account** is denoted as:`"com.cloudflare.api.account.<account_tag>": "*"`.
+*   **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
 
 ##### Zone
 
 A **single zone**, **all zones in an account**, or **all zones in all accounts** can be included in a token policy:
 
-* A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
-* **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
-* **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
+*   A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<zone_tag>": "*"`
+*   **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<account_tag>": {"com.cloudflare.api.account.zone.*": "*"}`
+*   **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
 
 ##### User
 

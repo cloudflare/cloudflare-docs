@@ -8,8 +8,8 @@ A cross-origin request is a request for website resources external to the origin
 
 Cloudflare supports CORS by:
 
-- Identifying cached assets based on the `Host` Header, `Origin` Header, URL path, and query. This allows different resources to use the same `Host` header but different `Origin` headers.
-- Passing `Access-Control-Allow-Origin` headers from the origin server to the browser.
+*   Identifying cached assets based on the `Host` Header, `Origin` Header, URL path, and query. This allows different resources to use the same `Host` header but different `Origin` headers.
+*   Passing `Access-Control-Allow-Origin` headers from the origin server to the browser.
 
 The `Access-Control-Allow-Origin` header allows servers to specify rules for sharing their resources with external domains. When a server receives a request to access a resource, it responds with a value for the `Access-Control-Allow-Origin` header. `Access-Control-Allow-Origin` headers are often applied to [cacheable content](/about/default-cache-behavior). A web server may respond with different `Access-Control` headers depending on the `Origin` header sent in the request.
 
@@ -17,6 +17,6 @@ The `Access-Control-Allow-Origin` header allows servers to specify rules for sha
 
 If you add or change CORS configuration at your origin web server, purging the Cloudflare cache by URL does not update the CORS headers. Force Cloudflare to retrieve the new CORS headers via one of the following options:
 
-- Change the filename or URL to bypass cache to instruct Cloudflare to retrieve the latest CORS headers.
-- Use the [single-file purge API](https://api.cloudflare.com/#zone-purge-files-by-url) to specify the appropriate CORS headers along with the purge request.
-- Update the resource’s last-modified time at your origin web server. Then, complete a [full purge](/how-to/purge-cache) to retrieve the latest version of your assets including updated CORS headers.
+*   Change the filename or URL to bypass cache to instruct Cloudflare to retrieve the latest CORS headers.
+*   Use the [single-file purge API](https://api.cloudflare.com/#zone-purge-files-by-url) to specify the appropriate CORS headers along with the purge request.
+*   Update the resource’s last-modified time at your origin web server. Then, complete a [full purge](/how-to/purge-cache) to retrieve the latest version of your assets including updated CORS headers.

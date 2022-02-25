@@ -17,10 +17,10 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 ## Enable Proxy Protocol v1 for TCP
 
-1. Log in to the Cloudflare dashboard
-1. Click **Spectrum**.
-1. Locate the application that will use the PROXY protocol and click **Configure**.
-1. From the dropdown, select **PROXY Protocol v1**.
+1.  Log in to the Cloudflare dashboard
+2.  Click **Spectrum**.
+3.  Locate the application that will use the PROXY protocol and click **Configure**.
+4.  From the dropdown, select **PROXY Protocol v1**.
 
 When TCP applications are configured to use **PROXY Protocol v1**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol plain-text header.
 
@@ -40,10 +40,10 @@ An example PROXY Protocol line for an IPv6 address would look like:
 
 ## Enabling Proxy Protocol v2 for TCP/UDP
 
-1. Log in to the Cloudflare dashboard
-1. Click **Spectrum**.
-1. Locate the application that will use the PROXY protocol and click **Configure**.
-1. From the dropdown, select **PROXY Protocol v2**.
+1.  Log in to the Cloudflare dashboard
+2.  Click **Spectrum**.
+3.  Locate the application that will use the PROXY protocol and click **Configure**.
+4.  From the dropdown, select **PROXY Protocol v2**.
 
 When TCP applications are configured to use **PROXY Protocol v2**, Cloudflare will prepend each inbound TCP connection with the PROXY Protocol binary header.
 

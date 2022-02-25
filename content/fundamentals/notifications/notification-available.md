@@ -4,11 +4,11 @@ title: Types of Notifications
 pcx-content-type: concept
 ---
 
-import SSLTroubleshoot from "../_partials/_troubleshoot-ssl"
-import DDOS from "../_partials/_ddos"
-import Errors5xx from "../_partials/_errors"
-import PageShieldDetectMaliciousScripts from "../_partials/_script-monitor-detect-malicious-scripts"
-import PageShieldReviewMaliciousScripts from "../_partials/_script-monitor-review-malicious-scripts"
+import SSLTroubleshoot from "../\_partials/\_troubleshoot-ssl"
+import DDOS from "../\_partials/\_ddos"
+import Errors5xx from "../\_partials/\_errors"
+import PageShieldDetectMaliciousScripts from "../\_partials/\_script-monitor-detect-malicious-scripts"
+import PageShieldReviewMaliciousScripts from "../\_partials/\_script-monitor-review-malicious-scripts"
 
 # What kinds of Notifications are available?
 
@@ -17,7 +17,7 @@ Depending on your plan, you will also be able to configure webhooks. Webhooks al
 
 ## What should you do when receiving Notifications?
 
-Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take. 
+Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
 
 Click below to understand what each Notification does and what to do when receiving one.
 
@@ -36,7 +36,6 @@ Purchase of Access.
 **What should you do if you receive one?**
 
 Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflare.com/) under **Configuration** > **Service Auth**.
-
 
 </div>
 </details>
@@ -74,9 +73,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1. Confirm that your primary nameservers are up and running.
-1. Confirm that the ACLs on your primary nameservers are configured correctly.
-1. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1.  Confirm that your primary nameservers are up and running.
+2.  Confirm that the ACLs on your primary nameservers are configured correctly.
+3.  Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -95,9 +94,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1. Confirm that the primary nameserver that is failing is up and running.
-1. Confirm that the ACL on the primary nameserver that is failing is configured correctly. 
-1. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1.  Confirm that the primary nameserver that is failing is up and running.
+2.  Confirm that the ACL on the primary nameserver that is failing is configured correctly.
+3.  Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -135,11 +134,11 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include: 
+Success alerts require no further action. Actions for failure notifications will depend on the type of failure. Possible actions include:
 
-* Checking the Access Control List (ACL) on your primary nameserver.
-* Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
-* Checking logs on primary nameservers for other errors.
+*   Checking the Access Control List (ACL) on your primary nameserver.
+*   Checking if Cloudflare IPs have been [configured correctly on your primary nameserver](https://support.cloudflare.com/hc/articles/360001356152#access-control-list-configuration).
+*   Checking logs on primary nameservers for other errors.
 
 </div>
 </details>
@@ -198,7 +197,6 @@ All Cloudflare plans with Load Balancing purchase.
 
 No direct call to action.
 
-
 </div>
 </details>
 
@@ -235,8 +233,8 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-1. <Errors5xx/>
+1.  Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
+2.  <Errors5xx/>
 
 </div>
 </details>
@@ -452,7 +450,6 @@ Stream subscription.
 **What should you do if you receive one?**
 
 Stream notifications are entirely customizable by the customer. Action will depend on the customizations enabled.
- 
 
 </div>
 </details>

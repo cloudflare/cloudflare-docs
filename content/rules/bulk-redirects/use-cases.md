@@ -14,15 +14,15 @@ In this example the original domain was replaced with a different domain. All fu
 
 Create a Bulk Redirect List with the following URL Redirect:
 
-* **Source URL**: `example.com/`
-* **Target URL**: `https://example.net/`
-* **Subpath matching**: Enabled
-* **Preserve query string**: Enabled
+*   **Source URL**: `example.com/`
+*   **Target URL**: `https://example.net/`
+*   **Subpath matching**: Enabled
+*   **Preserve query string**: Enabled
 
 This configuration will perform the following redirects:
 
 Request URL                               | URL after redirect
-------------------------------------------|------------------------------------------
+\------------------------------------------|------------------------------------------
 `http://example.com/`                     | `https://example.net/`
 `https://example.com/`                    | `https://example.net/`
 `https://example.com/my/path/to/page.htm` | `https://example.net/my/path/to/page.htm`
@@ -32,18 +32,18 @@ Request URL                               | URL after redirect
 
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
 
-1. Create a Bulk Redirect List with the following URL Redirect:
+1.  Create a Bulk Redirect List with the following URL Redirect:
 
-    * **Source URL**: `example.com/`
-    * **Target URL**: `https://example.net/`
-    * **Include subdomains**: Enabled
+    *   **Source URL**: `example.com/`
+    *   **Target URL**: `https://example.net/`
+    *   **Include subdomains**: Enabled
 
-1. Create a Bulk Redirect Rule that enables this list.
+2.  Create a Bulk Redirect Rule that enables this list.
 
 This configuration will perform the following redirects:
 
 Request URL                               | URL after redirect
-------------------------------------------|-----------------------
+\------------------------------------------|-----------------------
 `http://example.com/`                     | `https://example.net/`
 `https://example.com/`                    | `https://example.net/`
 `https://subdomain.example.com/`          | `https://example.net/`
@@ -54,14 +54,14 @@ Request URL                               | URL after redirect
 
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.
 
-1. Create a Bulk Redirect List named `uk_redirect_list` with the following URL Redirect:
+1.  Create a Bulk Redirect List named `uk_redirect_list` with the following URL Redirect:
 
-    * **Source URL**: `https://example.com/`
-    * **Target URL**: `https://example.co.uk/`
-    * **Subpath matching**: Enabled
-    * **Preserve query string**: Enabled
+    *   **Source URL**: `https://example.com/`
+    *   **Target URL**: `https://example.co.uk/`
+    *   **Subpath matching**: Enabled
+    *   **Preserve query string**: Enabled
 
-2. Create a Bulk Redirect Rule that enables the previous Bulk Redirect List and set the rule expression to the following:
+2.  Create a Bulk Redirect Rule that enables the previous Bulk Redirect List and set the rule expression to the following:
 
     ```txt
     ip.src.country == "GB" and http.request.full_uri in $uk_redirect_list
@@ -70,7 +70,7 @@ In this example, all website visitors from the United Kingdom will be redirected
 This configuration will perform the following redirects for UK visitors:
 
 Request URL                               | URL after redirect
-------------------------------------------|--------------------------------------------
+\------------------------------------------|--------------------------------------------
 `https://example.com/`                    | `https://example.co.uk/`
 `https://example.com/my/path/to/page.htm` | `https://example.co.uk/my/path/to/page.htm`
 `https://example.com/search?q=term`       | `https://example.co.uk/search?q=term`

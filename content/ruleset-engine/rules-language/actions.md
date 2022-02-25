@@ -13,7 +13,7 @@ The action of a rule tells Cloudflare how to handle matches for the rule [expres
 
 The table below lists the actions available in the Rules language.
 
-Some actions, like _Block_, will stop the evaluation of the remaining rules. The _Skip_ action will skip the evaluation of _some_ rules when there is a match, but the exact behavior will depend on the rule configuration.
+Some actions, like *Block*, will stop the evaluation of the remaining rules. The *Skip* action will skip the evaluation of *some* rules when there is a match, but the exact behavior will depend on the rule configuration.
 
 The available actions depend on the [phase](/about#phases) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
@@ -127,6 +127,6 @@ The available actions depend on the [phase](/about#phases) where you are configu
 
 <Aside type="note">
 
-Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for more information.
+Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the *Allow* and *Bypass* actions. Refer to [Firewall Rules actions](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions) for more information.
 
 </Aside>

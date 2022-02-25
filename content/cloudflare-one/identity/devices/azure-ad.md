@@ -11,7 +11,7 @@ pcx-content-type: how-to
 
 | Operating Systems | [WARP mode required](/connections/connect-devices/warp#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | --------- | ---- |
-| Windows | WARP with Gateway | All plans | 
+| Windows | WARP with Gateway | All plans |
 
 </div>
 </details>
@@ -26,22 +26,23 @@ If you want to allow users to reach certain applications with only Azure AD logi
 
 You can configure which applications secured by Cloudflare Access use which integration in the steps below.
 
-1. Follow the [instructions](/identity/idp-integration/azuread) to integrate Cloudflare Access as a cloud app with Azure AD.
+1.  Follow the [instructions](/identity/idp-integration/azuread) to integrate Cloudflare Access as a cloud app with Azure AD.
 
-2. Repeat this step a second time if you want to maintain an integration that does not require Azure AD device management. We recommend giving each a distinct name that will be used in the steps below.
+2.  Repeat this step a second time if you want to maintain an integration that does not require Azure AD device management. We recommend giving each a distinct name that will be used in the steps below.
 
-    <!-- ![Name Providers](../../static/azuread-device/name-providers.png) -->
+     <!-- ![Name Providers](../../static/azuread-device/name-providers.png) -->
 
-3. Next, [create a new](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/require-managed-devices) Conditional Access policy in Azure AD. In that policy, you can require that users connect from Managed, Hybrid, or compliant devices.
-Apply that policy to the integration with Cloudflare Access.
+3.  Next, [create a new](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/require-managed-devices) Conditional Access policy in Azure AD. In that policy, you can require that users connect from Managed, Hybrid, or compliant devices.
+    Apply that policy to the integration with Cloudflare Access.
 
-4. Apply that policy to the integration with Cloudflare Access.
+4.  Apply that policy to the integration with Cloudflare Access.
 
 ## Cloudflare Access Configuration
 
 In the Cloudflare for Zero Trust dashboard, you can configure which applications require connections from a managed device and which do not.
-1. Navigate to an application that requires managed device connections.
 
-2. Open the **Authentication** tab.
+1.  Navigate to an application that requires managed device connections.
 
-3. Toggle the *Azure AD* integration that requires managed device usage.
+2.  Open the **Authentication** tab.
+
+3.  Toggle the *Azure AD* integration that requires managed device usage.

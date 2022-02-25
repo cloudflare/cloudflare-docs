@@ -7,8 +7,8 @@ order: 3
 
 Configure exposed credentials checks using the [Rulesets API](https://developers.cloudflare.com/ruleset-engine/rulesets-api). You can do the following:
 
-* [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/managed-rulesets/exposed-credentials-check#configure-via-api).
-* Create custom rules that check for exposed credentials.
+*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/managed-rulesets/exposed-credentials-check#configure-via-api).
+*   Create custom rules that check for exposed credentials.
 
 ## Create a custom rule checking for exposed credentials
 
@@ -24,15 +24,15 @@ A rule with exposed credentials check has a match when both the rule expression 
 
 To check for exposed credentials in a custom rule, include the field `exposed_credential_check` in the rule definition. This field requires the following options:
 
-* `username_expression` — Expression that selects the user ID used in the credentials check. This field can have up to 1024 characters.
-* `password_expression` — Expression that selects the password used in the credentials check. This field can have up to 1024 characters.
+*   `username_expression` — Expression that selects the user ID used in the credentials check. This field can have up to 1024 characters.
+*   `password_expression` — Expression that selects the password used in the credentials check. This field can have up to 1024 characters.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 These options have additional requirements:
 
-* Each expression must evaluate to a string.
-* You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
+*   Each expression must evaluate to a string.
+*   You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
 
 </Aside>
 

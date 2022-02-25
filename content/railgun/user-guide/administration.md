@@ -13,18 +13,18 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 
 ## Adding a Railgun
 
-1. Navigate to the [Railgun listing page](https://www.cloudflare.com/a/account/my-account/).
-1. Enter the descriptive title of your choosing.
-1. Press the `Add` button.
-1. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
-1. Start the Railgun daemon so that it can proceed with activation.
-1. If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on.
-1. If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
+1.  Navigate to the [Railgun listing page](https://www.cloudflare.com/a/account/my-account/).
+2.  Enter the descriptive title of your choosing.
+3.  Press the `Add` button.
+4.  Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
+5.  Start the Railgun daemon so that it can proceed with activation.
+6.  If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on.
+7.  If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
 
 ## Enabling Railgun
 
-1. Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu.
-1. Switch the toggle to `On`.
+1.  Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu.
+2.  Switch the toggle to `On`.
 
 ## Collecting and Reporting Statistics
 

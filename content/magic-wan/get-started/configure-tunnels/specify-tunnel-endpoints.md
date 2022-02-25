@@ -16,12 +16,12 @@ Cloudflare recommends two Anycast GRE or IPsec tunnels for each ISP and location
 
 To configure the Anycast GRE or IPsec tunnels between Cloudflare and your locations, you must provide the following data for each tunnel:
 
-* **Customer edge IP address** — A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/)), you do not need to provide edge addresses. Cloudflare will provide them.
-* **Private subnet** — A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
-  * 10.0.0.0–10.255.255.255
-  * 172.16.0.0–172.31.255.255
-  * 192.168.0.0–192.168.255.255
-* **Private IP addresses** — The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
+*   **Customer edge IP address** — A public Internet routable IP address that is outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection ([Cloudflare Network Interconnect](https://developers.cloudflare.com/network-interconnect/)), you do not need to provide edge addresses. Cloudflare will provide them.
+*   **Private subnet** — A 31-bit subnet (/31 in CIDR notation) supporting 2 hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
+    *   10.0.0.0–10.255.255.255
+    *   172.16.0.0–172.31.255.255
+    *   192.168.0.0–192.168.255.255
+*   **Private IP addresses** — The private IP address assigned to the **Cloudflare** and **customer** sides of the tunnel
 
 For an example Anycast GRE or IPsec tunnel configuration, see [Anycast GRE configuration example](/reference/configuration-examples#gre-tunnel-configuration-example).
 

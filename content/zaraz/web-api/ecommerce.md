@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Zaraz Ecommerce
 
-`zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. 
+`zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
@@ -13,14 +13,14 @@ To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz ac
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-1. Click **Zaraz** > **Settings**.
-1. Enable **Ecommerce tracking**.
-1. Click **Save**.
-1. Locate the tool you want to use with ecommerce tracking and click **Edit**.
-1. Click **Settings**.
-1. Under **Advanced**, enable **Ecommerce tracking**.
-1. Click **Save**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
+2.  Click **Zaraz** > **Settings**.
+3.  Enable **Ecommerce tracking**.
+4.  Click **Save**.
+5.  Locate the tool you want to use with ecommerce tracking and click **Edit**.
+6.  Click **Settings**.
+7.  Under **Advanced**, enable **Ecommerce tracking**.
+8.  Click **Save**.
 
 ## Add ecommerce tracking to your website
 
@@ -30,35 +30,35 @@ After enabling ecommerce tracking on your Zaraz dashboard, you need to add `zara
 zaraz.ecommerce('Event Name', {parameters})
 ```
 
-To create a complete tracking event, you need to add an event and one or more parameters. Below you will find a list of events and parameters Zaraz supports, as well as code examples for different types of events. 
+To create a complete tracking event, you need to add an event and one or more parameters. Below you will find a list of events and parameters Zaraz supports, as well as code examples for different types of events.
 
 ## List of supported events
 
-* `Product List Viewed`
-* `Products Searched`
-* `Product Clicked`
-* `Product Added`
-* `Product Added to Wishlist`
-* `Product Removed`
-* `Product Viewed`
-* `Cart Viewed`
-* `Checkout Started`
-* `Checkout Step Viewed`
-* `Checkout Step Completed`
-* `Payment Info Entered`
-* `Order Completed`
-* `Order Updated`
-* `Order Refunded`
-* `Order Cancelled`
-* `Clicked Promotion`
-* `Viewed Promotion`
+*   `Product List Viewed`
+*   `Products Searched`
+*   `Product Clicked`
+*   `Product Added`
+*   `Product Added to Wishlist`
+*   `Product Removed`
+*   `Product Viewed`
+*   `Cart Viewed`
+*   `Checkout Started`
+*   `Checkout Step Viewed`
+*   `Checkout Step Completed`
+*   `Payment Info Entered`
+*   `Order Completed`
+*   `Order Updated`
+*   `Order Refunded`
+*   `Order Cancelled`
+*   `Clicked Promotion`
+*   `Viewed Promotion`
 
 ## List of supported parameters:
 
 <TableWrap>
 
 Parameter | Type | Description
---- | --- | ---
+\--- | --- | ---
 `product_id` | String | Product ID.
 `sku` | String | Product SKU number.
 `category` | String | Product category.
@@ -84,7 +84,7 @@ Parameter | Type | Description
 `order_id` | String | Internal ID of order/transaction/purchase.
 `affiliation` | String | Name of affiliate from which the order occurred.
 `subtotal` | Number | Order total after discounts but before deducting taxes and shipping.
-`total` | Number | Revenue with discounts and coupons added in. 
+`total` | Number | Revenue with discounts and coupons added in.
 `revenue` | Number | Revenue excluding shipping and tax.
 `shipping` | Number | Cost of shipping for transaction.
 `tax` | Number | Total tax for transaction.
@@ -98,6 +98,7 @@ Parameter | Type | Description
 ## Event code examples
 
 ### Product viewed
+
 ```js
 zaraz.ecommerce('Product Viewed', {
   product_id: '999555321',
@@ -113,6 +114,7 @@ zaraz.ecommerce('Product Viewed', {
 ```
 
 ### Product added
+
 ```js
 zaraz.ecommerce('Product Added', {
   product_id: '999555321',
@@ -130,6 +132,7 @@ zaraz.ecommerce('Product Added', {
 ```
 
 ### Order completed
+
 ```js
 zaraz.ecommerce('Order Completed', {
   checkout_id: '616727740',

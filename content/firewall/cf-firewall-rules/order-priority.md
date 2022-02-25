@@ -16,15 +16,15 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 <Aside type="warning" header="Important">
 
-* The execution order diagram does not include products powered by the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) like the [WAF](https://developers.cloudflare.com/waf/) or [Transform Rules](https://developers.cloudflare.com/rules/transform).
+*   The execution order diagram does not include products powered by the [Ruleset Engine](https://developers.cloudflare.com/ruleset-engine/) like the [WAF](https://developers.cloudflare.com/waf/) or [Transform Rules](https://developers.cloudflare.com/rules/transform).
 
-* You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/).
+*   You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](https://developers.cloudflare.com/waf/).
 
 </Aside>
 
 By default, Cloudflare evaluates Firewall Rules in **list order**, where rules are evaluated in the order they appear in the Firewall Rules **Rules List**. List ordering is convenient when working with small numbers of rules because you can manage their order by dragging and dropping them into position. However, as the number of rules grows, managing rules in list order becomes difficult. This is where priority order comes into play.
 
-When **priority ordering** is enabled, Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. In this case, only the action of the rule with the highest precedence is executed, unless that action is _Log_ or _Bypass_ (refer to [Firewall Rules actions](/cf-firewall-rules/actions#supported-actions) for details). Priority ordering makes it a lot easier to manage large numbers of Firewall Rules, and once the number of rules passes 200, Cloudflare requires it.
+When **priority ordering** is enabled, Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. If a request matches two rules with the same priority, action precedence is used to resolve the tie. In this case, only the action of the rule with the highest precedence is executed, unless that action is *Log* or *Bypass* (refer to [Firewall Rules actions](/cf-firewall-rules/actions#supported-actions) for details). Priority ordering makes it a lot easier to manage large numbers of Firewall Rules, and once the number of rules passes 200, Cloudflare requires it.
 
 ## Managing rule evaluation by list order
 
@@ -44,15 +44,15 @@ Once priority ordering is enabled, you can set a priority number for each Firewa
 
 To set the priority number for a Firewall Rule, follow these steps:
 
-1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
+1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
 
-   The **Edit Firewall Rule** panel will open.
+    The **Edit Firewall Rule** panel will open.
 
-1. Locate the **Priority** field and enter a positive integer value.
+2.  Locate the **Priority** field and enter a positive integer value.
 
 ![Edit Firewall Rule page](../images/firewall-rules-order-and-priority-4.png)
 
-1. Click **Save** to commit your changes and return to the **Rules List**.
+1.  Click **Save** to commit your changes and return to the **Rules List**.
 
 The **Priority** column displays the priority value for each rule.
 
@@ -70,10 +70,10 @@ Cloudflare has designed priority ordering to be extremely flexible. This flexibi
 
 While your priority numbering scheme can be arbitrary, keep the following in mind:
 
-- **The evaluation sequence starts from the lowest priority number** and goes to the highest.
-- **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the _Log_ action is evaluated before a rule that has the _Block_ action. For more on action precedence, refer to [Firewall Rules actions](/cf-firewall-rules/actions).
-- **Avoid using the number 1 as a priority** so that you can easily maintain and modify rule order.
-- **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
-  - 5000-9999: Trusted IP addresses
-  - 10000-19999: Blocking rules for bad crawlers
-  - 20000-29999: Blocking rules for abusive users/spam
+*   **The evaluation sequence starts from the lowest priority number** and goes to the highest.
+*   **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the *Log* action is evaluated before a rule that has the *Block* action. For more on action precedence, refer to [Firewall Rules actions](/cf-firewall-rules/actions).
+*   **Avoid using the number 1 as a priority** so that you can easily maintain and modify rule order.
+*   **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
+    *   5000-9999: Trusted IP addresses
+    *   10000-19999: Blocking rules for bad crawlers
+    *   20000-29999: Blocking rules for abusive users/spam

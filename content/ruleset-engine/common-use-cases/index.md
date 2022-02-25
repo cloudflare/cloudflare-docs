@@ -13,7 +13,7 @@ For more information on overriding Managed Rulesets, refer to [Override a Manage
 
 The examples in the topics below use overrides to customize the behavior of Managed Rulesets.
 
-* [Use a tag override to set WordPress rules to Block](/common-use-cases/deploy-cmr-wordpress-block)
-* [Use ruleset and tag overrides to enable only Joomla rules](/common-use-cases/deploy-cmr-joomla-only)
-* [Use ruleset and rule overrides to enable only selected rules](/common-use-cases/enable-selected-rules)
-* [Deploy a Managed Ruleset with ruleset, tag, and rule overrides](/common-use-cases/override-ruleset-tag-rule)
+*   [Use a tag override to set WordPress rules to Block](/common-use-cases/deploy-cmr-wordpress-block)
+*   [Use ruleset and tag overrides to enable only Joomla rules](/common-use-cases/deploy-cmr-joomla-only)
+*   [Use ruleset and rule overrides to enable only selected rules](/common-use-cases/enable-selected-rules)
+*   [Deploy a Managed Ruleset with ruleset, tag, and rule overrides](/common-use-cases/override-ruleset-tag-rule)

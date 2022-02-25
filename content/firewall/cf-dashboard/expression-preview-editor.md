@@ -24,21 +24,21 @@ The Expression Editor is located in the **Create Firewall Rule** and **Edit Fire
 
 To edit an expression in the editor:
 
-1. In the **Firewall Rules** tab, use the **Create a Firewall rule** button to create a new rule, or click the **wrench** icon to edit an existing rule.
+1.  In the **Firewall Rules** tab, use the **Create a Firewall rule** button to create a new rule, or click the **wrench** icon to edit an existing rule.
 
-   ![Firewall Rules tab](../images/firewall-rules-expressions-editor-1.png)
+    ![Firewall Rules tab](../images/firewall-rules-expressions-editor-1.png)
 
-   The **Create Firewall Rule** page displays.
+    The **Create Firewall Rule** page displays.
 
-1. To switch to the Expression Editor in the **Create Firewall Rule** page, click **Edit expression**.
+2.  To switch to the Expression Editor in the **Create Firewall Rule** page, click **Edit expression**.
 
-   ![Edit Expression link in Create Firewall Rule page](../images/firewall-rules-expressions-editor-2.png)
+    ![Edit Expression link in Create Firewall Rule page](../images/firewall-rules-expressions-editor-2.png)
 
-1. Use the text input to edit your expression. To commit your changes, click **Deploy** or **Save as draft**.
+3.  Use the text input to edit your expression. To commit your changes, click **Deploy** or **Save as draft**.
 
 To switch from the editor to the Expression Builder, click **Use expression builder**.
 
-   ![Expression Editor](../images/firewall-rules-expressions-editor-3.png)
+![Expression Editor](../images/firewall-rules-expressions-editor-3.png)
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, if you use parentheses to nest expressions in the editor, you will not be able to switch to the Expression Builder, because the builder does not support nested expressions.
 

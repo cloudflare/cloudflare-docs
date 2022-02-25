@@ -57,6 +57,7 @@ Provided that your port is open to Cloudflare traffic, it’s time for testing. 
 (GNU/Linux)
 $ sudo -u railgun /usr/bin/rg-listener -config=/etc/railgun/railgun.conf
 ```
+
 ## Testing Railgun
 
 Once you have configured Railgun, you can test its operation using the **Test** button on the Cloudflare dashboard found in **Speed** > **Optimization** > scroll down to Railgun > **Test**. This will indicate whether a request to your web server uses Railgun.
@@ -94,4 +95,4 @@ Oct 27 23:36:06 www railgun[199.27.130.135:22114]: Transmit time: 48us
 
 It is recommended that you consult the [Testing Railgun](#testing-railgun) section before enabling Railgun for all visitors to your site.
 
-When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn_set](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_set) with `mode` set to `0` or [conn_setmode_enabled](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.
+When you wish to go live, Enterprise and Business users should select the desired Railgun for your domain on the [Cloudflare Settings](https://www.cloudflare.com/a/account/my-account) page from the drop-down and then toggle the switch to ‘On’. Optimized Partners should use the [conn\_set](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_set) with `mode` set to `0` or [conn\_setmode\_enabled](/user-guide/optimized-partner-api/enable-and-disable-connections#get-conn_setmode_enabled) method to enable Railgun. Railgun may take up to five minutes to fully activate, after which you should see the `CF-Railgun` HTTP header present in responses from all your active Cloudflare DNS records.

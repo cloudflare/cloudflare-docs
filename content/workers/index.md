@@ -16,7 +16,7 @@ Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/s
   <Button type="secondary" href="/tutorials">View the tutorials</Button>
 </ButtonGroup>
 
---------------------------------
+***
 
 ## Installing the Workers CLI
 
@@ -25,6 +25,7 @@ To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have
 ```sh
 $ npm install -g @cloudflare/wrangler
 ```
+
 or install with yarn:
 
 ```sh
@@ -33,7 +34,7 @@ $ yarn global add @cloudflare/wrangler
 
 Read more about [installing `wrangler`](/cli-wrangler/install-update).
 
---------------------------------
+***
 
 ## Playground
 
@@ -54,16 +55,16 @@ async function handleRequest(request) {
   <Button type="secondary" href="/learning/playground">Learn more</Button>
 </ButtonGroup>
 
---------------------------------
+***
 
 ## Popular pages
 
-- [Learning: How Workers works](/learning/how-workers-works) – learn how Cloudflare’s global network powers Workers
-- [Pricing](/platform/pricing) – learn about the Free and Bundled plans
-- [Reference: HTMLRewriter](/runtime-apis/html-rewriter) – parse and transform HTML from inside a Worker
-- [Limits](/platform/limits) – learn about plan limits (Free plans get 100,000 req/day)
+*   [Learning: How Workers works](/learning/how-workers-works) – learn how Cloudflare’s global network powers Workers
+*   [Pricing](/platform/pricing) – learn about the Free and Bundled plans
+*   [Reference: HTMLRewriter](/runtime-apis/html-rewriter) – parse and transform HTML from inside a Worker
+*   [Limits](/platform/limits) – learn about plan limits (Free plans get 100,000 req/day)
 
---------------------------------
+***
 
 ## Community
 
@@ -73,7 +74,7 @@ async function handleRequest(request) {
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
 
---------------------------------
+***
 
 These docs are built with the [Cloudflare Docs Engine](https://developers.cloudflare.com/docs-engine/).
 

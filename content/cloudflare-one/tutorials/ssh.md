@@ -10,9 +10,9 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 **🗺️ This walkthrough covers how to:**
 
-* Build a policy in Cloudflare Access to secure the machine
-* Connect a machine to Cloudflare's network using an SSH connection
-* Connect from a client machine
+*   Build a policy in Cloudflare Access to secure the machine
+*   Connect a machine to Cloudflare's network using an SSH connection
+*   Connect from a client machine
 
 **⏲️ Time to complete:**
 
@@ -20,9 +20,9 @@ You can connect to machines over SSH using Cloudflare's Zero Trust platform.
 
 ## Before you start
 
-1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 
----
+***
 
 ## Create a Zero Trust policy
 
@@ -145,9 +145,7 @@ You can now connect from a client machine using `cloudflared`.
 
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
 
-```
-$ brew install cloudflare/cloudflare/cloudflared
-```
+    $ brew install cloudflare/cloudflare/cloudflared
 
 While you need to install `cloudflared`, you do not need to wrap your SSH commands in any unique way. Instead, you will need to make a one-time change to your SSH configuration file.
 

@@ -17,9 +17,9 @@ Read more about this service in [this blog post](https://blog.cloudflare.com/wel
 
 ## Setting up a Tor client
 
-The important difference between using all other modes of DNS and this one is that packet routing no longer uses IP addresses, and therefore all connections must be routed through a Tor client. 
+The important difference between using all other modes of DNS and this one is that packet routing no longer uses IP addresses, and therefore all connections must be routed through a Tor client.
 
-Before you start, head to the [Tor Project website](https://www.torproject.org/download/download.html.en) to download and install a Tor client. If you use the Tor Browser, it will automatically start a [SOCKS proxy](https://en.wikipedia.org/wiki/SOCKS) at `127.0.0.1:9150`. 
+Before you start, head to the [Tor Project website](https://www.torproject.org/download/download.html.en) to download and install a Tor client. If you use the Tor Browser, it will automatically start a [SOCKS proxy](https://en.wikipedia.org/wiki/SOCKS) at `127.0.0.1:9150`.
 
 If you use Tor from the command line, create the following configuration file:
 
@@ -78,26 +78,27 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
-1. Download `cloudflared` by following the guide for [Running a DNS over HTTPS Client](../../encrypted-dns/dns-over-https/dns-over-https-client).
-1. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
+1.  Download `cloudflared` by following the guide for [Running a DNS over HTTPS Client](../../encrypted-dns/dns-over-https/dns-over-https-client).
 
-	```sh
-	$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
-	```
+2.  Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
-1. Instruct your machine to treat the `.onion` address as localhost:
+    ```sh
+    $ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
+    ```
 
-	```bash
-	$ cat << EOF >> /etc/hosts
-	127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
-	EOF
-	```
+3.  Instruct your machine to treat the `.onion` address as localhost:
 
-1. Finally, start a local DNS over UDP daemon:
+    ```bash
+    $ cat << EOF >> /etc/hosts
+    127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
+    EOF
+    ```
 
-	```sh
-	$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-	INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-	INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
-	INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
-	```
+4.  Finally, start a local DNS over UDP daemon:
+
+    ```sh
+    $ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+    INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+    INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
+    INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
+    ```

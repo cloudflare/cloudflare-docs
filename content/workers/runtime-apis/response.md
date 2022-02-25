@@ -14,33 +14,32 @@ let response = new Response(body, init)
 
 <Definitions>
 
-- `body` <PropMeta>optional</PropMeta>
+*   `body` <PropMeta>optional</PropMeta>
 
-  - An object that defines the body text for the response. Can be `null` or any one of the following types:
+    *   An object that defines the body text for the response. Can be `null` or any one of the following types:
 
-    - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/BufferSource">BufferSource</TypeLink> &nbsp;
-    - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</TypeLink> &nbsp;
-    - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream">ReadableStream</TypeLink> &nbsp;
-    - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams">URLSearchParams</TypeLink> &nbsp;
-    - <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">USVString</TypeLink>    &nbsp;
+        *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/BufferSource">BufferSource</TypeLink>  
+        *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</TypeLink>  
+        *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream">ReadableStream</TypeLink>  
+        *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams">URLSearchParams</TypeLink>  
+        *   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">USVString</TypeLink>     
 
-- `init` <PropMeta>optional</PropMeta>
+*   `init` <PropMeta>optional</PropMeta>
 
-  - An `options` object that contains custom settings to apply to the response.
+    *   An `options` object that contains custom settings to apply to the response.
 
 </Definitions>
 
-Valid options for the `options` object include:
-<Definitions>
+Valid options for the `options` object include: <Definitions>
 
-  - `status` <Type>int</Type>
-    - The status code for the response, such as `200`.
+*   `status` <Type>int</Type>
+    *   The status code for the response, such as `200`.
 
-  - `statusText` <Type>string</Type>
-    - The status message associated with the status code, such as, `OK`.
+*   `statusText` <Type>string</Type>
+    *   The status message associated with the status code, such as, `OK`.
 
-  - `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink> | <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ByteString">ByteString</TypeLink>
-    - Any headers to add to your response that are contained within a [`Headers`](/runtime-apis/request#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
+*   `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink> | <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/ByteString">ByteString</TypeLink>
+    *   Any headers to add to your response that are contained within a [`Headers`](/runtime-apis/request#parameters) object or object literal of [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString) key-value pairs.
 
 </Definitions>
 
@@ -48,28 +47,29 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- `body` <TypeLink href="/runtime-apis/streams">Readable Stream</TypeLink>
-  - A simple getter to get the body contents.
-- `bodyUsed` <Type>boolean</Type>
-  - A boolean indicating if the body was used in the response.
-- `encodeBody` <Type>string</Type>
-  - Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"auto"`.
-- `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
-  - The headers for the response.
-- `ok` <Type>boolean</Type>
-  - A boolean indicating if the response was successful (status in the range `200`-`299`).
-- `redirected` <Type>boolean</Type>
-  - A boolean indicating if the response is the result of a redirect. If so, its URL list has more than one entry.
-- `status` <Type>int</Type>
-  - The status code of the response (for example, `200` to indicate success).
-- `statusText` <Type>string</Type>
-  - The status message corresponding to the status code (for example, `OK` for `200`).
-- `url` <Type>string</Type>
-  - The URL of the response. The value is the final URL obtained after any redirects.
+*   `body` <TypeLink href="/runtime-apis/streams">Readable Stream</TypeLink>
+    *   A simple getter to get the body contents.
+*   `bodyUsed` <Type>boolean</Type>
+    *   A boolean indicating if the body was used in the response.
+*   `encodeBody` <Type>string</Type>
+    *   Workers have to compress data according to the `content-encoding` header when transmitting, to serve data that is already compressed, this property has to be set to `"manual"`, otherwise the default is `"auto"`.
+*   `headers` <TypeLink href="/runtime-apis/request#parameters">Headers</TypeLink>
+    *   The headers for the response.
+*   `ok` <Type>boolean</Type>
+    *   A boolean indicating if the response was successful (status in the range `200`-`299`).
+*   `redirected` <Type>boolean</Type>
+    *   A boolean indicating if the response is the result of a redirect. If so, its URL list has more than one entry.
+*   `status` <Type>int</Type>
+    *   The status code of the response (for example, `200` to indicate success).
+*   `statusText` <Type>string</Type>
+    *   The status message corresponding to the status code (for example, `OK` for `200`).
+*   `url` <Type>string</Type>
+    *   The URL of the response. The value is the final URL obtained after any redirects.
 
 <!-- What type is this? WebSocket? -->
-- `webSocket`
-  - This is present in successful WebSocket handshake responses. For example, if a client sends a WebSocket upgrade request to an origin and a worker intercepts the request and then forwards it to the origin and the origin replies with a successful WebSocket upgrade response, the Worker sees `response.webSocket`. This establishes a WebSocket connection proxied through a Worker. Note that you cannot intercept data flowing over a WebSocket connection.
+
+*   `webSocket`
+    *   This is present in successful WebSocket handshake responses. For example, if a client sends a WebSocket upgrade request to an origin and a worker intercepts the request and then forwards it to the origin and the origin replies with a successful WebSocket upgrade response, the Worker sees `response.webSocket`. This establishes a WebSocket connection proxied through a Worker. Note that you cannot intercept data flowing over a WebSocket connection.
 
 </Definitions>
 
@@ -79,11 +79,11 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- `clone()` <TypeLink href="#response">Response</TypeLink>
-  - Creates a clone of a [`Response`](#response) object.
+*   `clone()` <TypeLink href="#response">Response</TypeLink>
+    *   Creates a clone of a [`Response`](#response) object.
 
-- `redirect()` <TypeLink href="#response">Response</TypeLink>
-  - Creates a new response with a different URL.
+*   `redirect()` <TypeLink href="#response">Response</TypeLink>
+    *   Creates a new response with a different URL.
 
 </Definitions>
 
@@ -93,28 +93,28 @@ Valid options for the `options` object include:
 
 <Definitions>
 
-- <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
+*   <Code>arrayBuffer()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">Promise{`<ArrayBuffer>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
+    *   Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
 
-- <Code>formData()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">Promise{`<FormData>`}</TypeLink>
+*   <Code>formData()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">Promise{`<FormData>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) object.
+    *   Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) object.
 
-- <Code>json()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/">Promise{`<JSON>`}</TypeLink>
+*   <Code>json()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/">Promise{`<JSON>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with the result of parsing the body text as [`JSON`](https://developer.mozilla.org/en-US/docs/Web/).
+    *   Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with the result of parsing the body text as [`JSON`](https://developer.mozilla.org/en-US/docs/Web/).
 
-- <Code>text()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">Promise{`<USVString>`}</TypeLink>
+*   <Code>text()</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">Promise{`<USVString>`}</TypeLink>
 
-  - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) (text).
+    *   Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) (text).
 
 </Definitions>
 
---------------------------------
+***
 
 ## Related resources
 
-- [Examples: Modify response](/examples/modify-response)
-- [Examples: Conditional response](/examples/conditional-response)
-- [Reference: `Request`](/runtime-apis/request)
+*   [Examples: Modify response](/examples/modify-response)
+*   [Examples: Conditional response](/examples/conditional-response)
+*   [Reference: `Request`](/runtime-apis/request)

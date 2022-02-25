@@ -7,10 +7,10 @@ pcx-content-type: how-to
 
 ## Windows
 
-1. Navigate to Windows Settings (Windows Key + I).
-1. Click **Apps**.
-1. Click **App & Features**.
-1. Scroll to find the Cloudflare WARP application and click **Uninstall**.
+1.  Navigate to Windows Settings (Windows Key + I).
+2.  Click **Apps**.
+3.  Click **App & Features**.
+4.  Scroll to find the Cloudflare WARP application and click **Uninstall**.
 
 ## macOS
 
@@ -29,7 +29,7 @@ You may be prompted to provide your credentials while removing the application.
 
 ## iOS and Android
 
-1. Find the 1.1.1.1 application on the home screen.
-1. Touch and hold on the application tile.
-1. Tap **Remove App**.
-1. Select **Delete App**.
+1.  Find the 1.1.1.1 application on the home screen.
+2.  Touch and hold on the application tile.
+3.  Tap **Remove App**.
+4.  Select **Delete App**.

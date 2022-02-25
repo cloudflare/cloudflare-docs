@@ -10,19 +10,19 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 **🗺️ This walkthrough covers how to:**
 
-* Build a policy in Cloudflare Access to secure the machine
-* Connect a machine to Cloudflare's network using kubectl
-* Connect from a client machine
+*   Build a policy in Cloudflare Access to secure the machine
+*   Connect a machine to Cloudflare's network using kubectl
+*   Connect from a client machine
 
 **Before you start**
 
-* [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+*   [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
 
 **⏲️ Time to complete:**
 
 30 minutes
 
----
+***
 
 ## Create a Zero Trust policy
 
@@ -143,9 +143,7 @@ You can now connect from a client machine using `cloudflared`.
 
 This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command using Homebrew.
 
-```
-$ brew install cloudflare/cloudflare/cloudflared
-```
+    $ brew install cloudflare/cloudflare/cloudflared
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 

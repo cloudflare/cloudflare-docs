@@ -13,10 +13,10 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 **🗺️ This tutorial covers how to:**
 
-* Integrate Cloudflare Access with Okta
-* Configure Okta for U2F enrollment
-* Build a [Zero Trust policy](/policies/zero-trust) that require users login with a hardware key
-* Specify that policy to apply to certain Access applications
+*   Integrate Cloudflare Access with Okta
+*   Configure Okta for U2F enrollment
+*   Build a [Zero Trust policy](/policies/zero-trust) that require users login with a hardware key
+*   Specify that policy to apply to certain Access applications
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
 
@@ -24,7 +24,7 @@ The first two sections of this tutorial link to guides to set up Cloudflare Acce
 
 20 minutes
 
----
+***
 
 ## Configure Cloudflare Access
 

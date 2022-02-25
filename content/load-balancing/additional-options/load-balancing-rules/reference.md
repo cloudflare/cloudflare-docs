@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Supported fields and operators
 
-The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer. 
+The fields available for load balancing rules depend on whether Cloudflare proxies the traffic going through your load balancer.
 
 If you use the wrong type of fields, you might see unexpected behavior from load balancing rules. For best results, always use the fields associated with your traffic's proxy status.
 
@@ -14,6 +14,7 @@ If you use the wrong type of fields, you might see unexpected behavior from load
 ## Fields supported regardless of proxy
 
 Regardless of whether your traffic is proxied, you have access to the following fields:
+
 <table style="width:100%">
   <thead>
     <tr>
@@ -58,10 +59,11 @@ Regardless of whether your traffic is proxied, you have access to the following 
 ## Proxied traffic
 
 If your traffic is proxied, you have access to all the fields listed under **Proxied Only** and [**Both**](#fields-supported-regardless-of-proxy), such as:
-- `Request Method`
-- `URI`
-- `Timestamp`
-- `Header`
+
+*   `Request Method`
+*   `URI`
+*   `Timestamp`
+*   `Header`
 
 For the most up to date list of these fields, [create a load balancing rule](../create-rules) in the UI.
 
@@ -72,6 +74,7 @@ For more details about the field type or properties, refer to the [Rules languag
 If your traffic is not proxied through Cloudflare, you have access to all the fields listed under **Unproxied only** and [**Both**](#fields-supported-regardless-of-proxy).
 
 Cloudflare Load Balancers support the following unproxied fields:
+
 <table style="width:100%">
   <thead>
     <tr>
@@ -119,14 +122,14 @@ Cloudflare Load Balancers support the following unproxied fields:
   </tbody>
 </table>
 
----
+***
 
 ## Operators and grouping symbols
 
-- **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
+*   **Comparison operators** specify how values defined in an expression must relate to the actual HTTP request value for the expression to return true.
 
-- **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
+*   **Logical operators** combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
 
-- **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
+*   **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
 For examples and usage, refer to [Operators and grouping symbols](https://developers.cloudflare.com/ruleset-engine/rules-language/operators) in the Rules language documentation.

@@ -25,16 +25,16 @@ A fully populated Bulk Redirect Rule object has the following JSON structure:
 
 The JSON object properties must comply with the following:
 
-* `action` must be `redirect`
+*   `action` must be `redirect`
 
-* `action_parameters` must contain a `from_list` object with additional settings.
+*   `action_parameters` must contain a `from_list` object with additional settings.
 
-* `from_list` must contain the following properties:
+*   `from_list` must contain the following properties:
 
-    * `name`: The name of an existing Bulk Redirect List to associate with the current Bulk Redirect Rule.
-    * `key`: An expression that defines the value that will be matched against the configured URL Redirect’s source URL values, following the rules of the [URL matching algorithm](/bulk-redirects/how-it-works#url-matching-algorithm). Refer to [Concepts](/bulk-redirects/concepts#bulk-redirect-rules) for more information.
+    *   `name`: The name of an existing Bulk Redirect List to associate with the current Bulk Redirect Rule.
+    *   `key`: An expression that defines the value that will be matched against the configured URL Redirect’s source URL values, following the rules of the [URL matching algorithm](/bulk-redirects/how-it-works#url-matching-algorithm). Refer to [Concepts](/bulk-redirects/concepts#bulk-redirect-rules) for more information.
 
-* `expression` must reference the request field used in the `key` property. Refer to [Concepts](/bulk-redirects/concepts#bulk-redirect-rules) for more information.
+*   `expression` must reference the request field used in the `key` property. Refer to [Concepts](/bulk-redirects/concepts#bulk-redirect-rules) for more information.
 
 ## URL Redirect List item
 

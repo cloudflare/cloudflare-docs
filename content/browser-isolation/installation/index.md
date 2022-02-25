@@ -9,6 +9,6 @@ Before installing and setting up the WARP Client, ensure that your device meets 
 
 If your device meets the system requirements, follow the setup instructions for your device:
 
-* [Windows](/installation/windows)
-* [macOS](/installation/macos)
-* [ChromeOS](/installation/chromeos)
+*   [Windows](/installation/windows)
+*   [macOS](/installation/macos)
+*   [ChromeOS](/installation/chromeos)

@@ -1,2 +1,5 @@
-* Alphanumeric characters: `a`-`z` and `A`-`Z`
-* The following special characters: ``_ :;.,\/"'?!(){}[]@<>=-+*#$&`|~^%``
+---
+---
+
+*   Alphanumeric characters: `a`-`z` and `A`-`Z`
+*   The following special characters: ``_ :;.,\/"'?!(){}[]@<>=-+*#$&`|~^%``

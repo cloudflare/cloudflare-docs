@@ -6,7 +6,7 @@ pcx-content-type: concept
 # IPFS Gateway
 
 Cloudflare's read-only Distributed Web Gateway lets you access content stored on
-the InterPlanetary File System \(IPFS\) quickly and easily, without downloading
+the InterPlanetary File System (IPFS) quickly and easily, without downloading
 any special software or giving up any storage space on your computer.
 
 Cloudflare's gateway is hosted at https://cloudflare-ipfs.com/. You can find the
@@ -41,24 +41,22 @@ IPFS currently uses [SHA-256](https://en.wikipedia.org/wiki/SHA-2) by default,
 which produces a 256 bit (32 byte) output, and that output is encoded with
 [Base58](https://en.wikipedia.org/wiki/Base58). Base58 is a binary-to-text
 encoding scheme originally developed for Bitcoin and has the advantage that
-letters that might be mistaken for each other in certain fonts \(like zero and
-the capital letter O\) aren't included.
+letters that might be mistaken for each other in certain fonts (like zero and
+the capital letter O) aren't included.
 
 A CID will typically look something like this:
 
-```
-QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
-```
+    QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco
 
 However, the same hash could be encoded with
 [Base32](https://en.wikipedia.org/wiki/Base32) and there are a slew of other
 supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3)
-and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
+and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_\(hash_function\)).
 
 ### Uploading to IPFS
 
 IPFS is fundamentally a [Distributed Hash Table
-\(DHT\)](https://en.wikipedia.org/wiki/Distributed_hash_table) which maps from
+(DHT)](https://en.wikipedia.org/wiki/Distributed_hash_table) which maps from
 CIDs to people who have the content addressed by that CID. The hash
 table is distributed because no single node in the network holds the whole
 thing. Instead, each node stores a subset of the hash table, as well as
@@ -88,10 +86,10 @@ the file would have the CID `QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`.
 
 You could then access the file in two ways.
 
-1. Requesting the file directly:<br />
-   https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy
-2. Requesting the file by name, from the directory:<br />
-   https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example_text.txt
+1.  Requesting the file directly:<br />
+    https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy
+2.  Requesting the file by name, from the directory:<br />
+    https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt
 
 While the CID of a file will only change if the file itself changes, the CID of
 a directory changes any time **any** of the files in it change, or if any files

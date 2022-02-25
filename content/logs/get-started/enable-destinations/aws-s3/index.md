@@ -4,7 +4,7 @@ order: 55
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
 
 # Enable Logpush to Amazon S3
 
@@ -16,36 +16,35 @@ Enable Logpush to Amazon S3 via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard.
+1.  Log in to the Cloudflare dashboard.
 
-1. Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise domain you want to use with Logpush.
 
-1. Go to **Analytics** > **Logs**.
+3.  Go to **Analytics** > **Logs**.
 
-1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the dataset you want to push to a storage service.
+5.  Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
-1. Select **Amazon S3**.
+7.  Select **Amazon S3**.
 
-1. Enter or select the following destination information:
-     * **Bucket path**
-     * **Daily subfolders**
-     * **Bucket region**
-     * **Encryption constraint in bucket policy**
-     * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
-        * Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**.
+8.  Enter or select the following destination information:
+    *   **Bucket path**
+    *   **Daily subfolders**
+    *   **Bucket region**
+    *   **Encryption constraint in bucket policy**
+    *   For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has a policy (if you did not add it already):
+        *   Copy the JSON policy, then go to your bucket in the Amazon S3 console and paste the policy in **Permissions** > **Bucket Policy** and click **Save**.
 
-1. Click **Validate access**.
-    
-1. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and click **Prove ownership**. To find the ownership token, click the **Open** button in the **Overview** tab of the ownership challenge file.
+9.  Click **Validate access**.
 
-1. Click **Save and Start Pushing** to finish enabling Logpush.
+10. Enter the **Ownership token** (included in a file or log Cloudflare sends to your provider) and click **Prove ownership**. To find the ownership token, click the **Open** button in the **Overview** tab of the ownership challenge file.
+
+11. Click **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists Amazon S3 as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
-
 
 ## Manage via API
 
@@ -60,11 +59,11 @@ For illustrative purposes, imagine that you want to store logs in the bucket `bu
 
 To enable Logpush to Amazon S3:
 
-1. Create an S3 bucket. Refer to [instructions from Amazon](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html).
+1.  Create an S3 bucket. Refer to [instructions from Amazon](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html).
 
     Note: Buckets in China regions (`cn-north-1`, `cn-northwest-1`) are currently not supported.
 
-1. Edit and paste the policy below into **S3** > **Bucket** > **Permissions** > **Bucket Policy**, replacing the `Resource` value with your own bucket path:
+2.  Edit and paste the policy below into **S3** > **Bucket** > **Permissions** > **Bucket Policy**, replacing the `Resource` value with your own bucket path:
 
 ```json
 {

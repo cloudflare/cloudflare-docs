@@ -10,11 +10,11 @@ pcx-content-type: reference
 Welcome to the brand new **Cloudflare for Teams documentation**.
 
 Starting on **February 8, 2021**, this space will replace the separate, independent documentation for:
-* **Cloudflare Access**
-* **Cloudflare Gateway**
-* **Cloudflare Tunnel**
-* **WARP client for Teams**
 
+*   **Cloudflare Access**
+*   **Cloudflare Gateway**
+*   **Cloudflare Tunnel**
+*   **WARP client for Teams**
 
 ## The new structure
 

@@ -19,18 +19,18 @@ Cloudflare is designed for easy setup. Anyone with a website and their own domai
 
 Cloudflare stops malicious traffic before it reaches your origin web server. Cloudflare analyzes potential threats in visitor requests based on a number of characteristics:
 
-- Visitor's IP address
-- Resources requested
-- Request payload and frequency
-- Customer-defined firewall rules
+*   Visitor's IP address
+*   Resources requested
+*   Request payload and frequency
+*   Customer-defined firewall rules
 
 A DNS lookup of a proxied (orange-clouded) Cloudflare subdomain returns [Cloudflare IP addresses](https://www.cloudflare.com/ips/). Proxied traffic comes to Cloudflare's edge and then Cloudflare forwards the request to your server. Cloudflare masks your origin IP address for proxied DNS records so attackers cannot bypass Cloudflare and directly attack your origin web server.
 
-Visitor <--[Connection 1]--> Cloudflare Edge <--[Connection 2]--> Origin Server
+Visitor <--\[Connection 1]--> Cloudflare Edge <--\[Connection 2]--> Origin Server
 
 A DNS lookup of an unproxied (grey-clouded) Cloudflare subdomain returns the IP address that you have entered for the record. Unproxied traffic goes directly to your origin server and does not receive any of the benefits of using Cloudflare.
 
-Visitor <--[Connection]--> Origin Server
+Visitor <--\[Connection]--> Origin Server
 
 [Create your Cloudflare account and add a domain](https://support.cloudflare.com/hc/en-us/articles/201720164) to review our security benefits.
 
@@ -48,17 +48,17 @@ Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cl
 
 </Aside>
 
-Also, our flat-rate pricing structure provides predictability and reliability in your [CDN](https://www.cloudflare.com/cdn-y/) and [DDoS](https://www.cloudflare.com/ddos/) bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth. 
+Also, our flat-rate pricing structure provides predictability and reliability in your [CDN](https://www.cloudflare.com/cdn-y/) and [DDoS](https://www.cloudflare.com/ddos/) bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth.
 
 Note that additional terms may apply to:
 
-- Self-serve domains with add-on features
-- Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
+*   Self-serve domains with add-on features
+*   Domains in the Enterprise plan (contact your Cloudflare Account Team for additional details)
 
 Learn how to [get started with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/360027989951).
 
 ## Related resources
 
-- [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
-- [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
-- [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)
+*   [What is Cloudflare?](https://www.cloudflare.com/learning/what-is-cloudflare/)
+*   [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/en-us/articles/200172676)
+*   [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/en-us/articles/200170166)

@@ -9,10 +9,10 @@ Use Cloudflare public key infrastructure (PKI) to create client certificates. Yo
 
 To use API Shield to protect your API or web application, you must do the following:
 
-1. Use Cloudflare’s fully hosted public key infrastructure (PKI) to [create a client certificate](create-a-client-certificate).
+1.  Use Cloudflare’s fully hosted public key infrastructure (PKI) to [create a client certificate](create-a-client-certificate).
 
-1. [Configure your mobile app or IoT device](configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
+2.  [Configure your mobile app or IoT device](configure-your-mobile-app-or-iot-device) to use your Cloudflare-issued client certificate.
 
-1. [Enable mTLS](enable-mtls) for the hosts you wish to protect with API Shield.
+3.  [Enable mTLS](enable-mtls) for the hosts you wish to protect with API Shield.
 
-1. Create Cloudflare firewall rules that [require API requests to present a valid client certificate](https://developers.cloudflare.com/api-shield/products/mtls/configure).
+4.  Create Cloudflare firewall rules that [require API requests to present a valid client certificate](https://developers.cloudflare.com/api-shield/products/mtls/configure).

@@ -12,18 +12,16 @@ No, you don't need create Edge Cache TTL page rules. When the WordPress plugin i
 
 ## Does Origin Cache Control override APO?
 
-No. APO ignores Origin Cache Control for caching on the Edge, but APO serves original Origin Cache Control to the client. 
+No. APO ignores Origin Cache Control for caching on the Edge, but APO serves original Origin Cache Control to the client.
 
 ## Why are my browser cache control headers missing with APO?
 
 The browser cache control headers may be missing with APO if you set your browser to cache TTL to "respect existing headers." For example:
 
-```
-$ curl -sv -o /dev/null https://example.com/ -H 'Accept: text/html' 2>&1 | grep cache-control
-< cache-control: max-age=86400, stale-while-revalidate=86400, stale-if-error=86400
-```
+    $ curl -sv -o /dev/null https://example.com/ -H 'Accept: text/html' 2>&1 | grep cache-control
+    < cache-control: max-age=86400, stale-while-revalidate=86400, stale-if-error=86400
 
-##  Is the stale-if-error directive still needed with APO?
+## Is the stale-if-error directive still needed with APO?
 
 No, the stale-if-error directive is not needed because the feature is built into APO.
 

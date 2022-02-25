@@ -55,6 +55,7 @@ You own the account lifecycle from creation, ongoing management, and finally del
 ```bash
 curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
 ```
+
 <Aside type="note">
 
 This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
@@ -123,7 +124,7 @@ A successful request will return the id to confirm the operation:
 
 Now that we have created an account, visualized existing accounts and learned how to delete an account, in the next step we will give another person access to the account.
 
---------------------------------
+***
 
 ## Next step
 

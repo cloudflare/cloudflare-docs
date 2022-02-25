@@ -25,8 +25,8 @@ Rule Preview requires access to a Cloudflare Enterprise plan.
 
 To test a Firewall Rule with Rule Preview:
 
-1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
-1. Click **Test rule** to trigger the test.
+1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
+2.  Click **Test rule** to trigger the test.
 
 ![Expression Builder Test Rule button](../images/firewall-rules-preview-1.png)
 
@@ -38,7 +38,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 ## Important Notes
 
-**Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
+**Consider the results of Firewall Preview an *indication* of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
 **Rule Preview does not take into account other Cloudflare Firewall Rules** that you have already configured. In effect, Rule Preview tests a single Firewall Rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 

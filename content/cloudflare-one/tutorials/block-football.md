@@ -13,19 +13,20 @@ In this mode, the Cloudflare WARP client runs on user devices and proxies all In
 
 **🗺️ This tutorial covers how to:**
 
-* Create a Gateway policy to block URLs that contain a hostname
-* Create a Gateway policy to block URLs that contain a URL path
-* Enroll devices into Gateway
-* Review the block events in the Gateway logs
+*   Create a Gateway policy to block URLs that contain a hostname
+*   Create a Gateway policy to block URLs that contain a URL path
+*   Enroll devices into Gateway
+*   Review the block events in the Gateway logs
 
 **⏲️Time to complete:**
 
 35 minutes
 
 ## Before you start
-1. [Add Gateway to your account](/setup)
 
----
+1.  [Add Gateway to your account](/setup)
+
+***
 
 ## Build a hostname policy
 
@@ -35,9 +36,7 @@ Click **Create a policy** to add a new HTTP policy. Give the policy a name and d
 
 Next, create a rule to block any subdomain that uses a particular host. This example uses `espn.com` as the host. The rule below uses the `matches regex` operator to block any subdomain that uses `espn.com` as the host.
 
-```
-.*espn\.com
-```
+    .*espn\.com
 
 ![Block ESPN](../static/secure-web-gateway/block-football/block-espn.png)
 
@@ -47,7 +46,6 @@ Next, click **Create policy** to save the rule.
 
 ![ESPN List](../static/secure-web-gateway/block-football/after-block-espn.png)
 
-
 ## Build a URL policy
 
 Some websites are organized by URL path, so blocking by subdomain is not sufficient. Instead, you must build rules for a specific URL path.
@@ -56,9 +54,7 @@ In the example below, `reddit.com` is a website where different areas of interes
 
 Matching for this URL requires a regular expression rule. Create a new policy and choose `URL` as the Selector. For the operator value, select `matches regex` and input `/r/CFB/` in the Value field.
 
-```
-/r/CFB
-```
+    /r/CFB
 
 ![Block CFB](../static/secure-web-gateway/block-football/block-cfb.png)
 
@@ -88,13 +84,13 @@ Navigate to the `Settings` section of the Zero Trust dashboard and select `Authe
 
 ## Determine which devices can enroll
 
-Next, build a rule to decide which devices can enroll in your account. 
+Next, build a rule to decide which devices can enroll in your account.
 
-1. Navigate to **Settings > Devices > Device enrollment**.
+1.  Navigate to **Settings > Devices > Device enrollment**.
 
-1. Click **Manage**.
+2.  Click **Manage**.
 
-1. Click **Add a rule**.
+3.  Click **Add a rule**.
 
     ![Device Enrollment](../static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -102,7 +98,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](../static/secure-web-gateway/block-football/allow-cf-users.png)
 
-1. Click **Save**.
+4.  Click **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
@@ -111,8 +107,9 @@ Your rule will now be visible under the **Device enrollment rules** list.
 To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
-* Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+
+*   Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+*   Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -124,17 +121,17 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 ## Enroll a device
 
-1. Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+1.  Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
-1. Once the client is installed, click the gear icon.
+2.  Once the client is installed, click the gear icon.
 
     ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-1. Under the **Account** tab, click **Login with Cloudflare for Teams**.
+3.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+4.  Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

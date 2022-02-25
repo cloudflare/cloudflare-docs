@@ -10,9 +10,9 @@ Access determines who can reach your applications by applying the Zero Trust pol
 
 The elements that make up a Zero Trust policy are:
 
-* **Actions**
-* **Rules**
-* **Criteria**
+*   **Actions**
+*   **Rules**
+*   **Criteria**
 
 ## Actions
 
@@ -22,13 +22,13 @@ The action is the first element you'll be asked to configure when you create an 
 
 These are the action types you can choose from:
 
-* **Allow**.  
-    The allow action allows users that meet certain criteria to reach an application behind Access. 
-* **Block**.  
-    The block action prevents users from reaching an application behind Access. 
-* **Bypass**.  
+*   **Allow**.\
+    The allow action allows users that meet certain criteria to reach an application behind Access.
+*   **Block**.\
+    The block action prevents users from reaching an application behind Access.
+*   **Bypass**.\
     The bypass action disables any Access enforcement for traffic that meets the defined rule criteria.
-* **Service Auth**.  
+*   **Service Auth**.\
     Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
 <Aside type='note'>
@@ -39,7 +39,7 @@ When applying a Bypass action, security settings revert to the defaults configur
 
 ## Rules
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need. 
+Rules work like logical operators. They help you define which categories of users your policy will affect. Each action needs at least an Include rule; for each action, you can set as many rules as you need.
 
 These are the rule types you can choose from:
 
@@ -49,33 +49,31 @@ These are the rule types you can choose from:
 
 ## Criteria
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`. 
+When you add a rule to your policy, you will be asked to specify the criteria you want users to meet in order for the rule to be applied to them. For example, you may want your policy to apply to all your team members in a specific country, except the ones whose email ends in `@contractor.company.com`.
 
 Here is a list of all the criteria you can apply:
 
-* **Emails** — `you@company.com`
-* **Emails ending in** — `@company.com`
-* **Access groups** — `example-team`
-* **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
-* **Everyone** — allows, denies, or bypasses access to everyone.
-* **Country** – uses the IP address to determine country.
-* **Valid Certificate** - the request will need to present any valid client certificate.
-* **Common Name** - the request will need to present a valid certificate with an expected common name.
-* **Any Access Service Token** - the request will need to present the headers for any [service token](/identity/service-auth/service-tokens) created for this account.
-* **Service Token** - the request will need to present the correct service token headers configured for the specific application
-* **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
-* **Authentication Method** - checks the [multifactor authentication](/policies/zero-trust/mfa-requirements) method used by the user, if supported by the identity provider.
-* **Login Method** - checks the identity provider used at the time of login.
-
+*   **Emails** — `you@company.com`
+*   **Emails ending in** — `@company.com`
+*   **Access groups** — `example-team`
+*   **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
+*   **Everyone** — allows, denies, or bypasses access to everyone.
+*   **Country** – uses the IP address to determine country.
+*   **Valid Certificate** - the request will need to present any valid client certificate.
+*   **Common Name** - the request will need to present a valid certificate with an expected common name.
+*   **Any Access Service Token** - the request will need to present the headers for any [service token](/identity/service-auth/service-tokens) created for this account.
+*   **Service Token** - the request will need to present the correct service token headers configured for the specific application
+*   **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
+*   **Authentication Method** - checks the [multifactor authentication](/policies/zero-trust/mfa-requirements) method used by the user, if supported by the identity provider.
+*   **Login Method** - checks the identity provider used at the time of login.
 
 ## Example scenarios
-
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |
 | Allow  | Include | Emails Ending In: `@example.com` |
 
-**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application. 
+**Result**: this configuration lets any user with an `@example.com` email address, as validated against an IdP, reach the application.
 
 | Action | Rule | Criteria |
 | ------ | ---- | -------- |
@@ -97,16 +95,16 @@ Policies are evaluated based on their action type and ordering. Bypass and Servi
 
 For example, if you have a list of policies that reflects the following:
 
-* Allow A
-* Block B
-* Service Auth C
-* Bypass D
-* Allow E
+*   Allow A
+*   Block B
+*   Service Auth C
+*   Bypass D
+*   Allow E
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
 
 <Aside type='warning'>
 
     Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application. 
-    
+
 </Aside>

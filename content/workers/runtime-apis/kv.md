@@ -12,7 +12,7 @@ Learn more about [How KV works](/learning/how-kv-works).
 
 To use Workers KV, you must create a KV namespace and add a [binding](/runtime-apis/kv#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/cli-wrangler/commands#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
 
---------------------------------
+***
 
 ## Methods
 
@@ -28,11 +28,11 @@ await NAMESPACE.put(key, value)
 
 <Definitions>
 
-  - `key` <Type>string</Type>
-    - The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
+*   `key` <Type>string</Type>
+    *   The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
 
-  - `value` <Type>string</Type> | <Type>ReadableStream</Type> | <Type>ArrayBuffer</Type>
-    -  The value to store. The type is inferred.
+*   `value` <Type>string</Type> | <Type>ReadableStream</Type> | <Type>ArrayBuffer</Type>
+    *   The value to store. The type is inferred.
 
 </Definitions>
 
@@ -48,7 +48,7 @@ Writes are immediately visible to other requests in the same edge location, but 
 
 #### Writing data in bulk
 
-You can [write more than one key-value pair at a time with Wrangler](/cli-wrangler/commands#kvbulk) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once. 
+You can [write more than one key-value pair at a time with Wrangler](/cli-wrangler/commands#kvbulk) or [via the API](https://api.cloudflare.com/#workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
 
 A `key` and `value` are required for each KV pair. The entire request size must be less than 100 megabytes. As of January 2022, Cloudflare does not support bulk writes from within a Worker.
 
@@ -60,13 +60,13 @@ Once the expiration time of an expiring key is reached, it will be deleted from 
 
 You can choose one of two ways to specify when a key should expire:
 
-1. Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key’s expiration to `1554076800`.
+1.  Set a key's expiration using an absolute time specified in a number of [seconds since the UNIX epoch](https://en.wikipedia.org/wiki/Unix_time). For example, if you wanted a key to expire at 12:00AM UTC on April 1, 2019, you would set the key’s expiration to `1554076800`.
 
-2. Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
+2.  Set a key's expiration time to live (TTL) using a relative number of seconds from the current time. For example, if you wanted a key to expire 10 minutes after creating it, you would set its expiration TTL to `600`.
 
 Both of these options are usable when writing a key inside a Worker or when writing keys using the API.
 
-As of January 2022, expiration targets that are less than 60 seconds into the future are not supported. This is true for both expiration methods. 
+As of January 2022, expiration targets that are less than 60 seconds into the future are not supported. This is true for both expiration methods.
 
 #### Creating expiring keys
 
@@ -74,9 +74,9 @@ The `put` method described [previously](/runtime-apis/kv#writing-key-value-pairs
 
 <Definitions>
 
-- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` <Type>Promise</Type>
+*   `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` <Type>Promise</Type>
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` <Type>Promise</Type>
+*   `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` <Type>Promise</Type>
 
 </Definitions>
 
@@ -135,10 +135,10 @@ NAMESPACE.get(key, {type: "text"})
 
 The `type` parameter can be any of:
 
-- `"text"`: A string (default).
-- `"json"`: An object decoded from a JSON string.
-- `"arrayBuffer"`: An [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
-- `"stream"`: A [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+*   `"text"`: A string (default).
+*   `"json"`: An object decoded from a JSON string.
+*   `"arrayBuffer"`: An [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+*   `"stream"`: A [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
 
 For simple values, it often makes sense to use the default `"text"` type which provides you with your value as a string. For convenience, a `"json"` type is also specified which will convert a JSON value into an object before returning it to you. For large values, you can use `"stream"` to request a `ReadableStream` and `"arrayBuffer"` to request an `ArrayBuffer` for binary values.
 
@@ -214,9 +214,9 @@ NAMESPACE.list({prefix?: string, limit?: number, cursor?: string})
 
 All arguments are optional:
 
-* `prefix` is a string that represents a prefix you can use to filter all keys.
-* `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
-* `cursor` is a string used for paginating responses.
+*   `prefix` is a string that represents a prefix you can use to filter all keys.
+*   `limit` is the maximum number of keys returned. The default is 1,000, which is the maximum. It is unlikely that you will want to change this default but it is included for completeness.
+*   `cursor` is a string used for paginating responses.
 
 The `list` method returns a promise which resolves with an object that looks like this:
 
@@ -228,7 +228,7 @@ The `list` method returns a promise which resolves with an object that looks lik
 }
 ```
 
-The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key and optionally the key's `expiration` and `metadata` values. 
+The `keys` property will contain an array of objects describing each key. That object will have one to three keys of its own: the `name` of the key and optionally the key's `expiration` and `metadata` values.
 
 The `name` is a string, the `expiration` value is a number, and `metadata` is whatever type was set initially. The `expiration` value will only be returned if the key has an expiration and will be in the absolute value form, even if it was set in the TTL form. Any `metadata` will only be returned if the given key has non-null associated metadata.
 
@@ -272,7 +272,7 @@ const next_value = await NAMESPACE.list({"cursor": cursor})
 
 ## KV bindings
 
-### Referencing KV from Workers 
+### Referencing KV from Workers
 
 A KV namespace is a key-value database that is replicated to Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
@@ -308,14 +308,14 @@ addEventListener('fetch', async event => {
 ```
 
 <Aside type="note">
-  
+
 You can create a namespace [using Wrangler](/cli-wrangler/commands#getting-started) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
- 1. Go to **Workers**.
- 2. Select your **Worker**.
- 3. Select **Settings** > **Variables**.
- 4. Go to **KV Namespace Bindings**.
- 5. Select **Add binding**.
+1.  Go to **Workers**.
+2.  Select your **Worker**.
+3.  Select **Settings** > **Variables**.
+4.  Go to **KV Namespace Bindings**.
+5.  Select **Add binding**.
 
 </Aside>
 
@@ -339,5 +339,5 @@ export class DurableObject {
 
 ## Related resources
 
-- [Limits](/platform/limits#kv-limits)
-- [Pricing](/platform/pricing#kv)
+*   [Limits](/platform/limits#kv-limits)
+*   [Pricing](/platform/pricing#kv)

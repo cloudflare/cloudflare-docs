@@ -11,12 +11,13 @@ By default, your HTTP request logs are not retained. When using the Logpull API 
 
 There are two endpoints for managing log retention:
 
-- `GET /logs/control/retention/flag` - returns whether retention is on
-- `POST /logs/control/retention/flag` - turns retention on or off
+*   `GET /logs/control/retention/flag` - returns whether retention is on
+*   `POST /logs/control/retention/flag` - turns retention on or off
 
 <Aside type="note" header="Note">
 
 To make a `POST` call, you must have a Cloudflare account role with `edit` permissions, such as Super Administrator, Administrator, or Log Share.
+
 </Aside>
 
 ## Example API requests using cURL
@@ -47,7 +48,8 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 ```
 
 #### Parameters
-* *flag* - can be either `true` or `false`
+
+*   *flag* - can be either `true` or `false`
 
 #### Response:
 

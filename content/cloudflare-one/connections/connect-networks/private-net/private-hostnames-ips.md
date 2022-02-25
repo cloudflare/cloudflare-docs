@@ -23,15 +23,15 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Prerequisites
 
-* Cloudflare Tunnel must be properly [configured](/connections/connect-apps/configuration) to route traffic to a private IP space.
-* `cloudflared` must be connected to Cloudflare from your target private network.
-* Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
+*   Cloudflare Tunnel must be properly [configured](/connections/connect-apps/configuration) to route traffic to a private IP space.
+*   `cloudflared` must be connected to Cloudflare from your target private network.
+*   Cloudflare WARP must be installed on end-user devices to connect your users to Cloudflare.
 
 ## Enable UDP support
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
-1. Scroll down to Firewall settings.
-1. Ensure the Proxy is enabled and both TCP and UDP are selected.
+1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
+2.  Scroll down to Firewall settings.
+3.  Ensure the Proxy is enabled and both TCP and UDP are selected.
 
     ![Enable UDP](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
 
@@ -39,12 +39,13 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 Next, we need to create a [Local Domain Fallback](/connections/connect-devices/warp/exclude-traffic/local-domains) entry.
 
-1. Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
+1.  Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
 
     ![Manage Local Domains](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
 
-2. Click **Manage**.
-3. Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly. 
+2.  Click **Manage**.
+
+3.  Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 
 ![Create Local Domains](../../../static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
@@ -56,7 +57,7 @@ While on the Network Settings page, ensure that **Split Tunnels** are configured
 
 ## Update `cloudflared`
 
-Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI. 
+Next, update your Cloudflare Tunnel configuration to ensure it is using QUIC as the default transport protocol. To do this, you can either set the `protocol: quic` property in your [configuration file](/connections/connect-apps/configuration/configuration-file) or [pass the `–-protocol quic` flag](/connections/connect-apps/configuration/arguments) directly through your CLI.
 
 Finally, update to the latest available version (2021.12.3 as of the time of writing) of cloudflared running on your target private network.
 
@@ -66,7 +67,7 @@ You can now resolve requests through the internal DNS server you set up in your 
 
 ## Test the setup
 
-For testing, run a `dig` command for the internal DNS service: 
+For testing, run a `dig` command for the internal DNS service:
 
 ```sh
 $ dig AAAA www.myorg.privatecorp
@@ -84,18 +85,18 @@ Both `dig` commands will fail if the WARP client is disabled in your end user's 
 
 Use the following troubleshooting strategies if you are running into issues while configuring your private network with Cloudflare Tunnel.
 
-* Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
+*   Ensure that `cloudflared` is connected to Cloudflare by visiting Access > Tunnels in the Zero Trust dashboard.
 
-* Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
+*   Ensure that `cloudflared` is running with `quic` protocol (search for `Initial protocol quic` in its logs).
 
-* Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
+*   Ensure that the machine where `cloudflared` is running is allowed to egress via UDP to port 7844 to talk out to Cloudflare.
 
-* Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
+*   Ensure that end-user devices are enrolled into WARP by visiting https://help.teams.cloudflare.com
 
-* Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
+*   Double-check the precedence of your application policies in the Gateway Network policies tab. Ensure that a more global Block or Allow policy will not supersede the application policies.
 
-* Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
+*   Check the Gateway Audit Logs Network tab to see whether your UDP DNS resolutions are being allowed or blocked.
 
-* Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
+*   Ensure that your Private DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
 
-* Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.
+*   Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.

@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a static WordPress site
 
@@ -27,8 +27,8 @@ You will use the free WordPress plugin [WP2Static](https://wordpress.org/plugins
 
 This tutorial assumes that you are:
 
-- The Administrator account on your WordPress site.
-- Able to install WordPress plugins on the site.
+*   The Administrator account on your WordPress site.
+*   Able to install WordPress plugins on the site.
 
 ## Setup
 
@@ -42,7 +42,7 @@ Select **Install** on the plugin. After it has finished installing, select **Act
 
 When your application refreshes, you should see a new section in your sidebar called **WP2Static**. Go to that section to begin your first static WordPress export.
 
-From the **Where will you host...** dropdown on the page, select _ZIP archive (.zip)_. WP2Static supports a number of different export types, including manual and automated exports. To make deployment easier, select **Allow offline usage** – this will make all the URLs in your WordPress export relative: `/logo.png` versus `https://mysite.com/logo.png`. It will also reduce the number of asset errors that could occur depending on your theme and WordPress setup.
+From the **Where will you host...** dropdown on the page, select *ZIP archive (.zip)*. WP2Static supports a number of different export types, including manual and automated exports. To make deployment easier, select **Allow offline usage** – this will make all the URLs in your WordPress export relative: `/logo.png` versus `https://mysite.com/logo.png`. It will also reduce the number of asset errors that could occur depending on your theme and WordPress setup.
 
 To do your first export, select **Start static site export** (this operation may take a while), and when it completes, save the ZIP file somewhere you can easily find later.
 
@@ -67,9 +67,9 @@ The [`--site`](/platform/sites/configuration) flag indicates that you want to de
 
 The newly generated `wp-static` directory will contain three components:
 
-1. A `public` directory, representing the site you want to deploy to Workers. This will be the location of your WordPress site.
-1. A `workers-site` directory, which contains the Workers script that will serve your website content. In this tutorial, you will not change anything in this folder.
-1. A `wrangler.toml` file, which contains the configuration details for your `wp-static` directory. You will populate this file with some information before the project is deployed.
+1.  A `public` directory, representing the site you want to deploy to Workers. This will be the location of your WordPress site.
+2.  A `workers-site` directory, which contains the Workers script that will serve your website content. In this tutorial, you will not change anything in this folder.
+3.  A `wrangler.toml` file, which contains the configuration details for your `wp-static` directory. You will populate this file with some information before the project is deployed.
 
 When deploying a website using Workers Sites, your static code – your HTML, CSS, and JavaScript – will be uploaded to Workers KV. The location of these files is by default the `public` folder mentioned above.
 
@@ -115,16 +115,16 @@ When your site looks correct in Wrangler’s preview, you can move onto publishi
 
 There are some features available in WordPress sites that will not be supported in a static site environment:
 
-- WordPress Forms
-- WordPress Comments
-- Any links to `/wp-admin` or similar internal WordPress routes
+*   WordPress Forms
+*   WordPress Comments
+*   Any links to `/wp-admin` or similar internal WordPress routes
 
 ## Conclusion
 
 Deploying your WordPress site to Workers has benefits for your site’s performance, security, and cost. With a static version of your site being served, you can do a number of things with your live WordPress installation:
 
-- Move your WordPress install to a private URL or subdomain, and serve the static version of your site by deploying the Workers application to your domain. Refer to [Deploying to a Domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) to learn more.
-- Run your WordPress instance locally, or put your now-hidden WordPress instance behind [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
-- Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting. Your Cloudflare Workers plan is priced per-request and because you can host up to thirty sites on your account, serving a high number of static WordPress sites can be an order of magnitude cheaper on Workers.
+*   Move your WordPress install to a private URL or subdomain, and serve the static version of your site by deploying the Workers application to your domain. Refer to [Deploying to a Domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) to learn more.
+*   Run your WordPress instance locally, or put your now-hidden WordPress instance behind [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
+*   Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting. Your Cloudflare Workers plan is priced per-request and because you can host up to thirty sites on your account, serving a high number of static WordPress sites can be an order of magnitude cheaper on Workers.
 
-Connect with the [Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers. 
+Connect with the [Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers.

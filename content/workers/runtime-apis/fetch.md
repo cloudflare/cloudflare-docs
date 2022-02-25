@@ -16,14 +16,16 @@ Asynchronous tasks such as `fetch` are not executed at the top level in a Worker
 
 <Aside type="warning" header="Worker to Worker">
 
-It is not currently (January 2022) possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal. 
+It is not currently (January 2022) possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal.
 
 </Aside>
 
---------------------------------
+***
 
 ## Constructor
+
 <!-- This code example needs more work -->
+
 ```js
 ---
 highlight: [8]
@@ -41,33 +43,34 @@ async function eventHandler(event) {
 ```
 
 <!-- Where do we have the return type in this format? -->
+
 <Definitions>
 
-- <Code>fetch()</Code> <TypeLink href="/runtime-apis/response">Promise{`<Response>`}</TypeLink>
+*   <Code>fetch()</Code> <TypeLink href="/runtime-apis/response">Promise{`<Response>`}</TypeLink>
 
-  - Fetch returns a promise to a Response.
+    *   Fetch returns a promise to a Response.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Properties
 
 <Definitions>
 
-- `request` <TypeLink href="/runtime-apis/request">Request</TypeLink> | <Type>string</Type>
-  - The [`Request`](/runtime-apis/request) object or a string represents the URL to fetch.
+*   `request` <TypeLink href="/runtime-apis/request">Request</TypeLink> | <Type>string</Type>
+    *   The [`Request`](/runtime-apis/request) object or a string represents the URL to fetch.
 
-- `init` <TypeLink href="/runtime-apis/request#requestinit">RequestInit</TypeLink>
-  - The content of the request.
+*   `init` <TypeLink href="/runtime-apis/request#requestinit">RequestInit</TypeLink>
+    *   The content of the request.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Related resources
 
-- [Example: use `fetch` to respond with another site](/examples/respond-with-another-site)
-- [Example: Fetch HTML](/examples/fetch-html)
-- [Example: Fetch JSON](/examples/fetch-json)
-- [Example: cache using Fetch](/examples/cache-using-fetch)
+*   [Example: use `fetch` to respond with another site](/examples/respond-with-another-site)
+*   [Example: Fetch HTML](/examples/fetch-html)
+*   [Example: Fetch JSON](/examples/fetch-json)
+*   [Example: cache using Fetch](/examples/cache-using-fetch)

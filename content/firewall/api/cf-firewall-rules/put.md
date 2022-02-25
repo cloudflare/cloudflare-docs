@@ -77,9 +77,9 @@ This example updates the Firewall Rule with ID `<RULE_ID>`.
 
 You must include the following fields in the request body:
 
-- `id`
-- `action`
-- `filter.id`
+*   `id`
+*   `action`
+*   `filter.id`
 
 All other fields are optional.
 

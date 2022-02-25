@@ -25,11 +25,9 @@ The **Documentation Explorer** opens and displays a list of available objects:
 
 ![GraphiQl Doc Explorer](../../static/images/graphiql-doc-explorer.png)
 
- Objects in the **Documentation Explorer** use this syntax:
+Objects in the **Documentation Explorer** use this syntax:
 
-```
-object-name: object-type-definition
-```
+    object-name: object-type-definition
 
 ## Find the type definition of an object
 
@@ -57,7 +55,7 @@ Click the type definition of the `viewer` field (gold text) to list its sub-fiel
 
 The `accounts` and `zones` fields take arguments to specify which data set to query.
 
-For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
+For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter\_InputObject**.
 
 ## Find the data sets available for a zone
 

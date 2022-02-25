@@ -4,7 +4,7 @@ order: 63
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
 
 # Enable Logpush to Splunk
 
@@ -16,38 +16,39 @@ Enable Logpush to Splunk via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard.
+1.  Log in to the Cloudflare dashboard.
 
-1. Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise domain you want to use with Logpush.
 
-1. Go to **Analytics** > **Logs**.
+3.  Go to **Analytics** > **Logs**.
 
-1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the dataset you want to push to a storage service.
+5.  Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
-1. Select **Splunk**.
+7.  Select **Splunk**.
 
-1. Enter or select the following destination information:
-     * **Splunk raw HTTP Event Collector URL**
-     * **Channel ID**
-     * **Auth Token**
-     * **Source Type**
-     * **Use insecure skip verify option**
+8.  Enter or select the following destination information:
+    *   **Splunk raw HTTP Event Collector URL**
+    *   **Channel ID**
+    *   **Auth Token**
+    *   **Source Type**
+    *   **Use insecure skip verify option**
 
-1. Click **Validate access**.
+9.  Click **Validate access**.
 
-1. Click **Save and Start Pushing** to finish enabling Logpush.
+10. Click **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists Splunk as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
 ## Manage via API
 
 To set up a Splunk Logpush job:
-1. Create a job with the appropriate endpoint URL and authentication parameters.
-1. Enable the job to begin pushing logs.
+
+1.  Create a job with the appropriate endpoint URL and authentication parameters.
+2.  Enable the job to begin pushing logs.
 
 <Aside type="note" header="Note">
 
@@ -61,32 +62,32 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-* **name** (optional) - Use your domain name as the job name.
-* **destination_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below. 
+*   **name** (optional) - Use your domain name as the job name.
+*   **destination\_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below.
 
-  * **<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`. 
-      * Cloudflare expects the HEC network port to be configured to `:443` or `:8088`. 
-      * Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.  
-      * Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk. 
-  * **<SPLUNK_CHANNEL_ID>**: A unique channel ID. This is a random GUID that you can generate by:
-      * Using an online tool like the [GUID generator](https://www.guidgenerator.com/). 
-      * Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`. 
-  * **<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
+    *   **\<SPLUNK\_ENDPOINT\_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
+        *   Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
+        *   Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
+        *   Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](https://developers.cloudflare.com/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk.
+    *   **\<SPLUNK\_CHANNEL\_ID>**: A unique channel ID. This is a random GUID that you can generate by:
+        *   Using an online tool like the [GUID generator](https://www.guidgenerator.com/).
+        *   Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`.
+    *   **\<INSECURE\_SKIP\_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 <Aside type="note" header="Note">
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
 </Aside>
 
-  * `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
-  * `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
+*   `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
+*   `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
 ```bash
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
 ```
 
-* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
 
-* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
@@ -158,31 +159,31 @@ Refer to the [Logpush FAQ](../../../faq#logpush-faq) for troubleshooting informa
 
 If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see a CAPTCHA challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF rule that allows Cloudflare to bypass the HEC endpoint.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to the **Firewall**.
-1. Click **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
-1. Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to the **Firewall**.
+2.  Click **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
+3.  Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
 
   <TableWrap>
 
-  Field | Operator | Value
-  ------|----------|------
-  Request Method | `equals` | `POST`
-  Hostname | `equals` | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com`
-  URI Path | `equals` | `/services/collector/raw`
-  URI Query String | `contains` | `channel`
-  AS Num | `equals` | `132892`
-  User Agent | `equals` | `Go-http-client/2.0`
+Field | Operator | Value
+\------|----------|------
+Request Method | `equals` | `POST`
+Hostname | `equals` | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com`
+URI Path | `equals` | `/services/collector/raw`
+URI Query String | `contains` | `channel`
+AS Num | `equals` | `132892`
+User Agent | `equals` | `Go-http-client/2.0`
 
   </TableWrap>
 
-1. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
+1.  After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
 
-  ```txt
-  (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.geoip.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
-  ```
+```txt
+(http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.geoip.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+```
 
-1. Under the **Then...** > **Choose an action** dropdown, select _Bypass_.
-1. In the **Choose a feature** dropdown, select _WAF Managed Rules_.
-1. Click **Deploy**.
+1.  Under the **Then...** > **Choose an action** dropdown, select *Bypass*.
+2.  In the **Choose a feature** dropdown, select *WAF Managed Rules*.
+3.  Click **Deploy**.
 
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.

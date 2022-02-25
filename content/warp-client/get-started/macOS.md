@@ -6,11 +6,11 @@ pcx-content-type: how-to
 
 # macOS desktop client
 
-1. [Download __Cloudflare_WARP.zip__](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
-1. Navigate to the downloads folder.
-1. Open **Cloudflare_WARP.zip**.
-1. Open the **Cloudflare_WARP.pkg** file that was extracted.
-1. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+1.  [Download **Cloudflare\_WARP.zip**](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
+2.  Navigate to the downloads folder.
+3.  Open **Cloudflare\_WARP.zip**.
+4.  Open the **Cloudflare\_WARP.pkg** file that was extracted.
+5.  Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
 ![macOS Menu Bar](../static/macOSMenuBar.png)
 
@@ -24,15 +24,15 @@ This is the main GUI application that you interact with. You can find it in`/App
 
 This is the daemon service responsible for establishing the wireguard tunnel and all interaction between our service endpoint and the Cloudflare WARP application. Here is where you can find:
 
-* **Service**: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
-* **Definition**: `/Library/LaunchDaemons/com.cloudflare.1dot1dot1dot1.macos.warp.daemon.plist`
+*   **Service**: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+*   **Definition**: `/Library/LaunchDaemons/com.cloudflare.1dot1dot1dot1.macos.warp.daemon.plist`
 
 ### Log files
 
 The macOS application places log files in two locations based on what part of the app is logging information. These logs are included with a feedback submission, when you click the checkbox in **Feedback** > **Share debug information**.
 
-* **Daemon and install logs**: `/Library/Application Support/Cloudflare`.
-* **Application GUI logs**: `/Users/<your local username>/Library/Logs/Cloudflare`.
+*   **Daemon and install logs**: `/Library/Application Support/Cloudflare`.
+*   **Application GUI logs**: `/Users/<your local username>/Library/Logs/Cloudflare`.
 
 ## How to remove the application
 

@@ -77,8 +77,8 @@ Next, initialize a git repository and make the first commit.
 
 <Aside type="note" header="Note:">
 
-You might need to [add your SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account). 
-  
+You might need to [add your SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
 </Aside>
 
 ```sh

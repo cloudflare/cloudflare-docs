@@ -5,13 +5,13 @@ pcx-content-type: concept
 
 # Default Cache Behavior
 
-Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers. 
+Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers.
 
-- Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0` or if there is a cookie in the response.
-- Cloudflare caches the resource in the following scenarios:
-    - The `Cache-Control` header is set to `public` and the `max-age` is greater than 0.
-    - The `Expires` header is set to a future date.
-- If both the `max-age` and an `Expires` header are set, `max-age` is used.
+*   Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0` or if there is a cookie in the response.
+*   Cloudflare caches the resource in the following scenarios:
+    *   The `Cache-Control` header is set to `public` and the `max-age` is greater than 0.
+    *   The `Expires` header is set to a future date.
+*   If both the `max-age` and an `Expires` header are set, `max-age` is used.
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/about/cache-control#cache-control-directives).
 
@@ -24,10 +24,10 @@ Cloudflare only caches based on file extension and not by MIME type. The Cloudfl
 | 7Z    | CSV   | GIF  | MIDI | PNG  | TIF  | ZIP |
 | AVI   | DOC   | GZ   | MKV  | PPT  | TIFF | ZST |
 | AVIF  | DOCX  | ICO  | MP3  | PPTX | TTF  |
-| APK   | DMG   | ISO  | MP4  | PS   | WEBM | 
+| APK   | DMG   | ISO  | MP4  | PS   | WEBM |
 | BIN   | EJS   | JAR  | OGG  | RAR  | WEBP |
-| BMP   | EOT   | JPG  | OTF  | SVG  | WOFF | 
-| BZ2   | EPS   | JPEG | PDF  | SVGZ | WOFF2| 
+| BMP   | EOT   | JPG  | OTF  | SVG  | WOFF |
+| BZ2   | EPS   | JPEG | PDF  | SVGZ | WOFF2|
 | CLASS | EXE   | JS   | PICT | SWF  | XLS  |
 | CSS   | FLAC  | MID  | PLS  | TAR  | XLSX |
 
@@ -36,15 +36,16 @@ To cache additional content, see [Page Rules](/how-to/create-page-rules) to crea
 ## Customization options and limitations
 
 Cloudflare’s CDN provides several cache customization options:
-- Caching behavior for individual URLs via [Cloudflare Page Rules](/how-to/create-page-rules)
-- Customize caching with [Cloudflare Workers](https://developers.cloudflare.com/workers/learning/how-the-cache-works)
-- Adjust caching level, cache TTL, and more via the Cloudflare Caching app
+
+*   Caching behavior for individual URLs via [Cloudflare Page Rules](/how-to/create-page-rules)
+*   Customize caching with [Cloudflare Workers](https://developers.cloudflare.com/workers/learning/how-the-cache-works)
+*   Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
 
-- 100MB Free and Pro
-- 200MB Business
-- 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
+*   100MB Free and Pro
+*   200MB Business
+*   500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
 If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
 

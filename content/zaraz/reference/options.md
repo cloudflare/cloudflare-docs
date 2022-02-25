@@ -8,7 +8,7 @@ title: Options
 
 Configure Zaraz's general options for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
 
-## Data layer compatibility mode 
+## Data layer compatibility mode
 
 Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. You can toggle this option off if you do not need it. Refer to [Data layer compatibility mode](/advanced/datalayer-compatibility) for more information.
 

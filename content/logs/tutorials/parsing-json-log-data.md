@@ -14,6 +14,7 @@ In this tutorial, you will learn how to parse your JSON log data using *jq*.  To
 <Aside type="note" header="Note">
 
 *jq* is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as *Kibana*.
+
 </Aside>
 
 ## Aggregating fields
@@ -93,7 +94,7 @@ $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 
 ## Showing TLS versions
 
-To find out which TLS versions your visitors are using &mdash; for example, to decide if you can disable TLS versions that are older than 1.2 &mdash; use the following query:
+To find out which TLS versions your visitors are using — for example, to decide if you can disable TLS versions that are older than 1.2 — use the following query:
 
 ```bash
 $ jq -r '.ClientSSLProtocol' logs.json | sort -n | uniq -c | sort -n

@@ -4,15 +4,16 @@ pcx-content-type: how-to
 type: overview
 ---
 
-import HSTSDefinition from "../../_partials/_hsts-definition.md"
+import HSTSDefinition from "../../\_partials/\_hsts-definition.md"
 
 # HTTP Strict Transport Security (HSTS)
 
 <HSTSDefinition/>
 
 HSTS adds an HTTP header that directs [compliant web browsers](/ssl-tls/browser-compatibility) to:
-- Transform HTTP links to HTTPS links
-- Prevent users from bypassing SSL browser warnings 
+
+*   Transform HTTP links to HTTPS links
+*   Prevent users from bypassing SSL browser warnings
 
 Before enabling HSTS, review the [requirements](#requirements).
 
@@ -22,20 +23,22 @@ For more background information on HSTS, see the <a href="https://blog.cloudflar
 
 </Aside>
 
----
+***
 
 ## Requirements
 
 In order for HSTS to work as expected, you need to:
-- Have enabled HTTPS before HSTS so browsers can accept your HSTS settings
-- Keep HTTPS enabled so visitors can access your site
+
+*   Have enabled HTTPS before HSTS so browsers can accept your HSTS settings
+*   Keep HTTPS enabled so visitors can access your site
 
 Once you enabled HSTS, avoid the following actions to ensure visitors can still access your site:
-- Changing your DNS records from [Proxied to DNS only](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
-- [Pausing Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753) on your site
-- Pointing your nameservers away from Cloudflare
-- Redirecting HTTPS to HTTP
-- Disabling SSL (invalid or expired certificates or certificates with mismatched host names)
+
+*   Changing your DNS records from [Proxied to DNS only](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+*   [Pausing Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753) on your site
+*   Pointing your nameservers away from Cloudflare
+*   Redirecting HTTPS to HTTP
+*   Disabling SSL (invalid or expired certificates or certificates with mismatched host names)
 
 <Aside type="warning">
 
@@ -46,27 +49,34 @@ If you remove HTTPS before disabling HSTS or before waiting for the duration of 
 ## Enable HSTS
 
 To enable HSTS for your website:
-1. Log in to the Cloudflare dashboard and select your account.
-1. Select your website.
-1. Go to **SSL/TLS** > **Edge Certificates**.
-1. For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
-1. Read the dialog and click **I understand**.
-1. Click **Next**.
-1. Configure the [HSTS settings](#configuration-settings).
-1. Click **Save**.
 
-    
+1.  Log in to the Cloudflare dashboard and select your account.
+
+2.  Select your website.
+
+3.  Go to **SSL/TLS** > **Edge Certificates**.
+
+4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
+
+5.  Read the dialog and click **I understand**.
+
+6.  Click **Next**.
+
+7.  Configure the [HSTS settings](#configuration-settings).
+
+8.  Click **Save**.
 
 ## Disable HSTS
 
 To disable HSTS on your website:
-1. Log in to the Cloudflare dashboard and select your account.
-1. Select your website.
-1. Go to **SSL/TLS** > **Edge Certificates**.
-1. For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
-1. Set the **Max Age Header** to **0 (Disable)**.
-1. If you previously enabled the **No-Sniff** header and want to remove it, set it to **Off**.  
-1. Click **Save**.
+
+1.  Log in to the Cloudflare dashboard and select your account.
+2.  Select your website.
+3.  Go to **SSL/TLS** > **Edge Certificates**.
+4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
+5.  Set the **Max Age Header** to **0 (Disable)**.
+6.  If you previously enabled the **No-Sniff** header and want to remove it, set it to **Off**.
+7.  Click **Save**.
 
 ## Configuration settings
 

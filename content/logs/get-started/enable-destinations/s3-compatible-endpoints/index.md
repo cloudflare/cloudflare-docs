@@ -4,20 +4,20 @@ order: 56
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
 
 # Enable Logpush to S3-compatible endpoints
 
 Cloudflare Logpush supports pushing logs to S3-compatible destinations via the Cloudflare dashboard or via API, including:
 
-* [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
-* [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
-* [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
-* [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
-* [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
-* [Linode Object Storage](https://www.linode.com/products/object-storage/)
-* [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
-* On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
+*   [Alibaba Cloud OSS](https://www.alibabacloud.com/help/doc-detail/64919.htm#title-37m-7gl-xy2)
+*   [Backblaze B2](https://www.backblaze.com/b2/docs/s3_compatible_api.html)
+*   [Digital Ocean Spaces](https://www.digitalocean.com/docs/spaces/)
+*   [IBM Cloud Object Storage](https://cloud.ibm.com/apidocs/cos/cos-compatibility)
+*   [JD Cloud Object Storage Service](https://docs.jdcloud.com/en/object-storage-service/introduction-2)
+*   [Linode Object Storage](https://www.linode.com/products/object-storage/)
+*   [Oracle Cloud Object Storage](https://docs.cloud.oracle.com/en-us/iaas/Content/Object/Tasks/s3compatibleapi.htm)
+*   On-premise [Ceph Object Gateway](https://docs.ceph.com/en/latest/radosgw/s3/)
 
 For more information about Logpush and the current production APIs, refer to [Cloudflare Logpush](/get-started/) documentation.
 
@@ -27,38 +27,39 @@ Enable Logpush to an S3-compatible destination via the dashboard.
 
 To enable the Cloudflare Logpush service:
 
-1. Log in to the Cloudflare dashboard.
+1.  Log in to the Cloudflare dashboard.
 
-1. Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise domain you want to use with Logpush.
 
-1. Go to **Analytics** > **Logs**.
+3.  Go to **Analytics** > **Logs**.
 
-1. Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
-1. Select the dataset you want to push to a storage service.
+5.  Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+6.  Select the data fields to include in your logs. Add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
-1. Select **S3-Compatible**.
+7.  Select **S3-Compatible**.
 
-1. Enter or select the following destination information:
-     * **S3 Compatible Bucket Path**
-     * **Bucket region**
-     * **Access Key ID**
-     * **Secret Access Key**
-     * **Endpoint URL**
+8.  Enter or select the following destination information:
+    *   **S3 Compatible Bucket Path**
+    *   **Bucket region**
+    *   **Access Key ID**
+    *   **Secret Access Key**
+    *   **Endpoint URL**
 
-1. Click **Validate access**.
+9.  Click **Validate access**.
 
-1. Click **Save and Start Pushing** to finish enabling Logpush.
+10. Click **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists the S3-compatible destination as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
 ## Manage via API
 
 To set up S3-compatible endpoints:
-1. Create a job with the appropriate endpoint URL and authentication parameters.
-1. Enable the job to begin pushing logs.
+
+1.  Create a job with the appropriate endpoint URL and authentication parameters.
+2.  Enable the job to begin pushing logs.
 
 <Aside type="note" header="Note">
 
@@ -71,19 +72,22 @@ Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compat
 ### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
-* **name** (optional) - Use your domain name as the job name.
-* **destination_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
+
+*   **name** (optional) - Use your domain name as the job name.
+*   **destination\_conf** - A log destination consisting of an endpoint name, bucket name, bucket path, region, access-key-id, and secret-access-key in the following string format:
 
 ```bash
 "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>"
 ```
+
 <Aside type="note" header="Note">
 
 `<ENDPOINT_URL>` is the URL without the bucket name or path. For example: `endpoint=sfo2.digitaloceanspaces.com`.
+
 </Aside>
 
-* **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
-* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](/reference/log-fields) for the full list of supported datasets.
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/get-started/logpush-configuration-api/understanding-logpush-api#options).
 
 Example request using cURL:
 

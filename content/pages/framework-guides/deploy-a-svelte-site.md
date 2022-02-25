@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Svelte site
 
@@ -123,7 +123,6 @@ Additionally, you will have access to [preview deployments](/platform/preview-de
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/get-started).
 
 </Aside>
-
 
 ## Learn more
 

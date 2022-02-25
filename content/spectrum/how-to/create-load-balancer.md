@@ -13,12 +13,12 @@ For help creating a Load Balancer from the dashboard or using the API, follow th
 
 ## Create a Spectrum application
 
-1. Log in to the Cloudflare dashboard.
-1. Click **Spectrum**.
-1. Click **Create an Application**.
-1. Under **Origin**, select **Load Balancer**.
-1. Select the load balancer from the menu.
-1. Click **Submit**.
+1.  Log in to the Cloudflare dashboard.
+2.  Click **Spectrum**.
+3.  Click **Create an Application**.
+4.  Under **Origin**, select **Load Balancer**.
+5.  Select the load balancer from the menu.
+6.  Click **Submit**.
 
 ### Example Curl using the API
 

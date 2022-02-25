@@ -10,17 +10,17 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 
 Each IRR entry record must include the following information:
 
-- **Route:** Each IP prefix Cloudflare advertises for you.
-- **Origin ASN:** Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
-- **Source:** The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
+*   **Route:** Each IP prefix Cloudflare advertises for you.
+*   **Origin ASN:** Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS209242).
+*   **Source:** The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
 
 ## Add or update IRR entries
 
 [Add or update IRR entries](/best-practices/irr-entries) when they meet any of these criteria:
 
-- The entry is missing.
-- The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
-- The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
+*   The entry is missing.
+*   The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
+*   The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
 
 ### Verify IRR entries for exact prefixes
 
@@ -31,6 +31,7 @@ You are strongly encouraged to verify IRR entries for the exact prefixes you'll 
 To verify your prefix and ASN route, use the tools and methods outlined in this table:
 
 <TableWrap><table>
+
   <thead>
     <tr>
       <th>Data to verify</th>

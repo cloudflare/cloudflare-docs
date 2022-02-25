@@ -4,14 +4,14 @@ order: 3
 pcx-content-type: configuration
 ---
 
-import DCVDefinition from "../../_partials/_dcv-definition.md"
-import DCVCNAMEDefinition from "../../_partials/_dcv-cname-definition.md"
-import CNAMECertValidation from "../../_partials/_cname-cert-verification.md"
-import CreateHostname from "../../_partials/_ssl-for-saas-create-hostname.md"
-import EmailValidationDefinition from "../../_partials/_email-validation-definition.md"
-import TXTValidationDefinition from "../../_partials/_txt-validation-definition.md"
-import EmailValidationProcess from "../../_partials/_email-validation-process.md"
-import ValidatePatch from "../../_partials/_ssl-for-saas-validate-patch.md"
+import DCVDefinition from "../../\_partials/\_dcv-definition.md"
+import DCVCNAMEDefinition from "../../\_partials/\_dcv-cname-definition.md"
+import CNAMECertValidation from "../../\_partials/\_cname-cert-verification.md"
+import CreateHostname from "../../\_partials/\_ssl-for-saas-create-hostname.md"
+import EmailValidationDefinition from "../../\_partials/\_email-validation-definition.md"
+import TXTValidationDefinition from "../../\_partials/\_txt-validation-definition.md"
+import EmailValidationProcess from "../../\_partials/\_email-validation-process.md"
+import ValidatePatch from "../../\_partials/\_ssl-for-saas-validate-patch.md"
 
 # Validate certificates — SSL for SaaS
 
@@ -31,8 +31,8 @@ If you value simplicity and your customers can tolerate a few minutes of downtim
 
 <CreateHostname/>
 
-- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
-- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
+*   [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `txt_name` and `txt_value`).
+*   **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 
 Ask your customer to create a TXT record named the **name** and containing the **value** at their authoritative DNS provider. Once this TXT record is in place, validation and certificate issuance will automatically complete.
 
@@ -44,8 +44,8 @@ Ask your customer to create a TXT record named the **name** and containing the *
 
 <CreateHostname/>
 
-- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
-- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
+*   [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
+*   **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
 
 <EmailValidationProcess/>
 
@@ -75,8 +75,8 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 
 <CreateHostname/>
 
-- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
-- **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
+*   [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, store the values present in the `validation_records` array (specifically `http_url` and `http_body`).
+*   **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the values for **Certificate validation request** and **Certificate validation response**.
 
 At your origin, make the `http_body` available in a TXT record at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.
 
@@ -98,7 +98,6 @@ ca3-be794c5f757b468eba805d1a705e44f6
 On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
 
 <ValidatePatch/>
-
 
 #### HTTP (automatic)
 

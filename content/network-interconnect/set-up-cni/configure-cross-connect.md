@@ -12,8 +12,8 @@ The Cloudflare Infrastructure uses your information to configure the cross-conne
 
 To configure the network cross-connect for physical links, Cloudflare generates a Letter of Authorization (LOA)/service key and sends it to you. After you receive the LOA, you can:
 
-* Order cross-connects at the locations the LOA specifies.
-* Verify when the cross-connects are complete.
+*   Order cross-connects at the locations the LOA specifies.
+*   Verify when the cross-connects are complete.
 
 <Aside type='note'>
 
@@ -35,10 +35,10 @@ For more information, see the [Cloudflare Network Interconnect Partner Program](
 
 ### Follow your partner's instructions below
 
-* [Console Connect](/partners/console-connect)
-* [Equinix Fabric](/partners/equinix-fabric)
-* [Megaport](/partners/megaport)
-* [PacketFabric](/partners/packet-fabric)
-* CoreSite OCX (_coming soon_)
-* Epsilon Infiny (_coming soon_)
-* Zayo (_coming soon_)
+*   [Console Connect](/partners/console-connect)
+*   [Equinix Fabric](/partners/equinix-fabric)
+*   [Megaport](/partners/megaport)
+*   [PacketFabric](/partners/packet-fabric)
+*   CoreSite OCX (*coming soon*)
+*   Epsilon Infiny (*coming soon*)
+*   Zayo (*coming soon*)

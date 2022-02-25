@@ -6,8 +6,8 @@ pcx-content-type: reference
 # License
 
 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+Version 2.0, January 2004
+http://www.apache.org/licenses/
 
     TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
@@ -207,10 +207,7 @@ Apache License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-
-
-## Runtime Library Exception to the Apache 2.0 License: ##
-
+## Runtime Library Exception to the Apache 2.0 License:
 
     As an exception, if you use this Software to compile your source code and
     portions of this Software are embedded into the binary product as a result,

@@ -7,12 +7,12 @@ order: 3
 
 The following examples illustrate how to perform URL rewrites with Transform Rules:
 
-* [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
-* [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
-* [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
-* [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
-* [Rewrite path with several URL segments to a different URL segment](#rewrite-path-with-several-url-segments-to-a-different-url-segment)
-* [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
+*   [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
+*   [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
+*   [Rewrite path of archived blog posts](#rewrite-path-of-archived-blog-posts)
+*   [Rewrite path of moved section of a website](#rewrite-path-of-moved-section-of-a-website)
+*   [Rewrite path with several URL segments to a different URL segment](#rewrite-path-with-several-url-segments-to-a-different-url-segment)
+*   [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
 
 ### Rewrite path of welcome page for visitors in specific countries
 
@@ -28,7 +28,7 @@ Text in **Expression Editor**:
 http.request.uri.path == "/welcome.html" && ip.geoip.country == "GB"
 ```
 
-Text after **Path** > **Rewrite to...** > _Static_:
+Text after **Path** > **Rewrite to...** > *Static*:
 
 ```txt
 /welcome-gb.html
@@ -46,7 +46,7 @@ Text in **Expression Editor**:
 http.request.uri.path == "/welcome.html" && ip.geoip.country == "PT"
 ```
 
-Text after **Path** > **Rewrite to...** > _Static_:
+Text after **Path** > **Rewrite to...** > *Static*:
 
 ```txt
 /welcome-pt.html
@@ -66,7 +66,7 @@ Text in **Expression Editor**:
 http.request.uri.path == "/blog"
 ```
 
-Text after **Query** > **Rewrite to...** > _Static_: 
+Text after **Query** > **Rewrite to...** > *Static*:
 
 ```txt
 sort-by=date
@@ -74,7 +74,7 @@ sort-by=date
 
 </Example>
 
-Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path does not change.
+Additionally, set the path rewrite action of the same rule to *Preserve* so that the URL path does not change.
 
 ![Rule configuration for query rewrite in the blog example](../../images/transform/use-case-blog.png)
 
@@ -90,7 +90,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/news/2012/")
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to...** > *Dynamic*:
 
 ```txt
 concat("/archive", http.request.uri.path)
@@ -112,7 +112,7 @@ Text in **Expression Editor**:
 starts_with(http.request.uri.path, "/blog/")
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to...** > *Dynamic*:
 
 ```txt
 regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
@@ -134,7 +134,7 @@ Text in **Expression Editor**:
 http.request.uri.path ~ "^/images/[^/]+/[^/]+/[^/]+$"
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to...** > *Dynamic*:
 
 ```txt
 regex_replace(http.request.uri.path, "^/images/[^/]+/[^/]+/(.+)$", "/img/${1}")
@@ -156,7 +156,7 @@ Text in **Expression Editor**:
 http.request.uri.path ~ "^/posts/[0-9]+-[0-9]+-[0-9]+-.*"
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to...** > *Dynamic*:
 
 ```txt
 regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")

@@ -1,3 +1,6 @@
+---
+---
+
 The addresses listed in this field will receive an email from `support@certvalidate.cloudflare.com`. They should either click **Review Certificate Request** or the `https://certvalidate.cloudflare.com` hyperlink.
 
 ![Certificate Validation Email](../static/certvalidate-email.png)

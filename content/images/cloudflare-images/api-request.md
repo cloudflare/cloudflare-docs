@@ -11,8 +11,8 @@ To make your first request to the Images API, you must obtain these pieces of in
 <summary>Your Cloudflare Account ID</summary>
 <div>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website. 
-1. In the **Overview** app, scroll down to find your Account ID.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
+2.  In the **Overview** app, scroll down to find your Account ID.
 
 </div>
 </details>

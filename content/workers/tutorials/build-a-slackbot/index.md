@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Build a Slackbot
 
@@ -37,10 +37,10 @@ Slack applications have many features. You will make use of two of them, Incomin
 
 Incoming Webhooks are URLs that you can use to send messages to your Slack channels. Your incoming webhook will be paired with GitHub’s webhook support to send messages to a Slack channel whenever there are updates to issues in a given repository. You will see the code in more detail as you build your application. First, create a Slack webhook:
 
-1. On the sidebar of Slack's UI, select **Incoming Webhooks**. 
-2. In **Webhook URLs for your Workspace**, select **Add New Webhook to Workspace**. 
-3. On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be messaged directly by our Slack bot when the webhook is called.) 
-4. Authorize the new webhook URL.
+1.  On the sidebar of Slack's UI, select **Incoming Webhooks**.
+2.  In **Webhook URLs for your Workspace**, select **Add New Webhook to Workspace**.
+3.  On the following screen, select the channel that you want your webhook to send messages to (you can select a room, like #general or #code, or be messaged directly by our Slack bot when the webhook is called.)
+4.  Authorize the new webhook URL.
 
 After authorizing your webhook URL, you will be returned to the **Incoming Webhooks** page and can view your new webhook URL. You will add this into our Workers code later. Next, you will add the second component to your Slack bot: a Slash Command.
 
@@ -50,8 +50,8 @@ After authorizing your webhook URL, you will be returned to the **Incoming Webho
 
 A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to our application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
 
-1. On the Slack sidebar, select **Slash Commands**.
-2. Create your first slash command. 
+1.  On the Slack sidebar, select **Slash Commands**.
+2.  Create your first slash command.
 
 For our example, you will use the command `/issue`. The request URL should be the `/lookup` path on your application URL: for instance, if your application will be hosted at `https://myworkerurl.com`, the Request URL should be `https://myworkerurl.com/lookup`.
 
@@ -63,27 +63,27 @@ Your Cloudflare Workers application will be able to handle incoming requests fro
 
 To configure a webhook:
 
-1. Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
+1.  Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
 
 If you have a repository like `https://github.com/user/repo`, you can access the **Webhooks** page directly at `https://github.com/user/repo/settings/hooks`.
 
-2. Set the Payload URL to the `/webhook` path on your Worker URL.  
+2.  Set the Payload URL to the `/webhook` path on your Worker URL.
 
-For example, if your Worker will be hosted at `https://myworkerurl.com`, the Payload URL should be `https://myworkerurl.com/webhook`. 
+For example, if your Worker will be hosted at `https://myworkerurl.com`, the Payload URL should be `https://myworkerurl.com/webhook`.
 
-3. In the **Content type** dropdown, select **application/json**.
+3.  In the **Content type** dropdown, select **application/json**.
 
 The **Content type** for your payload can either be a URL-encoded payload (`application/x-www-form-urlencoded`) or JSON (`application/json`). For the purpose of this tutorial and to make parsing the payload sent to our application, select JSON.
 
-4. In **Which events would you like to trigger this webhook?**, select **Let me select individual events**.
+4.  In **Which events would you like to trigger this webhook?**, select **Let me select individual events**.
 
-GitHub webhooks allow you to specify which events you would like to have sent to your webhook. By default, the webhook will send `push` events from your repository. For the purpose of this tutorial, you will choose **Let me select individual events**. 
+GitHub webhooks allow you to specify which events you would like to have sent to your webhook. By default, the webhook will send `push` events from your repository. For the purpose of this tutorial, you will choose **Let me select individual events**.
 
-5. Select the **Issues** event type. 
+5.  Select the **Issues** event type.
 
 There are many different event types that can be enabled for your webhook. Selecting **Issues** will send every issue-related event to your webhook, including when issues are opened, edited, deleted, and more. If you would like to expand your Slack bot application in the future, you can select more of these events after the tutorial.
 
-6. Select **Add webhook**.
+6.  Select **Add webhook**.
 
 ![Create a GitHub Webhook](./media/new-github-webhook.png)
 
@@ -136,9 +136,9 @@ To build your Slack bot on Cloudflare Workers, you will build up your applicatio
 
 The router template includes a class, `Router`, that is included to help developers with the common task of associating “routes” in your application (for instance, `/users`, or `/about`) with “functions”. In this tutorial, there are two routes/function handlers that you need to define:
 
-1. The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `PUT` request to `/lookup`.
+1.  The `lookup` function will take requests from Slack (sent when a user uses the `/issue` command), and look up the corresponding issue using the GitHub API. This function will be a `PUT` request to `/lookup`.
 
-2. The `webhook` function will be called when an issue changes on GitHub, via a configured webhook. This function will be a `POST` request to `/webhook`.
+2.  The `webhook` function will be called when an issue changes on GitHub, via a configured webhook. This function will be a `POST` request to `/webhook`.
 
 ### Handling requests
 
@@ -170,7 +170,7 @@ async function handleRequest(request) {
 }
 ```
 
-First, import the `Router` class from `router.js`. 
+First, import the `Router` class from `router.js`.
 
 In `handleRequest`, instantiate a new instance of `Router`, setting it to the variable `r`. The `Router` class makes use of a few functions to quickly and easily handle requests. The `post` method takes in a path string and a function handler. This indicates “when a client sends an HTTP `POST` to the path `/lookup`, call the `lookup` function”.
 
@@ -375,10 +375,10 @@ After you have gotten a response back from GitHub’s API, the final step is to 
 
 You can see four different pieces in the above screenshot:
 
-1. The first line (bolded) links to the issue, and shows the issue title
-2. The following lines (including code snippets) are the issue body
-3. The last line of text shows the issue status, the issue creator_(with a link to the user’s GitHub profile), and the creation date for the issue
-4. The profile picture of the issue creator, on the right-hand side
+1.  The first line (bolded) links to the issue, and shows the issue title
+2.  The following lines (including code snippets) are the issue body
+3.  The last line of text shows the issue status, the issue creator\_(with a link to the user’s GitHub profile), and the creation date for the issue
+4.  The profile picture of the issue creator, on the right-hand side
 
 The previously mentioned [Block Kit](https://api.slack.com/block-kit) framework will help take the issue data (in the structure lined out in [GitHub’s REST API documentation](https://developer.github.com/v3/issues/)) and format it into something like the above screenshot.
 
@@ -481,7 +481,7 @@ export default async request => {
 }
 ```
 
-One additional parameter passed into the response is `response_type`. By default, responses to slash commands are ephemeral, meaning that they are only seen by the user who writes the slash command. Passing a `response_type` of `in_channel`, as seen above, will cause the response to appear for all users in the channel. 
+One additional parameter passed into the response is `response_type`. By default, responses to slash commands are ephemeral, meaning that they are only seen by the user who writes the slash command. Passing a `response_type` of `in_channel`, as seen above, will cause the response to appear for all users in the channel.
 
 If you would like the messages to remain private, remove the `response_type` line. This will cause `response_type` to default to `ephemeral`.
 
@@ -660,11 +660,11 @@ export default async request => {
 }
 ```
 
-The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you created all the way back in the [Incoming Webhook](/tutorials/build-a-slackbot#incoming-webhook) section of this tutorial. 
+The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you created all the way back in the [Incoming Webhook](/tutorials/build-a-slackbot#incoming-webhook) section of this tutorial.
 
 <Aside type="warning">
 
-Since this webhook allows developers to post directly to your Slack channel, keep it secret. 
+Since this webhook allows developers to post directly to your Slack channel, keep it secret.
 
 </Aside>
 
@@ -680,7 +680,7 @@ Enter the secret text you’d like assigned to the variable name on the script n
 
 #### Handling errors
 
-Similarly to the `lookup` function handler, the `webhook` function handler should include some basic error handling. Unlike `lookup`, which sends responses directly back into Slack, if something goes wrong with your webhook, it may be useful to actually generate an erroneous response, and return it to GitHub. 
+Similarly to the `lookup` function handler, the `webhook` function handler should include some basic error handling. Unlike `lookup`, which sends responses directly back into Slack, if something goes wrong with your webhook, it may be useful to actually generate an erroneous response, and return it to GitHub.
 
 To do this, wrap the majority of the `webhook` function handler in a try/catch block, and construct a new response with a status code of `500`, and return it. The final version of `src/handlers/webhook.js` looks like this:
 

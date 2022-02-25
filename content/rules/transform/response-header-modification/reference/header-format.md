@@ -4,8 +4,8 @@ pcx-content-type: reference
 order: 1
 ---
 
-import HeaderValidNames from "../../../_partials/transform/_header-valid-names.md"
-import HeaderValidValues from "../../../_partials/transform/_header-valid-values.md"
+import HeaderValidNames from "../../../\_partials/transform/\_header-valid-names.md"
+import HeaderValidValues from "../../../\_partials/transform/\_header-valid-values.md"
 
 # Format of HTTP response header names and values
 

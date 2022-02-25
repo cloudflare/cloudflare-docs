@@ -11,8 +11,8 @@ IP Lists allow you to create a group of IP addresses and refer to them collectiv
 
 IP Lists are stored at the account level. To access the **Lists** interface, follow these steps:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-1. Go to **Configurations** > **Lists**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2.  Go to **Configurations** > **Lists**.
 
 The **Lists** user interface displays.
 ![Lists UI](../../images/lists-ui.png)
@@ -21,8 +21,8 @@ The **Lists** user interface displays.
 
 Creating an IP List involves two steps:
 
-1. [Create an IP List](/cf-dashboard/rules-lists/manage-lists/#create-an-ip-list).
-1. [Add IP addresses to the list](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
+1.  [Create an IP List](/cf-dashboard/rules-lists/manage-lists/#create-an-ip-list).
+2.  [Add IP addresses to the list](/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
 ## Use IP Lists in expressions
 

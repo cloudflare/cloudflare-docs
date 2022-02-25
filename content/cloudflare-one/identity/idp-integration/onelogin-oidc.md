@@ -11,54 +11,61 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 To set up OneLogin as your identity provider:
 
-1. Log in to your OneLogin admin portal.
-1. Select **Apps > Custom Connectors**.
+1.  Log in to your OneLogin admin portal.
+
+2.  Select **Apps > Custom Connectors**.
 
     ![OneLogin OIDC](../../static/documentation/identity/onelogin/onelogin-oidc-1.png)
 
-    The _Custom Connectors_ card displays.
+    The *Custom Connectors* card displays.
 
-1. Click **New Connector**.
-1. Name the connector. The _connector name_ card displays. Our example uses `access-oidc` for the connector name.
+3.  Click **New Connector**.
+
+4.  Name the connector. The *connector name* card displays. Our example uses `access-oidc` for the connector name.
 
     ![OneLogin OIDC Application Basic Configuration page](../../static/documentation/identity/onelogin/onelogin-oidc-3.png)
 
-1. In **Sign-On Method**, select the **OpenID Connect** option.
-1. In the **Redirect URI** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+5.  In **Sign-On Method**, select the **OpenID Connect** option.
+
+6.  In the **Redirect URI** field, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
-    
-1. Click **Save**.
-1. Select **More Actions > Add App to Connector**.
+
+7.  Click **Save**.
+
+8.  Select **More Actions > Add App to Connector**.
 
     ![OneLogin OIDC Application Basic Configuration page More Actions menu](../../static/documentation/identity/onelogin/onelogin-oidc-4.png)
 
-1. In the **Portal** section, enter a name for your application in the **Display Name** field.
-1. Click **Save**.
-1. Select the **Access** tab.
+9.  In the **Portal** section, enter a name for your application in the **Display Name** field.
+
+10. Click **Save**.
+
+11. Select the **Access** tab.
 
     ![OneLogin OIDC Add Application Access page](../../static/documentation/identity/onelogin/onelogin-oidc-6.png)
 
-1. Add the **Roles** that can access this application.
-1. Select the **SSO** tab.
+12. Add the **Roles** that can access this application.
+
+13. Select the **SSO** tab.
 
     ![OneLogin OIDC Add Application SSO page](../../static/documentation/identity/onelogin/onelogin-oidc-7.png)
 
-1. Click **Show client secret**.
+14. Click **Show client secret**.
 
-1. Copy both the **Client ID** and **Client Secret**.
+15. Copy both the **Client ID** and **Client Secret**.
 
-1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+16. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click **Add new**.
+17. Under **Login methods**, click **Add new**.
 
-1. Select Centrify as your IdP.
+18. Select Centrify as your IdP.
 
-1. Paste in your copied **Client ID** and **Client secret**.
+19. Paste in your copied **Client ID** and **Client secret**.
 
-1. Click **Save**.
+20. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
 

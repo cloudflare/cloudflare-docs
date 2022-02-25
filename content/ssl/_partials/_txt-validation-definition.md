@@ -1,1 +1,4 @@
+---
+---
+
 TXT record validation requires the creation of a TXT record in the hostname's authoritative DNS.

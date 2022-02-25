@@ -3,7 +3,7 @@ order:
 pcx-content-type: reference
 ---
 
-import ChangeQueueMethod from "../_partials/_change-queueing-method.md"
+import ChangeQueueMethod from "../\_partials/\_change-queueing-method.md"
 
 # Best practices
 

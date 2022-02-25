@@ -23,14 +23,14 @@ The addresses are Anycasted from all Cloudflare data centers, with the exception
 
 Spectrum can act as a TCP load balancer in front of an SMTP server but will not act as an intermediary mail server. Instead, Spectrum passes data through to your origin. The client IP shown on mail will be the Cloudflare edge IP. If the mail server requires knowing the true client IP, it should use Proxy Protocol to get the source IP from Cloudflare. Cloudflare recommends enabling Proxy Protocol on applications configured to proxy SMTP.
 
-SMTP servers may perform a series of checks on servers attempting to send messages through it. These checks are intended to filter requests from illegitimate servers. 
+SMTP servers may perform a series of checks on servers attempting to send messages through it. These checks are intended to filter requests from illegitimate servers.
 
 Messages may be rejected if:
 
-* A reverse DNS lookup on the IP address of the connecting server returns a negative response.
-* The reverse DNS lookup produces a different hostname than what was sent in the SMTP `HELO`/`EHLO` message.
-* The reverse DNS lookup produces a different hostname than what is advertised in your SMTP server's banner.
-* The result of a reverse DNS lookup does not match a corresponding forward DNS lookup.
+*   A reverse DNS lookup on the IP address of the connecting server returns a negative response.
+*   The reverse DNS lookup produces a different hostname than what was sent in the SMTP `HELO`/`EHLO` message.
+*   The reverse DNS lookup produces a different hostname than what is advertised in your SMTP server's banner.
+*   The result of a reverse DNS lookup does not match a corresponding forward DNS lookup.
 
 Spectrum applications do not have reverse DNS entries.
 
@@ -39,7 +39,6 @@ Additionally, SMTP servers may perform a DNS lookup to find the MX records for a
 ## Ports
 
 Cloudflare supports all TCP ports.
-
 
 ## Port ranges
 
@@ -79,11 +78,9 @@ The number of ports in an origin port range must match the number of ports speci
 Connections to a port within a port range at the edge will be proxied to the equivalent port offset in the origin range.
 For example, in the configurations above, a connection to `range.example.com:1005` would be proxied to port 3005 on the origin.
 
-
 ## IP Access Rules
 
 If IP Access Rules is enabled for a Spectrum application, Cloudflare will respect the IP Access Rules created under **Firewall** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
-
 
 ## Edge TLS Termination
 
@@ -108,10 +105,10 @@ The cipher suites below are ordered based on how they appear in the ClientHello,
 <TableWrap>
 
 OpenSSL Name | TLS 1.1 | TLS 1.2 | TLS 1.3
-------|---------------|---------------|---------------
-AEAD-AES128-GCM-SHA256 [^1]|❌|❌|✅
-AEAD-AES256-GCM-SHA384 [^1]|❌|❌|✅
-AEAD-CHACHA20-POLY1305-SHA256 [^1]|❌|❌|✅
+\------|---------------|---------------|---------------
+AEAD-AES128-GCM-SHA256 \[^1]|❌|❌|✅
+AEAD-AES256-GCM-SHA384 \[^1]|❌|❌|✅
+AEAD-CHACHA20-POLY1305-SHA256 \[^1]|❌|❌|✅
 ECDHE-ECDSA-AES128-GCM-SHA256|❌|✅|❌
 ECDHE-RSA-AES128-GCM-SHA256|❌|✅|❌
 ECDHE-RSA-AES128-SHA|✅|✅|❌
@@ -121,4 +118,4 @@ AES256-SHA|✅|✅|❌
 
 </TableWrap>
 
-[^1]: *Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.*
+\[^1]: *Although TLS 1.3 uses the same cipher suite space as previous versions of TLS, TLS 1.3 cipher suites are defined differently, only specifying the symmetric ciphers, and cannot be used for TLS 1.2. Similarly, TLS 1.2 and lower cipher suites cannot be used with TLS 1.3 (IETF TLS 1.3 draft 21). BoringSSL also hard-codes cipher preferences in this order for TLS 1.3.*

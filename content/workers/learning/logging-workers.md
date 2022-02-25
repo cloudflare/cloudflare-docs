@@ -89,12 +89,12 @@ You can review the production logs associated with any Worker by [logging into t
 
 Note that:
 
-- Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-- Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
-- Logs from any [Durable Objects](/learning/using-durable-objects) your Worker is using will show up in the dashboard.
-- A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+*   Workers logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
+*   Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
+*   Logs from any [Durable Objects](/learning/using-durable-objects) your Worker is using will show up in the dashboard.
+*   A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
---------------------------------
+***
 
 ## Identifying and handling errors and exceptions
 

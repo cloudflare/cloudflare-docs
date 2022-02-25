@@ -3,7 +3,7 @@ order: 2
 pcx-content-type: concept
 ---
 
-import CertTransparencyDefinition from "../../_partials/_cert-transparency-monitoring-definition.md"
+import CertTransparencyDefinition from "../../\_partials/\_cert-transparency-monitoring-definition.md"
 
 # Certificate Transparency Monitoring
 
@@ -15,7 +15,7 @@ If you use a shared certificate, you may receive notifications for domains or su
 
 </Aside>
 
---------
+***
 
 ## Overview
 
@@ -31,15 +31,16 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 </Aside>
 
---------
+***
 
 ## Opting in and out
 
 Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) in the Cloudflare dashboard.
 
 Features vary by plan:
-- **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
-- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
+
+*   **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
+*   **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 
@@ -47,17 +48,18 @@ To stop receiving alerts, switch the toggle to **Off** or remove your emails fro
     CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.
 </Aside>
 
---------
+***
 
 ## Emails to be concerned about
 
 Most certificate alerts are routine. We send alerts whenever a certificate for your domain appears in a log. Certificates expire (and must be reissued), so it is completely normal to receive issuance emails. If your domain is listed in the email, along with reasonable ownership and certificate information, then **no action is required**.
 
 You *should* take action when something is clearly wrong, such as if you:
-- Do not recognize the certificate issuer
-- Have recently noticed problems with your website
 
---------
+*   Do not recognize the certificate issuer
+*   Have recently noticed problems with your website
+
+***
 
 ## How to take action
 
@@ -65,17 +67,17 @@ You *should* take action when something is clearly wrong, such as if you:
 
 Only Certificate Authorities can revoke malicious certificates. If you believe an illegitimate certificate was issued for your domain, contact the Certificate Authority listed as the **Issuer** in the email.
 
-- [DigiCert support](https://www.digicert.com/support/#Contact)
+*   [DigiCert support](https://www.digicert.com/support/#Contact)
 
-- [GlobalSign support](https://support.globalsign.com/)
+*   [GlobalSign support](https://support.globalsign.com/)
 
-- [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
+*   [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
 
-- [IdenTrust support](https://www.identrust.com/support/support-team)
+*   [IdenTrust support](https://www.identrust.com/support/support-team)
 
-- [Let’s Encrypt support](https://letsencrypt.org/contact/)
+*   [Let’s Encrypt support](https://letsencrypt.org/contact/)
 
-- [Sectigo support](https://sectigo.com/support)
+*   [Sectigo support](https://sectigo.com/support)
 
 ### Option 2: Contact domain registrars
 

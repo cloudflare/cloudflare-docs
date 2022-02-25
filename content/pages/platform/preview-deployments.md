@@ -9,21 +9,21 @@ Preview deployments allow you to preview new versions of your project without de
 
 Every time you open a new pull request on your GitHub repository, Cloudflare Pages will create a unique preview URL, which will stay updated as you continue to push new commits to the branch. This is only true when pull requests originate from the repository itself.
 
-For example, if you have a repo called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/get-started#adding-a-custom-domain) attached to the project. 
+For example, if you have a repo called `user-example` connected to Pages, this will give you a `user-example.pages.dev` subdomain. If `main` is your default branch, then any commits to the `main` branch will update your `user-example.pages.dev` content, as well as any [custom domains](/get-started#adding-a-custom-domain) attached to the project.
 
 ![development preview](preview-deployment-mergedone.png)
 
-While developing `user-example`, you may push new changes to a `development` branch, for example. 
+While developing `user-example`, you may push new changes to a `development` branch, for example.
 
-In this example, after you create the new `development` branch, Pages will automatically generate a preview deployment for these changes available at `373f31e2.user-example.pages.dev` - where `373f31e2` is a randomly generated hash. 
+In this example, after you create the new `development` branch, Pages will automatically generate a preview deployment for these changes available at `373f31e2.user-example.pages.dev` - where `373f31e2` is a randomly generated hash.
 
 Each new branch you create will receive a new, randomly-generated hash in front of your `pages.dev` subdomain.
 
 ![development preview](preview-deployment-generated.png)
 
-Any additional changes to the `development` branch will continue to update this `373f31e2.user-example.pages.dev` preview address until the `development` branch is merged with the `main` production branch. 
+Any additional changes to the `development` branch will continue to update this `373f31e2.user-example.pages.dev` preview address until the `development` branch is merged with the `main` production branch.
 
-Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments. 
+Any custom domains, as well as your `user-example.pages.dev` site, will not be affected by preview deployments.
 
 ## Customizing preview deployments access
 

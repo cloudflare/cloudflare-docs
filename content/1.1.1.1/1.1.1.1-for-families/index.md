@@ -9,7 +9,7 @@ pcx-content-type: reference
 
 1.1.1.1 for Families categorizes destinations on the Internet based on the potential threat they pose regarding malware, phishing, or other types of security risks. When enabled, 1.1.1.1 for Families will block resolution to these destinations.
 
-1.1.1.1 for Families has two default options: 
+1.1.1.1 for Families has two default options:
 
 <details>
 <summary>Protect your home against malware</summary>
@@ -17,10 +17,10 @@ pcx-content-type: reference
 
 Using the following DNS resolvers will block malicious content:
 
-* `1.1.1.2`
-* `1.0.0.2`
-* `2606:4700:4700::1112`
-* `2606:4700:4700::1002`
+*   `1.1.1.2`
+*   `1.0.0.2`
+*   `2606:4700:4700::1112`
+*   `2606:4700:4700::1002`
 
 </div>
 </details>
@@ -31,10 +31,10 @@ Using the following DNS resolvers will block malicious content:
 
 When you change your DNS resolvers to the addresses below, 1.1.1.1 for Families will block malware and adult content.
 
-* `1.1.1.3`
-* `1.0.0.3`
-* `2606:4700:4700::1113`
-* `2606:4700:4700::1003`
+*   `1.1.1.3`
+*   `1.0.0.3`
+*   `2606:4700:4700::1113`
+*   `2606:4700:4700::1003`
 
 </div>
 </details>
@@ -70,10 +70,10 @@ https://family.cloudflare-dns.com/dns-query
 ```
 
 ## DNS over TLS (DoT)
+
 1.1.1.1 for Families also supports DoT if you have a compliant client, such as a compatible DoT router. DoT allows you to encrypt your DNS queries, protecting you from spoofing, malicious actors, and others. You can learn more about DoT in the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 
 To configure an encrypted DoT connection to 1.1.1.1 for Families, type one of the following URLs into the appropriate field of your DoT-compliant client:
-
 
 **If you want to block malware:**
 

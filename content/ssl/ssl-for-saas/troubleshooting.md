@@ -6,7 +6,7 @@ pcx-content-type: reference
 
 # Troubleshooting SSL for SaaS
 
---------
+***
 
 ## Validation exceptions
 
@@ -27,7 +27,7 @@ example.com. IN CAA 0 issue "letsencrypt.org"
 
 While it’s possible for CAA records to be set on the subdomain they wish to use with your service, it is unlikely. You would also have to remove this CAA record.
 
---------
+***
 
 ## Rate limits
 
@@ -35,33 +35,33 @@ By default, you may issue up to 15 certificates per minute. Only successful subm
 
 If you require a higher rate limit, contact your Customer Success Manager.
 
---------
+***
 
 ## Time outs
 
 If a certificate issuance times out, the error message will indicate where the timeout occurred:
 
-* Timed Out (Initializing)
-* Timed Out (Validation)
-* Timed Out (Issuance)
-* Timed Out (Deployment)
-* Timed Out (Deletion)
+*   Timed Out (Initializing)
+*   Timed Out (Validation)
+*   Timed Out (Issuance)
+*   Timed Out (Deployment)
+*   Timed Out (Deletion)
 
 To fix this error, send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) through the API or click the **refresh toggle** for the specific custom hostname in the dashboard.
 
---------
+***
 
 ## Immediate validation checks
 
 You can send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to request an immediate validation check on any certificate. The PATCH data only needs include the same `ssl` object as the original request.
 
---------
+***
 
 ## Purge cache
 
 To remove specific files from Cloudflare’s cache, [purge the cache](https://developers.cloudflare.com/cache/how-to/purge-cache#purge-by-single-file-by-url) while specifying one or more hosts.
 
---------
+***
 
 ## Resolution error 1016 (Origin DNS error) when accessing the custom hostname
 
@@ -69,10 +69,10 @@ Cloudflare returns a 1016 error when the custom hostname cannot be routed or pro
 
 There are two main causes of error 1016:
 
-1. Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](/ssl-for-saas/reference/common-api-calls) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
-1. Fallback Origin is not [correctly set](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
+1.  Custom Hostname ownership verification is not complete. To check verification status, run an API call to [search for a certificate by hostname](/ssl-for-saas/reference/common-api-calls) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`.
+2.  Fallback Origin is not [correctly set](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target). Confirm that you have created a DNS record for the fallback origin and also set the fallback origin.
 
---------
+***
 
 ## Custom hostname in Moved status
 

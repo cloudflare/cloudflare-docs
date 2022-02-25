@@ -11,32 +11,34 @@ You can create Gateway HTTP policies to control access to your corporate SaaS ap
 
 Not all SaaS applications support tenant control. Examples of common applications that do support tenant control through the injection of HTTP headers are:
 
-* Microsoft 365
-* Slack
-* GSuite
-* Dropbox
+*   Microsoft 365
+*   Slack
+*   GSuite
+*   Dropbox
 
 ## Add custom headers for a SaaS application (Microsoft 365 example)
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
-1. Create a policy with the following values:
-    * Action: `Allow`
-    * Selector: `Application`
-    * Operator: `In`
-    * Value: select the application you would like to inject custom headers for.
-1. Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
-    * Custom Header Name: Restrict-Access-To-Tenants
-    * Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
+1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
 
-1. Click **Create policy**.
+2.  Create a policy with the following values:
+    *   Action: `Allow`
+    *   Selector: `Application`
+    *   Operator: `In`
+    *   Value: select the application you would like to inject custom headers for.
+
+3.  Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
+    *   Custom Header Name: Restrict-Access-To-Tenants
+    *   Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
+
+4.  Click **Create policy**.
 
 Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to an Office 365 application with a personal account, authentication will fail.
 
-## Common policy configurations 
+## Common policy configurations
 
-This section covers policy configurations for common SaaS applications. 
+This section covers policy configurations for common SaaS applications.
 
 ### Microsoft 365
 
@@ -54,7 +56,7 @@ This section covers policy configurations for common SaaS applications.
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
-| Application | In | Slack | Allow | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` | 
+| Application | In | Slack | Allow | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
 
 </TableWrap>
 
@@ -88,30 +90,30 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 
 #### 1. Create an Isolate policy
 
-* **Name**: Isolate HTTPBIN
-* **Description**: Isolates the `httpbin.org` website.
-* **Action**: Isolate
+*   **Name**: Isolate HTTPBIN
+*   **Description**: Isolates the `httpbin.org` website.
+*   **Action**: Isolate
 
 | Selector | Operator | Value |
 | -- | -- | -- |
 | Domain | in | httpbin.org |
 
-  ![Isolate policy](../../../static/documentation/policies/httpbin-policy-1.png)
+![Isolate policy](../../../static/documentation/policies/httpbin-policy-1.png)
 
 #### 2. Create an Allow policy with a Custom Header
 
-* **Name**: Inject custom request header for HTTPBIN
-* **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
-* **Action**: Allow
+*   **Name**: Inject custom request header for HTTPBIN
+*   **Description**: Adds a custom request header for all traffic to the `httpbin.org` website.
+*   **Action**: Allow
 
 | Selector | Operator | Value |
 | -- | -- | -- |
 | Domain | in | httpbin.org |
 
-  ![Allow policy](../../../static/documentation/policies/httpbin-policy.png)
+![Allow policy](../../../static/documentation/policies/httpbin-policy.png)
 
 #### 3. Navigate to `https://httpbin.org/anything`
 
 HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
-  ![httpbin](../../../static/documentation/policies/httpbin.png)
+![httpbin](../../../static/documentation/policies/httpbin.png)

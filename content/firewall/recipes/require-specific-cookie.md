@@ -10,10 +10,10 @@ Use `http.cookie` [field](https://developers.cloudflare.com/ruleset-engine/rules
 
 This example comprises two rules:
 
-- The first rule targets requests to dev.www.foo that have a specific cookie key, `devaccess`. As long as the value of the cookie key contains one of three authorized users, _james_, _matt_, or _michael_, the expression matches and the request is allowed.
-- The second rule blocks all access to `dev.www.example.com`.
+*   The first rule targets requests to dev.www.foo that have a specific cookie key, `devaccess`. As long as the value of the cookie key contains one of three authorized users, *james*, *matt*, or *michael*, the expression matches and the request is allowed.
+*   The second rule blocks all access to `dev.www.example.com`.
 
-Since the _Allow_ action has precedence over _Block_, Cloudflare grants access to requests that satisfy Rule 1 and blocks all other requests to `dev.www.example.com`:
+Since the *Allow* action has precedence over *Block*, Cloudflare grants access to requests that satisfy Rule 1 and blocks all other requests to `dev.www.example.com`:
 
 <table>
   <thead>

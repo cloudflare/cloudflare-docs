@@ -8,8 +8,8 @@ You may want to adjust your Firewall Rules to increase access by customers or pa
 
 Potential examples include:
 
-- Removing rate limiting for an API
-- Sharing brand assets and marketing materials
+*   Removing rate limiting for an API
+*   Sharing brand assets and marketing materials
 
 <Aside type='note' header='Note'>
 
@@ -24,8 +24,9 @@ If a customer or partner is large enough, you could set up a Firewall Rule based
 ### Allow traffic by ASN
 
 This example uses:
-- `ip.geoip.asnum` to specify the general region
-- The `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
+
+*   `ip.geoip.asnum` to specify the general region
+*   The `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
 
 <table style='table-layout:fixed; width:100%'>
   <thead>
@@ -51,8 +52,9 @@ Access to [Bot Management](https://developers.cloudflare.com/bots/get-started/bm
 ### Adjust rules by ASN
 
 This example uses:
-- The `ip.geoip.asnum` field to specify the general region.
-- The `cf.threat_score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+
+*   The `ip.geoip.asnum` field to specify the general region.
+*   The `cf.threat_score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your firewall bypasses normal `User Agent Block` rules.
 
@@ -71,15 +73,16 @@ If a request meets these criteria, your firewall bypasses normal `User Agent Blo
   </tbody>
 </table>
 
-##  Update Firewall Rules by IP
+## Update Firewall Rules by IP
 
 For smaller organizations, you could set up Firewall Rules based on IP addresses.
 
 ### Allow traffic by IP address
 
 This example:
-- Specifies the network and host.
-- Uses the `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+
+*   Specifies the network and host.
+*   Uses the `cf.bot_management.score` [dynamic field](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
 
 <table style='table-layout:fixed; width:100%'>
   <thead>

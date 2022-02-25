@@ -7,15 +7,16 @@ pcx-content-type: tutorial
 
 This tutorial uses [Azure Dedicated HSM](https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/) — a FIPS 140-2 Level 3 certified implementation based on the Gemalto SafeNet Luna a790.
 
----
+***
 
 ## Before you start
 
 Make sure you have:
-- Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using Powershell
-- Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
 
----
+*   Followed Microsoft's [tutorial](https://docs.microsoft.com/en-us/azure/dedicated-hsm/tutorial-deploy-hsm-powershell) for deploying HSMs into an existing virtual network using Powershell
+*   Installed the [SafeNet client software](https://cpl.thalesgroup.com/node/11350)
+
+***
 
 ## 1. Create, assign, and initialize a new partition
 
@@ -94,7 +95,7 @@ lunacm:>partition init -label KeylessSSL -domain cloudflare
 Command Result : No Error
 ```
 
---------
+***
 
 ## 2. Generate a RSA key pair and certificate signing request (CSR)
 
@@ -121,13 +122,13 @@ Please enter password for token in slot 0 : ********
 Using "CKM_SHA256_RSA_PKCS" Mechanism
 ```
 
---------
+***
 
 ## 3. Obtain and upload a signed certificate from your Certificate Authority (CA)
 
 Provide the CSR created in the previous step to your organization’s preferred CA, demonstrate control of your domain as requested, and then download the signed SSL certificates. Follow the instructions provided in [Uploading “Keyless” SSL Certificates](/keyless-ssl/configuration#step-2--upload-keyless-ssl-certificates).
 
---------
+***
 
 ## 4. Modify your gokeyless config file and restart the service
 

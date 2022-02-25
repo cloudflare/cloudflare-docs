@@ -9,9 +9,9 @@ Cloudflare Access provides a mechanism for end users to authenticate with their 
 
 ## Requirements
 
-* A Cloudflare account
-* A site active on Cloudflare
-* The `cloudflared` daemon installed on the host and client machines
+*   A Cloudflare account
+*   A site active on Cloudflare
+*   The `cloudflared` daemon installed on the host and client machines
 
 > Cloudflare Access requires you to first [add a site](https://dash.cloudflare.com/sign-up) to Cloudflare. You can use any site you have registered; the site does not need to be the same one you use for customer traffic and it does not need to match sites in your internal DNS.
 >
@@ -79,4 +79,4 @@ When the client launches, `cloudflared` will launch a browser window and prompt 
 
 **Common issues**
 
-* Ensure that the machine's firewall permits egress on ports 80 and 443, otherwise `cloudflared` will return an error.
+*   Ensure that the machine's firewall permits egress on ports 80 and 443, otherwise `cloudflared` will return an error.

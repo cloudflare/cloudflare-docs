@@ -17,9 +17,9 @@ Cloudflare offers you automated checks for exposed credentials using Cloudflare 
 
 The WAF provides two mechanisms for this check:
 
-* The [Exposed Credentials Check Managed Ruleset](/managed-rulesets/exposed-credentials-check), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+*   The [Exposed Credentials Check Managed Ruleset](/managed-rulesets/exposed-credentials-check), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
 
-* The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) for a zone that check for exposed credentials according to your criteria for specific applications.
+*   The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) for a zone that check for exposed credentials according to your criteria for specific applications.
 
 Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis. The username/password credentials in clear text never leave the Cloudflare network. The WAF only uses an anonymized version of the username when determining if there are previously exposed credentials with that username.
 
@@ -27,20 +27,20 @@ Cloudflare updates the databases of exposed credentials supporting the exposed c
 
 The WAF can perform one of the following actions when it detects exposed credentials:
 
-* _Exposed-Credential-Check Header_ — Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
-* _Managed Challenge_ — Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet. Depending on the characteristics of a request, Cloudflare will show a non-interactive challenge page or show a CAPTCHA challenge.
-* _Block_ — Blocks HTTP requests containing exposed credentials.
-* _JS Challenge_ — Presents a Cloudflare JavaScript CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
-* _Log_ — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare Logs. Recommended for validating a rule before committing to a more severe action.
-* _Legacy CAPTCHA_ — Presents a CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
+*   *Exposed-Credential-Check Header* — Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
+*   *Managed Challenge* — Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet. Depending on the characteristics of a request, Cloudflare will show a non-interactive challenge page or show a CAPTCHA challenge.
+*   *Block* — Blocks HTTP requests containing exposed credentials.
+*   *JS Challenge* — Presents a Cloudflare JavaScript CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
+*   *Log* — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare Logs. Recommended for validating a rule before committing to a more severe action.
+*   *Legacy CAPTCHA* — Presents a CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
 
-The default action for the rules in the Exposed Credentials Check Managed Ruleset is _Exposed-Credential-Check Header_ (named `rewrite` in the API).
+The default action for the rules in the Exposed Credentials Check Managed Ruleset is *Exposed-Credential-Check Header* (named `rewrite` in the API).
 
-Cloudflare recommends that you only use the following actions: _Exposed-Credential-Check Header_ (named `rewrite` in the API) and _Log_ (`log`).
+Cloudflare recommends that you only use the following actions: *Exposed-Credential-Check Header* (named `rewrite` in the API) and *Log* (`log`).
 
 ## Exposed credentials checks in custom rules
 
-<Aside type='note'>
+\<Aside type='note'>
 
 Currently, exposed credentials checks in custom rules are only available via API.
 

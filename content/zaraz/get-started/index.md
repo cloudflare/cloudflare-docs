@@ -13,12 +13,12 @@ Zaraz relies on events and triggers to automatically load and activate the tools
 
 If the tool you need just requires a simple `pageview` trigger to operate, start by [adding a third-party tool](/get-started/add-tool) to your Zaraz dashboard.
 
-If you need a different kind of trigger, or set of triggers, [start by creating a trigger](/get-started/add-tool) before adding your third-party tool. Then, add your tool to the Zaraz dashboard, and configure it with the trigger or set of triggers you created. 
+If you need a different kind of trigger, or set of triggers, [start by creating a trigger](/get-started/add-tool) before adding your third-party tool. Then, add your tool to the Zaraz dashboard, and configure it with the trigger or set of triggers you created.
 
 You may also want to create specific events to send to your tool. Events are bundles of information that Zaraz sends to a tool when a particular trigger is matched. Refer to [Send events to a third-party tool](/get-started/send-events) for more information.
 
 ## Web API
 
-If you need complex integrations, Cloudflare Zaraz provides a unified set of functions to send data programmatically to third-party tools, with the `zaraz.track()` and `zaraz.set()` methods. 
+If you need complex integrations, Cloudflare Zaraz provides a unified set of functions to send data programmatically to third-party tools, with the `zaraz.track()` and `zaraz.set()` methods.
 
 [Zaraz Track](/web-api/zaraz-track) allows you to track the actions your users are taking on your website, and other events that might happen in real time. [Zaraz Set](/web-api/zaraz-set) allows you to define your own variables, which are then automatically included with your Zaraz Track calls or triggers. Refer to [Web API](/web-api) for more information.

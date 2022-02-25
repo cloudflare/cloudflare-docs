@@ -139,9 +139,9 @@ Before proceeding, ensure Load Balancing is enabled for your account. If you are
 
 As described in the [Load Balancing tutorial](https://developers.cloudflare.com/load-balancing/get-started), you will need to complete three tasks:
 
-1. Create a monitor to run health checks against your origin servers.
-2. Create a pool of one or more origin servers that will receive load balanced traffic.
-3. Create a load balancer with an external hostname, e.g., `www.example.com`, and one or more pools.
+1.  Create a monitor to run health checks against your origin servers.
+2.  Create a pool of one or more origin servers that will receive load balanced traffic.
+3.  Create a load balancer with an external hostname, e.g., `www.example.com`, and one or more pools.
 
 ### i. Define and create the health check ("monitor")
 

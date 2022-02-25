@@ -20,7 +20,7 @@ The following table includes a sample of covered attack vectors:
 <TableWrap>
 
 OSI Layer | Ruleset | Example of covered DDoS attack vectors
----|---|---
+\---|---|---
 L3/4 | [Network-layer DDoS Attack Protection](/managed-rulesets/network) | UDP flood attack<br/>SYN floods<br/>SYN-ACK reflection attack<br/>ACK floods<br/>Mirai and Mirai-variant L3/4 attacks<br/>ICMP flood attack<br/>SNMP flood attack<br/>QUIC flood attack<br/>DNS amplification attack<br/>Out of state TCP attacks<br/>Protocol violation attacks<br/>DNS amplification attack<br/>SIP attacks<br/>DNS Garbage Flood<br/>DNS NXDOMAIN flood<br/>DNS Query flood<br/>ESP flood
 L3/4 | [Advanced TCP Protection](/managed-rulesets/tcp-protection) | Fully randomized and spoofed ACK floods, SYN floods, SYN-ACK reflection attacks, and other sophisticated TCP-based DDoS attacks
 L7 (HTTP/HTTPS) | [HTTP DDoS Attack Protection](/managed-rulesets/http) | HTTP flood attack<br/>WordPress pingback attack<br/>HULK attack<br/>LOIC attack<br/>Mirai and Mirai-variant HTTP attacks

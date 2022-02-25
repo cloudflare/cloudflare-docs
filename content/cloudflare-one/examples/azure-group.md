@@ -8,7 +8,7 @@ tags:
 
 # Azure® Group
 
-Allow members of an Azure Group. The ID is the group UUID (_`id`_) in Azure:
+Allow members of an Azure Group. The ID is the group UUID (*`id`*) in Azure:
 
 ```json
 {

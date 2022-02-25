@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Vue application
 
@@ -53,7 +53,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Vue application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more

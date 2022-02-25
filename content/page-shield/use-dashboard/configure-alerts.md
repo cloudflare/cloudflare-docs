@@ -4,8 +4,8 @@ order: 2
 pcx-content-type: how-to
 ---
 
-import AlertsIntro from "../_partials/_alerts-intro.md"
-import ConfigureAlerts from "../_partials/_alerts-configure.md"
+import AlertsIntro from "../\_partials/\_alerts-intro.md"
+import ConfigureAlerts from "../\_partials/\_alerts-configure.md"
 
 # Configure Page Shield alerts
 

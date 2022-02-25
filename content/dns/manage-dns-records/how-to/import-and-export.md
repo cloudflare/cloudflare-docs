@@ -3,7 +3,7 @@ order: 1
 pcx-content-type: how-to
 ---
 
-import ImportScanInfo from "../../_partials/_import-scan-info.md"
+import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
 
 # Import and export records
 
@@ -14,7 +14,7 @@ If you want more control over which DNS records are imported and how, use the bu
 ## Import records
 
 ### Format your zone file
-    
+
 Create a [BIND zone file](https://en.wikipedia.org/wiki/Zone_file) for your domain. If you need help, use a [third-party tool](https://pgl.yoyo.org/as/bind-zone-file-creator.php).
 
 Make sure to remove all comments from your import file that start with a semicolon (;).
@@ -25,11 +25,11 @@ Make sure to remove all comments from your import file that start with a semicol
 
 To import a zone file using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-1. Go to **DNS**.
-1. Click **Advanced**.
-1. For **Import DNS records**, select your [formatted file](#format-your-zone-file).
-1. If you do not want [applicable records](/manage-dns-records/reference/proxied-dns-records) proxied, unselect **Proxy imported DNS records**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2.  Go to **DNS**.
+3.  Click **Advanced**.
+4.  For **Import DNS records**, select your [formatted file](#format-your-zone-file).
+5.  If you do not want [applicable records](/manage-dns-records/reference/proxied-dns-records) proxied, unselect **Proxy imported DNS records**.
 
 #### Using the API
 
@@ -43,10 +43,10 @@ You can also bulk export records from Cloudflare.
 
 To export records using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-1. Go to **DNS**.
-1. Click **Advanced**.
-1. Click **Export**.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2.  Go to **DNS**.
+3.  Click **Advanced**.
+4.  Click **Export**.
 
 ### Using the API
 

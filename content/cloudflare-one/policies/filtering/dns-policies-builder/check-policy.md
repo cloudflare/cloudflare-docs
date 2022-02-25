@@ -15,17 +15,17 @@ Once you have created a policy to block a domain, you can use either `dig` or `n
 
 If you are using a policy to block `example.com`, you can do the following to see if Gateway is blocking `example.com`:
 
-1. Open your terminal.
+1.  Open your terminal.
 
-1. Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
+2.  Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
 
-1. If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
+3.  If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
 
- ![Blocked when block page disabled](../../../static/documentation/faq/blocked-disabled.png)
+![Blocked when block page disabled](../../../static/documentation/faq/blocked-disabled.png)
 
- If the Block page is **enabled** for the policy, then you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers when the domain is successfully blocked.
+If the Block page is **enabled** for the policy, then you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers when the domain is successfully blocked.
 
- ![Blocked when block page enabled](../../../static/documentation/faq/blocked-enabled.png)
+![Blocked when block page enabled](../../../static/documentation/faq/blocked-enabled.png)
 
 ## Test a DNS policy
 
@@ -53,9 +53,9 @@ NAME_OF_CATEGORY.testcategory.com
 
 If the category has multiple words in the name (for example, *Parked & For Sale Domains*) then the test domain uses the following format:
 
-* Remove any spaces between the words
-* Replace `&` with `and`
-* All letters are lowercase
+*   Remove any spaces between the words
+*   Replace `&` with `and`
+*   All letters are lowercase
 
 | Category | Test domain |
 | -------- | ----------- |

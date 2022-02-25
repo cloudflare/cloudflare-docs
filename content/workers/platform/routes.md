@@ -18,9 +18,9 @@ Route patterns can be added with the Cloudflare API or in **Account Home** > [**
 
 Cloudflare Site routes are comprised of:
 
-- Route URL (refer to [Matching Behavior](#matching-behavior))
-- Worker script to execute on matching requests
-- Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/platform/limits#request-limits))
+*   Route URL (refer to [Matching Behavior](#matching-behavior))
+*   Worker script to execute on matching requests
+*   Failure mode for rate-limited accounts on the Free plan (see [daily request limits](/platform/limits#request-limits))
 
 The Routes REST API documentation can be found [in the Workers API docs](https://api.cloudflare.com/#worker-routes-properties).
 
@@ -28,9 +28,9 @@ If your route is configured to a hostname, you will need to add a DNS record to 
 
 You may enter a placeholder AAAA record pointing to [100::](https://datatracker.ietf.org/doc/html/rfc6666), which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the reserved IPv6 discard prefix but is not the only value allowed. For example, you may also use an A record pointed to 192.0.2.1 or a CNAME pointed to any resolvable target.
 
-\* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
+\* *A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/).*
 
-## Routes with *.workers.dev
+## Routes with \*.workers.dev
 
 Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `*.workers.dev` subdomain allows you to deploy Workers scripts [without attaching a custom domain as a Cloudflare zone](https://blog.cloudflare.com/announcing-workers-dev/).
 
@@ -55,15 +55,15 @@ A pattern to match all requests looks like this:
 
 While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expression) pattern, route patterns follow specific rules:
 
-- The only supported operator is the wildcard (`*`), which matches zero or more of any character.
+*   The only supported operator is the wildcard (`*`), which matches zero or more of any character.
 
-- Route patterns may not contain infix wildcards or query parameters. For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
+*   Route patterns may not contain infix wildcards or query parameters. For example, neither `example.com/*.jpg` nor `example.com/?foo=*` are valid route patterns.
 
-- When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
+*   When more than one route pattern could match a request URL, the most specific route pattern wins. For example, the pattern `www.example.com/*` would take precedence over `*.example.com/*` when matching a request for `https://www.example.com/`. The pattern `example.com/hello/*` would take precedence over `example.com/*` when matching a request for `example.com/hello/world`.
 
-- Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
+*   Route pattern matching considers the entire request URL, including the query parameter string. Since route patterns may not contain query parameters, the only way to have a route pattern match URLs with query parameters is to terminate it with a wildcard, `*`.
 
-- Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
+*   Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
 A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
 
@@ -72,7 +72,7 @@ A route can be specified without being associated with a Worker; this will act t
 *example.com/images/*       -> worker-script
 ```
 
-In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
+In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, *except* for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
 
 ### Validity
 
@@ -90,23 +90,23 @@ For example, `https://example.com/?anything` is not a valid route pattern.
 
 If you omit a scheme in your route pattern, it will match both `http://` and `https://` URLs. If you include `http://` or `https://`, it will only match HTTP or HTTPS requests, respectively.
 
-- `https://*.example.com/` matches `https://www.example.com/` but not `http://www.example.com/`.
+*   `https://*.example.com/` matches `https://www.example.com/` but not `http://www.example.com/`.
 
-- `*.example.com/` matches both `https://www.example.com/` and `http://www.example.com/`.
+*   `*.example.com/` matches both `https://www.example.com/` and `http://www.example.com/`.
 
 #### Hostnames may optionally begin with `*`
 
 If a route pattern hostname begins with `*`, then it matches the host and all subhosts. If a route pattern hostname begins with `*.`, then it only matches all subhosts.
 
-- `*example.com/` matches `https://example.com/` and `https://www.example.com/`.
+*   `*example.com/` matches `https://example.com/` and `https://www.example.com/`.
 
-- `*.example.com/` matches `https://www.example.com/` but not `https://example.com/`.
+*   `*.example.com/` matches `https://www.example.com/` but not `https://example.com/`.
 
 #### Paths may optionally end with `*`
 
 If a route pattern path ends with `*`, then it matches all suffixes of that path.
 
-- `https://example.com/path*` matches `https://example.com/path` and `https://example.com/path2` and `https://example.com/path/readme.txt`
+*   `https://example.com/path*` matches `https://example.com/path` and `https://example.com/path2` and `https://example.com/path/readme.txt`
 
 <Aside type="warning">
 

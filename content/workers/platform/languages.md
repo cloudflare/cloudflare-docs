@@ -23,10 +23,10 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 ### Resources on JavaScript / Typescript
 
-- [Quickstarts](/get-started/quickstarts) – More example repos to use as a basis for your projects
-- [TypeScript type definitions](https://github.com/cloudflare/workers-types)
-- [JavaScript and web standard APIs](/runtime-apis/web-standards)
-- [Tutorials](/tutorials)
+*   [Quickstarts](/get-started/quickstarts) – More example repos to use as a basis for your projects
+*   [TypeScript type definitions](https://github.com/cloudflare/workers-types)
+*   [JavaScript and web standard APIs](/runtime-apis/web-standards)
+*   [Tutorials](/tutorials)
 
 ## Wasm-supported
 
@@ -44,8 +44,8 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 ### Resources on WebAssembly
 
-- [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
-- [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
+*   [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
+*   [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
 
 ## Compiled to JavaScript
 
@@ -66,4 +66,4 @@ You can write Workers with any language that can compile to JavaScript, includin
 
 </TableWrap>
 
-Refer to the [Cloudflare Workers announces broad language support](https://blog.cloudflare.com/cloudflare-workers-announces-broad-language-support/) blog post for more information. 
+Refer to the [Cloudflare Workers announces broad language support](https://blog.cloudflare.com/cloudflare-workers-announces-broad-language-support/) blog post for more information.

@@ -8,7 +8,7 @@ pcx-content-type: overview
 
 Cloudflare bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 
-While Cloudflare offers several products that relate to bot traffic, this section reviews our _bot-specific products_, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
+While Cloudflare offers several products that relate to bot traffic, this section reviews our *bot-specific products*, Bot Fight Mode, Super Bot Fight Mode, and Bot Management for Enterprise.
 
 ## Which bot solution do I need?
 
@@ -24,4 +24,3 @@ To see the differences in features and functionality, visit [Plans](/plans/).
   <Button type="primary" href="/get-started">Get started</Button>
   <Button type="secondary" href="/concepts">Learn more</Button>
 </ButtonGroup>
-

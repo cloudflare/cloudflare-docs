@@ -96,7 +96,7 @@ addEventListener("fetch", event => {
 })
 ```
 
---------------------------------
+***
 
 <ContentColumn>
 

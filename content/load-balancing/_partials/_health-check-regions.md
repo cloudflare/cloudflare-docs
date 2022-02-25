@@ -1,3 +1,6 @@
+---
+---
+
 For each option selected in a pool's **Health Check Regions**, Cloudflare sends health checks from three separate data centers in that region.
 
 ![Health checks come from three data centers within each selected region.](../static/images/health-check-component.png)

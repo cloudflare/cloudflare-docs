@@ -13,17 +13,16 @@ Deploying Gateway DNS filtering using static IP addresses may prevent users from
 
 Locations are usually physical entities like offices, homes, retail stores, movie theatres, or data centers. The fastest way to start sending DNS queries from a location and protect it from security threats is by changing the DNS resolvers at the router.
 
-* If you have an IPv6 network, you can change your DNS resolvers to the dedicated IPv6 address for your location.
+*   If you have an IPv6 network, you can change your DNS resolvers to the dedicated IPv6 address for your location.
 
-* If you don’t have an IPv6 network, you can set up a location by changing the DNS resolvers to:
+*   If you don’t have an IPv6 network, you can set up a location by changing the DNS resolvers to:
 
-  * **172.64.36.1**
-  * **172.64.36.2**
+    *   **172.64.36.1**
+    *   **172.64.36.2**
 
 If you want to send your DNS queries over an encrypted connection, you can use the hostname that we provide in the dashboard to send queries using DNS over HTTPS.
 
-* [Add a location](/connections/connect-networks/locations/configuring-a-location)
-
+*   [Add a location](/connections/connect-networks/locations/configuring-a-location)
 
 ## How Gateway matches queries to locations
 
@@ -31,11 +30,11 @@ Gateway uses different ways to match a DNS query to locations depending on the t
 
 ![Determine location](../../../static/documentation/policies/gateway-determine-location-dns.png)
 
-1. **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname. 
+1.  **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname.
 
-2. **Step 2**: if the query wasn't sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the location by the source IPv4 address.
+2.  **Step 2**: if the query wasn't sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the location by the source IPv4 address.
 
-3. **Step 3**: If the query wasn't sent over IPv4, it means it was sent over IPv6. Gateway will look up the location associated with the DNS query based on the destination IPv6 address. 
+3.  **Step 3**: If the query wasn't sent over IPv4, it means it was sent over IPv6. Gateway will look up the location associated with the DNS query based on the destination IPv6 address.
 
 ## Location attributes
 
@@ -51,7 +50,7 @@ Changing the source IPv4 address of a location is an Enterprise feature. See our
 
 Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. When creating a location, the Zero Trust dashboard automatically identifies the public source IP address.
 
-Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Zero Trust dashboard. 
+Users on the Enterprise plan have the option of manually entering one or more IP addresses of their choice. This enables them to protect networks even if they're not connecting from any of those networks' IP addresses when creating the location on the Zero Trust dashboard.
 
 ![Editable IP address](../../../static/documentation/policies/editable-ip-address.png)
 
@@ -81,10 +80,10 @@ Each location has a unique hostname for DNS over TLS.
 
 Cloudflare Gateway will identify your location based on the DNS over TLS hostname.
 
- ![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
-
+![Get unique subdomain](../../../static/documentation/connections/get-unique-subdomain.png)
 
 ### DNS over HTTPS
+
 Each location has a unique hostname for DNS over HTTPS.
 
 Cloudflare Gateway will identify your location based on the DNS over HTTPS hostname.
@@ -93,7 +92,7 @@ Cloudflare Gateway will identify your location based on the DNS over HTTPS hostn
 
 #### DoH subdomain
 
-Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings. 
+Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as unique ID). If your organization uses DNS policies, you can enter your location's DoH subdomain as part of the WARP client settings.
 
 In the example below, the DoH subdomain is: `9y65g5srsm`.
 

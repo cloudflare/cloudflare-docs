@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Postmaster
 
-The postmaster page provides technical information about Email Routing to professionals who administer email systems, and other email providers. 
+The postmaster page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
 
 Here you will find information regarding Email Routing, along with best practices, rules, guidelines, and troubleshooting tools.
 
@@ -21,7 +21,7 @@ If you are a postmaster and are having trouble receiving Email Routing's emails,
 
 `104.30.0.0/20`
 
-_Ranges last updated: December 7, 2021_
+*Ranges last updated: December 7, 2021*
 
 ## Outbound hostnames
 
@@ -65,9 +65,9 @@ v=spf1 include:_spf.mx.cloudflare.net ~all
 
 In the example above:
 
-* `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
-* `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
-* `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
+*   `spf1`: Refers to SPF version 1, the most common and more widely adopted version of SPF.
+*   `include`: Include a second query to `_spf.mx.cloudflare.net` and allow its contents.
+*   `~all`: Otherwise [`SoftFail`](http://www.open-spf.org/SPF_Record_Syntax/) on all other origins. `SoftFail` means NOT allowed to send, but in transition. This instructs the upstream server to accept the email but mark it as suspicious if it came from any IP addresses outside of those defined in the SPF records.
 
 If we do a TXT query to `_spf.mx.cloudflare.net`, we get:
 
@@ -77,8 +77,8 @@ _spf.mx.cloudflare.net. 300 IN TXT "v=spf1 ip4:104.30.0.0/20 ~all"
 
 This response means:
 
-* Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
-* Otherwise, `SoftFail`.
+*   Allow all IPv4 IPs coming from the `104.30.0.0/20` subnet.
+*   Otherwise, `SoftFail`.
 
 You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and Phishing](https://blog.cloudflare.com/tackling-email-spoofing/) blog.
 
@@ -110,10 +110,10 @@ This has no effect to the end user's experience, though. The message headers wil
 
 Handling spam and abusive traffic is essential to any email provider. Below is a list of how Email Routing tackles this issue:
 
-* Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
-* Email Routing rejects emails whose SPF validation fails.
-* Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
-* Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
+*   Email Routing provides reverse DNS PTR records to all of its SMTP egress ranges. PTR records are often used as a reputation parameter.
+*   Email Routing rejects emails whose SPF validation fails.
+*   Email Routing refuses to send email to poorly configured SMTP servers — for example, servers with broken TLS certificates.
+*   Email Routing requires double opt-in to confirm ownership of new destination addresses. Email Routing sends an email with a timed verification link to the new address specified by the user. The destination address is only usable after the customer clicks that link.
 
 ## SMTP errors
 
@@ -121,4 +121,4 @@ In most cases, Email Routing simply forwards the upstream SMTP errors back to th
 
 ## Contact information
 
-The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas\&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).

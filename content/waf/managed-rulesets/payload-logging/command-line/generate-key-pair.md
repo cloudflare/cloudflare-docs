@@ -11,17 +11,17 @@ Generate a public/private key pair using the Cloudflare [`matched-data-cli`](htt
 
 Do the following:
 
-1. [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
+1.  [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
 
-1. Extract the content of the downloaded `.tar.gz` file to a local folder.
+2.  Extract the content of the downloaded `.tar.gz` file to a local folder.
 
-1. Open a terminal and navigate to the local folder containing the `matched-data-cli` tool.
+3.  Open a terminal and navigate to the local folder containing the `matched-data-cli` tool.
 
     ```sh
     ~ $ cd matched-data-cli
     ```
 
-1. Run the following command:
+4.  Run the following command:
 
     ```sh
     ~/matched-data-cli $ ./matched-data-cli generate-key-pair

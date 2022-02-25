@@ -29,7 +29,7 @@ example.com/docs,https://example.com/draft-docs,302,,TRUE
 
 ## Important remarks
 
-* The CSV file must not include a header row with column names.
-* A source/target URL must be enclosed in quotes (`"`) when it includes a comma (`,`). You can always URL values in quotes, but it is not required.
-* You can skip an optional value by immediately entering a comma (the delimiter) without entering any value.
-* You do not need to include trailing commas.
+*   The CSV file must not include a header row with column names.
+*   A source/target URL must be enclosed in quotes (`"`) when it includes a comma (`,`). You can always URL values in quotes, but it is not required.
+*   You can skip an optional value by immediately entering a comma (the delimiter) without entering any value.
+*   You do not need to include trailing commas.

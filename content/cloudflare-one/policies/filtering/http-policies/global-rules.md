@@ -20,8 +20,7 @@ Cloudflare Zero Trust applies a set of **global rules** to all accounts.
 | Hostname | `api.apple-cloudkit.com` | bypass | Temp cert pinning global bypass |
 | Hostname | `gateway.icloud.com` | bypass | Temp cert pinning global bypass |
 | Hostname | `*.edge.browser.run` | isolate | Anything bound for `*.edge.browser.run` needs to go the isolation browser |
-| Hostname | `help.teams.cloudflare.com` | allow | Zero Trust client will use this to check if Gateway is on by inspecting cert. Also will check if certificate is properly installed on client machine  | 
+| Hostname | `help.teams.cloudflare.com` | allow | Zero Trust client will use this to check if Gateway is on by inspecting cert. Also will check if certificate is properly installed on client machine  |
 | Request Header | `Accept: text/html` | noisolate | Browsers issue an `Accept:` header that begins with `text/html`. Do not isolate if we don't see such a header because this is not a browser |
 
 </TableWrap>
-

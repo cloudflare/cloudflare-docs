@@ -13,7 +13,7 @@ The Cloudflare Autonomous Edge is powered by the denial-of-service daemon (dosd)
 
 Another component of Cloudflare’s Autonomous Edge includes the TCP flow tracking daemon (flowtrackd). This daemon is Cloudflare’s TCP state tracking machine for detecting and mitigating the most randomized and sophisticated TCP-based DDoS attacks in unidirectional routing topologies — such as the case of [Magic Transit](https://developers.cloudflare.com/magic-transit/). flowtrackd is able to identify the state of a TCP connection and then drops, challenges, or rate-limits packets that do not belong to a legitimate connection.
 
-For more information, refer to our blog post _[A deep-dive into Cloudflare’s autonomous edge DDoS protection](https://blog.cloudflare.com/deep-dive-cloudflare-autonomous-edge-ddos-protection/)_.
+For more information, refer to our blog post *[A deep-dive into Cloudflare’s autonomous edge DDoS protection](https://blog.cloudflare.com/deep-dive-cloudflare-autonomous-edge-ddos-protection/)*.
 
 ## Centralized DDoS protection system
 

@@ -1,13 +1,14 @@
 ---
 order: 5
 ---
+
 # Download videos
 
 When you upload a video to Stream, it can be streamed using HLS/DASH. However, for certain use-cases (such as offline viewing), you may want to download the MP4. You can enable MP4 support on a per video basis by following the steps below:
 
-1. Enable MP4 support by making a POST request to the /downloads endpoint (example below)
-1. Save the MP4 URL provided by the response to the /downloads endpoint. This MP4 URL will become functional when the mp4 is ready (see step 3).
-1. Poll the /downloads endpoint until the `status` field is set to `ready` to inform you when the MP4 is available. You can now use the MP4 URL from step 2.
+1.  Enable MP4 support by making a POST request to the /downloads endpoint (example below)
+2.  Save the MP4 URL provided by the response to the /downloads endpoint. This MP4 URL will become functional when the mp4 is ready (see step 3).
+3.  Poll the /downloads endpoint until the `status` field is set to `ready` to inform you when the MP4 is available. You can now use the MP4 URL from step 2.
 
 ## Generating downloadable MP4 files for a video
 
@@ -119,6 +120,6 @@ highlight: [6]
 
 ## Billing for MP4 Downloads
 
-MP4 _downloads_ are billed in the same way as streaming of the video. You will be billed for the duration of the video each time the MP4 for the video is downloaded. For example, if you have a 10 minute video that is downloaded 100 times during the month, the downloads will count as 1000 minutes of minutes served.
+MP4 *downloads* are billed in the same way as streaming of the video. You will be billed for the duration of the video each time the MP4 for the video is downloaded. For example, if you have a 10 minute video that is downloaded 100 times during the month, the downloads will count as 1000 minutes of minutes served.
 
 You will not incur any additional cost for storage when you enable MP4s.

@@ -8,15 +8,15 @@ order: 3
 
 To set an HTTP request header, set the following parameters in the `action_parameters` field:
 
-* **operation**: `set`
-* Include one of the following parameters to define a static or dynamic value:
+*   **operation**: `set`
+*   Include one of the following parameters to define a static or dynamic value:
 
-    * **value**: Specifies a static value for the HTTP request header.
-    * **expression**: Specifies the expression that defines a value for the HTTP request header.
+    *   **value**: Specifies a static value for the HTTP request header.
+    *   **expression**: Specifies the expression that defines a value for the HTTP request header.
 
 To remove an HTTP request header, set the following parameter in the `action_parameters` field:
 
-* **operation**: `remove`
+*   **operation**: `remove`
 
 ## Static header value parameters
 

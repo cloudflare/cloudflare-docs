@@ -9,7 +9,7 @@ Debugging is a critical part of developing a new application — whether running
 
 <YouTube id="8iPmy7ePYDE"/>
 
---------------------------------
+***
 
 ## Local testing with `wrangler dev`
 
@@ -57,7 +57,6 @@ You can customize how `wrangler dev` works to fit your needs. Refer to [the `wra
 
 <Aside type="warning">
 
-There is a bug associated with `wrangler dev` documented in the [Known issues section](/platform/known-issues#wrangler-dev). 
+There is a bug associated with `wrangler dev` documented in the [Known issues section](/platform/known-issues#wrangler-dev).
 
 </Aside>
-

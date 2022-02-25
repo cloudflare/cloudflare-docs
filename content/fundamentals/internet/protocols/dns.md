@@ -80,14 +80,14 @@ The DNSSEC trust chain is a sequence of records that identify either a public ke
 
 There are several important new record types:
 
-  * DNSKEY: a public key, used to sign a set of resource records (RRset).
-  * DS: delegation signer, a hash of a key.
-  * RRSIG: a signature of a RRset that share name/type/class.
+*   DNSKEY: a public key, used to sign a set of resource records (RRset).
+*   DS: delegation signer, a hash of a key.
+*   RRSIG: a signature of a RRset that share name/type/class.
 
 A DNSKEY record is a cryptographic public key, DNSKEYs can be classified into two roles, which can be handled by separate keys or a single key
 
-  * KSK (key signing key): used to sign DNSKEY records.
-  * ZSK (zone signing key): used to sign all other records in the domain is authoritative for.
+*   KSK (key signing key): used to sign DNSKEY records.
+*   ZSK (zone signing key): used to sign all other records in the domain is authoritative for.
 
 For a given domain name and question, there are a set of answers. For example, if you ask for the A record for cloudflare.com, you get a set of A records as the answer:
 
@@ -139,18 +139,18 @@ In 2008, Dan Kaminsky revealed [an attack](https://spectrum.ieee.org/images/oct0
 
 DNS poisoning attacks are simple to describe, but difficult to pull off. Take the sequence of events:
 
-  * Client queries recursive resolver
-  * Recursive resolver queries authoritative server
-  * Authoritative server replies to recursive resolver
-  * Recursive resolver replies with an answer to the client
+*   Client queries recursive resolver
+*   Recursive resolver queries authoritative server
+*   Authoritative server replies to recursive resolver
+*   Recursive resolver replies with an answer to the client
 
 Kaminsky’s attack relies on the fact that UDP is a stateless protocol and that source IP addresses are blindly trusted. Each of the requests and responses described here is a single UDP request containing to and from IP addresses. Any host can in theory forge the source address on UDP message making look like it came from the expected source. Any attacker sitting on a network that does not filter outbound packets can construct a UDP message that says it’s from the authoritative server and send to the recursive resolver.
 
 Of the requests above, message number 3 is a good target to attack. This is because the recursive resolver will accept the first answer to its question that matches its query. So, if you can answer it faster than the authoritative server, the recursive resolver will accept your answer as the truth. This is the core of the attack:
 
-  * Pick a domain whose DNS entries you want to hijack.
-  * Send a request to the recursive resolver for the record you want to poison.
-  * Send many fake UDP responses pretending to be the authoritative server with the answer of your choosing (i.e. point the A record to an IP you control).
+*   Pick a domain whose DNS entries you want to hijack.
+*   Send a request to the recursive resolver for the record you want to poison.
+*   Send many fake UDP responses pretending to be the authoritative server with the answer of your choosing (i.e. point the A record to an IP you control).
 
 If one of your malicious—acceptable—responses arrives ahead of the real response, the recursive resolver will believe your record and cache it for as long as the TTL is set. Then any other clients asking for the poisoned record will be directed to your malicious servers.
 
@@ -158,12 +158,11 @@ If one of your malicious—acceptable—responses arrives ahead of the real resp
 
 There are some complications that make this harder than it sounds in practice. For example, you have to guess:
 
-  * The request ID—a 16-bit number
-  * The authoritative server address that the query was sent to
-  * The recursive resolver address used to send the query
-  * The UDP port used to send the query to the authoritative server
+*   The request ID—a 16-bit number
+*   The authoritative server address that the query was sent to
+*   The recursive resolver address used to send the query
+*   The UDP port used to send the query to the authoritative server
 
 When Kaminsky’s attack was originally proposed, many of these values were easily guessable or discoverable, thus making DNS poisoning a real threat. Since then, request ID, port randomization, and source address rotation have made this specific attack more difficult to pull off—but not impossible.
 
-The fundamental issue that allows this kind of attack to happen is that there is no way for the resolver to validate that the records are what they are supposed to be. Note: if the attacker is in position to see the query traffic from the recursive resolver, it has all the information it needs to forge answers (see [http://www.wired.com/2014/03/quantum/](http://www.wired.com/2014/03/quantum/)).
-
+The fundamental issue that allows this kind of attack to happen is that there is no way for the resolver to validate that the records are what they are supposed to be. Note: if the attacker is in position to see the query traffic from the recursive resolver, it has all the information it needs to forge answers (see <http://www.wired.com/2014/03/quantum/>).

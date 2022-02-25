@@ -14,38 +14,39 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 
 ## Before you start
 
-* [Install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
-* [Enable HTTP filtering](/policies/filtering/http-policies) by turning on the **Proxy** switch under **Settings** > **Network** > **L7 Firewall**.
-* [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
-* [Install the WARP client](/connections/connect-devices/warp) on the devices you want to allow into your network.
-* (optional) [Integrate your preferred identity provider](/identity/idp-integration) with Cloudflare Zero Trust. 
+*   [Install](/connections/connect-apps/install-and-setup/installation) `cloudflared`.
+*   [Enable HTTP filtering](/policies/filtering/http-policies) by turning on the **Proxy** switch under **Settings** > **Network** > **L7 Firewall**.
+*   [Create device enrollment rules](/connections/connect-devices/warp/warp-settings#device-enrollment-permissions) to determine which devices can enroll to your Zero Trust organization.
+*   [Install the WARP client](/connections/connect-devices/warp) on the devices you want to allow into your network.
+*   (optional) [Integrate your preferred identity provider](/identity/idp-integration) with Cloudflare Zero Trust.
 
 ## Create a tunnel to connect your network
 
-1. Authenticate `cloudflared` with the command below. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
+1.  Authenticate `cloudflared` with the command below. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 
     ```bash
     $ cloudflared login
     ```
 
-1. Create a tunnel with a user-friendly name to identify your network or environment. 
+2.  Create a tunnel with a user-friendly name to identify your network or environment.
 
     ```bash
     $ cloudflared tunnel create acme-network
     ```
 
-1. Finally, configure your tunnel with the IP/CIDR range of your private network. By doing this, you are creating a private network and making the WARP client aware that any requests to this IP range need to be routed to your new tunnel. 
+3.  Finally, configure your tunnel with the IP/CIDR range of your private network. By doing this, you are creating a private network and making the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
 
     ```bash
     $ cloudflared tunnel route ip add 10.0.0.0/8
     ```
-1. Confirm the routes enrolled with the following command:
+
+4.  Confirm the routes enrolled with the following command:
 
     ```bash
     $ cloudflared tunnel route ip show
     ```
 
-1. Next, create a [configuration file](/connections/connect-apps/configuration/configuration-file) for the tunnel. The configuration file will be structured as follows: 
+5.  Next, create a [configuration file](/connections/connect-apps/configuration/configuration-file) for the tunnel. The configuration file will be structured as follows:
 
     ```txt
     tunnel: <Tunnel-UUID>
@@ -54,11 +55,9 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
         enabled: true
     ```
 
-1. Run the tunnel. Traffic inside of your organization coming from enrolled WARP clients will be sent to this instance when the destination is your private IP range.
+6.  Run the tunnel. Traffic inside of your organization coming from enrolled WARP clients will be sent to this instance when the destination is your private IP range.
 
-    ```
-    $ cloudflared tunnel run acme-network
-    ```
+        $ cloudflared tunnel run acme-network
 
 ## (optional) Ensure that traffic can reach your network
 
@@ -66,19 +65,19 @@ By default, Cloudflare Zero Trust [excludes traffic](/connections/connect-device
 
 To check that, navigate to **Settings** > **Network** > **Split Tunnels** on the Zero Trust Dashboard, and click **Manage**.
 
-* If you are using the feature in **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption by default. If your network's IP/CIDR range is listed on this page, delete it.
-* If you are using the feature in **Include** mode, the IP ranges you see listed are the only one Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
+*   If you are using the feature in **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption by default. If your network's IP/CIDR range is listed on this page, delete it.
+*   If you are using the feature in **Include** mode, the IP ranges you see listed are the only one Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
 ## Configure devices to connect to your network
 
-1. On the devices you want to connect to your network, install the Cloudflare root certificate. This step is optional if TLS decryption under **Settings** > **Network** > **Firewall** is disabled for this device. You can find the certificate under **Settings** > **Devices** > **Certificates** and follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+1.  On the devices you want to connect to your network, install the Cloudflare root certificate. This step is optional if TLS decryption under **Settings** > **Network** > **Firewall** is disabled for this device. You can find the certificate under **Settings** > **Devices** > **Certificates** and follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
 
-1. Next, [log in](/connections/connect-devices/warp/deployment) to the WARP client with Cloudflare for Teams on each of the devices you want to connect.
-    * For desktop clients, go to **Account** > **Login with Cloudflare for Teams** and enter your organization's [team name](/glossary#team-name).
-    * For mobile clients, open the *1.1.1.1 Faster Internet* application, tap the Menu button, go to **Accounts** and enter your organization's [team name](/glossary#team-name).
+2.  Next, [log in](/connections/connect-devices/warp/deployment) to the WARP client with Cloudflare for Teams on each of the devices you want to connect.
+    *   For desktop clients, go to **Account** > **Login with Cloudflare for Teams** and enter your organization's [team name](/glossary#team-name).
+    *   For mobile clients, open the *1.1.1.1 Faster Internet* application, tap the Menu button, go to **Accounts** and enter your organization's [team name](/glossary#team-name).
 
 Users will now be able to reach any HTTP or TCP-based service on your network by navigating to any IP address in the range you have specified. Users can also visit `https://help.teams.cloudflare.com/` to ensure that:
 
-* The page returns **Your network is fully protected**.
-* Both **WARP** and **Gateway Proxy** are enabled in the **HTTP filtering** section.
-* The team name matches the expected organization. This team name must belong to the same Cloudflare account from which the tunnel is running.
+*   The page returns **Your network is fully protected**.
+*   Both **WARP** and **Gateway Proxy** are enabled in the **HTTP filtering** section.
+*   The team name matches the expected organization. This team name must belong to the same Cloudflare account from which the tunnel is running.

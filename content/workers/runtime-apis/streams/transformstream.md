@@ -18,9 +18,9 @@ let { readable, writable } = new TransformStream()
 
 <Definitions>
 
-- `TransformStream()` <Type>TransformStream</Type>
+*   `TransformStream()` <Type>TransformStream</Type>
 
-    - Returns a new identity transform stream.
+    *   Returns a new identity transform stream.
 
 </Definitions>
 
@@ -28,14 +28,14 @@ let { readable, writable } = new TransformStream()
 
 <Definitions>
 
-- `readable` <TypeLink href="#readablestream">ReadableStream</TypeLink>
-    - An instance of a `ReadableStream`.
-- `writable` <TypeLink href="#writablestream">WritableStream</TypeLink>
-    - An instance of a `WritableStream`.
+*   `readable` <TypeLink href="#readablestream">ReadableStream</TypeLink>
+    *   An instance of a `ReadableStream`.
+*   `writable` <TypeLink href="#writablestream">WritableStream</TypeLink>
+    *   An instance of a `WritableStream`.
 
 </Definitions>
 
 ## See also
 
-- [Using Streams.](/learning/using-streams)
-- [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)
+*   [Using Streams.](/learning/using-streams)
+*   [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)

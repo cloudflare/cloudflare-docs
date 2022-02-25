@@ -23,7 +23,7 @@ In the context of the web, confidentiality and authentication are achieved throu
 
 The TLS protocol evolved from the Secure Sockets Layer (SSL) protocol which was developed by Netscape in the mid-1990s. In 1999, the Internet Engineering Task Force (IETF) standardized a new protocol called TLS, which is an updated version of SSL. In fact, TLS is so similar to SSL that TLS 1.0 uses the SSL protocol version number 3.1. This may seem confusing at first, but makes sense since TLS is just a minor update to SSL 3.0. Subsequent versions of TLS have followed this pattern. Since TLS is an evolution of the SSL protocol, people still use the terms TLS and SSL somewhat interchangeably.
 
-There are two main types of handshakes in TLS: one based on [RSA](http://en.wikipedia.org/wiki/RSA_(cryptosystem)), and one based on [Diffie-Hellman](http://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). RSA and Diffie-Hellman were the two algorithms which ushered in the era of modern cryptography, and brought cryptography to the masses. These two handshakes differ only in how the two goals of key establishment and authentication are achieved:
+There are two main types of handshakes in TLS: one based on [RSA](http://en.wikipedia.org/wiki/RSA_\(cryptosystem\)), and one based on [Diffie-Hellman](http://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange). RSA and Diffie-Hellman were the two algorithms which ushered in the era of modern cryptography, and brought cryptography to the masses. These two handshakes differ only in how the two goals of key establishment and authentication are achieved:
 
 ![ssl-table](../static/ssl-table.png)
 
@@ -53,24 +53,24 @@ This is a 48-byte blob of data. It can be combined with both the client random a
 
 This is a unique identifier for combining algorithms making up a TLS connection. It defines one algorithm for each of the following:
 
-  * key establishment (typically a Diffie-Hellman variant or RSA)
-  * authentication (the certificate type)
-  * confidentiality (a symmetric cipher)
-  * integrity (a hash function)
+*   key establishment (typically a Diffie-Hellman variant or RSA)
+*   authentication (the certificate type)
+*   confidentiality (a symmetric cipher)
+*   integrity (a hash function)
 
 For example “AES128-SHA” defines a session that uses
 
-  * RSA for key establishment (implied)
-  * RSA for authentication (implied)
-  * 128-bit Advanced Encryption Standard in Cipher Block Chaining (CBC) mode for confidentiality
-  * 160-bit Secure Hashing Algorithm (SHA) for integrity
+*   RSA for key establishment (implied)
+*   RSA for authentication (implied)
+*   128-bit Advanced Encryption Standard in Cipher Block Chaining (CBC) mode for confidentiality
+*   160-bit Secure Hashing Algorithm (SHA) for integrity
 
 A more daunting, but valid cipher suite is “ECDHE-ECDSA-AES256-GCM-SHA384” which defines a session that uses:
 
-  * Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) key exchange for key establishment
-  * Elliptic Curve Digital Signature Algorithms (ECDSA) for authentication
-  * 256-bit Advanced Encryption Standard in Galois/Counter mode (GCM) for confidentiality
-  * 384-bit Secure Hashing Algorithm for integrity
+*   Elliptic Curve Diffie-Hellman Ephemeral (ECDHE) key exchange for key establishment
+*   Elliptic Curve Digital Signature Algorithms (ECDSA) for authentication
+*   256-bit Advanced Encryption Standard in Galois/Counter mode (GCM) for confidentiality
+*   384-bit Secure Hashing Algorithm for integrity
 
 With these definitions in hand, let’s walk through an RSA handshake.
 
@@ -108,11 +108,11 @@ In Diffie-Hellman, two parties with different secrets exchange messages to obtai
 
 The algorithm works like this:
 
-  * person a has secret a, sends g<sup>a</sup> to person b
-  * person b has secret b, sends g<sup>b</sup> to person a
-  * person a computes (g<sup>b</sup>)<sup>a</sup>
-  * person b computes (g<sup>a</sup>)<sup>b</sup>
-  * Both person a and b end up with g<sup>ab</sup>, which is their shared secret
+*   person a has secret a, sends g<sup>a</sup> to person b
+*   person b has secret b, sends g<sup>b</sup> to person a
+*   person a computes (g<sup>b</sup>)<sup>a</sup>
+*   person b computes (g<sup>a</sup>)<sup>b</sup>
+*   Both person a and b end up with g<sup>ab</sup>, which is their shared secret
 
 This doesn't work well with regular numbers because g<sup>ab</sup> can get really large, and there are efficient ways to take the nth root of a number. However, we can change the problem space and make it work. This is done by restricting the computation to numbers of a fixed size by always dividing the result of a computation by big prime number and taking the remainder. This is called modular arithmetic. Taking an nth root in modular arithmetic is called the discrete logarithm problem and is considered a hard problem.
 

@@ -19,54 +19,55 @@ If you have already added a subdomain at your host, create a corresponding [DNS 
 
 Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your root domain (`example.com`).
 
-1. Create a [proxied DNS A record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
+1.  Create a [proxied DNS A record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
-    <Example>
+     <Example>
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `www` | `192.0.2.1`| Proxied |
 
-    </Example>
+     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
+2.  Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
-    <Example>
-    
+     <Example>
+
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
     | `www.example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
-    
-    </Example>
+
+     </Example>
 
 ### Redirect root domain to a subdomain
 
 Sometimes, you might want all traffic to your root domain (`example.com`) to actually go to a subdomain (`www.example.com`).
 
-1. If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that subdomain.
-1. Create a proxied DNS A record for your root domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
+1.  If you have already added that subdomain at your host, create a corresponding [DNS A or CNAME record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) for that subdomain.
 
-    <Example>
+2.  Create a proxied DNS A record for your root domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
+
+     <Example>
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `@` | `192.0.2.1`| Proxied |
 
-    </Example>
+     </Example>
 
-1. Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+3.  Use [Bulk redirects](https://developers.cloudflare.com/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
 
-    <Example>
-    
+     <Example>
+
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
     | `example.com` | `https://www.example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
-    
-    </Example>
+
+     </Example>
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`). 
+If your main domain is using Cloudflare's [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`).
 
 For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/limitations#full-setup).
 

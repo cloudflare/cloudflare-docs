@@ -6,7 +6,7 @@ pcx-content-type: tutorial
 
 # Introduction to Terraform init
 
-This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain that is accessible on 203.0.113.10 and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform. 
+This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain that is accessible on 203.0.113.10 and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
 Before you begin, ensure you [installed Terraform](/installing). You will also need to [create an API Token](https://developers.cloudflare.com/api/tokens/create) with permissions to edit resources for this tutorial.
 
@@ -92,6 +92,7 @@ $ find .terraform/
 ```
 
 ## 3. Review the execution plan
+
 After installing the Cloudflare provider, review the proposed changes to your Cloudflare account so they match the configuration you previously defined.
 
 ```sh
@@ -134,7 +135,7 @@ can’t guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-In the “execution plan”, Terraform will create a new DNS record as requested. Values that you explicitly specified are displayed, such as the the value of the A record — 203.0.113.10. Values display as `<computed>` when they are derived based on other API calls, for example, looking up the `metadata`, or if the values are returned after the object is created. 
+In the “execution plan”, Terraform will create a new DNS record as requested. Values that you explicitly specified are displayed, such as the the value of the A record — 203.0.113.10. Values display as `<computed>` when they are derived based on other API calls, for example, looking up the `metadata`, or if the values are returned after the object is created.
 
 ## 4. Apply your changes
 
@@ -165,7 +166,6 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ## 5. Verify the results
 
 [Log in to the Cloudflare Dashboard](https://dash.cloudflare.com/login) and select the DNS tab. You should see the record created by Terraform.
-
 
 To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, you can run `terraform show`.
 

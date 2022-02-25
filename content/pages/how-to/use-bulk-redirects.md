@@ -34,7 +34,4 @@ After this, go back to **Bulk Redirects** > **Create Bulk Redirects**  > set a *
 
 ![Create a new Bulk redirects](./media/create_new_bulk_redirect.png)
 
-Finally, select **Save and deploy** and wait a few seconds for your rule to propagate. 
-
-
-
+Finally, select **Save and deploy** and wait a few seconds for your rule to propagate.

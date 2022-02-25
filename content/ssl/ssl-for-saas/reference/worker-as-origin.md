@@ -7,22 +7,24 @@ pcx-content-type: how-to
 
 If you are building your application on [Cloudflare Workers](https://developers.cloudflare.com/workers), you can use a Worker as the origin for your SaaS zone (also known as your fallback origin).
 
-1. In your SaaS zone, [create and set a fallback origin](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target), but use a "fake" proxied DNS record.
+1.  In your SaaS zone, [create and set a fallback origin](/ssl-for-saas/getting-started#step-1--create-fallback-origin-and-cname-target), but use a "fake" proxied DNS record.
 
-    - **Example**:  `service.example.com AAAA 100::`
+    *   **Example**:  `service.example.com AAAA 100::`
 
-1. In that same zone, navigate to **Workers**.
-1. Click **Add route**.
-1. Decide whether you want traffic bound for your SaaS zone (`example.com`) to go to that Worker:
+2.  In that same zone, navigate to **Workers**.
 
-    - If *yes*, set the following values:
+3.  Click **Add route**.
 
-        - **Route**: `*/*` (routes everything — including custom hostnames — to the Worker).
-        - **Worker**: Select the Worker used for your SaaS application.
+4.  Decide whether you want traffic bound for your SaaS zone (`example.com`) to go to that Worker:
 
-    - If *no*, set the following values:
+    *   If *yes*, set the following values:
 
-        - **Route**: `*.<zonename>.com/*` (only routes custom hostname traffic to the Worker)
-        - **Worker**: **None**
+        *   **Route**: `*/*` (routes everything — including custom hostnames — to the Worker).
+        *   **Worker**: Select the Worker used for your SaaS application.
 
-1. Click **Save**.
+    *   If *no*, set the following values:
+
+        *   **Route**: `*.<zonename>.com/*` (only routes custom hostname traffic to the Worker)
+        *   **Worker**: **None**
+
+5.  Click **Save**.

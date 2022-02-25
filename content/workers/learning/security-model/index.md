@@ -201,7 +201,7 @@ At this point, measuring code execution time locally is prevented. However, it c
 
 <Aside type="note">
 
-It has been suggested that if Workers reset its execution environment on every request, that Workers would be in a much safer position against timing attacks. Unfortunately, it is not so simple. The execution state could be stored in a client — not the Worker itself — allowing a Worker to resume its previous state on every new request. 
+It has been suggested that if Workers reset its execution environment on every request, that Workers would be in a much safer position against timing attacks. Unfortunately, it is not so simple. The execution state could be stored in a client — not the Worker itself — allowing a Worker to resume its previous state on every new request.
 
 </Aside>
 
@@ -227,7 +227,7 @@ As mentioned previously, process isolation is not a complete defense. Over time,
 
 ### Step 3: Periodic whole-memory shuffling
 
-At this point, all known attacks have been prevented. This leaves Workers susceptible to unknown attacks in the future, as with all other CPU-based systems. However, all new attacks will generally be very slow, taking days or longer, leaving Cloudflare with time to prepare a defense. 
+At this point, all known attacks have been prevented. This leaves Workers susceptible to unknown attacks in the future, as with all other CPU-based systems. However, all new attacks will generally be very slow, taking days or longer, leaving Cloudflare with time to prepare a defense.
 
 For example, it is within reason to restart the entire Workers runtime on a daily basis. This will reset the locations of everything in memory, forcing attacks to restart the process of discovering the locations of secrets. Cloudflare can also reschedule Workers across physical machines or cordons, so that the window to attack any particular neighbor is limited.
 

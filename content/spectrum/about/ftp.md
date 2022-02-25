@@ -17,7 +17,7 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 FTP leverages two different sockets, one for issuing commands and the other for actual data transfer. The control socket takes care of users logging in and sending commands, and the data socket is where directory listings and files actually get transferred.
 
-There are two ways in which client and server can establish a data socket: active and passive. In active mode, the server connects _back_ to the client on a port that they have specified, which can create issues where clients are behind an NAT. The alternative is passive mode, where the server opens an extra port that the client then connects to. For an overview of active versus passive FTP, refer to [Active FTP vs. Passive FTP, a Definitive Explanation](http://slacksite.com/other/ftp.html).
+There are two ways in which client and server can establish a data socket: active and passive. In active mode, the server connects *back* to the client on a port that they have specified, which can create issues where clients are behind an NAT. The alternative is passive mode, where the server opens an extra port that the client then connects to. For an overview of active versus passive FTP, refer to [Active FTP vs. Passive FTP, a Definitive Explanation](http://slacksite.com/other/ftp.html).
 
 In passive mode, the FTP server communicates a port that the client should connect to, which is done on the control socket via a PASV command. By default, the FTP server responds with the IP address that it is listening on. This scenario is fine for servers running directly on a public-facing IP but creates issues when a server is behind an NAT, firewall, or Cloudflare Spectrum.
 
@@ -66,4 +66,4 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 
 ## Related
 
-- [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)
+*   [IIS configuration](https://docs.microsoft.com/en-us/iis/publish/using-the-ftp-service/configuring-ftp-firewall-settings-in-iis-7#step-1-configure-the-passive-port-range-for-the-ftp-service)

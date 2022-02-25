@@ -14,10 +14,10 @@ Cloudflare’s Load Balancer distributes global traffic intelligently across Goo
 
 Before you begin, be sure you have the following:
 
-- Access to Google Cloud Platform (GCP)
-- Access to AWS
-- Docker image
-- A domain on Cloudflare (on the Free, Pro, or Business plan) with a Load Balancing subscription, configurable in **Traffic** on the dashboard
+*   Access to Google Cloud Platform (GCP)
+*   Access to AWS
+*   Docker image
+*   A domain on Cloudflare (on the Free, Pro, or Business plan) with a Load Balancing subscription, configurable in **Traffic** on the dashboard
 
 ## Deploying a containerized web application on Google Kubernetes Engine
 
@@ -31,17 +31,17 @@ Go to the [Kubernetes Engine](https://console.cloud.google.com/kubernetes?_ga=2.
 
 Set default configuration values by running the following commands:
 
-- `gcloud config set project PROJECT_ID`
-- `gcloud config set compute/zone us-west1-a`
+*   `gcloud config set project PROJECT_ID`
+*   `gcloud config set compute/zone us-west1-a`
 
 ## Deploying a web application
 
-1. Create a container cluster to run the container image. A cluster consists of a pool of Compute Engine VM instances running Kubernetes.
+1.  Create a container cluster to run the container image. A cluster consists of a pool of Compute Engine VM instances running Kubernetes.
 
-   - Run the following command to create a three-node cluster (our cluster name is _camilia-cluster_): `gcloud container clusters create camilia-cluster --num-nodes=3`
+    *   Run the following command to create a three-node cluster (our cluster name is *camilia-cluster*): `gcloud container clusters create camilia-cluster --num-nodes=3`
 
-   - It may take several minutes for the cluster to be created. Once the command is complete, run the following command to see the cluster’s three worker VM instances: `gcloud compute instances list`
+    *   It may take several minutes for the cluster to be created. Once the command is complete, run the following command to see the cluster’s three worker VM instances: `gcloud compute instances list`
 
-1. Deploy the application to the cluster. Use the kubectl command-line tool to deploy and manage applications on a Kubernetes Engine cluster.
-   You can create a simple nginx docker container, for example, using the following command (*camilia-nginx* is the name for the deployment):
-   `kubectl run camilia-nginx --image=nginx --port 80`
+2.  Deploy the application to the cluster. Use the kubectl command-line tool to deploy and manage applications on a Kubernetes Engine cluster.
+    You can create a simple nginx docker container, for example, using the following command (*camilia-nginx* is the name for the deployment):
+    `kubectl run camilia-nginx --image=nginx --port 80`

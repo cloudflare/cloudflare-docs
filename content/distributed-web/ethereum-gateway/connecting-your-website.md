@@ -16,4 +16,3 @@ Gateway](../interacting-with-the-eth-gateway/)
 to your own domain. To do this, you should replace `https://cloudflare-eth.com`
 with your domain, e.g. `myethereumgateway.xyz`, as the target of the HTTP
 query.
-

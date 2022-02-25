@@ -2,7 +2,7 @@
 pcx-content-type: concept
 ---
 
-import COTSDefinition from "../../_partials/_custom-origin-trust-store-definition.md"
+import COTSDefinition from "../../\_partials/\_custom-origin-trust-store-definition.md"
 
 # Custom origin trust store
 
@@ -22,7 +22,7 @@ To manage custom origin trust stores in the dashboard, go to **SSL/TLS** > **Ori
 
 To manage using the API, refer to the [API commands](#api-commands).
 
-## Limitations 
+## Limitations
 
 If your uploaded CA expires and no alternative CAs are valid within the trust store, Cloudflare will not be able to properly authenticate connections to the origin server with [Full (strict) encryption mode](/origin-configuration/ssl-modes#full-strict) enabled.
 

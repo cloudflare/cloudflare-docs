@@ -1,3 +1,6 @@
+---
+---
+
 For a full list of properties, refer to [Create Load Balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer). If you need help with API authentication, refer to [Cloudflare API Quickstart](https://developers.cloudflare.com/api/).
 
 <Aside type="note">

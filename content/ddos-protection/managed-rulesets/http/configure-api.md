@@ -16,7 +16,7 @@ You can define overrides at the ruleset, tag, and rule level for all Managed Rul
 
 When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/managed-rulesets/http/override-parameters).
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`. Additionally, you must set the override `"expression"` field to `"true"`.
 
@@ -26,9 +26,9 @@ The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
-* All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
-* All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
-* The rule with ID `{managed-ruleset-rule-id}` will use the `block` action.
+*   All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
+*   All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
+*   The rule with ID `{managed-ruleset-rule-id}` will use the `block` action.
 
 ```json
 curl -X PUT \

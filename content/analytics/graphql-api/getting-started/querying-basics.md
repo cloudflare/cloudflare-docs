@@ -17,11 +17,11 @@ A field can be another node, in which case the appropriate query would contain n
 
 A typical query against the Cloudflare GraphQL schema is made up of five components:
 
-* `query` - The root node.
-* `viewer` - A nested node indicating to GraphQL that you want to view the results. The `viewer` component represents the initial node of the user running the query.
-* `zones` or `account` - A nested node indicating the domain area or account you want to query against. The `viewer` can access one or more zones or accounts. Each zone or account contains a collection of data sets.
-* **Leaf node** - This specifies the data set you want to query against in a zone or account. `firewallEventsAdaptive` is an example of a leaf node that represents a data set for firewall events in a `zone` node.
-* **Field** - The fields in a query specify the set of metrics that you want to fetch. The `firewallEventsAdaptive` leaf node includes the `clientIP` field. If your leaf node queries requests, possible fields would include response bytes or the time at which requests were received.
+*   `query` - The root node.
+*   `viewer` - A nested node indicating to GraphQL that you want to view the results. The `viewer` component represents the initial node of the user running the query.
+*   `zones` or `account` - A nested node indicating the domain area or account you want to query against. The `viewer` can access one or more zones or accounts. Each zone or account contains a collection of data sets.
+*   **Leaf node** - This specifies the data set you want to query against in a zone or account. `firewallEventsAdaptive` is an example of a leaf node that represents a data set for firewall events in a `zone` node.
+*   **Field** - The fields in a query specify the set of metrics that you want to fetch. The `firewallEventsAdaptive` leaf node includes the `clientIP` field. If your leaf node queries requests, possible fields would include response bytes or the time at which requests were received.
 
 The following example shows the format for a firewall query:
 
@@ -71,12 +71,12 @@ query
 }
 ```
 
-* `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
-* `firewallEventsAdaptive` is the large data set that you want to query against. The set of data returned is defined by the following:
-    * `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than).
-    * `limit: 2` limits the results to 2 (the maximum value is 10,000).
-    * `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
-    * The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.
+*   `zones(filter: { zoneTag: "11111111"})` confines the query to search to one zone.
+*   `firewallEventsAdaptive` is the large data set that you want to query against. The set of data returned is defined by the following:
+    *   `filter:{}` limits the scope to firewall events between two times: `datetime_gt` (greater than) and `datetime_lt` (less than).
+    *   `limit: 2` limits the results to 2 (the maximum value is 10,000).
+    *   `orderBy` sorts the results, first by `datetime_DESC`, the datetime field , in descending order, and then by the rayname, also in descending order.
+    *   The list of fields: `action` (Allow, Block, Challenge), `datetime`, `rayName` (the RayID), `clientRequestHTTPHost` (the host the client requested), and `userAgent`.
 
 You can send the query with an API call or by clicking **Play** in the GraphiQL client. The format of the response is in JSON:
 
@@ -167,12 +167,12 @@ Here are some helpful articles about working with the Cloudflare Analytics API a
 
 ### Cloudflare specific
 
-* [Understanding the Cloudflare Dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
-* [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
+*   [Understanding the Cloudflare Dashboard](https://support.cloudflare.com/hc/en-us/articles/205075117-Understanding-the-Cloudflare-dashboard)
+*   [How to find your zoneTag using the API](https://api.cloudflare.com/#getting-started-resource-ids)
 
 ### General info on the GraphQL framework
 
-* [How to use GraphQL (tutorials)](https://www.howtographql.com/)
-* [Thinking in Graphs](https://graphql.org/learn/thinking-in-graphs/)
-* [What data can you can query in the GraphQL type system (schemas)](https://graphql.org/learn/schema/)
-* [How to pass variables in GraphiQL (Medium article with quick tips)](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)
+*   [How to use GraphQL (tutorials)](https://www.howtographql.com/)
+*   [Thinking in Graphs](https://graphql.org/learn/thinking-in-graphs/)
+*   [What data can you can query in the GraphQL type system (schemas)](https://graphql.org/learn/schema/)
+*   [How to pass variables in GraphiQL (Medium article with quick tips)](https://medium.com/graphql-mastery/graphql-quick-tip-how-to-pass-variables-into-a-mutation-in-graphiql-23ecff4add57)

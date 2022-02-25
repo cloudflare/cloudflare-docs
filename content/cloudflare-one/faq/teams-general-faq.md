@@ -17,14 +17,14 @@ Cloudflare Gateway's DNS resolver introduces security into this flow. Instead of
 
 Access is subjected to the MFA policies set in your identity provider. For example, users attempting to log in to an Access protected app might log in through Okta. Okta would enforce an MFA check before sending the valid authentication confirmation back to Cloudflare Access.
 
-Access does not have an independent or out-of-band MFA feature. 
+Access does not have an independent or out-of-band MFA feature.
 
 ## Which browsers are supported?
 
 These browsers are supported:
-* Internet Explorer® 11
-* Edge® (current release, last release)
-* Firefox® (current release, last release)
-* Chrome® (current release, last release)
-* Safari® (current release, last release)
- 
+
+*   Internet Explorer® 11
+*   Edge® (current release, last release)
+*   Firefox® (current release, last release)
+*   Chrome® (current release, last release)
+*   Safari® (current release, last release)

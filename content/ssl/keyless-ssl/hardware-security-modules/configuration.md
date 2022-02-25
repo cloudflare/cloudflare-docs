@@ -38,9 +38,9 @@ The URI path component contains attributes that identify a resource. The query c
 
 Keyless requires the following three attributes be specified:
 
-* **Module**: use `module-path` to locate the PKCS#11 module library.
-* **Token**:  use `serial`, `slot-id`, or `token` to specify the PKCS#11 token.
-* **Slot**:   use `id` or `object` to specify the PKCS#11 key pair.
+*   **Module**: use `module-path` to locate the PKCS#11 module library.
+*   **Token**:  use `serial`, `slot-id`, or `token` to specify the PKCS#11 token.
+*   **Slot**:   use `id` or `object` to specify the PKCS#11 key pair.
 
 For certain modules, a query attribute `max-sessions` is required in order to prevent opening too many sessions to the module. Certain additional attributes, such as `pin-value`, may be necessary depending on the situation. Refer to the documentation for your PKCS#11 module for more details.
 

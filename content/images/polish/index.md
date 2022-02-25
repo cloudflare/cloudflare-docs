@@ -13,7 +13,6 @@ When an image is fetched from your origin, our systems automatically optimize it
 
 ## Polish compression options
 
-
 With Lossless and Lossy modes, Cloudflare attempts to strip as much metadata as possible. However, Cloudflare cannot guarantee stripping all metadata because other factors, such as caching status, might affect which metadata is finally sent in the response.
 
 <Aside type="warning" header="Warning">
@@ -22,7 +21,7 @@ Polish may not be applied to origin responses that contain a `Vary` header. The 
 
 </Aside>
 
-### Lossless 
+### Lossless
 
 Lossless attempts to strip most metadata, like EXIF data, but does not change the image detail. Effectively, when uncompressed, a lossless image is identical to the original. On average, Lossless compression reduces file size by 21 percent.
 

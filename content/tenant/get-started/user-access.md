@@ -8,8 +8,8 @@ pcx-content-type: get-started
 
 There are two ways to manage how external customers access Cloudflare:
 
-1. By giving them direct Cloudflare dashboard access.
-2. By building an interface that they directly interact with.
+1.  By giving them direct Cloudflare dashboard access.
+2.  By building an interface that they directly interact with.
 
 The first method gives customers control over all aspects of Cloudflare, while the latter allows you to integrate your customer's Cloudflare experience into a dashboard that you control and that they may already be familiar with.
 
@@ -17,12 +17,12 @@ The first method gives customers control over all aspects of Cloudflare, while t
 
 ### Grant access using the dashboard
 
-If you want to give customers access to their individual accounts, it is not different than if you were inviting a teammate to help manage your account. This can be done via dashboard. 
+If you want to give customers access to their individual accounts, it is not different than if you were inviting a teammate to help manage your account. This can be done via dashboard.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-1. Select your account.
-1. Click **Manage Account** > **Members**.
-1. In the **Invite Members** panel, enter the email address requiring account access.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2.  Select your account.
+3.  Click **Manage Account** > **Members**.
+4.  In the **Invite Members** panel, enter the email address requiring account access.
 
 ### Grant access using the API
 
@@ -82,7 +82,7 @@ An example response for a successful creation:
 }
 ```
 
---------------------------------
+***
 
 ## Next step
 

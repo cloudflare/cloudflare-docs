@@ -12,9 +12,9 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 
 **🗺️ This walkthrough covers how to:**
 
-* Build a Zero Trust rule once and set it as the default for your account
-* Use that rule when adding an application to Cloudflare Access
-* Combine that default rule with other rules for additional customization
+*   Build a Zero Trust rule once and set it as the default for your account
+*   Use that rule when adding an application to Cloudflare Access
+*   Combine that default rule with other rules for additional customization
 
 **⏲️ Time to complete:**
 
@@ -42,21 +42,21 @@ The page will tag the default group as `Default`. You can quickly see the rule c
 
 You can now use this group in any new or existing application. To add to a new application, navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
-1. Click **Add an application**.
+1.  Click **Add an application**.
 
     ![Add App](../static/zero-trust-security/default-groups/add-app.png)
 
     Groups can be used in both self-hosted and external SaaS applications. This example uses a self-hosted application.
 
-1. In the next page, give the application a name and set the subdomain or URL where the Access policy will apply.
+2.  In the next page, give the application a name and set the subdomain or URL where the Access policy will apply.
 
     ![Define App](../static/zero-trust-security/default-groups/define-app.png)
 
-1. Lower on the page, you can also choose which identity providers can be used to authenticate for this specific application. In this example, the employees will use Okta while contractors will login with GitHub.
+3.  Lower on the page, you can also choose which identity providers can be used to authenticate for this specific application. In this example, the employees will use Okta while contractors will login with GitHub.
 
     ![ID Options](../static/zero-trust-security/default-groups/id-options.png)
 
-1. On the next page, Access will already have toggled the default rule to apply to the application.
+4.  On the next page, Access will already have toggled the default rule to apply to the application.
 
 If saved at this point, any user attempting to reach `team-jira.widgetcorp.tech` must authenticate with an `@cloudflare.com` address or must be one of the two contractor users set in the default group. If you don't want to use it, you can uncheck the box and add manual rules.
 

@@ -23,38 +23,38 @@ Cloudflare iterates over the CNAME chain starting from the hostname.  The value 
 
 #### If using Cloudflare for a partial setup
 
-1. Add a CNAME record to Cloudflare DNS for your domain:
+1.  Add a CNAME record to Cloudflare DNS for your domain:
 
-  ```txt
-  app.example.com CNAME proxy-fallback.saasprovider.com
-  ```
+```txt
+app.example.com CNAME proxy-fallback.saasprovider.com
+```
 
-1. Add a CNAME record to your authoritative DNS to point to the fallback origin:
+1.  Add a CNAME record to your authoritative DNS to point to the fallback origin:
 
-  ```txt
-  proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
-  ```
+```txt
+proxy-fallback.saasprovider.com CNAME proxy-fallback.saasprovider.com.cdn.cloudflare.net
+```
 
 <Aside type="warning" header="Warning:">To prevent unresolvable CNAME loops, only 10 consecutive CNAMES are followed to find the appropriate Custom Hostname CNAME. The final CNAME must contain <code class="InlineCode">[zone_name].cdn.cloudflare.net</code>.</Aside>
 
 #### If using another DNS provider
 
-1. Log into your authoritative DNS provider.
-1. Add a CNAME record to point to the fallback origin owned by the SaaS provider.
+1.  Log into your authoritative DNS provider.
+2.  Add a CNAME record to point to the fallback origin owned by the SaaS provider.
 
-  ```txt
-  app.example.com CNAME proxy-fallback.saasprovider.com
-  ```
+```txt
+app.example.com CNAME proxy-fallback.saasprovider.com
+```
 
 ## Apex verification
 
 For verification, the account that owns the custom hostname must also own all A and AAAA records for the apex.  To verify ownership, the IP returned for the hostname must reside in the IP prefix allocated to the account.
 
-The few seconds Cloudflare requires to iterate over the CNAME can cause a slight downtime.  This is likely acceptable for CNAME verification of Custom Hostnames for staging or development sites. However, Cloudflare recommends verification of Custom Hostnames via TXT record or HTTP token for live production traffic.  When TXT or HTTP verification completes and the Custom Hostname shows __Active__ in the Cloudflare __SSL/TLS__ app under the __Custom Hostnames__ tab, inform your customer to CNAME traffic to Cloudflare.
+The few seconds Cloudflare requires to iterate over the CNAME can cause a slight downtime.  This is likely acceptable for CNAME verification of Custom Hostnames for staging or development sites. However, Cloudflare recommends verification of Custom Hostnames via TXT record or HTTP token for live production traffic.  When TXT or HTTP verification completes and the Custom Hostname shows **Active** in the Cloudflare **SSL/TLS** app under the **Custom Hostnames** tab, inform your customer to CNAME traffic to Cloudflare.
 
 ## TXT
 
-Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) provides a TXT *ownership_verification* record for your customer to add to their DNS for ownership validation of the Custom Hostname.
+Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) provides a TXT *ownership\_verification* record for your customer to add to their DNS for ownership validation of the Custom Hostname.
 
 ```json
 {
@@ -77,62 +77,64 @@ Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-h
   ]
 }
 ```
+
 <Aside header="Note">
 Once you activate a Custom Hostname, you can remove the TXT record.
 </Aside>
 
 ## HTTP
 
-Each API call to create a Custom Hostname also provides an HTTP *ownership_verification* record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from the zone's origin server allows hostname verification before proxying domain traffic through Cloudflare.
+Each API call to create a Custom Hostname also provides an HTTP *ownership\_verification* record. Compared to TXT verification, HTTP verification doesn’t require your customer to change their DNS. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from the zone's origin server allows hostname verification before proxying domain traffic through Cloudflare.
 
-To get and use an HTTP ownership_verification record:
+To get and use an HTTP ownership\_verification record:
 
-1. Make an API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+1.  Make an API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
 
-1. In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
+2.  In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
 
   <details>
   <summary>Example response (truncated)</summary>
   <div>
 
-  ```json
-  {
-    "result": [
-      {
-        "id": "24c8c68e-bec2-49b6-868e-f06373780630",
-        "hostname": "app.example.com",
-        // ...
-        "ownership_verification_http": {
-          "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
-          "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
-        },
-        "created_at": "2020-03-04T20:06:04.117122Z"
-      }
-    ]
-  }
-  ```
+```json
+{
+  "result": [
+    {
+      "id": "24c8c68e-bec2-49b6-868e-f06373780630",
+      "hostname": "app.example.com",
+      // ...
+      "ownership_verification_http": {
+        "http_url": "http://app.example.com/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630",
+        "http_body": "48b409f6-c886-406b-8cbc-0fbf59983555"
+      },
+      "created_at": "2020-03-04T20:06:04.117122Z"
+    }
+  ]
+}
+```
+
   </div>
   </details>
 
-1. Store the `http_url` and `http_body` on your origin web server.
+1.  Store the `http_url` and `http_body` on your origin web server.
 
   <details>
   <summary>Example configuration</summary>
   <div>
 
-  ```
-  location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
-    return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
-  }
-  ```
+    location "/.well-known/cf-custom-hostname-challenge/24c8c68e-bec2-49b6-868e-f06373780630" {
+      return 200 "48b409f6-c886-406b-8cbc-0fbf59983555\n";
+    }
+
   </div>
   </details>
 
-1. After a few minutes, you will see the hostname validation become **Active** in the UI.
+1.  After a few minutes, you will see the hostname validation become **Active** in the UI.
 
 <Aside>Cloudflare sends GET requests to the <code>http_url</code> using <code>User-Agent: Cloudflare Custom Hostname Verification</code>.</Aside>
 
 ## Error codes
+
 Various hostname verification errors include:
 
 <TableWrap>

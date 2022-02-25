@@ -12,7 +12,7 @@ Main nodes provide deep packet-level information about traffic and attacks for S
 Use the main node to query traffic and attacks at a high level, as seen at the Cloudflare edge:
 
 Product       | Main node
---------------|---------------------------------------------
+\--------------|---------------------------------------------
 Spectrum      | `spectrumNetworkAnalyticsAdaptiveGroups`
 Magic Transit | `magicTransitNetworkAnalyticsAdaptiveGroups`
 
@@ -28,10 +28,10 @@ If you are using both Magic Transit and Spectrum for IP addresses that overlap, 
 
 This node provides information about DDoS attacks detected and mitigated by Cloudflare's main DDoS protection system, the denial of service daemon (dosd). This node includes attack metadata such as:
 
-* `attackStartDateTime`
-* `attackEndDatetime`
-* `attackType`
-* `attackSourceIp`
+*   `attackStartDateTime`
+*   `attackEndDatetime`
+*   `attackType`
+*   `attackSourceIp`
 
 Each row represents an attack event. Each attack has a unique ID.
 
@@ -47,12 +47,12 @@ To adjust mitigation sensitivities and actions, or to define expression filters 
 
 This node complements the information in the `dosdAttackAnalyticsAdaptiveGroups` node. Provides deep packet-level information about DDoS attack packets mitigated by dosd, including fields such as:
 
-* `ipProtocol`
-* `ipv4Checksum`
-* `ipv4Options`
-* `tcpSequenceNumber`
-* `tcpChecksum`
-* `icmpCode`
+*   `ipProtocol`
+*   `ipv4Checksum`
+*   `ipv4Options`
+*   `tcpSequenceNumber`
+*   `tcpChecksum`
+*   `icmpCode`
 
 Each row represents a packet sample. The sample rate is 1/10,000 packets.
 

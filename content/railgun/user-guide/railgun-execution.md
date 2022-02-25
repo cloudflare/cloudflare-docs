@@ -72,8 +72,8 @@ Both programs write a log file containing detailed information about operation. 
 
 ## Running
 
-1. Create a `rg.config` file containing the parameters above.
-2. Start memcached and then run `rg-listener` with the `-config` option set to the path of the `rg.config` file. Errors on start will output to stderr.
+1.  Create a `rg.config` file containing the parameters above.
+2.  Start memcached and then run `rg-listener` with the `-config` option set to the path of the `rg.config` file. Errors on start will output to stderr.
 
 ## Signal Handling
 

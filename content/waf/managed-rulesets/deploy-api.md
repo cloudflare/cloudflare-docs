@@ -17,9 +17,9 @@ You can define overrides to customize the behavior of the rules included in a Ma
 
 **Note:** There are a few requirements when deploying WAF Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
-* The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
+*   The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
 
-* You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
+*   You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 
 To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](https://developers.cloudflare.com/ruleset-engine/managed-rulesets).
 
@@ -31,7 +31,7 @@ For example, consider two account-level rules with different expressions that ex
 
 As another example, consider an account-level rule that executes a Managed Ruleset and a zone-level rule that executes the same Managed Ruleset. If both rules match for the same request, the Managed Ruleset is only executed when the account-level rule is evaluated.
 
- This behavior will change in the future so that you can execute each Managed Ruleset multiple times per request.
+This behavior will change in the future so that you can execute each Managed Ruleset multiple times per request.
 
 </Aside>
 
@@ -39,7 +39,7 @@ As another example, consider an account-level rule that executes a Managed Rules
 
 You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by adding a rule to the phase entry point that executes the custom ruleset.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 Currently, you can only deploy custom rulesets to a phase at the account level.
 

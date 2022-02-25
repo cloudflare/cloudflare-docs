@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Create a serverless, globally distributed REST API with Fauna
 
@@ -17,9 +17,9 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 
 ### Learning goals
 
-* How to store and retrieve data from Fauna in your Workers.
-* How to use Wrangler to store secrets securely.
-* How to use [Worktop][worktop] to add routing to your Workers.
+*   How to store and retrieve data from Fauna in your Workers.
+*   How to use Wrangler to store secrets securely.
+*   How to use [Worktop][worktop] to add routing to your Workers.
 
 Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop and reason about your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
@@ -40,7 +40,7 @@ For this tutorial, all API endpoints are public. However, Fauna also offers mult
 
 ### Creating your database
 
-Open the [Fauna dashboard][fauna-dashboard] in your browser and log into your Fauna account. 
+Open the [Fauna dashboard][fauna-dashboard] in your browser and log into your Fauna account.
 
 <Aside type="note" header="Fauna Account">
 
@@ -49,10 +49,11 @@ If you do not have a Fauna account, you can [sign up][fauna-signup] and deploy t
 </Aside>
 
 In the Fauna dashboard:
-1. Select **Create database**.
-2. Provide a valid name.
-3. Select the **Classic** [Region Group][fauna-region-groups].
-4. Select **Create**.
+
+1.  Select **Create database**.
+2.  Provide a valid name.
+3.  Select the **Classic** [Region Group][fauna-region-groups].
+4.  Select **Create**.
 
 ![Creating your database in Fauna](./media/create-database.png)
 
@@ -90,6 +91,7 @@ $ wrangler generate fauna-workers
 $ cd fauna-workers
 $ wrangler publish
 ```
+
 <Aside type="note" header="Publish before storing secrets">
 
 You must publish a version of your project before storing your server secret in the next step.
@@ -873,29 +875,51 @@ To build your own production-ready applications, refer to the [Fauna Workers qui
 If you would like to speak directly with a Fauna expert about building your applications on Cloudflare Workers with Fauna, [contact][fauna-contact] Fauna.
 
 [fauna]: https://fauna.com/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-blog-consistency-without-clocks]: https://fauna.com/blog/consistency-without-clocks-faunadb-transaction-protocol?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-choosing-authentication-strategy]: https://fauna.com/blog/choosing-an-authentication-strategy-with-fauna?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-collections]: https://docs.fauna.com/fauna/current/learn/introduction/key_concepts#collections?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-contact]: https://www2.fauna.com/cloudflare-contact?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-dashboard]: https://dashboard.fauna.com/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-default-roles]: https://docs.fauna.com/fauna/current/security/keys.html?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-region-groups]: https://docs.fauna.com/fauna/current/api/fql/region_groups#how-to-use-region-groups?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-signup]: https://dashboard.fauna.com/signup?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fauna-udfs]: https://docs.fauna.com/fauna/current/learn/understanding/user_defined_functions?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
 
 [fql]: https://docs.fauna.com/fauna/current/api/fql/?utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-add]: https://docs.fauna.com/fauna/current/api/fql/functions/add?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-delete]: https://docs.fauna.com/fauna/current/api/fql/functions/delete?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-get]: https://docs.fauna.com/fauna/current/api/fql/functions/get?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-let]: https://docs.fauna.com/fauna/current/api/fql/functions/let?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-reference]: https://docs.fauna.com/fauna/current/api/fql/functions/ref?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-select]: https://docs.fauna.com/fauna/current/api/fql/functions/select?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-update]: https://docs.fauna.com/fauna/current/api/fql/functions/update?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
+
 [fql-var]: https://docs.fauna.com/fauna/current/api/fql/functions/var?lang=shell&utm_source=Cloudflare&utm_medium=referral&utm_campaign=Q4_CF_2021
 
 [fauna-js-docs]: https://github.com/fauna/faunadb-js#using-with-cloudflare-workers
+
 [http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
 [worktop]: https://github.com/lukeed/worktop
+
 [wrangler-dev]: https://developers.cloudflare.com/workers/cli-wrangler/commands#dev
+
 [wrangler-generate]: https://developers.cloudflare.com/workers/cli-wrangler/commands#generate
+
 [wrangler-publish]: https://developers.cloudflare.com/workers/cli-wrangler/commands#publish

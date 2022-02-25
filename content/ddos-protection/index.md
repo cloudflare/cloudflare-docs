@@ -15,22 +15,22 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
   <Button type="secondary" href="/managed-rulesets">Managed Rulesets</Button>
 </ButtonGroup>
 
----
+***
 
 ## Availability
 
-* **HTTP DDoS attack protection**. Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) (zones with their traffic routed through the Cloudflare network).
+*   **HTTP DDoS attack protection**. Included in all Cloudflare plans for zones [onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) (zones with their traffic routed through the Cloudflare network).
 
-* **Network-layer (L3/4) DDoS attack protection**. Included in all Cloudflare plans for:
-  
-  * Zones [onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) (zones with their traffic routed through the Cloudflare network)
-  * IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/)
-  * IP Prefixes onboarded to [Magic Transit](https://developers.cloudflare.com/magic-transit/)
-  
-  Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
+*   **Network-layer (L3/4) DDoS attack protection**. Included in all Cloudflare plans for:
 
-* **Advanced TCP Protection Managed Ruleset**. Available in early access to Magic Transit customers.
+    *   Zones [onboarded to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup) (zones with their traffic routed through the Cloudflare network)
+    *   IP applications onboarded to [Spectrum](https://developers.cloudflare.com/spectrum/)
+    *   IP Prefixes onboarded to [Magic Transit](https://developers.cloudflare.com/magic-transit/)
+
+    Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
+
+*   **Advanced TCP Protection Managed Ruleset**. Available in early access to Magic Transit customers.
 
 ## Related resources
 
-* [How to prepare and respond to DDoS attacks](https://support.cloudflare.com/hc/sections/360007347692)
+*   [How to prepare and respond to DDoS attacks](https://support.cloudflare.com/hc/sections/360007347692)

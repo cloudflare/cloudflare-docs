@@ -27,7 +27,7 @@ If you do not specify a configuration file location, `cloudflared` will attempt 
 
 When `cloudflared` receives a HTTP request from the internet it matches the incoming request to an ingress rule from the config file. The ingress rules specify which traffic should go to which local services. See the section on [ingress rules](/connections/connect-apps/configuration/ingress).
 
-You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route _all_ traffic to the given URL.
+You can also run the Tunnel without a configuration file by appending the flags after the `run` command and before the name or UUID. Running your tunnel this way will route *all* traffic to the given URL.
 
 `cloudflared tunnel run --url localhost:3000 <NAME or UUID>`
 
@@ -36,4 +36,5 @@ You can also run the Tunnel without a configuration file by appending the flags 
 Once run, this command will establish an outbound-only connection to Cloudflare’s edge. That connection will not yet serve traffic. Any requests made to the Tunnel directly will fail. To route traffic from a hostname or load balancer pool, follow the [routing instructions](../routing-to-tunnel).
 
 You can also:
-* [Run a tunnel as a service](/connections/connect-apps/run-tunnel/run-as-service)
+
+*   [Run a tunnel as a service](/connections/connect-apps/run-tunnel/run-as-service)

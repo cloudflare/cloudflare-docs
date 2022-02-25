@@ -27,7 +27,7 @@ To add filters, under **Cache Performance**, click  **Add filter**.  Click **App
 
 The **Requests summary** graph depicts how your traffic changes over time, such as in response to a high-traffic event or a recent configuration change. Note that the Requests summary content is based on a 10% sample of requests.
 
-**Served by Cloudflare** indicates content served by Cloudflare that did not require contacting your origin web server. **Served by Origin** indicates traffic served from the origin web server. 
+**Served by Cloudflare** indicates content served by Cloudflare that did not require contacting your origin web server. **Served by Origin** indicates traffic served from the origin web server.
 
 For **Data Transfer**, **Revalidated** requests are considered **Served by Cloudflare**. However, revalidated requests count as **Served by Origin** within the **Requests** view. This analytics behavior reflects that Cloudflare must check the origin web server for revalidated cache requests before returning a result from cache.
 

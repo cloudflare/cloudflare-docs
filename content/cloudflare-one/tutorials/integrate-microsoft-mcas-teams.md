@@ -10,7 +10,6 @@ Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Micro
 
 Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With an MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 
-
 **⏲️ Time to complete:**
 
 20 minutes
@@ -36,22 +35,21 @@ This will return a list of banned hostnames. In this case, Angie's List is the b
 
 As you can see, the banned hostnames are preceded by a `.`. To use this output for a Zero Trust List, we need to do some text processing.
 
-1. Run the curl API call and direct the output to a file, in this case `mcas.txt`:
+1.  Run the curl API call and direct the output to a file, in this case `mcas.txt`:
 
     ```txt
     curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
     ```
 
-1. Remove the leading `.`, for example by running `sed` from the CLI: 
+2.  Remove the leading `.`, for example by running `sed` from the CLI:
 
     ```txt
     sed -i 's/^.//' mcas.txt
     ```
 
-1. This will give you the list of hostnames without leading `.`.
+3.  This will give you the list of hostnames without leading `.`.
 
-1. Replace the file's `.txt` extension with `.csv`. The file can now be imported into Cloudflare Zero Trust as a Hostname list.
-
+4.  Replace the file's `.txt` extension with `.csv`. The file can now be imported into Cloudflare Zero Trust as a Hostname list.
 
 ## Using the API to query allowed applications
 
@@ -63,12 +61,12 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=all
 
 ## Adding a hostname list in the Zero Trust Dashboard
 
-1. In the Zero Trust Dashboard, navigate to **My Team** > **Lists**
-1. Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues. 
-1. Add a name for the list, specify "Hostnames" as the list type, and give it a description.
-1. Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
-1. Click **Create**. You will see the list of hostnames that have been added to the list.
-1. Save the list.
+1.  In the Zero Trust Dashboard, navigate to **My Team** > **Lists**
+2.  Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
+3.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
+4.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
+5.  Click **Create**. You will see the list of hostnames that have been added to the list.
+6.  Save the list.
 
 Your list is now ready to be referenced by Gateway HTTP policies.
 
@@ -76,16 +74,18 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 ## Creating an HTTP policy
 
-1. Navigate to **Gateway** > **Policies** > **HTTP policies**.
-1. Click **Create a policy**.
+1.  Navigate to **Gateway** > **Policies** > **HTTP policies**.
+
+2.  Click **Create a policy**.
 
     ![List of hostnames](../static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
 
-1. Set the expression to:
-    * Selector: `Host`
-    * Operator: `In List`
-    * Value: your newly created list name.
-1. Set the Action to `Block`.
+3.  Set the expression to:
+    *   Selector: `Host`
+    *   Operator: `In List`
+    *   Value: your newly created list name.
+
+4.  Set the Action to `Block`.
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 

@@ -8,7 +8,7 @@ pcx-content-type: concept
 <Aside type="note">
 
 Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](https://developers.cloudflare.com/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](https://developers.cloudflare.com/pages/platform/functions#adding-middleware)  for shared behavior.
-  
+
 </Aside>
 
 ## Attaching headers
@@ -67,7 +67,6 @@ The same URL matching features that [`_redirects`](/platform/redirects) offers i
 When matching, a splat pattern — signified by an asterisk (`*`) — will greedily match all characters. You may only include a single splat in the URL.
 
 The matched value can be referenced within the header value as the `:splat` placeholder.
-
 
 #### Placeholders
 

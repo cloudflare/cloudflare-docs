@@ -2,7 +2,7 @@
 pcx-content-type: how-to
 ---
 
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a React application
 
@@ -32,7 +32,7 @@ $ git push -u origin main
 
 ## Deploying with Cloudflare Pages
 
-Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set u**p builds and deployments** section, provide the following information:
+Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set u**p builds and deployments\*\* section, provide the following information:
 
 <TableLayout>
 
@@ -52,7 +52,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 </Aside>
 
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`. 
+After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your React application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/platform/preview-deployments) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
 ## Learn more

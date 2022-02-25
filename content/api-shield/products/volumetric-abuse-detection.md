@@ -4,8 +4,8 @@ pcx-content-type: concept
 type: overview
 ---
 
-import Availability from "../_partials/_availability.md"
-import BlogBlurb from "../_partials/_blog-post.md"
+import Availability from "../\_partials/\_availability.md"
+import BlogBlurb from "../\_partials/\_blog-post.md"
 
 # Volumetric Abuse Detection
 

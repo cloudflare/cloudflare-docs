@@ -15,15 +15,17 @@ To set up OTP to allow guest-user access, you simply add the guest user's email 
 
 This is the workflow for your guest user:
 
-1. When logging in to your application, they will select **OTP**.
-1. Then, they will enter their email address and click **Send me a code**.
+1.  When logging in to your application, they will select **OTP**.
+
+2.  Then, they will enter their email address and click **Send me a code**.
 
     ![Login page](../static/documentation/identity/otp/otp1.png)
 
     Access will send a one-time PIN they can use to authenticate. This secure PIN expires 10 minutes after the initial request.
 
-1. If their email address matches a policy, they will receive a PIN.
-1. Next, they will paste the PIN in the login page and click **Sign in**.
+3.  If their email address matches a policy, they will receive a PIN.
+
+4.  Next, they will paste the PIN in the login page and click **Sign in**.
 
     ![PIN field](../static/documentation/identity/otp/otp2.png)
 
@@ -37,3 +39,4 @@ Access will then log them in.
     "type": "onetimepin",
     "name": "my example idp"
 }
+```

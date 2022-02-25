@@ -34,8 +34,8 @@ The expression specified in this example filter is:
 
 This filter expression has a `(this or that) and not this` structure designed to:
 
-1. Capture two WordPress paths that may be subject to brute force password attacks, and
-1. Exclude traffic that comes from the IP address `93.184.216.34`.
+1.  Capture two WordPress paths that may be subject to brute force password attacks, and
+2.  Exclude traffic that comes from the IP address `93.184.216.34`.
 
 Imagine that this is an IP for your office. This expression demonstrates a filter that might be used (in a Firewall Rule) to block access to the WordPress login when accessed outside the office network.
 

@@ -17,11 +17,9 @@ Go to the [API Tokens](https://dash.cloudflare.com/profile/api-tokens) page and 
 
 Now, you can authenticate and make requests to the API using your email and key in the request headers. For example, here is an API request to get all deployments in a project.
 
-```
-curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
---header 'X-Auth-Email: {email}' \
---header 'X-Auth-Key: {auth_key}' \
-```
+    curl --location --request GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/pages/projects/{project_name}/deployments' \
+    --header 'X-Auth-Email: {email}' \
+    --header 'X-Auth-Key: {auth_key}' \
 
 Try it with one of your projects by replacing `{account_id}`, `{project_name}`, `{email}`, and `{auth_key}`. You can find your `account_id` in the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers).
 
@@ -181,6 +179,6 @@ async function handleRequest(request) {
 
 ## Related resources
 
-- [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
-- [Workers Getting Started Guide](https://developers.cloudflare.com/workers/get-started/guide)
-- [Workers Cron Triggers](https://developers.cloudflare.com/workers/platform/cron-triggers)
+*   [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
+*   [Workers Getting Started Guide](https://developers.cloudflare.com/workers/get-started/guide)
+*   [Workers Cron Triggers](https://developers.cloudflare.com/workers/platform/cron-triggers)

@@ -7,7 +7,7 @@ pcx-content-type: concept
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers Metrics and zone-based Workers analytics. Workers metrics can help you diagnose issues and understand your Workers workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, go to **Workers** in your zone's Cloudflare dashboard to understand on a per-zone basis how much traffic your Worker is handling, and how many requests your site is getting.
 
----
+***
 
 ## Workers metrics
 
@@ -19,10 +19,10 @@ There are two metrics that can help you understand the health of your Worker in 
 
 The first graph shows historical request counts from the Workers runtime broken down into successful requests, errored requests, and subrequests.
 
-- **Total**: All incoming requests registered by a Worker script. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
-- **Success**: Requests that returned a Success or Client Disconnected invocation status.
-- **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error invocation status — refer to Invocation Statuses below for a breakdown of where your errors are coming from.
-- **Subrequests**: Requests triggered by calling `fetch` from within a Worker script. A subrequest that throws an uncaught error will not be counted.
+*   **Total**: All incoming requests registered by a Worker script. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
+*   **Success**: Requests that returned a Success or Client Disconnected invocation status.
+*   **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error invocation status — refer to Invocation Statuses below for a breakdown of where your errors are coming from.
+*   **Subrequests**: Requests triggered by calling `fetch` from within a Worker script. A subrequest that throws an uncaught error will not be counted.
 
 Request traffic data may display a drop off near the last few minutes displayed in the graph for time ranges less than six hours. This does not reflect a drop in traffic, but a slight delay in aggregation and metrics delivery.
 
@@ -66,7 +66,7 @@ The egress data chart shows the total amount of data sent out of the Worker over
 
 Worker script metrics can be inspected for up to three months in the past in maximum increments of one week. The dashboard includes the charts and information described below.
 
----
+***
 
 ## Zone analytics
 
@@ -78,8 +78,8 @@ Zone data can be scoped by time range within the last 30 days. The dashboard inc
 
 This chart shows subrequests — requests triggered by calling `fetch` from within a Worker script — broken down by cache status.
 
-- **Uncached**: requests answered directly by your origin server or other servers responding to subrequests.
-- **Cached**: requests answered by Cloudflare’s [cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). As Cloudflare caches more of your content, it accelerates content delivery and reduces load on your origin.
+*   **Uncached**: requests answered directly by your origin server or other servers responding to subrequests.
+*   **Cached**: requests answered by Cloudflare’s [cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). As Cloudflare caches more of your content, it accelerates content delivery and reduces load on your origin.
 
 ### Bandwidth
 
@@ -93,7 +93,7 @@ This chart shows historical requests for all scripts on a zone broken down by HT
 
 This chart shows historical data for all scripts on a zone broken down by successful requests, failed requests, and subrequests. These request types are categorized by HTTP status code where `200`-level requests are successful and `400` to `500`-level requests are failed.
 
----
+***
 
 ## GraphQL
 

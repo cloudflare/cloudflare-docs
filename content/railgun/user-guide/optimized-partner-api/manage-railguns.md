@@ -2,6 +2,7 @@
 order: 15
 pcx-content-type: configuration
 ---
+
 # Manage Railguns
 
 Creating and activating a Railgun requires two API calls. First, a Railgun must be initialized and then activated using the `init` and `activate` calls respectively. The activation API call is made by Railgun when the daemon is started and does not need to be made by a user.
@@ -15,10 +16,10 @@ The response body of the `init` API call will contain the activation token (`rtk
 Create a Railgun. If request is successful, a new Railgun is added to a host account and placed in initializing status (`INI`).
 
 ### Form parameters
- 	
-* **host_key** – Host API key
-* **name** – Name of Railgun (optional)
-* **pubname** – Name of Railgun shown to users (optional)
+
+*   **host\_key** – Host API key
+*   **name** – Name of Railgun (optional)
+*   **pubname** – Name of Railgun shown to users (optional)
 
 <details>
 <summary>Example request</summary>
@@ -71,10 +72,10 @@ Content-Type: application/json
 Create a Railgun. If request is successful, a new Railgun is added to a host account and placed in initializing status (`INI`).
 
 ### Query parameters
- 	
-* **host_key** – Host API key
-* **name** – Name of Railgun (optional)
-* **pubname** – Name of Railgun shown to users (optional)
+
+*   **host\_key** – Host API key
+*   **name** – Name of Railgun (optional)
+*   **pubname** – Name of Railgun shown to users (optional)
 
 <details>
 <summary>Example request</summary>
@@ -127,9 +128,9 @@ Content-Type: application/json
 Delete a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Form parameters
- 	
-* **host_key** – Host API key
-* **rtkn** – Railgun token
+
+*   **host\_key** – Host API key
+*   **rtkn** – Railgun token
 
 <details>
 <summary>Example request</summary>
@@ -178,9 +179,9 @@ Content-Type: application/json
 Delete a Railgun. If request is successful, the Railgun with a token matching `rtkn` is removed from the account and set to deleted status (`D`).
 
 ### Query parameters
- 	
-* **host_key** – Host API key
-* **rtkn** – Railgun token
+
+*   **host\_key** – Host API key
+*   **rtkn** – Railgun token
 
 <details>
 <summary>Example request</summary>

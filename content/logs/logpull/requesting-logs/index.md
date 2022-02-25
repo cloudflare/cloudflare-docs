@@ -9,20 +9,20 @@ pcx-content-type: reference
 
 The three endpoints supported by the Logpull API are:
 
-* `GET /logs/received` - returns HTTP request log data based on the parameters specified
-* `GET /logs/received/fields` - returns the list of all available log fields
-* `GET /logs/rayids/<rayid>` - returns HTTP request log data matching `<rayid>`
+*   `GET /logs/received` - returns HTTP request log data based on the parameters specified
+*   `GET /logs/received/fields` - returns the list of all available log fields
+*   `GET /logs/rayids/<rayid>` - returns HTTP request log data matching `<rayid>`
 
 ## Required authentication headers
 
 The following headers are required for all endpoint calls:
 
-* `X-Auth-Email` - the Cloudflare account email address associated with the domain
-* `X-Auth-Key` - the Cloudflare API key
+*   `X-Auth-Email` - the Cloudflare account email address associated with the domain
+*   `X-Auth-Key` - the Cloudflare API key
 
 Alternatively, API tokens with Logs Edit permissions can also be used for authentication:
 
-*  `Authorization: Bearer <API_TOKEN>`
+*   `Authorization: Bearer <API_TOKEN>`
 
 ## Parameters
 
@@ -63,6 +63,7 @@ The maximum time range from **start** to **end** cannot exceed 1 hour. Because *
 `start=2018-05-15T10:00:00Z&end=2018-05-15T10:01:00Z`, then `start=2018-05-15T10:01:00Z&end=2018-05-15T10:02:00Z` and so on.
 
 The overlap will be handled correctly.
+
 </Aside>
 
 ## Example API requests using cURL
@@ -88,6 +89,7 @@ curl -s \
 <Aside type="note" header="Note">
 
 The IATA code returned as part of the **Ray ID** does not need to included in the request. For example, if you have a **RayID** such as `49ddb3e70e665831-DFW`, only include `49ddb3e70e665831` in your request.
+
 </Aside>
 
 ## Fields

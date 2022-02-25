@@ -10,8 +10,8 @@ Define overrides for the Network-layer DDoS Attack Protection Managed Ruleset to
 
 The available parameters are the following:
 
-* Action
-* Sensitivity Level
+*   Action
+*   Sensitivity Level
 
 ## Action
 
@@ -21,17 +21,17 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
 
 <Definitions>
 
-- **Log**
-    - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting network layer DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+*   **Log**
+    *   API value: `"log"`.
+    *   Only available on Enterprise plans. Logs requests that match the expression of a rule detecting network layer DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
-- **Block**
-    - API value: `"block"`.
-    - Blocks IP packets that match the rule expression given the sensitivity levels.
+*   **Block**
+    *   API value: `"block"`.
+    *   Blocks IP packets that match the rule expression given the sensitivity levels.
 
-- **DDoS Dynamic**
-    - API value: _N/A_ (internal rule action that you cannot use in overrides).
-    - Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be _Block_ or an undisclosed mitigation action.
+*   **DDoS Dynamic**
+    *   API value: *N/A* (internal rule action that you cannot use in overrides).
+    *   Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be *Block* or an undisclosed mitigation action.
 
 </Definitions>
 
@@ -44,10 +44,10 @@ Defines how sensitive a rule is. Affects the thresholds used to determine if an 
 The available sensitivity levels are:
 
 UI Value          | API value
-------------------|----------
-_High_            | `"default"`
-_Medium_          | `"medium"`
-_Low_             | `"low"`
-_Essentially Off_ | `"eoff"`
+\------------------|----------
+*High*            | `"default"`
+*Medium*          | `"medium"`
+*Low*             | `"low"`
+*Essentially Off* | `"eoff"`
 
-In most cases, when you select the _Essentially Off_ sensitivity level the rule will not trigger for any of the selected actions, including _Log_. However, if the attack is extremely large, Cloudflare's protection systems will still trigger the rule's mitigation action to protect Cloudflare's network.
+In most cases, when you select the *Essentially Off* sensitivity level the rule will not trigger for any of the selected actions, including *Log*. However, if the attack is extremely large, Cloudflare's protection systems will still trigger the rule's mitigation action to protect Cloudflare's network.

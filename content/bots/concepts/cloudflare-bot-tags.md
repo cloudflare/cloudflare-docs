@@ -18,21 +18,21 @@ Bot tags are only available to Enterprise customers who have purchased Bot Manag
 
 ## Potential values
 
-Once you [enable Bot Tags](#enable-bot-tags), you can see more information about bot requests, such as whether a request came from a verified bot (like Bing) or a category of verified bot (like SearchEngine). 
+Once you [enable Bot Tags](#enable-bot-tags), you can see more information about bot requests, such as whether a request came from a verified bot (like Bing) or a category of verified bot (like SearchEngine).
 
 The following values are **examples** of what may be present in the `BotTags` log field, but not an exhaustive list:
 
-- api
-- google
-- bing
-- googleAds
-- googleMedia
-- googleImageProxy
-- pinterest
-- newRelic
-- baidu
-- apple
-- yandex
+*   api
+*   google
+*   bing
+*   googleAds
+*   googleMedia
+*   googleImageProxy
+*   pinterest
+*   newRelic
+*   baidu
+*   apple
+*   yandex
 
 ## Enable bot tags
 

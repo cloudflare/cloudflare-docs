@@ -43,8 +43,8 @@ Terraform v0.11.6
 
 ## Windows
 
-1. Download the 32 or 64-bit executable from the [Terraform Download](https://www.terraform.io/downloads.html) page.
-2. Unzip and place `terraform.exe` somewhere in your path.
+1.  Download the 32 or 64-bit executable from the [Terraform Download](https://www.terraform.io/downloads.html) page.
+2.  Unzip and place `terraform.exe` somewhere in your path.
 
 ## Other
 

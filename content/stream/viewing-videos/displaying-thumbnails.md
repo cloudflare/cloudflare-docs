@@ -11,9 +11,7 @@ A thumbnail from your video can be generated using a special link where you spec
 
 <Example>
 
-```
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
-```
+    https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
 
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" />
 
@@ -34,14 +32,14 @@ Using the `poster` query parameter in the embed URL, you can set a thumbnail to 
 
 Supported URL attributes are:
 
-- **`time`** (default `0s`, configurable) time from the video e.g. `8m`, `5m2s`
-- **`height`** (default `640`)
-- **`width`** (default `640`)
-- **`fit`** (default `crop`) to clarify what to do when requested height and width doesn't match the original upload, which should be one of:
-  - **`crop`**  cut parts of the video that doesn't fit in the given size
-  - **`clip`** preserve the entire frame and decrease the size of the image within given size
-  - **`scale`** distort the image to fit the given size
-  - **`fill`** preserve the entire frame and fill the rest of the requested size with black background
+*   **`time`** (default `0s`, configurable) time from the video e.g. `8m`, `5m2s`
+*   **`height`** (default `640`)
+*   **`width`** (default `640`)
+*   **`fit`** (default `crop`) to clarify what to do when requested height and width doesn't match the original upload, which should be one of:
+    *   **`crop`**  cut parts of the video that doesn't fit in the given size
+    *   **`clip`** preserve the entire frame and decrease the size of the image within given size
+    *   **`scale`** distort the image to fit the given size
+    *   **`fill`** preserve the entire frame and fill the rest of the requested size with black background
 
 ## Use Case 2: Setting the default thumbnail timestamp using the API
 
@@ -56,9 +54,10 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID
 ```
 
- `thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the  `thumbnailTimestampPct` value to 0.5.
+`thumbnailTimestampPct` is a value between 0.0 (the first frame of the video) and 1.0 (the last frame of the video). This is particularly useful if you have videos of varying lengths. For example, you wanted the thumbnail to be the frame at the half way point of your videos, you can simply set the  `thumbnailTimestampPct` value to 0.5.
 
 The example will yield a request:
+
 ```bash
 curl -X POST \
 -H "Authorization: Bearer $TOKEN" \
@@ -72,20 +71,19 @@ Stream supports animated GIFs as thumbnails. Views using animated thumbnails do 
 
 ### Animated GIF thumbnails
 
-```
-https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
-```
+    https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
+
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" />
 
 Supported URL attributes for animated thumbnails are:
 
-- **`time`** (default `0s`) time from the video e.g. `8m`, `5m2s`
-- **`height`** (default `640`)
-- **`width`** (default `640`)
-- **`fit`** (default `crop`) to clarify what to do when requested height and width doesn't match the original upload, which should be one of:
-  - **`crop`**  cut parts of the video that doesn't fit in the given size
-  - **`clip`** preserve the entire frame and decrease the size of the image within given size
-  - **`scale`** distort the image to fit the given size
-  - **`fill`** preserve the entire frame and fill the rest of the requested size with black background
-- **`duration`** (default `5s`)
-- **`fps`** (default `8`)
+*   **`time`** (default `0s`) time from the video e.g. `8m`, `5m2s`
+*   **`height`** (default `640`)
+*   **`width`** (default `640`)
+*   **`fit`** (default `crop`) to clarify what to do when requested height and width doesn't match the original upload, which should be one of:
+    *   **`crop`**  cut parts of the video that doesn't fit in the given size
+    *   **`clip`** preserve the entire frame and decrease the size of the image within given size
+    *   **`scale`** distort the image to fit the given size
+    *   **`fill`** preserve the entire frame and fill the rest of the requested size with black background
+*   **`duration`** (default `5s`)
+*   **`fps`** (default `8`)

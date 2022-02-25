@@ -19,13 +19,13 @@ Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encry
 
 For non-authoritative or partial domains (domains on a CNAME setup), Universal SSL will be:
 
-- Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
-- Validated:
+*   Provisioned once the DNS record is [proxied through Cloudflare](https://support.cloudflare.com/hc/articles/360020348832#h_836723523521544131668686) (orange-clouded).
+*   Validated:
 
-    - Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/changing-dcv-method) records to your authoritative DNS.
-    - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
+    *   Immediately if you add [Domain Control Validation (DCV)](/edge-certificates/changing-dcv-method) records to your authoritative DNS.
+    *   After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
 
-Unless you cover and validate multiple subdomains with an [advanced certificate](../../advanced-certificate-manager), you will need to proxy and validate each new subdomains as they are added. 
+Unless you cover and validate multiple subdomains with an [advanced certificate](../../advanced-certificate-manager), you will need to proxy and validate each new subdomains as they are added.
 
 ## Disable Universal SSL
 
@@ -39,25 +39,25 @@ To avoid errors with your domain, either [upload a custom certificate](../../cus
 
 If you disable Universal SSL, you may experience errors with the following scenarios:
 
-- **Enabled features**:
+*   **Enabled features**:
 
-    - [HTTP Strict Transport Security (HSTS)](/edge-certificates/additional-options/http-strict-transport-security)
-    - [Always Use HTTPS](/edge-certificates/additional-options/always-use-https)
-    - [Opportunistic Encryption](/edge-certificates/additional-options/opportunistic-encryption)
+    *   [HTTP Strict Transport Security (HSTS)](/edge-certificates/additional-options/http-strict-transport-security)
+    *   [Always Use HTTPS](/edge-certificates/additional-options/always-use-https)
+    *   [Opportunistic Encryption](/edge-certificates/additional-options/opportunistic-encryption)
 
-- **Other setups**:
+*   **Other setups**:
 
-    - [Page rules](https://support.cloudflare.com/hc/articles/218411427) that redirect traffic to HTTPS
-    - HTTP to HTTPS redirects at your origin web server
+    *   [Page rules](https://support.cloudflare.com/hc/articles/218411427) that redirect traffic to HTTPS
+    *   HTTP to HTTPS redirects at your origin web server
 
 ### Disable Universal SSL
 
 To disable Universal SSL:
 
-1. Make sure you have [uploaded a custom certificate](../../custom-certificates) or purchased [Advanced Certificate Manager](../../advanced-certificate-manager) to protect your domain.
-1. Log in to the Cloudflare dashboard and select your account.
-1. Select your domain.
-1. Go to **SSL/TLS** > **Edge Certificates**.
-1. For **Disable Universal SSL**, select **Disable Universal SSL**.
-1. Read the warnings in the **Acknowledgement**.
-1. Select **I Understand** and click **Confirm**.
+1.  Make sure you have [uploaded a custom certificate](../../custom-certificates) or purchased [Advanced Certificate Manager](../../advanced-certificate-manager) to protect your domain.
+2.  Log in to the Cloudflare dashboard and select your account.
+3.  Select your domain.
+4.  Go to **SSL/TLS** > **Edge Certificates**.
+5.  For **Disable Universal SSL**, select **Disable Universal SSL**.
+6.  Read the warnings in the **Acknowledgement**.
+7.  Select **I Understand** and click **Confirm**.

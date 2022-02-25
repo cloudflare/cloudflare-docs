@@ -12,7 +12,7 @@ Client IP Geolocation is currently in closed Beta testing.
 
 </Aside>
 
-Cloudflare designed [Cloudflare WARP](https://developers.cloudflare.com/warp-client/) and [1.1.1.1](https://developers.cloudflare.com/1.1.1.1/) to make Internet browsing more private and secure. These applications encrypt last-mile connections and make it more difficult for others to use client IP addresses in user fingerprinting. 
+Cloudflare designed [Cloudflare WARP](https://developers.cloudflare.com/warp-client/) and [1.1.1.1](https://developers.cloudflare.com/1.1.1.1/) to make Internet browsing more private and secure. These applications encrypt last-mile connections and make it more difficult for others to use client IP addresses in user fingerprinting.
 
 However, unlike legacy VPN applications, we never designed WARP or 1.1.1.1 to hide user locations or allow users to misrepresent their true geographic location. As a web property operator, you can use **Client IP Geolocation** to map Cloudflare egress IP addresses to specific geolocations.
 
@@ -20,7 +20,6 @@ However, unlike legacy VPN applications, we never designed WARP or 1.1.1.1 to hi
   <Button type="primary" href="/get-started">Get started</Button>
   <Button type="secondary" href="/about">Learn more</Button>
 </ButtonGroup>
-
 
 <Aside type="note">
 

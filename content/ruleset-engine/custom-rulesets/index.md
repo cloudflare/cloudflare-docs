@@ -7,7 +7,7 @@ order: 760
 
 # Work with custom rulesets
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 Custom rulesets are currently only supported by the Cloudflare WAF.
 
@@ -15,9 +15,9 @@ Custom rulesets are currently only supported by the Cloudflare WAF.
 
 Use the following workflow to deploy a custom ruleset at the account level:
 
-1. [Create a custom ruleset](/custom-rulesets/create-custom-ruleset).
-1. [Add rules to your custom ruleset](/custom-rulesets/add-rules-ruleset).
-1. [Add a rule to an account-level phase entry point ruleset that executes the custom ruleset](/custom-rulesets/deploy-custom-ruleset).
+1.  [Create a custom ruleset](/custom-rulesets/create-custom-ruleset).
+2.  [Add rules to your custom ruleset](/custom-rulesets/add-rules-ruleset).
+3.  [Add a rule to an account-level phase entry point ruleset that executes the custom ruleset](/custom-rulesets/deploy-custom-ruleset).
 
 <Aside type="warning">
 

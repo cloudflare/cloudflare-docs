@@ -7,10 +7,10 @@ pcx-content-type: reference
 
 Email Routing main page is divided into four sections:
 
-* Custom address rules
-* Catch-all
-* DNS
-* Verified emails
+*   Custom address rules
+*   Catch-all
+*   DNS
+*   Verified emails
 
 ## Custom addresses
 
@@ -20,12 +20,12 @@ Note that if you have more than one destination address linked to the same custo
 
 When creating a rule, you must specify an **Action**:
 
-* *Send to*: Emails will be routed to your **Destination address**. This is the default action.
-* *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
+*   *Send to*: Emails will be routed to your **Destination address**. This is the default action.
+*   *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 <Aside type="note">
 
-All rules are automatically disabled until the destination address is validated by the user. This is to prevent spamming unintended recipients. 
+All rules are automatically disabled until the destination address is validated by the user. This is to prevent spamming unintended recipients.
 
 </Aside>
 
@@ -35,8 +35,8 @@ This feature enables Cloudflare to “catch” every variation of email addresse
 
 You must also specify an **Action** for Catch-all:
 
-* *Send to*: Emails will be routed to your **Destination address**. This is the default action.
-* *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
+*   *Send to*: Emails will be routed to your **Destination address**. This is the default action.
+*   *Drop*: Accepts emails but deletes them without routing to the specified **Destination address**. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 ## Email DNS records
 
@@ -50,6 +50,6 @@ To prevent spam, Email Routing rules do not become active until after the destin
 
 <Aside type="note">
 
-Deleting a destination address automatically disables all routing rules that use that email address as destination. 
+Deleting a destination address automatically disables all routing rules that use that email address as destination.
 
 </Aside>

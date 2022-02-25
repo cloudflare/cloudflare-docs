@@ -1,3 +1,6 @@
+---
+---
+
 The **Activity log** summarizes Firewall events by date to show the action taken and the applied Cloudflare security feature.
 
 ![Example of Activity log events](../images/analytics-activity-log.png)
@@ -16,6 +19,6 @@ For example, if you are diagnosing a bot-related issue, you may want to see the 
 
 For a description of the actions that may appear in the **Activity Log**, refer to [Actions](https://developers.cloudflare.com/ruleset-engine/rules-language/actions).
 
-When the _Connection Close_ action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
+When the *Connection Close* action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
 
-The [_Managed Challenge (Recommended)_](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security products: Firewall Rules, IP Access Rules, User Agent Blocking, Rate Limiting, Custom Rules, and Bot Fight Mode.
+The [*Managed Challenge (Recommended)*](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security products: Firewall Rules, IP Access Rules, User Agent Blocking, Rate Limiting, Custom Rules, and Bot Fight Mode.

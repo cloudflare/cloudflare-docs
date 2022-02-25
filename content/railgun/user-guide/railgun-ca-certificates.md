@@ -17,14 +17,12 @@ This means that when enabling Full SSL (Strict) in the dashboard while Railgun i
 
 Here is an example of the error generated when `validate.cert = 1`, the origin uses an Origin CA leaf, and the Origin CA roots are not in the trust store for Railgun specified by `ca.bundle`:
 
-```
-rg-listener: [2a074d8b36f00000-ATL] www.example.com origin request failed 123.123.123.123:443 to %!!(MISSING)s(MISSING): x509: certificate signed by unknown authority
-```
+    rg-listener: [2a074d8b36f00000-ATL] www.example.com origin request failed 123.123.123.123:443 to %!!(MISSING)s(MISSING): x509: certificate signed by unknown authority
 
 Here are the following options available to avoid these errors:
 
-1. Set `validate.cert = 0` in the `railgun.conf` file.
-1. Add to the trust store specified in the `ca.bundle` parameter in the `railgun.conf`. This can be done by simply adding these root certificates at the end of the file using a text editor.
+1.  Set `validate.cert = 0` in the `railgun.conf` file.
+2.  Add to the trust store specified in the `ca.bundle` parameter in the `railgun.conf`. This can be done by simply adding these root certificates at the end of the file using a text editor.
 
 By default, `railgun.conf` defines the Listener's trust store as (for Debian/Ubuntu): `ca.bundle = /etc/ssl/railgun-ca-certs.crt`.
 

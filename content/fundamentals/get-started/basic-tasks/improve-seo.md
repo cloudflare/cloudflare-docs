@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Improve SEO
 
-The goal of Search Engine Optimization (SEO) is to get your website to rank higher on various search engine providers (Google, Bing, etc.). 
+The goal of Search Engine Optimization (SEO) is to get your website to rank higher on various search engine providers (Google, Bing, etc.).
 
 In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to site speed — and search crawlers.
 
@@ -31,8 +31,8 @@ Since search engines use HTTPS as [a ranking signal](https://webmasters.googlebl
 
 To make sure your domain is accessible over HTTPS:
 
-1. Get an [SSL/TLS certificate](https://developers.cloudflare.com/ssl/get-started) for your domain.
-1. [Redirect visitors](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) to the HTTPS version of your domain.
+1.  Get an [SSL/TLS certificate](https://developers.cloudflare.com/ssl/get-started) for your domain.
+2.  [Redirect visitors](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https) to the HTTPS version of your domain.
 
 ## Troubleshooting
 
@@ -40,8 +40,8 @@ Depending on your domain's security settings, you might accidentally block searc
 
 If you notice SEO issues, make sure your:
 
-- [Firewall rules](https://developers.cloudflare.com/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
-- [Bot protection](https://developers.cloudflare.com/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
+*   [Firewall rules](https://developers.cloudflare.com/firewall/known-issues-and-faq#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
+*   [Bot protection](https://developers.cloudflare.com/bots/concepts/bot#verified-bots) settings are not blocking **Verified Bots**.
 
 If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](https://support.cloudflare.com/hc/articles/200169806).
 
@@ -49,7 +49,7 @@ If you still notice issues with search engine crawlers, refer to our [Troublesho
 
 The following characteristics do not affect your domain's SEO:
 
-- **Changing your nameservers**: Using Cloudflare's nameservers does not affect your domain's SEO.
-- **Server location**: According to Google, [server location](http://www.seroundtable.com/seo-geo-location-server-google-17468.html) is not important for SEO.
-- **Sites sharing IP addresses**: Search engines do not generally penalize domains using shared IP addresses unless several of these sites are malicious or spammy.
-- **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.
+*   **Changing your nameservers**: Using Cloudflare's nameservers does not affect your domain's SEO.
+*   **Server location**: According to Google, [server location](http://www.seroundtable.com/seo-geo-location-server-google-17468.html) is not important for SEO.
+*   **Sites sharing IP addresses**: Search engines do not generally penalize domains using shared IP addresses unless several of these sites are malicious or spammy.
+*   **Cloudflare caching**: When Cloudflare caches your content, it actually speeds up content delivery and only improves SEO. Our caching does not create duplicate content, rewrite URLs, or create additional subdomains.

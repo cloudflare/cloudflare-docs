@@ -22,6 +22,7 @@ Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions.
 
 <TableWrap><table>
+
 <thead>
     <tr>
       <th>Route registry</th>

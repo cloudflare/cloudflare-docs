@@ -27,9 +27,9 @@ Any customer can create PTR records, but only Enterprise customers can create re
 
 The following Cloudflare customers can create reverse zones (for example, `2.0.192.in-addr.arpa`):
 
-- Enterprise customers with an IPv4 address space can add the IPv4 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
-- Enterprise customers with an IPv6 address space need to contact their account team to get the IPv6 reverse zone added to their account.
-- DNS Firewall customers need to contact their account team to add PTR records for the IPs used for their DNS Firewall clusters.
+*   Enterprise customers with an IPv4 address space can add the IPv4 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
+*   Enterprise customers with an IPv6 address space need to contact their account team to get the IPv6 reverse zone added to their account.
+*   DNS Firewall customers need to contact their account team to add PTR records for the IPs used for their DNS Firewall clusters.
 
 If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://whois.icann.org/en).
 
@@ -37,50 +37,55 @@ If your account does not meet these qualifications and you do not own the IP pre
 
 To use PTR records, you need to create a reverse DNS zone and add a PTR record for forward resolution:
 
-1. Within your enterprise account, click **Add site**.
-1. For your site name, use the reverse IP address:
-    - For IPv4 /24 prefixes, the pattern is:
-        - **IP prefix**: `<octet_1>.<octet_2>.<octet_3>.0/24`
-        - **Reverse zone address**: `<octet_3>.<octet_2>.<octet_1>.in-addr.arpa`
-    - For IPv4 /16 prefixes, the pattern is:
-        - **IP prefix**: `<octet_1>.<octet_2>.0.0/16`
-        - **Reverse zone address**: `<octet_2>.<octet_1>.in-addr.arpa`
+1.  Within your enterprise account, click **Add site**.
 
-    <details>
-    <summary>Example</summary>
-    <div>
+2.  For your site name, use the reverse IP address:
 
-    - **IPv4 prefix**: `198.51.100.0/24`
-    - **Reverse zone**: `100.51.198.in-addr.arpa`
+    *   For IPv4 /24 prefixes, the pattern is:
+        *   **IP prefix**: `<octet_1>.<octet_2>.<octet_3>.0/24`
+        *   **Reverse zone address**: `<octet_3>.<octet_2>.<octet_1>.in-addr.arpa`
+    *   For IPv4 /16 prefixes, the pattern is:
+        *   **IP prefix**: `<octet_1>.<octet_2>.0.0/16`
+        *   **Reverse zone address**: `<octet_2>.<octet_1>.in-addr.arpa`
 
-    </div>
-    </details>
+     <details>
+     <summary>Example</summary>
+     <div>
 
-    <Aside type="warning">
-    
+    *   **IPv4 prefix**: `198.51.100.0/24`
+    *   **Reverse zone**: `100.51.198.in-addr.arpa`
+
+     </div>
+     </details>
+
+     <Aside type="warning">
+
     Enterprise customers can only add reverse zones for IPv4 addresses. If you want to add zones for IPv6 addresses, contact your account team.
 
-    </Aside>
+     </Aside>
 
-1. If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
-1. Skip the rest of the onboarding process.
-1. Once finished with onboarding, go to **DNS**.
-1. For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
+3.  If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 
-    <details>
-    <summary>Example</summary>
-    <div>
+4.  Skip the rest of the onboarding process.
+
+5.  Once finished with onboarding, go to **DNS**.
+
+6.  For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
+
+     <details>
+     <summary>Example</summary>
+     <div>
 
     For example, you might have the following configuration:
 
-    - **Reverse zone**: `100.51.198.in-addr.arpa`
-    - **IP address**: `198.51.100.123`
+    *   **Reverse zone**: `100.51.198.in-addr.arpa`
+    *   **IP address**: `198.51.100.123`
 
     The PTR record on the subdomain would be `123`, making the full domain for forward lookup `123.100.51.198.in-addr.arpa`.
 
-    </div>
-    </details>
+     </div>
+     </details>
 
-1. Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
+7.  Add the two Cloudflare nameservers provided for the zone at your Regional Internet Registry (RIR).
 
 After this process, your reverse zone will be activated and you can perform reverse DNS lookups.

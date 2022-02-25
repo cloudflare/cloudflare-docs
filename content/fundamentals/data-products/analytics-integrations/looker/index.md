@@ -17,14 +17,15 @@ This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Buck
 
 Before sending your Cloudflare log data to Looker, make sure that you:
 
-- Have an existing Looker account
-- Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
-- Load your data in a [database supported by Looker](https://looker.com/solutions/other-databases)
+*   Have an existing Looker account
+*   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
+*   Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
+*   Load your data in a [database supported by Looker](https://looker.com/solutions/other-databases)
 
 <Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Looker.
+
 </Aside>
 
 ## Task 1 - Connect your Database to Looker
@@ -37,23 +38,23 @@ Once you load Cloudflare logs into your database, [connect the database to Looke
 
 To create your new LookML project:
 
-1. Log in to your Looker account.
+1.  Log in to your Looker account.
 
-2. In the menu bar, click **Develop** and make sure **Development Mode** is set to _ON_.
+2.  In the menu bar, click **Develop** and make sure **Development Mode** is set to *ON*.
 
-3. Next, also under **Develop**, click **Manage LookML Projects**.
+3.  Next, also under **Develop**, click **Manage LookML Projects**.
 
-4. At the top right of the LookML Projects page, click **New LookML Project**.
+4.  At the top right of the LookML Projects page, click **New LookML Project**.
 
-5. In the **New Project** dialog, enter a project name.
+5.  In the **New Project** dialog, enter a project name.
 
-6. For **Starting Point**, choose _Clone Public Git Repository**.**_
+6.  For **Starting Point**, choose *Clone Public Git Repository\*\*.\*\**
 
-7. Enter the _cloudflare_block_ URL for the public Git repository `git://github.com/llooker/cloudflare_block.git`.
+7.  Enter the *cloudflare\_block* URL for the public Git repository `git://github.com/llooker/cloudflare_block.git`.
 
-8. Click **Create Project**. Looker will pull all of the repository files into a new LookML project.
+8.  Click **Create Project**. Looker will pull all of the repository files into a new LookML project.
 
-9. Next, open the project.
+9.  Next, open the project.
 
 10. Click **Deploy from Remote** to pull all remote changes into your local version of the repository.
     ![Looker manage LookML projects](../../../static/images/looker/screenshots/develop-look-ml-project.png)
@@ -62,10 +63,10 @@ To create your new LookML project:
 
 To update the connection name in the LookML files:
 
-1. In your LookML **cloudflare_looker** model file, replace the **connection** name with yours, for example:
-   `connection: "bigquery_lpr"`.
+1.  In your LookML **cloudflare\_looker** model file, replace the **connection** name with yours, for example:
+    `connection: "bigquery_lpr"`.
 
-2. Check if any table names need to be updated to your database connection names as well. If you decide to rename the filenames for explore, model name, and view, make sure to update all mentions within the other files. Otherwise, you might encounter errors.
+2.  Check if any table names need to be updated to your database connection names as well. If you decide to rename the filenames for explore, model name, and view, make sure to update all mentions within the other files. Otherwise, you might encounter errors.
 
 ## Task 4 - View the Dashboards
 
@@ -111,40 +112,40 @@ All dashboard have a set of filters that you can apply to the entire dashboard, 
 
 ![Looker Cloudflare dashboard filters](../../../static/images/looker/screenshots/cloudflare-looker-dashboard-filters.png)
 
-The default time interval is set to 24 hours. Note that for correct calculations, by default, filters exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
+The default time interval is set to 24 hours. Note that for correct calculations, by default, filters exclude Worker subrequests (**WorkerSubrequest** = *false*) and purge requests (**ClientRequestMethod** is not *PURGE*).
 
 Available Filters:
 
-- Date (EdgeStartTimestamp)
+*   Date (EdgeStartTimestamp)
 
-- Device type
+*   Device type
 
-- Country
+*   Country
 
-- Client IP
+*   Client IP
 
-- Hostname
+*   Hostname
 
-- Request URI
+*   Request URI
 
-- Origin Response Status
+*   Origin Response Status
 
-- Edge response status
+*   Edge response status
 
-- Origin IP
+*   Origin IP
 
-- User Agent
+*   User Agent
 
-- RayID
+*   RayID
 
-- Worker Subrequest
+*   Worker Subrequest
 
-- Client Request Method
+*   Client Request Method
 
 With the following pre-set filter values in the Looker dashboards all workers subrequests and client request method PURGE are excluded from the calculations:
 
-- **WorkerSubrequet** set to value _False_
+*   **WorkerSubrequet** set to value *False*
 
-- **ClientRequestMethod** doesn’t equal to _PURGE_
+*   **ClientRequestMethod** doesn’t equal to *PURGE*
 
 You can always adjust your default filters values according to your needs.

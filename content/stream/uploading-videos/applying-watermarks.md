@@ -31,6 +31,7 @@ tus-upload --chunk-size 5242880 \
 ```
 
 ### Step 3: Done
+
 ![Watermarked Video](./cat.png)
 
 ## Profiles
@@ -42,36 +43,36 @@ To create, list, delete, or get information about the profile, you will need you
 
 <Definitions>
 
-  - `name` <Type>string</Type> <PropMeta>default: _empty string_</PropMeta>
+*   `name` <Type>string</Type> <PropMeta>default: *empty string*</PropMeta>
 
-    - A short description for the profile. For example, "marketing videos."
+    *   A short description for the profile. For example, "marketing videos."
 
-  - `opacity` <Type>float</Type> <PropMeta>default: 1.0</PropMeta>
+*   `opacity` <Type>float</Type> <PropMeta>default: 1.0</PropMeta>
 
-    - Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
+    *   Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
 
-  - `padding` <Type>float</Type> <PropMeta>default: 0.05</PropMeta>
+*   `padding` <Type>float</Type> <PropMeta>default: 0.05</PropMeta>
 
-    - Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
+    *   Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
 
-    - Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
+    *   Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
 
-  - `scale` <Type>float</Type> <PropMeta>default: 0.15 </PropMeta>
+*   `scale` <Type>float</Type> <PropMeta>default: 0.15 </PropMeta>
 
-    - The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
+    *   The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
 
-    - The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
+    *   The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
 
-  - `position` <Type>string (enum)</Type> <PropMeta>default: "upperRight"</PropMeta>
+*   `position` <Type>string (enum)</Type> <PropMeta>default: "upperRight"</PropMeta>
 
-    - Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
+    *   Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
 
-      <Aside>
+        <Aside>
 
         Note that `center` will ignore the `padding` parameter.
-  
-      </Aside>
-  
+
+        </Aside>
+
 </Definitions>
 
 ## Creating a Watermark profile
@@ -79,6 +80,7 @@ To create, list, delete, or get information about the profile, you will need you
 ### Use Case 1: Upload a local image file directly
 
 To upload the image directly, please send a POST request using `multipart/form-data` as the content-type and specify the file under the `file` key. All other fields are optional.
+
 ```bash
 curl -X POST -H "Authorization: Bearer $TOKEN" \
 -F file=@{path-to-image-locally} \
@@ -93,6 +95,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
 ### Use Case 2: Pass a URL to an image
 
 To specify a URL for upload, please send a POST request using `application/json` as the content-type and specify the file location using the `url` key. All other fields are optional.
+
 ```bash
 curl -X POST -H "Authorization: Bearer $TOKEN" \
 -H 'Content-Type: application/json' \
@@ -129,6 +132,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/watermarks
   "messages": []
 }
 ```
+
 `downloadedFrom` will be populated if the profile was created via downloading from URL.
 
 ## Using a watermark profile on a video
@@ -195,6 +199,7 @@ $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
 ### Direct creator uploads
+
 The video uploaded with the generated unique one-time URL will be watermarked with the profile specified.
 
 ```bash
@@ -239,6 +244,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/direct_upload
 `watermark` will be `null` if no watermark was specified.
 
 ## Get a watermark profile
+
 To view a watermark profile that you created:
 
 ```bash
@@ -338,7 +344,7 @@ If the operation was successful, it will return a success response:
 
 ## Limitations
 
-* Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
-* Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
-* Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
-* The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.
+*   Once the watermark profile is created, you cannot change its parameters. If you need to edit your watermark profile, please delete it and create a new one.
+*   Once the watermark is applied to a video, you cannot change the watermark without re-uploading the video to apply a different profile.
+*   Once the watermark is applied to a video, deleting the watermark profile will not also remove the watermark from the video.
+*   The maximum file size is 2MiB (2097152 bytes), and only PNG files are supported.

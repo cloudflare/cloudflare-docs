@@ -4,7 +4,7 @@ order: 4
 pcx-content-type: reference
 ---
 
-import TransformPhaseFields from "../../_partials/transform/_transform-phase-fields.md"
+import TransformPhaseFields from "../../\_partials/transform/\_transform-phase-fields.md"
 
 # Available fields and functions in Bulk Redirect Rules
 

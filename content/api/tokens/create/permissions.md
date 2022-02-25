@@ -10,7 +10,7 @@ pcx-content-type: reference
 
 Below is a list of the available token permissions.
 
-To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) API method. 
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) API method.
 
 </ContentColumn>
 

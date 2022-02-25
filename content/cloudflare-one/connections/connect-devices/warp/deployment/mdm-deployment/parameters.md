@@ -10,7 +10,7 @@ Each client supports the following set of parameters as part of their deployment
 <Aside type='note'>
 
 Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your` mdm.xml` or `com.cloudflare.warp.plist` files).
-  
+
   </Aside>
 
 ## Required for full Cloudflare One features
@@ -25,9 +25,10 @@ For the vast majority of Cloudflare Zero Trust features to work, you need to spe
 
 **Description.** Instructs the client to register device with your organization. Registration requires authentication via an [IDP](/identity/idp-integration) or [Service Auth](/identity/service-auth).
 
-**Value:** Your [team name](/glossary#team-name). 
+**Value:** Your [team name](/glossary#team-name).
 
 ## Required field for DNS only policy enforcemet
+
 This field is only required to enforce DNS policies when deploying the client in DoH-only mode.
 
 ### `gateway_unique_id`
@@ -51,8 +52,9 @@ This field is only required to enforce DNS policies when deploying the client in
 **Description.** 	Allows you to choose the operational mode of the client.
 
 **Value:**
-- `1dot1` Gateway enforcement of DNS policies only through [DoH](/glossary#doh). All other traffic is handled by your devices default mechanisms
-- `warp`  [default value] All traffic sent through [Cloudflare Gateway](/glossary#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, or device posture.
+
+*   `1dot1` Gateway enforcement of DNS policies only through [DoH](/glossary#doh). All other traffic is handled by your devices default mechanisms
+*   `warp`  \[default value] All traffic sent through [Cloudflare Gateway](/glossary#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, or device posture.
 
 New service modes such as Proxy only are not supported as a value and must be configured in the Zero Trust dashboard.
 
@@ -65,8 +67,9 @@ New service modes such as Proxy only are not supported as a value and must be co
 **Description.** 	Controls the visibility of the onboarding screens that ask the user to review the privacy policy during an application's first launch.
 
 **Value:**
-- `false` Screens hidden.
-- `true`  [default value] Screen visible.
+
+*   `false` Screens hidden.
+*   `true`  \[default value] Screen visible.
 
 ### `switch_locked`
 
@@ -77,16 +80,17 @@ New service modes such as Proxy only are not supported as a value and must be co
 **Description.** 	Allows the user to control the connected state of the application (main toggle switch).
 
 **Value:**
-- `false` [default value] The user is able to turn switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `true`  The user is prevented from turning off the switch.
+
+*   `false` \[default value] The user is able to turn switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+*   `true`  The user is prevented from turning off the switch.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of 0. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
 <Aside type='note'> 
 
-  This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
-</Aside>
+This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 
+</Aside>
 
 ### `auto_connect`
 
@@ -97,8 +101,9 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 **Description.** 	If switch has been turned off by user the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value, usually just enough time for a user to login to hotel or airport wifi.
 
 **Value:**
-- `0` Allow the switch to stay in the off position indefinitely until the user turns it back on.
-- `1-1440`  Turn switch back on automatically after the specified number of minutes.
+
+*   `0` Allow the switch to stay in the off position indefinitely until the user turns it back on.
+*   `1-1440`  Turn switch back on automatically after the specified number of minutes.
 
 <Aside> 
   This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
@@ -113,8 +118,9 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 **Description.** 	When the WARP client is deployed via MDM, the in-app Send Feedback button is disabled by default. This parameter allows you to re-enable the button and direct it towards your organization.
 
 **Value:**
-- `https://support.example.com` Use an https:// link to open your companies internal help site.
-- `mailto:yoursupport@example.com`  Use a mailto: link to open your default mail client.
+
+*   `https://support.example.com` Use an https:// link to open your companies internal help site.
+*   `mailto:yoursupport@example.com`  Use a mailto: link to open your default mail client.
 
 ## Authentication with service tokens
 
@@ -124,8 +130,7 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 
 Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/identity/service-auth/service-tokens).
 
-Both a `auth_client_id` and `auth_client_secret` are required when using this authentication method. 
-
+Both a `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 
 ### `auth_client_id`
 
@@ -135,7 +140,7 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 
 **Description.** The automatically generated ID when you created your [Service Token](/identity/service-auth/service-tokens).
 
-**Value:** `Client ID` from your service token. 
+**Value:** `Client ID` from your service token.
 
 ### `auth_client_secret`
 
@@ -145,12 +150,12 @@ Both a `auth_client_id` and `auth_client_secret` are required when using this au
 
 **Description.** The automatically generated secret when you created your [Service Token](/identity/service-auth/service-tokens).
 
-**Value:** `Client Secret` from your service token. 
+**Value:** `Client Secret` from your service token.
 
 ## Frequently Asked Questions
 
-* **What happens if I don't supply a Gateway DoH subdomain?**
-If you specify an `organization` we will automatically use the default location specified in Gateway.
+*   **What happens if I don't supply a Gateway DoH subdomain?**
+    If you specify an `organization` we will automatically use the default location specified in Gateway.
 
-* **How do I obtain logs in the event of an issue with client?**
-The macOS and Windows clients installations each contain an application in their installed folders called warp-diag that can be used to obtain logs.
+*   **How do I obtain logs in the event of an issue with client?**
+    The macOS and Windows clients installations each contain an application in their installed folders called warp-diag that can be used to obtain logs.

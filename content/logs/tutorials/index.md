@@ -9,4 +9,4 @@ Learn to manage and analyze your Cloudflare Logs with the following resources. F
 
 ## Logpull and Logpush
 
-- [Parsing Cloudflare Logs JSON data](/tutorials/parsing-json-log-data/)
+*   [Parsing Cloudflare Logs JSON data](/tutorials/parsing-json-log-data/)

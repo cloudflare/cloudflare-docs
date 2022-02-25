@@ -16,9 +16,9 @@ To invoke a [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting-ro
 https://api.cloudflare.com/client/v4
 ```
 
-For authentication instructions, see [_Getting Started: Requests_](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, see [*Getting Started: Requests*](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, see [_Getting Started: Endpoints_](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, see [*Getting Started: Endpoints*](https://api.cloudflare.com/#getting-started-endpoints).
 
 ## Manage your waiting room
 

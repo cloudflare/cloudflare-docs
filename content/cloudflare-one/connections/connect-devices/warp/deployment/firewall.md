@@ -11,14 +11,15 @@ If your organization uses a firewall or other policies to restrict Internet traf
 
 The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow this IPv4 address:
 
- - IPv4 API Endpoint: `162.159.192.1`
+*   IPv4 API Endpoint: `162.159.192.1`
 
 <Aside type='note'> 
   The Orchestration API endpoint is currently shared with our Consumer WARP client. In early 2022 we will be splitting this out to its own dedicated IP addresses.
 
-  Those IP addresses will be:
-  - IPv4 API Endpoint: `162.159.137.105` and `162.159.138.105`
-  - IPv6 API Endpoint: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
+Those IP addresses will be:
+
+*   IPv4 API Endpoint: `162.159.137.105` and `162.159.138.105`
+*   IPv6 API Endpoint: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
 
 </Aside>
 
@@ -26,14 +27,15 @@ The WARP client talks with our edge via a standard HTTPS connection outside the 
 
 All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
 
- - IPv4 DoH Address: `162.159.36.1`
- - IPv6 DoH Address: `2606:4700:4700::1111`
+*   IPv4 DoH Address: `162.159.36.1`
+*   IPv6 DoH Address: `2606:4700:4700::1111`
 
 ## WARP Ingress IP
 
 These are the IP addresses that the WARP client will connect to. All traffic from your device to the Cloudflare edge will go through these IP addresses.
-- IPv4 Range: `162.159.193.0/24`
-- IPv6 Range: `2606:4700:100::/48`
+
+*   IPv4 Range: `162.159.193.0/24`
+*   IPv6 Range: `2606:4700:100::/48`
 
 ### WARP UDP Ports
 
@@ -42,5 +44,6 @@ WARP utilizes UDP for all of its communications. By default, the UDP Port requir
 ## Creating firewall rules
 
 If your organization does not currently allow Inbound/Outbound communication over the IP addresses and ports described above you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
-- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
-- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+*   Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
+*   macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`

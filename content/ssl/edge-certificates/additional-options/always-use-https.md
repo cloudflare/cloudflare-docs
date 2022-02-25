@@ -3,21 +3,21 @@ order: 14
 pcx-content-type: how-to
 ---
 
-import AlwaysUseHTTPSDefinition from "../../_partials/_always-use-https-definition.md"
+import AlwaysUseHTTPSDefinition from "../../\_partials/\_always-use-https-definition.md"
 
-# Always Use HTTPS 
+# Always Use HTTPS
 
 <AlwaysUseHTTPSDefinition/>
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
 
-## Encrypt all visitor traffic 
+## Encrypt all visitor traffic
 
 To redirect traffic for all subdomains and hosts in your application:
 
-1. Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-1. Navigate to **SSL/TLS** > **Edge Certificates**.
-1. For **Always Use HTTPS**, switch the toggle to **On**.
+1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+3.  For **Always Use HTTPS**, switch the toggle to **On**.
 
 ### Encrypt some visitor traffic
 

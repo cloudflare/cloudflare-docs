@@ -28,7 +28,7 @@ See also curl examples for [UDP wireformat](/encrypted-dns/dns-over-https/make-a
 
 ## Send multiple questions in a query
 
-Sending more than one question when making requests depends on the HTTP version used, as each DNS query maps to exactly one HTTP request. HTTP/2 and HTTP/3 have multiplexing and you can start multiple requests concurrently. HTTP/2 is, in fact, the minimum recommended version of HTTP for use with DNS over HTTPS (DoH). This is not specific to 1.1.1.1, but rather how DoH works. 
+Sending more than one question when making requests depends on the HTTP version used, as each DNS query maps to exactly one HTTP request. HTTP/2 and HTTP/3 have multiplexing and you can start multiple requests concurrently. HTTP/2 is, in fact, the minimum recommended version of HTTP for use with DNS over HTTPS (DoH). This is not specific to 1.1.1.1, but rather how DoH works.
 
 You can learn more about how DoH works in RFC8484, more specifically [the HTTP layer requirements](https://datatracker.ietf.org/doc/html/rfc8484#section-5.2).
 

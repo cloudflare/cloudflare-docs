@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Authorize users with Auth0
 
@@ -17,9 +17,9 @@ In this tutorial, you will integrate [Auth0](https://auth0.com), an identity man
 
 ### What you will learn
 
-- How to authorize and authenticate users in Workers.
-- How to persist authorization credentials inside of Workers KV.
-- How to use Auth0 user information inside of your Workers application.
+*   How to authorize and authenticate users in Workers.
+*   How to persist authorization credentials inside of Workers KV.
+*   How to use Auth0 user information inside of your Workers application.
 
 ## Set up Auth0
 
@@ -48,10 +48,10 @@ $ wrangler generate --site my-auth-example
 
 Before implementing an authorizer in your application, which will verify that a user is logged in, it is useful to understand how Auth0’s login flow works. The condensed version of this flow is below (review a [longer writeup in Auth0’s documentation](https://auth0.com/docs/flows/concepts/auth-code)):
 
-1. A user makes a request to the Workers application.
-2. If the user is not logged in, they are redirected to the login page.
-3. After logging in, the user is redirected back to the Workers application with a login `code` query parameter.
-4. The Workers application takes the login `code` parameter and exchanges it with Auth0 for authorization tokens.
+1.  A user makes a request to the Workers application.
+2.  If the user is not logged in, they are redirected to the login page.
+3.  After logging in, the user is redirected back to the Workers application with a login `code` query parameter.
+4.  The Workers application takes the login `code` parameter and exchanges it with Auth0 for authorization tokens.
 
 In a traditional application that is attached to a database, the authorization tokens Auth0 returns are often persisted in a database. This will allow users to return to the application and continue to use it without the need for re-authorization. With a Workers application, you have access to a quick and easy-to-use data storage solution that lives right next to your serverless application: Workers KV. Using Workers KV, you will store authorization tokens and tie them to a user using an authorization cookie.
 
@@ -357,10 +357,10 @@ const persistAuth = async exchange => {
 
 Inside of `validateToken` examine fields inside of the decoded token, ensuring that:
 
-- The `iss` field matches the `AUTH0_DOMAIN` secret
-- The `aud` field matches the `AUTH0_CLIENT_ID` secret
-- The `exp` field is after the current time
-- The `iat` field was issued in the last day
+*   The `iss` field matches the `AUTH0_DOMAIN` secret
+*   The `aud` field matches the `AUTH0_CLIENT_ID` secret
+*   The `exp` field is after the current time
+*   The `iat` field was issued in the last day
 
 The code for this will use a `try/catch` block, throwing an error and returning false if any of the above criteria are not true:
 
@@ -625,7 +625,7 @@ export const authorize = async event => {
 }
 ```
 
-By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content. 
+By implementing this function, you have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to see your Workers Site content.
 
 To configure your deployment and publish the application, you can go to the [**Publish** section](/tutorials/authorize-users-with-auth0#publish), but in the next few portions of the tutorial you will focus on some of the more interesting aspects of this project; for example, accessing user information within your application, edge state hydration, logging out users, and making the application more production-ready with some improvements and customizations.
 
@@ -772,7 +772,7 @@ While this tutorial assumes that you are deploying a Workers Sites application, 
 
 The next section of this tutorial, [**Publish**](/tutorials/authorize-users-with-auth0#publish), assumes deployment to Workers’ built-in deployment target, `*.workers.dev`, but if you want to handle deploying to an existing domain, known commonly as a zone, you will need to take the following steps:
 
-1. Update the `handleEvent` function to make a request to your origin.
+1.  Update the `handleEvent` function to make a request to your origin.
 
 While you are currently using Workers Sites, update `workers-site/index.js` and replace the Workers Site code with a request to your origin:
 
@@ -799,7 +799,7 @@ async function handleEvent(event) {
 
 Given an example configuration and deployment of `https://my-auth.signalnerve.com`, your Workers script will continue to authorize users, but when it comes time to return a response back to the user, the code will now make a request to `my-auth.signalnerve.com`, and, if you have set up the edge state hydration concept explored [earlier in this tutorial](/tutorials/authorize-users-with-auth0#using-user-data-in-our-application), you will still receive the same user information in your HTML response as originally configured.
 
-2. Configure your `wrangler.toml` file to associate your Workers script with a zone.
+2.  Configure your `wrangler.toml` file to associate your Workers script with a zone.
 
 Associating a configured zone from your Cloudflare account is covered in the section [Configure for deploying to a registered domain](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) section of [Get started](/get-started/guide). In the [**Publish** section](/tutorials/authorize-users-with-auth0#publish) of this guide, you will learn how to configure the file `wrangler.toml` to deploy to `*.workers.dev` — make sure you review the [Get started guide](/get-started/guide#optional-configure-for-deploying-to-a-registered-domain) linked above so you can understand how these approaches differ.
 
@@ -877,10 +877,10 @@ Below is the complete list of secrets that the Workers script will look for when
 
 | `wrangler secret` key | Value                                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| AUTH0_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). It must include the scheme `https://` and should be a valid URL |
-| AUTH0_CLIENT_ID       | Your Auth0 client ID                                                                                                         |
-| AUTH0_CLIENT_SECRET   | Your Auth0 client secret                                                                                                     |
-| AUTH0_CALLBACK_URL    | The callback url for your application (refer to [Setting the callback URL](/tutorials/authorize-users-with-auth0#setting-the-callback-url) below)                                                 |
+| AUTH0\_DOMAIN          | Your Auth0 domain (for example, `https://myapp.auth0.com`). It must include the scheme `https://` and should be a valid URL |
+| AUTH0\_CLIENT\_ID       | Your Auth0 client ID                                                                                                         |
+| AUTH0\_CLIENT\_SECRET   | Your Auth0 client secret                                                                                                     |
+| AUTH0\_CALLBACK\_URL    | The callback url for your application (refer to [Setting the callback URL](/tutorials/authorize-users-with-auth0#setting-the-callback-url) below)                                                 |
 | SALT                  | A secret string used to encrypt user `sub` values (refer to [Setting the salt](/tutorials/authorize-users-with-auth0#setting-the-salt) below)                                             |
 
 For each key, find the corresponding value in your Auth0 application settings page.
@@ -961,7 +961,7 @@ $ wrangler secret put SALT
 
 #### Allowed origin/callback URLs
 
-Note that Auth0 has security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application configuration. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for [wrangler dev][/cli-wrangler/commands#dev] usage):
+Note that Auth0 has security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application configuration. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for \[wrangler dev]\[/cli-wrangler/commands#dev] usage):
 
 | URL                                                  | Description          |
 | ---------------------------------------------------- | -------------------- |
@@ -983,10 +983,10 @@ $ wrangler publish
 
 Wrangler will compile your code, upload the associated Workers Sites folder (`public`, by default), and begin handling requests sent to your `*.workers.dev` application, or to your zone. To confirm everything works as expected, you should:
 
-1. Visit your application (for example, [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
-2. Log in with an email/password or the social identity provider of your choice, if enabled.
-3. Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
-4. If you see your site, you have successfully authorized users to your Workers application, using Auth0.
+1.  Visit your application (for example, [my-auth-test.signalnerve.workers.dev](https://my-auth-test.signalnerve.workers.dev)), which should redirect you to Auth0’s login page.
+2.  Log in with an email/password or the social identity provider of your choice, if enabled.
+3.  Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
+4.  If you see your site, you have successfully authorized users to your Workers application, using Auth0.
 
 ![Example GIF](./media/example-vid.gif)
 
@@ -998,6 +998,6 @@ By completing this tutorial, you have successfully built an application that aut
 
 You can build a lot more with Workers, such as serving static and JAMstack-style applications using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
 
-- [Build a Slack bot](/tutorials/build-a-slackbot)
-- [Deploy a React app using Workers Sites](/tutorials/deploy-a-react-app-with-create-react-app)
-- [Localize a website using HTMLRewriter](/tutorials/localize-a-website)
+*   [Build a Slack bot](/tutorials/build-a-slackbot)
+*   [Deploy a React app using Workers Sites](/tutorials/deploy-a-react-app-with-create-react-app)
+*   [Localize a website using HTMLRewriter](/tutorials/localize-a-website)

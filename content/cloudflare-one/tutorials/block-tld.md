@@ -11,14 +11,15 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 **🗺️ This tutorial covers how to:**
 
-* Build a policy in Gateway to block entire TLDs
+*   Build a policy in Gateway to block entire TLDs
 
 **⏲️Time to complete:**
 
 5 minutes
 
 ## Before you start
-1. [Add Gateway to your account](/setup)
+
+1.  [Add Gateway to your account](/setup)
 
 ## Build a policy to block by TLD
 
@@ -30,9 +31,7 @@ Click **Create a policy**. In the policy builder, name the policy and optionally
 
 Choose `Domain` in the Selector, `matches regex` in the Operator, and input the following value:
 
-```
-[.]fail
-```
+    [.]fail
 
 Replacing `fail` with the TLD you intend to block.
 

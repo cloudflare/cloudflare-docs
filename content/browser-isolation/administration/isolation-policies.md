@@ -8,13 +8,14 @@ order: 2
 Browser Isolation is enabled by configuring a HTTP policy with an Isolate action within Cloudflare Gateway.
 
 ## Before you start
+
 The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](https://developers.cloudflare.com/gateway/connecting-to-gateway/install-cloudflare-cert).
 
 ## Manage HTTP policies
 
-1. On the Teams dashboard, navigate to the Policies tab.
-2. Select the **HTTP** tab.
-3. Select **Add a Rule**.
+1.  On the Teams dashboard, navigate to the Policies tab.
+2.  Select the **HTTP** tab.
+3.  Select **Add a Rule**.
 
 Administrators are able to create up to 50 rules in their HTTP policy.
 
@@ -39,6 +40,7 @@ When a HTTP policy applies the Isolate action the user's web browser is transpar
 | Host | In | `example.com`, `example.net` | Isolate
 
 #### Isolating entire domain names
+
 If you would like to isolate an entire domain name, use a regular expression match such as:
 
 | Selector | Operator | Value | Action |
@@ -52,9 +54,11 @@ If you would like to isolate an entire domain name, use a regular expression mat
 | Host | In | `example.com` | Do Not Isolate
 
 ### API traffic
+
 Isolation policies are applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
 
 ## Enable L7 filtering
+
 In the settings (Gateway → Policies → Settings) page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
 
 <Aside>

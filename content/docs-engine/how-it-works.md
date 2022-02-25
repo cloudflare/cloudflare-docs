@@ -7,23 +7,23 @@ pcx-content-type: overview
 
 In short, docs sites built with the Cloudflare Docs Engine are [Gatsby](https://www.gatsbyjs.com) sites with a bunch of [custom MDX components](/reference/markdown) and a shell UI you that’s consistent across products, all deployed as a [Workers Sites project](https://workers.cloudflare.com/sites) via the [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action).
 
---------------------------------
+***
 
 ## Requirements
 
 The instructions below assume you already have a paid [Cloudflare Workers](https://workers.cloudflare.com) account so you can deploy your docs site using [Workers Sites](https://workers.cloudflare.com/sites). You can theoretically use any static site deploy tool; however, only Workers Sites has been tested at this time.
 
---------------------------------
+***
 
 ## Minimal setup
 
 Each docs site built with the engine needs the following structure:
 
-1. A `package.json` with the engine dependency and some custom scripts configured.
-2. A `docs-config.js` config which exports a JavaScript object.
-3. A `wrangler.toml` with the correct `[site]` configured.
-4. A `.gitignore` which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
-5. Content in `src/content/` — A single `index.md` will do.
+1.  A `package.json` with the engine dependency and some custom scripts configured.
+2.  A `docs-config.js` config which exports a JavaScript object.
+3.  A `wrangler.toml` with the correct `[site]` configured.
+4.  A `.gitignore` which ignores at least `.docs`, `dist/worker.js`, and `node_modules`.
+5.  Content in `src/content/` — A single `index.md` will do.
 
 For a repo holding a single docs site, everything but the content should be in the root.
 
@@ -130,29 +130,29 @@ dist/worker.js
 
 ### 5. Content
 
-Last but not least, _content_.
+Last but not least, *content*.
 
 Inside of `src/content/` you must have at least an `index.md`. However outside of that, you can structure it more or less however you want.
 
 Some helpful things to know:
 
-- The sidebar navigation tree and page paths are automatically generated from the file structure and naming in `src/content/`.
+*   The sidebar navigation tree and page paths are automatically generated from the file structure and naming in `src/content/`.
 
-  - Page title is automatically pulled from the first `h1` (`#` in Markdown) in the document if no front matter `title` is specified.
+    *   Page title is automatically pulled from the first `h1` (`#` in Markdown) in the document if no front matter `title` is specified.
 
-  - `index.md` files inside sub-folders of `src/content/` will take the pathname of their parent directory.
+    *   `index.md` files inside sub-folders of `src/content/` will take the pathname of their parent directory.
 
-- You can include custom MDX components in `src/content/` as `.js` files right alongside your `.md` files. Import them relatively.
+*   You can include custom MDX components in `src/content/` as `.js` files right alongside your `.md` files. Import them relatively.
 
-- You can also include media the same way. For pages which reference several image files, [a common pattern](https://github.com/cloudflare/workers-docs-engine/tree/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-qr-code-generator) is group them in a `media/` directory which is a sibling of the `index.md` file. So `src/content/some-page/index.md` and `src/content/some-page/media/*.png`.
+*   You can also include media the same way. For pages which reference several image files, [a common pattern](https://github.com/cloudflare/workers-docs-engine/tree/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-qr-code-generator) is group them in a `media/` directory which is a sibling of the `index.md` file. So `src/content/some-page/index.md` and `src/content/some-page/media/*.png`.
 
-- If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
+*   If you want to create reusable “partials” that don’t generate pages, start the file names with `_`. See [an example in the Workers docs](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/_partials/_tutorials-before-you-start.md). Then you can [import them](https://github.com/cloudflare/workers-docs-engine/blob/9cd282f3384bb07a98498816954408001149f348/src/content/tutorials/build-a-slackbot/index.md#L6-L10) as you would any other MDX component.
 
 Learn more about the [content framework](/contributing/content/content-framework) used by new Cloudflare docs sites and how to use the [built-in MDX components](/reference/markdown).
 
---------------------------------
+***
 
 ## See also
 
-- [Markdown reference](/reference/markdown)
-- [Configuration reference](/reference/configuration)
+*   [Markdown reference](/reference/markdown)
+*   [Configuration reference](/reference/configuration)

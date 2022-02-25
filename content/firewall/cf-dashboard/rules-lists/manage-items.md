@@ -7,9 +7,9 @@ order: 360
 
 ## View items in an IP List
 
-1. [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
-1. To view items in a list, click the **Edit** link associated with the list you want to view.
+2.  To view items in a list, click the **Edit** link associated with the list you want to view.
 
 The list of items displays sorted by IP address, ascending:
 
@@ -25,9 +25,9 @@ You cannot download a list in CSV format from the dashboard. If you need to down
 
 IP Lists support:
 
-* Individual IPv4 addresses
-* IPv4 CIDR ranges with a prefix from `/8` to `/32`
-* IPv6 CIDR ranges with a prefix from `/4` to `/64`
+*   Individual IPv4 addresses
+*   IPv4 CIDR ranges with a prefix from `/8` to `/32`
+*   IPv6 CIDR ranges with a prefix from `/4` to `/64`
 
 You can combine individual addresses and CIDR ranges in the same list.
 
@@ -37,8 +37,8 @@ To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the la
 
 For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
 
-* `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
-* `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+*   `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
+*   `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
 </Aside>
 
@@ -46,33 +46,33 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1. [Access the Lists interface](/cf-dashboard/rules-lists) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/cf-dashboard/rules-lists) available at **Configurations** > **Lists**.
 
-1. Click the **Edit** button associated with the list that you want to edit.
+2.  Click the **Edit** button associated with the list that you want to edit.
 
-  The list of IP items displays.
+The list of IP items displays.
 
-1. Click **Add items**.
+1.  Click **Add items**.
 
-  The **Add items to list** page displays:
+The **Add items to list** page displays:
 
-  ![Add items to list page](../../images/lists-add-items-to-list-page.png)
+![Add items to list page](../../images/lists-add-items-to-list-page.png)
 
-1. To [add items to the list manually](#add-items-to-a-list-manually), use the text inputs in the Lists interface.
+1.  To [add items to the list manually](#add-items-to-a-list-manually), use the text inputs in the Lists interface.
 
-1. To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
+2.  To [add items in CSV format](/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
 
 ### Add items to a list manually
 
-1. In the **Add items to list** page, add an IP Address and an optional description in the text inputs.
+1.  In the **Add items to list** page, add an IP Address and an optional description in the text inputs.
 
-  ![Enter list items manually](../../images/lists-add-items-manually.png)
+![Enter list items manually](../../images/lists-add-items-manually.png)
 
-1. As you enter information into a text input, a new row of inputs displays below the current one.
+1.  As you enter information into a text input, a new row of inputs displays below the current one.
 
-  To delete any of the IP addresses that you have entered, click **X**.
+To delete any of the IP addresses that you have entered, click **X**.
 
-1. Click **Add to list** to add the new items.
+1.  Click **Add to list** to add the new items.
 
 The updated list displays.
 
@@ -99,22 +99,22 @@ IP-address
 
 To add items to an IP List by uploading a CSV file:
 
-1. In the **Add items to list** page, click **Upload CSV**.
+1.  In the **Add items to list** page, click **Upload CSV**.
 
-  Your operating system's file browser dialog displays.
+Your operating system's file browser dialog displays.
 
-1. Browse to the location of the CSV file, select it, and click **Open**.
+1.  Browse to the location of the CSV file, select it, and click **Open**.
 
-  The **Add items to list** page updates to include the items from the CSV file:
+The **Add items to list** page updates to include the items from the CSV file:
 
-  ![CSV items shown in Add items page](../../images/lists-add-items-csv.png)
+![CSV items shown in Add items page](../../images/lists-add-items-csv.png)
 
-1. You can continue to edit the items in the list before adding them:
+1.  You can continue to edit the items in the list before adding them:
 
-  - To delete any of the IP addresses that you have entered, click **X**.
-  - To add extra IP addresses manually, enter the information in the text inputs.
+*   To delete any of the IP addresses that you have entered, click **X**.
+*   To add extra IP addresses manually, enter the information in the text inputs.
 
-1. Click **Add to list** to add the new items to your list.
+1.  Click **Add to list** to add the new items to your list.
 
 The updated list displays.
 
@@ -122,23 +122,23 @@ The updated list displays.
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
-- IP addresses that were already in the list are updated with the description from the CSV file.
-- IP addresses in the CSV file that were not already in the list are added to the list.
+*   IP addresses that were already in the list are updated with the description from the CSV file.
+*   IP addresses in the CSV file that were not already in the list are added to the list.
 
 </Aside>
 
 ## Delete items from a list
 
-1. [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1.  [Access the Lists interface](/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
 
-1. Click the **Edit** link associated with list from which you want to delete.
+2.  Click the **Edit** link associated with list from which you want to delete.
 
-1. Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
+3.  Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
 
-  ![Delete items from list](../../images/lists-delete-items.png)
+![Delete items from list](../../images/lists-delete-items.png)
 
-1. Click **Remove** to delete the selected items from the list.
+1.  Click **Remove** to delete the selected items from the list.
 
-1. Click **Remove** in the confirmation dialog.
+2.  Click **Remove** in the confirmation dialog.
 
 The updated list displays.

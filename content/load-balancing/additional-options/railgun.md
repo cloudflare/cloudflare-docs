@@ -28,6 +28,6 @@ Though Railgun's optimal placing is in front of your load balancer, you can also
 
 Observe the following guidelines to avoid interruptions with site traffic:
 
-1. Use the `railgun-nat.conf` configuration file to set the internal addresses of the hosts Railgun will be optimizing (`localhost:8080`, for example). This is important to avoid looping the request outbound to the internet and back to the load balancer only to be forwarded to the origin.
-1. Ensure no firewall rules are in place that will interfere with traffic between the listener and the origin server.
-1. Ensure port 2408 is open and passed through the load balancer so that it does not interfere with the TLS connection between the listener and sender.
+1.  Use the `railgun-nat.conf` configuration file to set the internal addresses of the hosts Railgun will be optimizing (`localhost:8080`, for example). This is important to avoid looping the request outbound to the internet and back to the load balancer only to be forwarded to the origin.
+2.  Ensure no firewall rules are in place that will interfere with traffic between the listener and the origin server.
+3.  Ensure port 2408 is open and passed through the load balancer so that it does not interfere with the TLS connection between the listener and sender.

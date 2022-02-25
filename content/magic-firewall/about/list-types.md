@@ -12,9 +12,9 @@ Cloudflare sees approximately 28 million HTTP requests each second and blocks 76
 
 The threat intelligence feed categories include Malware, Anonymizer, and Botnet Command-and-Control centers. Malware and Botnet lists cover properties on the Internet distributing malware and known command-and-control centers. Anonymizers contain a list of known forward proxies that allow attackers to hide their IP addresses.
 
-- **Anonymizer** - Targets sites that allow users to surf the Internet anonymously.
-- **Botnet** — Targets sites that are queried by compromised devices to exfiltrate information or potentially infect other devices in a network.
-- **Malware** — Targets sites hosting malicious content and other compromised websites.
+*   **Anonymizer** - Targets sites that allow users to surf the Internet anonymously.
+*   **Botnet** — Targets sites that are queried by compromised devices to exfiltrate information or potentially infect other devices in a network.
+*   **Malware** — Targets sites hosting malicious content and other compromised websites.
 
 ## IP Lists
 

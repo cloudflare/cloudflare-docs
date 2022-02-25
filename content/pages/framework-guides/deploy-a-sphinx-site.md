@@ -1,7 +1,8 @@
 ---
 pcx-content-type: how-to
 ---
-import TutorialsBeforeYouStart from "../_partials/_tutorials-before-you-start.md" 
+
+import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.md"
 
 # Deploy a Sphinx site
 
@@ -11,18 +12,17 @@ In this guide, you will create a new Sphinx project and deploy it using Cloudfla
 
 ## Prerequisites
 
-  * Python 3 - Sphinx is based on Python, therefore you must have Python installed
+*   Python 3 - Sphinx is based on Python, therefore you must have Python installed
 
-  * [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages
+*   [pip](https://pypi.org/project/pip/) - The PyPA recommended tool for installing Python packages
 
-  * [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
+*   [pipenv](https://pipenv.pypa.io/en/latest/) - automatically creates and manages a virtualenv for your projects
 
 <Aside type="note">
 
 If you are already running a version of Python 3.7, ensure that Python version 3.7 is also installed on your computer before you begin this guide. Python 3.7 is the latest version supported by Cloudflare Pages.
- 
-</Aside>
 
+</Aside>
 
 The latest version of Python 3.7 is 3.7.11:
 
@@ -32,10 +32,10 @@ The latest version of Python 3.7 is 3.7.11:
 
 Refer to the official Python documentation for installation guidance:
 
-- [Windows](https://www.python.org/downloads/windows/)
-- [Linux/UNIX](https://www.python.org/downloads/source/)
-- [Mac OS X](https://www.python.org/downloads/mac-osx/)
-- [Other](https://www.python.org/download/other/)
+*   [Windows](https://www.python.org/downloads/windows/)
+*   [Linux/UNIX](https://www.python.org/downloads/source/)
+*   [Mac OS X](https://www.python.org/downloads/mac-osx/)
+*   [Other](https://www.python.org/download/other/)
 
 ### Installing Pipenv
 
@@ -64,6 +64,7 @@ From your terminal, run the following commands to create a new directory and nav
 $ mkdir my-wonderful-new-sphinx-project
 $ cd my-wonderful-new-sphinx-project
 ```
+
 ### Pipenv with Python 3.7
 
 Pipenv allows you to specify which version of Python to associate with a virtual environment. For the purpose of this guide, the virtual environment for your Sphinx project must use Python 3.7.
@@ -73,6 +74,7 @@ Use the following command:
 ```shell
 ~my-wonderful-new-sphinx-project$ pipenv --python 3.7
 ```
+
 You should see the following output:
 
 ```shell
@@ -96,8 +98,6 @@ List the contents of the directory:
 ~my-wonderful-new-sphinx-project$ ls
 Pipfile
 ```
-
-
 
 ### Installing Sphinx
 
@@ -179,7 +179,6 @@ my-wonderful-new-sphinx-project
 
 You now have everything you need to start deploying your site to Cloudflare Pages. For learning how to create documentation with Sphinx, refer to the official [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/quickstart.html).
 
-
 <TutorialsBeforeYouStart/>
 
 ## Creating a GitHub repository
@@ -233,10 +232,9 @@ For example:
 
 | Variable name         | Value          |
 | --------------------  | -------------- |
-| PYTHON_VERSION        | 3.7            |
+| PYTHON\_VERSION        | 3.7            |
 
 </TableLayout>
-
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `Pipenv`, your project dependencies, and building your site, before deployment.
 

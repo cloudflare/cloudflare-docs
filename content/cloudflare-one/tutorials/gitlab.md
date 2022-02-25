@@ -4,22 +4,23 @@ category: 🔐 Zero Trust
 difficulty: Advanced
 pcx-content-type: tutorial
 ---
+
 # Zero Trust GitLab SSH & HTTP
 
 You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Cloudflare Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
 
 **🗺️ This walkthrough covers how to:**
 
-* Deploy an instance of GitLab
-* Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
-* Build policies with Cloudflare Access to control who can reach GitLab
-* Connect over HTTP and SSH through Cloudflare
+*   Deploy an instance of GitLab
+*   Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
+*   Build policies with Cloudflare Access to control who can reach GitLab
+*   Connect over HTTP and SSH through Cloudflare
 
 **⏲️ Time to complete:**
 
 1 hour
 
----
+***
 
 ## Deploying GitLab
 
@@ -216,9 +217,7 @@ You can now create DNS records for GitLab in the Cloudflare dashboard. Remember,
 
 In the DNS tab, choose the website where you built your [Zero Trust policies](/policies/zero-trust). Click `+Add record` and select `CNAME` from type. In the `Name` field, input `gitlab`. In the `Target` field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
-```
-6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
-```
+    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
 
 ![Add DNS](../static/zero-trust-security/gitlab/add-dns.png)
 
@@ -254,9 +253,7 @@ To pull or push code, you must also add an SSH key to your profile in GitLab.
 
 To push and pull code over SSH, you will need to install `cloudflared` on the client machine as well. This example uses a macOS laptop. On macOS, you can install `cloudflared` with the following command.
 
-```
-$ brew install cloudflare/cloudflare/cloudflared
-```
+    $ brew install cloudflare/cloudflare/cloudflared
 
 While you need to install `cloudflared`, you do not need to wrap your SSH commands in any unique way. Instead, you will need to make a one-time change to your SSH configuration file.
 
@@ -270,6 +267,7 @@ Input the following values; replacing `gitlab-ssh.widgetcorp.tech` with the host
 Host gitlab-ssh.widgetcorp.tech
   ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
 ```
+
 You can now test the SSH flow by attempting to clone the project created earlier.
 
 ```bash

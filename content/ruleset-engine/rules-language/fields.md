@@ -8,30 +8,30 @@ order: 5
 
 The Cloudflare Rules language supports a range of field types:
 
-- [Standard fields](#standard-fields) represent common, typically static properties of an HTTP request.
-- [Dynamic fields](#dynamic-fields) represent computed or derived values, typically related to Cloudflare threat intelligence about the request.
-- [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
-- [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
-- [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
-- [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
+*   [Standard fields](#standard-fields) represent common, typically static properties of an HTTP request.
+*   [Dynamic fields](#dynamic-fields) represent computed or derived values, typically related to Cloudflare threat intelligence about the request.
+*   [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
+*   [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
+*   [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
+*   [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
 
 ## Standard fields
 
 Most standard fields use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
 
-- Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
+*   Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
-  To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
+    To evaluate a range of addresses using CIDR notation, use the `in` [comparison operator](/rules-language/operators/#comparison-operators) as in this example: `ip.src in {1.2.3.0/24 4.5.6.0/24}`.
 
-- In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
+*   In Wireshark, `ssl` is a protocol field containing hundreds of other fields of various types that are available for comparison in multiple ways. However, in the Rules language `ssl` is a single Boolean field that indicates whether the connection from the client to Cloudflare is encrypted.
 
-- The Cloudflare Rules language does not support the `slice` operator.
+*   The Cloudflare Rules language does not support the `slice` operator.
 
 <Aside type='note' header="Availability notes">
 
-* Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
+*   Access to `ip.geoip.is_in_european_union`, `ip.geoip.subdivision_1_iso_code`, and `ip.geoip.subdivision_2_iso_code` fields requires a Cloudflare Business or Enterprise plan.
 
-* Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
+*   Access to `http.request.cookies` field requires a Cloudflare Pro, Business, or Enterprise plan.
 
 </Aside>
 
@@ -1121,6 +1121,6 @@ The Cloudflare Rules language supports these HTTP response header fields:
   </tbody>
 </table>
 
----
+***
 
-_GeoIP is the registered trademark of MaxMind, Inc._
+*GeoIP is the registered trademark of MaxMind, Inc.*

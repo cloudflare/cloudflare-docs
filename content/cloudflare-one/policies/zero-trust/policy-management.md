@@ -15,21 +15,21 @@ You can create up to 1,000 policies per application.
 
 To create a Zero Trust policy for an existing application:
 
-1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
+1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-1. Locate the application for which you want to create the policy.
+2.  Locate the application for which you want to create the policy.
 
-1. Click **Add a Rule**.
+3.  Click **Add a Rule**.
 
-  ![Add rule](../../static/documentation/policies/add-rule.png)
+![Add rule](../../static/documentation/policies/add-rule.png)
 
-1. Select a **Rule name**. This name will identify your policy in the list of application policies.
+1.  Select a **Rule name**. This name will identify your policy in the list of application policies.
 
-1. Select a **[Rule action](/policies/zero-trust#actions)**. 
+2.  Select a **[Rule action](/policies/zero-trust#actions)**.
 
-1. Configure as many **[Rules](/policies/zero-trust#rules)** as needed.
+3.  Configure as many **[Rules](/policies/zero-trust#rules)** as needed.
 
-1. Click **Save rule**.
+4.  Click **Save rule**.
 
 Your policy has now been added to the application.
 
@@ -37,32 +37,32 @@ Your policy has now been added to the application.
 
 To make any changes to an application’s policies:
 
-1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
+1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-1. Locate the application for which you want to change the policies.
+2.  Locate the application for which you want to change the policies.
 
-1. Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
+3.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-  ![Policies section](../../static/documentation/policies/policies-section.png)
+![Policies section](../../static/documentation/policies/policies-section.png)
 
-1. Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
+1.  Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
 
-1. Once you’ve made all the necessary changes, click **Save application**.
+2.  Once you’ve made all the necessary changes, click **Save application**.
 
 ## Delete a policy
 
 To delete a Zero Trust policy:
 
-1. On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
+1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-1. Locate the application for which you want to delete the policy.
+2.  Locate the application for which you want to delete the policy.
 
-1. Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
+3.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-1. Locate the policy you want to delete and click **Delete**.
+4.  Locate the policy you want to delete and click **Delete**.
 
-1. A pop-up message will ask you to confirm your decision to delete the policy. Click **Delete**.
+5.  A pop-up message will ask you to confirm your decision to delete the policy. Click **Delete**.
 
-1. Click **Save application**.
+6.  Click **Save application**.
 
 Your policy has now been deleted.

@@ -9,12 +9,11 @@ With Image Resizing, you can transform images on Cloudflare’s edge platform. Y
 
 Cloudflare Image Resizing lets you:
 
-- Quickly and easily adapt images to your site’s layout and your visitors’ screen sizes without maintaining a server-side image processing pipeline on your servers.
+*   Quickly and easily adapt images to your site’s layout and your visitors’ screen sizes without maintaining a server-side image processing pipeline on your servers.
 
-- Integrate [image processing with Workers](/image-resizing/resize-with-workers), which enables advanced integrations such as custom URL schemes, content negotiation, and responsive images based on Client Hints.
+*   Integrate [image processing with Workers](/image-resizing/resize-with-workers), which enables advanced integrations such as custom URL schemes, content negotiation, and responsive images based on Client Hints.
 
 You can use Cloudflare Image Resizing with either a [pre-defined URL format](/image-resizing/url-format) or, for advanced use cases, with [Cloudflare Workers](/image-resizing/resize-with-workers).
-
 
 ## Availability
 

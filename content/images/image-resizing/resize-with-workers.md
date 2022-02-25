@@ -9,9 +9,9 @@ Using Image Resizing with Workers gives you powerful programmatic control over e
 
 Here are a few examples of the flexibility Workers give you:
 
-* **Use a custom URL scheme**. Instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
-* **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
-* **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
+*   **Use a custom URL scheme**. Instead of specifying pixel dimensions in image URLs, use preset names such as `thumbnail` and `large`.
+*   **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
+*   **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
 The resizing feature is accessed via the [options](https://developers.cloudflare.com/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](https://developers.cloudflare.com/workers/runtime-apis/fetch).
 
@@ -21,96 +21,97 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
 <Definitions>
 
-- **`width`**
-  - Maximum width in pixels. The value must be an integer.
+*   **`width`**
+    *   Maximum width in pixels. The value must be an integer.
 
-- **`height`**
-  - Maximum height in pixels.
+*   **`height`**
+    *   Maximum height in pixels.
 
-- **`dpr`**
-  - Stands for device pixel ratio. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Default is `1`.
+*   **`dpr`**
+    *   Stands for device pixel ratio. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`. Default is `1`.
 
-- **`fit`**
-  - Resizing mode as a string. It affects interpretation of `width` and `height`:
+*   **`fit`**
+    *   Resizing mode as a string. It affects interpretation of `width` and `height`:
 
-    <Definitions>
+        <Definitions>
 
-    - **`scale-down`**
-      - Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
+        *   **`scale-down`**
+            *   Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
 
-    - **`contain`**
-      - Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
+        *   **`contain`**
+            *   Resizes to the maximum size that fits within the given `width` and `height`. If only a single dimension is given (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension. Aspect ratio is always preserved.
 
-    - **`cover`**
-      - Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
+        *   **`cover`**
+            *   Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
 
-    - **`crop`**
-      - The image will shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
+        *   **`crop`**
+            *   The image will shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also `trim`.
 
-    - **`pad`**
-      - Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
+        *   **`pad`**
+            *   Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
 
-    </Definitions>
+        </Definitions>
 
-- **`gravity`**
+*   **`gravity`**
 
-  - When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should be left uncropped.
+    *   When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should be left uncropped.
 
-    There are three ways of specifying gravity:
+        There are three ways of specifying gravity:
 
-    - A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
-    - `"auto"`, which selects focal point based on saliency detection (using maximum symmetric surround algorithm).
-    - An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+        *   A string `"left"`, `"right"`, `"top"`, `"bottom"`, or `"center"` (the default). `{fit: "cover", gravity: "top"}` will crop bottom or left and right sides as necessary, but will not crop anything from the top.
+        *   `"auto"`, which selects focal point based on saliency detection (using maximum symmetric surround algorithm).
+        *   An object `{x, y}` containing focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
 
-- **`trim`**
-  - An object with four properties `{left, top, right, bottom}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
+*   **`trim`**
+    *   An object with four properties `{left, top, right, bottom}` that specify a number of pixels to cut off on each side. Allows removal of borders or cutting out a specific fragment of an image. Trimming is performed before resizing or rotation. Takes `dpr` into account.
 
-- **`quality`**
-  - Quality setting from 1-100 (useful values are in 60-90 range). Lower values make images look worse, but load faster. The default is `85`. Quality `100` will generate very large image files, and is not recommended.
+*   **`quality`**
 
-  In case of PNG images, an explicit quality setting enables use of 8-bit (palette) variant of the format, using [pngquant](https://pngquant.org)'s quality scale. Images that cannot meet the requested quality with 256 colors will fall back to 24-bit PNG format or JPEG if they are opaque.
+    *   Quality setting from 1-100 (useful values are in 60-90 range). Lower values make images look worse, but load faster. The default is `85`. Quality `100` will generate very large image files, and is not recommended.
 
-- **`format`**
-  - Output format to generate. Options are:
+    In case of PNG images, an explicit quality setting enables use of 8-bit (palette) variant of the format, using [pngquant](https://pngquant.org)'s quality scale. Images that cannot meet the requested quality with 256 colors will fall back to 24-bit PNG format or JPEG if they are opaque.
 
-    - **`avif`** — generate images in AVIF format if possible (with WebP as a fallback).
-    - **`webp`** — generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
-    - **`json`** — instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+*   **`format`**
+    *   Output format to generate. Options are:
 
-    Other supported formats (PNG, JPEG, animated GIF) are used by default if no other format is specified.
+        *   **`avif`** — generate images in AVIF format if possible (with WebP as a fallback).
+        *   **`webp`** — generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
+        *   **`json`** — instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
 
-    To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
+        Other supported formats (PNG, JPEG, animated GIF) are used by default if no other format is specified.
 
-- **`anim`**
-  - Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
+        To automatically serve WebP or AVIF formats to browsers that support them, check if the `Accept` header contains `image/webp` or `image/avif`, and set the format option accordingly.
 
-- **`metadata`**
-  - What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
+*   **`anim`**
+    *   Whether to preserve animation frames from input files. Default is `true`. Setting it to `false` reduces animations to still images. This setting is recommended when enlarging images or processing arbitrary user content, because large GIF animations can weigh tens or even hundreds of megabytes. It is also useful to set `anim:false` when using `format:"json"` to get the response quicker without the number of frames.
 
-    <Definitions>
+*   **`metadata`**
+    *   What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
 
-    - **`keep`**
-      - Preserve most of EXIF metadata, including GPS location if present.
+        <Definitions>
 
-    - **`copyright`**
-      - Only keep the copyright tag, and discard everything else. This is the default behavior for JPEG files.
+        *   **`keep`**
+            *   Preserve most of EXIF metadata, including GPS location if present.
 
-    - **`none`**
-      - Discard all invisible EXIF metadata. Currently WebP and PNG output formats always discard metadata.
+        *   **`copyright`**
+            *   Only keep the copyright tag, and discard everything else. This is the default behavior for JPEG files.
 
-    </Definitions>
+        *   **`none`**
+            *   Discard all invisible EXIF metadata. Currently WebP and PNG output formats always discard metadata.
 
-- **`background`**
-  - Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
+        </Definitions>
 
-- **`rotate`**
-  - Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+*   **`background`**
+    *   Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
 
-- **`sharpen`**
-  - Strength of sharpening filter to apply to the image. Floating-point number between `0` (no sharpening, default) and `10` (maximum). `1.0` is a recommended value for downscaled images.
+*   **`rotate`**
+    *   Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
 
-- **`blur`**
-  - Radius of a blur filter (approximate gaussian). Maximum supported radius is 250.
+*   **`sharpen`**
+    *   Strength of sharpening filter to apply to the image. Floating-point number between `0` (no sharpening, default) and `10` (maximum). `1.0` is a recommended value for downscaled images.
+
+*   **`blur`**
+    *   Radius of a blur filter (approximate gaussian). Maximum supported radius is 250.
 
 </Definitions>
 

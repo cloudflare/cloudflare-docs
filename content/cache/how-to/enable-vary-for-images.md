@@ -7,7 +7,7 @@ pcx-content-type: how-to
 
 Vary for Images is enabled through Cloudflare’s API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
 
-## Create a variants rule 
+## Create a variants rule
 
 ```json
 curl -X PATCH 
@@ -17,9 +17,9 @@ curl -X PATCH
 -H "Content-Type: application/json" \ 
 --data 
 '{"value":{"jpeg":["image/webp","image/avif"],"jpg":["image/webp","image/avif"]}}' 
-``` 
+```
 
-## Modify to only allow WebP variants 
+## Modify to only allow WebP variants
 
 ```json
 curl -X PATCH 
@@ -31,7 +31,7 @@ curl -X PATCH
 '{"value":{"jpeg":["image/webp"],"jpg":["image/webp"]}}' 
 ```
 
-## Delete the rule 
+## Delete the rule
 
 ```json
 curl -X DELETE 
@@ -40,7 +40,7 @@ curl -X DELETE
 -H "X-Auth-Key: 3xamp1ek3y1234" 
 ```
 
-## Get the rule 
+## Get the rule
 
 ```json
 curl -X GET 

@@ -12,18 +12,18 @@ This is a suggested list and not an exhaustive list. Review your environment and
 
 ## Recommended rules
 
-**Rule ID**: 1 <br/> 
-**Description**: Single rule that blocks all traffic with UDP source ports which are used in attacks or invalid in Magic Transit ingress. <br/> 
+**Rule ID**: 1 <br/>
+**Description**: Single rule that blocks all traffic with UDP source ports which are used in attacks or invalid in Magic Transit ingress. <br/>
 **Match**: `(udp.srcport in {1900 11211 389 111 19 1194 3702 10001 20800 161 162 137 27005 520 0})` <br/>
 **Action**: Block <br/>
 
-**Rule ID**: 2 <br/> 
-**Description**: Blocks TCP traffic with source port 0 and common ports used in TCP SYN/ACK reflection attacks. <br/> 
+**Rule ID**: 2 <br/>
+**Description**: Blocks TCP traffic with source port 0 and common ports used in TCP SYN/ACK reflection attacks. <br/>
 **Match**: `(tcp.srcport in {21 0 3306})` <br/>
 **Action**: Block <br/>
 
-**Rule ID**: 3 <br/> 
-**Description**: Blocks HOPOPT (protocol 0) or else blocks if protocol not in {ESP, TCP, UDP, GRE, ICMP}. Note that this is only an example. Permit the relevant protocols for your environment.<br/> 
+**Rule ID**: 3 <br/>
+**Description**: Blocks HOPOPT (protocol 0) or else blocks if protocol not in {ESP, TCP, UDP, GRE, ICMP}. Note that this is only an example. Permit the relevant protocols for your environment.<br/>
 **Match**: `(ip.proto eq "hopopt") or (not ip.proto in {"esp" "tcp" "udp" "gre" "icmp"})` <br/>
 **Action**: Block <br/>
 
@@ -55,17 +55,17 @@ The information below covers traffic type, how the port is used, and reasons for
 
 The list below is a common list of traffic types you should also consider blocking or restricting inbound.
 
-- SFTP, TFTP
-- SSH, Telnet
-- RDP
-- RCP
-- SMCP
-- NTP
-  - Common vector for reflection attacks. Consider using [Cloudflare Gateway](https://developers.cloudflare.com/distributed-web/), [1.1.1.1's DNS over HTTPs (DoH)](https://developers.cloudflare.com/1.1.1.1/), or an internal DNS service if possible. Consider restricting your firewall rules to only allow the source and destination of DNS traffic.
-- MS-SQL
-  - Common vector and [increasingly used as vector for DDos attacks](https://blog.cloudflare.com/ddos-attack-trends-for-2021-q4/). Block if unused or consider restricting only to the required source IP addresses.
-- HTTP and HTTPS
-  - If you only have servers on your Magic Transit prefixes, consider blocking ingress traffic on TCP source ports 80 and 443 from outside. If you have endpoints on your Magic Transit prefixes, you can allow traffic on the source ports but consider creating a disabled rule you can activate to respond to reflection attacks as needed.
+*   SFTP, TFTP
+*   SSH, Telnet
+*   RDP
+*   RCP
+*   SMCP
+*   NTP
+    *   Common vector for reflection attacks. Consider using [Cloudflare Gateway](https://developers.cloudflare.com/distributed-web/), [1.1.1.1's DNS over HTTPs (DoH)](https://developers.cloudflare.com/1.1.1.1/), or an internal DNS service if possible. Consider restricting your firewall rules to only allow the source and destination of DNS traffic.
+*   MS-SQL
+    *   Common vector and [increasingly used as vector for DDos attacks](https://blog.cloudflare.com/ddos-attack-trends-for-2021-q4/). Block if unused or consider restricting only to the required source IP addresses.
+*   HTTP and HTTPS
+    *   If you only have servers on your Magic Transit prefixes, consider blocking ingress traffic on TCP source ports 80 and 443 from outside. If you have endpoints on your Magic Transit prefixes, you can allow traffic on the source ports but consider creating a disabled rule you can activate to respond to reflection attacks as needed.
 
 If relevant to your environment, consider blocking based on GeoIP, which blocks traffic based on the country or user when an end user's IP address is registered in the GeoIP database.
 

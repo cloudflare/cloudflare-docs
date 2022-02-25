@@ -4,7 +4,7 @@ order: 3
 pcx-content-type: get-started
 ---
 
-import StaticResourcesBM from "../_partials/_static-resources-bm.md"
+import StaticResourcesBM from "../\_partials/\_static-resources-bm.md"
 
 # Get started with Bot Management for Enterprise
 
@@ -12,11 +12,11 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 
 This Enterprise product provides the most flexibility to customers by:
 
-- Generating a [bot score](/concepts/bot-score) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with Firewall Rules or [`Workers`](https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties).
-- Allowing customers to view this score in Bot Analytics or Logs.
+*   Generating a [bot score](/concepts/bot-score) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
+*   Allowing customers to take action on this score with Firewall Rules or [`Workers`](https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties).
+*   Allowing customers to view this score in Bot Analytics or Logs.
 
----
+***
 
 ## Enable Bot Management for Enterprise
 
@@ -24,12 +24,12 @@ Our Solutions Engineering team will work with you to begin setting up the produc
 
 ### Before you begin
 
-- Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
-- Review the following concepts:
+*   Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
+*   Review the following concepts:
 
-  - [Bot score](/concepts/bot-score): Learn how Cloudflare scores bot requests.
-  - [Challenge Solve Rate (CSR)](/concepts/challenge-solve-rate): Learn how to evaluate the effectiveness of Firewall rules.
-  - [Bot tags](/concepts/cloudflare-bot-tags): Learn more about *why* Cloudflare classified a request a certain way.
+    *   [Bot score](/concepts/bot-score): Learn how Cloudflare scores bot requests.
+    *   [Challenge Solve Rate (CSR)](/concepts/challenge-solve-rate): Learn how to evaluate the effectiveness of Firewall rules.
+    *   [Bot tags](/concepts/cloudflare-bot-tags): Learn more about *why* Cloudflare classified a request a certain way.
 
 ### Step 1 — Configure Bot Management
 
@@ -42,20 +42,21 @@ To enable this feature, go to **Firewall** > **Bots**.
 Before deploying Bot Management on live traffic, use [Bot Analytics](/bot-analytics/bm-subscription) to determine your domain's sensitivity to bot traffic.
 
 Go to **Firewall** > **Bots** and examine the following traffic segments:
-- **Automated traffic**: Bot scores of 1
-- **Likely automated traffic**: Bots scores of 2 through 29
-- **Other traffic groups**: Any additional large spikes in bot scores
+
+*   **Automated traffic**: Bot scores of 1
+*   **Likely automated traffic**: Bots scores of 2 through 29
+*   **Other traffic groups**: Any additional large spikes in bot scores
 
 For **automated** traffic, sort through the IP addresses, ASNs, and other data points at the bottom of the page. Look for any traffic that *should not* be blocked — commonly API or mobile app traffic. Do the same for **likely automated** traffic.
 
-Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12. 
+Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
 ![Bot score distribution](../images/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 
-- Have a range of scores you can confidently block or challenge
-- Understand nuances in your traffic that may require special attention
+*   Have a range of scores you can confidently block or challenge
+*   Understand nuances in your traffic that may require special attention
 
 <Aside type='note' header='Important'>
 
@@ -92,9 +93,9 @@ Create Firewall Rules that address **likely automated** traffic and **other traf
 
 Cloudflare recommends that most customers block or challenge bot scores **below 30**, but your domain might vary:
 
-- If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
-- If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
-- If your Firewall Rule has a [**Challenge Solve Rate (CSR)**](/concepts/challenge-solve-rate) higher than 3%, consider lowering your challenge threshold.
+*   If you want to minimize false positives and lost revenue — such as ecommerce domains — you might permit requests with lower bot scores to access your domain.
+*   If you want to increase protection and minimize bot traffic, you might challenge higher bot scores.
+*   If your Firewall Rule has a [**Challenge Solve Rate (CSR)**](/concepts/challenge-solve-rate) higher than 3%, consider lowering your challenge threshold.
 
 The best approach is to start small and slowly increase your threshold to prevent widespread issues.
 
@@ -102,7 +103,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 You can adjust your Firewall Rules at any point. Set aside time to review [Bot Analytics](/bot-analytics/bm-subscription) and [Firewall Events](https://developers.cloudflare.com/waf/analytics) to see if your rules need additional tuning.
 
----
+***
 
 ## Other considerations
 
@@ -117,4 +118,5 @@ For more details, see [Static resource protection](/reference/static-resources).
 Some automated traffic is good! To allow good bots like Google or Bing, use the **Verified Bot** field in your rules. If you see a verified bot that Cloudflare is not [currently tracking](https://developers.cloudflare.com/firewall/known-issues-and-faq#bots-currently-detected), fill out an [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ### Mobile traffic
+
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your Firewall Rules.

@@ -18,31 +18,31 @@ The job of an *IPFS Gateway* like Cloudflare's is to take requests for CIDs and
 return the content corresponding to the given CID. Each time you access a piece
 of content through a gateway, you provide a URL with two parts:
 
-1. The hostname of the gateway, or essentially, who you want to answer the
-   request. Cloudflare's gateway is accessible at `cloudflare-ipfs.com`, while
-   the makers of IPFS run a gateway at `ipfs.io`, and if you run your own node
-   you may even have a gateway at `localhost:8080`!
-2. The request path, which comes after the hostname. The request path either
-   starts with `/ipfs/<hash>` or `/ipns/<domain>`. If the request starts with
-   `/ipfs/`, that tells the gateway that you want the content with the CID that
-   immediately follows. Because the content is addressed by CID, the gateway's
-   response is *immutable* and will *never change*. If the request starts with
-   `/ipns/`, that tells the gateway that you want it to lookup the CID
-   associated with a given domain in DNS and then serve whatever content
-   corresponds to the CID it happens to find. Because DNS can change over time,
-   so will the gateway's response.
+1.  The hostname of the gateway, or essentially, who you want to answer the
+    request. Cloudflare's gateway is accessible at `cloudflare-ipfs.com`, while
+    the makers of IPFS run a gateway at `ipfs.io`, and if you run your own node
+    you may even have a gateway at `localhost:8080`!
+2.  The request path, which comes after the hostname. The request path either
+    starts with `/ipfs/<hash>` or `/ipns/<domain>`. If the request starts with
+    `/ipfs/`, that tells the gateway that you want the content with the CID that
+    immediately follows. Because the content is addressed by CID, the gateway's
+    response is *immutable* and will *never change*. If the request starts with
+    `/ipns/`, that tells the gateway that you want it to lookup the CID
+    associated with a given domain in DNS and then serve whatever content
+    corresponds to the CID it happens to find. Because DNS can change over time,
+    so will the gateway's response.
 
-   That's generally going to look like:
-   `/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`. The `/ipfs/` tells
-   the gateway that you're providing the address of a piece of content stored on
-   IPFS. The `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco` is the address
-   itself.
+    That's generally going to look like:
+    `/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco`. The `/ipfs/` tells
+    the gateway that you're providing the address of a piece of content stored on
+    IPFS. The `QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco` is the address
+    itself.
 
 Put those two components all together and the URL you provide will look like
 this:
 
-- https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/
-- or this: https://cloudflare-ipfs.com/ipns/ipfs.io/
+*   https://cloudflare-ipfs.com/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/
+*   or this: https://cloudflare-ipfs.com/ipns/ipfs.io/
 
 The first link is a mirror of Wikipedia, and I can say that with confidence
 because it is an /ipfs/ link and therefore immutable. The second link is IPFS's

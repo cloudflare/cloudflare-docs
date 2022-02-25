@@ -9,13 +9,13 @@ Below are limits observed by the Cloudflare Pages free plan. For more details on
 
 ## Builds
 
-Each time you push new code to your git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the free plan. Refer to the Pro and Business plans on the Pages [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently. 
+Each time you push new code to your git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the free plan. Refer to the Pro and Business plans on the Pages [pricing page](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently.
 
 Builds will timeout after 20 minutes.
 
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time. 
+A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time.
 
 ## Files
 

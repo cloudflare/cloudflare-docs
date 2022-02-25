@@ -15,8 +15,8 @@ When you add rules to a ruleset using the [Update ruleset](/rulesets-api/update)
 
 You can use other API methods depending on the type of operation:
 
-* Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/rulesets-api/add-rule) method.
-* Update a single rule in a custom ruleset — use the [Update rule](/rulesets-api/update-rule) method.
+*   Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/rulesets-api/add-rule) method.
+*   Update a single rule in a custom ruleset — use the [Update rule](/rulesets-api/update-rule) method.
 
 </Aside>
 

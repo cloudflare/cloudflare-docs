@@ -30,9 +30,9 @@ Unlike other serverless providers which use [containerized processes](https://ww
 
 A given isolate has its own scope, but isolates are not necessarily long-lived. An isolate may be spun down and evicted for a number of reasons:
 
-- resource limitations on the machine.
-- a suspicious script - anything seen as trying to break out of the Isolate sandbox.
-- individual [resource limits](/platform/limits).
+*   resource limitations on the machine.
+*   a suspicious script - anything seen as trying to break out of the Isolate sandbox.
+*   individual [resource limits](/platform/limits).
 
 Because of this, it is generally advised that you not store mutable state in your global scope unless you have accounted for this contingency.
 
@@ -64,6 +64,6 @@ Like all other JavaScript platforms, a single Workers instance may handle multip
 
 Learn more about:
 
-- [FetchEvents](/runtime-apis/fetch-event)
-- [Request context](/runtime-apis/request)
-- [Runtime limitations](/platform/limits)
+*   [FetchEvents](/runtime-apis/fetch-event)
+*   [Request context](/runtime-apis/request)
+*   [Runtime limitations](/platform/limits)

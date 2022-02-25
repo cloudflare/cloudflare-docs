@@ -16,9 +16,9 @@ These contracts are called peering agreements. Once the peering agreement is sig
 
 Not every network owns all of its cables and infrastructure. There are three types of networks:
 
-  * Tier 1 networks own physical infrastructure and exchange traffic with all other tier 1 providers and thus can reach every other network without purchasing transit from another company. (There are also regional Tier 1 networks that can own the infrastructure in a region, but not globally). AT&T is a good example of a Tier 1 network, it operates 410,000 miles of fiber cable. Comcast is a good example of a regional Tier 1 network, it operates fiber in the US, but not globally.
-  * Tier 2 networks buy the use of Tier 1 network cables or make agreements with Tier 1 networks to use the cables for free (aka peering).
-  * Tier 3 networks are those that connect the Tier 1 and 2 networks to people’s homes and offices.
+*   Tier 1 networks own physical infrastructure and exchange traffic with all other tier 1 providers and thus can reach every other network without purchasing transit from another company. (There are also regional Tier 1 networks that can own the infrastructure in a region, but not globally). AT\&T is a good example of a Tier 1 network, it operates 410,000 miles of fiber cable. Comcast is a good example of a regional Tier 1 network, it operates fiber in the US, but not globally.
+*   Tier 2 networks buy the use of Tier 1 network cables or make agreements with Tier 1 networks to use the cables for free (aka peering).
+*   Tier 3 networks are those that connect the Tier 1 and 2 networks to people’s homes and offices.
 
 The routing tables on each router grow to be so large they require a special type of memory called TCAM which specializes in searching for parts of an IP address in a table of IP address blocks. When a message reaches a router, the router looks in the TCP header at the IP address the message is destined for and checks if it knows how to reach it.
 

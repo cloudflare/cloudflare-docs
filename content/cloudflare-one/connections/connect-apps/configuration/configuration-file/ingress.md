@@ -129,22 +129,23 @@ ingress:
   # responds with HTTP 404).
   - service: http_status:404
 ```
+
 To set both top-level configurations and origin-specific configurations, you can use the following properties within  `originRequest` rules:
 
-- [connectTimeout](#connecttimeout)
-- [tlsTimeout](#tlstimeout)
-- [tcpKeepAlive](#tcpkeepalive)
-- [noHappyEyeballs](#nohappyeyeballs)
-- [keepAliveConnections](#keepaliveconnections)
-- [keepAliveTimeout](#keepalivetimeout)
-- [httpHostHeader](#httphostheader)
-- [originServerName](#originservername)
-- [caPool](#capool)
-- [noTLSVerify](#notlsverify)
-- [disableChunkedEncoding](#disablechunkedencoding)
-- [proxyAddress](#proxyaddress)
-- [proxyPort](#proxyport)
-- [proxyType](#proxyyype)
+*   [connectTimeout](#connecttimeout)
+*   [tlsTimeout](#tlstimeout)
+*   [tcpKeepAlive](#tcpkeepalive)
+*   [noHappyEyeballs](#nohappyeyeballs)
+*   [keepAliveConnections](#keepaliveconnections)
+*   [keepAliveTimeout](#keepalivetimeout)
+*   [httpHostHeader](#httphostheader)
+*   [originServerName](#originservername)
+*   [caPool](#capool)
+*   [noTLSVerify](#notlsverify)
+*   [disableChunkedEncoding](#disablechunkedencoding)
+*   [proxyAddress](#proxyaddress)
+*   [proxyPort](#proxyport)
+*   [proxyType](#proxyyype)
 
 ### connectTimeout
 
@@ -178,7 +179,7 @@ Default: `100`
 Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections.
 
 ### keepAliveTimeout
-	
+
 Default: `1m30s`
 
 Timeout after which an idle keepalive connection can be discarded.
@@ -234,8 +235,8 @@ Default: `""`
 `cloudflared` starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP.
 This configures what type of proxy will be started. Valid options are:
 
- - `""` for the regular proxy
- - `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
+*   `""` for the regular proxy
+*   `"socks"` for a SOCKS5 proxy. Refer to the [tutorial on connecting through Cloudflare Access using kubectl](/tutorials/kubectl) for more information.
 
 ## Validating your configuration
 

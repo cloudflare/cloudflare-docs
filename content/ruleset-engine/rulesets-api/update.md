@@ -18,11 +18,14 @@ Use one of the following API endpoints:
 | [Update zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
 [ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
+
 [ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
+
 [uep-account]: https://api.cloudflare.com/#account-rulesets-update-entrypoint-ruleset
+
 [uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your `PUT` request.
 
@@ -169,7 +172,7 @@ For more information on deploying rulesets, check [Deploy rulesets](/basic-opera
 
 You can use this API method to update the description of an existing ruleset or phase entry point.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/managed-rulesets/override-managed-ruleset) to customize the ruleset behavior.
 

@@ -8,8 +8,8 @@ order: 6
 
 The Cloudflare Rules language provides functions for manipulating and validating values in an expression:
 
-- [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
-- The [HMAC validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
+*   [Transformation functions](#transformation-functions) manipulate values extracted from an HTTP request.
+*   The [HMAC validation function](#hmac-validation) tests the validity of an HMAC token. Use it to write expressions that target requests based on the presence of a valid HMAC token.
 
 ## Transformation functions
 
@@ -29,158 +29,158 @@ The Rules language supports these transformation functions:
 
 <Definitions>
 
-- <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+*   <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
-  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
-  
-  - <em>Example:</em><br />
+    *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
-    <code class='InlineCode' style='width:100%'>
-    any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
-    </code>
+    *   <em>Example:</em><br />
 
-- <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+        <code class='InlineCode' style='width:100%'>
+        any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+        </code>
 
-  - Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
+*   <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
 
-  - <em>Example:</em><br />
+    *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
-    <code class="InlineCode">all(http.request.headers['content-type'][*] == "application/json")</code>
+    *   <em>Example:</em><br />
 
-- <code>concat(<Type>String | Integer | bytes | Array elements</Type>)</code> <Type>String</Type>
+        <code class="InlineCode">all(http.request.headers\['content-type']\[\*] == "application/json")</code>
 
-  - Takes a comma-separated list of values. Concatenates the argument values into a single String.
+*   <code>concat(<Type>String | Integer | bytes | Array elements</Type>)</code> <Type>String</Type>
 
-  - <em>Example:</em><br />
+    *   Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
-    <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
+    *   <em>Example:</em><br />
 
-- <code>ends_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
+        <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
 
-  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+*   <code>ends\_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - _Example:_<br />
-    If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
+    *   Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-    <Aside type='warning'>
+    *   *Example:*<br />
+        If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
-    **Warning:** The `ends_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
+        <Aside type='warning'>
 
-    </Aside>
+        **Warning:** The `ends_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
 
-- <code>len(<Type>String | bytes</Type>)</code> <Type>Integer</Type>
+        </Aside>
 
-  - Returns the byte length of a String or Bytes field.
+*   <code>len(<Type>String | bytes</Type>)</code> <Type>Integer</Type>
 
-  - <em>Example:</em><br />
+    *   Returns the byte length of a String or Bytes field.
 
-    <code class="InlineCode">len(http.host)</code>
+    *   <em>Example:</em><br />
 
-- <code>lower(<Type>String</Type>)</code> <Type>String</Type>
+        <code class="InlineCode">len(http.host)</code>
 
-  - Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
+*   <code>lower(<Type>String</Type>)</code> <Type>String</Type>
 
-  - <em>Example:</em><br />
+    *   Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
-    <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
+    *   <em>Example:</em><br />
 
-- <code>regex_replace(source<ParamType>String</ParamType>, regular_expression<ParamType>String</ParamType>, replacement<ParamType>String</ParamType>)</code> <Type>String</Type>
+        <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
-  - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
+*   <code>regex\_replace(source<ParamType>String</ParamType>, regular\_expression<ParamType>String</ParamType>, replacement<ParamType>String</ParamType>)</code> <Type>String</Type>
 
-  - _Examples:_
+    *   Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-    Literal match replace:<br />
-    `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
+    *   *Examples:*
 
-    If there is no match, the input string does not change:<br />
-    `regex_replace("/x", "^/y$", "/mumble") == "/x"`
+        Literal match replace:<br />
+        `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
 
-    Match is case sensitive by default:<br />
-    `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
+        If there is no match, the input string does not change:<br />
+        `regex_replace("/x", "^/y$", "/mumble") == "/x"`
 
-    When there are multiple matches, only one replacement occurs (the first one):<br />
-    `regex_replace("/a/a", "/a", "/b") == "/b/a"`
+        Match is case sensitive by default:<br />
+        `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
 
-    Escape a `$` in the replacement string by prefixing it with another `$`:<br />
-    `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
+        When there are multiple matches, only one replacement occurs (the first one):<br />
+        `regex_replace("/a/a", "/a", "/b") == "/b/a"`
 
-    Replace with capture groups:<br />
-    `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
+        Escape a `$` in the replacement string by prefixing it with another `$`:<br />
+        `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
 
-    <Aside type='warning'>
+        Replace with capture groups:<br />
+        `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
-    **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
+        <Aside type='warning'>
 
-    </Aside>
+        **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
 
-- <code>remove_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
+        </Aside>
 
-  - Returns a new byte array with all the occurrences of the given bytes removed.
+*   <code>remove\_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
 
-  - <em>Example:</em><br />
+    *   Returns a new byte array with all the occurrences of the given bytes removed.
 
-    <code class="InlineCode">remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+    *   <em>Example:</em><br />
 
-- <code>starts_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
+        <code class="InlineCode">remove\_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
 
-  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+*   <code>starts\_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
 
-  - _Example:_<br />
-    If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
+    *   Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-    <Aside type='warning'>
+    *   *Example:*<br />
+        If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
-    **Warning:** The `starts_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
+        <Aside type='warning'>
 
-    </Aside>
+        **Warning:** The `starts_with()` function is not available in [Firewall Rules](https://developers.cloudflare.com/firewall/).
 
-- <code>to_string(<Type>Integer | Boolean | IP address</Type>)</code> <Type>String</Type>
+        </Aside>
 
-  - Returns the string representation of an Integer, Boolean, or IP address value.
+*   <code>to\_string(<Type>Integer | Boolean | IP address</Type>)</code> <Type>String</Type>
 
-  - _Examples:_
+    *   Returns the string representation of an Integer, Boolean, or IP address value.
 
-    ```txt
-    to_string(cf.bot_management.score) == '5'
-    to_string(ssl) == 'true'
-    ```
+    *   *Examples:*
 
-    <Aside type='warning'>
+        ```txt
+        to_string(cf.bot_management.score) == '5'
+        to_string(ssl) == 'true'
+        ```
 
-    **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform).
+        <Aside type='warning'>
 
-    </Aside>
+        **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](https://developers.cloudflare.com/rules/transform).
 
-- <code>upper(<Type>String</Type>)</code> <Type>String</Type>
+        </Aside>
 
-  - Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
+*   <code>upper(<Type>String</Type>)</code> <Type>String</Type>
 
-  - <em>Example:</em><br />
+    *   Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
-    <code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
+    *   <em>Example:</em><br />
 
-- <code>url_decode(<Type>String</Type>)</code> <Type>String</Type>
+        <code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-  - Decodes a URL formatted string, as in the following:
+*   <code>url\_decode(<Type>String</Type>)</code> <Type>String</Type>
 
-    - <code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode to space characters <code class="InlineCode"> </code>
+    *   Decodes a URL formatted string, as in the following:
 
-    - <code class="InlineCode">%E4%BD</code> decodes to <code class="InlineCode">ä½ </code>
+        *   <code class="InlineCode">%20</code> and <code class="InlineCode">+</code> decode to space characters <code class="InlineCode"> </code>
 
-  - <em>Example:</em><br />
+        *   <code class="InlineCode">%E4%BD</code> decodes to <code class="InlineCode">ä½ </code>
 
-    <code class="InlineCode">any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")</code>
+    *   <em>Example:</em><br />
+
+        <code class="InlineCode">any(url\_decode(http.request.body.form.values\[*])\[*] contains "an xss attack")</code>
 
 </Definitions>
 
 ## Magic Firewall Functions
 
-- <code>bit_slice(<Type>String</Type>, <Type>Number</Type>, <Type>Number</Type>)</code> <Type>Number</Type>
+*   <code>bit\_slice(<Type>String</Type>, <Type>Number</Type>, <Type>Number</Type>)</code> <Type>Number</Type>
 
-  - Select a slice of contiguous bits from a string field. This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
-  - The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
-  - Use of structure fields is preferred over this mechanism.
+    *   Select a slice of contiguous bits from a string field. This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
+    *   The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
+    *   Use of structure fields is preferred over this mechanism.
 
 ## HMAC validation
 
@@ -209,37 +209,37 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
 <Definitions>
 
-- _Key_ <Type>String literal</Type>
+*   *Key* <Type>String literal</Type>
 
-  - Specifies the secret cryptographic key for validating the HMAC.
+    *   Specifies the secret cryptographic key for validating the HMAC.
 
-- _MessageMAC_ <Type>String</Type>
+*   *MessageMAC* <Type>String</Type>
 
-  - Contains a concatenation of these HMAC elements: _message_, _separator_, _timestamp_, _mac_. For a definition and an example, refer to [MessageMAC](#messagemac).
+    *   Contains a concatenation of these HMAC elements: *message*, *separator*, *timestamp*, *mac*. For a definition and an example, refer to [MessageMAC](#messagemac).
 
-- _ttl_ <Type>Integer literal</Type>
+*   *ttl* <Type>Integer literal</Type>
 
-  - Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
+    *   Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
 
-- _currentTimeStamp_ <Type>Integer</Type>
+*   *currentTimeStamp* <Type>Integer</Type>
 
-  - Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
+    *   Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
-- _lengthOfSeparator_ <Type>Integer literal</Type> <PropMeta>optional</PropMeta>
+*   *lengthOfSeparator* <Type>Integer literal</Type> <PropMeta>optional</PropMeta>
 
-  - Specifies the length of the _separator_ between the _timestamp_ and the _message_ in the _MessageMAC_. Expressed in bytes, with a default value of 0.
+    *   Specifies the length of the *separator* between the *timestamp* and the *message* in the *MessageMAC*. Expressed in bytes, with a default value of 0.
 
-- _flags_ <Type>String literal</Type> <PropMeta>optional</PropMeta>
+*   *flags* <Type>String literal</Type> <PropMeta>optional</PropMeta>
 
-  - When you set this optional argument to `'s'`, the function expects the value of the base64-encoded _mac_ in the _MessageMAC_ argument to use the URL-safe character set with no padding.
+    *   When you set this optional argument to `'s'`, the function expects the value of the base64-encoded *mac* in the *MessageMAC* argument to use the URL-safe character set with no padding.
 
-  - When you do **not** set the value of _flags_ to `'s'`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+    *   When you do **not** set the value of *flags* to `'s'`, you must URL encode the base64 value for *mac* in the *MessageMAC* argument.
 
 </Definitions>
 
 ### Usage
 
-The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the _message_ and the _timestamp_ regions of the MessageMAC. When the generated MAC matches the _mac_ region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
+The `is_timed_hmac_valid_v0()` function uses the supplied *Key* to generate a message authentication code (MAC) from the *message* and the *timestamp* regions of the MessageMAC. When the generated MAC matches the *mac* region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
 For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
 
@@ -299,7 +299,7 @@ For details on generating a MessageMAC, refer to [Implement token creation](http
 
 <Aside type='warning' header='Important'>
 
-When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional *flags* argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for *mac* in the *MessageMAC* argument.
 
 For more information, refer to [HMAC Validation: Overview](#overview).
 
@@ -315,12 +315,12 @@ Consider the case where the MessageMAC is contained entirely within a single fie
 
 Note how the URI maps to the elements of the MessageMAC:
 
-- _message_: `/download/cat.jpg`
-- _separator_: `?verify=`
-- _timestamp_: `1484063787`
-- _mac_: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
+*   *message*: `/download/cat.jpg`
+*   *separator*: `?verify=`
+*   *timestamp*: `1484063787`
+*   *mac*: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
-When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the _MessageMAC_ argument:
+When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the *MessageMAC* argument:
 
 ```java
 is_timed_hmac_valid_v0(

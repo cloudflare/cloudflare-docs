@@ -7,16 +7,16 @@ pcx-content-type: configuration
 
 The following API calls can be used to determine details and the status or one or more Railguns assigned to an account. These calls are sometimes needed to determine the unique `rtkn` or `id` assigned to a Railgun.
 
-## POST user_get_all
+## POST user\_get\_all
 
 `POST /api/v2/railgun/user_get_all`
 
 Assign a Railgun to a domain.
 
 ### Form parameters
- 	
-* **email** – User account email
-* **tkn** – User API token
+
+*   **email** – User account email
+*   **tkn** – User API token
 
 <details>
 <summary>Example request</summary>
@@ -112,16 +112,16 @@ Content-Type: application/json
 </div>
 </details>
 
-## GET user_get_all
+## GET user\_get\_all
 
 `GET /api/v2/railgun/user_get_all`
 
 Assign a Railgun to a domain.
 
 ### Query parameters
- 	
-* **email** – User account email
-* **tkn** – User API token
+
+*   **email** – User account email
+*   **tkn** – User API token
 
 <details>
 <summary>Example request</summary>
@@ -217,7 +217,7 @@ Content-Type: application/json
 </div>
 </details>
 
-## POST zone_conn_get_active
+## POST zone\_conn\_get\_active
 
 `POST /api/v2/railgun/zone_conn_get_active`
 
@@ -225,8 +225,8 @@ List all active Railgun connections for a domain.
 
 ### Form parameters
 
-* **email** – User account email
-* **tkn** – User API token
+*   **email** – User account email
+*   **tkn** – User API token
 
 <details>
 <summary>Example request</summary>
@@ -277,16 +277,16 @@ Content-Type: application/json
 </div>
 </details>
 
-## GET zone_conn_get_active
+## GET zone\_conn\_get\_active
 
 `GET /api/v2/railgun/zone_conn_get_active`
 
 List all active Railgun connections for a domain.
 
 ### Form parameters
- 	
-* **email** – User account email
-* **tkn** – User API token
+
+*   **email** – User account email
+*   **tkn** – User API token
 
 <details>
 <summary>Example request</summary>

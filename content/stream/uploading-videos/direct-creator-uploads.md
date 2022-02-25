@@ -23,11 +23,11 @@ body of the `POST` request:
 
 <Definitions>
 
-  - `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>
-    - Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
+*   `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>
+    *   Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-  - `expiry` <Type>string (date)</Type> <PropMeta>default: now + 30 minutes</PropMeta>
-    - Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
+*   `expiry` <Type>string (date)</Type> <PropMeta>default: now + 30 minutes</PropMeta>
+    *   Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
 </Definitions>
 
@@ -35,20 +35,20 @@ Additionally, you can control security features through these fields:
 
 <Definitions>
 
-  - `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
-    - Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
+*   `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
+    *   Limits the permission to view the video to only [signed URLs](/viewing-videos/securing-your-stream).
 
-  - `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: _empty_</PropMeta>
-    - Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
+*   `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: *empty*</PropMeta>
+    *   Limit the domains this video can be embedded on. Learn more about [allowed origins](/viewing-videos/securing-your-stream).
 
-  - `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
-      - Sets the timestamp location of [thumbnail](/viewing-videos/displaying-thumbnails) image to a percentage location of the video from 0 to 1.
+*   `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
+    *   Sets the timestamp location of [thumbnail](/viewing-videos/displaying-thumbnails) image to a percentage location of the video from 0 to 1.
 
-  - `watermark` <Type>string</Type> <PropMeta>default: _none_</PropMeta>
-    - `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/uploading-videos/applying-watermarks) automatically.
+*   `watermark` <Type>string</Type> <PropMeta>default: *none*</PropMeta>
+    *   `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/uploading-videos/applying-watermarks) automatically.
 
-  - `meta` <Type>json map</Type> <PropMeta>default: _none_</PropMeta>
-    - Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
+*   `meta` <Type>json map</Type> <PropMeta>default: *none*</PropMeta>
+    *   Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
 
 </Definitions>
 
@@ -185,9 +185,7 @@ Typically, tus uploads require the authentication information to be sent with ev
 
 To get around this, you can request a one-time tokenized URL by making a POST request to the `/stream?direct_user=true` end point:
 
-```
-curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
-```
+    curl -H "Authorization: bearer $TOKEN" -X POST -H 'Tus-Resumable: 1.0.0' -H 'Upload-Length: $VIDEO_LENGTH' 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?direct_user=true'
 
 The response will contain a `Location` header which provides the one-time URL the client can use to upload the video using tus.
 
@@ -230,9 +228,9 @@ Once you have an endpoint that returns the tokenized upload URL from the `locati
 
 ### Testing your Direct Creator Upload Endpoint
 
-Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the `Upload endpoint` field and then try to upload a video. 
+Once you have built your endpoint which calls Stream and returns the tokenized URL in the location header, you can test it with this [tus codepen demo](https://codepen.io/cfzf/pen/wvGMRXe). In the demo codepen, paste your end point URL in the `Upload endpoint` field and then try to upload a video.
 
-When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL. 
+When using Direct Creator Uploads, the `Upload endpoint` field in the demo should contain the url to your endpoint, not to the videodelivery.net tokenized URL. This is the most common reason Direct Creator Uploads fail using tus. Customers often set the tus url to the videodelivery.net URL instead of to their endpoint which *returns* the videodelivery.net URL.
 
 Please note that if you are developing on localhost, your test using the codepen may fail. Before testing, it is best to push your endpoint to a server with an IP and/or domain so you are not using localhost. Alternatively, you can setup a Worker with the example code provided above.
 
@@ -244,7 +242,7 @@ Upload-Metadata header should contain key-value pairs. The keys are text and the
 
 In the example below, the `Upload-Metadata` header is instructing Stream to only accept uploads with max video duration of 10 minutes and to make this video private:
 
-```'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'```
+`'Upload-Metadata: maxDurationSeconds NjAw,requiresignedurls'`
 
 *NjAw* is the base64 encoded value for "600" (or 10 minutes).
 
@@ -255,8 +253,8 @@ After the creation of a unique one-time upload URL, you may wish to retain the
 
 You can do that two ways:
 
-1. You can [query the media API](/uploading-videos/searching/) with the UID
-to understand it's status.
+1.  You can [query the media API](/uploading-videos/searching/) with the UID
+    to understand it's status.
 
-2. You can [create a webhook subscription](/uploading-videos/using-webhooks/) to receive notifications
-regarding the status of videos.  These notifications include the video's UID.
+2.  You can [create a webhook subscription](/uploading-videos/using-webhooks/) to receive notifications
+    regarding the status of videos.  These notifications include the video's UID.

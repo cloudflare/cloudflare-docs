@@ -7,14 +7,15 @@ pcx-content-type: tutorial
 
 This tutorial uses [Google Cloud HSM](https://cloud.google.com/kms/docs/hsm) — a FIPS 140-2 Level 3 certified implementation.
 
----
+***
 
 ## Before you start
 
 Make sure that you have:
-- Set up your [Google Cloud project](https://cloud.google.com/kms/docs/quickstart#before-you-begin)
 
----
+*   Set up your [Google Cloud project](https://cloud.google.com/kms/docs/quickstart#before-you-begin)
+
+***
 
 ## 1. Create a key ring
 
@@ -26,7 +27,7 @@ Only [certain locations](https://cloud.google.com/kms/docs/locations#hsm-regions
 
 </Aside>
 
----
+***
 
 ## 2. Create a key
 
@@ -55,7 +56,7 @@ Create a key, including the following information:
   </tbody>
 </table>
 
----
+***
 
 ## 3. Import the private key
 
@@ -67,7 +68,7 @@ You need to [convert your key](https://cloud.google.com/kms/docs/formatting-keys
 
 </Aside>
 
----
+***
 
 ## 4. Modify your gokeyless config file and restart the service
 
@@ -75,7 +76,5 @@ Once you’ve imported the key, copy the **Resource name** from the UI. Then, ad
 
 With the config file saved, restart `gokeyless` and verify it started successfully.
 
-```
-$ sudo systemctl restart gokeyless.service
-$ sudo systemctl status gokeyless.service -l
-```
+    $ sudo systemctl restart gokeyless.service
+    $ sudo systemctl status gokeyless.service -l

@@ -4,7 +4,7 @@ order: 63
 pcx-content-type: how-to
 ---
 
-import EnableReadPermissions from "../../../_partials/_enable-read-permissions.md"
+import EnableReadPermissions from "../../../\_partials/\_enable-read-permissions.md"
 
 # Enable Logpush to New Relic
 
@@ -14,29 +14,29 @@ Cloudflare Logpush supports pushing logs directly to New Relic via the Cloudflar
 
 To enable a Logpush service to New Relic via the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select the Enterprise domain you want to use with Logpush.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select the Enterprise domain you want to use with Logpush.
 
-1. Go to **Analytics** > **Logs**. 
+2.  Go to **Analytics** > **Logs**.
 
-1. Click **Connect a service** and a modal window will open.
+3.  Click **Connect a service** and a modal window will open.
 
-1. Select the dataset you want to push to a storage service.
+4.  Select the dataset you want to push to a storage service.
 
-1. Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
+5.  Select the data fields to include in your logs. You can add or remove fields later by modifying your settings in **Logs** > **Logpush**.
 
-1. Select **New Relic**.
+6.  Select **New Relic**.
 
-1. Enter the **New Relic Logs Endpoint**:
+7.  Enter the **New Relic Logs Endpoint**:
 
     US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
-    
+
     EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
     Use the region that matches the one that has been set on your New Relic account. The `<NR_LICENSE_KEY>` field can be found on the New Relic dashboard. It can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
 
-1. Click **Validate access**.
+8.  Click **Validate access**.
 
-1. Click **Save and Start Pushing** to finish enabling Logpush.
+9.  Click **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists New Relic as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
@@ -48,31 +48,31 @@ Once connected, Cloudflare lists New Relic as a connected service under **Logs**
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-* **name** (optional) - Use your domain name as the job name.
+*   **name** (optional) - Use your domain name as the job name.
 
-* **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](https://developers.cloudflare.com/logs/reference/logpush-api-configuration#options).
+*   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](https://developers.cloudflare.com/logs/reference/logpush-api-configuration#options).
 
-  <Aside type="note" header="Note">
- 
-  In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
- 
-  </Aside>
+    <Aside type="note" header="Note">
 
-* **destination_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
+    In order to query Cloudflare logs, New Relic requires fields to be sent as a Unix Timestamp.
 
-  * `<NR_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
-  * `<NR_LICENSE_KEY>`: This key can be found on the New Relic dashboard and it can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
-  * `format`: The format is `cloudflare`.
+    </Aside>
 
-    US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
-    
-    EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+*   **destination\_conf** - A log destination consisting of an endpoint URL, a license key and a format in the string format below.
 
-* **max_upload_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
+    *   `<NR_ENDPOINT_URL>`: The New Relic HTTP logs intake endpoint, which is `https://log-api.newrelic.com/log/v1` for US or `https://log-api.eu.newrelic.com/log/v1` for the EU, depending on the region that has been set on your New Relic account.
+    *   `<NR_LICENSE_KEY>`: This key can be found on the New Relic dashboard and it can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
+    *   `format`: The format is `cloudflare`.
 
-* **max_upload_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
+        US: `"https://log-api.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
 
-* **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields) for the full list of supported datasets.
+        EU: `"https://log-api.eu.newrelic.com/log/v1?Api-Key=<NR_LICENSE_KEY>&format=cloudflare"`
+
+*   **max\_upload\_records** (optional) - The maximum number of log lines per batch. This must be at least 1,000 lines or more. Note that there is no way to specify a minimum number of log lines per batch. This means that log files may contain many fewer lines than specified.
+
+*   **max\_upload\_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
+
+*   **dataset** - The category of logs you want to receive. Refer to [Log fields](https://developers.cloudflare.com/logs/reference/log-fields) for the full list of supported datasets.
 
 Example request using cURL:
 
@@ -126,9 +126,9 @@ curl -s -X PUT \
 https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/100 -d'{"enabled":true}' \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" | jq .
-````
+```
 
-Response: 
+Response:
 
 ```bash
 {

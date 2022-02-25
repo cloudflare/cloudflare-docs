@@ -17,15 +17,15 @@ You can also use [preview deployments](/platform/preview-deployments) to preview
 
 ## Organizational access
 
-You can deploy projects to Cloudflare Pages from your open-source team, company, or side project on both GitHub and GitLab. 
+You can deploy projects to Cloudflare Pages from your open-source team, company, or side project on both GitHub and GitLab.
 
 ### GitHub
 
-When authorizing Cloudflare Pages to access your GitHub account, you can also specify access to organizations that you belong to on GitHub. 
+When authorizing Cloudflare Pages to access your GitHub account, you can also specify access to organizations that you belong to on GitHub.
 
 ### GitLab
 
-By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow all organizations on your GitLab account to be available for use. 
+By authorizing Cloudflare Pages to access your GitLab account, you will automatically allow all organizations on your GitLab account to be available for use.
 
 ## Removing access to your GitHub account
 
@@ -33,7 +33,7 @@ You can remove Cloudflare Pages' access to your GitHub account by viewing the [*
 
 ## Removing access to your GitLab account
 
-You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access. 
+You can remove Cloudflare Pages' access to your GitLab account by navigating to **User Settings** > **Applications** > **Authorized Applications**. Find the applications called Cloudflare Pages and select the **Revoke** button to revoke access.
 
 ## Pausing Automatic Builds
 

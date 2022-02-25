@@ -12,9 +12,9 @@ Cloudflare engages with your organization in an initial kickoff call to confirm 
 
 To set up a PNI connection, provide the following information:
 
-- Colocation facility where you want to connect. The location must be accessible from one of [Cloudflare's peering locations](https://www.peeringdb.com/net/4224).
-- Port speeds
-- Number of target VLANs
+*   Colocation facility where you want to connect. The location must be accessible from one of [Cloudflare's peering locations](https://www.peeringdb.com/net/4224).
+*   Port speeds
+*   Number of target VLANs
 
 Cloudflare authorizes the PNI, you place the order, and Cloudflare handles the rest.
 
@@ -32,10 +32,10 @@ To set up a cross-connect in a metropolitan area network (MAN) that does not hav
 
 To establish a vPNI connection, provide the following information:
 
-- Locations to interconnect. You must choose locations supported by our [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
-- Preferred link size
-- Number of VLANs
-- Rate Limit
+*   Locations to interconnect. You must choose locations supported by our [Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
+*   Preferred link size
+*   Number of VLANs
+*   Rate Limit
 
 Use one of our partner's dashboards to place the order, and the interconnect platform will establish the connection.
 

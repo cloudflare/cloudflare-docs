@@ -8,8 +8,8 @@ order: 1
 
 Create a [static or dynamic URL rewrite](/transform/url-rewrite) based on the parameter name provided in the `action_parameters` field:
 
-* Define the `value` parameter to specify a static URL rewrite.
-* Define the `expression` parameter to specify the expression that defines the dynamic URL rewrite to perform.
+*   Define the `value` parameter to specify a static URL rewrite.
+*   Define the `expression` parameter to specify the expression that defines the dynamic URL rewrite to perform.
 
 ## Static URL rewrite parameters
 

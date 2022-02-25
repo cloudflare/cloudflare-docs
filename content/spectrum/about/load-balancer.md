@@ -28,6 +28,7 @@ The example below shows a TCP health check configuration for an application runn
 <div class="special-class" markdown="1">
 
 ![Health Check UI](../img/load-balancing/spectrum-tcp-check.png)
+
 </div>
 </details>
 
@@ -56,6 +57,7 @@ curl 'https://api.cloudflare.com/client/v4/organizations/{ORG_ID}/load_balancers
   "method": "connection_established",
 }
 ```
+
 </div>
 </details>
 
@@ -69,10 +71,10 @@ Weight configured within a load balancer pool will be honored with load balancin
 
 All pool steering modes are available for transport load balancing through Spectrum:
 
-- [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
-- [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
-- [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
-- [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#proximity-steering): Traffic goes to the closest physical data center.
+*   [Standard failover](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#off---standard-failover): Traffic goes from unhealthy pools to the next healthy pool in your configuration.
+*   [Dynamic steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#dynamic-steering): Traffic goes to the fastest pool for a given user.
+*   [Geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering): Traffic goes to a specific geographic region or — for Enterprise customers only — specific data centers.
+*   [Proximity steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/pool-level-steering#proximity-steering): Traffic goes to the closest physical data center.
 
 ## Load balancing rules
 

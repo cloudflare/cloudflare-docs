@@ -11,9 +11,9 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 
 **🗺️ This tutorial covers how to:**
 
-* Create a Gateway policy to block file uploads to a specific provider
-* Enroll devices into a Zero Trust account where this rule will be enforced
-* Log file type upload attempts
+*   Create a Gateway policy to block file uploads to a specific provider
+*   Enroll devices into a Zero Trust account where this rule will be enforced
+*   Log file type upload attempts
 
 **⏲️ Time to complete:**
 
@@ -71,13 +71,13 @@ Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authe
 
 ## Determine which devices can enroll
 
-Next, build a rule to decide which devices can enroll in your account. 
+Next, build a rule to decide which devices can enroll in your account.
 
-1. Navigate to **Settings > Devices > Device enrollment**.
+1.  Navigate to **Settings > Devices > Device enrollment**.
 
-1. Click **Manage**.
+2.  Click **Manage**.
 
-1. Click **Add a rule**.
+3.  Click **Add a rule**.
 
     ![Device Enrollment](../static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -85,7 +85,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](../static/secure-web-gateway/block-football/allow-cf-users.png)
 
-1. Click **Save**.
+4.  Click **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
@@ -94,8 +94,9 @@ Your rule will now be visible under the **Device enrollment rules** list.
 To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/connections/connect-devices/warp/install-cloudflare-cert) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
-* Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
-* Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+
+*   Follow the link provided in [these instructions](/connections/connect-devices/warp/install-cloudflare-cert).
+*   Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -107,17 +108,17 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 ## Enroll a device
 
-1. Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
+1.  Follow the [instructions](/connections/connect-devices/warp/deployment) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
-1. Once the client is installed, click the gear icon.
+2.  Once the client is installed, click the gear icon.
 
     ![WARP](../static/secure-web-gateway/secure-dns-devices/warp.png)
 
-1. Under the **Account** tab, click **Login with Cloudflare for Teams**.
+3.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
     ![Account View](../static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-1. Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+4.  Input your [team name](/glossary#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](../static/secure-web-gateway/secure-dns-devices/org-name.png)
 

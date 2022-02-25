@@ -23,7 +23,7 @@ Cloudflare Schema Validation requires unique Operation IDs for each endpoint and
 
 ## Specifications
 
-API Shield supports API schemas using OpenAPI Specification v3. 
+API Shield supports API schemas using OpenAPI Specification v3.
 
 The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 

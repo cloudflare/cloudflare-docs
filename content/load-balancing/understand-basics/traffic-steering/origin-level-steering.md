@@ -5,7 +5,7 @@ pcx-content-type: concept
 
 # Origin steering
 
-Use **origin steering** to customize how each [pool](/understand-basics/pools) distributes traffic to its associated origins. 
+Use **origin steering** to customize how each [pool](/understand-basics/pools) distributes traffic to its associated origins.
 
 These distributions are the result of your origin steering [policy](#origin-steering-options) combined with the [weights](#weights) assigned to each origin.
 
@@ -19,12 +19,12 @@ If an origin [becomes unhealthy](/understand-basics/health-details), your pool w
 
 When you [create a pool](/how-to/create-pool), you have to choose an option for **Origin Steering**:
 
-- **Random**: Sends requests to origins purely based on [origin weights](#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
-- **Hash**: Cloudflare sends requests to origins based on a combination of [origin weights](#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same origin, but actual traffic distribution may differ from origin weights.
+*   **Random**: Sends requests to origins purely based on [origin weights](#weights). Distributes traffic more accurately, but may cause requests from the same IP to hit different origins.
+*   **Hash**: Cloudflare sends requests to origins based on a combination of [origin weights](#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same origin, but actual traffic distribution may differ from origin weights.
 
 ## Weights
 
-By default, all origins within a pool have a weight of **1**. 
+By default, all origins within a pool have a weight of **1**.
 
 If you leave each origin with the default setting and choose a **Random** origin steering policy, each pool will receive the same percentage of traffic. If you were to use a **Hash** policy, that percentage will vary based on the IP distribution of your requests.
 
@@ -42,9 +42,9 @@ To customize weights when you [create or edit a pool](/how-to/create-pool), set 
 
 Here’s an example applying weights to three origin servers with a **Random** origin steering policy:
 
-- **Weights:** Origin Server A = 0.25; Origin Server B = 0.25; Origin Server C = 0.50
-- **When all origins are healthy**, each origin will receive the following proportion of total traffic: A = 25%; B = 25%; C = 50%.
-- **When one origin is unhealthy** (such as origin C), each healthy origin will receive the following proportion of total traffic: A = 50%; B=50%.
+*   **Weights:** Origin Server A = 0.25; Origin Server B = 0.25; Origin Server C = 0.50
+*   **When all origins are healthy**, each origin will receive the following proportion of total traffic: A = 25%; B = 25%; C = 50%.
+*   **When one origin is unhealthy** (such as origin C), each healthy origin will receive the following proportion of total traffic: A = 50%; B=50%.
 
 A significant amount of traffic is required for the distribution to converge on the expected values.
 
@@ -63,7 +63,7 @@ If an origin is used in multiple pools and has multiple weights assigned, the to
 
 ### Limitations
 
-If you choose **Hash** for your **Origin Steering** or enable [session affinity](/understand-basics/session-affinity), these options can affect traffic distribution. 
+If you choose **Hash** for your **Origin Steering** or enable [session affinity](/understand-basics/session-affinity), these options can affect traffic distribution.
 
 Additionally, session affinity takes precedence over any selected weight or origin steering policy.
 

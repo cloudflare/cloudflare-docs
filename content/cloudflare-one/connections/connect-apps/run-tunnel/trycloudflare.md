@@ -9,9 +9,9 @@ Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel w
 
 ## Using TryCloudflare
 
-1. Follow [these instructions](/connections/connect-apps/install-and-setup/installation) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
-2. Launch a web server that is available over localhost to `cloudflared`.
-3. Run the following terminal command to start a free tunnel.
+1.  Follow [these instructions](/connections/connect-apps/install-and-setup/installation) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
+2.  Launch a web server that is available over localhost to `cloudflared`.
+3.  Run the following terminal command to start a free tunnel.
 
 ```sh
 $ cloudflared tunnel
@@ -28,14 +28,17 @@ $ cloudflared tunnel --url http://localhost:7000
 ## FAQ
 
 ### What are some example use cases for TryCloudflare?
-* Create a web server for a project on your laptop that you want to share with others on different networks
-* Test browser compatibility for a new site by creating a free Tunnel and testing the link in different browsers
-* Run speed tests from different regions by using a tool like Pingdom or WebPageTest to connect to the randomly-generated subdomain created by TryCloudflare
+
+*   Create a web server for a project on your laptop that you want to share with others on different networks
+*   Test browser compatibility for a new site by creating a free Tunnel and testing the link in different browsers
+*   Run speed tests from different regions by using a tool like Pingdom or WebPageTest to connect to the randomly-generated subdomain created by TryCloudflare
 
 ### Why does Cloudflare provide this service for free?
-* We want more users to experience the speed and security improvements of Cloudflare Tunnel (and Argo Smart Routing). We hope you test it with TryCloudflare and decide to add it to your production sites.
-* Cloudflare’s features historically require you to own a domain, set that domain’s DNS to Cloudflare’s nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
-* We don’t guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
+
+*   We want more users to experience the speed and security improvements of Cloudflare Tunnel (and Argo Smart Routing). We hope you test it with TryCloudflare and decide to add it to your production sites.
+*   Cloudflare’s features historically require you to own a domain, set that domain’s DNS to Cloudflare’s nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
+*   We don’t guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
 
 ### Legal
+
 Your installation of cloudflared software constitutes a symbol of your signature indicating that you accept the terms of the [Cloudflare License](/connections/connect-apps/license), [Terms](https://www.cloudflare.com/terms/) and [Privacy Policy](https://www.cloudflare.com/privacypolicy/).

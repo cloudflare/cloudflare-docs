@@ -17,6 +17,6 @@ Available as a paid add-on for customers on an Enterprise plan.
 
 When you receive such a notification:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-1. Go to **Firewall** > **Page Shield**.
-1. Check the details of each changed script in the Script Monitor dashboard, and validate if it is an expected change.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2.  Go to **Firewall** > **Page Shield**.
+3.  Check the details of each changed script in the Script Monitor dashboard, and validate if it is an expected change.

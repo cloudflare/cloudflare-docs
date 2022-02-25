@@ -10,9 +10,9 @@ The first version of SSL for SaaS will be deprecated on September 1, 2021.
 
 ## Why is SSL for SaaS changing?
 
-In SSL for SaaS v1, traffic for Custom Hostnames is proxied to the origin based on the IP addresses assigned to the zone with SSL for SaaS enabled. This IP-based routing introduces complexities that prevented customers from making changes with zero downtime. 
+In SSL for SaaS v1, traffic for Custom Hostnames is proxied to the origin based on the IP addresses assigned to the zone with SSL for SaaS enabled. This IP-based routing introduces complexities that prevented customers from making changes with zero downtime.
 
-SSL for SaaS v2 removes IP-based routing and its associated problems. Instead, traffic is proxied to the origin based on the custom hostname of the SaaS zone. This means that Custom Hostnames will now need to pass a **hostname verification** step after Custom Hostname creation and in addition to SSL certificate validation. This adds a layer of security from SSL for SaaS v1 by ensuring that only verified hostnames are proxied to your origin. 
+SSL for SaaS v2 removes IP-based routing and its associated problems. Instead, traffic is proxied to the origin based on the custom hostname of the SaaS zone. This means that Custom Hostnames will now need to pass a **hostname verification** step after Custom Hostname creation and in addition to SSL certificate validation. This adds a layer of security from SSL for SaaS v1 by ensuring that only verified hostnames are proxied to your origin.
 
 ## What action is needed?
 
@@ -24,15 +24,15 @@ Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps yo
 
 #### DNS TXT Record
 
-When creating a Custom Hostname with the TXT method through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab. 
+When creating a Custom Hostname with the TXT method through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership\_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
 #### HTTP Token
 
-When creating a Custom Hostname with the HTTP through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+When creating a Custom Hostname with the HTTP through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership\_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
 
-Cloudflare sends GET requests to the http_url using `User-Agent: Cloudflare Custom Hostname Verification`.
+Cloudflare sends GET requests to the http\_url using `User-Agent: Cloudflare Custom Hostname Verification`.
 
-When the HTTP token is verified, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab. 
+When the HTTP token is verified, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
 ### Other validation methods
 
@@ -44,7 +44,7 @@ Custom Hostnames can also be validated once Cloudflare detects that the Custom H
 
 Once you have tested and added the hostname validation step to your Custom Hostname creation process, please contact your Cloudflare Account Team to schedule a date to migrate your SSL for SaaS v1 zones. Your Cloudflare Account Team will work with you to validate your existing Custom Hostnames without downtime.
 
-## If you are using BYOIP or Apex Proxying: 
+## If you are using BYOIP or Apex Proxying:
 
 Both BYOIP addresses and IP addresses configured for Apex Proxying allow for hostname validation to complete successfully by having either a BYOIP address or an Apex Proxy IP address as the target of a DNS A record for a custom hostname.
 
@@ -54,7 +54,7 @@ SSL for SaaS v2 is functionally equivalent to SSL for SaaS v1, but removes the r
 
 ## What happens during the migration?
 
-Once the migration has been started for your zone(s), Cloudflare will require every Custom Hostname to pass a hostname verification check. Existing Custom Hostnames that are proxying to Cloudflare with a DNS CNAME record will automatically re-validate and migrate to the new version with no downtime. Any Custom Hostnames created after the start of the migration will need to pass the hostname validation check using one of the validation methods mentioned above. 
+Once the migration has been started for your zone(s), Cloudflare will require every Custom Hostname to pass a hostname verification check. Existing Custom Hostnames that are proxying to Cloudflare with a DNS CNAME record will automatically re-validate and migrate to the new version with no downtime. Any Custom Hostnames created after the start of the migration will need to pass the hostname validation check using one of the validation methods mentioned above.
 
 <Aside type='note'>
 
@@ -66,25 +66,25 @@ You can revert the migration at any time.
 
 Before your migration, you should:
 
-1. To test validation methods, set up a test zone and ask your Solutions Engineer (SE) to enable SSL for SaaS v2.
-1. Wait for your SE to run our pre-migration tool. This tool groups your hostnames into one of the following statuses:
-    - `test_pending`: In the process of being verified or was unable to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
-    - `test_active`: Passed CNAME verification
-    - `test_active_apex`: Passed Apex Proxy verification
-    - `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
-    - `test_failed`: Failed hostname verification 25 times
-1. Review the results of our pre-migration tool (run by your Solutions Engineer) using one of the following methods:
-    - Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
-    - Via a CSV file (provided by your SE)
-    - Via the Cloudflare dashboard:
-    ![Review SSL migration status in the dashboard](../../static/ssl-migration-status.png)
-1. Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
+1.  To test validation methods, set up a test zone and ask your Solutions Engineer (SE) to enable SSL for SaaS v2.
+2.  Wait for your SE to run our pre-migration tool. This tool groups your hostnames into one of the following statuses:
+    *   `test_pending`: In the process of being verified or was unable to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
+    *   `test_active`: Passed CNAME verification
+    *   `test_active_apex`: Passed Apex Proxy verification
+    *   `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
+    *   `test_failed`: Failed hostname verification 25 times
+3.  Review the results of our pre-migration tool (run by your Solutions Engineer) using one of the following methods:
+    *   Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
+    *   Via a CSV file (provided by your SE)
+    *   Via the Cloudflare dashboard:
+        ![Review SSL migration status in the dashboard](../../static/ssl-migration-status.png)
+4.  Approve the migration. Your Cloudflare account team will work with you to schedule a migration window for each of your SSL for SaaS zones.
 
 ## During the migration
 
 After the migration has started and has had some time to progress, Cloudflare will generate a list of Custom Hostnames that failed to migrate and ask for your approval to complete the migration. When you give your approval, the migration will be complete, SSL for SaaS v1 will be disabled for the zone, and any Custom Hostname that has not completed hostname validation will no longer function.
 
-The migration timeline depends on the number of Custom Hostnames. For example, if a zone has fewer than 10,000 Custom Hostnames, the list can be generated around an hour after beginning the migration. If a zone has millions of Custom Hostnames, it may take up to 24 hours to identify instances that failed to successfully migrate. 
+The migration timeline depends on the number of Custom Hostnames. For example, if a zone has fewer than 10,000 Custom Hostnames, the list can be generated around an hour after beginning the migration. If a zone has millions of Custom Hostnames, it may take up to 24 hours to identify instances that failed to successfully migrate.
 
 When your Cloudflare Account Team asks for approval to complete the migration, please respond in a timely manner. You will have **two weeks** to validate any remaining Custom Hostnames before they are systematically deleted.
 
@@ -96,4 +96,4 @@ If you would like to begin the migration process before March 31, 2021, please c
 
 ## What if I have additional questions?
 
-If you have any questions, please contact your Cloudflare Account Team or [SaaSv2@cloudflare.com](mailto:SaaSv2@cloudflare.com). 
+If you have any questions, please contact your Cloudflare Account Team or <SaaSv2@cloudflare.com>.

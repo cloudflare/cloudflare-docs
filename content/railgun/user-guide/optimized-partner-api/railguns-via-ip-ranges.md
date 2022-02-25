@@ -7,7 +7,7 @@ pcx-content-type: configuration
 
 It is possible to make a Railgun available to domains via IP ranges. This can be done by setting one or more IP range(s) that a Railgun will use. Once the Railgun IP Range(s) have been set, any domains that have origin IP(s) that fall within a Railgun’s IP Range(s) will have the ability to select and enable the Railgun.
 
-## POST ipr_set
+## POST ipr\_set
 
 `POST /api/v2/railgun/ipr_set`
 
@@ -20,9 +20,9 @@ The input format for this type is address/y where address is an IPv4 or IPv6 add
 For internal reasons, Cloudflare restricts the netmask range of 8 < netmask < 32 for IPv4 and 112 < netmask < 128 for IPv6.
 
 ### Form parameters
- 	
-* **rtkn** – Railgun token
-* **ipr** – One or more Railgun IP addresses/ranges. Use JSON array format.
+
+*   **rtkn** – Railgun token
+*   **ipr** – One or more Railgun IP addresses/ranges. Use JSON array format.
 
 <details>
 <summary>Example request</summary>

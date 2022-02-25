@@ -5,8 +5,8 @@ type: overview
 pcx-content-type: navigation
 ---
 
-import PlanIntro from "../_partials/_plan-intro.md"
-import GetStarted from "../_partials/_plan-get-started.md"
+import PlanIntro from "../\_partials/\_plan-intro.md"
+import GetStarted from "../\_partials/\_plan-get-started.md"
 
 # Cloudflare bot plans
 

@@ -22,8 +22,8 @@ To set up your static routes, refer to [Create static routes](/get-started/confi
 
 ## Supported IPsec configuration parameters
 
-- Auth is PSK
-- Supported encryption proposal: aes256gcm16-prfsha512-modp2048
-- Remote Port of 500
-- 0s reauth time or no reauth
-- 4h rekey time
+*   Auth is PSK
+*   Supported encryption proposal: aes256gcm16-prfsha512-modp2048
+*   Remote Port of 500
+*   0s reauth time or no reauth
+*   4h rekey time

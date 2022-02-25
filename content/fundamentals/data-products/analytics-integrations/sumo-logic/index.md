@@ -17,14 +17,15 @@ This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and
 
 Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 
-- Have an existing Sumo Logic account
-- Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
-- Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
+*   Have an existing Sumo Logic account
+*   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
+*   Configure [Logpush](https://developers.cloudflare.com/logs/about) or [Logpull](https://developers.cloudflare.com/logs/logpull)
+*   Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
 <Aside type="note" header="Note">
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Sumo Logic.
+
 </Aside>
 
 ## Task 1 - Send Cloudflare Logs data to Sumo Logic
@@ -35,27 +36,27 @@ You can use either **Cloudflare Logpush** or **AWS S3** to send your Cloudflare 
 
 To enable Cloudflare Logpush in Sumo Logic:
 
-1. Configure a [Hosted Collector](https://help.sumologic.com/03Send-Data/Hosted-Collectors/Configure-a-Hosted-Collector).
+1.  Configure a [Hosted Collector](https://help.sumologic.com/03Send-Data/Hosted-Collectors/Configure-a-Hosted-Collector).
 
-2. Configure an [HTTP Logs and Metrics Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source).
+2.  Configure an [HTTP Logs and Metrics Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source).
 
-3. Provide the _HTTP Source Address (URL)_ required by the Cloudflare Logpush API or Cloudflare dashboard UI.
+3.  Provide the *HTTP Source Address (URL)* required by the Cloudflare Logpush API or Cloudflare dashboard UI.
 
-4. Enable [Cloudflare Logpush to Sumo Logic](https://developers.cloudflare.com/logs/get-started/enable-destinations/sumo-logic).
+4.  Enable [Cloudflare Logpush to Sumo Logic](https://developers.cloudflare.com/logs/get-started/enable-destinations/sumo-logic).
 
 ### 1.2 Send log data via AWS S3
 
 To connect AWS S3 to Sumo Logic:
 
-1. [Configure your AWS S3 Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source).
+1.  [Configure your AWS S3 Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source).
 
-2. Begin collecting Cloudflare logs data.
+2.  Begin collecting Cloudflare logs data.
 
 ## Task 2 - Filter Workers requests
 
 If you have [Cloudflare Workers](https://www.cloudflare.com/products/cloudflare-workers/) enabled and want to filter them out from the logs, do the following:
 
-Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is _true_, as illustrated below:
+Under **Processing Rules for Logs** create a **Filter** (processing rule regex on our Cloudflare collector) to exclude any log data where **WorkerSubrequest** is *true*, as illustrated below:
 
 ![Sumo Logic Processing Rules for Logs](../../../static/images/sumo-logic/screenshots/exclude_Workers-sumo_logic.png)
 
@@ -63,10 +64,10 @@ Under **Processing Rules for Logs** create a **Filter** (processing rule regex o
 
 To install the [Cloudflare App for Sumo Logic](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare):
 
-1. In the Sumo Logic UI, click **App Catalog** and search for _Cloudflare_.
-   ![Sumo Logic Cloudflare in App Catalog](../../../static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
+1.  In the Sumo Logic UI, click **App Catalog** and search for *Cloudflare*.
+    ![Sumo Logic Cloudflare in App Catalog](../../../static/images/sumo-logic/screenshots/cloudflare-app-sumo-logic-app-catalog.png)
 
-2. Click **Add to Library** and specify the **Source** category _Cloudflare_, which was completed in Step 1.
+2.  Click **Add to Library** and specify the **Source** category *Cloudflare*, which was completed in Step 1.
 
 You should now be able to see the Cloudflare dashboards populated with your Cloudflare log data.
 
@@ -132,39 +133,40 @@ Click the **funnel icon** in the top dashboard menu bar to display a scrollable 
 <Aside type="note" header="Note">
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
+
 </Aside>
 
 Each panel has a set of filters that are applied to the results for that panel only, as shown in the following example. Click the funnel icon in the top panel menu bar to display a list of panel-specific filters.
 
-The default time interval is set to 24 hours. Note that for correct filter calculations, you need to exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
+The default time interval is set to 24 hours. Note that for correct filter calculations, you need to exclude Worker subrequests (**WorkerSubrequest** = *false*) and purge requests (**ClientRequestMethod** is not *PURGE*).
 
 #### Available Filters
 
-- Date (EdgeStartTimestamp)
+*   Date (EdgeStartTimestamp)
 
-- client_country
+*   client\_country
 
-- client_device_type
+*   client\_device\_type
 
-- client_ip
+*   client\_ip
 
-- client_request_host
+*   client\_request\_host
 
-- client_request_method
+*   client\_request\_method
 
-- client_request_uri
+*   client\_request\_uri
 
-- client_request_user_agent
+*   client\_request\_user\_agent
 
-- edge_response_status
+*   edge\_response\_status
 
-- origin_ip
+*   origin\_ip
 
-- origin_response_status
+*   origin\_response\_status
 
-- ray_id
+*   ray\_id
 
-- worker_subrequest
+*   worker\_subrequest
 
 ## Debugging tips
 
@@ -176,102 +178,102 @@ If that is the case, verify and test the Cloudflare App filters below each dashb
 
 The available fields are:
 
-- CacheCacheStatus
+*   CacheCacheStatus
 
-- CacheResponseBytes
+*   CacheResponseBytes
 
-- CacheResponseStatus
+*   CacheResponseStatus
 
-- ClientASN
+*   ClientASN
 
-- ClientCountry
+*   ClientCountry
 
-- ClientDeviceType
+*   ClientDeviceType
 
-- ClientIP
+*   ClientIP
 
-- ClientIPClass
+*   ClientIPClass
 
-- ClientRequestBytes
+*   ClientRequestBytes
 
-- ClientRequestHost
+*   ClientRequestHost
 
-- ClientRequestMethod
+*   ClientRequestMethod
 
-- ClientRequestPath
+*   ClientRequestPath
 
-- ClientRequestProtocol
+*   ClientRequestProtocol
 
-- ClientRequestReferer
+*   ClientRequestReferer
 
-- ClientRequestURI
+*   ClientRequestURI
 
-- ClientRequestUserAgent
+*   ClientRequestUserAgent
 
-- ClientSSLCipher
+*   ClientSSLCipher
 
-- ClientSSLProtocol
+*   ClientSSLProtocol
 
-- ClientSrcPort
+*   ClientSrcPort
 
-- EdgeColoCode
+*   EdgeColoCode
 
-- EdgeColoID
+*   EdgeColoID
 
-- EdgeEndTimestamp
+*   EdgeEndTimestamp
 
-- EdgePathingOp
+*   EdgePathingOp
 
-- EdgePathingSrc
+*   EdgePathingSrc
 
-- EdgePathi
+*   EdgePathi
 
-- ngStatus
+*   ngStatus
 
-- EdgeRateLimitAction
+*   EdgeRateLimitAction
 
-- EdgeRateLimitID
+*   EdgeRateLimitID
 
-- EdgeRequestHost
+*   EdgeRequestHost
 
-- EdgeResponseBytes
+*   EdgeResponseBytes
 
-- EdgeResponseContentType
+*   EdgeResponseContentType
 
-- EdgeResponseStatus
+*   EdgeResponseStatus
 
-- EdgeServerIP
+*   EdgeServerIP
 
-- EdgeStartTimestamp
+*   EdgeStartTimestamp
 
-- FirewallMatchesActions
+*   FirewallMatchesActions
 
-- FirewallMatchesSources
+*   FirewallMatchesSources
 
-- FirewallMatchesRuleIDs
+*   FirewallMatchesRuleIDs
 
-- OriginIP
+*   OriginIP
 
-- OriginResponseStatus
+*   OriginResponseStatus
 
-- OriginResponseTime
+*   OriginResponseTime
 
-- OriginSSLProtocol
+*   OriginSSLProtocol
 
-- RayID
+*   RayID
 
-- WAFAction
+*   WAFAction
 
-- WAFFlags
+*   WAFFlags
 
-- WAFMatchedVar
+*   WAFMatchedVar
 
-- WAFProfile
+*   WAFProfile
 
-- WAFRuleID
+*   WAFRuleID
 
-- WAFRuleMessage
+*   WAFRuleMessage
 
-- WorkerSubrequest
+*   WorkerSubrequest
 
-- ZoneID
+*   ZoneID

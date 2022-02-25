@@ -7,11 +7,11 @@ type: overview
 
 # List and view rulesets
 
-* [List existing rulesets](#list-existing-rulesets)
-* [View a specific ruleset](#view-a-specific-ruleset)
-* [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
-* [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset)
-* [List rules in a Managed Ruleset with a specific tag](#list-rules-in-a-managed-ruleset-with-a-specific-tag)
+*   [List existing rulesets](#list-existing-rulesets)
+*   [View a specific ruleset](#view-a-specific-ruleset)
+*   [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
+*   [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset)
+*   [List rules in a Managed Ruleset with a specific tag](#list-rules-in-a-managed-ruleset-with-a-specific-tag)
 
 ## List existing rulesets
 
@@ -25,13 +25,14 @@ Use one of the following API endpoints:
 | [List zone rulesets][lr-zone]       | `GET /zones/<ZONE_ID>/rulesets`       |
 
 [lr-account]: https://api.cloudflare.com/#account-rulesets-list-account-rulesets
+
 [lr-zone]: https://api.cloudflare.com/#zone-rulesets-list-zone-rulesets
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
 Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy to the specified zone.
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on which ruleset types are allowed in that product’s supported phases.
 
@@ -93,20 +94,23 @@ Use one of the following API endpoints:
 | [Get zone entry point ruleset][gep-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
 [gr-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset
+
 [gr-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset
+
 [gep-account]: https://api.cloudflare.com/#account-rulesets-get-entrypoint-ruleset
+
 [gep-zone]: https://api.cloudflare.com/#zone-rulesets-get-entrypoint-ruleset
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
-Note: You can only use the _Get a zone ruleset_ operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
+Note: You can only use the *Get a zone ruleset* operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
 
 </Aside>
 
 The API returns a `404 Not Found` HTTP status code under these conditions:
 
-* When a ruleset cannot be found.
-* When the specified ruleset is not a Managed Ruleset the calling account is entitled to execute.
+*   When a ruleset cannot be found.
+*   When the specified ruleset is not a Managed Ruleset the calling account is entitled to execute.
 
 ### Example
 
@@ -172,7 +176,9 @@ Use one of the following API endpoints:
 | [List versions of a zone entry point ruleset][lvep-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions` |
 
 [lv-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-account-ruleset
+
 [lvep-account]: https://api.cloudflare.com/#account-rulesets-list-versions-of-an-entrypoint-ruleset
+
 [lvep-zone]: https://api.cloudflare.com/#zone-rulesets-list-versions-of-an-entrypoint-ruleset
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
@@ -244,8 +250,11 @@ Use one of the following API endpoints:
 | [Get zone entry point ruleset version][gepv-zone] | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>` |
 
 [grv-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset-version
+
 [grv-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset-version
+
 [gepv-account]: https://api.cloudflare.com/#account-rulesets-get-an-entrypoint-ruleset-version
+
 [gepv-zone]: https://api.cloudflare.com/#zone-rulesets-get-an-entrypoint-ruleset-version
 
 You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a Managed Ruleset.
@@ -302,7 +311,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 </div>
 </details>
 
-<Aside type='note' header='Note'>
+\<Aside type='note' header='Note'>
 
 When you view a specific version of a Managed Ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 

@@ -9,11 +9,12 @@ The GraphQL Analytics API is a RESTful API based on HTTPS requests and JSON resp
 
 All responses contain an `errors` array, which will be `null` if there are no errors, and include at least one error object if there was an error. Non-null error objects will contain the following fields:
 
-- `message`: a string describing the error.
-- `path`: the nodes associated with the error, starting from the root. Note that the number included in the path array, for example, `0` or `1`, specifies to which zone the error applies; `0` indicates the first zone in the list (or only zone, if only one is being queried).
-- `timestamp`: UTC datetime when the error occurred.
+*   `message`: a string describing the error.
+*   `path`: the nodes associated with the error, starting from the root. Note that the number included in the path array, for example, `0` or `1`, specifies to which zone the error applies; `0` indicates the first zone in the list (or only zone, if only one is being queried).
+*   `timestamp`: UTC datetime when the error occurred.
 
 ## Example
+
 ```json
 {
   "data": null,
@@ -40,8 +41,8 @@ All responses contain an `errors` array, which will be `null` if there are no er
 
 Sample error messages:
 
-- "cannot request data older than..."
-- "number of fields cannot be more than..."
+*   "cannot request data older than..."
+*   "number of fields cannot be more than..."
 
 These messages indicate that the query exceeds what is allowed for the particular dataset under your plan. Refer to [Data accessibility](/graphql-api/limits/#data-accessibility) for details.
 
@@ -49,8 +50,8 @@ These messages indicate that the query exceeds what is allowed for the particula
 
 Sample error messages:
 
-- "error parsing args..."
-- "scalar fields must have not selections"
+*   "error parsing args..."
+*   "scalar fields must have not selections"
 
 These messages indicate that the query cannot be processed because it is malformed.
 
@@ -58,5 +59,5 @@ These messages indicate that the query cannot be processed because it is malform
 
 Sample error messages:
 
-- "limit reached, please try reduced time period"
-- "quota exceeded, please repeat your request in the next minute"
+*   "limit reached, please try reduced time period"
+*   "quota exceeded, please repeat your request in the next minute"

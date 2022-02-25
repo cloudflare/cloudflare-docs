@@ -27,18 +27,22 @@ To install the Cloudflare root certificate, follow the steps found [here](/conne
 </div>
 
 We present an HTTP error page in the following cases:
-1. **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
-  * The server certificate issuer is unknown or is not trusted by the service.
-  * The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
-  * There is at least one expired certificate in the certificate chain for the server certificate
-1. **Common certificate errors occur**. For example,  in the event of a certificate common name mismatch.
-1. **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+
+1.  **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
+
+*   The server certificate issuer is unknown or is not trusted by the service.
+*   The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
+*   There is at least one expired certificate in the certificate chain for the server certificate
+
+1.  **Common certificate errors occur**. For example,  in the event of a certificate common name mismatch.
+2.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
-* Operating System (Windows 10, macOS 10.x, iOS 14.x)
-* Web browser (Chrome, Firefox, Safari, Edge)
-* URL of the request
-* Screenshot or copy/paste of the content from the error page
+
+*   Operating System (Windows 10, macOS 10.x, iOS 14.x)
+*   Web browser (Chrome, Firefox, Safari, Edge)
+*   URL of the request
+*   Screenshot or copy/paste of the content from the error page
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -46,16 +50,17 @@ If you see this page, providing as much information as possible to the local IT 
 
 You may not see analytics on the Overview page for the following reasons:
 
-* **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
-* **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-* **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
-* **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
+*   **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
+*   **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
+*   **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
+*   **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ## I see a "No Browsers Available" alert.
 
 If you encounter this error please [file feedback](/policies/browser-isolation/known-limitations) via the WARP client and we will investigate.
 
 ## I see a "Maximum Sessions Reached" alert.
+
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
@@ -65,22 +70,23 @@ A browser isolation session is a connection from your local browser to a remote 
 
 This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
 
-1. In the Google Admin console, navigate to **Security** > **API controls**.
-1. Check the *Trust internal, domain-owned apps* option.
+1.  In the Google Admin console, navigate to **Security** > **API controls**.
+2.  Check the *Trust internal, domain-owned apps* option.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
 This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL inspection in a proxy between your server and Cloudflare. To solve this:
-* Add the certificate to the system certificate pool.
-* Use the `--origin-ca-pool` flag and specify the path to the certificate.
-* Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
+
+*   Add the certificate to the system certificate pool.
+*   Use the `--origin-ca-pool` flag and specify the path to the certificate.
+*   Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
 
 ## I see an error 1033 when attempting to run a tunnel.
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers. 
-1. Make sure you run your tunnel (step 6 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#6-run-the-tunnel).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/connections/connect-apps/routing-to-tunnel/lb) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/connections/connect-apps/install-and-setup/tunnel-guide#6-run-the-tunnel).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
@@ -93,13 +99,13 @@ This error will appear if a certificate has not been generated for the Access ap
 These mobile applications may use [certificate pinning](/glossary#certificate-pinning). Cloudflare Gateway dynamically generates a certificate for all encrypted connections in order to inspect the content of HTTP traffic. This certificate will not match the expected certificate by applications that use certificate pinning.
 To allow these applications to function normally, administrators can configure bypass rules to exempt traffic to hosts associated with the application from being intercepted and inspected.
 
-## My tunnel fails to authenticate. 
+## My tunnel fails to authenticate.
 
 To start using Cloudflare Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
 
-* The public key of the origin certificate for that hostname
-* The private key of the origin certificate for that domain
-* A token that is unique to Cloudflare Tunnel
+*   The public key of the origin certificate for that hostname
+*   The private key of the origin certificate for that domain
+*   A token that is unique to Cloudflare Tunnel
 
 Those three components are bundled into a single PEM file that is downloaded one time during that login flow. The host certificate is valid for the root domain and any subdomain one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to create DNS records for your domain in Cloudflare.
 
@@ -117,10 +123,10 @@ If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able t
 
 There are a few different possible root causes behind the `websocket: bad handshake` error:
 
-* Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
-* WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
-* Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
-* Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
+*   Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
+*   WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
+*   Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to *Off*. To resolve, set the SSL/TLS encryption mode to any setting other than *Off*.
+*   Your requests are blocked by [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to *Allow* in the bot fight mode settings.
 
 ## Connections are timing out after 270 seconds
 

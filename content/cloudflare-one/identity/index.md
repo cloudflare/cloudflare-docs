@@ -17,5 +17,5 @@ Additionally, Cloudflare Zero Trust can integrate with [endpoint protection prov
 
 ## Related tutorials
 
-* [Require U2F keys with Okta](/tutorials/okta-u2f)
-* [Troubleshoot user login details](/tutorials/user-diagnostics)
+*   [Require U2F keys with Okta](/tutorials/okta-u2f)
+*   [Troubleshoot user login details](/tutorials/user-diagnostics)

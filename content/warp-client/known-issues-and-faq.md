@@ -12,9 +12,9 @@ Below you will find answers to our most commonly asked questions regarding the W
 
 As our [Network Map](https://www.cloudflare.com/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the server you are connecting to is not necessarily the one physically closest to your location. This can be due to a number of reasons:
 
-* We work hard to prevent it, but sometimes your nearest server might be having problems. [Check the system status](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for more information.
-* Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
-* Not all Cloudflare locations are WARP enabled. We are constantly evaluating performance and how users are connecting, bringing more servers online with WARP all the time.
+*   We work hard to prevent it, but sometimes your nearest server might be having problems. [Check the system status](https://www.cloudflarestatus.com/?_ga=2.155811579.1117044671.1600983837-1079355427.1599074097) for more information.
+*   Your Internet provider may choose to route traffic along an alternate path for reasons such as cost savings, reliability, or other infrastructure concerns.
+*   Not all Cloudflare locations are WARP enabled. We are constantly evaluating performance and how users are connecting, bringing more servers online with WARP all the time.
 
 ## Why is my public IP address sometimes visible?
 
@@ -34,7 +34,7 @@ Cloudflare WARP and the 1.1.1.1 with WARP applications go through performance te
 
 The WARP client for Windows requires .NET Framework version 4.7.2 or later to be installed on your computer.
 
----
+***
 
 ## Known issues
 

@@ -19,7 +19,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `{{ system.page.query.QUERY_PARAM }}`| String | Returns the value of a URL query parameter. Replace QUERY_PARAM with the name of your parameter. |
+| `{{ system.page.query.QUERY_PARAM }}`| String | Returns the value of a URL query parameter. Replace QUERY\_PARAM with the name of your parameter. |
 | `{{ system.page.title }}`| String | Returns the page title. |
 | `{{ system.page.url.search }}`| String | Returns search parameters provided, beginning with the leading `?` character. |
 | `{{ system.page.url.pathname }}`| String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment. |
@@ -51,7 +51,6 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 | `{{ system.misc.random }}`| Number | Returns a random number unique to each request. |
 | `{{ system.misc.timestamp }}`| Number | Returns Unix time in seconds. |
 | `{{ system.misc.timestampMilliseconds }}`| Number | Returns Unix time in milliseconds. |
-
 
 </TableWrap>
 

@@ -48,38 +48,41 @@ Create a Firewall Rule based on the filters and exclusions you select within Fir
 
 To create a new Firewall Rule:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-1. Navigate to **Firewall** > **Firewall Rules**.
-1. Click **Create a Firewall Rule**.
-1. In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-   ![Create Firewall Rule](../images/create-firewall-rule-1.png)
+2.  Navigate to **Firewall** > **Firewall Rules**.
 
-1. Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
+3.  Click **Create a Firewall Rule**.
 
-   ![Select field](../images/firewall-rules-expression-builder-3.png)
+4.  In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
 
-1. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
+    ![Create Firewall Rule](../images/create-firewall-rule-1.png)
 
-   ![Select operator](../images/firewall-rules-expression-builder-4.png)
+5.  Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
-   In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, refer to [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
+    ![Select field](../images/firewall-rules-expression-builder-3.png)
 
-1. Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
+6.  Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
-   ![Select value](../images/firewall-rules-expression-builder-value.png)
+    ![Select operator](../images/firewall-rules-expression-builder-4.png)
 
-1. To set an action for your rule, use the **Action** drop-down list. In this example the _Block_ action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
+    In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, refer to [Edit rule expressions](/cf-dashboard/expression-preview-editor/).
 
-   ![Select action](../images/firewall-rules-expression-builder-5.png)
+7.  Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value *United Kingdom* is set using the **Country** drop-down list.
 
-1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
+    ![Select value](../images/firewall-rules-expression-builder-value.png)
+
+8.  To set an action for your rule, use the **Action** drop-down list. In this example the *Block* action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
+
+    ![Select action](../images/firewall-rules-expression-builder-5.png)
+
+9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
 
 After you choose an option, you are returned to the **Rules List**, which displays your new rule:
 
 ![Rules List](../images/firewall-rules-expression-builder-11.png)
 
-If you choose to deploy your new rule, the toggle switch associated with the rule will be _On_. If you save the rule as a draft, the toggle will be _Off_. Use the toggle to enable or disable your Firewall Rule.
+If you choose to deploy your new rule, the toggle switch associated with the rule will be *On*. If you save the rule as a draft, the toggle will be *Off*. Use the toggle to enable or disable your Firewall Rule.
 
 ## Manage rules
 

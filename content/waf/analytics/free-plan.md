@@ -4,10 +4,10 @@ pcx-content-type: reference
 title: Free plan
 ---
 
-import FilterReportDuration from "../_partials/_analytics-filter-report-duration.md"
-import ActivityLog from "../_partials/_analytics-activity-log.md"
-import CreateFirewallRule from "../_partials/_analytics-create-firewall-rule.md"
-import ShareFilters from "../_partials/_analytics-share-url.md"
+import FilterReportDuration from "../\_partials/\_analytics-filter-report-duration.md"
+import ActivityLog from "../\_partials/\_analytics-activity-log.md"
+import CreateFirewallRule from "../\_partials/\_analytics-create-firewall-rule.md"
+import ShareFilters from "../\_partials/\_analytics-share-url.md"
 
 # Firewall Analytics — Free plan
 

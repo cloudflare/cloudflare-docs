@@ -12,22 +12,22 @@ Cloudflare partners with multiple network fabric providers to offer as many conn
 
 <Aside type='note'>
 
-You can read more about the partner program on our website. See 
- the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
+You can read more about the partner program on our website. See
+the [Cloudflare Network Interconnect Partner Program](https://www.cloudflare.com/network-interconnect-partnerships/).
 
 </Aside>
 
-* [Console Connect](/partners/console-connect)
-* [Equinix Fabric](/partners/equinix-fabric)
-* [Megaport](/partners/megaport)
-* [PacketFabric](/partners/packet-fabric)
-* CoreSite OCX (_coming soon_)
-* Epsilon Infiny (_coming soon_)
-* Zayo (_coming soon_)
+*   [Console Connect](/partners/console-connect)
+*   [Equinix Fabric](/partners/equinix-fabric)
+*   [Megaport](/partners/megaport)
+*   [PacketFabric](/partners/packet-fabric)
+*   CoreSite OCX (*coming soon*)
+*   Epsilon Infiny (*coming soon*)
+*   Zayo (*coming soon*)
 
 <Aside type='note'>
 
-If you can't find a Cloudflare port close to your infrastructure from your fabric provider's dashboard, contact interconnection@cloudflare.com to request a port closer to your location under the _Interconnect Anywhere_ program.
+If you can't find a Cloudflare port close to your infrastructure from your fabric provider's dashboard, contact interconnection@cloudflare.com to request a port closer to your location under the *Interconnect Anywhere* program.
 
 </Aside>
 
@@ -36,7 +36,7 @@ If you can't find a Cloudflare port close to your infrastructure from your fabri
 Cloudflare collaborates with data center providers to streamline the physical network interconnect provisioning process in our physical locations. The locations below are available with our PNI partners.
 
 Metro | Data Center
----------|----------
+\---------|----------
 | **Africa** |
 Cape Town | [Teraco Cape Town, South Africa](https://www.peeringdb.com/fac/1225)
 Johannesburg | [Teraco Johannesburg Campus, South Africa](https://www.peeringdb.com/fac/850)

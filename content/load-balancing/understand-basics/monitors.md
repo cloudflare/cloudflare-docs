@@ -3,8 +3,8 @@ order: 1
 pcx-content-type: concept
 ---
 
-import MonitorDefinition from "../_partials/_monitor-definition.md"
-import HealthCheckRegions from "../_partials/_health-check-regions.md"
+import MonitorDefinition from "../\_partials/\_monitor-definition.md"
+import HealthCheckRegions from "../\_partials/\_health-check-regions.md"
 
 # Monitors
 
@@ -20,19 +20,19 @@ Health checks associated with load balancers are different from <strong>Standalo
 
 </Aside>
 
----
+***
 
 ## Properties
 
 For an up-to-date list of monitor properties, refer to [Monitor properties](https://api.cloudflare.com/#load-balancer-monitors-properties) in our API documentation.
 
----
+***
 
 ## Create monitors
 
 For step-by-step guidance, refer to [Create monitors](/how-to/create-monitor).
 
----
+***
 
 ## Health check regions
 
@@ -46,13 +46,13 @@ Because of how Cloudflare checks health from [multiple regions](#health-check-re
 
 The same problem can occur when setting low values for a monitor's **Interval**.
 
----
+***
 
 ## Host header prioritization
 
 When a load balancer runs health checks, headers set on an origin override headers set on a monitor. For more details, refer to [Override HTTP Host headers](/additional-options/override-http-host-headers).
 
----
+***
 
 ## API commands
 

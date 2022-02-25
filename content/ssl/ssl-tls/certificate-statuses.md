@@ -7,11 +7,11 @@ pcx-content-type: reference
 
 Certificates move through the following stages as they progress to Cloudflare’s edge:
 
-1. Initializing
-2. Pending Validation
-3. Pending Issuance
-4. Pending Deployment
-5. Active
+1.  Initializing
+2.  Pending Validation
+3.  Pending Issuance
+4.  Pending Deployment
+5.  Active
 
 Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** within five minutes. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
 

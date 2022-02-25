@@ -9,12 +9,12 @@ pcx-content-type: reference
 
 | Command | Description |
 | ------- | ----------- |
-| `cloudflared tunnel login` | Prompts a browser window where you can authenticate your tunnel to your Cloudflare account. | 
+| `cloudflared tunnel login` | Prompts a browser window where you can authenticate your tunnel to your Cloudflare account. |
 | `cloudflared tunnel list` | Displays all active tunnels, their creation time, and associated connections. Use the `-d` flag to include deleted tunnels.  |
 | `cloudflared tunnel create <NAME or UUID>` | Creates a tunnel, registers it with the Cloudflare edge and generates a credential file to run this tunnel.  |
 | `cloudflared tunnel route` | Routes traffic through a tunnel. |
 | `cloudflared tunnel route lb <NAME or UUID> <load balancer name> <load balancer pool>` | Creates a Load Balancer with an origin pool that points to the tunnel. |
-| `cloudflared tunnel route ip add <IP/CIDR> <NAME or UUID>` | Adds any network route space (represented as a CIDR) to your routing table. That network space becomes reachable for requests egressing from a user’s machine as long as it is using Cloudflare WARP and is enrolled in the same account that is running the tunnel chosen here. Further, those requests will be proxied to the specified tunnel, and reach an IP in the given CIDR, as long as that IP is reachable from the tunnel. | 
+| `cloudflared tunnel route ip add <IP/CIDR> <NAME or UUID>` | Adds any network route space (represented as a CIDR) to your routing table. That network space becomes reachable for requests egressing from a user’s machine as long as it is using Cloudflare WARP and is enrolled in the same account that is running the tunnel chosen here. Further, those requests will be proxied to the specified tunnel, and reach an IP in the given CIDR, as long as that IP is reachable from the tunnel. |
 | `cloudflared tunnel route ip show` (or `list`) | Shows your organization’s private routing table. You can use additional flags to filter the results. |
 | `cloudflared tunnel route ip delete` | Deletes the row for a given CIDR from your routing table. That portion of your network will no longer be reachable by the WARP client. |
 | `cloudflared tunnel route ip get <IP/CIDR>` | Checks which row of the routing table will be used to proxy a given IP. This helps check and validate your configuration. |

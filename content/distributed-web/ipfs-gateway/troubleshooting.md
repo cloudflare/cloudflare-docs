@@ -39,15 +39,11 @@ they're still not discoverable by other gateways, it's possible the node is
 having trouble announcing the files to the rest of the network. You can make
 sure the node with the content has pinned it by running:
 
-```
-ipfs pin -r <content id>
-```
+    ipfs pin -r <content id>
 
 And you can force the actual announcement by running:
 
-```
-ipfs dht provide -rv <content id>
-```
+    ipfs dht provide -rv <content id>
 
 The second command will run indefinitely and has quite complicated output, so
 you may want to run it in the background and omit the `-v` flag.

@@ -15,8 +15,8 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 **🗺️ This walkthrough covers how to:**
 
-* Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
-* Configure that policies precedence in your Gateway configuration
+*   Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
+*   Configure that policies precedence in your Gateway configuration
 
 **⏲️ Time to complete:**
 
@@ -24,22 +24,22 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 ## Before you start
 
-1. [Connect devices](/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
-1. [Enable web inspection](/connections/connect-devices/warp/warp-settings#enable-proxy)
+1.  [Connect devices](/connections/connect-devices/warp) to Cloudflare's edge with the WARP client and [install the root certificate](/connections/connect-devices/warp/install-cloudflare-cert)
+2.  [Enable web inspection](/connections/connect-devices/warp/warp-settings#enable-proxy)
 
 ## Build the policy
 
-1. Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click **Add a rule**.
+1.  Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click **Add a rule**.
 
-1. Name the policy and, optionally, provide a description.
+2.  Name the policy and, optionally, provide a description.
 
     ![Name Policy](../static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
 
-1. Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
+3.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
 
     ![Selctor](../static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
 
-1. Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
+4.  Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
 
     ![Action](../static/secure-web-gateway/exempt-cert-pinning/select-action.png)
 

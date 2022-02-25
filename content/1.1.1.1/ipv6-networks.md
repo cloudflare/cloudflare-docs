@@ -5,7 +5,7 @@ pcx-content-type: reference
 
 # Support for IPv6-only networks
 
-While network infrastructure is shifting towards IPv6-only networks, providers still need to support IPv4 addresses. Dual-stack networks are networks in which all nodes have both IPv4 and IPv6 connectivity capabilities, and can therefore understand both IPv4 and IPv6 packets. 
+While network infrastructure is shifting towards IPv6-only networks, providers still need to support IPv4 addresses. Dual-stack networks are networks in which all nodes have both IPv4 and IPv6 connectivity capabilities, and can therefore understand both IPv4 and IPv6 packets.
 
 1.1.1.1 supports DNS64, a mechanism that synthesizes AAAA records from A records when no AAAA records exist. DNS64 allows configuring a DNS resolver to synthesize IPv6 addresses from IPv4 answers.
 

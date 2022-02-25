@@ -10,22 +10,22 @@ You can configure Cloudflare Zero Trust to exclude domains and IP addresses from
 
 **🗺️ This walkthrough covers how to:**
 
-* Manage the default lists of excluded domains and IP addresses
-* Add a domain or IP address to the exclusion list
+*   Manage the default lists of excluded domains and IP addresses
+*   Add a domain or IP address to the exclusion list
 
 **⏲️ Time to complete:**
 
 10 minutes
 
----
+***
 
 ## Configure domains to resolve locally
 
 You can configure domains to use the device's local resolver. Cloudflare Zero Trust excludes a list of domains by default and you can also remove those default domains if needed.
 
-1. On the Zero Trust Dashboard, navigate to **Settings > Network**.
+1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-1. Scroll down to **Local Domain Fallback** and click **Manage**.
+2.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
     ![Network Settings](../static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
@@ -37,9 +37,9 @@ To add a domain to the default list, input the domain in the `Domain` field. You
 
 You can deploy Cloudflare Zero Trust in split tunnel mode and exclude IP addresses for devices enrolled in your account.
 
-1. On the Zero Trust Dashboard, navigate to **Settings > Network**.
+1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-1. Scroll down to **Local Domain Fallback** and click **Manage**.
+2.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
     ![Network Settings](../static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 

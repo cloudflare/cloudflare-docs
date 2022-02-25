@@ -19,9 +19,9 @@ For more information about Early Hints, refer to the [Early Hints blog](https://
 
 ## Sign up for Early Hints Beta
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-1. From the dashboard, click **Speed** > **Optimization**.
-1. Under **Optimized Delivery**, click **Join the beta**.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
+2.  From the dashboard, click **Speed** > **Optimization**.
+3.  Under **Optimized Delivery**, click **Join the beta**.
 
 After joining the Beta, you can toggle Early Hints on or off from **Optimized Delivery**.
 
@@ -29,9 +29,9 @@ After joining the Beta, you can toggle Early Hints on or off from **Optimized De
 
 Early Hints are only generated and cached:
 
-- For URIs with `.html`, `.htm`, or `.php` file extensions, or no file extension
-- On 200, 301, or 302 response return codes
-- When the response contains [link headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) with preconnect or preload rel types, such as `Link: </img/preloaded.png>; rel=preload`
+*   For URIs with `.html`, `.htm`, or `.php` file extensions, or no file extension
+*   On 200, 301, or 302 response return codes
+*   When the response contains [link headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link) with preconnect or preload rel types, such as `Link: </img/preloaded.png>; rel=preload`
 
 <Aside type="note">
 
@@ -47,6 +47,6 @@ Currently, only certain browser versions will take action to preload or preconne
 
 Additionally, keep the following in mind:
 
-- Early Hints responses may be emitted before reaching the origin server or Worker. When Early Hints is enabled and pages on your site require authentication, unauthenticated visitors may receive a 103 response. The 103 response would contain cached Link headers and be sent before a 403 Forbidden response from your origin.
-- Early Hints may be emitted less frequently on requests where the content is cacheable. Cloudflare CDN is more likely to retrieve a response header before the asynchronous Early Hints lookup finishes if the response has been cached. Cloudflare will not send a 103 response if the main response header is already available.
-- Cloudflare currently disables Early Hints on some User-Agents, for example, select search crawler bots that show incompatibility with 1xx responses.
+*   Early Hints responses may be emitted before reaching the origin server or Worker. When Early Hints is enabled and pages on your site require authentication, unauthenticated visitors may receive a 103 response. The 103 response would contain cached Link headers and be sent before a 403 Forbidden response from your origin.
+*   Early Hints may be emitted less frequently on requests where the content is cacheable. Cloudflare CDN is more likely to retrieve a response header before the asynchronous Early Hints lookup finishes if the response has been cached. Cloudflare will not send a 103 response if the main response header is already available.
+*   Cloudflare currently disables Early Hints on some User-Agents, for example, select search crawler bots that show incompatibility with 1xx responses.

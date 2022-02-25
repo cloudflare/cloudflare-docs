@@ -17,8 +17,8 @@ This architecture allows `cloudflared` instances to proxy Internet traffic into 
 
 **🗺️ This tutorial covers how to:**
 
-* Deploy `cloudflared` in a replica model
-* Proxy traffic into a Kubernetes service with Tunnel
+*   Deploy `cloudflared` in a replica model
+*   Proxy traffic into a Kubernetes service with Tunnel
 
 **⏲️ Time to complete: 45 minutes**
 
@@ -56,9 +56,9 @@ $ kubectl create secret generic tunnel-credentials \
 
 ## Associate your Tunnel with a DNS record
 
-1. Go to the Cloudflare dashboard.
-2. Navigate to the DNS tab.
-3. Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
+1.  Go to the Cloudflare dashboard.
+2.  Navigate to the DNS tab.
+3.  Now create a CNAME targeting `.cfargotunnel.com`. In this example, the tunnel ID is ef824aef-7557-4b41-a398-4684585177ad, so create a CNAME record specifically targeting `ef824aef-7557-4b41-a398-4684585177ad.cfargotunnel.com`.
 
 You can also create multiple CNAME records targeting the same Tunnel, if desired.
 
@@ -78,29 +78,27 @@ configmap/cloudflared configured
 
 ## Examine status of your pod
 
-```
-    $ kubectl get pods
-    NAME                                  READY   STATUS    RESTARTS   AGE
-    cloudflared-57746f77fd-frc99          1/1     Running   0          12m
-    cloudflared-57746f77fd-xht8n          1/1     Running   0          12m
-    httpbin-deployment-67f749774f-42tqj   1/1     Running   0          20h
-    $ kubectl logs $(kubectl get pod -l app=cloudflared -o jsonpath="{.items[0].metadata.name}")
-    2021-05-04T17:39:49Z INF Starting tunnel tunnelID=ef824aef-7557-4b41-a398-4684585177ad
-    2021-05-04T17:39:49Z INF Version
-    2021-05-04T17:39:49Z INF GOOS: linux, GOVersion: go1.15.7, GoArch: amd64
-    2021-05-04T17:39:49Z INF Settings: map[config:/etc/cloudflared/config/config.yaml cred-file:/etc/cloudflared/creds/credentials.json credentials-file:/etc/cloudflared/creds/credentials.json metrics:0.0.0.0:2000 no-autoupdate:true]
-    2021-05-04T17:39:49Z INF Generated Connector ID: 4c5dc5d3-8e10-480e-ac74-e385e591553e
-    2021-05-04T17:39:49Z INF Initial protocol h2mux
-    2021-05-04T17:39:49Z INF Starting metrics server on [::]:2000/metrics
-    2021-05-04T17:39:49Z INF Connection 1daced2f-466c-4610-8ba6-7642a8ddec68 registered connIndex=0 location=MCI
-    2021-05-04T17:39:50Z INF Connection 1a5276bc-3313-4bb7-a677-d93deccab24f registered connIndex=1 location=DFW
-    2021-05-04T17:39:51Z INF Connection aa7adacc-e855-4b11-bf41-e113419b7ef4 registered connIndex=2 location=MCI
-    2021-05-04T17:39:51Z INF Connection a8055c76-2a90-4be5-8dc9-ebaa5c58fb5f registered connIndex=3 location=DFW
-```
+        $ kubectl get pods
+        NAME                                  READY   STATUS    RESTARTS   AGE
+        cloudflared-57746f77fd-frc99          1/1     Running   0          12m
+        cloudflared-57746f77fd-xht8n          1/1     Running   0          12m
+        httpbin-deployment-67f749774f-42tqj   1/1     Running   0          20h
+        $ kubectl logs $(kubectl get pod -l app=cloudflared -o jsonpath="{.items[0].metadata.name}")
+        2021-05-04T17:39:49Z INF Starting tunnel tunnelID=ef824aef-7557-4b41-a398-4684585177ad
+        2021-05-04T17:39:49Z INF Version
+        2021-05-04T17:39:49Z INF GOOS: linux, GOVersion: go1.15.7, GoArch: amd64
+        2021-05-04T17:39:49Z INF Settings: map[config:/etc/cloudflared/config/config.yaml cred-file:/etc/cloudflared/creds/credentials.json credentials-file:/etc/cloudflared/creds/credentials.json metrics:0.0.0.0:2000 no-autoupdate:true]
+        2021-05-04T17:39:49Z INF Generated Connector ID: 4c5dc5d3-8e10-480e-ac74-e385e591553e
+        2021-05-04T17:39:49Z INF Initial protocol h2mux
+        2021-05-04T17:39:49Z INF Starting metrics server on [::]:2000/metrics
+        2021-05-04T17:39:49Z INF Connection 1daced2f-466c-4610-8ba6-7642a8ddec68 registered connIndex=0 location=MCI
+        2021-05-04T17:39:50Z INF Connection 1a5276bc-3313-4bb7-a677-d93deccab24f registered connIndex=1 location=DFW
+        2021-05-04T17:39:51Z INF Connection aa7adacc-e855-4b11-bf41-e113419b7ef4 registered connIndex=2 location=MCI
+        2021-05-04T17:39:51Z INF Connection a8055c76-2a90-4be5-8dc9-ebaa5c58fb5f registered connIndex=3 location=DFW
 
 ## Visit your hostname
 
-At this point, you'll see the httpbin welcome page.  
+At this point, you'll see the httpbin welcome page.
 
 In this tutorial, we've covered how the same Tunnel can be run in many `cloudflared` processes. You can also use this knowledge to support elastic scaling, graceful `cloudflared` restarts, and rolling upgrades in the future.
 

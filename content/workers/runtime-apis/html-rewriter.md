@@ -10,7 +10,7 @@ The `HTMLRewriter` class allows developers to build comprehensive and expressive
 
 The `HTMLRewriter` class should be instantiated once in your Workers script, with a number of handlers attached using the `on` and `onDocument` functions.
 
---------------------------------
+***
 
 ## Constructor
 
@@ -20,7 +20,7 @@ new HTMLRewriter()
   .onDocument(new DocumentHandler())
 ```
 
---------------------------------
+***
 
 ## Global Types
 
@@ -28,17 +28,17 @@ Throughout the HTMLRewriter API, there are a few consistent types that many prop
 
 <Definitions>
 
-- `Content` <Type>string</Type>
+*   `Content` <Type>string</Type>
 
-  - Content inserted in the output stream should be a string.
+    *   Content inserted in the output stream should be a string.
 
-- `ContentOptions` <Type>Object</Type>
+*   `ContentOptions` <Type>Object</Type>
 
-  - `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
+    *   `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Handlers
 
@@ -123,17 +123,17 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 <Definitions>
 
-- `tagName` <Type>string</Type>
-  - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
+*   `tagName` <Type>string</Type>
+    *   The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
 
-- `attributes` <Type>Iterator</Type> <PropMeta>read-only</PropMeta>
-  - A `[name, value]` pair of the tag’s attributes.
+*   `attributes` <Type>Iterator</Type> <PropMeta>read-only</PropMeta>
+    *   A `[name, value]` pair of the tag’s attributes.
 
-- `removed` <Type>boolean</Type>
-  - Indicates whether the element has been removed or replaced by one of the previous handlers.
+*   `removed` <Type>boolean</Type>
+    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-- `namespaceURI` <Type>String</Type>
-  - Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
+*   `namespaceURI` <Type>String</Type>
+    *   Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
 
 </Definitions>
 
@@ -141,53 +141,53 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 <Definitions>
 
-- <Code>getAttribute(name<ParamType>string</ParamType>)</Code> <Type>string | null</Type>
+*   <Code>getAttribute(name<ParamType>string</ParamType>)</Code> <Type>string | null</Type>
 
-  - Returns the value for a given attribute name on the element, or `null` if it is not found.
+    *   Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-- <Code>hasAttribute(name<ParamType>string</ParamType>)</Code> <Type>boolean</Type>
+*   <Code>hasAttribute(name<ParamType>string</ParamType>)</Code> <Type>boolean</Type>
 
-  - Returns a boolean indicating whether an attribute exists on the element.
+    *   Returns a boolean indicating whether an attribute exists on the element.
 
-- <Code>setAttribute(name<ParamType>string</ParamType>, value<ParamType>string</ParamType>)</Code> <Type>Element</Type>
+*   <Code>setAttribute(name<ParamType>string</ParamType>, value<ParamType>string</ParamType>)</Code> <Type>Element</Type>
 
-  - Sets an attribute to a provided value, creating the attribute if it does not exist.
+    *   Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-- <Code>removeAttribute(name<ParamType>string</ParamType>)</Code> <Type>Element</Type>
+*   <Code>removeAttribute(name<ParamType>string</ParamType>)</Code> <Type>Element</Type>
 
-  - Removes the attribute.
+    *   Removes the attribute.
 
-- <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content before the element.
+    *   Inserts content before the element.
 
-- <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content right after the element.
+    *   Inserts content right after the element.
 
-- <Code>prepend(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code><Type>Element</Type>
+*   <Code>prepend(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code><Type>Element</Type>
 
-  - Inserts content right after the start tag of the element.
+    *   Inserts content right after the start tag of the element.
 
-- <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content right before the end tag of the element.
+    *   Inserts content right before the end tag of the element.
 
-- <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Removes the element and inserts content in place of it.
+    *   Removes the element and inserts content in place of it.
 
-- <Code>setInnerContent(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>setInnerContent(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Replaces content of the element.
+    *   Replaces content of the element.
 
-- <Code>remove()</Code> <Type>Element</Type>
+*   <Code>remove()</Code> <Type>Element</Type>
 
-  - Removes the element with all its content.
+    *   Removes the element with all its content.
 
-- <Code>removeAndKeepContent()</Code> <Type>Element</Type>
+*   <Code>removeAndKeepContent()</Code> <Type>Element</Type>
 
-  - Removes the start tag and end tag of the element but keeps its inner content intact.
+    *   Removes the start tag and end tag of the element but keeps its inner content intact.
 
 </Definitions>
 
@@ -201,14 +201,14 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 <Definitions>
 
-- `removed` <Type>boolean</Type>
-  - Indicates whether the element has been removed or replaced by one of the previous handlers.
+*   `removed` <Type>boolean</Type>
+    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-- `text` <Type>string</Type> <PropMeta>read-only</PropMeta>
-  - The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
+*   `text` <Type>string</Type> <PropMeta>read-only</PropMeta>
+    *   The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
 
-- `lastInTextNode` <Type>boolean</Type> <PropMeta>read-only</PropMeta>
-  - Specifies whether the chunk is the last chunk of the text node.
+*   `lastInTextNode` <Type>boolean</Type> <PropMeta>read-only</PropMeta>
+    *   Specifies whether the chunk is the last chunk of the text node.
 
 </Definitions>
 
@@ -216,21 +216,21 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 <Definitions>
 
-- <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content before the element.
+    *   Inserts content before the element.
 
-- <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content right after the element.
+    *   Inserts content right after the element.
 
-- <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Removes the element and inserts content in place of it.
+    *   Removes the element and inserts content in place of it.
 
-- <Code>remove()</Code> <Type>Element</Type>
+*   <Code>remove()</Code> <Type>Element</Type>
 
-  - Removes the element with all its content.
+    *   Removes the element with all its content.
 
 </Definitions>
 
@@ -250,11 +250,11 @@ class ElementHandler {
 
 <Definitions>
 
-- `removed` <Type>boolean</Type>
-  - Indicates whether the element has been removed or replaced by one of the previous handlers.
+*   `removed` <Type>boolean</Type>
+    *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-- `text` <Type>string</Type>
-  - The text of the comment. This property can be assigned different values, to modify comment’s text.
+*   `text` <Type>string</Type>
+    *   The text of the comment. This property can be assigned different values, to modify comment’s text.
 
 </Definitions>
 
@@ -262,21 +262,21 @@ class ElementHandler {
 
 <Definitions>
 
-- <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content before the element.
+    *   Inserts content before the element.
 
-- <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Inserts content right after the element.
+    *   Inserts content right after the element.
 
-- <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
 
-  - Removes the element and inserts content in place of it.
+    *   Removes the element and inserts content in place of it.
 
-- <Code>remove()</Code> <Type>Element</Type>
+*   <Code>remove()</Code> <Type>Element</Type>
 
-  - Removes the element with all its content.
+    *   Removes the element with all its content.
 
 </Definitions>
 
@@ -297,14 +297,14 @@ class DocumentHandler {
 
 <Definitions>
 
-- `name` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
-  - The doctype name.
+*   `name` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+    *   The doctype name.
 
-- `publicId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
-  - The quoted string in the doctype after the PUBLIC atom.
+*   `publicId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+    *   The quoted string in the doctype after the PUBLIC atom.
 
-- `systemId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
-  - The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
+*   `systemId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+    *   The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
 
 </Definitions>
 
@@ -324,13 +324,13 @@ class DocumentHandler {
 
 <Definitions>
 
-- <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>DocumentEnd</Type>
+*   <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>DocumentEnd</Type>
 
-  - Inserts content after the end of the document.
+    *   Inserts content after the end of the document.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Selectors
 
@@ -338,70 +338,70 @@ This is what selectors are and what they are used for.
 
 <Definitions>
 
-  - `*`
-    - Any element.
+*   `*`
+    *   Any element.
 
-  - `E`
-    - Any element of type E.
+*   `E`
+    *   Any element of type E.
 
-  - `E:nth-child(n)`
-    - An E element, the n-th child of its parent.
+*   `E:nth-child(n)`
+    *   An E element, the n-th child of its parent.
 
-  - `E:first-child`
-    - An E element, first child of its parent.
+*   `E:first-child`
+    *   An E element, first child of its parent.
 
-  - `E:nth-of-type(n)`
-    - An E element, the n-th sibling of its type.
+*   `E:nth-of-type(n)`
+    *   An E element, the n-th sibling of its type.
 
-  - `E:first-of-type`
-    - An E element, first sibling of its type.
+*   `E:first-of-type`
+    *   An E element, first sibling of its type.
 
-  - `E:not(s)`
-    - An E element that does not match either compound selectors.
+*   `E:not(s)`
+    *   An E element that does not match either compound selectors.
 
-  - `E.warning`
-    - An E element belonging to the class warning.
+*   `E.warning`
+    *   An E element belonging to the class warning.
 
-  - `E#myid`
-    - An E element with ID equal to myid.
+*   `E#myid`
+    *   An E element with ID equal to myid.
 
-  - `E[foo]`
-    - An E element with a foo attribute.
+*   `E[foo]`
+    *   An E element with a foo attribute.
 
-  - `E[foo="bar"]`
-    - An E element whose foo attribute value is exactly equal to bar.
+*   `E[foo="bar"]`
+    *   An E element whose foo attribute value is exactly equal to bar.
 
-  - `E[foo="bar" i]`
-    - An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
+*   `E[foo="bar" i]`
+    *   An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
 
-  - `E[foo="bar" s]`
-    - An E element whose foo attribute value is exactly and case-sensitively equal to bar.
+*   `E[foo="bar" s]`
+    *   An E element whose foo attribute value is exactly and case-sensitively equal to bar.
 
-  - `E[foo~="bar"]`
-    - An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
+*   `E[foo~="bar"]`
+    *   An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
 
-  - `E[foo^="bar"]`
-    -  An E element whose foo attribute value begins exactly with the string bar.
+*   `E[foo^="bar"]`
+    *   An E element whose foo attribute value begins exactly with the string bar.
 
-  - `E[foo$="bar"]`
-    - An E element whose foo attribute value ends exactly with the string bar.
+*   `E[foo$="bar"]`
+    *   An E element whose foo attribute value ends exactly with the string bar.
 
-  - `E[foo*="bar"]`
-    - An E element whose foo attribute value contains the substring bar.
+*   `E[foo*="bar"]`
+    *   An E element whose foo attribute value contains the substring bar.
 
-  - <Code>E[foo&#124;="en"]</Code>
+*   <Code>E\[foo|="en"]</Code>
 
-    - An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
+    *   An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
 
-  - `E F`
-    - An F element descendant of an E element.
+*   `E F`
+    *   An F element descendant of an E element.
 
-  - `E > F`
-    - An F element child of an E element.
+*   `E > F`
+    *   An F element child of an E element.
 
 </Definitions>
 
---------------------------------
+***
 
 ## Errors
 
@@ -428,10 +428,10 @@ async function handle(request) {
 }
 ```
 
---------------------------------
+***
 
 ## Related resources
 
-- [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
-- [Tutorial: Localize a Website](/tutorials/localize-a-website)
-- [Example: rewrite links](/examples/rewrite-links)
+*   [Introducing `HTMLRewriter`](https://blog.cloudflare.com/introducing-htmlrewriter/)
+*   [Tutorial: Localize a Website](/tutorials/localize-a-website)
+*   [Example: rewrite links](/examples/rewrite-links)

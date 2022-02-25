@@ -21,15 +21,15 @@ If you are migrating from "classic" Cloudflare Tunnel deployments to the new, pe
 
 **🗺️ This tutorial covers how to:**
 
-* Start a secure, outbound-only, connection from a machine to Cloudflare
-* Give the application a hostname where users can connect
-* Complete the entire process with a single command using `cloudflared`
+*   Start a secure, outbound-only, connection from a machine to Cloudflare
+*   Give the application a hostname where users can connect
+*   Complete the entire process with a single command using `cloudflared`
 
 **⏲️ Time to complete:**
 
 10 minutes
 
----
+***
 
 ## Install `cloudflared`
 
@@ -55,10 +55,10 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 You can now [create a Tunnel](/connections/connect-apps/create-tunnel) that will connect `cloudflared` to Cloudflare's edge. In this example, you can use a single command to perform all of the steps required to connect an application to Cloudflare's edge. The command will perform the following functions:
 
-1. [Create a Tunnel](/connections/connect-apps/create-tunnel) with an associated name. That Tunnel can serve traffic for multiple services and multiple hostnames; this example uses a single service and single hostname.
-2. [Create DNS records](/connections/connect-apps/routing-to-tunnel) for the Tunnel. These DNS records will send traffic to the Tunnel. The records created will not be deleted if the Tunnel is interrupted or if `cloudflared` or your origin service restarts.
-3. [Configure the Tunnel](/connections/connect-apps/configuration) by sending traffic to the URL specified. In this example, the only configuration argument required is the URL where traffic should be directed.
-4. [Run the Tunnel](/connections/connect-apps/run-tunnel) and begin serving traffic.
+1.  [Create a Tunnel](/connections/connect-apps/create-tunnel) with an associated name. That Tunnel can serve traffic for multiple services and multiple hostnames; this example uses a single service and single hostname.
+2.  [Create DNS records](/connections/connect-apps/routing-to-tunnel) for the Tunnel. These DNS records will send traffic to the Tunnel. The records created will not be deleted if the Tunnel is interrupted or if `cloudflared` or your origin service restarts.
+3.  [Configure the Tunnel](/connections/connect-apps/configuration) by sending traffic to the URL specified. In this example, the only configuration argument required is the URL where traffic should be directed.
+4.  [Run the Tunnel](/connections/connect-apps/run-tunnel) and begin serving traffic.
 
 Run the following command to perform all of the functions listed above, replacing the `--hostname` value with a hostname in your Cloudflare account as well as the `--url` and `--name` values with the URL of your service and the name you would like to assign to the Tunnel.
 
@@ -67,9 +67,10 @@ Run the following command to perform all of the functions listed above, replacin
 ![Command Output](../static/secure-origin-connections/single-command/command-output.png)
 
 The command above will
-* create a Tunnel named `Grafana`,
-* create a persisent DNS record at the `example` subdomain, and
-* send traffic directed to that hostname through the Tunnel and to the service available at `localhost:3000`.
+
+*   create a Tunnel named `Grafana`,
+*   create a persisent DNS record at the `example` subdomain, and
+*   send traffic directed to that hostname through the Tunnel and to the service available at `localhost:3000`.
 
 ## Manage the Tunnel
 

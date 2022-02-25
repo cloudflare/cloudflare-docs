@@ -92,6 +92,7 @@ You can customize a variety of options for your waiting rooms.
 <Aside type='note' header='Note'>
 
 You can configure only one waiting room per `host/path` combination.
+
 </Aside>
 
 ## Additional details

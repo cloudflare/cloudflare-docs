@@ -13,8 +13,8 @@ Before you build the rule, you'll need to follow [these instructions](/setup) to
 
 **🗺️ This walkthrough covers how to:**
 
-* Create a list of approved countries where a team operates
-* Require that users connecting to self-hosted or SaaS applications connect from those countries
+*   Create a list of approved countries where a team operates
+*   Require that users connecting to self-hosted or SaaS applications connect from those countries
 
 **⏲️ Time to complete:**
 
@@ -40,11 +40,11 @@ Click `Save`.
 
 You can now build [Zero Trust policies](/policies/zero-trust) that will require at least one country in the approved countries list. You can build these policies for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
 
-1. Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
-1. Choose an application and click `Edit`.
-1. Select the existing rule and click `Edit`.
-1. Click `+ Add require`.
-1. In the dropdown, select `Access groups`. The existing groups will display and choose the name of the group with the approved countries list.
+1.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+2.  Choose an application and click `Edit`.
+3.  Select the existing rule and click `Edit`.
+4.  Click `+ Add require`.
+5.  In the dropdown, select `Access groups`. The existing groups will display and choose the name of the group with the approved countries list.
 
 ![Edit](../static/zero-trust-security/country-rules/add-rule.png)
 

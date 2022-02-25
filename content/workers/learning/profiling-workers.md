@@ -81,9 +81,9 @@ With the DevTools open, select the **Profile** tab > **Start**. Open a new tab w
 
 There are three ways to view the CPU profiling data:
 
-1. **Tree** - a top-down view of all functions called. Starting with top-level functions and nesting subsequent calls under each one.
-2. **Heavy** - a bottom-up view of all functions called. Starting with the final functions in the stack and nesting parent calls under each one.
-3. **Chart** - a flame chart that will show all function calls and how much time was spent in each function execution.
+1.  **Tree** - a top-down view of all functions called. Starting with top-level functions and nesting subsequent calls under each one.
+2.  **Heavy** - a bottom-up view of all functions called. Starting with the final functions in the stack and nesting parent calls under each one.
+3.  **Chart** - a flame chart that will show all function calls and how much time was spent in each function execution.
 
 To find slow functions, enter the **Chart** view and search for the last long function in a stack.
 

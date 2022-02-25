@@ -38,10 +38,10 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 | `httpRequests1hGroups`                        |   3 days |   7 days |  30 days |    90 days |
 | `httpRequests1mByColoGroups`                  |      n/a |      n/a |      n/a |     7 days |
 | `httpRequests1mGroups`                        |      n/a | 24 hours |   3 days |     7 days |
-| `ipFlows1mGroups`*                            |      n/a |      n/a |      n/a |    30 days |
-| `ipFlows1hGroups`*                            |      n/a |      n/a |      n/a |   6 months |
-| `ipFlows1dGroups`*                            |      n/a |      n/a |      n/a |     1 year |
-| `ipFlows1mAttackGroups`*                      |      n/a |      n/a |      n/a |     1 year |
+| `ipFlows1mGroups`\*                            |      n/a |      n/a |      n/a |    30 days |
+| `ipFlows1hGroups`\*                            |      n/a |      n/a |      n/a |   6 months |
+| `ipFlows1dGroups`\*                            |      n/a |      n/a |      n/a |     1 year |
+| `ipFlows1mAttackGroups`\*                      |      n/a |      n/a |      n/a |     1 year |
 | `loadBalancingRequestsGroups`                 |      n/a |   3 days |  30 days |    30 days |
 | `loadBalancingRequests`                       |      n/a |   3 days |  30 days |    30 days |
 | `magicFirewallNetworkAnalyticsAdaptiveGroups` |      n/a |      n/a |      n/a |    90 days |
@@ -121,10 +121,10 @@ The example query below demonstrates how to retrieve account limits for the `bro
 
 In addition to access restrictions, there are limits on the volume of data that a query can return, and there are user limits on daily data volume. The following limits apply in addition to the general rate limits enforced by the Cloudflare API:
 
-- **A zone-scoped query can include up to 10 zones.**
-- **Account-scoped queries can aggregate data for up to 1,000 zones** — queries that involve aggregated data across more than 1,000 zones return with an error.
-- **Queries can request up to 30 fields** — this limit is indicated by `maxNumberOfFields` in `settings`.
-- **Responses can return up to 10,000 records** — this limit is indicated by `maxPageSize` in `settings`.
+*   **A zone-scoped query can include up to 10 zones.**
+*   **Account-scoped queries can aggregate data for up to 1,000 zones** — queries that involve aggregated data across more than 1,000 zones return with an error.
+*   **Queries can request up to 30 fields** — this limit is indicated by `maxNumberOfFields` in `settings`.
+*   **Responses can return up to 10,000 records** — this limit is indicated by `maxPageSize` in `settings`.
 
 Queries must explicitly specify the upper bound of records to return, using the `limit` argument, as in the following example.
 

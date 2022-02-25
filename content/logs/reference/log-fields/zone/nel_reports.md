@@ -16,7 +16,7 @@ The descriptions below detail the fields available for `nel_reports`.
 | ClientIPASNDescription | Client ASN description | string |
 | ClientIPCountry | Client country | string |
 | LastKnownGoodColoCode | IATA airport code of colo client connected to | string |
-| Phase | The phase of connection the error occurred in; <em>dns</em> \| <em>connection</em> \| <em>application</em> \| <em>unknown</em> | string |
+| Phase | The phase of connection the error occurred in; <em>dns</em> | <em>connection</em> | <em>application</em> | <em>unknown</em> | string |
 | Timestamp | Timestamp for error report | int or string |
 | Type | The type of error in the phase | string |
 

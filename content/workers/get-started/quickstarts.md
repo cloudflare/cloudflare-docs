@@ -18,209 +18,209 @@ $ wrangler generate <new-project-name> <github-repo-url>
 
 <Definitions>
 
-- `new-project-name`
-  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/cli-wrangler/configuration).
+*   `new-project-name`
+    *   A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/cli-wrangler/configuration).
 
-- `github-repo-url`
-  - This is the URL of the GitHub repo starter, as below.
+*   `github-repo-url`
+    *   This is the URL of the GitHub repo starter, as below.
 
 </Definitions>
 
 </ContentColumn>
 
---------------------------------
+***
 
 ## Templates
 
 <WorkerStarter
-  title="JavaScript Starter"
-  description="A bare-bones Workers starter project, in JavaScript."
-  repo="cloudflare/worker-template"
+title="JavaScript Starter"
+description="A bare-bones Workers starter project, in JavaScript."
+repo="cloudflare/worker-template"
 />
 
 <WorkerStarter
-  title="TypeScript Starter"
-  description="A bare-bones Workers starter project, in TypeScript."
-  repo="cloudflare/worker-typescript-template"
+title="TypeScript Starter"
+description="A bare-bones Workers starter project, in TypeScript."
+repo="cloudflare/worker-typescript-template"
 />
 
 <WorkerStarter
-  title="Worker Sites"
-  description="Easily deploy a static site or static assets to Cloudflare’s edge network."
-  repo="cloudflare/worker-sites-template"
+title="Worker Sites"
+description="Easily deploy a static site or static assets to Cloudflare’s edge network."
+repo="cloudflare/worker-sites-template"
 />
 
 <WorkerStarter
-  title="Router"
-  description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic."
-  repo="cloudflare/worker-template-router"
+title="Router"
+description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic."
+repo="cloudflare/worker-template-router"
 />
 
 <WorkerStarter
-  title="Miniflare Example Project"
-  description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment."
-  repo="mrbbot/miniflare-typescript-esbuild-jest"
+title="Miniflare Example Project"
+description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment."
+repo="mrbbot/miniflare-typescript-esbuild-jest"
 />
 
 <WorkerStarter
-  title="Sunder Starter (Typescript)"
-  description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
-  repo="sunderjs/sunder-worker-template"
+title="Sunder Starter (Typescript)"
+description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Worker Sites for static assets."
+repo="sunderjs/sunder-worker-template"
 />
 
 <WorkerStarter
-  title="Hono Starter"
-  description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare."
-  repo="yusukebe/hono-minimal"
+title="Hono Starter"
+description="Hono is an ultrafast web framework built for Cloudflare Workers. This is a minimal project using Hono, TypeScript, esbuild, and Miniflare."
+repo="yusukebe/hono-minimal"
 />
 
---------------------------------
+***
 
 ## Frameworks
 
 <WorkerStarter
-  title="Apollo GraphQL Server"
-  description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers."
-  repo="signalnerve/workers-graphql-server"
+title="Apollo GraphQL Server"
+description="Lightning-fast, globally distributed Apollo GraphQL server, deployed at the edge using Cloudflare Workers."
+repo="signalnerve/workers-graphql-server"
 />
 
 <WorkerStarter
-  title="Flareact"
-  description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs."
-  repo="flareact/flareact"
+title="Flareact"
+description="Flareact is an edge-rendered React framework built for Cloudflare Workers. It features file-based page routing with dynamic page paths and edge-side data fetching APIs."
+repo="flareact/flareact"
 />
 
---------------------------------
+***
 
 ## Example Projects
 
 <WorkerStarter
-  title="Speedtest"
-  description="Measure download / upload connection speed from the client side, using the Performance Timing API."
-  repo="cloudflare/worker-speedtest-template"
+title="Speedtest"
+description="Measure download / upload connection speed from the client side, using the Performance Timing API."
+repo="cloudflare/worker-speedtest-template"
 />
 
 <WorkerStarter
-  title="Sentry"
-  description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool"
-  repo="bustle/cf-sentry"
+title="Sentry"
+description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool"
+repo="bustle/cf-sentry"
 />
 
 <WorkerStarter
-  title="Image Color"
-  description="Retrieve the dominant color of a PNG or JPEG image"
-  repo="xtuc/img-color-worker"
+title="Image Color"
+description="Retrieve the dominant color of a PNG or JPEG image"
+repo="xtuc/img-color-worker"
 />
 
 <WorkerStarter
-  title="Cloud Storage"
-  description="Serve private AWS bucket files from a Worker script"
-  repo="conzorkingkong/cloud-storage"
+title="Cloud Storage"
+description="Serve private AWS bucket files from a Worker script"
+repo="conzorkingkong/cloud-storage"
 />
 
 <WorkerStarter
-  title="BinAST"
-  description="Serve a JavaScript Binary AST via a Cloudflare Worker."
-  repo="xtuc/binast-cf-worker-template"
+title="BinAST"
+description="Serve a JavaScript Binary AST via a Cloudflare Worker."
+repo="xtuc/binast-cf-worker-template"
 />
 
 <WorkerStarter
-  title="AWS DynamoDB SQS"
-  description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker"
-  repo="cloudflare/workers-aws-template"
+title="AWS DynamoDB SQS"
+description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker"
+repo="cloudflare/workers-aws-template"
 />
 
 <WorkerStarter
-  title="Edge-side rendering - Vitedge"
-  description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more."
-  repo="frandiox/vitessedge-template"
+title="Edge-side rendering - Vitedge"
+description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more."
+repo="frandiox/vitessedge-template"
 />
 
 <WorkerStarter
-  title="REST API with Fauna"
-  description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
-  repo="fauna-labs/fauna-workers"
+title="REST API with Fauna"
+description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications."
+repo="fauna-labs/fauna-workers"
 />
 
---------------------------------
+***
 
 ## Other languages
 
 Other languages may require you to install additional tools beyond wrangler. See the README.md file in the project.
 
 <WorkerStarter
-  title="Hello World (Rust)"
-  description="A bare-bones starter in Rust."
-  repo="cloudflare/rustwasm-worker-template"
+title="Hello World (Rust)"
+description="A bare-bones starter in Rust."
+repo="cloudflare/rustwasm-worker-template"
 />
 
 <WorkerStarter
-  title="Hello World (Python)"
-  description="A bare-bones starter in Python."
-  repo="cloudflare/python-worker-hello-world"
+title="Hello World (Python)"
+description="A bare-bones starter in Python."
+repo="cloudflare/python-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (Scala)"
-  description="A bare-bones starter in Scala."
-  repo="cloudflare/scala-worker-hello-world"
+title="Hello World (Scala)"
+description="A bare-bones starter in Scala."
+repo="cloudflare/scala-worker-hello-world"
 />
 
 <WorkerStarter
-  title="KV example (Scala)"
-  description="Example usage of Workers KV in Scala."
-  repo="cloudflare/scala-worker-kv"
+title="KV example (Scala)"
+description="Example usage of Workers KV in Scala."
+repo="cloudflare/scala-worker-kv"
 />
 
 <WorkerStarter
-  title="Hello World (Reason)"
-  description="A bare-bones starter in Reason."
-  repo="cloudflare/reason-worker-hello-world"
+title="Hello World (Reason)"
+description="A bare-bones starter in Reason."
+repo="cloudflare/reason-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (FSharp)"
-  description="A bare-bones starter in FSharp/Fable."
-  repo="fable-compiler/cfworker-hello-world"
+title="Hello World (FSharp)"
+description="A bare-bones starter in FSharp/Fable."
+repo="fable-compiler/cfworker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (Dart)"
-  description="A bare-bones starter in Dart."
-  repo="cloudflare/dart-worker-hello-world"
+title="Hello World (Dart)"
+description="A bare-bones starter in Dart."
+repo="cloudflare/dart-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (Kotlin)"
-  description="A bare-bones starter in Kotlin."
-  repo="cloudflare/kotlin-worker-hello-world"
+title="Hello World (Kotlin)"
+description="A bare-bones starter in Kotlin."
+repo="cloudflare/kotlin-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (COBOL)"
-  description="A bare-bones starter in COBOL."
-  repo="cloudflare/cobol-worker-template"
+title="Hello World (COBOL)"
+description="A bare-bones starter in COBOL."
+repo="cloudflare/cobol-worker-template"
 />
 
 <WorkerStarter
-  title="Hello World (Perl)"
-  description="A bare-bones starter in Perl."
-  repo="cloudflare/perl-worker-hello-world"
+title="Hello World (Perl)"
+description="A bare-bones starter in Perl."
+repo="cloudflare/perl-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Hello World (PHP)"
-  description="A bare-bones starter in PHP."
-  repo="cloudflare/php-worker-hello-world"
+title="Hello World (PHP)"
+description="A bare-bones starter in PHP."
+repo="cloudflare/php-worker-hello-world"
 />
 
 <WorkerStarter
-  title="Emscripten + Wasm Image Resizer"
-  description="An image resizer in C compiled to Wasm with Emscripten."
-  repo="cloudflare/worker-emscripten-template"
+title="Emscripten + Wasm Image Resizer"
+description="An image resizer in C compiled to Wasm with Emscripten."
+repo="cloudflare/worker-emscripten-template"
 />
 
---------------------------------
+***
 
 ## Built with Workers
 

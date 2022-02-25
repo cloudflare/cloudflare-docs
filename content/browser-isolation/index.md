@@ -7,6 +7,7 @@ type: overview
 <ContentColumn>
 
 # Welcome
+
 Welcome to the Cloudflare Browser Isolation documentation!
 
 ## How Browser Isolation works

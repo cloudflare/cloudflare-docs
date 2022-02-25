@@ -18,7 +18,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script.
 
---------------------------------
+***
 
 ## 1. Sign up for a Workers account
 
@@ -28,7 +28,7 @@ Before you can start [publishing](/cli-wrangler/commands#publish) your Workers o
 
 The signup process will guide you through choosing a `*.workers.dev` subdomain and verifying your email address, both of which are required to publish.
 
---------------------------------
+***
 
 ## 2. Install the Workers CLI
 
@@ -39,6 +39,7 @@ To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have
 ```sh
 $ npm install -g @cloudflare/wrangler
 ```
+
 or install with yarn:
 
 ```sh
@@ -52,7 +53,7 @@ $ wrangler --version
 👷 ✨  wrangler 1.19.4
 ```
 
---------------------------------
+***
 
 ## 3. Configure the Workers CLI
 
@@ -71,7 +72,7 @@ y
 
 Open the browser, log into your account, and select **Allow**. This will send an OAuth Token to Wrangler so it can deploy your scripts to Cloudflare.
 
---------------------------------
+***
 
 ## 4. Generate a new project
 
@@ -108,7 +109,7 @@ For example, to build a Workers project in TypeScript, run:
 
 To start a project from your own code — rather than a starter — use [`wrangler init`](/cli-wrangler/commands#init).
 
---------------------------------
+***
 
 ## 5. Write code
 
@@ -118,8 +119,8 @@ With your new project generated, you can begin to write your code.
 
 Fundamentally, a Workers application consists of two parts:
 
-1. An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
-2. An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
+1.  An [event listener](/runtime-apis/add-event-listener) that listens for [`FetchEvents`](/runtime-apis/fetch-event), and
+2.  An event handler that returns a [Response](/runtime-apis/response) object which is passed to the event’s `.respondWith()` method.
 
 When a request is received on one of Cloudflare’s edge servers for a URL matching a Workers script, it passes the request to the Workers runtime. This dispatches a [`FetchEvent`](/runtime-apis/fetch-event) in the [isolate](/learning/how-workers-works#isolates) where the script is running.
 
@@ -140,13 +141,13 @@ async function handleRequest(request) {
 
 Below is an example of the request response workflow:
 
-1. An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/runtime-apis/request) object which is a representation of the HTTP request that triggered the `FetchEvent`.
+1.  An event listener for the `FetchEvent` tells the script to listen for any request coming to your Worker. The event handler is passed the `event` object, which includes `event.request`, a [`Request`](/runtime-apis/request) object which is a representation of the HTTP request that triggered the `FetchEvent`.
 
-2. The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
+2.  The call to [`.respondWith()`](/runtime-apis/fetch-event#methods) lets the Workers runtime intercept the request in order to send back a custom response (in this example, the plain text “Hello worker!”).
 
-    - The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/runtime-apis/response) or `Promise<Response>` that determines the response.
+    *   The `FetchEvent` handler typically culminates in a call to the method `.respondWith()` with either a [`Response`](/runtime-apis/response) or `Promise<Response>` that determines the response.
 
-    - The `FetchEvent` object also provides [two other methods](/runtime-apis/fetch-event#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
+    *   The `FetchEvent` object also provides [two other methods](/runtime-apis/fetch-event#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
 
 Learn more about [the `FetchEvent` lifecycle](/learning/fetch-event-lifecycle).
 
@@ -180,9 +181,9 @@ async function handleRequest(request) {
 
 It is common to route requests based on:
 
-- `request.method` — for example, `GET` or `POST`.
-- `request.url` — for example, filter based on query parameters or the pathname.
-- `request.headers` — filter based on specific headers.
+*   `request.method` — for example, `GET` or `POST`.
+*   `request.url` — for example, filter based on query parameters or the pathname.
+*   `request.headers` — filter based on specific headers.
 
 Refer to a full list of [all properties of a `Request` object](/runtime-apis/request#properties).
 
@@ -204,7 +205,7 @@ The example outlined in this guide is a starting point. There are many Workers [
 
 For inspiration, refer to [Built with Workers](https://workers.cloudflare.com/built-with) for a showcase of projects.
 
---------------------------------
+***
 
 ## 6. Preview your project
 
@@ -250,7 +251,7 @@ Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforeha
 
 </Aside>
 
---------------------------------
+***
 
 ## 7. Configure your project for deployment
 
@@ -301,10 +302,10 @@ To publish your application on a zone you own, and not a `*.workers.dev` subdoma
 
 You can get your `zone_id` with the following steps:
 
-1. [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired zone.
-2. If not already there, navigate to **Overview** in the dashboard.
-3. Scroll down until you see **Zone ID** on the right.
-4. Click **Click to copy** below the input.
+1.  [**Log in** to your Cloudflare account](https://dash.cloudflare.com/login) and select the desired zone.
+2.  If not already there, navigate to **Overview** in the dashboard.
+3.  Scroll down until you see **Zone ID** on the right.
+4.  Click **Click to copy** below the input.
 
 Wrangler’s environments feature allows you to deploy the same project to multiple places under multiple names. For a complete guide on how to configure environments, refer to the [environments page](/platform/environments).
 
@@ -330,13 +331,13 @@ route = "example.com/*"
 
 The `route` key here is a [route pattern](/platform/routes), which can contain wildcards.
 
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record. 
+If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 
-You may enter a placeholder `AAAA` record pointing to `100::`, which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666) but is not the only value allowed. For example, you may also use an `A` record pointed to `192.0.2.1` or a `CNAME` pointed to any resolvable target. 
+You may enter a placeholder `AAAA` record pointing to `100::`, which must be proxied through Cloudflare (orange-cloud in the DNS settings). This value specifically is the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666) but is not the only value allowed. For example, you may also use an `A` record pointed to `192.0.2.1` or a `CNAME` pointed to any resolvable target.
 
-Whichever method you choose, your record must be proxied through Cloudflare (orange-clouded) and resolve successfully. 
+Whichever method you choose, your record must be proxied through Cloudflare (orange-clouded) and resolve successfully.
 
---------------------------------
+***
 
 ## 8. Publish your project
 
@@ -372,7 +373,7 @@ For more information on environments, refer to the [Wrangler documentation](/cli
 
 You can also configure a GitHub repository to automatically deploy every time you `git push`. You can do this by either using the [Workers GitHub action](https://github.com/marketplace/actions/deploy-to-cloudflare-workers-with-wrangler), or by writing your own GitHub action and manually configuring the necessary [GitHub secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
 
---------------------------------
+***
 
 ## 9. Turn on/off usage notifications
 
@@ -404,7 +405,7 @@ After you enable notifications and add recipients, edit or turn off notification
 
 ![notifications-tab](./media/workers-overview-notifications.png)
 
---------------------------------
+***
 
 ## Next steps
 

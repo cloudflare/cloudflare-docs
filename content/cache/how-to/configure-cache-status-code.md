@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Configure cache by status code
 
-Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin. 
+Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.
 
 Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/about/default-cache-behavior) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Page Rule](/how-to/create-page-rules#cache-everything). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
@@ -65,11 +65,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 
 Provide a JSON object containing status codes and their corresponding TTLs. Each key-value pair in the cache TTL by status page rule has the following syntax:
 
-- `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-599.
-- `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
-- `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
+*   `status_code`: A string such as 200 or 500. `status_code` matches the exact status code from the origin web server. Valid status codes are between 100-599.
+*   `status_code_range`: A "from-to" string, such as 200-299 or 400-599. `status_code_range` matches any status code from the origin web server within the specified range.
+*   `TTL`: An integer that defines the duration an asset is valid in seconds or one of the following strings: `no-store`, `no-cache`. Only positive integers, including 0, are accepted.
 
 ## Set cache TTL by response status via a Cloudflare Worker
 
 The **cacheTtlByStatus** option is a version of the **cacheTtl** feature that designates a cache TTL for a request’s response status code (for example, `{ "200-299": 86400, 404: 1, "500-599": 0 }`).
-

@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # Localize a website with HTMLRewriter
 
@@ -159,11 +159,11 @@ To review that everything looks as expected, use the preview functionality built
 
 You can expand on this simple translation functionality to provide country-specific translations, based on the incoming request’s `Accept-Language` header. By taking this header, parsing it, and passing the parsed language into your `ElementHandler`, you can retrieve a translated string in your user’s home language, provided that it is defined in `strings`.
 
-To implement this: 
+To implement this:
 
-1. Update the `strings` object, adding a second layer of key-value pairs and allowing strings to be looked up in the format `strings[country][key]`. 
-2. Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process. 
-3. Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
+1.  Update the `strings` object, adding a second layer of key-value pairs and allowing strings to be looked up in the format `strings[country][key]`.
+2.  Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process.
+3.  Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
 
 To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) NPM package:
 

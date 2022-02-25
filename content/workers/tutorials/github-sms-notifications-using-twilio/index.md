@@ -5,7 +5,7 @@ content_type: "📝 Tutorial"
 pcx-content-type: tutorial
 ---
 
-import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start.md"
+import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-start.md"
 
 # GitHub SMS notifications using Twilio
 
@@ -16,13 +16,14 @@ import TutorialsBeforeYouStart from "../../_partials/_tutorials-before-you-start
 In this tutorial, you will learn to build an SMS notification system on Workers to receive updates on a GitHub repository. Your Worker will send you a text update using Twilio when there is new activity on your repository.
 
 You will learn how to:
-- Build webhooks using Workers.
-- Integrate Workers with GitHub and Twilio.
-- Use Worker secrets with Wrangler.
+
+*   Build webhooks using Workers.
+*   Integrate Workers with GitHub and Twilio.
+*   Use Worker secrets with Wrangler.
 
 ![Video of receiving a text after pushing to a repo](media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
---------------------------------
+***
 
 ## Generate a project
 
@@ -44,27 +45,27 @@ First, create a webhook for your repository to post updates to your Worker. Insi
 
 You can reference the finished code at this [GitHub repository](https://github.com/davidtsong/github-twilio-notifications/).
 
---------------------------------
+***
 
 ## Configure GitHub
 
 To start, configure a GitHub webhook to post to your Worker when there is an update to the repository:
 
-1. Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
+1.  Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
 
-2. Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/get-started/guide#6-preview-your-project) file and then [running `wrangler publish` in your command line](/get-started/guide#8-publish-your-project) to generate a live URL for your Worker.
+2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/get-started/guide#6-preview-your-project) file and then [running `wrangler publish` in your command line](/get-started/guide#8-publish-your-project) to generate a live URL for your Worker.
 
-3. In the **Content type** dropdown, select _application/json_.
+3.  In the **Content type** dropdown, select *application/json*.
 
-4. In the **Secret** field, input a secret key of your choice.
+4.  In the **Secret** field, input a secret key of your choice.
 
-5. In **Which events would you like to trigger this webhook?**, select **Let me select individual events**. Select the events you want to get notifications for (such as **Pull requests**, **Pushes**, and **Branch or tag creation**).
+5.  In **Which events would you like to trigger this webhook?**, select **Let me select individual events**. Select the events you want to get notifications for (such as **Pull requests**, **Pushes**, and **Branch or tag creation**).
 
-6. Select **Add webhook** to finish configuration.
+6.  Select **Add webhook** to finish configuration.
 
 ![GitHub config screenshot](media/github-config-screenshot.png)
 
---------------------------------
+***
 
 ## Parsing the response
 
@@ -196,7 +197,7 @@ route = ""
 zone_id = ""
 ```
 
---------------------------------
+***
 
 ## Sending a text with Twilio
 
@@ -235,6 +236,7 @@ async function sendText(message){
   return new Response(JSON.stringify(result), request)
 }
 ```
+
 To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/cli-wrangler/commands#put) in your command line.
 
 ```sh
@@ -291,6 +293,6 @@ By completing this tutorial, you have learned how to build webhooks using Worker
 
 ## Related resources
 
-- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-- [Build a JAMStack app](/tutorials/build-a-jamstack-app)
-- [Build a QR code generator](/tutorials/build-a-qr-code-generator)
+*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+*   [Build a JAMStack app](/tutorials/build-a-jamstack-app)
+*   [Build a QR code generator](/tutorials/build-a-qr-code-generator)

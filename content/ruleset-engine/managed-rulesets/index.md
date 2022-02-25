@@ -12,7 +12,7 @@ Managed Rulesets are preconfigured rulesets provided by Cloudflare that you can 
 
 The rules in a Managed Ruleset have a default configuration. However, you can define overrides that change this default configuration.
 
-<Aside type='note' header='Note'>
+\<Aside type='note' header='Note'>
 
 On the Cloudflare dashboard you define overrides through **configurations**.
 

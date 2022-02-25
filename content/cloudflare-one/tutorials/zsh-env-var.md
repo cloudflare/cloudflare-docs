@@ -17,14 +17,14 @@ You can also use `cloudflared` to quickly gather the JWT from an application and
 
 **🗺️ This tutorial covers how to:**
 
-* Login to an application secured by Cloudflare Access from the command line using `cloudflared`
-* Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
+*   Login to an application secured by Cloudflare Access from the command line using `cloudflared`
+*   Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
 
 **⏲️Time to complete:**
 
 5 minutes
 
----
+***
 
 ## Install `cloudflared`
 

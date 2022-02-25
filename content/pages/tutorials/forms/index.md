@@ -96,7 +96,6 @@ The source code for this example is [available on GitHub](https://github.com/clo
 
 </Aside>
 
-
 ### Setup
 
 To begin, create a [new GitHub repository](https://repo.new/). Then create a new local directory on your machine, initialize git, and attach the GitHub location as a remote destination:
@@ -315,11 +314,11 @@ Your work now resides within the GitHub repository, which means that Pages is ab
 
 If this is your first Cloudflare Pages project, refer to the [Get started guide](/get-started) for a complete walkthrough. After selecting the appropriate GitHub repository, you must configure your project with the following build settings:
 
-* **Project name** – Your choice
-* **Production branch** – `main`
-* **Framework preset** – None
-* **Build command** – None / Empty
-* **Build output directory** – `public`
+*   **Project name** – Your choice
+*   **Production branch** – `main`
+*   **Framework preset** – None
+*   **Build command** – None / Empty
+*   **Build output directory** – `public`
 
 After clicking the **Save and Deploy** button, your Pages project will begin its first deployment. When successful, you will be presented with a unique `*.pages.dev` subdomain and a link to your live demo.
 
@@ -329,5 +328,5 @@ If you would like to review the full source code for this application, you can f
 
 ## Related resources
 
-- [Build an API for your front end using Cloudflare Workers](/tutorials/build-an-api-with-workers)
-- [Handle form submissions with Airtable](https://developers.cloudflare.com/workers/tutorials/handle-form-submissions-with-airtable)
+*   [Build an API for your front end using Cloudflare Workers](/tutorials/build-an-api-with-workers)
+*   [Handle form submissions with Airtable](https://developers.cloudflare.com/workers/tutorials/handle-form-submissions-with-airtable)

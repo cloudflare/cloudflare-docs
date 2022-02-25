@@ -21,7 +21,7 @@ Your team domain is a unique subdomain assigned to your Cloudflare account; for 
 
 ## How do I change my subscription plan?
 
-To make changes to your subscription, visit the Billing section under Account on the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it. 
+To make changes to your subscription, visit the Billing section under Account on the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it.
 
 ## How are active seats measured?
 
@@ -31,14 +31,14 @@ Cloudflare Zero Trust subscriptions consist of seats that users in your account 
 
 User seats can be removed for Access and Gateway at **My Team** > **Users**. Removing a user will have consequences both on Access and on Gateway:
 
-* **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
+*   **Access**: All active sessions for that user will be invalidated. Note: A user will be able to log back into an application unless the Application’s policy is also updated to block future logins from that user.
 
-* **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
+*   **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
 
 <Aside type='warning'>
 
 The Remove action will remove a user’s seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user’s ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in WARP.
-  
+
 </Aside>
 
 ### Revoking users

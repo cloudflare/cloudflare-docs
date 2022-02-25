@@ -7,20 +7,20 @@ pcx-content-type: tutorial
 
 This article presents examples of queries you can use to populate your own dashboard.
 
-  - [Parameters and filters](#parameters-and-filters)
-  - [Timeseries graph](#timeseries-graph)
-  - [Activity log](#activity-log)
-  - [Top N cards - source](#top-n-cards---source)
-  - [Top N cards - destination](#top-n-cards---destination)
-  - [TCP Flags](#tcp-flags)
-  - [Executive summary](#executive-summary)
+*   [Parameters and filters](#parameters-and-filters)
+*   [Timeseries graph](#timeseries-graph)
+*   [Activity log](#activity-log)
+*   [Top N cards - source](#top-n-cards---source)
+*   [Top N cards - destination](#top-n-cards---destination)
+*   [TCP Flags](#tcp-flags)
+*   [Executive summary](#executive-summary)
 
 Use this workflow to build and test queries:
 
-* Install and configure the [GraphiQL](https://www.electronjs.org/apps/graphiql) app to authenticate to the Cloudflare Analytics GraphQL API. Cloudflare recommends token authentication. Refer to [Configure an Analytics API token](/graphql-api/getting-started/authentication/api-token-auth/), for more information.
-* Construct the queries in the GraphiQL. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to [Querying basics](/graphql-api/getting-started/querying-basics/).
-* Test your queries by running them from GraphiQL or by passing them as the payload in a cURL request to the GraphQL API endpoint.
-* Use the queries in your application to provide data for your dashboard widgets.
+*   Install and configure the [GraphiQL](https://www.electronjs.org/apps/graphiql) app to authenticate to the Cloudflare Analytics GraphQL API. Cloudflare recommends token authentication. Refer to [Configure an Analytics API token](/graphql-api/getting-started/authentication/api-token-auth/), for more information.
+*   Construct the queries in the GraphiQL. You can use the introspective documentation in the GraphQL client to explore the nodes available. For further information about queries, refer to [Querying basics](/graphql-api/getting-started/querying-basics/).
+*   Test your queries by running them from GraphiQL or by passing them as the payload in a cURL request to the GraphQL API endpoint.
+*   Use the queries in your application to provide data for your dashboard widgets.
 
 ## Parameters and filters
 

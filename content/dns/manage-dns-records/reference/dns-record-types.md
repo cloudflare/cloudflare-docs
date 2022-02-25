@@ -7,7 +7,7 @@ pcx-content-type: reference
 
 This page provides reference information about the different types of DNS records. For guidance on adding DNS records, refer to [Manage DNS records](/manage-dns-records/how-to/create-dns-records).
 
----
+***
 
 ## IP address resolution
 
@@ -19,15 +19,15 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
-    - Be 63 characters or less
-    - Start with a letter and end with a letter or digit
-    - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
-- **IPv4/IPv6 address**: Your origin web server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
-- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-    - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-    - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
+*   **Name**: A subdomain or the root domain, which must:
+    *   Be 63 characters or less
+    *   Start with a letter and end with a letter or digit
+    *   Only contain letters, digits, or hyphens (underscores allowed but discouraged)
+*   **IPv4/IPv6 address**: Your origin web server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
+*   **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
+    *   If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
+    *   If the **Proxy Status** is **DNS Only**, you can customize the value.
+*   **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
 
 ### CNAME
 
@@ -35,55 +35,55 @@ These records include the following fields:
 
 These records include the following fields:
 
-- **Name**: A subdomain or the root domain, which must:
-    - Be 63 characters or less
-    - Start with a letter and end with a letter or digit
-    - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
-- **Target**: The hostname where traffic should be directed (`example.com`).
-- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-    - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-    - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
+*   **Name**: A subdomain or the root domain, which must:
+    *   Be 63 characters or less
+    *   Start with a letter and end with a letter or digit
+    *   Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
+*   **Target**: The hostname where traffic should be directed (`example.com`).
+*   **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
+    *   If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
+    *   If the **Proxy Status** is **DNS Only**, you can customize the value.
+*   **Proxy status**: For more details, refer to [Proxied DNS records](../proxied-dns-records).
 
 You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record) if this hostname is meant to proxy traffic.
 
----
+***
 
 ## Email authentication
 
 These records are recommended regardless of whether your domain sends email messages. Creating [secure email records](https://blog.cloudflare.com/tackling-email-spoofing/) can help protect your domain against email spoofing.
 
-If your domain is not used to send email messages, learn more about creating recommended [restrictive records](https://www.cloudflare.com/learning/dns/dns-records/protect-domains-without-email/). 
+If your domain is not used to send email messages, learn more about creating recommended [restrictive records](https://www.cloudflare.com/learning/dns/dns-records/protect-domains-without-email/).
 
 ### MX
 
 A mail exchange (MX) record is required to deliver email to a mail server.
 
-- [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
-- [Create an MX record](/manage-dns-records/how-to/email-records#add-mx-records)
+*   [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
+*   [Create an MX record](/manage-dns-records/how-to/email-records#add-mx-records)
 
 ### DKIM
 
 A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptographically signing emails:
 
-- [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
-- [Create a DKIM record](/manage-dns-records/how-to/email-records#configure-email-security-records)
+*   [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
+*   [Create a DKIM record](/manage-dns-records/how-to/email-records#configure-email-security-records)
 
 ### SPF
 
 A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
 
-- [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
-- [Create an SPF record](/manage-dns-records/how-to/email-records#configure-email-security-records)
+*   [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
+*   [Create an SPF record](/manage-dns-records/how-to/email-records#configure-email-security-records)
 
 ### DMARC
 
 A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
-- [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
-- [Create a DMARC record](/manage-dns-records/how-to/email-records#configure-email-security-records)
+*   [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
+*   [Create a DMARC record](/manage-dns-records/how-to/email-records#configure-email-security-records)
 
----
+***
 
 ## Specialized records
 
@@ -111,7 +111,7 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 ### PTR
 
-A [pointer (PTR) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ptr-record/) specifies the allowed hosts for a given IP address. 
+A [pointer (PTR) record](https://www.cloudflare.com/learning/dns/dns-records/dns-ptr-record/) specifies the allowed hosts for a given IP address.
 
 Within Cloudflare, PTR records are used for reverse DNS lookups and should preferably be added to [reverse zones](/additional-options/reverse-zones).
 

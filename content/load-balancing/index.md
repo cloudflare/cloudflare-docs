@@ -12,10 +12,10 @@ Cloudflare Load Balancing allows you to distribute traffic across your servers, 
 
 Cloudflare Load Balancing provides several benefits:
 
-- **Load balancing and failover**: Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
-- **Active health checks**: Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
-- **Intelligent routing**: Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
-- **Customized setup**: Create custom rules (or reuse monitors and pools across multiple load balancers) to adjust routing according to the characteristics of each request.
+*   **Load balancing and failover**: Distribute traffic evenly across your healthy servers, automatically failing over when a server is unhealthy or unresponsive.
+*   **Active health checks**: Monitor your servers at configurable intervals and across multiple data centers to look for specific status codes, response text, and timeouts.
+*   **Intelligent routing**: Choose whether to distribute requests based on server latency, a visitor's geographic region, or even a visitor's GPS coordinates.
+*   **Customized setup**: Create custom rules (or reuse monitors and pools across multiple load balancers) to adjust routing according to the characteristics of each request.
 
 <Aside type='note' header="Note">
 
@@ -33,4 +33,3 @@ Cloudflare Load Balancing is available as an add-on feature for any type of acco
   <Button type="primary" href="/get-started">Get started</Button>
   <Button type="secondary" href="/understand-basics">Learn more</Button>
 </ButtonGroup>
-

@@ -73,19 +73,19 @@ Now, when you feed the function `NSLookup` a record type and a domain, you will 
 
 The record types supported are:
 
-* A
-* AAAA
-* CAA
-* CNAME
-* DS
-* DNSKEY
-* MX
-* NS
-* NSEC
-* NSEC3
-* RRSIG
-* SOA
-* TXT
+*   A
+*   AAAA
+*   CAA
+*   CNAME
+*   DS
+*   DNSKEY
+*   MX
+*   NS
+*   NSEC
+*   NSEC3
+*   RRSIG
+*   SOA
+*   TXT
 
 For example, typing:
 
@@ -101,7 +101,7 @@ NSLookup(B1, B2)
 
 <br/>
 
-Returns 
+Returns
 
 ```txt
 198.41.214.162, 198.41.215.162

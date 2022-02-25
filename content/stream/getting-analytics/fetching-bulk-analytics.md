@@ -1,35 +1,35 @@
 ---
 pcx-content-type: reference
 ---
- 
+
 # Fetching bulk analytics
 
  <Aside type='note'>
 
 Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
-  
+
  </Aside>
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request.
 
 ## Metrics available
 
-  - Number of views (number of times the video playback has been started)
-  - Time viewed in seconds
-  - Number of video buffering events
-  - Number of times quality level has changed
+*   Number of views (number of times the video playback has been started)
+*   Time viewed in seconds
+*   Number of video buffering events
+*   Number of times quality level has changed
 
 ## Filters available
 
 There is no limit on number of filters per query.
 
-  - Video UID
-  - Date/time
-  - Country
-  - Device type
-  - Device operating system
-  - Device browser
-  - Quality level (only for quality level metric)
+*   Video UID
+*   Date/time
+*   Country
+*   Device type
+*   Device operating system
+*   Device browser
+*   Quality level (only for quality level metric)
 
 <Aside>
 
@@ -47,10 +47,10 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
-1. Make a query to https://api.cloudflare.com/client/v4/graphql
-1. Include your Cloudflare API token in the headers (see cURL example included on this page)
-1. It is important that you change the $ACCOUNT_ID with your account ID and the date range
-1. The body of the query should contain the following GraphQL Query:
+1.  Make a query to https://api.cloudflare.com/client/v4/graphql
+2.  Include your Cloudflare API token in the headers (see cURL example included on this page)
+3.  It is important that you change the $ACCOUNT\_ID with your account ID and the date range
+4.  The body of the query should contain the following GraphQL Query:
 
 ```javascript
 query {
@@ -82,23 +82,21 @@ query {
 
 Here is the exact cURL request:
 
-```
-curl --request POST \
---url https://api.cloudflare.com/client/v4/graphql \
---header 'content-type: application/json' \
---header 'Authorization: Bearer $TOKEN' \
---data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
-```
+    curl --request POST \
+    --url https://api.cloudflare.com/client/v4/graphql \
+    --header 'content-type: application/json' \
+    --header 'Authorization: Bearer $TOKEN' \
+    --data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
 
 ### Response:
 
 The response will look something like below. Things to remember:
 
- - Each object inside videoPlaybackEventsAdaptiveGroups represents one video
- - uid property represents the video uid
- - count property shows the view count for one video during the specified date range
- - timeViewedMinutes property shows the minutes viewed per video during the specified date range
- - If a video did not have views in the date range specified, it will NOT be included in the response
+*   Each object inside videoPlaybackEventsAdaptiveGroups represents one video
+*   uid property represents the video uid
+*   count property shows the view count for one video during the specified date range
+*   timeViewedMinutes property shows the minutes viewed per video during the specified date range
+*   If a video did not have views in the date range specified, it will NOT be included in the response
 
 ```javascript
 {
@@ -235,11 +233,12 @@ query {
 
 Here are the steps to implementing pagination:
 
-  1. Call the first query without uid_gt filter to get the first set of videos
-  1. Grab the last video ID from the response from the first query
-  1. Call next query by specifying uid_gt property and set it to the last video ID. This will return the next set of videos
+1.  Call the first query without uid\_gt filter to get the first set of videos
+2.  Grab the last video ID from the response from the first query
+3.  Call next query by specifying uid\_gt property and set it to the last video ID. This will return the next set of videos
 
 ## Limitations
- - Only Cloudflare API keys, not API tokens can be used with the Stream GraphQL API for now
- - Maximum query interval in a single query is 31 days
- - Maximum data retention period is 90 days
+
+*   Only Cloudflare API keys, not API tokens can be used with the Stream GraphQL API for now
+*   Maximum query interval in a single query is 31 days
+*   Maximum data retention period is 90 days

@@ -12,37 +12,37 @@ These instructions are not meant for configuring a service to run against an API
 
 **🗺️ This walkthrough covers how to:**
 
-* Connect to resources secured by Cloudflare Access from a CLI
+*   Connect to resources secured by Cloudflare Access from a CLI
 
 **⏲️ Time to complete:**
 
 30 minutes
 
----
+***
 
 ## Authenticate a session from the command line
 
 Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare Access token for a given application. This walkthrough uses the domain `example.com` as a stand-in for a protected API.
 
-1. To generate a token, run the following command:
+1.  To generate a token, run the following command:
 
 ```sh
 $ cloudflared access login https://example.com
 ```
 
-  With this command, `cloudflared` launches a browser window containing the same Access login page found when attempting to access a web application.
+With this command, `cloudflared` launches a browser window containing the same Access login page found when attempting to access a web application.
 
-2. Select your identity provider and log in.
+2.  Select your identity provider and log in.
 
-  If the browser window does not launch, you can use the unique URL that is automatically printed to the command line.
+If the browser window does not launch, you can use the unique URL that is automatically printed to the command line.
 
-3. Once you have successfully authenticated, the browser returns the token to `cloudflared` in a cryptographic transfer and stores it.
+3.  Once you have successfully authenticated, the browser returns the token to `cloudflared` in a cryptographic transfer and stores it.
 
-  The token is valid for the session duration configured by the Access administrator.
+The token is valid for the session duration configured by the Access administrator.
 
 ## Access your API
 
-Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named _token_. You can invoke the wrapper as follows:
+Once you have retrieved a token, you can access the protected API. The `cloudflared` command-line tool includes a wrapper for transferring data via `curl`, which uses URL syntax (for more, see the [curl](https://github.com/curl/curl) GitHub project). The wrapper injects the token into the `curl` request as a query argument named *token*. You can invoke the wrapper as follows:
 
 ```sh
 $ cloudflared access curl http://example.com
@@ -84,13 +84,13 @@ It is possible to save the token as an environment variable for convenience and 
 
 Set up a token as an environment variable as follows:
 
-1. Run the following command to export the token to the shell environment:
+1.  Run the following command to export the token to the shell environment:
 
     ```sh
     $ export TOKEN=$(cloudflared access token -app=http://example.com)
     ```
 
-2. Confirm the token was saved with the following:
+2.  Confirm the token was saved with the following:
 
     ```sh
     $ echo $TOKEN

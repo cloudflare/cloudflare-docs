@@ -31,8 +31,8 @@ To track a `dataLayer.push` function, create a trigger with `zaraz.track()`. The
 <TableWrap>
 
 Rule type | Variable name | Match operation | Match string
----       | ---           | ---             | ---
-_Match rule_ | `{{ client.__zarazTrack }}` |  _Contains_ | `purchase`
+\---       | ---           | ---             | ---
+*Match rule* | `{{ client.__zarazTrack }}` |  *Contains* | `purchase`
 
 </TableWrap>
 

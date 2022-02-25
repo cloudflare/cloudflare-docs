@@ -17,15 +17,14 @@ pinning service and your own server for higher availability.
 
 ## Prerequisites
 
-- A Linux server that's online as much as possible. A VPS from a provider like
-  [DigitalOcean](https://www.digitalocean.com/) is an option, or something like
-  a [NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc.html)
-  or [Raspberry Pi](https://www.raspberrypi.org/) running on your home network
-  will work.<br />
-  <u>Recommended Minimum Requirements:</u>
-  - 2 gigabytes of RAM
-  - 10 gigabytes of disk space
-  - 1 terabyte of bandwidth per month
+*   A Linux server that's online as much as possible. A VPS from a provider like
+    [DigitalOcean](https://www.digitalocean.com/) is an option, or something like
+    a [NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc.html)
+    or [Raspberry Pi](https://www.raspberrypi.org/) running on your home network
+    will work.<br /> <u>Recommended Minimum Requirements:</u>
+    *   2 gigabytes of RAM
+    *   10 gigabytes of disk space
+    *   1 terabyte of bandwidth per month
 
 ## Installing IPFS
 
@@ -45,7 +44,7 @@ $ rm -rf go-ipfs go-ipfs_v0.4.21_linux-amd64.tar.gz
 IPFS also has to do its own setup, so we run this command *logged in as the user
 that we'll want to run the IPFS daemon*:
 
-``` bash
+```bash
 $ ipfs init
 ```
 
@@ -63,19 +62,17 @@ create a service for it so that we get all these benefits.
 To do this, we create a *unit file* at `/etc/systemd/system/ipfs.service` with
 the contents:
 
-```
-[Unit]
-Description=IPFS Daemon
+    [Unit]
+    Description=IPFS Daemon
 
-[Service]
-ExecStart=/usr/local/bin/ipfs daemon
-User=root
-Restart=always
-LimitNOFILE=10240
+    [Service]
+    ExecStart=/usr/local/bin/ipfs daemon
+    User=root
+    Restart=always
+    LimitNOFILE=10240
 
-[Install]
-WantedBy=multi-user.target
-```
+    [Install]
+    WantedBy=multi-user.target
 
 Change the line "User=root" if you're not running the daemon as root, and then
 tell systemd about the new service:
@@ -88,16 +85,16 @@ $ sudo systemctl start ipfs
 
 ### Notes on systemd
 
-- See high-level information on how the IPFS daemon is doing:<br />
-  `$ systemctl status ipfs`
-- Stop the daemon:<br />
-  `$ systemctl stop ipfs`
-- Start the daemon:<br />
-  `$ systemctl start ipfs`
-- See all logs from the daemon:<br />
-  `$ journalctl -u ipfs`
-- See only most recent logs, and show new logs as they're written:<br />
-  `$ journalctl -f -u ipfs`
+*   See high-level information on how the IPFS daemon is doing:<br />
+    `$ systemctl status ipfs`
+*   Stop the daemon:<br />
+    `$ systemctl stop ipfs`
+*   Start the daemon:<br />
+    `$ systemctl start ipfs`
+*   See all logs from the daemon:<br />
+    `$ journalctl -u ipfs`
+*   See only most recent logs, and show new logs as they're written:<br />
+    `$ journalctl -f -u ipfs`
 
 ## Opening Up to the Internet
 

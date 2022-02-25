@@ -27,12 +27,12 @@ Cloudflare supports cron expressions with five fields, along with most [Quartz s
 <TableWrap>
 
 Field         | Values  | Characters
---------------|---------|------------
-Minute        | 0-59    | * , - /
-Hours         | 0-23    | * , - /
-Days of Month | 1-31    | * , - / L W
-Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | * , - /
-Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | * , - / L #
+\--------------|---------|------------
+Minute        | 0-59    | \* , - /
+Hours         | 0-23    | \* , - /
+Days of Month | 1-31    | \* , - / L W
+Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /
+Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L #
 
 </TableWrap>
 
@@ -42,26 +42,26 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 <Definitions>
 
-- `* * * * *`
-  - Every minute
+*   `* * * * *`
+    *   Every minute
 
-- `*/30 * * * *`
-  - Every 30 minutes
+*   `*/30 * * * *`
+    *   Every 30 minutes
 
-- `0 17 * * sun` or `0 17 * * 1`
-  - 5PM on Sunday
+*   `0 17 * * sun` or `0 17 * * 1`
+    *   5PM on Sunday
 
-- `10 7 * * mon-fri` or `10 7 * * 2-6`
-  - 7:10AM on weekdays
+*   `10 7 * * mon-fri` or `10 7 * * 2-6`
+    *   7:10AM on weekdays
 
-- `0 15 1 * *`
-  - 3PM on first day of the month
+*   `0 15 1 * *`
+    *   3PM on first day of the month
 
-- `0 18 * * 6L` or `0 18 * * friL`
-  - 6PM on the last Friday of the month
+*   `0 18 * * 6L` or `0 18 * * friL`
+    *   6PM on the last Friday of the month
 
-- `23 59 LW * *`
-  - 11:59PM on the last weekday of the month
+*   `23 59 LW * *`
+    *   11:59PM on the last weekday of the month
 
 </Definitions>
 

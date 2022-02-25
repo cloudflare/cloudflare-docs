@@ -12,12 +12,12 @@ When your domain is registered with Cloudflare, you can review your domain statu
 
 ## Edit WHOIS records
 
-Cloudflare redacts WHOIS information from your domain by default. However, we do store the authentic WHOIS record for your domain. You may edit the WHOIS contact data for any domain. To do that: 
+Cloudflare redacts WHOIS information from your domain by default. However, we do store the authentic WHOIS record for your domain. You may edit the WHOIS contact data for any domain. To do that:
 
-1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
-1. From **Overview**, scroll down to **Manage domain**.
-1. Select the domain you want to edit and click **Manage** > **Contacts**.
-1. Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
+1.  Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
+2.  From **Overview**, scroll down to **Manage domain**.
+3.  Select the domain you want to edit and click **Manage** > **Contacts**.
+4.  Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
 
 Refer to [Registrant contact updates](/account-options/domain-contact-updates) for more information.
 
@@ -27,13 +27,13 @@ The first time you transfer or register a new domain, a Default Contact is creat
 
 To edit the Default Contact information:
 
-1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
-1. From **Overview**, scroll down to **Manage domain**.
-1. In the **Default Contact** card, click **Edit**.
+1.  Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
+2.  From **Overview**, scroll down to **Manage domain**.
+3.  In the **Default Contact** card, click **Edit**.
 
 ## Automatic renewal of domain
 
-Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other registrars, your domain will only renew at the list price set by the registry. When a domain has the auto-renew setting turned on, Cloudflare will attempt to automatically renew the domain prior to expiration. 
+Cloudflare Registrar enrolls your domain to auto-renew by default. Unlike other registrars, your domain will only renew at the list price set by the registry. When a domain has the auto-renew setting turned on, Cloudflare will attempt to automatically renew the domain prior to expiration.
 
 There is no guarantee that the renewal will succeed. Renewals may fail for various reasons, including billing failures and registry downtime. While we will make several attempts to renew, we strongly recommend you frequently review your account to ensure your domains have been renewed.
 

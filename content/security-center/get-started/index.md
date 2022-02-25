@@ -9,16 +9,16 @@ This guide covers the steps you need to take to set up Security Center in your C
 
 ## Prerequisites
 
-* A Cloudflare account
-* At least one zone onboarded to Cloudflare
+*   A Cloudflare account
+*   At least one zone onboarded to Cloudflare
 
 ## Enable Security Insights and start initial scan
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-1. In the Account Home, open **Security Center**.
+2.  In the Account Home, open **Security Center**.
 
-1. Under **Perform initial scan**, click **Start scan**.
+3.  Under **Perform initial scan**, click **Start scan**.
 
     ![Security Center's home page where you can start an initial scan](../images/security-insights-start-scan.png)
 

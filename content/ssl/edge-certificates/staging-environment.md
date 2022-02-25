@@ -7,9 +7,9 @@ pcx-content-type: how-to
 
 Use your certificate staging environment to test new custom (modern) certificates before pushing them to your production environment. This process helps you solve potential certificate problems **before** there's an incident, such as when:
 
-- You make a mistake when uploading a new custom certificate.
-- You misunderstand the order of your certificates.
-- Clients have previously pinned your custom certificate, causing a TLS termination error.
+*   You make a mistake when uploading a new custom certificate.
+*   You misunderstand the order of your certificates.
+*   Clients have previously pinned your custom certificate, causing a TLS termination error.
 
 <Aside type="note">
 
@@ -17,7 +17,7 @@ Staging environments are available only to Enterprise customers as part of an op
 
 </Aside>
 
----
+***
 
 ## Use your staging environment
 
@@ -25,10 +25,10 @@ Staging environments are available only to Enterprise customers as part of an op
 
 To upload custom (modern) certificates to your staging environment:
 
-1. Navigate to **SSL/TLS** > **Staging Certificates**.
-1. Click **Upload Custom Staging Certificate**.
-1. Upload your custom (modern) certificate ([detailed instructions](/edge-certificates/custom-certificates/uploading)).
-1. Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
+1.  Navigate to **SSL/TLS** > **Staging Certificates**.
+2.  Click **Upload Custom Staging Certificate**.
+3.  Upload your custom (modern) certificate ([detailed instructions](/edge-certificates/custom-certificates/uploading)).
+4.  Your certificate will appear in the dashboard with a status of **Staging Deployment**. If you refresh the page, its status should go to **Staging Active**.
 
 ### Step 2 — Test certificate
 
@@ -40,17 +40,17 @@ curl --resolve <HOSTNAME>:<STAGING_IP> https://<HOSTNAME> -iv
 
 You should confirm whether:
 
-- TLS termination is successful.
-- The right certificate is being served at the edge.
-- Any clients are pinning the old certificate.
+*   TLS termination is successful.
+*   The right certificate is being served at the edge.
+*   Any clients are pinning the old certificate.
 
 ### Step 3 — Push certificate to production
 
 Assuming there are no issues, push your custom (modern) certificate to your production environment:
 
-1. Navigate to **SSL/TLS** > **Staging Certificates**.
-1. Click a custom certificate.
-1. Click **Push to Production**.
+1.  Navigate to **SSL/TLS** > **Staging Certificates**.
+2.  Click a custom certificate.
+3.  Click **Push to Production**.
 
 If there were issues with your certificate, you can keep it in your staging environment or click **Deactivate** on the certificate itself.
 
@@ -58,11 +58,11 @@ If there were issues with your certificate, you can keep it in your staging envi
 
 If you roll out a custom (modern) certificate to production and encounter issues, you can push that certificate back to your staging environment for additional testing:
 
-1. Navigate to **SSL/TLS** > **Edge Certificates**.
-1. Click a custom certificate.
-1. Click **Push to Staging**.
+1.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Click a custom certificate.
+3.  Click **Push to Staging**.
 
----
+***
 
 ## Limitations
 
@@ -74,5 +74,5 @@ Currently, staging environments are only available to Enterprise customers parti
 
 At the moment, staging environments have limited functionality:
 
-- Only custom (modern) certificates
-- Only accessed via the dashboard
+*   Only custom (modern) certificates
+*   Only accessed via the dashboard

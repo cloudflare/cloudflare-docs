@@ -20,8 +20,8 @@ There is no need to update your `compatibility_date` if you do not want to. The 
 
 However, even though you do not need to update the `compatibility_date` field, it is a good practice to do so for two reasons:
 
-1. Sometimes, new features can only be made available to Workers that have a current `compatibility_date`. To access the latest features, you need to stay up-to-date.
-2. Generally, other than this page, the Workers documentation may only describe the current `compatibility_date`, omitting information about historical behavior. If your Worker uses an old `compatibility_date`, you will need to continuously refer to this page in order to check if any of the APIs you are using have changed.
+1.  Sometimes, new features can only be made available to Workers that have a current `compatibility_date`. To access the latest features, you need to stay up-to-date.
+2.  Generally, other than this page, the Workers documentation may only describe the current `compatibility_date`, omitting information about historical behavior. If your Worker uses an old `compatibility_date`, you will need to continuously refer to this page in order to check if any of the APIs you are using have changed.
 
 ## Compatibility flags
 
@@ -55,25 +55,25 @@ Originally, properties on Workers API objects were defined as instance propertie
 
 This changes applies to:
 
-* `AbortSignal`
-* `AbortController`
-* `Blob`
-* `Body`
-* `DigestStream`
-* `Event`
-* `File`
-* `Request`
-* `ReadableStream`
-* `ReadableStreamDefaultReader`
-* `ReadableStreamBYOBReader`
-* `Response`
-* `TextDecoder`
-* `TextEncoder`
-* `TransformStream`
-* `URL`
-* `WebSocket`
-* `WritableStream`
-* `WritableStreamDefaultWriter`
+*   `AbortSignal`
+*   `AbortController`
+*   `Blob`
+*   `Body`
+*   `DigestStream`
+*   `Event`
+*   `File`
+*   `Request`
+*   `ReadableStream`
+*   `ReadableStreamDefaultReader`
+*   `ReadableStreamBYOBReader`
+*   `Response`
+*   `TextDecoder`
+*   `TextEncoder`
+*   `TransformStream`
+*   `URL`
+*   `WebSocket`
+*   `WritableStream`
+*   `WritableStreamDefaultWriter`
 
 ### New URL parser implementation
 
@@ -167,4 +167,3 @@ HTML5 does not recognize XML self-closing tag syntax. For example, `<script src=
 `<esi:include>` and `<esi:comment>` are two tags that are not part of the HTML5 standard, but are instead used as part of [Edge Side Includes](https://en.wikipedia.org/wiki/Edge_Side_Includes), a technology for server-side HTML modification. These tags are not expected to contain any body and are commonly written with XML self-closing syntax.
 
 `HTMLRewriter` was designed to parse standard HTML5, not ESI. However, it would be useful to be able to implement some parts of ESI using `HTMLRewriter`. To that end, this compatibility flag causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, so that they can be parsed and handled properly.
-

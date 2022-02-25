@@ -11,35 +11,39 @@ Kandji deploys Cloudflare WARP as a custom app. For an overview of how Kandji de
 
 First, you need to download the **custom configuration profile**. For the simplest deployment, Kandji has created a downloadable configuration profile that enables Cloudfare WARP’s user notifications and configures its Privacy Preference Policy Control ([PPPC](https://support.kandji.io/create-a-privacy-preferences-policy-control-profile)) to have Full Disk Access.
 
-1. Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
-1. Add the custom profile.
-    1. In the navigation bar on the left, click **Library**.
-    1. In the upper-right corner, click **Add New**.
-    1. On the **Add Library Item** page, click **Custom Profile**.
-    1. Click **Add & Configure**.
-1. Configure the custom profile.
-    1. Enter a **Name** for the custom configuration profile.
-    1. Assign your custom profile to a test Blueprint.
-    1. Set the **Device Families** to Mac.
-    1. Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
-    1. Save the custom profile.
+1.  Download the [custom profile](https://github.com/kandji-inc/support/blob/master/Configuration%20Profiles/cloudflare_warp.mobileconfig).
+
+2.  Add the custom profile.
+    1.  In the navigation bar on the left, click **Library**.
+    2.  In the upper-right corner, click **Add New**.
+    3.  On the **Add Library Item** page, click **Custom Profile**.
+    4.  Click **Add & Configure**.
+
+3.  Configure the custom profile.
+
+    1.  Enter a **Name** for the custom configuration profile.
+    2.  Assign your custom profile to a test Blueprint.
+    3.  Set the **Device Families** to Mac.
+    4.  Upload the `cloudflare_warp.mobileconfig` file you previously downloaded.
+    5.  Save the custom profile.
 
     ![Custom profile](../../../../../../static/documentation/connections/custom-profile.png)
 
-1. Next, add a custom app.
-    1. In the navigation bar on the left, click **Library**.
-    1. In the upper-right corner, click **Add New**.
-    1. On the **Add Library Item** page, click **Custom App**.
-    1. Click **Add & Configure**.
-1. Configure the custom app.
-    1. Name the custom app.
-    1. Assign the custom app to the same test Blueprint as above.
-    1. Select **Audit and Enforce** as the installation type.
-    1. Copy the **Audit and Enforce Script** below and paste it into the **Audit Script** text field.
-    1. To enforce a minimum app version, update the **ENFORCED_VERSION** variable in the audit script with the version number the audit script should enforce. (Example version number 1.5.207.0). If **ENFORCED_VERSION** is left blank (““), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. (see script comments for more details)
-    1. In the Install Details section, select **Installer Package**. 
-    1. Under **Installer Package**, upload the Cloudflare Warp installer package. If you don’t already have the Cloudflare WARP installer package, [visit the Downloads page](/connections/connect-devices/warp/download-warp).
-    1. Click **Save**.
+4.  Next, add a custom app.
+    1.  In the navigation bar on the left, click **Library**.
+    2.  In the upper-right corner, click **Add New**.
+    3.  On the **Add Library Item** page, click **Custom App**.
+    4.  Click **Add & Configure**.
+
+5.  Configure the custom app.
+    1.  Name the custom app.
+    2.  Assign the custom app to the same test Blueprint as above.
+    3.  Select **Audit and Enforce** as the installation type.
+    4.  Copy the **Audit and Enforce Script** below and paste it into the **Audit Script** text field.
+    5.  To enforce a minimum app version, update the **ENFORCED\_VERSION** variable in the audit script with the version number the audit script should enforce. (Example version number 1.5.207.0). If **ENFORCED\_VERSION** is left blank (““), the audit script will not check for a version and will only check for the presence of the Cloudflare WARP app in the Applications folder or a subfolder within **Applications**. (see script comments for more details)
+    6.  In the Install Details section, select **Installer Package**.
+    7.  Under **Installer Package**, upload the Cloudflare Warp installer package. If you don’t already have the Cloudflare WARP installer package, [visit the Downloads page](/connections/connect-devices/warp/download-warp).
+    8.  Click **Save**.
 
 ## Audit and Enforce Script
 
@@ -212,5 +216,3 @@ fi
 
 exit 0
 ```
-
-

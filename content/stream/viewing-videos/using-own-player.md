@@ -9,9 +9,9 @@ There could be cases where you might need more control over the Stream player fo
 
 Some use cases that might benefit from a third-party player include:
 
-- Native mobile playback
-- Features the Stream player does not support
-- Specific UI needs such as branding
+*   Native mobile playback
+*   Features the Stream player does not support
+*   Specific UI needs such as branding
 
 ## Manifest files
 
@@ -48,8 +48,8 @@ Currently, the following hints are available:
 
 <Definitions>
 
-  - `clientBandwidthHint` <Type>float</Type>
-    - Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
+*   `clientBandwidthHint` <Type>float</Type>
+    *   Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
 
 </Definitions>
 
@@ -105,5 +105,5 @@ If you need complete control over the video element's CSS you can use a third pa
 
 ## Limitations
 
-- [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
-- Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.
+*   [Analytics](/getting-analytics/) are not collected by third-party players, information such as minutes viewed and number of views will not be available on the Stream dashboard.
+*   Automatic error reporting is not available to third-party players. Please reach out to Cloudflare Support if you experience playback issues with Stream manifest files.

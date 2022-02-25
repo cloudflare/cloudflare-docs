@@ -5,11 +5,11 @@ order: 5
 
 # Monitor exposed credentials events
 
-The Firewall **Activity log** contains entries for requests with exposed credentials identified by rules with the _Log_ action.
+The Firewall **Activity log** contains entries for requests with exposed credentials identified by rules with the *Log* action.
 
 Check for exposed credentials events in the Firewall Analytics dashboard (**Overview** tab of the **Firewall** app), filtering by a specific Rule ID. For more information on filtering Firewall events, refer to [Adjusting displayed data](/analytics/paid-plans#adjusting-displayed-data).
 
-<Aside type='warning' header='Important'>
+\<Aside type='warning' header='Important'>
 
 Exposed credentials events are only logged after you activate the Exposed Credentials Check Managed Ruleset or create a custom rule checking for exposed credentials.
 

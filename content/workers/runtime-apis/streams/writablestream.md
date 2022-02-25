@@ -29,9 +29,9 @@ Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamd
 
 <Definitions>
 
-- `locked` <Type>boolean</Type>
+*   `locked` <Type>boolean</Type>
 
-  - A Boolean value to indicate if the writable stream is locked to a writer.
+    *   A Boolean value to indicate if the writable stream is locked to a writer.
 
 </Definitions>
 
@@ -39,23 +39,23 @@ Refer to the [WritableStreamDefaultWriter](/runtime-apis/streams/writablestreamd
 
 <Definitions>
 
-- <Code>abort(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise&lt;void></Type>
+*   <Code>abort(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise\<void></Type>
 
-  - Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
+    *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/runtime-apis/streams/transformstream), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
-  <Aside type="warning" header="Warning">
+    <Aside type="warning" header="Warning">
 
-  Any data not yet written is lost upon abort.
+    Any data not yet written is lost upon abort.
 
-  </Aside>
+    </Aside>
 
-- `getWriter()` <TypeLink href="/runtime-apis/streams/writablestreamdefaultwriter">WritableStreamDefaultWriter</TypeLink>
+*   `getWriter()` <TypeLink href="/runtime-apis/streams/writablestreamdefaultwriter">WritableStreamDefaultWriter</TypeLink>
 
-  - Gets an instance of `WritableStreamDefaultWriter` and locks the `WritableStream` to that writer instance.
+    *   Gets an instance of `WritableStreamDefaultWriter` and locks the `WritableStream` to that writer instance.
 
 </Definitions>
 
 ## Related resources
 
-- [Using Streams.](/learning/using-streams)
-- [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)
+*   [Using Streams.](/learning/using-streams)
+*   [Writable streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#ws-model)

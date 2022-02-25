@@ -14,13 +14,13 @@ The following sections provide examples for the different skip rule scenarios av
 
 Take the following into account regarding the provided examples:
 
-* The `<ZONE_ID>` value is the ID of the zone where you want to add the rule. To retrieve a list of zones you have access to, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation.
+*   The `<ZONE_ID>` value is the ID of the zone where you want to add the rule. To retrieve a list of zones you have access to, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation.
 
-* The `<RULESET_ID>` value is the ID of the entry point ruleset of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view). If you do not have such a ruleset yet, you can use the [Update zone entry point ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) API operation to create the entry point ruleset with a skip rule in a single operation.
+*   The `<RULESET_ID>` value is the ID of the entry point ruleset of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](https://developers.cloudflare.com/ruleset-engine/rulesets-api/view). If you do not have such a ruleset yet, you can use the [Update zone entry point ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update) API operation to create the entry point ruleset with a skip rule in a single operation.
 
-* The examples in this page add a new rule at the zone level with the `skip` action. If you wish to edit an existing rule, refer to [Update a rule in a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule) for more information.
+*   The examples in this page add a new rule at the zone level with the `skip` action. If you wish to edit an existing rule, refer to [Update a rule in a ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update-rule) for more information.
 
-* Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
+*   Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
 
 ## Skip the remaining rules in the current ruleset
 

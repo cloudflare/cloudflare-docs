@@ -17,13 +17,14 @@ HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will 
 
 Build an HTTP policy by configuring the following elements:
 
-* **Expressions**
-    * **Selectors**
-    * **Operators**
-* **Actions**
+*   **Expressions**
+    *   **Selectors**
+    *   **Operators**
+*   **Actions**
 
 ## Expressions
-Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy. 
+
+Expressions are sets of conditions with which you can combine [selectors](#selectors) and [operators](#operators). By configuring one or more expressions, you can define the scope of your HTTP policy.
 
 ### Selectors
 
@@ -119,13 +120,14 @@ The `Host` selector matches the exact entry input by a customer in the value fie
 
 #### Device Posture
 
-With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device and/or if the device or software are configured in a particular way. 
+With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device and/or if the device or software are configured in a particular way.
 
 | UI name | API example |
 | --- | --- |
 | Passed Device Posture Checks | `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})` |
 
 ### Operators
+
 Operators are the way Gateway matches traffic to a selector. Matching happens as follows:
 
 | Operator              |          Meaning
@@ -143,12 +145,12 @@ Just like actions on destinations in DNS policies, actions in HTTP policies allo
 
 These are the action types you can choose from:
 
-* **[Allow](#allow)** 
-* **[Block](#block)** 
-* **[Isolate](#isolate)**
-* **[Do Not Isolate](#do-not-isolate)**
-* **[Do Not Inspect](#do-not-inspect)**
-* **[Do Not Scan](#do-not-scan)**
+*   **[Allow](#allow)**
+*   **[Block](#block)**
+*   **[Isolate](#isolate)**
+*   **[Do Not Isolate](#do-not-isolate)**
+*   **[Do Not Inspect](#do-not-inspect)**
+*   **[Do Not Scan](#do-not-scan)**
 
 ### Allow
 
@@ -201,18 +203,18 @@ When an admin enables AV scanning for uploads and/or downloads, Gateway will sca
 
 For more information on disabling QUIC on a managed device, see [these instructions](https://support.google.com/chrome/a/answer/7649838?hl=en). You can manually disable QUIC in Google Chrome using the Experimental QUIC protocol (`#enable-quic`) flag:
 
-1. In the address bar, type:  `chrome://flags#enable-quic`.
-1. Set the **Experimental QUIC protocol** flag to `Disabled`.
-1. Relaunch Chrome for the setting to take effect.
+1.  In the address bar, type:  `chrome://flags#enable-quic`.
+2.  Set the **Experimental QUIC protocol** flag to `Disabled`.
+3.  Relaunch Chrome for the setting to take effect.
 
 The following Windows registry key (or Mac/Linux preference) can be used to disable QUIC in Chrome, and can be enforced via GPO or equivalent:
 
-* **Data type:** `Boolean [Windows:REG_DWORD]`
-* **Windows registry location for Windows clients:** `Software\Policies\Google\Chrome\QuicAllowed`
-* **Windows registry location for Google Chrome OS clients:** `Software\Policies\Google\ChromeOS\QuicAllowed`
-* **Mac/Linux preference name:** `QuicAllowed`
-* **Description:** If this policy is set to true (or not set), usage of QUIC is allowed. If the policy is set to false, usage of QUIC is not allowed.
-* **Recommended value:** `Windows: 0x00000000`, `Linux: false`, `Mac: <false />`
+*   **Data type:** `Boolean [Windows:REG_DWORD]`
+*   **Windows registry location for Windows clients:** `Software\Policies\Google\Chrome\QuicAllowed`
+*   **Windows registry location for Google Chrome OS clients:** `Software\Policies\Google\ChromeOS\QuicAllowed`
+*   **Mac/Linux preference name:** `QuicAllowed`
+*   **Description:** If this policy is set to true (or not set), usage of QUIC is allowed. If the policy is set to false, usage of QUIC is not allowed.
+*   **Recommended value:** `Windows: 0x00000000`, `Linux: false`, `Mac: <false />`
 
 ## FAQ
 
@@ -227,8 +229,8 @@ The L7 firewall evaluates rules starting with the rule containing the lowest pre
 
 ### **I see an error when browsing Google-related pages. What's the problem?**
 
-If you are using the Gateway proxy, you need to disable the QUIC protocol within the Google Chrome settings. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy. 
+If you are using the Gateway proxy, you need to disable the QUIC protocol within the Google Chrome settings. This will prevent you from encountering issues such as users who are able to connect to Google-related sites and services (like YouTube) that are explicitly blocked by a Gateway policy.
 
 Google Chrome uses QUIC to connect to all google services by default. This means all requests to google services via the Google Chrome browser use UDP instead of TCP. **At this time, Gateway does not support inspection of QUIC traffic and requests using QUIC will bypass Gateway HTTP policies**. Gateway does prevent standard HTTP requests from negotiating to using QUIC with the `Alt-Svc` header by removing this header from HTTP requests.
 
-Gateway will support inspection of QUIC traffic in the future. 
+Gateway will support inspection of QUIC traffic in the future.

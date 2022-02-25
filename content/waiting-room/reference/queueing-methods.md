@@ -2,7 +2,7 @@
 pcx-content-type: concept
 ---
 
-import ChangeQueueMethod from "../_partials/_change-queueing-method.md"
+import ChangeQueueMethod from "../\_partials/\_change-queueing-method.md"
 
 # Queueing method
 

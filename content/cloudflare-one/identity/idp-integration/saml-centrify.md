@@ -11,69 +11,69 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 To set up SAML with Centrify as your identity provider:
 
-1. Log in to your **Centrify** admin portal and click **Apps**.
+1.  Log in to your **Centrify** admin portal and click **Apps**.
 
     ![Centrify Apps page](../../static/documentation/identity/saml-centrify/saml-centrify-1.png)
 
-1. Select **Add Web Apps**.
+2.  Select **Add Web Apps**.
 
-1. Click the **Custom** tab.
+3.  Click the **Custom** tab.
 
-1. Next to the **SAML** icon click **Add**.
+4.  Next to the **SAML** icon click **Add**.
 
     ![Centrify Settings Add Application details page](../../static/documentation/identity/saml-centrify/saml-centrify-3.png)
 
-1. Enter the required information for your application.
+5.  Enter the required information for your application.
 
-1. Click **Save**.
+6.  Click **Save**.
 
-1. Click **Settings** in the left pane.
+7.  Click **Settings** in the left pane.
 
-1. In the middle menu pane, select **Trust**.
+8.  In the middle menu pane, select **Trust**.
 
-1. Choose the **Manual Configuration** option.
+9.  Choose the **Manual Configuration** option.
 
-1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+10. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/glossary#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1. Click **Save**.
+11. Click **Save**.
 
-1. In the middle menu pane, select **User Access**.
+12. In the middle menu pane, select **User Access**.
 
-1. Click **Add**. The **Select Role** dialog displays.
+13. Click **Add**. The **Select Role** dialog displays.
 
     ![Centrify Settings Select Role dialog](../../static/documentation/identity/saml-centrify/saml-centrify-6.png)
 
-1. Complete your roles access assignments. The Role rules display on the **User Access** card.
+14. Complete your roles access assignments. The Role rules display on the **User Access** card.
 
     ![Centrify Added Roles list](../../static/documentation/identity/saml-centrify/saml-centrify-7.png)
 
-1. In the middle menu pane, select **SAML Response**.
+15. In the middle menu pane, select **SAML Response**.
 
-1. Click **Active > Add** to create a new **Attribute Name**, **Email**.
+16. Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
     ![Centrify Settings Email Attribute](../../static/documentation/identity/saml-centrify/saml-centrify-9.png)
 
-1. Enter the user email addresses in the **Attribute Value** field.
+17. Enter the user email addresses in the **Attribute Value** field.
 
-1. Click **Save**.
+18. Click **Save**.
 
-1. Select **Settings** again from the left menu pane, and **Trust**.
+19. Select **Settings** again from the left menu pane, and **Trust**.
 
-1. Select the **Manual Configuration** option.
+20. Select the **Manual Configuration** option.
 
-1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+21. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click **Add new**.
+22. Under **Login methods**, click **Add new**.
 
-1. Select SAML.
+23. Select SAML.
 
-1. Copy and paste the corresponding information from Centrify into the fields.
+24. Copy and paste the corresponding information from Centrify into the fields.
 
-1. Click **Save**.
+25. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
@@ -83,7 +83,7 @@ Some IdPs allow administrators to upload metadata files from their SP (service p
 
 To get your Cloudflare metadata file:
 
-1. Download your unique SAML metadata file at the following URL:
+1.  Download your unique SAML metadata file at the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
@@ -91,8 +91,9 @@ To get your Cloudflare metadata file:
 
     Replace `<your-team-name>`  with your [team name](/glossary#team-name).
 
-1. Save the file in XML format.
-1. Upload the XML document to your **Centrify** account.
+2.  Save the file in XML format.
+
+3.  Upload the XML document to your **Centrify** account.
 
 ## Example API configuration
 

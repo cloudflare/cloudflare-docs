@@ -11,9 +11,9 @@ You can use [Cloudflare Tunnel](/connections/connect-apps) to connect applicatio
 
 **🗺️ This tutorial covers how to:**
 
-* Start a secure, outbound-only, connection from a server to Cloudflare
-* Keep that connection running after deleting the initial authentication file
-* Give that application a hostname where users can reach the resource
+*   Start a secure, outbound-only, connection from a server to Cloudflare
+*   Keep that connection running after deleting the initial authentication file
+*   Give that application a hostname where users can reach the resource
 
 **⏲️ Time to complete:**
 

@@ -19,9 +19,9 @@ The plan of your SSL for SaaS application determines the analytics available for
 
 Use custom hostname analytics to help your organization with billing and infrastructure decisions, answering questions like:
 
-- "How many total requests is your service getting?"
-- "Is one customer transferring significantly more data than the others?"
-- "How many global customers do you have and where are they distributed?"
+*   "How many total requests is your service getting?"
+*   "Is one customer transferring significantly more data than the others?"
+*   "How many global customers do you have and where are they distributed?"
 
 If you see one customer is using more data than another, you might increase their bill. If requests are increasing in a certain geographic region, you might want to increase the origin servers in that region.
 
@@ -31,8 +31,8 @@ To access custom hostname analytics, either [use the dashboard](https://support.
 
 With custom hostname analytics, you can also share site information with your customers, including data about:
 
-- How many pageviews their site is receiving.
-- Whether their site has a large percentage of bot traffic.
-- How fast their site is.
+*   How many pageviews their site is receiving.
+*   Whether their site has a large percentage of bot traffic.
+*   How fast their site is.
 
 Build custom dashboards to share this information by specifying an individual custom hostname in `clientRequestHTTPHost` field of [any dataset](https://developers.cloudflare.com/analytics/graphql-api/features/data-sets) that includes this field.

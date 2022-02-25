@@ -259,7 +259,6 @@ router.all('*', () => new Response("Not Found", { status: 404 }))
 
 The second planned route is `GET /users/:id`, which returns a single user based on their ID. Configure another route, which will use parameters to capture part of the URL and make it available as part of the route handler as an object `params`:
 
-
 ```js
 ---
 filename: index.js
@@ -379,8 +378,8 @@ In this tutorial, you have used PostgREST, `postgrest-js`, and Cloudflare Worker
 
 ## Related resources
 
-If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below. 
+If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
-- [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
-- [Build a Slackbot](/tutorials/build-a-slackbot)
-- [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)
+*   [Authorize users with Auth0](/tutorials/authorize-users-with-auth0)
+*   [Build a Slackbot](/tutorials/build-a-slackbot)
+*   [GitHub SMS notifications using Twilio](/tutorials/github-sms-notifications-using-twilio)

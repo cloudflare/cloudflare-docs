@@ -12,7 +12,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 **🗺️ This walkthrough covers how to:**
 
-* Render a terminal in your browser for SSH connections
+*   Render a terminal in your browser for SSH connections
 
 **⏲️ Time to complete:**
 
@@ -20,10 +20,10 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 
 ## Before you start
 
-1. [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-1. [Connect your machine to Cloudflare](/tutorials/ssh) and apply Zero Trust rules
+1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+2.  [Connect your machine to Cloudflare](/tutorials/ssh) and apply Zero Trust rules
 
----
+***
 
 ## Create a Zero Trust policy
 

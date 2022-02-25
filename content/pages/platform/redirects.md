@@ -11,31 +11,27 @@ To use redirects on Cloudflare Pages, declare your redirects in a plain text fil
 
 Only one redirect can be defined per line and must follow this format:
 
-```
-[source] [destination] [code?]
-```
+    [source] [destination] [code?]
 
 <Aside heading="Status Code">
 
-  The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
+The `[code]` parameter is optional, and when not defined, will default to a `302` status code.
 
 </Aside>
 
 A complete example with multiple redirects may look like the following:
 
-```
----
-filename: _redirects
----
-/home301 / 301
-/home302 / 302
-/querystrings /?query=string 301
-/twitch https://twitch.tv
-/trailing /trailing/ 301
-/notrailing/ /nottrailing 301
-/blog/* https://blog.my.domain/:splat
-/products/:code/:name /products?code=:code&name=:name
-```
+    ---
+    filename: _redirects
+    ---
+    /home301 / 301
+    /home302 / 302
+    /querystrings /?query=string 301
+    /twitch https://twitch.tv
+    /trailing /trailing/ 301
+    /notrailing/ /nottrailing 301
+    /blog/* https://blog.my.domain/:splat
+    /products/:code/:name /products?code=:code&name=:name
 
 A project is limited to 100 total redirects. Each redirect declaration has a 1000-character limit. Malformed definitions are ignored. If there are multiple redirects for the same `source` path, the topmost redirect is applied.
 
@@ -76,4 +72,4 @@ Similarly, the matched value can be used in the redirect location with `:placeho
 
 ## Related resources
 
-- [Transform Rules](https://developers.cloudflare.com/rules/transform)
+*   [Transform Rules](https://developers.cloudflare.com/rules/transform)

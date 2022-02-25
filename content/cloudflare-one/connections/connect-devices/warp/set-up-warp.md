@@ -12,7 +12,7 @@ This is a high-level, step-by-step walkthrough on how to get started with WARP i
 
 ### 1. Create a Cloudflare Zero Trust account.
 
-The Cloudflare Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization. 
+The Cloudflare Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
 As you complete the [Cloudflare Zero Trust onboarding](/setup), you will be asked to create a [team name](/glossary#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
@@ -34,15 +34,15 @@ Choose one of the [different ways](/connections/connect-devices/warp/deployment)
 
 ### 6. Enable the Proxy setting in the Zero Trust Dashboard.
 
-Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.  
+Navigate to **Settings** > **Network** and enable the **Proxy** setting. This will allow you to start routing your HTTP traffic to Gateway.
 
 ### 7. Go through this checklist.
 
 To begin inspecting DNS and HTTP traffic on your devices, you need to ensure all of the following:
 
-* Your devices have the WARP client installed and connected.
-* The [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) has been installed on your devices.
-* The [proxy setting](/connections/connect-devices/warp/warp-settings#enable-proxy) has been enabled on the Zero Trust Dashboard.
+*   Your devices have the WARP client installed and connected.
+*   The [Cloudflare root certificate](/connections/connect-devices/warp/install-cloudflare-cert) has been installed on your devices.
+*   The [proxy setting](/connections/connect-devices/warp/warp-settings#enable-proxy) has been enabled on the Zero Trust Dashboard.
 
 ## Gateway with DoH
 
@@ -50,7 +50,7 @@ This mode is best suited for organizations that only want to apply DNS filtering
 
 ### 1. Create a Cloudflare Zero Trust account.
 
-The Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization. 
+The Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
 As you complete the [Cloudflare Zero Trust onboarding](/setup), you will be asked to create a [team name](/glossary#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
@@ -62,7 +62,7 @@ Configure [One-time PIN](/identity/one-time-pin) or connect a [third-party ident
 
 Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
-### 4. (optional) Add a location to Gateway. 
+### 4. (optional) Add a location to Gateway.
 
 By default, the WARP client will direct DoH queries to a default DNS endpoint when enrolled to your account. If you need to direct these queries to a separate DNS endpoint, [add a location](/connections/connect-networks/locations) to Gateway. This will create a new DoH endpoint, which you can add when deploying the WARP client to your devices.
 

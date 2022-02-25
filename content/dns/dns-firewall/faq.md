@@ -19,7 +19,7 @@ DNS Firewall alternates between a customer's nameservers, using an algorithm is 
 <summary>How long does DNS Firewall cache a stale object?</summary>
 <div>
 
-DNS Firewall sets cache longevity according to allocated memory. 
+DNS Firewall sets cache longevity according to allocated memory.
 
 As long as there is enough allocated memory, Cloudflare does not clear items from the cache forcefully, even when the TTL expires. This feature allows Cloudflare to serve stale objects from cache if your nameservers are offline.
 
@@ -39,14 +39,14 @@ No. If the customer's nameservers respond with a SERVFAIL, the DNS Firewall will
 <summary>Does DNS Firewall support EDNS-Client-Subnet?</summary>
 <div>
 
-Yes. Often, DNS providers want to see a client's IP via [EDNS](https://datatracker.ietf.org/doc/html/rfc7871)-Client-Subnet because they serve geographically specific DNS answers based on the client's IP. With EDNS-Client-Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the origin nameserver. 
+Yes. Often, DNS providers want to see a client's IP via [EDNS](https://datatracker.ietf.org/doc/html/rfc7871)-Client-Subnet because they serve geographically specific DNS answers based on the client's IP. With EDNS-Client-Subnet enabled, the DNS Firewall will forward the client's IP subnet along with the DNS query to the origin nameserver.
 
 When EDNS is enabled, the DNS Firewall gives out the geographically correct answer in cache based on the client IP subnet. To do this, the DNS Firewall segments its cache. For example:
 
-1. A resolver says it is looking for an answer for client `192.0.2.0/24`.
-1. The DNS Firewall will proxy the request to the origin for the answer.
-1. The DNS Firewall  will cache the answer from the origin, but only for that `/24`.
-1. `203.0.113.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
+1.  A resolver says it is looking for an answer for client `192.0.2.0/24`.
+2.  The DNS Firewall will proxy the request to the origin for the answer.
+3.  The DNS Firewall  will cache the answer from the origin, but only for that `/24`.
+4.  `203.0.113.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
 
 <Aside type="note">
 
@@ -63,7 +63,7 @@ Some resolvers might not be sending any EDNS data. When you set the `ecs_fallbac
 <summary>Does DNS Firewall cache negative answers?</summary>
 <div>
 
-Not by default, but you can set `negative_cache_ttl` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`. 
+Not by default, but you can set `negative_cache_ttl` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`.
 
 </div>
 </details>
@@ -73,6 +73,6 @@ Not by default, but you can set `negative_cache_ttl` via the [API](https://api.c
 <div>
 
 If you want PTR records on the assigned DNS Firewall cluster IPs that point to your nameserver hostnames, please reach out to your Cloudflare account team.
-  
+
 </div>
 </details>

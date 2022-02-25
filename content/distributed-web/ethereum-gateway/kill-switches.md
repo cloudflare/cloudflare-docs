@@ -14,7 +14,7 @@ the smart contract that can be exploited, this can lead to the theft of
 resources from the smart contract or from other individuals.
 
 This was brought into sharp focus during the [infamous DAO
-incident](https://en.wikipedia.org/wiki/The_DAO_(organization)). The DAO smart
+incident](https://en.wikipedia.org/wiki/The_DAO_\(organization\)). The DAO smart
 contract acted as a complex, decentralized venture capital fund and held Ether
 worth $250 million at its peak collected from a group of investors. Hackers
 exploited vulnerabilities in the smart contract, stealing $50 million worth of
@@ -57,7 +57,7 @@ trustworthiness.
 The trust placed in consensus-based algorithms is based on the assumption that
 most people are honest, or more accurately that no sufficiently large subset of
 people can be made to collude to produce a malicious outcome. This is the
-_democratisation of trust_. In the DAO attack, a majority of nodes agreed to
+*democratisation of trust*. In the DAO attack, a majority of nodes agreed to
 accept an irregular state transition. This effectively undid the damage of the
 attack, and shows how, at least in the world of blockchain, perception is
 reality. Because most people “believed" -- accepted this irregular block, it

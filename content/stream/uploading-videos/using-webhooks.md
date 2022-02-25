@@ -66,9 +66,7 @@ To verify a signature, you need to retrieve your webhook signing secret. This va
 
 To verify the signature, get the value of the `Webhook-Signature` header. It will look like this:
 
-```
-Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404
-```
+    Webhook-Signature: time=1230811200,sig1=60493ec9388b44585a29543bcf0de62e377d4da393246a8b1c901d0e3e672404
 
 ### Step 1: Parse the signature
 
@@ -85,9 +83,9 @@ At this step, you should discard requests with timestamps that are too old for y
 Prepare the signature source string:
 You should concatenate these three strings:
 
-- Value of the `time` field e.g. `1230811200`
-- Character `.`
-- Webhook request body (complete with newline characters, if applicable)
+*   Value of the `time` field e.g. `1230811200`
+*   Character `.`
+*   Webhook request body (complete with newline characters, if applicable)
 
 It is important for every byte in the request body to remain unaltered for successful signature verification.
 
@@ -106,13 +104,14 @@ If the signatures match, you can trust that the webhook was sent by Cloudflare.
 
 ## Limitations
 
-- Webhooks will only be sent after the processing of a video is complete,
-  and the body will indicate whether the processing of the video succeeded or failed.
-- Only one webhook subscription is allowed per-account.
+*   Webhooks will only be sent after the processing of a video is complete,
+    and the body will indicate whether the processing of the video succeeded or failed.
+*   Only one webhook subscription is allowed per-account.
 
 ## Examples
 
 ### Golang
+
 Using [crypto/hmac](https://golang.org/pkg/crypto/hmac/#pkg-overview):
 
 ```
@@ -141,47 +140,41 @@ func main() {
 
 ### Node.js
 
-```
-var crypto = require('crypto');
+    var crypto = require('crypto');
 
-var key = 'secret from the Cloudflare API';
-var message = 'string from step 2';
+    var key = 'secret from the Cloudflare API';
+    var message = 'string from step 2';
 
-var hash = crypto.createHmac('sha256', key).update(message);
+    var hash = crypto.createHmac('sha256', key).update(message);
 
-hash.digest('hex');
-```
+    hash.digest('hex');
 
 ### Ruby
 
-```
-require 'openssl'
+    require 'openssl'
 
-key = 'secret from the Cloudflare API'
-message = 'string from step 2'
+    key = 'secret from the Cloudflare API'
+    message = 'string from step 2'
 
-OpenSSL::HMAC.hexdigest('sha256', key, message)
-```
+    OpenSSL::HMAC.hexdigest('sha256', key, message)
 
 In JavaScript (for example, to use in Cloudflare Workers):
 
-```
-const key = 'secret from the Cloudflare API';
-const message = 'string from step 2';
+    const key = 'secret from the Cloudflare API';
+    const message = 'string from step 2';
 
-const getUtf8Bytes = str =>
-  new Uint8Array(
-    [...unescape(encodeURIComponent(str))].map(c => c.charCodeAt(0))
-  );
+    const getUtf8Bytes = str =>
+      new Uint8Array(
+        [...unescape(encodeURIComponent(str))].map(c => c.charCodeAt(0))
+      );
 
-const keyBytes = getUtf8Bytes(key);
-const messageBytes = getUtf8Bytes(message);
+    const keyBytes = getUtf8Bytes(key);
+    const messageBytes = getUtf8Bytes(message);
 
-const cryptoKey = await crypto.subtle.importKey(
-  'raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' },
-  true, ['sign']
-);
-const sig = await crypto.subtle.sign('HMAC', cryptoKey, messageBytes);
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' },
+      true, ['sign']
+    );
+    const sig = await crypto.subtle.sign('HMAC', cryptoKey, messageBytes);
 
-[...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, '0')).join('');
-```
+    [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, '0')).join('');

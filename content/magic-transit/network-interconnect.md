@@ -16,8 +16,8 @@ For more information about Network Interconnect, refer to the [Network Interconn
 
 When working with Magic Transit and CNI, observe these guidelines:
 
-- You must implement MSS clamping because Cloudflare Network Interconnect does not support 1500 byte packets.
+*   You must implement MSS clamping because Cloudflare Network Interconnect does not support 1500 byte packets.
 
-- Set the MSS clamp size to 1332 bytes to accommodate the additional overhead from the Foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
+*   Set the MSS clamp size to 1332 bytes to accommodate the additional overhead from the Foo-over-UDP (FOU) protocol and IPv6. These are used to backhaul data from the data center where traffic is ingested — close to the end user — to the facility with the CNI link.
 
-- Cloudflare Network Interconnect does not process outgoing traffic from your data centers. Egress traffic returns to end users through direct server return (DSR) not through Cloudflare. For this reason, CNI cannot replace your existing transit providers.
+*   Cloudflare Network Interconnect does not process outgoing traffic from your data centers. Egress traffic returns to end users through direct server return (DSR) not through Cloudflare. For this reason, CNI cannot replace your existing transit providers.

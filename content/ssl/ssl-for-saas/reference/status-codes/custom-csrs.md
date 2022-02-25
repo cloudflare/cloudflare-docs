@@ -9,7 +9,7 @@ pcx-content-type: reference
 ## Success codes
 
 Endpoint|Method|HTTP Status Code
---------|------|----
+\--------|------|----
 `/api/v4/zones/:zone_id/custom_csrs`|POST|201 Created
 `/api/v4/zones/:zone_id/custom_csrs`|GET|200 OK
 `/api/v4/zones/:zone_id/custom_csrs/:custom_csr_id`|GET|200 OK
@@ -18,7 +18,7 @@ Endpoint|Method|HTTP Status Code
 ## Error codes
 
 HTTP Status Code|API Error Code|Error Message
-----------------|--------------|-------------
+\----------------|--------------|-------------
 400|1400|Unable to decode the JSON request body. Check your input and try again.
 400|1401|Zone ID is required. Check your input and try again.
 400|1402|The request has no Authorization header. Check your input and try again.
@@ -29,7 +29,7 @@ HTTP Status Code|API Error Code|Error Message
 400|1409|Common Name field is required. Check your input and try again.
 400|1410|The specified Common Name is too long. Maximum allowed length is %d characters. Check your input and try again.
 400|1411|At least one subject alternative name (SAN) is required. Check your input and try again.
-400|1412|Invalid subject alternative name(s) (SAN). SANs have to be smaller than 256 characters in length, cannot be IP addresses, cannot contain any special characters such as ~`!@#$%^&*()=+{}[]|\\;:'\",<>/? and cannot begin or end with a ‘-’ character. Check your input and try again.
+400|1412|Invalid subject alternative name(s) (SAN). SANs have to be smaller than 256 characters in length, cannot be IP addresses, cannot contain any special characters such as ~\`!@#$%^&\*()=+{}\[]|\\;:'",<>/? and cannot begin or end with a ‘-’ character. Check your input and try again.
 400|1413|Subject Alternative Names (SANs) with non-ASCII characters are not supported. Check your input and try again.
 400|1414|Reserved top domain subject alternative names (SAN), such as 'test', 'example', 'invalid' or 'localhost', is not supported. Check your input and try again.
 400|1415|Unable to parse subject alternative name(s) (SAN) - :reason. Check your input and try again. Reasons: publicsuffix: cannot derive eTLD+1 for domain %q; publicsuffix: invalid public suffix %q for domain %q;

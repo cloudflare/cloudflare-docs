@@ -1,3 +1,6 @@
+---
+---
+
 <details>
 <summary>Example monitor configuration</summary>
 <div>
