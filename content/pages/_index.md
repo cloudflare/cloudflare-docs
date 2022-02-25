@@ -35,8 +35,4 @@ You can [connect with the Pages community on Discord](https://discord.gg/cloudfl
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
-***
-
-These docs are built with the [Cloudflare Docs engine](/docs-engine/).
-
 {{</content-column>}}

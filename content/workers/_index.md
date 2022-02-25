@@ -77,8 +77,4 @@ async function handleRequest(request) {
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
 
-***
-
-These docs are built with the [Cloudflare Docs Engine](/docs-engine/).
-
 {{</content-column>}}
