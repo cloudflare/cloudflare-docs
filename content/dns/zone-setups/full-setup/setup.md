@@ -10,13 +10,13 @@ meta:
 
 {{<render file="_full-setup-definition.md">}}
 
-## Step 1 — Do you have an existing domain name?
+## Step 1 — Do you already own a domain?
 
 <details>
 <summary>Yes</summary>
 <div>
 
-If you already have a domain name and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
+If you already own a domain and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
 
 </div>
 </details>
@@ -25,7 +25,7 @@ If you already have a domain name and want to use Cloudflare for your authoritat
 <summary>No</summary>
 <div>
 
-If you do not already have a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain).
+If you do not already own a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain).
 
 Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
