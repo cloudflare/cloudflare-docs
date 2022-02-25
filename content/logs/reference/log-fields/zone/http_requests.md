@@ -7,7 +7,7 @@ title: HTTP requests
 
 The descriptions below detail the fields available for `http_requests`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Value | Type |
 | -- | -- | -- |
@@ -92,4 +92,4 @@ The descriptions below detail the fields available for `http_requests`.
 | ZoneID | Internal zone ID | int |
 | ZoneName | The human-readable name of the zone (e.g. 'cloudflare.com'). Available in Logpush v2 only. | string |
 
-</TableWrap>
+{{</table-wrap>}}

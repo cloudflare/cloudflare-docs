@@ -10,4 +10,4 @@ meta:
 
 Before you configure APO for your WordPress site, complete the following tasks.
 
-<DirectoryListing path="/get-started"/>
+{{<directory-listing>}}

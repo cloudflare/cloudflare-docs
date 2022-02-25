@@ -27,15 +27,15 @@ await NAMESPACE.put(key, value)
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `key` <Type>string</Type>
+*   `key` {{<type>}}string{{</type>}}
     *   The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
 
-*   `value` <Type>string</Type> | <Type>ReadableStream</Type> | <Type>ArrayBuffer</Type>
+*   `value` {{<type>}}string{{</type>}} | {{<type>}}ReadableStream{{</type>}} | {{<type>}}ArrayBuffer{{</type>}}
     *   The value to store. The type is inferred.
 
-</Definitions>
+{{</definitions>}}
 
 This method returns a `Promise` that you should `await` on in order to verify a successful update.
 
@@ -73,13 +73,13 @@ As of January 2022, expiration targets that are less than 60 seconds into the fu
 
 The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-value-pairs) has an optional third parameter. It accepts an object with optional fields that allow you to customize the behavior of the `put` method. In particular, you can set either `expiration` or `expirationTtl`, depending on how you would like to specify the key’s expiration time. To do this, run one of the two commands below to set an expiration when writing a key from within a Worker:
 
-<Definitions>
+{{<definitions>}}
 
-*   `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` <Type>Promise</Type>
+*   `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
 
-*   `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` <Type>Promise</Type>
+*   `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
 
-</Definitions>
+{{</definitions>}}
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
@@ -308,7 +308,7 @@ addEventListener('fetch', async event => {
 });
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can create a namespace [using Wrangler](/workers/cli-wrangler/commands/#getting-started) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
@@ -318,7 +318,7 @@ You can create a namespace [using Wrangler](/workers/cli-wrangler/commands/#gett
 4.  Go to **KV Namespace Bindings**.
 5.  Select **Add binding**.
 
-</Aside>
+{{</Aside>}}
 
 ### Referencing KV from Durable Objects and Workers using Modules Syntax
 

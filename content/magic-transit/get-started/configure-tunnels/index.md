@@ -8,4 +8,4 @@ weight: 0
 
 Cloudflare requires configuration data from the processes below to set up Magic Transit for your organization.
 
-<DirectoryListing path="/get-started/configure-tunnels"/>
+{{<directory-listing>}}

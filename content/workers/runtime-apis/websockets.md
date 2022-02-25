@@ -28,73 +28,73 @@ let [client, server] = Object.values(new WebSocketPair())
 
 ### accept
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>accept()</Code>
+*   {{<code>}}accept(){{</code>}}
 
     *   Accepts the Websocket connection and begins terminating requests for the WebSocket at Cloudflare's edge. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
-</Definitions>
+{{</definitions>}}
 
 ### addEventListener
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>addEventListener(event<ParamType>WebSocketEvent</ParamType>, callbackFunction<ParamType>Function</ParamType>)</Code>
+*   {{<code>}}addEventListener(event{{<param-type>}}WebSocketEvent{{</param-type>}}, callbackFunction{{<param-type>}}Function{{</param-type>}}){{</code>}}
 
     *   Add callback functions to be executed when an event has occurred on the WebSocket.
 
-</Definitions>
+{{</definitions>}}
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `event` <TypeLink href="#events">WebSocketEvent</TypeLink>
+*   `event` {{<type-link href="#events">}}WebSocketEvent{{</type-link>}}
 
     *   The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events) to listen to.
 
-*   <Code>callbackFunction(message<TypeLink href="#message">Message</TypeLink>) <Type>Function</Type></Code>
+*   {{<code>}}callbackFunction(message{{<type-link href="#message">}}Message{{</type-link>}}) {{<type>}}Function{{</type>}}{{</code>}}
 
     *   A function to be called when the Websocket responds to a specific event.
 
-</Definitions>
+{{</definitions>}}
 
 ### close
 
-*   <Code>close(code<ParamType>number</ParamType>, reason<ParamType>string</ParamType>)</Code>
+*   {{<code>}}close(code{{<param-type>}}number{{</param-type>}}, reason{{<param-type>}}string{{</param-type>}}){{</code>}}
 
     Close the WebSocket connection.
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>code<ParamType>integer</ParamType></Code> <PropMeta>optional</PropMeta>
+*   {{<code>}}code{{<param-type>}}integer{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
 
-*   <Code>reason<ParamType>string</ParamType></Code> <PropMeta>optional</PropMeta>
+*   {{<code>}}reason{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   A human-readable string indicating why the WebSocket connection was closed.
 
-</Definitions>
+{{</definitions>}}
 
 ### send
 
-*   <Code>send(message<ParamType>string</ParamType>)</Code>
+*   {{<code>}}send(message{{<param-type>}}string{{</param-type>}}){{</code>}}
 
     Send a message to the other WebSocket in this WebSocket pair.
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>message<ParamType>string</ParamType></Code>
+*   {{<code>}}message{{<param-type>}}string{{</param-type>}}{{</code>}}
 
     *   The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
-</Definitions>
+{{</definitions>}}
 
 ## Events
 
@@ -114,12 +114,12 @@ An event indicating a new message received from the client, including the data p
 
 ### Message
 
-<Definitions>
+{{<definitions>}}
 
-*   `data` <Type>any</Type> - The data passed back from the other WebSocket in your pair.
-*   `type` <Type>string</Type> - Defaults to `message`.
+*   `data` {{<type>}}any{{</type>}} - The data passed back from the other WebSocket in your pair.
+*   `type` {{<type>}}string{{</type>}} - Defaults to `message`.
 
-</Definitions>
+{{</definitions>}}
 
 ## Related resources
 

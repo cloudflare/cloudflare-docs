@@ -44,13 +44,13 @@ Cloudflare will return `0.0.0.0` if the [fully qualified domain name (FQDN)](htt
 
 Choose one of the options on the left menu to read full step-by-step instructions on how to configure 1.1.1.1 for Families.
 
-<Aside type='note' header='Domain miscategorization'>
+{{<Aside type="note" header="Domain miscategorization">}}
 
 If you are using 1.1.1.1 for Families and see a domain that you believe is miscategorized, [fill in this form](https://radar.cloudflare.com/categorization-feedback/) to bring it to our attention. Your submission will remain anonymous.
 
 We review these submissions to improve Cloudflare’s categorization.
 
-</Aside>
+{{</Aside>}}
 
 ## DNS over HTTPS (DoH)
 

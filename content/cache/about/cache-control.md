@@ -19,11 +19,11 @@ At this point, Cloudflare’s cache logic examines the HTTP response received fr
 
 A `Cache-Control` header can include a number of directives, and the directive dictates who can cache a resource along with how long those resources can be cached before they must be updated.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 For more information about Cache-Control directives at origin servers, refer to the [Mozilla Cache-Control documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control).
 
-</Aside>
+{{</Aside>}}
 
 If multiple directives are passed together, each directive is separated by a comma. If the directive takes an argument, it follows the directive separated by an equal sign. For example: `max-age=86400`.
 
@@ -41,13 +41,13 @@ Cacheability refers to whether or not a resource should enter a cache, and the d
 
 Expiration refers to how long a resource should remain in the cache, and the directives below affect how long a resource stays in the cache.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age` Cache-Control headers.
 
 When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare settings bypass cache. Setting `no-cache` also bypasses cache.
 
-</Aside>
+{{</Aside>}}
 
 *   `max-age=seconds` — Indicates the response is stale after its age is greater than the specified number of seconds. Age is defined as the time in seconds since the asset was served from the origin server. The `seconds` argument is an unquoted integer.
 *   `s-maxage=seconds` — Indicates that in shared caches, the maximum age specified by this directive overrides the maximum age specified by either the `max-age` directive or the `Expires` header field. The `s-maxage` directive also implies the semantics of the proxy-revalidate response directive. Browsers ignore `s-maxage`.

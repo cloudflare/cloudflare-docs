@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # Configure dynamic advertisement
 
-<Aside>
+{{<Aside>}}
 
 To prevent issues and simplify the advertisement process during an attack scenario, refer to [best practices for managing dynamic advertisement](/byoip/best-practices/dynamic-advertisement/).
 
-</Aside>
+{{</Aside>}}
 
 ## Before you start (Magic Transit customers only)
 

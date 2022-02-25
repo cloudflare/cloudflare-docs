@@ -22,11 +22,11 @@ You can change the reporting endpoint so that the CSP reports are sent to the sa
 <YOUR-HOSTNAME>/cdn-cgi/script-monitor/report?<QUERY_STRING>
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Only available to Enterprise customers with a paid add-on.
 
-</Aside>
+{{</Aside>}}
 
 ## Prerequisites for using the same hostname for CSP reports
 

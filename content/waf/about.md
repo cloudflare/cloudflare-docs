@@ -28,11 +28,11 @@ You can define a configuration that affects an entire Managed Ruleset, or config
 
 ## Custom rulesets
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 Currently, you can only create and deploy custom rulesets via API.
 
-</Aside>
+{{</Aside>}}
 
 You can [create custom rulesets](/ruleset-engine/custom-rulesets/create-custom-ruleset) with your own WAF rules that you can later [deploy to a phase entry point](/waf/managed-rulesets/deploy-api/#deploying-custom-rulesets).
 
@@ -57,23 +57,23 @@ You can **deploy** the Managed Rulesets provided by WAF to the following phases:
 *   `http_request_firewall_managed` phase at the **account** level (the phase `kind` is `root`)
 *   `http_request_firewall_managed` phase at the **zone** level (the phase `kind` is `zone`)
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 When you deploy a Managed Ruleset in the dashboard using the **WAF** tab of the Firewall app, you are deploying that ruleset to the `http_request_firewall_managed` phase of the selected zone.
 
 When you deploy a Managed Ruleset using **Firewall Rulesets** in the dashboard at the account level, you are deploying that ruleset to the `http_request_firewall_managed` phase of the account.
 
-</Aside>
+{{</Aside>}}
 
 To deploy your own WAF rules, create a custom ruleset and add any custom rules to this ruleset. Next, deploy the custom ruleset to a supported phase.
 
 You can **create** and **deploy** custom rulesets to the `http_request_firewall_custom` phase at the **account** level (the phase `kind` is `root`).
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 Currently, creating and deploying custom rulesets is only available via API.
 
-</Aside>
+{{</Aside>}}
 
 To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in the Ruleset Engine documentation.
 

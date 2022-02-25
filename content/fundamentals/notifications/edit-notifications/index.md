@@ -13,8 +13,8 @@ weight: 9
 
 The browser will navigate back to the list of Notifications.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You can also disable and/or delete Notifications. To disable a Notification, click the **Enabled** toggle. To delete it, click **Delete**.
 
-</Aside>
+{{</Aside>}}

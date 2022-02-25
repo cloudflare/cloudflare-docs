@@ -8,11 +8,11 @@ weight: 2
 
 Custom Firewall rules allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
 
-</Aside>
+{{</Aside>}}
 
 Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), Custom Firewall rules have an **expression** and an **action**:
 

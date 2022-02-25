@@ -12,11 +12,11 @@ After downloading your Cloudflare Logs data, you can use different tools to pars
 
 In this tutorial, you will learn how to parse your JSON log data using *jq*.  To get started with *jq*, visit the [*jq* official site](https://stedolan.github.io/jq/).
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 *jq* is a powerful command line for parsing JSON data and performing certain types of analysis. To perform more detailed analysis, consider a full-fledged data analysis system, such as *Kibana*.
 
-</Aside>
+{{</Aside>}}
 
 ## Aggregating fields
 

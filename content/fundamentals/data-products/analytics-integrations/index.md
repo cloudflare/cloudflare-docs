@@ -10,4 +10,4 @@ Cloudflare Enterprise customers can use Cloudflare integrations with their prefe
 
 Analyze [Cloudflare Logs](/logs/) data with the following analytics platforms:
 
-<DirectoryListing path="/data-products/analytics-integrations"/>
+{{<directory-listing>}}

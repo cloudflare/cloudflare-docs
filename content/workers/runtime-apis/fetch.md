@@ -9,17 +9,17 @@ The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) prov
 
 The `fetch` method is implemented on the `ServiceWorkerGlobalScope`. Refer to [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) for more information.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Asynchronous tasks such as `fetch` are not executed at the top level in a Worker script and must be executed within a `FetchEvent` handler such as [`respondWith`](/workers/runtime-apis/fetch-event/#methods). Learn more about [the Request context](/workers/runtime-apis/request/#the-request-context).
 
-</Aside>
+{{</Aside>}}
 
-<Aside type="warning" header="Worker to Worker">
+{{<Aside type="warning" header="Worker to Worker">}}
 
 It is not currently (January 2022) possible to send fetch requests to other Workers (Worker to Worker) within the same zone. The origin server, if any, will receive the request instead. However, sending requests to Workers within other zones is possible and will work as normal.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -45,27 +45,27 @@ async function eventHandler(event) {
 
 <!-- Where do we have the return type in this format? -->
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>fetch()</Code> <TypeLink href="/runtime-apis/response">Promise{`<Response>`}</TypeLink>
+*   {{<code>}}fetch(){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
 
     *   Fetch returns a promise to a Response.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 
 ## Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `request` <TypeLink href="/runtime-apis/request">Request</TypeLink> | <Type>string</Type>
+*   `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}} | {{<type>}}string{{</type>}}
     *   The [`Request`](/workers/runtime-apis/request/) object or a string represents the URL to fetch.
 
-*   `init` <TypeLink href="/runtime-apis/request#requestinit">RequestInit</TypeLink>
+*   `init` {{<type-link href="/runtime-apis/request#requestinit">}}RequestInit{{</type-link>}}
     *   The content of the request.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 

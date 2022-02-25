@@ -14,9 +14,9 @@ layout: example
 
 # Cache using fetch
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 async function handleRequest(request) {
@@ -51,7 +51,7 @@ addEventListener("fetch", event => {
 
 ***
 
-<ContentColumn>
+{{<content-column>}}
 
 ## Caching HTML resources
 
@@ -64,11 +64,11 @@ Setting the cache level to **Cache Everything** will override the default cachea
 
 ## Custom cache keys
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This feature is available only to Enterprise customers.
 
-</Aside>
+{{</Aside>}}
 
 A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both. For more about cache keys, refer to the [Create custom cache keys](/cache/how-to/create-cache-keys/index.d425772ab3.html) documentation.
 
@@ -102,11 +102,11 @@ Workers operating on behalf of different zones cannot affect each other's cache.
 
 ## Override based on origin response code
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This feature is available only to Enterprise customers.
 
-</Aside>
+{{</Aside>}}
 
 ```js
 // Force response to be cached for 86400 seconds for 200 status
@@ -118,4 +118,4 @@ fetch(request, {
 
 This option is a version of the `cacheTtl` feature which chooses a TTL based on the response's status code and does not automatically set `cacheEverything: true`. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time, and override cache directives sent by the origin. You can review [details on the `cacheTtl` feature on the Request page](/workers/runtime-apis/request/#requestinitcfproperties).
 
-</ContentColumn>
+{{</content-column>}}

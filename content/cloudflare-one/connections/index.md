@@ -8,7 +8,7 @@ weight: 5
 
 Learn how you can connect your applications, devices, and networks to Cloudflare.
 
-<DirectoryListing path="/connections"/>
+{{<directory-listing>}}
 
 ## Related tutorials
 

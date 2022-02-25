@@ -18,7 +18,7 @@ Download and install `cloudflared` via the [Cloudflare Package Repository](https
 
 Alternatively, download the latest release directly.
 
-<TableWrap>
+{{<table-wrap>}}
 
 Type   | amd64 / x86-64 | x86 (32-bit) | ARM  | ARM64 |
 \-------|----------------|--------------|------|-------|
@@ -26,7 +26,7 @@ Binary | [Download](https://github.com/cloudflare/cloudflared/releases/latest/do
 .deb   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.deb) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb) |
 .rpm   | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-386.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm.rpm) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-aarch64.rpm) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## macOS
 
@@ -44,11 +44,11 @@ Type   | 32-bit | 64-bit |
 \-------|----------------|-----|
 Executable | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-386.exe) | [Download](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe) |
 
-<Aside>
+{{<Aside>}}
 
 Instances of `cloudflared` do not automatically update on Windows. You will need to perform manual updates.
 
-</Aside>
+{{</Aside>}}
 
 ## Docker
 

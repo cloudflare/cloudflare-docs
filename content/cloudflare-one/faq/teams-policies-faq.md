@@ -27,7 +27,7 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 | Selector | Operator | Value | Action |
 | - | - | - | - |
-| Host | Matches regex | <Code>.\*whispersystems.org | .\*signal.org</Code> | Block |
+| Host | Matches regex | {{<code>}}.\*whispersystems.org | .\*signal.org{{</code>}} | Block |
 
 To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
 

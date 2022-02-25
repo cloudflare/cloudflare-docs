@@ -96,11 +96,11 @@ At Cloudflare, these are most commonly used to demonstrate domain ownership prio
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The **Content** for TXT records at Cloudflare must be 2048 characters or less.
 
-</Aside>
+{{</Aside>}}
 
 ### CAA
 

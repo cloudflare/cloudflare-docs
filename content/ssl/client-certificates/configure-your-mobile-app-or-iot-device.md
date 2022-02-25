@@ -142,13 +142,13 @@ You can [create a client certificate in the Cloudflare dashboard](/ssl/client-ce
 
 However, since most developers working at scale generate their own private keys and certificate signing requests via API, this example uses the Cloudflare API to create client certificates.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You can only use API Shield with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
 If you need to use a different CA, contact a Cloudflare customer success manager.
 
-</Aside>
+{{</Aside>}}
 
 To create a bootstrap certificate for the iOS application and the IoT device, this example uses [Cloudflare’s public key infrastructure toolkit, CFSSL](https://github.com/cloudflare/cfssl):
 

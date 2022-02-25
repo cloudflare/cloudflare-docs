@@ -10,4 +10,4 @@ meta:
 
 The following pages include additional information about Page Shield:
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

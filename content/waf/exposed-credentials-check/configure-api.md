@@ -13,11 +13,11 @@ Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/ru
 
 ## Create a custom rule checking for exposed credentials
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This feature is only available to customers on an Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
 
@@ -28,14 +28,14 @@ To check for exposed credentials in a custom rule, include the field `exposed_cr
 *   `username_expression` — Expression that selects the user ID used in the credentials check. This field can have up to 1024 characters.
 *   `password_expression` — Expression that selects the password used in the credentials check. This field can have up to 1024 characters.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 These options have additional requirements:
 
 *   Each expression must evaluate to a string.
 *   You can only use the `upper()`, `lower()`, and `url_decode()` functions, and you cannot nest these functions.
 
-</Aside>
+{{</Aside>}}
 
 You can use the `exposed_credential_check` field in rules with one of the following actions: `rewrite`, `log`, `block`, `challenge`, or `js_challenge`.
 

@@ -21,7 +21,7 @@ API property name: `"action"`.
 
 The action performed for packets that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
 
-<Definitions>
+{{<definitions>}}
 
 *   **Log**
     *   API value: `"log"`.
@@ -35,7 +35,7 @@ The action performed for packets that match specific rules of Cloudflare's DDoS 
     *   API value: *N/A* (internal rule action that you cannot use in overrides).
     *   Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be *Block* or an undisclosed mitigation action.
 
-</Definitions>
+{{</definitions>}}
 
 ## Sensitivity Level
 

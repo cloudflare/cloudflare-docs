@@ -5,11 +5,11 @@ title: Add custom HTTP headers
 
 # Add custom HTTP headers
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Cloudflare provides HTTP header customization for Pages projects by adding a `_headers` file to your project. Refer to the [documentation](/pages/platform/headers) for more information.
 
-</Aside>
+{{</Aside>}}
 
 More advanced customization of HTTP headers is available through Cloudflare Workers [serverless functions](https://www.cloudflare.com/learning/serverless/what-is-serverless/).
 

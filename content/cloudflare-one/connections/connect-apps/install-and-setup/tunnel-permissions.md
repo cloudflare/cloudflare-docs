@@ -17,7 +17,7 @@ Each `cloudflared tunnel create` command generates a tunnel credential. The tunn
 
 Refer to the table below for a comparison between the two files and the purposes for which they are intended.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | | Account certificate | Tunnel certificate |
 | -- | -- | -- |
@@ -30,7 +30,7 @@ Refer to the table below for a comparison between the two files and the purposes
 | **Valid for** | At least 10 years, and the service token it contains is valid until revoked | Does not expire |
 | **Needed to** | Manage tunnels (for example, create, delete and list tunnels) | Run a tunnel. Create a config file. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Tunnel ownership
 

@@ -88,7 +88,7 @@ $ git push -u origin main
 
 Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option | Value          |
 | -------------------- | -------------- |
@@ -96,25 +96,25 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 | Build command        | `zola build` |
 | Build directory      | `public`       |
 
-</TableLayout>
+</div>
 
 Below the configuration, make sure to set the **Environment Variables (advanced)** for specifying the `ZOLA_VERSION`.
 
 For example, `ZOLA_VERSION`: `0.14.0`.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Currently, Cloudflare Pages only supports `ZOLA_VERSION`: <=`0.14.0` in builds.
 
-</Aside>
+{{</Aside>}}
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `zola`, your project dependencies, and building your site, before deploying it.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 

@@ -10,4 +10,4 @@ meta:
 
 You can perform the following tasks in Cloudflare Security Center:
 
-<DirectoryListing path="/tasks"/>
+{{<directory-listing>}}

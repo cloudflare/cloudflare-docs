@@ -6,11 +6,11 @@ weight: 3
 
 # Get started
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Client IP Geolocation is currently in closed Beta testing.
 
-</Aside>
+{{</Aside>}}
 
 There are several things you can do to best handle traffic from Cloudflare VPN and forward-proxy users:
 

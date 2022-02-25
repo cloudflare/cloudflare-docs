@@ -12,7 +12,7 @@ JSON formatted queries are sent using a `GET` request. When making requests usin
 
 Supported parameters:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Required? | Description | Example |
 | ---|---|---|--- |
@@ -21,7 +21,7 @@ Supported parameters:
 | `do` | No | DO bit - set if client wants DNSSEC data (either boolean or numeric value).| `true` |
 | `cd` | No | CD bit - set to disable validation (either boolean or numeric value). | `false` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 Example request:
 
@@ -58,7 +58,7 @@ Example response:
 
 The following table has more information on each response field:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Description |
 | --- |--- |
@@ -75,4 +75,4 @@ The following table has more information on each response field:
 | `Answer: TTL` | The number of seconds the answer can be stored in cache before it is considered stale. |
 | `Answer: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
 
-</TableWrap>
+{{</table-wrap>}}

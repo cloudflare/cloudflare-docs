@@ -46,15 +46,15 @@ Create and manage [Load Balancing rules](/load-balancing/) in the **Custom Rules
 
 14. Click **Save**.
 
-<Aside type='warning' header='Warning'>
+{{<Aside type="warning" header="Warning">}}
 
 To save a new load balancer rule, make sure to save both the rule **and** the overall load balancer configuration.
 
-</Aside>
+{{</Aside>}}
 
 ## Example configuration
 
-<Example>
+{{<example>}}
 
 This example routes certain content requests from our webserver to a different origin pool.
 
@@ -100,4 +100,4 @@ This example routes certain content requests from our webserver to a different o
       </tr>
     </tbody>
   </table>
-</Example>
+{{</example>}}

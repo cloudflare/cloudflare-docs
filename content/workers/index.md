@@ -8,16 +8,16 @@ meta:
   title: Cloudflare Workers documentation
 ---
 
-<ContentColumn>
+{{<content-column>}}
 
 # Cloudflare Workers documentation
 
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started/guide">Get started</Button>
-  <Button type="secondary" href="/tutorials">View the tutorials</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started/guide">}}Get started{{</button>}}
+  {{<button type="secondary" href="/tutorials">}}View the tutorials{{</button>}}
+{{</button-group>}}
 
 ***
 
@@ -53,10 +53,10 @@ async function handleRequest(request) {
 }
 ```
 
-<ButtonGroup>
-  <Button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Launch playground</Button>
-  <Button type="secondary" href="/learning/playground">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}
+  {{<button type="secondary" href="/learning/playground">}}Learn more{{</button>}}
+{{</button-group>}}
 
 ***
 
@@ -81,4 +81,4 @@ async function handleRequest(request) {
 
 These docs are built with the [Cloudflare Docs Engine](/docs-engine/).
 
-</ContentColumn>
+{{</content-column>}}

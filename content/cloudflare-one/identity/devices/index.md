@@ -14,15 +14,15 @@ When device posture checks are configured, users can only connect to a protected
 
 To enable one or more device posture attributes, navigate to **My Team** > **Devices** > **Device posture** on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and click **+Add**.
 
-<Aside>
+{{<Aside>}}
 
 When setting up new device posture checks, we recommend first testing them without setting certificate thumbprint or SHA256 checksum values.
 
-</Aside>
+{{</Aside>}}
 
 ## Available device posture attributes
 
-<DirectoryListing path="/identity/devices"/>
+{{<directory-listing>}}
 
 ## Verify device posture checks in the WARP client
 

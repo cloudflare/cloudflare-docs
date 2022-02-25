@@ -8,4 +8,4 @@ weight: 2
 
 As you get started with Cloudflare, explore the following guides to get the most out of our products.
 
-<DirectoryListing path="/get-started"/>
+{{<directory-listing>}}

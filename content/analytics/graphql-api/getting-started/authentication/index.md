@@ -12,7 +12,7 @@ To secure access to your GraphQL Analytics data, use a Cloudflare API key or tok
 
 This table outlines the differences between Cloudflare API keys and tokens:
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -34,7 +34,7 @@ This table outlines the differences between Cloudflare API keys and tokens:
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
 To create and configure GraphQL Analytics API tokens, refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
 

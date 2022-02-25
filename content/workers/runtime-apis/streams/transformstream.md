@@ -17,24 +17,24 @@ The Workers platform currently only implements an identity transform stream, a t
 let { readable, writable } = new TransformStream()
 ```
 
-<Definitions>
+{{<definitions>}}
 
-*   `TransformStream()` <Type>TransformStream</Type>
+*   `TransformStream()` {{<type>}}TransformStream{{</type>}}
 
     *   Returns a new identity transform stream.
 
-</Definitions>
+{{</definitions>}}
 
 ## Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `readable` <TypeLink href="#readablestream">ReadableStream</TypeLink>
+*   `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
     *   An instance of a `ReadableStream`.
-*   `writable` <TypeLink href="#writablestream">WritableStream</TypeLink>
+*   `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
     *   An instance of a `WritableStream`.
 
-</Definitions>
+{{</definitions>}}
 
 ## See also
 

@@ -10,11 +10,11 @@ Bigger organizations can deploy WARP automatically to their fleet of devices in 
 
 Here is a list of generic instructions to deploy WARP on your organization's devices.
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in the Zero Trust Dashboard.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

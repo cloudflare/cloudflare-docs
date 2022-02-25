@@ -8,7 +8,7 @@ weight: 5
 
 Cloudflare provides the following Managed Rulesets in the WAF:
 
-<TableWrap><table style="table-layout:fixed; width:100%;">
+{{<table-wrap>}}<table style="table-layout:fixed; width:100%;">
 
   <thead>
     <tr>
@@ -30,11 +30,11 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
     </tr>
   </tbody>
-</table></TableWrap>
+</table>{{</table-wrap>}}
 
 The following rulesets run in the response phase:
 
-<TableWrap><table style="table-layout:fixed; width:100%;">
+{{<table-wrap>}}<table style="table-layout:fixed; width:100%;">
 
   <thead>
     <tr>
@@ -48,7 +48,7 @@ The following rulesets run in the response phase:
       <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Firewall</strong> > <strong>Data</strong>.</td>
     </tr>
   </tbody>
-</table></TableWrap>
+</table>{{</table-wrap>}}
 
 ## Phases of deployed Managed Rulesets
 

@@ -29,13 +29,13 @@ This is the general pattern for using comparison operators:
 
 The Rules language supports these comparison operators:
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
-<TableWrap style='width:100%'>
+{{<table-wrap style="width:100%">}}
 <table style='width:100%'>
   <thead>
    <tr>
@@ -156,7 +156,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
     </tr>
   </tbody>
 </table>
-</TableWrap>
+{{</table-wrap>}}
 
 ## Logical operators
 
@@ -170,7 +170,7 @@ Logical operators combine two or more expressions into a single compound express
 
 Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
 
-<TableWrap>
+{{<table-wrap>}}
 <table style='width:100%'>
   <thead>
    <tr>
@@ -221,15 +221,15 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
    </tr>
   </tbody>
 </table>
-</TableWrap>
+{{</table-wrap>}}
 
 ### Order of precedence
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
 
-</Aside>
+{{</Aside>}}
 
 When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
 
@@ -248,11 +248,11 @@ Since the logical `and` operator has precedence over logical `or`, the `and` ope
 
 ## Grouping symbols
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Only the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/) does not.
 
-</Aside>
+{{</Aside>}}
 
 The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 

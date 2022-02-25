@@ -18,7 +18,7 @@ import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-sta
 
 In this tutorial, you will use [Wrangler](https://github.com/cloudflare/wrangler) and [Cloudflare Workers](https://workers.cloudflare.com) to deploy and serve a static site. With the rise of architectures like [JAMStack](https://jamstack.org/), static sites have become a simple, streamlined way to combine highly available static assets with performant back-end code, especially when deployed in a serverless model. With Workers, your application will be distributed to over 200+ locations around the world and served directly from Cloudflare’s CDN at the server closest to your users.
 
-<YouTube id="6YC3MgVwCGA"/>
+{{<youtube id="6YC3MgVwCGA">}}
 
 If you just want to review the code used in this tutorial, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/react-workers-template). You can take that code, customize it, and deploy it for use in your own projects.
 

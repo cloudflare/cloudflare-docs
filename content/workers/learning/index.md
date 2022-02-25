@@ -6,4 +6,4 @@ weight: 5
 
 # Learning
 
-<DirectoryListing path="/learning"/>
+{{<directory-listing>}}

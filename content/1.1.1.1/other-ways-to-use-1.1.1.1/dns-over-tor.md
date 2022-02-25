@@ -6,11 +6,11 @@ weight: 0
 
 # DNS over Tor
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
 
-</Aside>
+{{</Aside>}}
 
 If you do not want to disclose your IP address to the resolver, you can use our Tor onion service. Resolving DNS queries through the Tor network guarantees a significantly higher level of anonymity than making the requests directly. Not only does doing so prevent the resolver from ever seeing your IP address, but it also prevents your ISP from knowing that you attempted to resolve a domain name.
 
@@ -40,11 +40,11 @@ Also, if you use the Tor Browser, you can head to the resolver's address to see 
 https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
 
-</Aside>
+{{</Aside>}}
 
 **Tip:** If you ever forget the `dns4torblahblahblah.onion` address, use cURL:
 

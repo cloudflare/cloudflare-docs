@@ -10,11 +10,11 @@ Use **origin steering** to customize how each [pool](/load-balancing/understand-
 
 These distributions are the result of your origin steering [policy](#origin-steering-options) combined with the [weights](#weights) assigned to each origin.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If an origin [becomes unhealthy](/load-balancing/understand-basics/health-details/), your pool will also re-balance traffic according to its steering policy.
 
-</Aside>
+{{</Aside>}}
 
 ## Origin steering options
 
@@ -56,11 +56,11 @@ An origin with a weight of **0** should not receive any traffic sent to that poo
 
 You can also see this value in the **Percent** field when creating or editing a pool in the dashboard.
 
-<Aside type="note" header="Note:">
+{{<Aside type="note" header="Note:">}}
 
 If an origin is used in multiple pools and has multiple weights assigned, the total traffic sent to that pool will differ from the percentage specified in each individual pool.
 
-</Aside>
+{{</Aside>}}
 
 ### Limitations
 

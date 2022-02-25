@@ -5,9 +5,9 @@ _build:
   list: never
 ---
 
-<ButtonGroup>
-  <Button type="primary" href="../free">Free</Button>
-  <Button type="primary" href="../pro">Pro</Button>
-  <Button type="primary" href="../biz-and-ent">Business</Button>
-  <Button type="primary" href="../bm-subscription">Bot Management for Enterprise</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="../free">}}Free{{</button>}}
+  {{<button type="primary" href="../pro">}}Pro{{</button>}}
+  {{<button type="primary" href="../biz-and-ent">}}Business{{</button>}}
+  {{<button type="primary" href="../bm-subscription">}}Bot Management for Enterprise{{</button>}}
+{{</button-group>}}

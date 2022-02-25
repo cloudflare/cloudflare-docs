@@ -60,19 +60,19 @@ At the end of your analysis, you should:
 *   Have a range of scores you can confidently block or challenge
 *   Understand nuances in your traffic that may require special attention
 
-<Aside type='note' header='Important'>
+{{<Aside type="note" header="Important">}}
 
 If you were a Cloudflare customer before adding Bot Management, you can view past analytics. This means that you will be able to sort through traffic insights immediately.
 
 New customers should give Bot Analytics a few days to gather data. You should only begin blocking or challenging traffic after checking for possible exemptions or special endpoints.
 
-</Aside>
+{{</Aside>}}
 
 ### Step 3 — Create a Firewall Rule for automated traffic
 
 Based on your analysis of **automated** traffic, create a [Firewall Rule](/firewall/cf-firewall-rules) that **challenges** scores of 1 but still allows good, automated requests. Monitor that rule for a few days to make sure you are targeting the right traffic (user agents, IP addresses, API or mobile traffic).
 
-<Example>
+{{<example>}}
 <table style='table-layout:fixed; width:100%'>
   <thead>
   <tr>
@@ -87,7 +87,7 @@ Based on your analysis of **automated** traffic, create a [Firewall Rule](/firew
     </tr>
   </tbody>
 </table>
-</Example>
+{{</example>}}
 
 ### Step 4 — Create additional Firewall Rules
 

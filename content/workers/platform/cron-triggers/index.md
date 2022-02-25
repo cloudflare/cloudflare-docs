@@ -13,11 +13,11 @@ Cron Triggers allow users to map a cron expression to a Worker script using a [S
 
 You can add Cron Triggers to scripts with the Cloudflare API, or in the dashboard in **Workers** > **Manage Workers** > select **your Worker** > [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers). Refer to [Limits](/workers/platform/limits/#number-of-schedules) to track the maximum number of Cron Triggers per Worker. If a script is managed with Wrangler, Cron Triggers should be exclusively managed through the `wrangler.toml` file.
 
-<Aside type="note" header="Requires a ScheduledEvent Listener">
+{{<Aside type="note" header="Requires a ScheduledEvent Listener">}}
 
 To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runtime-apis/scheduled-event/) listener to the Workers script.
 
-</Aside>
+{{</Aside>}}
 
 ![workers-schedule-editor](../media/workers-schedule-editor.png)
 
@@ -25,7 +25,7 @@ To respond to a Cron Trigger, you must add a [`"scheduled"` event](/workers/runt
 
 Cloudflare supports cron expressions with five fields, along with most [Quartz scheduler](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html#introduction)-like cron syntax extensions:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Field         | Values  | Characters
 \--------------|---------|------------
@@ -35,13 +35,13 @@ Days of Month | 1-31    | \* , - / L W
 Months        | 1-12, case-insensitive 3-letter abbreviations ("JAN", "aug", etc.) | \* , - /
 Weekdays      | 1-7, case-insensitive 3-letter abbreviations ("MON", "fri", etc.)  | \* , - / L #
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Examples
 
 Some common time intervals that may be useful for setting up your Cron Trigger:
 
-<Definitions>
+{{<definitions>}}
 
 *   `* * * * *`
     *   Every minute
@@ -64,13 +64,13 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 *   `23 59 LW * *`
     *   11:59PM on the last weekday of the month
 
-</Definitions>
+{{</definitions>}}
 
-<Aside type="note" header="Testing Cron Triggers and potential delays">
+{{<Aside type="note" header="Testing Cron Triggers and potential delays">}}
 
 A recommended way for testing your Cron Trigger is to first deploy it to a test domain. Adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take minutes for changes to propagate to the Cloudflare network edge.
 
-</Aside>
+{{</Aside>}}
 
 ## Viewing past events
 

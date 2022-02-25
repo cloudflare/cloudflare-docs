@@ -57,11 +57,11 @@ Defining environment variables inline will override the default credentials stor
 2.  After being taken to the **Profile** page, scroll to **API Keys**.
 3.  Select **View** to copy your **Global API Key**.\*
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 \* Treat your Global API Key like a password. It should not be stored in version control or in your code – use environment variables if possible.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

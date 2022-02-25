@@ -20,11 +20,11 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 *   Have a Cloudflare Enterprise account with Cloudflare Logs enabled
 *   Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Cloudflare logs are HTTP/HTTPS request logs in JSON format and are gathered from our 200+ data centers globally. By default, timestamps are returned as Unix nanosecond integers. We recommend using the RFC 3339 format for sending logs to Elastic.
 
-</Aside>
+{{</Aside>}}
 
 ## Task 1 - Preparation
 
@@ -189,11 +189,11 @@ All dashboard have a set of filters that you can apply to the entire dashboard, 
 
 ![Cloudflare dashboard filters](/fundamentals/static/images/elastic/screenshots/cloudflare-dashboards-filters-elastic-kibana.png)
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You can use filters to drill down and examine the data at a granular level. Filters include client country, client device type, client IP, client request host, client request URI, client request user agent, edge response status, origin IP, and origin response status.
 
-</Aside>
+{{</Aside>}}
 
 The default time interval is set to 24 hours. Note that for correct calculations filter will need to exclude Worker subrequests (**WorkerSubrequest** = *false*) and purge requests (**ClientRequestMethod** is not *PURGE*).
 
@@ -253,11 +253,11 @@ If you see *status: \[RED]*, then your cluster isn’t healthy and it’s likely
 
 It is important to verify the return status of the call to Elasticsearch. Lines starting with *Flushing \[N] logs to elasticsearch* and followed by a response line indicate that everything is working as expected.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You might see a *WARNING* message containing text that says *‘y’ year should be replaced…*. You can ignore this message.
 
-</Aside>
+{{</Aside>}}
 
 If you run into any other issues, take note of the exact return message and contact your Cloudflare support team.
 

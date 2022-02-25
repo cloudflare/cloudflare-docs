@@ -29,7 +29,7 @@ You are strongly encouraged to verify IRR entries for the exact prefixes you'll 
 
 To verify your prefix and ASN route, use the tools and methods outlined in this table:
 
-<TableWrap><table>
+{{<table-wrap>}}<table>
 
   <thead>
     <tr>
@@ -56,14 +56,14 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
       <td>Your origin ASN<br/>and routing data</td>
       <td>WHOIS lookup</td>
       <td>
-        <p>In a terminal, use this <Code>whois</Code> command, substituting your network prefix for <em>network-prefix</em>:</p>
-        <p><Code>whois -h rr.ntt.net network-prefix</Code></p>
-        <p>The host <Code>rr.ntt.net</Code> is the primary server for the Global IP network.</p>
+        <p>In a terminal, use this {{<code>}}whois{{</code>}} command, substituting your network prefix for <em>network-prefix</em>:</p>
+        <p>{{<code>}}whois -h rr.ntt.net network-prefix{{</code>}}</p>
+        <p>The host {{<code>}}rr.ntt.net{{</code>}} is the primary server for the Global IP network.</p>
       </td>
       <td>IRR route, origin, and source information.</td>
     </tr>
   </tbody>
-</table></TableWrap>
+</table>{{</table-wrap>}}
 
 ### WHOIS output example
 
@@ -93,10 +93,10 @@ last-modified:  2018-03-16T16:58:06Z
 source:         APNIC
 ```
 
-<Aside type="note" header="Note:">
+{{<Aside type="note" header="Note:">}}
 
 WHOIS output also shows the RPKI entry information for prefix IP addresses. When your WHOIS output only contains an RPKI entry, you must add the IRR entry.
 
 For more information, see [best practices for IRR entry updates](/byoip/best-practices/irr-entries/).
 
-</Aside>
+{{</Aside>}}

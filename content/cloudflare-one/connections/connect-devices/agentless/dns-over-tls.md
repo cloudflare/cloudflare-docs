@@ -56,11 +56,11 @@ forward-zone:
 	forward-addr: 2a06:98c1:54::xxxx#xxxxxxxxx.cloudflare-gateway.com
 ```
 
- <Aside>
+ {{<Aside>}}
 
 Each location has a unique DoT hostname and IPv6 address. Remember to enter your location's values when applying the config above.
 
-</Aside>
+{{</Aside>}}
 
 ## Supported TLS versions
 

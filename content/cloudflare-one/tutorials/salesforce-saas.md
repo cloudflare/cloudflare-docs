@@ -49,9 +49,9 @@ title: Salesforce with Access for SaaS configuration
 
 1.  In Salesforce, ensure your users have **Federation IDs**.
 
- <Aside>
+ {{<Aside>}}
  The Federation ID is found under Manage Users > Users in Setup. The Federation ID should match the email address of the user authenticating via Access.
- </Aside>
+ {{</Aside>}}
 
 1.  Navigate to **Security Controls > Single Sign-On Settings**.
 2.  Set the following global settings:

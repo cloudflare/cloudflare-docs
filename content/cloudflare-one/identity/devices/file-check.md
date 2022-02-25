@@ -17,11 +17,11 @@ weight: 13
 </div>
 </details>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can create multiple instances of the File Check for each operating system you need to run it on, or if you need to check for multiple files.
 
-</Aside>
+{{</Aside>}}
 
 The File Check device posture attribute checks for the presence of a file on a device.
 

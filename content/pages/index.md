@@ -8,7 +8,7 @@ meta:
   title: Cloudflare Pages documentation
 ---
 
-<ContentColumn>
+{{<content-column>}}
 
 # Cloudflare Pages documentation
 
@@ -16,11 +16,11 @@ Deploy your dynamic front-end applications using Cloudflare Pages. Pages are sup
 
 Get started deploying your first site using our **Get started** guide below, or refer to our **Framework guides** page to explore the vast ecosystem of tools and frameworks that Pages supports.
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="/framework-guides">See the framework guides</Button>
-  <Button type="secondary" href="https://pages.dev">Your Cloudflare Pages dashboard</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="/framework-guides">}}See the framework guides{{</button>}}
+  {{<button type="secondary" href="https://pages.dev">}}Your Cloudflare Pages dashboard{{</button>}}
+{{</button-group>}}
 
 ## Popular pages
 
@@ -39,4 +39,4 @@ You can [connect with the Pages community on Discord](https://discord.gg/cloudfl
 
 These docs are built with the [Cloudflare Docs engine](/docs-engine/).
 
-</ContentColumn>
+{{</content-column>}}

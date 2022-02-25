@@ -14,7 +14,7 @@ In a small number of cases, the analytics provided on the Cloudflare dashboard a
 
 Cloudflare Analytics builds the following datasets from sampled data:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Data set                  | Nodes                                                                              |
 | :-------------------------| :--------------------------------------------------------------------------------- |
@@ -27,7 +27,7 @@ Cloudflare Analytics builds the following datasets from sampled data:
 | Workers Metrics           | `workersInvocationsAdaptive`                                                       |
 | Magic Firewall Analytics  | `magicFirewallSamplesAdaptiveGroups`                                               |
 
-</TableWrap>
+{{</table-wrap>}}
 
 \* These nodes are deprecated. Refer to [Deprecated data nodes](/analytics/graphql-api/features/data-sets/#deprecated-data-nodes) for more information.
 
@@ -47,7 +47,7 @@ Cloudflare almost always uses **adaptive sampling**, which means the sample rate
 
 The following data nodes are based on fixed sampling, where the sample rate does not vary:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Data set | Rate | Notes |
 | :------- | ---: | :---- |
@@ -55,7 +55,7 @@ The following data nodes are based on fixed sampling, where the sample rate does
 | Network Analytics<br /><p><b>Nodes:</b><br />`ipFlows1mGroups`<br />`ipFlows1hGroups`<br />`ipFlows1dGroups`<br />`ipFlows1mAttacksGroups`</p> | 0.012% | Sampling rate is in terms of packet count (1 of every 8,192 packets). |
 | Network Analytics v2<br /><p><b>Nodes:</b><br />`dosdNetworkAnalyticsAdaptiveGroups`<br />`dosdAttackAnalyticsAdaptiveGroups`<br />`flowtrackdNetworkAnalyticsAdaptiveGroups`<br />`magicFirewallNetworkAnalyticsAdaptiveGroups`<br />`magicTransitNetworkAnalyticsAdaptiveGroups`<br />`spectrumNetworkAnalyticsAdaptiveGroups`</p> | Depends on the node. | Sample rate is 1/100 for Magic Firewall, 1/10,000 for dosd, and dynamic for flowtrackd. Refer to the [NAv2 migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/#node-comparison) for details. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Access to raw data
 

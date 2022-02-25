@@ -21,7 +21,7 @@ To have a welcome page in two languages, create two URL Rewrite Rules with a sta
 
 **URL Rewrite Rule #1**
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -35,11 +35,11 @@ Text after **Path** > **Rewrite to...** > *Static*:
 /welcome-gb.html
 ```
 
-</Example>
+{{</example>}}
 
 **URL Rewrite Rule #2**
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -53,13 +53,13 @@ Text after **Path** > **Rewrite to...** > *Static*:
 /welcome-pt.html
 ```
 
-</Example>
+{{</example>}}
 
 ### Rewrite URL query string of blog visitors
 
 To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a URL Rewrite Rule with the following settings:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -73,7 +73,7 @@ Text after **Query** > **Rewrite to...** > *Static*:
 sort-by=date
 ```
 
-</Example>
+{{</example>}}
 
 Additionally, set the path rewrite action of the same rule to *Preserve* so that the URL path does not change.
 
@@ -83,7 +83,7 @@ Additionally, set the path rewrite action of the same rule to *Preserve* so that
 
 To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new URL Rewrite Rule and define a dynamic URL path rewrite using an expression:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -97,7 +97,7 @@ Text after **Path** > **Rewrite to...** > *Dynamic*:
 concat("/archive", http.request.uri.path)
 ```
 
-</Example>
+{{</example>}}
 
 The filter uses the `starts_with()` function all paths starting with `/news/2012/`. The dynamic path rewrite uses the `concat()` function to concatenate a prefix to the original URL path of the HTTP request.
 
@@ -105,7 +105,7 @@ The filter uses the `starts_with()` function all paths starting with `/news/2012
 
 To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Create a URL Rewrite Rule and use the `regex_replace()` function for this purpose:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -119,7 +119,7 @@ Text after **Path** > **Rewrite to...** > *Dynamic*:
 regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
 ```
 
-</Example>
+{{</example>}}
 
 The `regex_replace()` function matches the path component on a regular expression (`^/blog/`) and then provides a replacement for that match (`/marketing/`).
 
@@ -127,7 +127,7 @@ The `regex_replace()` function matches the path component on a regular expressio
 
 To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folder1>`, `<folder2>`, and `<filename>` can vary — to `/img/<filename>`, create a URL Rewrite Rule with a dynamic rewrite of the path component:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -141,7 +141,7 @@ Text after **Path** > **Rewrite to...** > *Dynamic*:
 regex_replace(http.request.uri.path, "^/images/[^/]+/[^/]+/(.+)$", "/img/${1}")
 ```
 
-</Example>
+{{</example>}}
 
 For example, this rule would rewrite the `/images/nature/animals/tiger.png` path to `/img/tiger.png`.
 
@@ -149,7 +149,7 @@ For example, this rule would rewrite the `/images/nature/animals/tiger.png` path
 
 To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following URL Rewrite Rule:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -163,6 +163,6 @@ Text after **Path** > **Rewrite to...** > *Dynamic*:
 regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")
 ```
 
-</Example>
+{{</example>}}
 
 The function `regex_replace()` also allows you to extract parts of the URL using regular expressions' capture groups. Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.

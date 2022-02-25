@@ -8,7 +8,7 @@ layout: list
 
 # Endpoints
 
-<ContentColumn>
+{{<content-column>}}
 
 To invoke a [Cloudflare Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) operation, append the endpoint to the Cloudflare API base URL:
 
@@ -18,17 +18,17 @@ For authentication instructions, refer to [Getting Started: Requests](https://ap
 
 For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 The Rules Lists API endpoints require a value for `<ACCOUNT_ID>`.
 
 To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
-</Aside>
+{{</Aside>}}
 
 The Cloudflare Rules Lists API supports the operations outlined below. Visit the associated links for examples.
 
-</ContentColumn>
+{{</content-column>}}
 
 ## Manage lists
 
@@ -74,7 +74,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
 
 ## Manage items in a list
 
-<ContentColumn>
+{{<content-column>}}
 
 Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
@@ -82,7 +82,7 @@ Asynchronous list operations return an `operation_id`, which you can use to moni
 
 When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an `HTTP 201` status code.
 
-</ContentColumn>
+{{</content-column>}}
 
 <table style="table-layout:fixed; width:100%;">
   <thead>

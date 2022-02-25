@@ -73,13 +73,13 @@ In the `ingress` section, input the hostname of the application created in the Z
 
 ![Bastion](/cloudflare-one/static/zero-trust-security/ssh-slc/bastion-mode.png)
 
-<Aside>
+{{<Aside>}}
 
 Bastion mode introduces a risk of horizontal movement. Only use in cases where you expect that users who connect to `cloudflared` would then be able to connect to anything that `cloudflared` can address.
 
 Alternatively, you can point the service directly to a specific URL, IP, or port.
 
-</Aside>
+{{</Aside>}}
 
 ```yaml
 tunnel: 79a60ee2-9a98-4f5f-96c7-76c88b2075be
@@ -152,8 +152,8 @@ $ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-l
 
 When users authenticate through Cloudflare Access, Cloudflare will generate a certificate for the individual using the username from the identity provider (stripped of the email domain). That certificate will then be presented to the SSH server.
 
-<Aside>
+{{<Aside>}}
 
 The username in the identity provider must match the username on the SSH server.
 
-</Aside>
+{{</Aside>}}

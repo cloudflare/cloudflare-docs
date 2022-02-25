@@ -25,7 +25,7 @@ Consider a Firewall Rule that blocks requests whose URLs match `www.example.com/
 
 The following table shows some examples of URL normalization:
 
-<TableWrap>
+{{<table-wrap>}}
 
 URL                                  | Normalized URL
 \-------------------------------------|--------------------------------
@@ -34,6 +34,6 @@ URL                                  | Normalized URL
 `www.example.com\hello`              | `www.example.com/hello`
 `www.example.com/./lang//en/hello./` | `www.example.com/lang/en/hello./`
 
-</TableWrap>
+{{</table-wrap>}}
 
 The exact URL normalization performed by Cloudflare varies according to the configured settings. For more information, refer to [URL normalization settings](/rules/normalization/settings/).

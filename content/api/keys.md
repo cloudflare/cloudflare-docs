@@ -36,8 +36,8 @@ To retrieve your API key:
     *   **Global API Key**: Serves as your main API key.
     *   **Origin CA Key**: Only used when creating origin certificates using the API.
 
-     <Aside type="note">
+     {{<Aside type="note">}}
 
     To access your Host API Key (needed for the Hosting Partner API), log into the [partners dashboard](https://partners.cloudflare.com/login). If you would like to become a Hosting partner, [contact our hosting partner team](https://www.cloudflare.com/certified-partners).
 
-     </Aside>
+     {{</Aside>}}

@@ -31,21 +31,21 @@ Once complete, return to the Zero Trust dashboard to integrate with your Cloudfl
 
 Cloudflare Access relies on a secure exchange between a user's browser and the Tanium agent to read data from the Tanium client. When users attempt to connect to a resource protected by Access with a Tanium rule, Cloudflare Access will validate the user's identity, and the browser will connect to the Tanium agent before making a decision to grant access.
 
-<Aside>
+{{<Aside>}}
 
 The integration does not currently support Safari.
 
-</Aside>
+{{</Aside>}}
 
 ## Integrating Tanium Identity
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Requirements |
 | ------------ |
 | You will need an active Tanium™ Core Platform deployment that runs version 7.2 or later. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 Integrate your Tanium deployment with Cloudflare Access using public keys generated in the Tanium step-by-step documentation linked above.
 

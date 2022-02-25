@@ -16,7 +16,7 @@ Spectrum [log events](/logs/log-fields/) can be configured through the [dashboar
 
 ## Status Codes
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Code | Description |
 | --- | -------- |
@@ -49,4 +49,4 @@ Spectrum [log events](/logs/log-fields/) can be configured through the [dashboar
 | 540	| The client/edge TLS handshake failed due to an invalid configuration. |
 | 999	| Unknown connection error. |
 
-</TableWrap>
+{{</table-wrap>}}

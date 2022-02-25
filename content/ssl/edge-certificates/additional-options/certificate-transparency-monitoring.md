@@ -10,11 +10,11 @@ import CertTransparencyDefinition from "../../\_partials/\_cert-transparency-mon
 
 <CertTransparencyDefinition/>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you use a shared certificate, you may receive notifications for domains or subdomains that do not belong to you.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -26,11 +26,11 @@ If you enable Certificate Transparency (CT) Monitoring, Cloudflare will send you
 
 In rare cases, you may believe a certificate is illegitimate. This is when you should [take action](#how-to-take-action).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For even more details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-certificate-transparency-and-nimbus/).
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -45,9 +45,9 @@ Features vary by plan:
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 
-<Aside type="note" header="Note:">
+{{<Aside type="note" header="Note:">}}
     CT monitoring does not detect phishing attempts. For example, for <code>cloudflare.com</code>, an alert would not trigger for a certificate issued for <code>cloudf1are.com</code> or <code>cloud-flare.com</code>.
-</Aside>
+{{</Aside>}}
 
 ***
 

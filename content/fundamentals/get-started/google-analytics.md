@@ -13,8 +13,8 @@ Cloudflare proxies traffic to your origin web server, but the GA JavaScript code
 
 Cloudflare only affects analytics tools that read logs directly from your web server (like awstats).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 To troubleshoot potential issues with Google Analytics, refer to [Common GA setup mistakes](https://support.google.com/analytics/answer/1009683).
 
-</Aside>
+{{</Aside>}}

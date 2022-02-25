@@ -49,11 +49,11 @@ To set up a Datadog Logpush job:
 1.  Create a job with the appropriate endpoint URL and authentication parameters.
 2.  Enable the job to begin pushing logs.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Datadog.
 
-</Aside>
+{{</Aside>}}
 
 <EnableReadPermissions/>
 
@@ -140,8 +140,8 @@ Response:
 }
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The Datadog destination is exclusive to new jobs and might not be backward compatible with older jobs. Create new jobs if you expect to send your logs directly to Datadog instead of modifying already existing ones. If you try to modify an existing job for another destination to push logs to Datadog, you may observe errors.
 
-</Aside>
+{{</Aside>}}

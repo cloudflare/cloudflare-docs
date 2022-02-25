@@ -19,8 +19,8 @@ You can use Cloudflare Page Rules to prevent Zaraz from loading on specific URLs
 
 Refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427) for more information about how Page Rules work.
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 If you need to block just one or more events from firing in a tool, we recommend you use [Blocking Triggers](/zaraz/get-started/create-trigger/#blocking-triggers).
 
-</Aside>
+{{</Aside>}}

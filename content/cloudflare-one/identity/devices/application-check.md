@@ -17,11 +17,11 @@ weight: 12
 </div>
 </details>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can create multiple instances of the Application Check for each operating system you need to run it on, or if you need to check for multiple applications.
 
-</Aside>
+{{</Aside>}}
 
 The Application Check device posture attribute checks that a specific application process is running on a device.
 

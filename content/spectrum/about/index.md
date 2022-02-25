@@ -7,4 +7,4 @@ pcx-content-type: navigation
 
 For more information about concepts related to Spectrum, refer to the sections below.
 
-<DirectoryListing path="/about"/>
+{{<directory-listing>}}

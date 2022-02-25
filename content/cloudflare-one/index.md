@@ -10,7 +10,7 @@ meta:
 
 # Cloudflare Zero Trust documentation
 
-<ContentColumn>
+{{<content-column>}}
 
 Cloudflare Zero Trust replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
 
@@ -34,4 +34,4 @@ Cloudflare Zero Trust replaces legacy security perimeters with our global edge, 
 
 ![Cloudflare Zero Trust illustration](/cloudflare-one/static/documentation/teams-no-background.png)
 
-</ContentColumn>
+{{</content-column>}}

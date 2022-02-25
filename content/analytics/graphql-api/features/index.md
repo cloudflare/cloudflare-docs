@@ -8,4 +8,4 @@ weight: 21
 
 The GraphQL Analytics API offers the following features:
 
-<DirectoryListing path="/graphql-api/features"/>
+{{<directory-listing>}}

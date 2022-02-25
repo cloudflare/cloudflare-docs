@@ -8,11 +8,11 @@ weight: 4
 
 The **SSL/TLS Recommender** helps you choose which [Encryption mode](/ssl/origin-configuration/ssl-modes/) is best for your application.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For more background, refer to the [introductory blog post](https://blog.cloudflare.com/ssl-tls-recommender).
 
-</Aside>
+{{</Aside>}}
 
 ## Common tasks
 
@@ -38,11 +38,11 @@ Based on this initial scan, the Recommender may decide that you could use a stro
 
 If so, it will send the zone owner an email with the recommended option and add a *Recommended by Cloudflare* tag to that option on the **SSL/TLS** page. You are not required to use this recommendation.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you do not receive an email, keep your current **SSL encryption mode**.
 
-</Aside>
+{{</Aside>}}
 
 ## Limitations
 

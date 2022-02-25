@@ -12,11 +12,11 @@ This diagram illustrates the flow of traffic with Magic Transit.
 
 ![GRE tunnel flow](/magic-transit/static/mt-gre-tunnel-flow.png)
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 Egress packets are routed by your ISP interface, not Cloudflare.
 
-</Aside>
+{{</Aside>}}
 
 ## Encapsulation
 
@@ -26,7 +26,7 @@ In the diagram below, Magic Transit encapsulates packets at the Cloudflare edge 
 
 ![Encapsulation diagram](/magic-transit/static/magic-transit-anycast-1.png)
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 To accommodate additional header data introduced by encapsulation, the maximum segment size (MSS) must be adjusted so that packets comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
@@ -34,7 +34,7 @@ Because egress packets are routed via your ISP interface, not Cloudflare, you mu
 
 For instructions, refer to [Set Maximum Segment Size](/magic-transit/get-started/requirements/#set-maximum-segment-size).
 
-</Aside>
+{{</Aside>}}
 
 ## Anycast GRE
 

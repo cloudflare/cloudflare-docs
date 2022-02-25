@@ -30,13 +30,13 @@ Use one of the following API endpoints:
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You cannot delete a ruleset that is still referenced in other rules. For example, you cannot delete a custom ruleset that is being deployed in a rule with `execute` action.
 
 To delete the ruleset, update or delete any rules that reference the ruleset and try again.
 
-</Aside>
+{{</Aside>}}
 
 ### Example
 
@@ -70,13 +70,13 @@ If the delete operation succeeds, the method call returns a `204 No Content` HTT
 
 Later updates to the ruleset will not reuse the version number of a deleted ruleset version.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You cannot delete a ruleset version if it is the latest ruleset version and there is a rule with `execute` action deploying that ruleset.
 
 To delete the ruleset version, update or delete any rules that reference the ruleset and try again.
 
-</Aside>
+{{</Aside>}}
 
 ### Example
 

@@ -37,14 +37,14 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
     *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
     *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
-     <Example>
+     {{<example>}}
 
     Record|Type|Name|Content
     \-----|-------|-------|-----
     Fallback origin|A|`proxy-fallback.saasprovider.com`|192.0.2.1
     CNAME target|CNAME|`*.customers.saasprovider.com`|`proxy-fallback.saasprovider.com`
 
-     </Example>
+     {{</example>}}
 
 4.  Enable **Custom Hostnames** for your zone:
 

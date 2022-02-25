@@ -14,4 +14,4 @@ With Cloudflare Zero Trust, you can protect two types of web applications: SaaS 
 
 **Dashboard SSO applications** are a special type of SaaS application that manages SSO settings for the Cloudflare dashboard and has limited permissions for customer edits.
 
-<DirectoryListing path="/applications/configure-apps"/>
+{{<directory-listing>}}

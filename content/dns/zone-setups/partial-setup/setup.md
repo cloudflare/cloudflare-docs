@@ -12,11 +12,11 @@ import PartialSetupDefinition from "../../\_partials/\_partial-setup-definition.
 
 <PartialSetupDefinition/>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 A partial setup is only available to customers on a Business or Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

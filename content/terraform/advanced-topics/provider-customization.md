@@ -9,11 +9,11 @@ Terraform communicates with cloud and edge provider APIs such as Cloudflare thro
 
 ## Adjust the default Cloudflare provider settings
 
-<Aside>
+{{<Aside>}}
 
 The examples below build on the [Cloudflare Terraform tutorial](/terraform/tutorial/).
 
-</Aside>
+{{</Aside>}}
 
 The Cloudflare Terraform provider can be customized through the use of configuration parameters, specified either in your `.tf` configuration files or via environment variables, such as `$CLOUDFLARE_RPS`. Using environment variables may make sense when running Terraform from a CI/CD system or when the change is temporary and does not need to be persisted in your configuration history.
 

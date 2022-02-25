@@ -6,4 +6,4 @@ weight: 3
 
 # Concepts
 
-<DirectoryListing path="/concepts"/>
+{{<directory-listing>}}

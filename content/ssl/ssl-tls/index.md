@@ -10,4 +10,4 @@ meta:
 
 For more on Cloudflare SSL/TLS, see these articles:
 
-<DirectoryListing path="/ssl-tls"/>
+{{<directory-listing>}}

@@ -30,7 +30,7 @@ To see an in-depth breakdown of SaaS applications your users have visited, click
 
 Within Shadow IT Discovery, applications are labeled according to their status. Your organization can determine the status of each application, and decide to change it at any point in time. This is a list of possible values for the status field:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Status | Description |
 | -------- | --------------- |
@@ -39,7 +39,7 @@ Within Shadow IT Discovery, applications are labeled according to their status. 
 | **In review** | Applications in the process of being reviewed by your organization. |
 | **Unreviewed** | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Change an application's status
 

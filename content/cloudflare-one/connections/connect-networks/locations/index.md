@@ -6,11 +6,11 @@ weight: 3
 
 # Locations
 
-<Aside type="Warning" header="Warning">
+{{<Aside type="Warning" header="Warning">}}
 
 Deploying Gateway DNS filtering using static IP addresses may prevent users from connecting to public Wi-Fi networks through captive portals. To avoid this issue, use the [WARP client](/cloudflare-one/connections/connect-devices/warp/) to connect your devices to Cloudflare Zero Trust.
 
-</Aside>
+{{</Aside>}}
 
 Locations are usually physical entities like offices, homes, retail stores, movie theatres, or data centers. The fastest way to start sending DNS queries from a location and protect it from security threats is by changing the DNS resolvers at the router.
 
@@ -43,11 +43,11 @@ The only requirement for a location is its name. All other fields are optional i
 
 ### Source IPv4 address
 
-<Aside>
+{{<Aside>}}
 
 Changing the source IPv4 address of a location is an Enterprise feature. See our [payment plans](https://www.cloudflare.com/teams-pricing/) for more information.
 
-</Aside>
+{{</Aside>}}
 
 Gateway uses the public source IPv4 address of your network to identify your location, apply policies and log DNS requests. When creating a location, the Zero Trust dashboard automatically identifies the public source IP address.
 
@@ -55,7 +55,7 @@ Users on the Enterprise plan have the option of manually entering one or more IP
 
 ![Editable IP address](/cloudflare-one/static/documentation/policies/editable-ip-address.png)
 
-<Aside type='note' header='Your IPv4 address is taken'>
+{{<Aside type="note" header="Your IPv4 address is taken">}}
 
 When trying to configure a location over IPv4, you may run into this error:
 
@@ -65,7 +65,7 @@ This may mean someone else in the same network signed up for Cloudflare Gateway 
 
 If you think someone else is wrongfully using this IPv4 address, please [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
 
-</Aside>
+{{</Aside>}}
 
 ### IPv6 address
 

@@ -10,7 +10,7 @@ layout: list
 
 The Cloudflare Filters API supports an endpoint for validating expressions.
 
-<TableWrap>
+{{<table-wrap>}}
   <table style="width: 100%;">
     <thead>
         <tr>
@@ -38,7 +38,7 @@ The Cloudflare Filters API supports an endpoint for validating expressions.
         </tr>
     </tbody>
   </table>
-</TableWrap>
+{{</table-wrap>}}
 
 ## Examples
 

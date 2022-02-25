@@ -20,14 +20,14 @@ In order to receive a `401` for expired session, add the following header to all
 
 When users log in to an application protected by Access, Access generates two session tokens:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Token | Description | Storage |
 |---|---|---|
 | **Global session token**| Establishes the maximum amount of time for a user’s Access session | Your Cloudflare [team domain](/cloudflare-one/glossary/#team-domain) |
 | **Application token** | Establishes a session for a specific application | The hostname of the application protected |
 
-</TableWrap>
+{{</table-wrap>}}
 
 You can configure the duration of both tokens on the dashboard. When users log in, the global session token will default to the duration of the application token. You can configure the duration of the global session token to be shorter or longer than the application’s session token.
 

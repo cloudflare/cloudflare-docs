@@ -20,11 +20,11 @@ For more information, refer to [Expressions](/ruleset-engine/rules-language/expr
 
 ## Expression Builder and Editor
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Firewall Rules expressions have a 4 KB limit (approximately 4,000 text characters).
 
-</Aside>
+{{</Aside>}}
 
 The Firewall app in the Cloudflare dashboard offers two options for editing expressions.
 
@@ -40,11 +40,11 @@ Both interfaces are available in the **Create Firewall Rule** page. This article
 
 ## Create a Firewall Rule
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 Create a Firewall Rule based on the filters and exclusions you select within Firewall Analytics by clicking **Create firewall rule** in **Firewall** > **Overview**.
 
-</Aside>
+{{</Aside>}}
 
 To create a new Firewall Rule:
 

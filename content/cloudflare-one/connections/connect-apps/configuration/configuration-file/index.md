@@ -6,11 +6,11 @@ weight: 2
 
 # Configuration file
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you are running [quick tunnels](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#quick-tunnels), you do not need a configuration file.
 
-</Aside>
+{{</Aside>}}
 
 Configuring tunnels through a YAML file (what we refer to as a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) allows you to have fine-grained control over how an instance of `cloudflared` will operate. In your configuration file you can specify top-level properties for your `cloudflared` instance, as well as configure origin-specific properties by writing [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) and adding parameters to them.
 
@@ -80,8 +80,8 @@ When making changes to the configuration file for a given tunnel, we suggest rel
 
 Your `cloudflared` will now be running with the updated version of your configuration file.
 
-<Aside type='note' header='Traffic handling'>
+{{<Aside type="note" header="Traffic handling">}}
 
 When the first instance of <code>cloudflared</code> is stopped, long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH) will be dropped. UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
 
-</Aside>
+{{</Aside>}}

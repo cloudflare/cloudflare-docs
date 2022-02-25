@@ -10,11 +10,11 @@ weight: 2
 
 A group is a set of rules that can be configured once and then quickly applied across many Access applications. You can select a group as a selector in any Zero Trust policy, and all the criteria from the selected group will apply to that application.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Access groups are distinct from groups in your identity provider, like Okta groups. Access groups can contain a mix of individual users, groups from identity providers, and service authentication options like service tokens.
 
-</Aside>
+{{</Aside>}}
 
 ## Example scenario
 
@@ -67,11 +67,11 @@ Group criteria help define whether to include or exclude a team member from a  g
 
 We recommend using groups to define any IP address-based rules you configure in policies. Keeping IP addresses in one place allows you to modify or remove addresses once, rather than in each policy, and reduces the potential for mistakes.
 
-<Aside>
+{{<Aside>}}
 
 If adding more than one IP address or range to a group, it’s best to use an Include rule. If you don’t use the Include rule, the policy using that  group attempts to require traffic to originate from all ranges.
 
-</Aside>
+{{</Aside>}}
 
 ## Using groups for country requirements
 

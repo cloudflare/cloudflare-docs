@@ -13,9 +13,9 @@ layout: example
 
 # Respond with another site
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 addEventListener('fetch', function(event) {

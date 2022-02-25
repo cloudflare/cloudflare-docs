@@ -21,13 +21,13 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device seria
 
 To create rules based on device serial numbers you'll need to create a list of numbers using the [Lists](/cloudflare-one/policies/lists/) functionality in the Zero Trust Dashboard.
 
-<Aside header='Important'>
+{{<Aside header="Important">}}
 
 Cloudflare Access relies on the WARP client to gather the serial number of a device attempting to reach an application.
 
 In order for your users to be able to authenticate, you must [deploy the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) in proxy mode to your company devices. Users also must enroll into your organization's Cloudflare Zero Trust account.
 
-</Aside>
+{{</Aside>}}
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
 

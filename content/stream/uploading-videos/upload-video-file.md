@@ -21,11 +21,11 @@ curl -X POST \
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
 ```
 
-<Aside>
+{{<Aside>}}
 
 Note that cURL `-F` flag automatically configures the content-type header and maps `skiing.mp4` to a form input called `file`.
 
-</Aside>
+{{</Aside>}}
 
 ## Resumable uploads with tus (for large files)
 
@@ -35,7 +35,7 @@ Note that cURL `-F` flag automatically configures the content-type header and ma
 
 [tus protocol](https://tus.io) is the recommended method for uploading large files to Cloudflare Stream from a computer. Popular programming languages have [tus client implementations](https://tus.io/implementations.html).
 
-<Aside>
+{{<Aside>}}
 
 Important: Cloudflare Stream requires a minimum chunk size of 5,242,880 bytes when using TUS, unless the entire file is less than this amount.
 
@@ -43,15 +43,15 @@ We recommend increasing the chunk size to 52,428,800 bytes for better performanc
 
 Maximum chunk size can be 209,715,200 bytes.
 
-</Aside>
+{{</Aside>}}
 
-<Aside>
+{{<Aside>}}
 
 Important: Cloudflare Stream requires a chunk size divisible by 256KiB (256x1024 bytes). Please round your desired chunk size to the nearest multiple of 256KiB.
 
 The final chunk of an upload or uploads that fit within a single chunk are exempt from this requirement.
 
-</Aside>
+{{</Aside>}}
 
 ### Specifying upload options
 
@@ -61,7 +61,7 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 
 Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
 
-<Definitions>
+{{<definitions>}}
 
 *   `name`
 
@@ -83,7 +83,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
     *   The watermark profile UID.
 
-</Definitions>
+{{</definitions>}}
 
 ### Getting the video ID when using TUS
 
@@ -97,7 +97,7 @@ For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$A
 
 ### Command-line example
 
-<Example>
+{{<example>}}
 
 You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
@@ -115,11 +115,11 @@ In the beginning of the response from tus, you’ll see the endpoint for getting
     INFO Created: https://api.cloudflare.com/client/v4/accounts/d467d4f0fcbcd9791b613bc3a9599cdc/stream/dd5d531a12de0c724bd1275a3b2bc9c6
     ...
 
-</Example>
+{{</example>}}
 
 ### Golang Example
 
-<Example>
+{{<example>}}
 
 To get started, import a [tus](https://tus.io) client. You can use the [go-tus](https://github.com/eventials/go-tus) by [eventials](https://github.com/eventials) to upload from your Go applications.
 
@@ -177,13 +177,13 @@ upload.Progress()
 upload.Finished()
 ```
 
-</Example>
+{{</example>}}
 
 Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functionality such as resuming uploads and getting more details about the progress of the upload.
 
 ### Node.js Example
 
-<Example>
+{{<example>}}
 
 Install tus-js-client
 
@@ -245,4 +245,4 @@ var upload = new tus.Upload(file, options);
 upload.start();
 ```
 
-</Example>
+{{</example>}}

@@ -12,11 +12,11 @@ Cloudflare Workers is a serverless application platform running on Cloudflare’
 
 Learn more about [how Workers works](/workers/learning/how-workers-works/).
 
-<Aside type ="note" header="Try the Playground">
+{{<Aside type="note" header="Try the Playground">}}
 
 The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). The Playground does not require any setup. It is a simple, instant way to preview and test a Workers script directly in the browser against any site.
 
-</Aside>
+{{</Aside>}}
 
 This guide will instruct you through setting up a Cloudflare account to deploying your first Worker script.
 
@@ -26,7 +26,7 @@ This guide will instruct you through setting up a Cloudflare account to deployin
 
 Before you can start [publishing](/workers/cli-wrangler/commands/#publish) your Workers on your own domain or a free `*.workers.dev` subdomain, you must sign up for a Cloudflare Workers account.
 
-<p><Button type="primary" href="https://dash.cloudflare.com/sign-up/workers">Sign up</Button></p>
+<p>{{<button type="primary" href="https://dash.cloudflare.com/sign-up/workers">}}Sign up{{</button>}}</p>
 
 The signup process will guide you through choosing a `*.workers.dev` subdomain and verifying your email address, both of which are required to publish.
 
@@ -247,11 +247,11 @@ Once you have filled in your `account_id`, you are ready to preview your code. R
 
 This command will build your project, run it locally, and return a URL for you to visit to preview the Worker.
 
-<Aside header="A note about building">
+{{<Aside header="A note about building">}}
 
 Running `wrangler dev` and `wrangler publish` both run `wrangler build` beforehand automatically, but it can be useful to run `build` separately to check for errors. Running `wrangler build` installs the necessary dependencies for your project and compiles it to make it ready for previewing or deployment. Learn [more about Wrangler](/workers/cli-wrangler/commands/).
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -354,11 +354,11 @@ header: Publish to workers.dev
 ~/my-worker $ wrangler publish
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
 
-</Aside>
+{{</Aside>}}
 
 ### (Optional) Publish your project to a registered domain
 
@@ -387,11 +387,11 @@ Workers Weekly Summary provides a breakdown of your overall Workers usage for yo
 
 Workers Usage Report is an on-demand usage notification that is triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
 
-<Aside type ="note" header="Workers Unbound">
+{{<Aside type="note" header="Workers Unbound">}}
 
 If you are on Workers Unbound, you will also see duration and [egress data usage (which you are not billed on)](/workers/learning/metrics-and-analytics/#egress-data).
 
-</Aside>
+{{</Aside>}}
 
 ![workers-usage-report](../media/workers-usage-report.png)
 

@@ -20,7 +20,7 @@ Some actions, like *Block*, will stop the evaluation of the remaining rules. The
 
 The available actions depend on the [phase](/ruleset-engine/about/#phases) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table style="width: 100%">
   <thead>
@@ -126,10 +126,10 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the *Allow* and *Bypass* actions. Refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions) for more information.
 
-</Aside>
+{{</Aside>}}

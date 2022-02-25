@@ -29,11 +29,11 @@ After you provision the IPs and the ping tests confirm the connection, accept th
 
 Cloudflare advertises all of its prefixes over the CNI, but the process occurs over a private link from Cloudflare to the customer data center.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Why does my CNI need to accept all of Cloudflare's prefixes? Accepting all of Cloudflare's prefixes ensures your CNI is fully utilized, and traffic routed from PoPs back to the CNI is secure, fast, and reliable.
 
-</Aside>
+{{</Aside>}}
 
 After you accept the BGP session, traffic begins flowing over the CNI. To confirm traffic is flowing correctly, contact your solutions engineer who can see whether traffic is flowing.
 

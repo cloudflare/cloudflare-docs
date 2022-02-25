@@ -58,11 +58,11 @@ You own the account lifecycle from creation, ongoing management, and finally del
 curl -X GET https://api.cloudflare.com/client/v4/accounts -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This endpoint is the same as documented in our [API docs](https://api.cloudflare.com/#accounts-list-accounts). The same filters can be used for created accounts.
 
-</Aside>
+{{</Aside>}}
 
 You will get back a list of all the accounts you have created plus any accounts your user already had access to:
 
@@ -101,11 +101,11 @@ You will get back a list of all the accounts you have created plus any accounts 
 
 If for any reason you need to delete an account you created, call `DELETE /accounts/:account_id`.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Account deletion is permanent and will delete any zones or other resources under the account.
 
-</Aside>
+{{</Aside>}}
 
 ```bash
 curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<account_id> -H 'x-auth-email: <x-auth-email>' -H 'x-auth-key: <x-auth-key>'
@@ -132,4 +132,4 @@ Now that we have created an account, visualized existing accounts and learned ho
 
 Learn how to manage external customers access to Cloudflare.
 
-<p><Button type="primary" href="/get-started/user-access">Step 2: User access</Button></p>
+<p>{{<button type="primary" href="/get-started/user-access">}}Step 2: User access{{</button>}}</p>

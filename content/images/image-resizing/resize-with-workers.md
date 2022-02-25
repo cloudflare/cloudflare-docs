@@ -20,7 +20,7 @@ The resizing feature is accessed via the [options](/workers/runtime-apis/request
 
 The `fetch()` function accepts parameters in the second argument inside the `{cf: {image: {…}}}` object. The parameters are:
 
-<Definitions>
+{{<definitions>}}
 
 *   **`width`**
     *   Maximum width in pixels. The value must be an integer.
@@ -34,7 +34,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 *   **`fit`**
     *   Resizing mode as a string. It affects interpretation of `width` and `height`:
 
-        <Definitions>
+        {{<definitions>}}
 
         *   **`scale-down`**
             *   Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
@@ -51,7 +51,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
         *   **`pad`**
             *   Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
 
-        </Definitions>
+        {{</definitions>}}
 
 *   **`gravity`**
 
@@ -89,7 +89,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 *   **`metadata`**
     *   What EXIF data should be preserved in the output image. Note that EXIF rotation and embedded color profiles are always applied ("baked in" into the image), and are not affected by this option. Note that if the Polish feature is enabled, all metadata may have been removed already and this option may have no effect.
 
-        <Definitions>
+        {{<definitions>}}
 
         *   **`keep`**
             *   Preserve most of EXIF metadata, including GPS location if present.
@@ -100,7 +100,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
         *   **`none`**
             *   Discard all invisible EXIF metadata. Currently WebP and PNG output formats always discard metadata.
 
-        </Definitions>
+        {{</definitions>}}
 
 *   **`background`**
     *   Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`.
@@ -114,7 +114,7 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 *   **`blur`**
     *   Radius of a blur filter (approximate gaussian). Maximum supported radius is 250.
 
-</Definitions>
+{{</definitions>}}
 
 In your worker, where you would fetch the image using `fetch(request)`, add options like this:
 
@@ -136,11 +136,11 @@ These typings are also available in [our Workers TypeScript definitions library]
 
 Create a new script in the Workers section of the Cloudflare Dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Do not set up the Image Resizing worker for the entire zone (`/*`). This will block all non-image requests and make your website inaccessible.
 
-</Aside>
+{{</Aside>}}
 
 It is best to keep the path handled by the Worker separate from the path to original (unresized) images, to avoid request loops caused by the image resizing worker calling itself. For example, store your images in `example.com/originals/` directory, and handle resizing via `example.com/thumbnails/*` path that fetches images from the `/originals/` directory. If source images are stored in a location that is handled by a Worker, you must prevent the Worker from creating an infinite loop.
 
@@ -164,11 +164,11 @@ addEventListener("fetch", event => {
 
 ## Lack of preview in the Dashboard
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Image Resizing is not simulated in the preview of in the Workers dashboard editor.
 
-</Aside>
+{{</Aside>}}
 
 The script preview of the Worker editor ignores `fetch()` options, and will always fetch unresized images. To see the effect of Image Resizing you must deploy the Worker script and use it outside of the editor.
 

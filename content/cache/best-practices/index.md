@@ -8,4 +8,4 @@ meta:
 
 # Best practices
 
-<DirectoryListing path="/best-practices"/>
+{{<directory-listing>}}

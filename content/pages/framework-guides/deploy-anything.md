@@ -25,7 +25,7 @@ $ git push -u origin main
 
 Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option     | Value              |
 | ------------------------ | ------------------ |
@@ -33,17 +33,17 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 | Build command (optional) | `yourbuildcommand` |
 | Build output directory   | `yourbuilddir`     |
 
-</TableLayout>
+</div>
 
 Unlike many of our framework guides, the build command and build directory for your site are going to be completely custom. If you do not need a build step, input  `exit 0` into the **Build command** field.
 
 After configuring your site, you can begin your first deploy. Your custom build command (if provided) will run, and Pages will deploy your static site.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 After you have deployed your site, you will receive a unique subdomain for your project on `*.pages.dev`. Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 

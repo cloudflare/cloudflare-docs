@@ -54,11 +54,11 @@ These steps help you set up Centrify as your identity provider:
 
 14. Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
-     <Aside>
+     {{<Aside>}}
 
     Do not use the forward slash from the <strong>Settings</strong> tab.
 
-     </Aside>
+     {{</Aside>}}
 
 15. Navigate to the **User Access** tab.
 

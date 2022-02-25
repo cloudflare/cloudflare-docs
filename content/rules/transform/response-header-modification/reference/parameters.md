@@ -50,11 +50,11 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP respon
 }
 ```
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/) you can use in an expression.
 
-</Aside>
+{{</Aside>}}
 
 ## Header removal parameters
 

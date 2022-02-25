@@ -31,13 +31,13 @@ List all prefixes and the ASNs where they should originate. When specifying pref
 </div>
 </details>
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 When customers supply their own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP AS\_PATH. For example, if the customer ASN is AS64496, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
 If you do not have an ASN or do not want to bring your ASN to Cloudflare, you can use the Cloudflare Customer ASN (AS209242). In this case, the path becomes `13335 209242`.
 
-</Aside>
+{{</Aside>}}
 
 ## Border Gateway Protocol (BGP) control for advertisements
 

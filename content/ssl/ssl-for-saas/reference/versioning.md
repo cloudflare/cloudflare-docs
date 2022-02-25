@@ -58,11 +58,11 @@ SSL for SaaS v2 is functionally equivalent to SSL for SaaS v1, but removes the r
 
 Once the migration has been started for your zone(s), Cloudflare will require every Custom Hostname to pass a hostname verification check. Existing Custom Hostnames that are proxying to Cloudflare with a DNS CNAME record will automatically re-validate and migrate to the new version with no downtime. Any Custom Hostnames created after the start of the migration will need to pass the hostname validation check using one of the validation methods mentioned above.
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 You can revert the migration at any time.
 
-</Aside>
+{{</Aside>}}
 
 ### Before the migration
 

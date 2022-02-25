@@ -6,4 +6,4 @@ weight: 4
 
 # Installation
 
-<DirectoryListing path="/user-guide/set-up"/>
+{{<directory-listing>}}

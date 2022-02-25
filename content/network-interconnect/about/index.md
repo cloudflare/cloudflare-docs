@@ -8,4 +8,4 @@ meta:
 
 # About Cloudflare Network Interconnect
 
-<DirectoryListing path="/about"/>
+{{<directory-listing>}}

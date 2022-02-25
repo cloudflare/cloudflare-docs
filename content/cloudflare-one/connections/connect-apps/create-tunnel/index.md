@@ -31,7 +31,7 @@ The created Tunnel can serve traffic for multiple hostnames in your Cloudflare a
 
 Creating a Tunnel generates a credentials file for that specific Tunnel. This file is distinct from the cert.pem file. To run the Tunnel without managing DNS from `cloudflared`, you only need the credentials file.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Action | `cert.pem` | Credentials file |
 |---|---|---|
@@ -42,7 +42,7 @@ Creating a Tunnel generates a credentials file for that specific Tunnel. This fi
 | Connect to load balancer<br/>pools from `cloudflared` | Required | - |
 | Route traffic to a running Tunnel<br/>from the Cloudflare dashboard | Available | Available |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## List available Tunnels
 
@@ -64,11 +64,11 @@ You can delete an existing Tunnel with cloudflared. To delete a Tunnel, run the 
 $ cloudflared tunnel delete <NAME>
 ```
 
-<Aside>
+{{<Aside>}}
 
 The command requires the `cert.pem` file.
 
-</Aside>
+{{</Aside>}}
 
 If there are still active connections on that Tunnel, then you will have to force the deletion with:
 
@@ -80,10 +80,10 @@ This will cause those connections to be dropped.
 
 Deleting the Tunnel also invalidates the credentials file associated with that Tunnel, meaning those connections can not be re-established.
 
-<Aside>
+{{<Aside>}}
 
 Tunnels created in this method do not currently display in the **Traffic** tab of the [Cloudflare dashboard](https://dash.cloudflare.com). These connections will be added to the dashboard in a future release.
 
-</Aside>
+{{</Aside>}}
 
 Cloudflare Tunnel deletes DNS records after 24-48 hours of a Tunnel being unregistered. Cloudflare Tunnel does not delete TLS certificates on your behalf once the Tunnel is shut down. If you want to clean up a Tunnel you’ve shut down, you can delete DNS records [in the DNS editor](https://dash.cloudflare.com/?zone=dns) and revoke TLS certificates in the Origin Certificates section of the [SSL/TLS tab of the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/ssl-tls/origin).

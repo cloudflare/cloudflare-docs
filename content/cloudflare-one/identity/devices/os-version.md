@@ -32,11 +32,11 @@ To enable the OS version check:
 
 Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 You must ensure the version is entered is a valid `x.x.x` Semver. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
 
-  </Aside>
+  {{</Aside>}}
 
 ### On macOS
 

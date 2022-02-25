@@ -62,8 +62,8 @@ To enable Logpush to Azure:
 
 3.  Provide the SAS URL when prompted by the Logpush API or UI.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Logpush will stop pushing logs if your SAS token expires, which is why an expiration period of at least 5 years is required. You can always update your Logpush job with a new token if needed.
 
-</Aside>
+{{</Aside>}}

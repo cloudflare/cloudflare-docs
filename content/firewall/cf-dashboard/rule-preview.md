@@ -10,7 +10,7 @@ meta:
 
 # Preview Firewall Rules
 
-<ContentColumn>
+{{<content-column>}}
 
 ## Overview
 
@@ -18,11 +18,11 @@ Cloudflare Firewall Rules provides a powerful and flexible platform for filterin
 
 To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a Firewall Rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the **Firewall Rules Expression Editor** so that you can test a rule as you edit it.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Rule Preview requires access to a Cloudflare Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 ## Use Rule Preview
 
@@ -49,9 +49,9 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 
-</ContentColumn>
+{{</content-column>}}
 
-<TableWrap style="width:100%">
+{{<table-wrap style="width:100%">}}
 <table style="width: 100%">
    <thead>
       <tr>
@@ -254,4 +254,4 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
     </tbody>
   </table>
-</TableWrap>
+{{</table-wrap>}}

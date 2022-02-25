@@ -14,11 +14,11 @@ To add one or more rules to a phase entry point ruleset, use the [Update ruleset
 
 If you are adding a **single** rule to a ruleset, consider using the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) API method instead. In this case, the request only includes the definition of the new rule.
 
-<Aside type="note" header="Creating an entry point ruleset">
+{{<Aside type="note" header="Creating an entry point ruleset">}}
 
 Instead of relying on the automatic creation of an entry point ruleset, you can also create this ruleset explicitly using the [Create ruleset](/ruleset-engine/rulesets-api/create/) method.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

@@ -30,11 +30,11 @@ To create a new advanced certificate in the dashboard:
     *   Certificate Validity Period
 6.  Click **Save**.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Selecting **Let’s Encrypt** as a CA limits a certificate to txt validation\_method, 90 validity\_days, omission of cloudflare\_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, such as `example.com`, `*.example.com`).
 
-</Aside>
+{{</Aside>}}
 
 ### Using the API
 
@@ -81,8 +81,8 @@ Normally, you only need to update DCV if you have your application on a partial 
 
 For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/).
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/dcv-update/).
 
-</Aside>
+{{</Aside>}}

@@ -8,4 +8,4 @@ weight: 6
 
 Customize your Web Analytics views by using filters.
 
-<DirectoryListing path="/web-analytics/configuring-web-analytics"/>
+{{<directory-listing>}}

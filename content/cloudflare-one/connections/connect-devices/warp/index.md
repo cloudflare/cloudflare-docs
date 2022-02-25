@@ -30,11 +30,11 @@ The WARP client can be configured in three modes.
 
 ## WARP client modes
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 **Proxy mode** can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
 
-</Aside>
+{{</Aside>}}
 
 ### Gateway with WARP (default)
 

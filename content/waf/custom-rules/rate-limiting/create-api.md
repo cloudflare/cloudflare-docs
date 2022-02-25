@@ -8,13 +8,13 @@ layout: list
 
 # Create Rate Limiting rules via API
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 This feature is only available for selected customers on an Enterprise plan.
 
 For API guidance on the previous version of Rate Limiting rules, refer to the [Cloudflare API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-properties).
 
-</Aside>
+{{</Aside>}}
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api) to create a Rate Limiting rule via API.
 

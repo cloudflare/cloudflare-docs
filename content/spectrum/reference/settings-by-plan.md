@@ -8,15 +8,15 @@ layout: list
 
 # Settings by plan
 
-<ContentColumn>
+{{<content-column>}}
 
 Certain fields in Spectrum request and response bodies require an Enterprise plan.  To upgrade your plan, contact your account team.
 
 Spectrum properties requiring an Enterprise plan:
 
-</ContentColumn>
+{{</content-column>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 Name          | Type         | Description                                                                              | Example
 \--------------|--------------|------------------------------------------------------------------------------------------|-------------------
@@ -26,10 +26,10 @@ proxy\_protocol | string       | Enables Proxy Protocol to the origin. Spectrum 
 ip\_firewall    | boolean      | Enables IP Access Rules for this application.                                                                                                                                                                                 | true
 tls            | string       | Type of TLS termination for the application. Options are "off" (default, aka Passthrough), "flexible", "full", and "strict". See [Configuration Options](/spectrum/configuration-options/) for descriptions of each. | "full"
 
-</TableWrap>
+{{</table-wrap>}}
 
-<ContentColumn>
+{{<content-column>}}
 
 Review the [Spectrum API documentation](https://api.cloudflare.com/#spectrum-applications-properties) for example API requests.
 
-</ContentColumn>
+{{</content-column>}}

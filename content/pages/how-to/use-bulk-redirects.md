@@ -7,11 +7,11 @@ title: Handle redirects with Bulk Redirects
 
 In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-redirects) to handle redirects that surpasses the 100 redirect rules limit set by Pages. A [`_redirects`](/pages/platform/limits#redirects) file has a maximum of 100 redirect rules.
 
-<Aside type="Note">
+{{<Aside type="Note">}}
 
 The redirects defined in the `_redirects` file of your build folder can work together with your Bulk Redirects. In case of duplicates, Bulk Redirects will run in front of your Pages project, where your other redirects live.
 
-</Aside>
+{{</Aside>}}
 
 To use Bulk Redirects, log in to the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) > **Rules** > **Bulk Redirects**.
 
@@ -23,11 +23,11 @@ In **Bulk Redirects**, select **Create a new Bulk Redirects list**.
 
 Create a new list, and in the content type, select **Redirect**. You will be prompted to add your redirect **Source URL** and **Target URL**. You can also specify the **Status** code for each redirect.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can upload a CSV file of all your redirects. However, your redirects cannot be a relative path.
 
-</Aside>
+{{</Aside>}}
 
 If you set the **Source URL** to `https://www.example.dev/examples` and the **Target URL** to `https://www.example.dev/pages/examples` with a status code of `301`, whenever the **Source URL** is requested, it will be permanently redirected to the **Target URL**.
 

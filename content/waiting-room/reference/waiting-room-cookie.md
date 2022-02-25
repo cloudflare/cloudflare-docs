@@ -7,11 +7,11 @@ title: Cookies
 
 A waiting room only uses the `__cfwaitingroom` cookie when a visitor requests access to a host and path combination with an enabled and associated waiting room. When the waiting room is suspended, traffic goes to the origin and the `__cfwaitingroom` cookie is not created. The `__cfwaitingroom` cookie is encrypted and cookies copied to another device will not work.
 
-<Aside type='warning' header='Important:'>
+{{<Aside type="warning" header="Important:">}}
 
 Cloudflare Waiting Room requires the `__cfwaitingroom` cookie. When a waiting room is actively queueing, users cannot visit that host and path combination without enabling cookies.
 
-</Aside>
+{{</Aside>}}
 
 ## Cookie expiration time
 

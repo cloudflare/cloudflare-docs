@@ -12,11 +12,11 @@ import ImportScanInfo from "../../\_partials/\_import-scan-info.md"
 
 If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/import-and-export/#import-records).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
 
-</Aside>
+{{</Aside>}}
 
 ## Create DNS records
 

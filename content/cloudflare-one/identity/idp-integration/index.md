@@ -10,11 +10,11 @@ Cloudflare Zero Trust allows you to integrate your organization's identity provi
 
 Adding an identity provider as a login method requires configuration both on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
-<Aside>
+{{<Aside>}}
 
 Cloudflare Access supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
 
-</Aside>
+{{</Aside>}}
 
 ## Set up IdPs on the Zero Trust dashboard
 

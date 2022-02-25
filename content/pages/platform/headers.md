@@ -6,11 +6,11 @@ weight: 8
 
 # Headers
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Custom headers defined in the `_headers` file are not currently applied to responses from [Functions](/pages/platform/functions), even if the function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the `_headers` file to the `Response` object in the appropriate `/functions` route. When altering headers for multiple routes, you may be interested in [adding middleware](/pages/platform/functions#adding-middleware)  for shared behavior.
 
-</Aside>
+{{</Aside>}}
 
 ## Attaching headers
 
@@ -45,7 +45,7 @@ https://myproject.pages.dev/*
 
 An incoming request which matches multiple rules' URL patterns will inherit all rules' headers. Using the previous `_headers` file, the following requests will have the following headers applied:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Request URL                                   | Headers                                                                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -55,7 +55,7 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 | https://myproject.pages.dev/secure/page       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
 | https://myproject.pages.dev/static/styles.css | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
 
-</TableWrap>
+{{</table-wrap>}}
 
 If a header is applied twice in the `_headers` file, the values are joined with a comma separator. Headers defined in the `_headers` file override what Cloudflare Pages ordinarily sends, so be aware when setting security headers. Cloudflare reserves the right to attach new headers to Pages projects at any time in order to improve performance or harden the security of your deployments.
 

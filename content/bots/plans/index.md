@@ -15,12 +15,12 @@ import GetStarted from "../\_partials/\_plan-get-started.md"
 
 <PlanIntro/>
 
-<ButtonGroup>
-  <Button type="primary" href="/plans/free">Free</Button>
-  <Button type="primary" href="/plans/pro">Pro</Button>
-  <Button type="primary" href="/plans/biz-and-ent">Business</Button>
-  <Button type="primary" href="/plans/bm-subscription">Bot Management for Enterprise</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/plans/free">}}Free{{</button>}}
+  {{<button type="primary" href="/plans/pro">}}Pro{{</button>}}
+  {{<button type="primary" href="/plans/biz-and-ent">}}Business{{</button>}}
+  {{<button type="primary" href="/plans/bm-subscription">}}Bot Management for Enterprise{{</button>}}
+{{</button-group>}}
 
 ## How do I get started?
 

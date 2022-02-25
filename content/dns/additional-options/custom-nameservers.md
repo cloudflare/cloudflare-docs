@@ -8,11 +8,11 @@ weight: 2
 
 With custom (or vanity) nameservers, a domain can use Cloudflare DNS without using the hostnames of Cloudflare-assigned nameservers. For instance, you can configure `ns1.example.com` and `ns2.example.com` as nameservers for `example.com`.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 When using [subdomain support](https://support.cloudflare.com/hc/articles/360026440252), a parent and child zone cannot share the same nameserver names.
 
-</Aside>
+{{</Aside>}}
 
 ## Availability
 
@@ -29,11 +29,11 @@ Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at
 
 Once you configure account-level custom nameservers, these nameservers can be applied and used by any zones in that account.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 When you choose the names for your account-level nameservers, each hostname must be a subdomain of a zone that is part of your Cloudflare account and on a Business plan or higher.
 
-</Aside>
+{{</Aside>}}
 
 ### Cloudflare Registrar
 

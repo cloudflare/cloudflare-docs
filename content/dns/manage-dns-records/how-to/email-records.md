@@ -16,23 +16,23 @@ To route emails to your mail server, you need to [create two DNS records](/dns/c
 
 1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
 
-     <Example>
+     {{<example>}}
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `mail` | `192.0.2.1`| Proxied |
 
-     </Example>
+     {{</example>}}
 
 2.  An **MX** record that points to that subdomain.
 
-     <Example>
+     {{<example>}}
 
     | **Type** | **Name** | **Mail server** | **TTL** |
     | --- | --- | --- | --- |
     | MX | `@` | `mail.example.com`| Auto |
 
-     </Example>
+     {{</example>}}
 
 ***
 
@@ -44,11 +44,11 @@ There are several DNS mechanisms to prevent others from sending emails on behalf
 *   [DomainKeys Identified Mail (DKIM)](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/): Ensure email authenticity by cryptographically signing emails.
 *   [Domain-based Message Authentication Reporting and Conformance (DMARC)](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/): Receive aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For additional background on email security records, refer to the [introductory blog post](https://blog.cloudflare.com/tackling-email-spoofing/).
 
-</Aside>
+{{</Aside>}}
 
 ### Configure email security records
 

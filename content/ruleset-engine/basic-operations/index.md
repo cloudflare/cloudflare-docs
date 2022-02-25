@@ -6,4 +6,4 @@ weight: 4
 
 # Basic operations
 
-<DirectoryListing path="/basic-operations"/>
+{{<directory-listing>}}

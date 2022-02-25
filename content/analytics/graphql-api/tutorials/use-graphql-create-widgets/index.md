@@ -50,7 +50,7 @@ This table lists Network Analytics datasets (nodes) and the `datetimeDimension` 
 
 When you want an aggregated view of data, use the `Groups` query nodes. For example, the `ipFlows1mAttacksGroups` dataset represents minute-wise rollup reports of attack activity. For more detail, refer to [Datasets](/analytics/graphql-api/features/data-sets/).
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -102,11 +102,11 @@ When you want an aggregated view of data, use the `Groups` query nodes. For exam
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
 The table below lists the start and end time attributes that are valid for query nodes representing different time ranges.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -143,7 +143,7 @@ The table below lists the start and end time attributes that are valid for query
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Timeseries graph
 

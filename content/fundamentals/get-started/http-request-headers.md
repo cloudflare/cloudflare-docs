@@ -25,11 +25,11 @@ This header will only be sent on the traffic from Cloudflare's edge to your orig
 
 There is no difference between the `True-Client-IP` and `CF-Connecting-IP` headers besides the name of the header. Some Enterprise customers with legacy devices need `True-Client-IP` to avoid updating firewalls or load-balancers to read a custom header name.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 If you are using Cloudflare in a stacked CDN and authenticating HTTP requests based on the IP address value in the `True-Client-IP` header, you must [enable `True-Client-IP`](https://support.cloudflare.com/hc/articles/206776727#h_4bf7CC7xR9dZJjR4y6wwcG). If you do not enable this feature, the `True-Client-IP` header can be spoofed to any value. Alternatively, if you do not want to receive the `True-Client-IP` header, use a [Transform Rule](/rules/transform) to remove this HTTP request header.
 
-</Aside>
+{{</Aside>}}
 
 </div>
 </details>
@@ -44,11 +44,11 @@ If an `X-Forwarded-For` header was already present in the request to Cloudflare,
 
 In the examples above, `203.0.113.1` is the original visitor IP address and `198.51.100.101` and `198.51.100.102` are proxy server IP addresses provided to Cloudflare via the `X-Forwarded-For` header.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 To restore the original visitor IP address at your origin web server, Cloudflare recommends that your logs or applications look at `CF-Connecting-IP` or `True-Client-IP`, instead of `X-Forwarded-For`, since `CF-Connecting-IP` and `True-Client-IP` have a consistent format containing only one IP.
 
-</Aside>
+{{</Aside>}}
 
 </div>
 </details>

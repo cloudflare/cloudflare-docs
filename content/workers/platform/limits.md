@@ -7,7 +7,7 @@ title: Limits
 
 ## Account plan limits
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature                                                                         | Free      | Paid      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
@@ -20,7 +20,7 @@ title: Limits
 | [Number of Cron Triggers<br/>per script](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Request limits
 
@@ -32,7 +32,7 @@ Cloudflare has network-wide limits on the request body size. This limit is tied 
 
 Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500 MB.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Cloudflare Plan | Maximum body size |
 | --------------- | ----------------- |
@@ -41,7 +41,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 | Business        | 200MB             |
 | Enterprise      | 500MB             |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Response limits
 
@@ -49,7 +49,7 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 
 ## Worker limits
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature                     | Free                                                 | Bundled Usage Model                         | Unbound Usage Model                       |
 | --------------------------- | ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
@@ -58,17 +58,17 @@ Cloudflare does not enforce response limits, but cache limits for [Cloudflare's 
 | [CPU runtime](#cpu-runtime) | 10 ms                                                | 50 ms HTTP request <br/> 50 ms Cron trigger | 30 s HTTP request <br/> 15 min Cron Trigger |                                           |
 | [Duration](#duration)       |                                                      |                                             | No limit\* |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Bundled Usage Model
 
 Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundled Workers limits are based on CPU time, rather than [duration](#duration). This means that the time limit does not include the time a script is waiting for responses from network calls. The billing model for Bundled Workers is based on requests that exceed the included number of requests on the Paid plan. Learn more about [Usage Model pricing](/workers/platform/pricing/#usage-models).
 
-<Aside type="note" header="No limit* for duration">
+{{<Aside type="note" header="No limit* for duration">}}
 
 There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
 
-</Aside>
+{{</Aside>}}
 
 ### Unbound Usage Model
 
@@ -76,7 +76,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 ## KV limits
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature                               | Free                  | Paid       |
 | ------------------------------------- | --------------------- | ---------- |
@@ -91,17 +91,17 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 | [Key metadata](#kv)                   | 1024 bytes            | 1024 bytes |
 | [Value size](#kv)                     | 25 MiB                | 25 MiB     |
 
-</TableWrap>
+{{</table-wrap>}}
 
-<Aside type="note" header="Free vs. Paid plan pricing">
+{{<Aside type="note" header="Free vs. Paid plan pricing">}}
 
 Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
 
-</Aside>
+{{</Aside>}}
 
 ## Cache API limits
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature                               | Free   | Bundled |
 | ------------------------------------- | ------ | ------- |
@@ -109,11 +109,11 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 | [Calls/request](#cache-api)           | 50     | 50      |
 | [Storage/request](#cache-api)         | 5 GB   | 5 GB    |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Durable Objects limits
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature                                 | Limit
 | --------------------------------------- | ------
@@ -125,7 +125,7 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 | [Value size](#durable-objects)          | 128 KiB
 | [CPU per request](#durable-objects)     | 30s
 
-</TableWrap>
+{{</table-wrap>}}
 
 ***
 
@@ -232,11 +232,11 @@ A Workers script can be up to 1 MB in size after compression. If needed, you can
 
 Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 scripts at any given time. Free Workers accounts are limited to a maximum of 30 scripts at any given time.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 App Workers scripts do not count towards this limit.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -266,11 +266,11 @@ Workers KV is an eventually consistent system, meaning that reads will sometimes
 
 *   5 GBs total `put()` per-request
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known in advance. Then, `.put()`ing such responses will block subsequent `.put()`s from starting until the current `.put()` completes.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

@@ -24,17 +24,17 @@ Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) 
 
 ## Available Endpoints
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) supports customizable [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder), analytics, additional built-in filtering categories, and custom rate limiting capabilities.
 
 If you require additional controls over our public 1.1.1.1 resolver, [contact us](https://www.cloudflare.com/products/zero-trust/).
 
-</Aside>
+{{</Aside>}}
 
 The publicly available endpoints for 1.1.1.1 are detailed in the following table:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Resolver                           | IP Addresses       | DNS over HTTPS endpoint                         | DNS over TLS endpoint
 \-----------------------------------|--------------------|-------------------------------------------------|-------------------------------
@@ -42,7 +42,7 @@ Resolver                           | IP Addresses       | DNS over HTTPS endpoin
 Families (Malware)                 | `1.1.1.2` / `1.0.0.2`  | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
 Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3`  | `https://family.cloudflare-dns.com/dns-query`   | `family.cloudflare-dns.com`
 
-</TableWrap>
+{{</table-wrap>}}
 
 You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/1.1.1.1-for-families/) endpoints.
 

@@ -46,11 +46,11 @@ Finish the policy by clicking **Create policy**.
 
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For more information on how policies work with regular expressions, refer to [Can I use regular expressions to build policies?](/cloudflare-one/faq/teams-policies-faq/#can-i-use-regular-expressions-to-build-policies)
 
-</Aside>
+{{</Aside>}}
 
 ## Review logs
 

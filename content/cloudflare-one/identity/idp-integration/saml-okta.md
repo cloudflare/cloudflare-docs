@@ -65,11 +65,11 @@ To set up SAML with Okta as your identity provider:
 
 The identity provider is now set up.
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 SAML attributes are only refreshed during authentications with the Okta identity provider. This means the Okta group membership is not updated unless a user logs in and out of the WARP client, or logs into an Access application.
 
-</Aside>
+{{</Aside>}}
 
 ## Download SP metadata (optional)
 

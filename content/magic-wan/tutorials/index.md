@@ -7,4 +7,4 @@ pcx-content-type: navigation
 
 Review the tutorials to learn more about how you can use Magic WAN.
 
-<DirectoryListing path="/tutorials"/>
+{{<directory-listing>}}

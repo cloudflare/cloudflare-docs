@@ -26,21 +26,21 @@ const reader = readable.getReader({ mode: "byob" })
 
 ## Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>read(buffer<ParamType>ArrayBufferView</ParamType>)</Code> <TypeLink href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">Promise\<ReadableStreamBYOBReadResult></TypeLink>
+*   {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
     *   Returns a promise with the next available chunk of data read into a passed-in buffer.
 
-*   <Code>readAtLeast(minBytes, buffer<ParamType>ArrayBufferView</ParamType>)</Code> <TypeLink href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">Promise\<ReadableStreamBYOBReadResult></TypeLink>
+*   {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
     *   Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
 
-</Definitions>
+{{</definitions>}}
 
 ## Common issues
 
-  <Aside type="warning" header="Warning">
+  {{<Aside type="warning" header="Warning">}}
 
 `read` provides no control over the minimum number of bytes that should be read into the buffer. Even if you allocate a 1 MiB buffer, the kernel is perfectly within its rights to fulfill this read with a single byte, whether or not an EOF immediately follows.
 
@@ -48,7 +48,7 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 
 `readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read.
 
-  </Aside>
+  {{</Aside>}}
 
 ## Related resources
 

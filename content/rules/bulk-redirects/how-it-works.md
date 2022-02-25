@@ -16,9 +16,9 @@ If there is a match for a URL Redirect according to the URL matching algorithm, 
 
 The following URL Redirect parameters control the matching behavior between the request URL and source URLs of the configured (and enabled) URL Redirects:
 
-<Definitions>
+{{<definitions>}}
 
-*   **Subpath matching** <PropMeta>(default: false)</PropMeta>
+*   **Subpath matching** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
     *   If true, the URL Redirect will apply to all paths under the given source path. For example, consider the following source and target URLs of a URL Redirect:
 
@@ -27,7 +27,7 @@ The following URL Redirect parameters control the matching behavior between the 
 
     *   With this configuration and **Subpath matching** enabled, an incoming request to `example.com/foo/bar` will be redirected to `https://example.com/qux/bar`.
 
-*   **Include subdomains** <PropMeta>(default: false)</PropMeta>
+*   **Include subdomains** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
     *   If true, the source URL hostname of the URL Redirect will also apply to all its subdomains. For example, consider the following source and target URLs of a URL Redirect:
 
@@ -36,7 +36,7 @@ The following URL Redirect parameters control the matching behavior between the 
 
     *   With this configuration and **Includes subdomains** enabled, incoming requests to `http://a.example.com/about` and `http://a.b.example.com/about` would also match, in addition to the specified domain with no subdomain (`https://example.com/about`).
 
-</Definitions>
+{{</definitions>}}
 
 For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
 
@@ -44,9 +44,9 @@ For detailed information on these parameters, refer to [URL Redirect parameters]
 
 The following parameters configure how Cloudflare determines the path and query string of the final target URL:
 
-<Definitions>
+{{<definitions>}}
 
-*   **Preserve query string** <PropMeta>(default: false)</PropMeta>
+*   **Preserve query string** {{<prop-meta>}}(default: false){{</prop-meta>}}
 
     *   If true, the final target URL will keep the query string of the original request. For example, consider the following source and target URLs of a URL Redirect:
 
@@ -55,7 +55,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
     *   With this configuration and **Preserve query string** enabled, an incoming request to `http://example.com/about?q=term` would be redirected to `https://example.com/newpage?q=term`. If **Preserve query string** is disabled, the same incoming request would be redirected to `https://example.com/newpage`.
 
-*   **Preserve path suffix** <PropMeta>(default: true)</PropMeta>
+*   **Preserve path suffix** {{<prop-meta>}}(default: true){{</prop-meta>}}
 
     *   Defines if the final target URL will include the parts of the request path that did not match the URL Redirect's source URL.
 
@@ -68,7 +68,7 @@ The following parameters configure how Cloudflare determines the path and query 
 
     *   If you set **Preserve path suffix** to false, the same request will still match the redirect, but it will be redirected to `https://example.com/b/`.
 
-</Definitions>
+{{</definitions>}}
 
 For detailed information on these parameters, refer to [URL Redirect parameters](/rules/bulk-redirects/reference/parameters/).
 
@@ -82,7 +82,7 @@ The URL of an incoming request matches a URL Redirect in a list if:
 
 3.  The path is the same as the source URL. If **Subpath matching** is enabled, Cloudflare also considers the subpaths of the path in the URL Redirect's source URL when determining if there is a match. For example, a URL Redirect with its source URL defined as `example.com/blog` will also match requests to `example.com/blog/foo` and `example.com/blog/bar`.
 
-     <Aside type="note" header="Note">
+     {{<Aside type="note" header="Note">}}
 
     URL Redirects with **Subpath matching** enabled are only considered for request paths with 16 or fewer slashes. For example, if there is a configured URL Redirect with source URL set to `example.com/foo` and with **Subpath matching** enabled:
 
@@ -91,7 +91,7 @@ The URL of an incoming request matches a URL Redirect in a list if:
 
     This does not affect URL Redirects with **Subpath matching** disabled. Exact path matches are always considered, even for redirects with **Subpath matching** enabled.
 
-     </Aside>
+     {{</Aside>}}
 
 ### Determining the URL Redirect to apply
 

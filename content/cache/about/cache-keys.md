@@ -16,11 +16,11 @@ A Cache Key is an identifier that Cloudflare uses for a file in our cache, and t
 
 The default Cache Key constructed from this request combines aspects such as Cloudflare Zone ID, scheme, hostname, and path into a Cache Key similar to  `1234:https://www.example.com/foo.jpg`. Zone ID and Path are always included in the Cache Key and cannot be modified.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Using Custom Cache Keys may result in cache sharding and reduction of your cache hit ratio.
 
-</Aside>
+{{</Aside>}}
 
 To create a Cache Key, see [Create a Custom Cache Key](/cache/how-to/create-cache-keys/).
 
@@ -31,11 +31,11 @@ There are a couple of common reasons to change the Cache Key Template. You might
 *   Fragment the cache so one URL is stored in multiple files. For example, to store different files based on a specific query string in the URL.
 *   Consolidate the cache so different HTTP requests are stored in the same file. For example, to remove the Origin header added to Cloudflare Cache Keys by default.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 `$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](https://support.cloudflare.com/hc/articles/200170416) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](/ssl/origin-configuration/ssl-modes#flexible) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
 
-</Aside>
+{{</Aside>}}
 
 For cross-origin requests, such as one from `anotherdomain.com` to `example.com`, the Origin HTTP request header results in a Cache Key with the `${header:origin}` token populated as `anotherdomain.com::https://www.example.com/something`.
 

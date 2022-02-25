@@ -19,8 +19,8 @@ To set up Opportunistic Encryption:
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Opportunistic Encryption**, switch the toggle to **On**.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You do not need to configure your origin web server to support Opportunistic Encryption.
 
-</Aside>
+{{</Aside>}}

@@ -6,4 +6,4 @@ weight: 2
 
 # Upload videos
 
-<DirectoryListing path="/uploading-videos"/>
+{{<directory-listing>}}

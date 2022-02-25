@@ -26,11 +26,11 @@ This code will be run for every request, but the source code will not be accessi
 
 The examples below are only suggestions, and do not have to be followed exactly. You can compute image URLs and resizing options in many other ways.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 When testing Image Resizing, make sure you deploy the script and test it from a regular web browser window. The preview in the dashboard does not simulate Image Resizing.
 
-</Aside>
+{{</Aside>}}
 
 ## Hiding the image server
 

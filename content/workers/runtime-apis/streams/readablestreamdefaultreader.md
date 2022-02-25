@@ -22,37 +22,37 @@ const reader = readable.getReader()
 
 ## Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `closed` <Type>Promise</Type>
+*   `closed` {{<type>}}Promise{{</type>}}
 
     *   A promise indicating if the reader is closed. The promise is fulfilled when the reader stream closes and is rejected if there is an error in the stream.
 
-</Definitions>
+{{</definitions>}}
 
 ## Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   `read()` <Type>Promise</Type>
+*   `read()` {{<type>}}Promise{{</type>}}
 
     *   A promise that returns the next available chunk of data being passed through the reader queue.
 
-*   <Code>cancel(reason<ParamType>string</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>void</Type>
+*   {{<code>}}cancel(reason{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}void{{</type>}}
 
     *   Cancels the stream. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying source’s cancel algorithm -- if this readable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its cancel algorithm causes the transform’s writable side to become errored with `reason`.
 
-        <Aside type="warning" header="Warning">
+        {{<Aside type="warning" header="Warning">}}
 
         Any data not yet read is lost.
 
-        </Aside>
+        {{</Aside>}}
 
-*   `releaseLock()` <Type>void</Type>
+*   `releaseLock()` {{<type>}}void{{</type>}}
 
     *   Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
 
-</Definitions>
+{{</definitions>}}
 
 ## Related resources
 

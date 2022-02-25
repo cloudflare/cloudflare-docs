@@ -35,11 +35,11 @@ You will receive a response similar to this:
 
 In the example above, `id` is a future image identifier that will be uploaded by a creator.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Previously, in version 1 of the `direct_upload` endpoint, the ID was an identifier of a request, not an image. Therefore, there was no way to know if an image had been really uploaded.
 
-</Aside>
+{{</Aside>}}
 
 With version 2 of `direct_upload`, a new draft image record is created when you invoke this endpoint. It will not appear on a [list of images](https://api.cloudflare.com/#cloudflare-images-list-images), but  it is possible to fetch an image record with the provided ID to check its current status. In the example below, `<Image_ID>` is the `id` received from the response when requesting a one-time upload URL with the `direct_upload` endpoint.
 

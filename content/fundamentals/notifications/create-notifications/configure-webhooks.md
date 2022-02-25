@@ -5,15 +5,15 @@ title: Configure webhooks
 layout: list
 ---
 
-<ContentColumn>
+{{<content-column>}}
 
 # Configure webhooks
 
 There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. The following table lists some of the most popular services you can connect to your Cloudflare account, as well as the information you need to connect to them:
 
-</ContentColumn>
+{{</content-column>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Service | Secret | URL |
 | ------- | ------ | ---- |
@@ -24,9 +24,9 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 | [OpsGenie](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration) | The secret is the `API Key` for OpsGenie's REST API. | `https://api.opsgenie.com/v2/alerts` |
 | [Splunk](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) | The secret is required and has to be entered by the user. This is what Splunk refers to as `token`. Refer to [Splunk’s documentation](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector#How_the_Splunk_platform_uses_HTTP_Event_Collector_tokens_to_get_data_in) for details. | 1. We only support three Splunk endpoints: `services/collector`, `services/collector/raw`, and `services/collector/event`. <br/> 2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088. <br/> 3. SSL must be enabled on the server. |
 
-</TableWrap>
+{{</table-wrap>}}
 
-<ContentColumn>
+{{<content-column>}}
 
 After configuring the external service you want to connect to, set up webhooks in your Cloudflare dashboard:
 
@@ -44,4 +44,4 @@ After configuring the external service you want to connect to, set up webhooks i
 
 The new webhook will appear in the **Webhooks** card.
 
-</ContentColumn>
+{{</content-column>}}

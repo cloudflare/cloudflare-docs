@@ -50,7 +50,7 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 
 ## Return codes
 
-<TableWrap>
+{{<table-wrap>}}
 
 | HTTP Status | Meaning |
 | ---|--- |
@@ -59,4 +59,4 @@ Cloudflare's DNS over HTTPS resolver supports TLS 1.2 and TLS 1.3.
 | `415` | Unsupported content type. |
 | `504` | Resolver timeout while waiting for the query response. |
 
-</TableWrap>
+{{</table-wrap>}}

@@ -27,17 +27,17 @@ new HTMLRewriter()
 
 Throughout the HTMLRewriter API, there are a few consistent types that many properties and methods use:
 
-<Definitions>
+{{<definitions>}}
 
-*   `Content` <Type>string</Type>
+*   `Content` {{<type>}}string{{</type>}}
 
     *   Content inserted in the output stream should be a string.
 
-*   `ContentOptions` <Type>Object</Type>
+*   `ContentOptions` {{<type>}}Object{{</type>}}
 
     *   `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 
@@ -122,75 +122,75 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 #### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `tagName` <Type>string</Type>
+*   `tagName` {{<type>}}string{{</type>}}
     *   The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
 
-*   `attributes` <Type>Iterator</Type> <PropMeta>read-only</PropMeta>
+*   `attributes` {{<type>}}Iterator{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   A `[name, value]` pair of the tag’s attributes.
 
-*   `removed` <Type>boolean</Type>
+*   `removed` {{<type>}}boolean{{</type>}}
     *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-*   `namespaceURI` <Type>String</Type>
+*   `namespaceURI` {{<type>}}String{{</type>}}
     *   Represents the [namespace URI](https://infra.spec.whatwg.org/#namespaces) of an element.
 
-</Definitions>
+{{</definitions>}}
 
 #### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>getAttribute(name<ParamType>string</ParamType>)</Code> <Type>string | null</Type>
+*   {{<code>}}getAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}string | null{{</type>}}
 
     *   Returns the value for a given attribute name on the element, or `null` if it is not found.
 
-*   <Code>hasAttribute(name<ParamType>string</ParamType>)</Code> <Type>boolean</Type>
+*   {{<code>}}hasAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}boolean{{</type>}}
 
     *   Returns a boolean indicating whether an attribute exists on the element.
 
-*   <Code>setAttribute(name<ParamType>string</ParamType>, value<ParamType>string</ParamType>)</Code> <Type>Element</Type>
+*   {{<code>}}setAttribute(name{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Sets an attribute to a provided value, creating the attribute if it does not exist.
 
-*   <Code>removeAttribute(name<ParamType>string</ParamType>)</Code> <Type>Element</Type>
+*   {{<code>}}removeAttribute(name{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the attribute.
 
-*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content before the element.
 
-*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content right after the element.
 
-*   <Code>prepend(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code><Type>Element</Type>
+*   {{<code>}}prepend(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}{{<type>}}Element{{</type>}}
 
     *   Inserts content right after the start tag of the element.
 
-*   <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content right before the end tag of the element.
 
-*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element and inserts content in place of it.
 
-*   <Code>setInnerContent(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}setInnerContent(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Replaces content of the element.
 
-*   <Code>remove()</Code> <Type>Element</Type>
+*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element with all its content.
 
-*   <Code>removeAndKeepContent()</Code> <Type>Element</Type>
+*   {{<code>}}removeAndKeepContent(){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the start tag and end tag of the element but keeps its inner content intact.
 
-</Definitions>
+{{</definitions>}}
 
 ### Text chunks
 
@@ -200,40 +200,40 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 #### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `removed` <Type>boolean</Type>
+*   `removed` {{<type>}}boolean{{</type>}}
     *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-*   `text` <Type>string</Type> <PropMeta>read-only</PropMeta>
+*   `text` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
 
-*   `lastInTextNode` <Type>boolean</Type> <PropMeta>read-only</PropMeta>
+*   `lastInTextNode` {{<type>}}boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   Specifies whether the chunk is the last chunk of the text node.
 
-</Definitions>
+{{</definitions>}}
 
 #### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content before the element.
 
-*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content right after the element.
 
-*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element and inserts content in place of it.
 
-*   <Code>remove()</Code> <Type>Element</Type>
+*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element with all its content.
 
-</Definitions>
+{{</definitions>}}
 
 ### Comments
 
@@ -249,37 +249,37 @@ class ElementHandler {
 
 #### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `removed` <Type>boolean</Type>
+*   `removed` {{<type>}}boolean{{</type>}}
     *   Indicates whether the element has been removed or replaced by one of the previous handlers.
 
-*   `text` <Type>string</Type>
+*   `text` {{<type>}}string{{</type>}}
     *   The text of the comment. This property can be assigned different values, to modify comment’s text.
 
-</Definitions>
+{{</definitions>}}
 
 #### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>before(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}before(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content before the element.
 
-*   <Code>after(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}after(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Inserts content right after the element.
 
-*   <Code>replace(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Element</Type>
+*   {{<code>}}replace(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element and inserts content in place of it.
 
-*   <Code>remove()</Code> <Type>Element</Type>
+*   {{<code>}}remove(){{</code>}} {{<type>}}Element{{</type>}}
 
     *   Removes the element with all its content.
 
-</Definitions>
+{{</definitions>}}
 
 ### Doctype
 
@@ -296,18 +296,18 @@ class DocumentHandler {
 
 #### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `name` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+*   `name` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The doctype name.
 
-*   `publicId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+*   `publicId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The quoted string in the doctype after the PUBLIC atom.
 
-*   `systemId` <Type>string | null</Type> <PropMeta>read-only</PropMeta>
+*   `systemId` {{<type>}}string | null{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The quoted string in the doctype after the SYSTEM atom or immediately after the `publicId`.
 
-</Definitions>
+{{</definitions>}}
 
 ### End
 
@@ -323,13 +323,13 @@ class DocumentHandler {
 
 #### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>append(content<ParamType>Content</ParamType>, contentOptions<ParamType>ContentOptions</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>DocumentEnd</Type>
+*   {{<code>}}append(content{{<param-type>}}Content{{</param-type>}}, contentOptions{{<param-type>}}ContentOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}DocumentEnd{{</type>}}
 
     *   Inserts content after the end of the document.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 
@@ -337,7 +337,7 @@ class DocumentHandler {
 
 This is what selectors are and what they are used for.
 
-<Definitions>
+{{<definitions>}}
 
 *   `*`
     *   Any element.
@@ -390,7 +390,7 @@ This is what selectors are and what they are used for.
 *   `E[foo*="bar"]`
     *   An E element whose foo attribute value contains the substring bar.
 
-*   <Code>E\[foo|="en"]</Code>
+*   {{<code>}}E\[foo|="en"]{{</code>}}
 
     *   An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
 
@@ -400,7 +400,7 @@ This is what selectors are and what they are used for.
 *   `E > F`
     *   An F element child of an E element.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 

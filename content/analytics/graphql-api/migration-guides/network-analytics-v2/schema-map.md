@@ -10,7 +10,7 @@ layout: list
 
 The following table lists direct mappings between NAv1 and NAv2 fields, when available, and provides related fields when there is no direct mapping available.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table style='width:100%; font-size: 85%'>
   <thead>
@@ -285,6 +285,6 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
 \* The `attackId` field value may be different between NAv1 and NAv2 for the same attack.

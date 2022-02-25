@@ -8,4 +8,4 @@ weight: 151
 
 For more guidance related to common issues with load balancers, refer to the following resources:
 
-<DirectoryListing path="/troubleshooting"/>
+{{<directory-listing>}}

@@ -48,11 +48,11 @@ For example, if you were using MacOS:
         $ az login
         $ az group create --name HSMgroup --location southcentralus
 
-     <Aside type="note" header="Note:">
+     {{<Aside type="note" header="Note:">}}
 
     For a list of supported regions, see the [Microsoft documentation](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=key-vault).
 
-     </Aside>
+     {{</Aside>}}
 
 2.  [Create, provision, and activate](https://docs.microsoft.com/en-us/azure/key-vault/managed-hsm/quick-create-cli) the HSM.
 

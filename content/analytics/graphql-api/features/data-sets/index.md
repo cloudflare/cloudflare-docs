@@ -22,7 +22,7 @@ Detailed descriptions of nodes, their structure, and supported queries are avail
 
 The following datasets (and associated nodes) are available in Cloudflare Analytics:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Dataset (product)          | Node                                                                                                                           |
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
@@ -38,26 +38,26 @@ The following datasets (and associated nodes) are available in Cloudflare Analyt
 | SYN Attacks (DoS Analytics) | `synAvgPps1mGroups`                                                                                                            |
 | Workers Metrics             | `workersInvocationsAdaptive`                                                                                                   |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Beta datasets
 
 Beta datasets are available to Enterprise customers for testing and exploration. Do not rely on beta data nodes, since they are subject to change or removal without notice.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Dataset (product) | Node                                                                                                        |
 | :----------------- | :---------------------------------------------------------------------------------------------------------- |
 | Browser Insights   | `browserInsightsAdaptiveGroups` `webVitalsAdaptiveGroups`                                                   |
 | Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Deprecated data nodes
 
 The following data nodes are deprecated. To avoid disruption, migrate to replacement nodes before the sunset date.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Node                         | Replacement node                     | Sunset date       |
 | ---------------------------- | ------------------------------------ | ----------------- |
@@ -71,7 +71,7 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021     |
 | `ipFlows1mGroups`<br/> `ipFlows1hGroups`<br/> `ipFlows1dGroups`<br/> `ipFlows1mAttacksGroups` | `spectrumNetworkAnalyticsAdaptiveGroups`<br/> `magicTransitNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsAdaptiveGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | March 31, 2022 |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Working with datasets
 

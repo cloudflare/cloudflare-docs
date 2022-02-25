@@ -8,13 +8,13 @@ weight: 5
 
 Wrangler allows you to develop modern ES6 applications with support for modules. This support is possible because of Wrangler's [webpack](https://webpack.js.org/) integration. This document describes how Wrangler uses webpack to build your Workers and how you can bring your own configuration.
 
-<Aside type="note" header="Configuration and webpack version">
+{{<Aside type="note" header="Configuration and webpack version">}}
 
 Wrangler includes `webpack@4`. If you want to use `webpack@5`, or another bundler like esbuild or Rollup, you must set up [custom builds](/workers/cli-wrangler/configuration/#build) in your `wrangler.toml` file.
 
 You must set `type = "webpack"` in your `wrangler.toml` file to use Wrangler's webpack integration. If you are encountering warnings about specifying `webpack_config`, refer to [backwards compatibility](#backwards-compatibility).
 
-</Aside>
+{{</Aside>}}
 
 ## Sensible defaults
 

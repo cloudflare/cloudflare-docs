@@ -33,11 +33,11 @@ These are the action types you can choose from:
 *   **Service Auth**.\
     Service Auth rules enforce authentication flows that do not require an identity provider IdP) login, such as service tokens and mutual TLS.
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 When applying a Bypass action, security settings revert to the defaults configured for the zone and any configured page rules. If Always use HTTPS is enabled for the site, then traffic to the bypassed destination continues in HTTPS. If it is not or you applied page rules to disable it, traffic is HTTP.
 
-</Aside>
+{{</Aside>}}
 
 ## Rules
 
@@ -105,8 +105,8 @@ For example, if you have a list of policies that reflects the following:
 
 The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
     Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application. 
 
-</Aside>
+{{</Aside>}}

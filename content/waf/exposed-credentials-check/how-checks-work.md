@@ -12,7 +12,7 @@ At this point, the WAF looks up the username/password pair in the request agains
 
 For example, the following rule blocks `POST` requests to the `/login.php` URI when Cloudflare identifies the submitted credentials as previously exposed:
 
-<Example>
+{{<example>}}
 
 **Rule #1**
 
@@ -26,6 +26,6 @@ Exposed credentials check with the following configuration:
 
 Action: *Legacy CAPTCHA*
 
-</Example>
+{{</example>}}
 
 When there is a match for the rule above and Cloudflare detects exposed credentials, the WAF presents the user with a challenge.

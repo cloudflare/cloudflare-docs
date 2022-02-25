@@ -6,4 +6,4 @@ weight: 6
 
 # Service auth
 
-<DirectoryListing path="/identity/service-auth"/>
+{{<directory-listing>}}

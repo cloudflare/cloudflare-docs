@@ -23,7 +23,7 @@ Suggested registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
 
 Each routing registry has its own set of IRR entry instructions. This table provides links to those instructions.
 
-<TableWrap><table>
+{{<table-wrap>}}<table>
 
 <thead>
     <tr>
@@ -57,4 +57,4 @@ Each routing registry has its own set of IRR entry instructions. This table prov
       <td><a href="https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr">https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr</a></td>
     </tr>
   </tbody>
-</table></TableWrap>
+</table>{{</table-wrap>}}

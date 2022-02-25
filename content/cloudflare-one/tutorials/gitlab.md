@@ -206,11 +206,11 @@ cloudflared tunnel run
 
 ![Tunnel Run](/cloudflare-one/static/zero-trust-security/gitlab/tunnel-run.png)
 
-<Aside>
+{{<Aside>}}
 
 This command should be run as a `systemd` service for long-term use; if it terminates, GitLab will be unavailable.
 
-</Aside>
+{{</Aside>}}
 
 ### Configure DNS records
 
@@ -244,11 +244,11 @@ GitLab will create a new project and repository.
 
 ![New Project](/cloudflare-one/static/zero-trust-security/gitlab/new-project.png)
 
-<Aside>
+{{<Aside>}}
 
 To pull or push code, you must also add an SSH key to your profile in GitLab.
 
-</Aside>
+{{</Aside>}}
 
 ### Configuring SSH
 

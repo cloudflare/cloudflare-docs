@@ -8,4 +8,4 @@ weight: 4
 
 Complete the tasks in the order shown below to configure your tunnels.
 
-<DirectoryListing path="/get-started/configure-tunnels"/>
+{{<directory-listing>}}

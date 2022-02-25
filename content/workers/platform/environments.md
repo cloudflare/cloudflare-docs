@@ -5,11 +5,11 @@ title: Environments
 
 # Environments
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can only use environments with [Wrangler](/workers/cli-wrangler/).
 
-</Aside>
+{{</Aside>}}
 
 ## Background
 
@@ -269,11 +269,11 @@ With this configuration, deploy each environment by attaching a `--env` or `-e` 
 
 ***
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 When you create a Service or Environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information i.e `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
 
-</Aside>
+{{</Aside>}}
 
 ## Custom webpack configurations
 

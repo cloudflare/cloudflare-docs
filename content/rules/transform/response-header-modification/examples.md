@@ -16,7 +16,7 @@ The following examples illustrate how to perform response header modifications w
 
 The following HTTP Response Header Modification Rule adds a header named `X-Source` with a static value (`Cloudflare`) to the response:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -30,13 +30,13 @@ Selected operation under **Modify response header**: *Set static*
 
 **Value**: `Cloudflare`
 
-</Example>
+{{</example>}}
 
 ## Add an HTTP response header with the current bot score
 
 The following HTTP Response Header Modification Rule adds a header named `X-Bot-Score` with the current bot score to the response:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -50,13 +50,13 @@ Selected operation under **Modify response header**: *Set dynamic*
 
 **Value**: `to_string(cf.bot_management.score)`
 
-</Example>
+{{</example>}}
 
 ## Remove an HTTP response header
 
 The following HTTP Response Header Modification Rule removes the `cf-connecting-ip` header from the response:
 
-<Example>
+{{<example>}}
 
 Text in **Expression Editor**:
 
@@ -68,4 +68,4 @@ Selected operation under **Modify response header**: *Remove*
 
 **Header name**: `cf-connecting-ip`
 
-</Example>
+{{</example>}}

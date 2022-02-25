@@ -8,11 +8,11 @@ weight: 8
 
 You can delete variants via the Images dashboard or via API.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Deleting a variant is a global action that will affect other images that contain that variant.
 
-</Aside>
+{{</Aside>}}
 
 ## Delete a variant using the dashboard
 
@@ -20,11 +20,11 @@ Deleting a variant is a global action that will affect other images that contain
 2.  Click **Images** > **Variants**.
 3.  Find the variant you want to remove and click **Delete**.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You cannot delete the public variant.
 
-</Aside>
+{{</Aside>}}
 
 ## Delete a variant using the API
 

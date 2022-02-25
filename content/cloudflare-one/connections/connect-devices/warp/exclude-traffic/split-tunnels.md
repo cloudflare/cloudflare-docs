@@ -56,7 +56,7 @@ Valid domains include:
 *   `example.example.com`
 *   `*.example.com`
 
-<Aside header='Warning about using domains in Split Tunnels'>
+{{<Aside header="Warning about using domains in Split Tunnels">}}
 
 Domain-based split tunneling works alongside DNS by dynamically excluding or including the route to the IP address(es) returned in the DNS lookup request. This has a few ramifications you should be aware of before deploying in your organization:
 
@@ -65,7 +65,7 @@ Domain-based split tunneling works alongside DNS by dynamically excluding or inc
 3.  Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/http-policies/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
 4.  If a DNS result has been previously cached it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
 
-</Aside>
+{{</Aside>}}
 
 ### Important platform differences
 
@@ -87,8 +87,8 @@ Due to platform differences, mobile clients can only apply Split Tunnels rules w
 
 On the Split Tunnels page, locate the IP address or hostname in the list and then click **Delete**.
 
-<Aside>
+{{<Aside>}}
 
 If you need to revert to the default Split Tunnels entries, delete all entries from the list. Once the list is empty, the page will re-populate with the default values.
 
-</Aside>
+{{</Aside>}}

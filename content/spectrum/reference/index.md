@@ -8,4 +8,4 @@ weight: 0
 
 For more information related to Spectrum, refer to the sections below.
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

@@ -12,4 +12,4 @@ Cloudflare Zero Trust integrates with third-party tools to help you deploy the W
 
 This is a list of partners Cloudflare Zero Trust works with:
 
-<DirectoryListing path="/connections/connect-devices/warp/deployment/mdm-deployment/partners"/>
+{{<directory-listing>}}

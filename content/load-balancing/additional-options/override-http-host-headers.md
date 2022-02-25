@@ -8,11 +8,11 @@ weight: 16
 
 When your application needs specialized routing (CNAME setup or custom hosts like Heroku), you can customize the `Host` header used in health checks on a per-origin or per-monitor level.
 
-<Aside type="warning" header="Important">
+{{<Aside type="warning" header="Important">}}
 
 If you set a header override on an individual origin, it will take precedence over a header override set on a monitor.
 
-</Aside>
+{{</Aside>}}
 
 ## Per origin Host header override
 

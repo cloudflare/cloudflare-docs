@@ -16,7 +16,7 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 
 Use CNI with other products in Cloudflare's suite for additional benefits.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -50,6 +50,6 @@ Use CNI with other products in Cloudflare's suite for additional benefits.
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}
 
 For more detail on how CNI delivers these benefits, see [Introducing Cloudflare Network Interconnect](https://blog.cloudflare.com/cloudflare-network-interconnect/#:~:text=Today%20we're%20excited%20to,to%20their%20physical%20network%20edge.).

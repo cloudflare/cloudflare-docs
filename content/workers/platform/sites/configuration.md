@@ -10,7 +10,7 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
 
 ## Commands
 
-<Definitions>
+{{<definitions>}}
 
 *   `wrangler generate proj --site`
     *   Creates a project with a Worker serving a generic HTML file and favicon with the directory structure:
@@ -31,35 +31,35 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
 *   `wrangler init proj --site`
     *   Creates a `wrangler.toml` file and a `workers-site` directory. In the `site` configuration key in the generated `wrangler.toml` file, you will need to update the `bucket` key with the relative path to the folder containing your static site assets. For example, if your website lives within the `public` directory of your project, then you should use the `bucket = "./public"` pairing.
 
-</Definitions>
+{{</definitions>}}
 
 ## wrangler.toml
 
 There are a few specific configuration settings for Workers Sites in your `wrangler.toml` file:
 
-<Definitions>
+{{<definitions>}}
 
-*   `bucket` <PropMeta>required</PropMeta>
+*   `bucket` {{<prop-meta>}}required{{</prop-meta>}}
     *   The directory containing your static assets, path relative to your `wrangler.toml`. Example: `bucket = "./public"`.
 
-*   `entry-point` <PropMeta>optional</PropMeta>
+*   `entry-point` {{<prop-meta>}}optional{{</prop-meta>}}
     *   The location of your Worker script, default is `workers-site`. Example: `entry-point = "./workers-site"`.
 
-*   `include` <PropMeta>optional</PropMeta>
+*   `include` {{<prop-meta>}}optional{{</prop-meta>}}
     *   A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
 
-*   `exclude` <PropMeta>optional</PropMeta>
+*   `exclude` {{<prop-meta>}}optional{{</prop-meta>}}
     *   A list of gitignore-style patterns for files or directories in `bucket` you want to exclude from uploads. Example: `exclude = ["ignore_dir"]`.
 
-</Definitions>
+{{</definitions>}}
 
 To learn more about the optional `include` and `exclude` fields, refer to [Ignoring subsets of static assets](#ignoring-subsets-of-static-assets).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If your project uses [environments](/workers/platform/environments/), make sure to place `site` above any environment-specific configuration blocks.
 
-</Aside>
+{{</Aside>}}
 
 Example of a `wrangler.toml`:
 

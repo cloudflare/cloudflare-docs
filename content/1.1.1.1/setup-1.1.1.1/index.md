@@ -14,4 +14,4 @@ After configuring your system, you can check if you are connected to 1.1.1.1 by 
 
 Select a platform to get started:
 
-<DirectoryListing path="/setup-1.1.1.1"/>
+{{<directory-listing>}}

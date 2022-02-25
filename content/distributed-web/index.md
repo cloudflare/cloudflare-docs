@@ -10,13 +10,13 @@ meta:
 
 # Cloudflare Distributed Web docs
 
-<ContentColumn>
+{{<content-column>}}
 
 View files stored on the InterPlanetary File System in your browser. Interact with the Ethereum blockchain. Explore the Distributed Web.
 
-<ButtonGroup>
-  <Button type="primary" href="/ipfs-gateway">IPFS Gateway</Button>
-  <Button type="primary" href="/ethereum-gateway">Ethereum Gateway</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/ipfs-gateway">}}IPFS Gateway{{</button>}}
+  {{<button type="primary" href="/ethereum-gateway">}}Ethereum Gateway{{</button>}}
+{{</button-group>}}
 
-</ContentColumn>
+{{</content-column>}}

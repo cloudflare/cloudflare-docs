@@ -6,11 +6,11 @@ weight: 436
 
 # DELETE examples
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 The `DELETE` operation does not delete any filter related to the Firewall Rule. To delete the filter, use the [Filters API](/firewall/api/cf-filters/).
 
-</Aside>
+{{</Aside>}}
 
 ## Delete multiple rules
 

@@ -14,9 +14,9 @@ layout: example
 
 # Set security headers
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 const DEFAULT_SECURITY_HEADERS = {

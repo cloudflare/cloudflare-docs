@@ -20,13 +20,13 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 45 minutes
 
-<Aside header="Prerequisites">
+{{<Aside header="Prerequisites">}}
 
 *   A Zero Trust account setup
 *   The [WARP client](/cloudflare-one/connections/connect-devices/warp/) installed on a device and enrolled in a Zero Trust instance
 *   Admin access to server with Internet access
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -77,12 +77,12 @@ warp-routing:
   enabled: true
 ```
 
- <Aside>
+ {{<Aside>}}
  Tunnel ID can be found by running <code>cloudflared tunnel list</code>.
 
 ![Tunnel ID](/cloudflare-one/static/zero-trust-security/ztna/tunnel-id.png)
 
- </Aside>
+ {{</Aside>}}
 
 1.  Now run the tunnel:
 

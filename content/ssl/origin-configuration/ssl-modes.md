@@ -14,11 +14,11 @@ If possible, Cloudflare strongly recommends using [**Full**](#full) or [**Full (
 
 For more details about how your encryption mode fits into the bigger picture of SSL/TLS protection, refer to [Get started](/ssl/get-started/).
 
-<Aside type="note" header="Tip:">
+{{<Aside type="note" header="Tip:">}}
 
 If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/ssl-tls-recommender/).
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -54,11 +54,11 @@ When you set your encryption mode to **Off**, your application:
 
 ![SSL Encryption set to off](/ssl/static/ssl-encryption-mode-off.png)
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
 
-</Aside>
+{{</Aside>}}
 
 ***
 

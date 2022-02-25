@@ -6,11 +6,11 @@ weight: 1
 
 # Check that a policy is working
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 Before you start, please make sure you are connected to a network that is associated with the location where the policy is applied.
 
-</Aside>
+{{</Aside>}}
 
 Once you have created a policy to block a domain, you can use either `dig` or `nslookup` on your to see if the policy is working as intended.
 

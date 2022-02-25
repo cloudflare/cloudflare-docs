@@ -10,4 +10,4 @@ Before installing and setting up the WARP Client, ensure that your device meets 
 
 If your device meets the system requirements, follow the setup instructions for each system.
 
-<DirectoryListing path="/get-started"/>
+{{<directory-listing>}}

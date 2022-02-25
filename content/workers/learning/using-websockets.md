@@ -6,21 +6,21 @@ weight: 0
 
 # Using WebSockets
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 WebSocket pricing and limits details are currently not available. Developers are encouraged to experiment with WebSocket support in Cloudflare Workers, but WebSocket support generally remains in early access.
 
-</Aside>
+{{</Aside>}}
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
 WebSockets are open connections sustained between the client and the origin server. Inside a WebSocket connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSocket connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 WebSockets utilize a simple event-based system for receiving and sending messages, much like the Workers' runtime model of responding to events.
 
-</Aside>
+{{</Aside>}}
 
 ## Writing a WebSocket Server
 
@@ -33,11 +33,11 @@ A client can make a WebSocket request in the browser by instantiating a new inst
 const websocket = new WebSocket("wss://example-websocket.signalnerve.workers.dev")
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#writing-a-websocket-client).
 
-</Aside>
+{{</Aside>}}
 
 When an incoming WebSocket request reaches the Workers function, it will contain an `Upgrade` header, set to the string value `websocket`. Check for this header before continuing to instantiate a WebSocket:
 

@@ -12,11 +12,11 @@ Schema Validation allows you to check if incoming traffic complies with a previo
 
 For help configuring Schema Validation for one or more hosts using the dashboard, refer to [Configure Schema Validation](/api-shield/configure/).
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
-</Aside>
+{{</Aside>}}
 
 ## Operation IDs
 

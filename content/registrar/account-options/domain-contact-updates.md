@@ -25,13 +25,13 @@ If you update any of the fields mentioned above, Cloudflare Registrar will send 
 
 If you do not update these fields, your contact information is updated immediately and no further action is required.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 After clicking the link in the approval email Cloudflare sends you, you have the option to accept or reject the contact changes. If you click the **Accept** button, your domain will be transfer-locked for 60 days.
 
 If you do not want your domain to be locked, be sure to click the **Do not apply 60 day transfer lock** checkbox *before* clicking the **Accept** button.
 
-</Aside>
+{{</Aside>}}
 
 ## Changing email contact
 

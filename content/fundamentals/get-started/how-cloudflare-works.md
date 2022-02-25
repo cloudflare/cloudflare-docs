@@ -8,11 +8,11 @@ weight: 2
 
 More than just using Cloudflare's [Content Delivery (CDN)](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/) services, customers rely on Cloudflare’s global network to enhance security, performance, and reliability of anything connected to the Internet.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Cloudflare is not generally a hosting provider. Cloudflare generally cannot remove content from the Internet that it does not host.
 
-</Aside>
+{{</Aside>}}
 
 Cloudflare is designed for easy setup. Anyone with a website and their own domain can use Cloudflare regardless of their platform choice. Cloudflare doesn’t require additional hardware, software, or changes to your code.
 
@@ -43,11 +43,11 @@ Cloudflare optimizes the delivery of website resources for your visitors. Cloudf
 
 Cloudflare’s globally distributed [Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) routes visitor requests to the nearest Cloudflare data center. Cloudflare distributed DNS responds to website visitors with Cloudflare IP addresses for traffic you proxy to Cloudflare. This also provides security by hiding the specific IP address of your origin web server.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Cloudflare-proxied domains share IP addresses from a pool that belongs to the Cloudflare network. As a result, Cloudflare does not offer dedicated or exclusive IP addresses. To reduce the number of Cloudflare IPs that your domain shares with other Cloudflare customer domains, upgrade to a [Business or Enterprise plan and upload a Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
 
-</Aside>
+{{</Aside>}}
 
 Also, our flat-rate pricing structure provides predictability and reliability in your [CDN](https://www.cloudflare.com/cdn-y/) and [DDoS](https://www.cloudflare.com/ddos/) bandwidth expenses. Cloudflare does not have bandwidth limits for domains on the Free, Pro and Business plans as long as those domains comply with our [Terms of Service](https://www.cloudflare.com/terms/). However, your hosting provider may still impose limits on bandwidth usage and/or charge for bandwidth.
 

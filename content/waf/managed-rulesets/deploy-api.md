@@ -24,7 +24,7 @@ You can define overrides to customize the behavior of the rules included in a Ma
 
 To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets).
 
-<Aside type="warning" header="Important">
+{{<Aside type="warning" header="Important">}}
 
 Currently, each Managed Ruleset will execute **at most once per request**. Configuring a second rule that executes the same Managed Ruleset will have no effect.
 
@@ -34,16 +34,16 @@ As another example, consider an account-level rule that executes a Managed Rules
 
 This behavior will change in the future so that you can execute each Managed Ruleset multiple times per request.
 
-</Aside>
+{{</Aside>}}
 
 ## Deploying custom rulesets
 
 You can create custom rulesets in the `http_request_firewall_custom` phase at the account level. After creating a custom ruleset, you can deploy it to a phase at the account level by adding a rule to the phase entry point that executes the custom ruleset.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Currently, you can only deploy custom rulesets to a phase at the account level.
 
-</Aside>
+{{</Aside>}}
 
 To learn more about creating and deploying custom rulesets using the Rulesets API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets).

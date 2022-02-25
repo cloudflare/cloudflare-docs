@@ -25,10 +25,10 @@ weight: 41
 7.  Enter `https://api.cloudflare.com/client/v4/graphql` in the **GraphQL Endpoint** field
     ![Edit GraphQL Endpoint](/analytics/static/images/GraphiQL-response-pane.png)
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 The right-side response pane is empty when you enter your information correctly. An error displays when there are problems with your header credentials.
 
-</Aside>
+{{</Aside>}}
 
 Now that you have configured authentication with a Cloudflare API key, you are ready to run queries using GraphiQL.

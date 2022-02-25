@@ -12,7 +12,7 @@ Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare 
 
 Magic Firewall uses Wireshark syntax, a domain-specific language common in the networking world and the same syntax used across our other products. With this syntax, you can easily craft powerful rules to precisely allow or deny any traffic in or out of your network. You can also choose to create rules from your Cloudflare Dashboard under **Firewall Rulesets** > **Magic Firewall**.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 When you or your end users are using other Cloudflare services (for example, CDN and Spectrum) that proxy traffic, be aware of the following:
 
@@ -20,4 +20,4 @@ When you or your end users are using other Cloudflare services (for example, CDN
 *   You must allow [Cloudflare IP addresses](https://www.cloudflare.com/ips/).
 *   When using Magic Firewall, fragmented packets are reassembled into complete packets before they are inspected. As a result, you cannot create firewall rules for fragments.
 
-</Aside>
+{{</Aside>}}

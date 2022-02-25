@@ -6,4 +6,4 @@ weight: 21
 
 # Account-scoped datasets
 
-<DirectoryListing path="/reference/log-fields/account"/>
+{{<directory-listing>}}

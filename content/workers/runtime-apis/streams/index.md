@@ -5,4 +5,4 @@ title: Streams
 
 # Streams
 
-<DirectoryListing path="/runtime-apis/streams"/>
+{{<directory-listing>}}

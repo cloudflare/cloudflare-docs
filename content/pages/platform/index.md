@@ -5,4 +5,4 @@ title: Platform
 
 # Platform
 
-<DirectoryListing path="/platform"/>
+{{<directory-listing>}}

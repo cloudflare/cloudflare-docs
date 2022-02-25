@@ -6,11 +6,11 @@ weight: 7
 
 # WARP settings
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you are deploying [WARP in managed mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), refer to this [list of parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) instead. Any settings you configure on the Zero Trust Dashboard will be overridden by the local policy deployed by your management software. To ensure Dashboard settings are applied as intended, remove the corresponding parameters from management configuration.
 
-</Aside>
+{{</Aside>}}
 
 To manage WARP settings and device connectivity preferences, navigate to **Settings** > **Devices** on the Zero Trust dashboard.
 
@@ -27,11 +27,11 @@ To manage WARP settings and device connectivity preferences, navigate to **Setti
 </div>
 </details>
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 This feature needs the <b>Lock WARP switch</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Zero Trust Dashboard.
 
-</Aside>
+{{</Aside>}}
 
 When this toggle is **enabled**, you can provide end users with an one-time password that will allow them to toggle off the WARP client in case they need to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
 

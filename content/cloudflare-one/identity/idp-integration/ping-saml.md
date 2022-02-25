@@ -24,11 +24,11 @@ To set up PingIdentity (SAML) as your identity provider:
 
 5.  In the **SAML attribute configuration** dialog select **Email attribute > urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress**.
 
-     <Aside>
+     {{<Aside>}}
 
     There is an additional setting for PingFederate prior to 9.0.
 
-     </Aside>
+     {{</Aside>}}
 
 6.  In the **Signature Policy** tab, disable the option to **Always Sign Assertion**.
 

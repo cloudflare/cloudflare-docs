@@ -8,4 +8,4 @@ weight: 5
 
 As you [get started with load balancing](/load-balancing/get-started/), you will need to perform the following tasks:
 
-<DirectoryListing path="/how-to"/>
+{{<directory-listing>}}

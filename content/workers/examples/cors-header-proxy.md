@@ -12,9 +12,9 @@ layout: example
 
 # CORS header proxy
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 // Cloudflare supports the GET, POST, HEAD, and OPTIONS methods from any origin,

@@ -6,4 +6,4 @@ weight: 2
 
 # Viewing videos
 
-<DirectoryListing path="/viewing-videos"/>
+{{<directory-listing>}}

@@ -31,11 +31,11 @@ Configure a Managed Ruleset to:
 
 To skip one or more rules or WAF Managed Rulesets, [add a WAF exception](/waf/managed-rulesets/waf-exceptions/).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Some Managed Rulesets may not allow custom configuration, depending on your Cloudflare plan.
 
-</Aside>
+{{</Aside>}}
 
 ### Configure field values for all the rules
 
@@ -113,7 +113,7 @@ Do the following:
 
 4.  Click **Next**.
 
-    \<Aside type='note' header='Note'>
+    {{<Aside type="note" header="Note">}}
 
     If you selected a tag, you get a dialog asking you if any new rules with the selected tag should be configured with the field values you selected.
 
@@ -121,6 +121,6 @@ Do the following:
 
     Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
 
-     </Aside>
+     {{</Aside>}}
 
 5.  Click **Save**.

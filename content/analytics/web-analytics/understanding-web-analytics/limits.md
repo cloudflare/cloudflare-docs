@@ -12,14 +12,14 @@ Cloudflare limits the number of sites for which you can track web analytics as w
 
 Cloudflare limits the number of sites for which you can track web analytics. Limits depend on whether a site uses Cloudflare's proxy.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Site type                                      | Limit              |
 | ---------------------------------------------- | ------------------ |
 | Not proxied through Cloudflare                 | 10                 |
 | Proxied through Cloudflare                     | No limit           |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Rules Limits
 
@@ -27,7 +27,7 @@ Cloudflare limits the number of Web Analytics rules you can have by plan type. F
 
 Rules are only available for sites proxied through Cloudflare.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Plan type      | Rules limit  |
 | -------------- | ------------ |
@@ -36,4 +36,4 @@ Rules are only available for sites proxied through Cloudflare.
 | Business       | 20           |
 | Enterprise     | 100          |
 
-</TableWrap>
+{{</table-wrap>}}

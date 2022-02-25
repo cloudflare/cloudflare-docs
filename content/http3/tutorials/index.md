@@ -6,4 +6,4 @@ weight: 3
 
 # Tutorials
 
-<DirectoryListing path="/tutorials"/>
+{{<directory-listing>}}

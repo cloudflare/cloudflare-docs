@@ -35,11 +35,11 @@ For example, you can create a list for the combination of generic client TCP and
 
 Create a list named **Endpoints** and specify the list of endpoints or user IP addresses to reference within the rules.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Rule 10 in the example ruleset below is acting as a catch-all to block all traffic not permitted in rules 1-3 towards your list of Endpoint IP addresses. If you want to permit other traffic to these destination IP addresses, the new rule must be added before rule 10.
 
-</Aside>
+{{</Aside>}}
 
 ### Suggested rules
 

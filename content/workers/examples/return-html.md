@@ -12,9 +12,9 @@ layout: example
 
 # Return small HTML page
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 const html = `<!DOCTYPE html>

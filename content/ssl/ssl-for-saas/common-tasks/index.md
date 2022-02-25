@@ -8,4 +8,4 @@ meta:
 
 # Common tasks — SSL for SaaS
 
-<DirectoryListing path="/ssl-for-saas/common-tasks"/>
+{{<directory-listing>}}

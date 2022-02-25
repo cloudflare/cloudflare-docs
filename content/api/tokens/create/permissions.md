@@ -8,19 +8,19 @@ layout: list
 
 # API token permissions
 
-<ContentColumn>
+{{<content-column>}}
 
 Below is a list of the available token permissions.
 
 To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) API method.
 
-</ContentColumn>
+{{</content-column>}}
 
 ## User permissions
 
 The applicable scope of user permissions is `com.cloudflare.api.user`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Name | Description |
 |------|-------------|
@@ -31,13 +31,13 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 | User Details Read | Grants read access to user details. |
 | User Details Write | Grants write access to user details. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Account permissions
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Name | Description |
 |------|-------------|
@@ -110,13 +110,13 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Workers Scripts Write | Grants write access to Cloudflare Workers scripts. |
 | Workers Tail Read | Grants `wrangler tail` read permissions. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Zone permissions
 
 The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Name | Description |
 |------|-------------|
@@ -161,4 +161,4 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Zone WAF Write | Grants write access to Zone WAF. |
 | Zone Write | Grants write access to zone management. |
 
-</TableWrap>
+{{</table-wrap>}}

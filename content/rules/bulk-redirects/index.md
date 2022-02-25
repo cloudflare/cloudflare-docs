@@ -12,7 +12,7 @@ Bulk Redirects are essentially static — they do not support any string replace
 
 ## Availability
 
-<TableWrap>
+{{<table-wrap>}}
 
 |                                              | Free | Pro | Business | Enterprise |
 |----------------------------------------------|-----:|----:|---------:|-----------:|
@@ -20,6 +20,6 @@ Bulk Redirects are essentially static — they do not support any string replace
 | Number of Bulk Redirect Lists                           |  5 |   5 |   5 |     25 |
 | Number of URL Redirects across lists                    | 20 | 500 | 500 | 10,000 |
 
-</TableWrap>
+{{</table-wrap>}}
 
 When determining the available Bulk Redirect features and their limits, Cloudflare takes into account the highest plan on your account.

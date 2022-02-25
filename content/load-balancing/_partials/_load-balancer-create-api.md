@@ -7,11 +7,11 @@ _build:
 
 For a full list of properties, refer to [Create Load Balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer). If you need help with API authentication, refer to [Cloudflare API Quickstart](/api/).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Since load balancers only exist on a zone — and not an account — you may need to get the zone `id` with the [List Zones](https://api.cloudflare.com/#zone-list-zones) command.
 
-</Aside>
+{{</Aside>}}
 
 ```json
 ---

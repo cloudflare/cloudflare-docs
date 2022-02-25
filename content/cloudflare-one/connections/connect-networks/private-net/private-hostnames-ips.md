@@ -6,11 +6,11 @@ weight: 5
 
 # Private hostnames and IPs
 
-<Aside type='note' header='Traffic handling'>
+{{<Aside type="note" header="Traffic handling">}}
 
 When the old replica is stopped, it will drop long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH). UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
 
-</Aside>
+{{</Aside>}}
 
 Building out a private network has two primary components: the infrastructure side and the client side.
 
@@ -50,11 +50,11 @@ Next, we need to create a [Local Domain Fallback](/cloudflare-one/connections/co
 
 ![Create Local Domains](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/cloudflare-one/connections/connect-networks/private-net/#optional-ensure-that-traffic-can-reach-your-network).
 
-</Aside>
+{{</Aside>}}
 
 ## Update `cloudflared`
 

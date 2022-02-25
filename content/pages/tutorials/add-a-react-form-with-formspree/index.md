@@ -93,11 +93,11 @@ The `useForm` hook returns a `state` object and a `handleSubmit` function which 
 
 For clarity, this form does not include any styling, but in the GitHub project (<https://github.com/formspree/formspree-example-cloudflare-react>) you can review an example of how to apply styles to the form.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 `ValidationError` components are helpers that display error messages for field errors, or general form errors (if no `field` attribute is provided). For more information on validation, refer to the [Formspree React documentation](https://help.formspree.io/hc/en-us/articles/360055613373-The-Formspree-React-library#validation).
 
-</Aside>
+{{</Aside>}}
 
 To add this form to your website, import the component:
 
@@ -148,11 +148,11 @@ export default App;
 
 Now you have a single-page application containing a Contact Us form with several fields for the user to fill out. However, you have not set up the form to submit to a valid form endpoint yet. You will do that in the [next section](/pages/add-a-react-form-with-formspree/#the-formspree-back-end).
 
-<Aside type="info" header="GitHub repository">
+{{<Aside type="info" header="GitHub repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/formspree/formspree-example-cloudflare-react). It is a live Pages application with a [live demo](https://formspree-example-cloudflare-react.pages.dev/) available, too.
 
-</Aside>
+{{</Aside>}}
 
 ## The Formspree back end
 
@@ -229,11 +229,11 @@ In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environme
 
 Now, when you commit and push changes to a branch of your git repo, a new preview app will be created with a form that submits to the test form URL. However, your production website will continue to submit to the original form URL.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Create React App uses the prefix `REACT_APP_` to designate environment variables that are accessible to front-end JavaScript code. A different framework will use a different prefix to expose environment variables. For example, in the case of Next.js, the prefix is `NEXT_PUBLIC_`. Consult the documentation of your front-end framework to determine how to access environment variables from your React code.
 
-</Aside>
+{{</Aside>}}
 
 In this tutorial, you built and deployed a website using Cloudflare Pages and Formspree to handle form submissions. You created a React application with a form that communicates with Formspree to process and store submission requests and send notifications.
 

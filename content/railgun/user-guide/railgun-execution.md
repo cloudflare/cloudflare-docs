@@ -16,18 +16,18 @@ Both programs write a log file containing detailed information about operation. 
 
 ## Runtime Options
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Option | Description |
 | ---------|---------- |
 | `-config[=\| ]PATH` | The path to the `rg.config` configuration file to use |
 | `-version` | Output version information and exit |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Configuration Parameters
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Parameter | Description |
 | ----------|------------ |
@@ -69,7 +69,7 @@ Both programs write a log file containing detailed information about operation. 
 | `cpu.oversubscribe` | Tuning feature used to set a multiplier on the number of cores available to oversubscribe. Default is 1. |
 | `stream.size` | If the HTTP response body is greater than this number of bytes it will not be delta compressed and the body will be streamed across the WAN as it is read from the HTTP server. Defaults to 250000. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Running
 

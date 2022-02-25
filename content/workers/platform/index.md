@@ -6,4 +6,4 @@ weight: 6
 
 # Platform
 
-<DirectoryListing path="/platform"/>
+{{<directory-listing>}}

@@ -13,11 +13,11 @@ Before collecting a PCAP, you should first understand a packet capture's `system
 
 Currently, when a PCAP is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`. These packets are sampled, and the sampled packets across all edge metals are collected to build a PCAP file. This type of sampling packets and building a PCAP is the `simple` type.
 
-<Aside>
+{{<Aside>}}
 
 This feature is currently in an Early Access state. For access, contact your account team.
 
-</Aside>
+{{</Aside>}}
 
 ## Send a PCAP collect Request
 

@@ -65,11 +65,11 @@ You can now select **Block** as the action. You can add optional text to present
 
 Click **Create policy** to save the rule.
 
-<Aside>
+{{<Aside>}}
 
 The policy created will apply to any traffic sent to Gateway where HTTP filtering is applied. If you want to only apply one rule in this policy to specific groups of users, you can split this polity into two and add selectors that specific groups of users.
 
-</Aside>
+{{</Aside>}}
 
 Once saved, the policy should now appear in your policy list.
 

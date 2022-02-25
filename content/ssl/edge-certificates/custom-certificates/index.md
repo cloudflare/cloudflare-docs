@@ -34,8 +34,8 @@ Certificates uploaded to Cloudflare will be automatically grouped together into 
 
 A Certificate Pack is a group of certificates that share the same set of hostnames — for example, `example.com` and `*.example.com` — but use different signature algorithms. Each pack can include up to three certificates, with one from each of the following signature algorithms: `SHA-2/RSA`, `SHA-2/ECDSA`, and `SHA-1/RSA`. Each pack only counts as one SSL certificate against your custom certificate quota.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You cannot delete the primary certificate if secondary certificates are present in the pack.
 
-</Aside>
+{{</Aside>}}

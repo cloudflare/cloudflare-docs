@@ -78,11 +78,11 @@ By default, the agent will run as a Local Account service and will look for the 
 mkdir C:\Windows\System32\config\systemprofile\.cloudflared
 ```
 
-<Aside>
+{{<Aside>}}
 
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
 
-</Aside>
+{{</Aside>}}
 
 ## Authenticate `cloudflared`
 
@@ -150,13 +150,13 @@ with `%USERNAME%` being your Windows username (this is your user folder).
 
 ## Route to the Tunnel
 
-<Aside>
+{{<Aside>}}
 
 <strong>IMPORTANT</strong>: Make sure you have enabled WebSockets in the "Network" section of your domain in the Cloudflare control panel:
 
 ![Enable WebSockets](/cloudflare-one/static/zero-trust-security/ssh/enable-websockets.png)
 
-</Aside>
+{{</Aside>}}
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the service configured as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/).
 
@@ -230,11 +230,11 @@ At this point the shortcut will appear on the desktop, and users can launch with
 
 ### MacOS
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Before you start, make sure you download an RDP client for macOS.
 
-</Aside>
+{{</Aside>}}
 
 MacOS users can save a command shortcut that will launch the RDP flow.
 

@@ -56,7 +56,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 
 ## List of supported parameters:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Parameter | Type | Description
 \--- | --- | ---
@@ -94,7 +94,7 @@ Parameter | Type | Description
 `currency` | String | Currency code for the transaction.
 `value` | Number | Total value of the product after quantity.
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Event code examples
 

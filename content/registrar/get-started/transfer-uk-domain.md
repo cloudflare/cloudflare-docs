@@ -26,11 +26,11 @@ Cloudflare currently supports the transfer of `.uk`, `co.uk`, `org.uk`, and `me.
 5.  After checkout, request your current registrar to update the IPS tag to `CLOUDFLARE`. The tag must be updated within seven days of completing the checkout process or the transfer will fail.
 6.  Cloudflare will receive a notice once your registrar updates the IPS tag. After that, we will finish transferring your domain.
 
-  <Aside type="warning" header="Warning">
+  {{<Aside type="warning" header="Warning">}}
 
 If you request your current registrar to update the IPS tag before completing the checkout process, the transfer request will be automatically rejected. You must complete the checkout process before requesting the IPS tag update.
 
-  </Aside>
+  {{</Aside>}}
 
 ## Possible reasons a transfer may fail or be rejected
 
@@ -50,8 +50,8 @@ To transfer a `.uk` domain to another registrar, follow these steps:
 6.  Enter the IPS tag of the registrar you wish to transfer to.
 7.  Your new registrar is responsible for accepting the transfer. Cloudflare has no visibility into why a transfer might not be accepted by the new registrar.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you do not know the IPS tag, contact your new registrar for instructions. Your new registrar may require you to follow some additional steps before starting the transfer process.
 
-</Aside>
+{{</Aside>}}

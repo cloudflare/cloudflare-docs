@@ -21,10 +21,10 @@ IP Restrictions control which IP address API requests with this token can and ca
 
 By default, tokens don't expire. They are long lived. Defining a TTL allows for setting when a token starts being valid and when a token is no longer valid. This is often referred to as `notBefore` and `notAfter`. Setting these timestamps will limit the lifetime of the token to the defined period. Not setting the start date or `notBefore` means the token is active as soon as it is created. Not setting the end date or `notAfter` means the token does not expire.
 
-<Aside type="note"> 
+{{<Aside type="note">}} 
 
 Dates selected are defined as 00:00 UTC of that day. For finer grained time selection, use the [API](/api/).
 
-</Aside>
+{{</Aside>}}
 
 ![Time to Live Selection](../media/ttl.png)

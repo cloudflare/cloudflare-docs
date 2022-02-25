@@ -10,7 +10,7 @@ meta:
 
 # 2021-03-05 – Emergency release
 
-<TableWrap><table style="width: 100%"> <thead> <tr> <th>
+{{<table-wrap>}}<table style="width: 100%"> <thead> <tr> <th>
 Ruleset </th> <th>
 Rule </th> <th>
 Description </th> <th>
@@ -22,4 +22,4 @@ Microsoft Exchange - SSRF - CVE-2021-26855 </td> <td>
 N/A </td> <td>
 Block </td> </tr> </tbody>
 
-</table></TableWrap>
+</table>{{</table-wrap>}}

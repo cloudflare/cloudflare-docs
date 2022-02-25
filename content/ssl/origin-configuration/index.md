@@ -8,4 +8,4 @@ weight: 8
 
 Learn more about SSL/TLS protection options for your origin servers:
 
-<DirectoryListing path="/origin-configuration"/>
+{{<directory-listing>}}

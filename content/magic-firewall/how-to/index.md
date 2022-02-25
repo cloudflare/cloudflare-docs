@@ -8,4 +8,4 @@ weight: 4
 
 Review the content below to learn how to complete tasks using Magic Firewall.
 
-<DirectoryListing path="/how-to"/>
+{{<directory-listing>}}

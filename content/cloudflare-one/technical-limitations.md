@@ -10,7 +10,7 @@ This lists covers limitations for rules, applications, fields, and other feature
 
 All values are per organization.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature | Limit |
 | ------- | ----- |
@@ -23,13 +23,13 @@ All values are per organization.
 | Application URL length (characters) | <= 63 |
 | Team Domain max length (characters) | <= 63 |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Cloudflare Tunnel limitations
 
 All values are per account.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature | Limit |
 | ------- | ----- |
@@ -37,7 +37,7 @@ All values are per account.
 | IP routes per account | 1000 |
 | Active `cloudflared` replicas per tunnel | 25 |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Account defaults
 

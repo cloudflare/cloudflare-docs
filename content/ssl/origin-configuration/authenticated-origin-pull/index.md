@@ -12,13 +12,13 @@ This authentication becomes particularly important with the Cloudflare Web Appli
 
 If you want your domain to be FIPS compliant, you must [upload your own certificate](/ssl/set-up/#per-hostname--customer-certificates).
 
-<ButtonGroup>
-    <Button type="primary" href="set-up">Get started</Button>
-    <Button type="secondary" href="explanation">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+    {{<button type="primary" href="set-up">}}Get started{{</button>}}
+    {{<button type="secondary" href="explanation">}}Learn more{{</button>}}
+{{</button-group>}}
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Authenticated Origin Pull is incompatible with Railgun.
 
-</Aside>
+{{</Aside>}}

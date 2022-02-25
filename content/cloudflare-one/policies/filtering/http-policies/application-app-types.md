@@ -38,7 +38,7 @@ A full list of supported applications and their respective app types are availab
 
 ### App types
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Application type | Definition |
 | ---------------- | ---------- |
@@ -60,7 +60,7 @@ A full list of supported applications and their respective app types are availab
 | Streaming |Applications used for streaming video or audio. |
 | [Do Not Decrypt](#do-not-decrypt-applications) | Applications that are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 #### Do Not Decrypt applications
 
@@ -74,12 +74,12 @@ Gateway periodically updates the *Do Not Decrypt* app type to include new applic
 
 ![Do not decrypt HTTP rule](/cloudflare-one/static/documentation/faq/do-not-decrypt.png)
 
-<Aside>
+{{<Aside>}}
 
 <b>Google Drive for Desktop</b> allows you to configure the app to trust the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> Gateway presents.
 Doing so will allow you to inspect the traffic to and from Google Drive, instead of setting up a <i>Do Not Inspect</i> rule and lose visibility on that traffic. To trust the Cloudflare Root Certificate in Google Drive, check out these <a href="https://support.google.com/a/answer/7644837">instructions for TrustedRootCertsFile</a>.
 
-</Aside>
+{{</Aside>}}
 
 ## Supported actions for applications
 

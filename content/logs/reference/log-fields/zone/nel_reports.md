@@ -7,7 +7,7 @@ title: NEL reports
 
 The descriptions below detail the fields available for `nel_reports`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Value | Type |
 | -- | -- | -- |
@@ -19,4 +19,4 @@ The descriptions below detail the fields available for `nel_reports`.
 | Timestamp | Timestamp for error report | int or string |
 | Type | The type of error in the phase | string |
 
-</TableWrap>
+{{</table-wrap>}}

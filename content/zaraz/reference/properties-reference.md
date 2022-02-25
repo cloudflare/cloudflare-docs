@@ -8,17 +8,17 @@ meta:
   title: Zaraz event and system properties
 ---
 
-<ContentColumn>
+{{<content-column>}}
 
 # Zaraz event and system properties
 
 Cloudflare Zaraz offers event and system properties that you can use when configuring the product. They are helpful to send data to a third-party tool or to create triggers as they have context about a specific user's browser session and the actions they take on the website. Below is a list of event and system properties, how can you access them, and their values:
 
-</ContentColumn>
+{{</content-column>}}
 
 ## System properties
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Property | Type | Description |
 | --- | --- | --- |
@@ -55,15 +55,15 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 | `{{ system.misc.timestamp }}`| Number | Returns Unix time in seconds. |
 | `{{ system.misc.timestampMilliseconds }}`| Number | Returns Unix time in milliseconds. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Event properties
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Property | Type | Description |
 | --- | --- | --- |
 | `{{ client.__zarazTrack }}`| String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track/) for more information. |
 | `{{ client.PARAMETER }}`| String | Returns a specific parameter value sent using the Set method of the Web API. Replace `PARAMETER` with the name of your parameter. Refer to [Zaraz Set](/zaraz/web-api/zaraz-set/) for more information. |
 
-</TableWrap>
+{{</table-wrap>}}

@@ -19,11 +19,11 @@ HSTS adds an HTTP header that directs [compliant web browsers](/ssl/ssl-tls/brow
 
 Before enabling HSTS, review the [requirements](#requirements).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For more background information on HSTS, see the <a href="https://blog.cloudflare.com/enforce-web-policy-with-hypertext-strict-transport-security-hsts/">introductory blog post</a>.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -42,11 +42,11 @@ Once you enabled HSTS, avoid the following actions to ensure visitors can still 
 *   Redirecting HTTPS to HTTP
 *   Disabling SSL (invalid or expired certificates or certificates with mismatched host names)
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 If you remove HTTPS before disabling HSTS or before waiting for the duration of the original <strong>Max Age Header</strong> specified in your Cloudflare HSTS configuration, your website becomes inaccessible to visitors for the duration of the Max Age Header or until you enable HTTPS.
 
-</Aside>
+{{</Aside>}}
 
 ## Enable HSTS
 
@@ -125,8 +125,8 @@ To disable HSTS on your website:
 </tbody>
 </table>
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 Once HSTS <strong>Preload</strong> is configured, submit requests for addition to each browser’s preload list. Chrome, Firefox/Mozilla, and Safari use the Chrome preload list. A minimum <strong>Max Age Header</strong> of 12 months is required for inclusion in HSTS preload lists.
 
-</Aside>
+{{</Aside>}}

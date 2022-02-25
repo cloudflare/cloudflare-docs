@@ -6,4 +6,4 @@ weight: 11
 
 # Zone-scoped datasets
 
-<DirectoryListing path="/reference/log-fields/zone"/>
+{{<directory-listing>}}

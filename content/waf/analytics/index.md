@@ -30,7 +30,7 @@ Firewall Analytics is available at **Firewall** > **Overview**.
 
 The available features vary according to your Cloudflare plan:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Feature                  | Free                | Pro                 | Business            | Enterprise
 \-------------------------|---------------------|---------------------|---------------------|-------------------
@@ -40,7 +40,7 @@ Print report             | –                   | Yes                 | Yes    
 Export records           | –                   | –                   | Up to 500 events    | Up to 500 events
 L4 DoS attacks mitigated | –                   | –                   | –                   | Last 7 days
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Known limitations
 

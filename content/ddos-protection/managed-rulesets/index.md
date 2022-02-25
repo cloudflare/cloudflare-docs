@@ -10,7 +10,7 @@ The DDoS Attack Protection Managed Rulesets provide comprehensive protection aga
 
 The available Managed Rulesets are:
 
-<Definitions>
+{{<definitions>}}
 
 *   **[HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)**
 
@@ -24,4 +24,4 @@ The available Managed Rulesets are:
 
     *   This ruleset protects against sophisticated and out-of-state TCP DDoS attacks.
 
-</Definitions>
+{{</definitions>}}

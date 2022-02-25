@@ -18,7 +18,7 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 
 ## Requirements
 
-<TableWrap>
+{{<table-wrap>}}
     <table>
         <tr>
             <th>&nbsp;</th>
@@ -77,7 +77,7 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
             <td>&nbsp;</td>
         </tr>
     </table>
-</TableWrap>
+{{</table-wrap>}}
 
 ## Support
 

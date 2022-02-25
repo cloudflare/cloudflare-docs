@@ -10,7 +10,7 @@ meta:
 
 The available skip options in Custom Firewall rules are the following:
 
-<Definitions>
+{{<definitions>}}
 
 *   **Skip the remaining Custom Rules (current ruleset)**
     *   Dashboard option: **All remaining Custom Rules**.
@@ -47,4 +47,4 @@ The available skip options in Custom Firewall rules are the following:
 
     *   The API values are case sensitive.
 
-</Definitions>
+{{</definitions>}}

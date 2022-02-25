@@ -43,7 +43,7 @@ https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/<RAY_ID>?[&fiel
 
 The following table describes the parameters available:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Parameter | Description | Applies to | Required |
 |---|---|---|--|
@@ -55,9 +55,9 @@ The following table describes the parameters available:
 | timestamps | <p>- Format in which timestamp fields will be returned</p> <p>- Value options are: `unixnano` (default), `unix`, `rfc3339`</p> <p>- Timestamps returned as integers for `unix` and `unixnano` and as strings for `rfc3339`</p> | <p>/logs/received</p> <p>/logs/rayids</p> | No |
 | CVE-2021-44228 | <p>- Optional redaction for [CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228).  This option will replace every occurrence of the string `${` with `x{`.</p> <p> For example: `CVE-2021-44228=true` </p> | <p>/logs/received</p> | No |
 
-</TableWrap>
+{{</table-wrap>}}
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The maximum time range from **start** to **end** cannot exceed 1 hour. Because **start** is inclusive and **end** is exclusive, to get all the data for every minute, starting at 10AM, the proper values are:
 
@@ -65,7 +65,7 @@ The maximum time range from **start** to **end** cannot exceed 1 hour. Because *
 
 The overlap will be handled correctly.
 
-</Aside>
+{{</Aside>}}
 
 ## Example API requests using cURL
 
@@ -87,11 +87,11 @@ curl -s \
     "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/rayids/47ff6e2c812d3ccb?timestamps=rfc3339"
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The IATA code returned as part of the **Ray ID** does not need to included in the request. For example, if you have a **RayID** such as `49ddb3e70e665831-DFW`, only include `49ddb3e70e665831` in your request.
 
-</Aside>
+{{</Aside>}}
 
 ## Fields
 

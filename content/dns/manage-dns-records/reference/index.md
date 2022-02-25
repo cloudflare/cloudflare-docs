@@ -8,4 +8,4 @@ meta:
 
 # Reference — DNS records
 
-<DirectoryListing path="/manage-dns-records/reference"/>
+{{<directory-listing>}}

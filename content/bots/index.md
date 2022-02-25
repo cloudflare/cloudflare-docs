@@ -22,7 +22,7 @@ To see the differences in features and functionality, visit [Plans](/bots/plans/
 
 ## Next steps
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="/concepts">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="/concepts">}}Learn more{{</button>}}
+{{</button-group>}}

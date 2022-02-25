@@ -38,13 +38,13 @@ curl -X PUT \
 ]'
 ```
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 `PUT` does not update the filter specified. It only looks at the filter ID (`<FILTER_ID>`) to update the rule with a new filter.
 
 To update the filter, use the [Filters API](/firewall/api/cf-filters/).
 
-</Aside>
+{{</Aside>}}
 
 ```json
 ---
@@ -132,7 +132,7 @@ header: Response
 }
 ```
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 `PUT` overwrites fields that are not explicitly passed in the request.
 
@@ -140,4 +140,4 @@ For example, if the request omits `description`, any previously existing `descri
 
 To preserve existing values, issue a `GET` request and based on the response, determine which fields (and respective values) to include in your `PUT` request.
 
-</Aside>
+{{</Aside>}}

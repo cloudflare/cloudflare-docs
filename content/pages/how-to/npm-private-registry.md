@@ -9,11 +9,11 @@ Cloudflare Pages supports custom package registries, allowing you to include pri
 
 You will be be adjusting the [environment variables](/pages/platform/build-configuration/#environment-variables) in your Pages project's **Settings**. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings will not be reflected until its next deployment.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Be sure to trigger a new deployment after changing any settings.
 
-</Aside>
+{{</Aside>}}
 
 ## Registry Access Token
 
@@ -39,11 +39,11 @@ The following section applies to users with applications that are only using pri
 
 In your Pages project's **Settings** > **Environment variables**, add a new [environment variable](/pages/platform/build-configuration/#environment-variables) named `NPM_TOKEN` to the **Production** and **Preview** environments and paste the [read-only token you created](#registry-access-token) as its value.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Add the `NPM_TOKEN` variable to both the **Production** and **Preview** environments.
 
-</Aside>
+{{</Aside>}}
 
 By default, `npm` looks for an environment variable named `NPM_TOKEN` and because you did not define a [custom registry endpoint](#custom-registry-endpoints), the npm registry is assumed. Local development should continue to work as expected, provided that you and your teammates are authenticated with npm accounts (see `npm whoami` and `npm login`) that have been granted access to the private package(s).
 
@@ -59,11 +59,11 @@ When multiple registries are in use, a project will need to define its own root-
 
 Here, all packages under the `@foobar` scope are directed towards the GitHub Packages registry. Then the registries are assigned their own access tokens via their respective environment variable names.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You only need to define an Access Token for the npm registry (refer to `TOKEN_FOR_NPM` in the example) if it is hosting private packages that your application requires.
 
-</Aside>
+{{</Aside>}}
 
 Your Pages project must then have the matching [environment variables](/pages/platform/build-configuration/#environment-variables) defined for all environments. In our example, that means `TOKEN_FOR_NPM` must contain [the read-only npm token](#registry-access-token) value and `TOKEN_FOR_GITHUB` must contain its own [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token#creating-a-token).
 

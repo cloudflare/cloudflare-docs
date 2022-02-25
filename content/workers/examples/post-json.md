@@ -11,9 +11,9 @@ layout: example
 
 # Post JSON
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 /**

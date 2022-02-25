@@ -10,4 +10,4 @@ Your Cloudflare user must be active, verified, and enabled by Cloudflare to use 
 
 If your account has not yet been enabled, reach out to partners@cloudflare.com.
 
-<p><Button type="primary" href="/get-started/provisioning-resources">Step 1: Provisioning resources</Button></p>
+<p>{{<button type="primary" href="/get-started/provisioning-resources">}}Step 1: Provisioning resources{{</button>}}</p>

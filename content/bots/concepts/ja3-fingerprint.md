@@ -7,11 +7,11 @@ title: JA3 Fingerprint
 
 A [**JA3 Fingerprint**](https://github.com/salesforce/ja3) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 JA3 Fingerprints are only available to Enterprise customers who have purchased Bot Management.
 
-</Aside>
+{{</Aside>}}
 
 ## Analytics
 

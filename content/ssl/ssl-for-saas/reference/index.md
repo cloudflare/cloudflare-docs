@@ -8,4 +8,4 @@ meta:
 
 # Reference — SSL for SaaS
 
-<DirectoryListing path="/ssl-for-saas/reference"/>
+{{<directory-listing>}}

@@ -27,27 +27,27 @@ addEventListener("fetch", event => {
 
 ### Supported `FetchEvent` properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `event.type` <Type>string</Type>
+*   `event.type` {{<type>}}string{{</type>}}
     *   The type of event. This will always return `"fetch"`.
 
-*   `event.request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
+*   `event.request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
     *   The incoming HTTP request.
 
-*   <Code>event.respondWith(response<TypeLink href="/runtime-apis/response">Response</TypeLink>|\<span style={{marginLeft:"-6px"}}><ParamType>Promise</ParamType></span>)</Code> <Type>void</Type>
+*   {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|\<span style={{marginLeft:"-6px"}}>{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`respondWith`](#respondwith).
 
-*   <Code>event.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+*   {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`waitUntil`](#waituntil).
 
-*   <Code>event.passThroughOnException()</Code> <Type>void</Type>
+*   {{<code>}}event.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`passThroughOnException`](#passthroughonexception).
 
-</Definitions>
+{{</definitions>}}
 
 ### Bindings
 
@@ -69,23 +69,23 @@ export default {
 
 ### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `request` <TypeLink href="/runtime-apis/request">Request</TypeLink>
+*   `request` {{<type-link href="/runtime-apis/request">}}Request{{</type-link>}}
     *   The incoming HTTP request.
 
-*   `env` <Type>object</Type>
+*   `env` {{<type>}}object{{</type>}}
     *   The [bindings](/workers/platform/environment-variables/) assigned to the Worker.
 
-*   <Code>context.waitUntil(promise<ParamType>Promise</ParamType>)</Code> <Type>void</Type>
+*   {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`waitUntil`](#waituntil).
 
-*   <Code>context.passThroughOnException()</Code> <Type>void</Type>
+*   {{<code>}}context.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
 
     *   Refer to [`passThroughOnException`](#passthroughonexception).
 
-</Definitions>
+{{</definitions>}}
 
 ### Bindings
 
@@ -99,13 +99,13 @@ When responding to a HTTP request, the fetch handler may use any of the followin
 
 Intercepts the request and allows the Worker to send a custom response.
 
-<Aside type="warning" header="Service Worker format only">
+{{<Aside type="warning" header="Service Worker format only">}}
 
 The `respondWith` method is only applicable to the Service Worker format.
 
 With the Module Worker format, return a `Response` from the handler directly.
 
-</Aside>
+{{</Aside>}}
 
 If a `fetch` event handler does not call `respondWith`, the runtime delivers the event to the next registered `fetch` event handler. In other words, while not recommended, this means it is possible to add multiple `"fetch"` event handlers within a Worker.
 

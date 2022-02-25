@@ -29,45 +29,45 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 ### Base64 utility methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob">atob()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob">}}atob(){{</type-link>}}
 
     *   Decodes a string of data which has been encoded using base-64 encoding.
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa">btoa()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa">}}btoa(){{</type-link>}}
 
     *   Creates a base-64 encoded ASCII string from a string of binary data.
 
-</Definitions>
+{{</definitions>}}
 
 ### Timers
 
-<Definitions>
+{{<definitions>}}
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval">setInterval()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval">}}setInterval(){{</type-link>}}
 
     *   Schedules a function to execute every time a given number of milliseconds elapses.
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearInterval">clearInterval()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearInterval">}}clearInterval(){{</type-link>}}
 
     *   Cancels the repeated execution set using [`setInterval()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval).
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout">setTimeout()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout">}}setTimeout(){{</type-link>}}
 
     *   Schedules a function to execute in a given amount of time.
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearTimeout">clearTimeout()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/clearTimeout">}}clearTimeout(){{</type-link>}}
 
     *   Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout).
 
-</Definitions>
+{{</definitions>}}
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Timers are only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
 
-</Aside>
+{{</Aside>}}
 
 ### EventTarget and Event
 
@@ -79,19 +79,19 @@ The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortCo
 
 ### Fetch global
 
-<Definitions>
+{{<definitions>}}
 
-*   <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch">fetch()</TypeLink>
+*   {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch">}}fetch(){{</type-link>}}
 
     *   Starts the process of fetching a resource from the network. Refer to [Fetch API](/workers/runtime-apis/fetch/).
 
-</Definitions>
+{{</definitions>}}
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The Fetch API is only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -109,8 +109,8 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URL)
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
 
-</Aside>
+{{</Aside>}}

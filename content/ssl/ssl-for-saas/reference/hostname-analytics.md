@@ -10,11 +10,11 @@ You can use custom hostname analytics for two general purposes: exploring how yo
 
 These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics**, **Firewall Analytics**, and [any other datasets](/analytics/graphql-api/features/data-sets) with the `clientRequestHTTPHost` field.
 
-<Aside type="note" header="Note:">
+{{<Aside type="note" header="Note:">}}
 
 The plan of your SSL for SaaS application determines the analytics available for your custom hostnames.
 
-</Aside>
+{{</Aside>}}
 
 ## Explore customer usage
 

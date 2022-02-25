@@ -17,10 +17,10 @@ For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](/bots/ab
 
 ## Zone-scoped datasets
 
-<DirectoryListing path="/reference/log-fields/zone"/>
+{{<directory-listing>}}
 
 ## Account-scoped datasets
 
-<DirectoryListing path="/reference/log-fields/account"/>
+{{<directory-listing>}}
 
 For more information on logs available in Cloudflare for Teams, refer to [Teams logs](/cloudflare-one/analytics/logs).

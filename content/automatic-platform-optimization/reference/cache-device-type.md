@@ -16,11 +16,11 @@ To enable caching by device type, enable the setting from the Cloudflare dashboa
 
 Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
-<Aside>
+{{<Aside>}}
 
 Changing Cache By Device Type setting will invalidate Cache.
 
-</Aside>
+{{</Aside>}}
 
 The Cloudflare for WordPress plugin automatically purges all cache variations for updated pages. If you use any of the plugins listed below, enable cache by device type.
 

@@ -20,11 +20,11 @@ Unless specifically set in a [Page Rule](/cache/how-to/create-page-rules/), Clou
 
 The Cloudflare UI and API both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 If you modify cached assets, the new asset is not displayed to repeat visitors before the Browser Cache TTL duration. [Purging Cloudflare’s cache](/cache/how-to/purge-cache/) does not affect assets cached in a visitor’s browser.
 
-</Aside>
+{{</Aside>}}
 
 1.  Log in to your Cloudflare dashboard.
 2.  Click **Caching**.

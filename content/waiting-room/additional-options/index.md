@@ -8,4 +8,4 @@ weight: 5
 
 Beyond [creating a simple waiting room](/waiting-room/get-started/), you may want to further customize how your waiting room appears or functions.
 
-<DirectoryListing path="/how-to"/>
+{{<directory-listing>}}

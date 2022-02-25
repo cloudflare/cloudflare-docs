@@ -13,9 +13,9 @@ layout: example
 
 # Sign requests
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 // You will need some super-secret data to use as a symmetric key.
@@ -101,21 +101,21 @@ addEventListener("fetch", event => {
 
 ***
 
-<ContentColumn>
+{{<content-column>}}
 
 ## Generating signed requests
 
 You can generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Signed requests expire after one minute. Cloudflare recommends choosing expiration durations dynamically, depending on the path or a query parameter.
 
-</Aside>
+{{</Aside>}}
 
 For request URLs beginning with `/generate/`, replace `/generate/` with `/verify/`, sign the resulting path with its timestamp, and return the full, signed URL in the response body.
 
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 async function generateSignedUrl(url) {

@@ -22,7 +22,7 @@ A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more UR
 
 The following example defines a Bulk Redirect List named `list_b` with two URL Redirects:
 
-<Example>
+{{<example>}}
 
 **`list_b` Bulk Redirect List**
 
@@ -31,18 +31,18 @@ Source URL                | Target URL                 | Status code
 `example.com/about`       | `https://example.com/news` | `301` (the default)
 `example.com/new_feature` | `https://example.com/soon` | `302`
 
-</Example>
+{{</example>}}
 
 The following Bulk Redirect Rule, named `Rule 2`, enables the URL Redirects in the `list_b` Bulk Redirect List:
 
-<Example>
+{{<example>}}
 
 **`Rule 2` Bulk Redirect Rule**
 
 *   **Rule name**: `Rule 2`
 *   **Associated list**: `list_b`
 
-</Example>
+{{</example>}}
 
 ## URL Redirects
 
@@ -58,11 +58,11 @@ URL Redirect Lists allow you to create distinct groups of URL Redirects for diff
 
 A Bulk Redirect List does not perform any redirects on its own — you must reference the list in a Bulk Redirect Rule to enable the redirects in the list.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You can only reference Bulk Redirect Lists in Bulk Redirect Rules. Other types of rules powered by the Ruleset Engine do not support Bulk Redirect Lists.
 
-</Aside>
+{{</Aside>}}
 
 ## Bulk Redirect Rules
 
@@ -92,7 +92,7 @@ ip.src.country == "GB" and http.request.full_uri in $<LIST_NAME>
 
 For more information on the available fields, refer to [Available fields and functions](/rules/bulk-redirects/reference/fields-functions/).
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 At the left of the `in` operator you can only use fields directly and not values returned by a function. In most situations, you will want to use one of the following fields with the `in` operator:
 
@@ -101,7 +101,7 @@ At the left of the `in` operator you can only use fields directly and not values
 
 Refer to [Fields](/ruleset-engine/rules-language/fields) for more information.
 
-</Aside>
+{{</Aside>}}
 
 ### Key
 

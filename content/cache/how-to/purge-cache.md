@@ -7,11 +7,11 @@ pcx-content-type: concept
 
 You can purge cached resources by single-file (recommended), hostname or cache-tag (Enterprise plans only), or all cached content. All users can purge by single-file (by URL) or purge all cached assets. Cloudflare Enterprise users can also purge using hostnames and cache-tags.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Purge requests appear in Cloudflare Logs and are identified by the PURGE method and the Cloudflare-branded User Agent.
 
-</Aside>
+{{</Aside>}}
 
 ## Purge by single-file (by URL)
 
@@ -33,11 +33,11 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
 
 You can purge objects with these characteristics using an API call ([Purge files by URL](https://api.cloudflare.com/#zone-purge-files-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution. All of the listed options are Enterprise features.
 
-</Aside>
+{{</Aside>}}
 
 1.  Log in to your Cloudflare dashboard.
 2.  Click **Caching** > **Configuration**.
@@ -71,11 +71,11 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 4.  Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host).
 5.  Cloudflare forces a [cache miss](/cache/about/default-cache-behavior/#cloudflare-cache-responses) on content with the purged cache-tag.
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Be careful when purging. A cache miss can cause execution delays by requiring a fetch from your origin server.
 
-</Aside>
+{{</Aside>}}
 
 ## Add Cache-Tag HTTP response headers
 
@@ -106,11 +106,11 @@ When your content reaches our edge network, Cloudflare:
 5.  In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
 6.  Click **Purge**.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You can purge using cache-tags or hostnames via the Cloudflare API. For more information, see the [API documentation](https://api.cloudflare.com/) for Purging by cache-tag or hostname. You can use up to 30 cache-tags in one API call and make up to 30,000 purge API calls in a 24-hour period.
 
-</Aside>
+{{</Aside>}}
 
 ## Purge cache by prefix (Enterprise Only)
 
@@ -150,13 +150,13 @@ There are several limitations regarding purge by prefix:
     *   `www.example.com/foo?a=b` (query string)
     *   `www.example.com/foo#bar` (fragment)
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 Because purge by prefix purges a directory, any URI for a resource within the purged directory is purged regardless of query string or fragment (though fragments are not generally sent by browsers). Purge by prefix rules do not accept fragments and query strings.
 
 Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` will be purged, for example, `foo.com/bar/baz`, `foo.com/bar?good=bad`, etc. and purging `foo.com/bar?good=bad` itself will not work.
 
-</Aside>
+{{</Aside>}}
 
 ## Purge cache key resources
 

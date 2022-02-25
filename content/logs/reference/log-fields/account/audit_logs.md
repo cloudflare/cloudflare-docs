@@ -7,7 +7,7 @@ title: Audit logs
 
 The descriptions below detail the fields available for `audit_logs`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Value | Type |
 | -- | -- | -- |
@@ -27,4 +27,4 @@ The descriptions below detail the fields available for `audit_logs`.
 | ResourceType | The type of resource that was changed | string |
 | When | When the change happened | int or string |
 
-</TableWrap>
+{{</table-wrap>}}

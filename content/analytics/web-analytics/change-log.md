@@ -10,7 +10,7 @@ meta:
 
 Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytics functionality. The table below includes a log of what changed in the `beacon.min.js` file and when.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Date of change | Description |
 | ---------------|------------- |
@@ -20,4 +20,4 @@ Cloudflare occasionally updates the `beacon.min.js` file to improve Web Analytic
 | 2021-05-28     | `startsWith` function replaced with `indexOf` function, which prevents rendering if multiple beacon scripts are loaded. |
 | 2021-05-12     | Reporting endpoint changed from `/cdn-cgi/beacon/performance` to `/cdn-cgi/rum` (for Browser Insights only). |
 
-</TableWrap>
+{{</table-wrap>}}

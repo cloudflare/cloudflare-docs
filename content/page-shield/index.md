@@ -18,14 +18,14 @@ Page Shield includes the following features:
 *   **Code change detection**: Detects any changes in the scripts loaded in your pages.
 *   **Alerts**: Receive notifications about newly detected scripts, scripts loaded from unknown domains, new scripts considered malicious, or code changes in your existing scripts.
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="/about">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="/about">}}Learn more{{</button>}}
+{{</button-group>}}
 
 ## Availability
 
-<TableWrap>
+{{<table-wrap>}}
 
 Feature | Free | Pro | Business | Enterprise | Enterprise<br/> w/ add-on
 \--------|------|-----|----------|------------|----------------------------
@@ -35,4 +35,4 @@ Page attribution                             | –   | –   | Yes | Yes | Yes
 Malicious code detection<br/> and alerting   | –   | –   | –   | –   | Yes
 Code change detection<br/> and alerting      | –   | –   | –   | –   | Yes
 
-</TableWrap>
+{{</table-wrap>}}

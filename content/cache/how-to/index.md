@@ -8,4 +8,4 @@ weight: 3
 
 Learn how to complete different tasks to customize your cache behavior.
 
-<DirectoryListing path="/how-to"/>
+{{<directory-listing>}}

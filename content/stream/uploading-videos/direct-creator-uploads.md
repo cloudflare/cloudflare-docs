@@ -22,36 +22,36 @@ To make API requests you will need your [Cloudflare API token](https://www.cloud
 There are several constraints you can enforce on your user's uploads through the
 body of the `POST` request:
 
-<Definitions>
+{{<definitions>}}
 
-*   `maxDurationSeconds` <Type>integer</Type> <PropMeta>required</PropMeta>
+*   `maxDurationSeconds` {{<type>}}integer{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
     *   Enforces the maximum duration in seconds for a video the user uploads.  For direct uploads, Stream requires videos are at least 1 second in length, and restricts to a maximum of 6 hours.  Therefore, this field must be greater than 1 and less than 21,600.
 
-*   `expiry` <Type>string (date)</Type> <PropMeta>default: now + 30 minutes</PropMeta>
+*   `expiry` {{<type>}}string (date){{</type>}} {{<prop-meta>}}default: now + 30 minutes{{</prop-meta>}}
     *   Optional string field that enforces the time after which the unique one-time upload URL is invalid.  The time value must be formatted in RFC3339 layout and will be interpreted against UTC time zone.  If an expiry is set, it must be no less than two minutes in the future, and not more than 6 hours in the future.  If an expiry is not set, the upload URL will expire 30 minutes after it's creation.
 
-</Definitions>
+{{</definitions>}}
 
 Additionally, you can control security features through these fields:
 
-<Definitions>
+{{<definitions>}}
 
-*   `requireSignedURLs` <Type>boolean</Type> <PropMeta>default: false</PropMeta>
+*   `requireSignedURLs` {{<type>}}boolean{{</type>}} {{<prop-meta>}}default: false{{</prop-meta>}}
     *   Limits the permission to view the video to only [signed URLs](/stream/viewing-videos/securing-your-stream/).
 
-*   `allowedOrigins` <Type>array of strings</Type> <PropMeta>default: *empty*</PropMeta>
+*   `allowedOrigins` {{<type>}}array of strings{{</type>}} {{<prop-meta>}}default: *empty*{{</prop-meta>}}
     *   Limit the domains this video can be embedded on. Learn more about [allowed origins](/stream/viewing-videos/securing-your-stream/).
 
-*   `thumbnailTimestampPct` <Type>float</Type> <PropMeta>default: 0</PropMeta>
+*   `thumbnailTimestampPct` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0{{</prop-meta>}}
     *   Sets the timestamp location of [thumbnail](/stream/viewing-videos/displaying-thumbnails/) image to a percentage location of the video from 0 to 1.
 
-*   `watermark` <Type>string</Type> <PropMeta>default: *none*</PropMeta>
+*   `watermark` {{<type>}}string{{</type>}} {{<prop-meta>}}default: *none*{{</prop-meta>}}
     *   `uid` of the watermark profile to be included in this video. Video uploaded by the link will be [watermarks](/stream/uploading-videos/applying-watermarks/) automatically.
 
-*   `meta` <Type>json map</Type> <PropMeta>default: *none*</PropMeta>
+*   `meta` {{<type>}}json map{{</type>}} {{<prop-meta>}}default: *none*{{</prop-meta>}}
     *   Set the video's `name` along with any other additional arbitrary keys for metadata to be stored.
 
-</Definitions>
+{{</definitions>}}
 
 ## Using Basic Uploads
 
@@ -135,7 +135,7 @@ size, the user will receive a `4xx` response.
 
 ### Example
 
-<Example>
+{{<example>}}
 
 ```html
 <!DOCTYPE html>
@@ -176,7 +176,7 @@ size, the user will receive a `4xx` response.
 </html>
 ```
 
-</Example>
+{{</example>}}
 
 ## Using tus (recommended for videos over 200MB)
 

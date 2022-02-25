@@ -12,4 +12,4 @@ To prevent this and secure your connections, 1.1.1.1 supports DNS over TLS (DoT)
 
 Pick one of these standards to start.
 
-<DirectoryListing path="/encrypted-dns"/>
+{{<directory-listing>}}

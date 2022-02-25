@@ -44,11 +44,11 @@ To upload a custom SSL certificate in the dashboard:
 
 5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
 
-     <Aside type="note">
+     {{<Aside type="note">}}
 
     If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
 
-     </Aside>
+     {{</Aside>}}
 
 6.  Choose the appropriate [**Bundle Method**](/ssl/bundling-methodologies/).
 
@@ -144,11 +144,11 @@ To update a certificate:
 5.  Click the wrench icon and click **Replace SSL certificate and key**.
 6.  Follow the same steps as [create a new certificate](#upload-a-custom-certificate).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
 
-</Aside>
+{{</Aside>}}
 
 ### Using the API
 

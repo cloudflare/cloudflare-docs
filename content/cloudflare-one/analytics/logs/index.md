@@ -8,7 +8,7 @@ weight: 6
 
 The Logs section of the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) allows you to take a look at analytics on your network traffic.
 
-<DirectoryListing path="/analytics/logs"/>
+{{<directory-listing>}}
 
 ## How long are logs stored by Cloudflare Zero Trust?
 

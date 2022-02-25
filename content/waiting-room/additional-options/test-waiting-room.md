@@ -8,9 +8,9 @@ weight: 0
 
 Follow this tutorial to ensure your Waiting Room queues and admits users as expected.
 
-<Aside type="warning" header="Warning:">
+{{<Aside type="warning" header="Warning:">}}
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare.
-</Aside>
+{{</Aside>}}
 
 ***
 

@@ -12,11 +12,11 @@ Page Shield implements different mechanisms to determine if a script is maliciou
 *   Malicious domain checks
 *   Malicious script detection
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This feature is available as a paid add-on for customers on an Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 ## Malicious URL checks
 

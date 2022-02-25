@@ -5,8 +5,8 @@ _build:
   list: never
 ---
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Network Error Logging is currently in a closed beta for Enterprise users. To sign up for Network Error Logging, refer to [Get started](/network-error-logging/get-started/).
 
-</Aside>
+{{</Aside>}}

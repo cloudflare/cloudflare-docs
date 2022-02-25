@@ -133,11 +133,11 @@ As noted above, there is no discernible pattern for which origin receives the re
 
 ## 4. Switch to using Cloudflare's Load Balancing product
 
-<Aside>
+{{<Aside>}}
 
 Before proceeding, ensure Load Balancing is enabled for your account. If you are on an Enterprise plan, contact your Customer Success Manager to enable Load Balancing' otherwise, you can subscribe to Load Balancing within the Cloudflare Dashboard.
 
-</Aside>
+{{</Aside>}}
 
 As described in the [Load Balancing tutorial](/load-balancing/get-started), you will need to complete three tasks:
 

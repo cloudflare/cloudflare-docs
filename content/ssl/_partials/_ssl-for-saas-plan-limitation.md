@@ -5,8 +5,8 @@ _build:
   list: never
 ---
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Only certain customers have access to this feature. For more details, see the [Plans page](/ssl/ssl-for-saas/plans/).
 
-</Aside>
+{{</Aside>}}

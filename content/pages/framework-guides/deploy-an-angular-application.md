@@ -24,11 +24,11 @@ $ cd my-angular-app
 
 Alternatively, you can use [`npx`](https://www.npmjs.com/package/npx), which is included with all modern `npm` versions, to avoid the global installation:
 
-<Aside>
+{{<Aside>}}
 
 **Note:** All modern versions of `npm` already include the `npx` executable. You do not need to install anything for this approach.
 
-</Aside>
+{{</Aside>}}
 
 ```sh
 # Create the project
@@ -59,7 +59,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option | Value                            |
 | -------------------- | -------------------------------- |
@@ -67,7 +67,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Build command        | `npm run build -- -c production` |
 | Build directory      | `dist/my-angular-app`            |
 
-</TableLayout>
+</div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
@@ -110,11 +110,11 @@ After completing configuration, click the **Save and Deploy** button.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies – including Angular CLI – and builds the project as specified.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 

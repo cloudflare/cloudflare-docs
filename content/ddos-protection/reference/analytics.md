@@ -16,7 +16,7 @@ You can view DDoS analytics in different dashboards, depending on your service a
 
 ## Availability
 
-<TableWrap>
+{{<table-wrap>}}
 
 Service       | Free              | Pro                | Business           | Enterprise
 \--------------|-------------------|--------------------|--------------------|-------------------
@@ -24,4 +24,4 @@ WAF/CDN       | Activity log only | Firewall Analytics | Firewall Analytics | Fi
 Spectrum      | –                 | –                  | –                  | Network Analytics
 Magic Transit | –                 | –                  | –                  | Network Analytics
 
-</TableWrap>
+{{</table-wrap>}}

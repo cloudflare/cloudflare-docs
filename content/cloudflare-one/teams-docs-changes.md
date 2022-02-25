@@ -22,7 +22,7 @@ Starting on **February 8, 2021**, this space will replace the separate, independ
 
 The new Cloudflare for Teams documentation is structured around six main topics:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Topic | Description |
 | ------- | ----------- |
@@ -34,4 +34,4 @@ The new Cloudflare for Teams documentation is structured around six main topics:
 | [🤖 **API-related documentation**](/cloudflare-one/api-terraform/) | This section covers how to manage Access with the API and Terraform. |
 | [📈 **Documentation on Analytics**](/cloudflare-one/analytics/) | This section explains our analytics pages on the Teams dash, as well as our logs pages. |
 
-</TableWrap>
+{{</table-wrap>}}

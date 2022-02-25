@@ -34,8 +34,8 @@ Notification History is available to all plans. The amount of history clients ha
 *   **Free, Pro and Business**: History from the past 30 days.
 *   **Enterprise**: History from the past 90 days.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Customers will not be able to to access Notification History from before Oct 11, 2021.
 
-</Aside>
+{{</Aside>}}

@@ -8,4 +8,4 @@ meta:
 
 # About Cache
 
-<DirectoryListing path="/about"/>
+{{<directory-listing>}}

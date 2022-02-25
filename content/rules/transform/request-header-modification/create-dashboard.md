@@ -24,11 +24,11 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
 
-     <Aside type='note'>
+     {{<Aside type="note">}}
 
     Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
 
-     </Aside>
+     {{</Aside>}}
 
 6.  For **Modify request header**, select one of the following options:
 
@@ -44,11 +44,11 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
     ![HTTP request header modification examples](/rules/static/transform/request-header-modification-example.png)
 
-     <Aside type='note'>
+     {{<Aside type="note">}}
 
     You can modify up to 30 HTTP request headers in a single rule.
 
-     </Aside>
+     {{</Aside>}}
 
 9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 

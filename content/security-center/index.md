@@ -20,10 +20,10 @@ Cloudflare Security Center (beta) brings together our suite of security products
 *   **Security Insights**: Review and manage potential security risks and vulnerabilities associated with your IT infrastructure.
 *   **Infrastructure**: Review and manage your IT infrastructure.
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started">Get started</Button>
-  <Button type="secondary" href="/about">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="/about">}}Learn more{{</button>}}
+{{</button-group>}}
 
 ***
 

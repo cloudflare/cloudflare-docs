@@ -63,11 +63,11 @@ To set up S3-compatible endpoints:
 1.  Create a job with the appropriate endpoint URL and authentication parameters.
 2.  Enable the job to begin pushing logs.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Unlike Logpush jobs to Amazon S3, there is no ownership challenge with S3-compatible APIs.
 
-</Aside>
+{{</Aside>}}
 
 <EnableReadPermissions/>
 
@@ -82,11 +82,11 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 "s3://<BUCKET_NAME>/<BUCKET_PATH>?region=<REGION>&access-key-id=<ACCESS_KEY_ID>&secret-access-key=<SECRET_ACCESS_KEY>&endpoint=<ENDPOINT_URL>"
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 `<ENDPOINT_URL>` is the URL without the bucket name or path. For example: `endpoint=sfo2.digitaloceanspaces.com`.
 
-</Aside>
+{{</Aside>}}
 
 *   **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 *   **logpull\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options).

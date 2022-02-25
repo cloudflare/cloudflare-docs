@@ -45,8 +45,8 @@ $ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
 $ ./uninstall.sh
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 You may be prompted to provide your credentials while removing the application.
 
-</Aside>
+{{</Aside>}}

@@ -8,4 +8,4 @@ meta:
 
 # Reference — Zone setups
 
-<DirectoryListing path="/zone-setups/reference"/>
+{{<directory-listing>}}

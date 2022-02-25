@@ -29,12 +29,12 @@ Cloudflare Zaraz then translates the `dataLayer.push()` call to a `zaraz.track()
 
 To track a `dataLayer.push` function, create a trigger with `zaraz.track()`. The following example triggers a `dataLayer.push()` function with a `purchase` event:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` |  *Contains* | `purchase`
 
-</TableWrap>
+{{</table-wrap>}}
 
 We do not recommend using `dataLayer`. However, as many websites employ it, Cloudflare Zaras has this automatic translation layer that converts it to `zaraz.track()`.

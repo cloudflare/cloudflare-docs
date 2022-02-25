@@ -36,7 +36,7 @@ $ git push -u origin main
 
 Deploy your site to Pages by logging into the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Pages** dashboard and selecting **Create a project**. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option | Value           |
 | -------------------- | --------------- |
@@ -44,15 +44,15 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 | Build command        | `npm run build` |
 | Build directory      | `dist`          |
 
-</TableLayout>
+</div>
 
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `vue`, your project dependencies, and building your site, before deploying it.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Vue application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.

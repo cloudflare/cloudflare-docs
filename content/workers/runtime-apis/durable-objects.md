@@ -31,12 +31,12 @@ export class DurableObject {
 }
 ```
 
-<Definitions>
+{{<definitions>}}
 
 *   `state`
     *   Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
 
-*   `state.id` <Type>DurableObjectId</Type>
+*   `state.id` {{<type>}}DurableObjectId{{</type>}}
     *   The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
 
 *   `state.waitUntil`
@@ -45,7 +45,7 @@ export class DurableObject {
 *   `state.storage`
     *   Contains methods for accessing persistent storage via the transactional storage API. Refer to [Transactional Storage API](#transactional-storage-api) for a detailed reference.
 
-*   <Code>state.blockConcurrencyWhile(callback<ParamType>Function()</ParamType>)</Code> <Type>Promise</Type>
+*   {{<code>}}state.blockConcurrencyWhile(callback{{<param-type>}}Function(){{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
     *   Executes `callback()` (which may be `async`) while blocking any other events from being delivered to the object until the callback completes. This allows you to execute some code that performs I/O (such as a `fetch()`) with the guarantee that the object's state will not unexpectedly change as a result of concurrent events. All events that were not explicitly initiated as part of the callback itself will be blocked. This includes not only new incoming requests, but also responses to outgoing requests (such as `fetch()`) that were initiated outside of the callback. Once the callback completes, these events will be delivered.
 
@@ -58,7 +58,7 @@ export class DurableObject {
 *   `env`
     *   Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers (not using Modules syntax), these same bindings appear as global variables within the Workers script. Workers that export Durable Object classes always use the Modules syntax and have bindings delivered to the constructor rather than placed in global variables.
 
-</Definitions>
+{{</definitions>}}
 
 ### Durable Object lifespan
 
@@ -129,133 +129,133 @@ The transactional storage API is accessible via [the `state.storage` object](#du
 
 Each method is implicitly wrapped inside a transaction, such that its results are atomic and isolated from all other storage operations, even when accessing multiple key-value pairs.
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>get(key<ParamType>string</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise\<any></Type>
+*   {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<any>{{</type>}}
 
     *   Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
         **Supported options:**
 
-        <Definitions>
+        {{<definitions>}}
 
-        *   <Code>allowConcurrency<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}allowConcurrency{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   By default, the system will pause delivery of I/O events to the object while a storage operation is in progress, in order to avoid unexpected race conditions. Pass `allowConcurrency: true` to opt out of this behavior and allow concurrent events to be delivered.
 
-        *   <Code>noCache<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}noCache{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   If true, then the key/value will not be inserted into the in-memory cache. If the key is already in the cache, the cached value will be returned, but its last-used time will not be updated. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance.
 
-        </Definitions>
+        {{</definitions>}}
 
-*   <Code>get(keys<ParamType>Array\<string></ParamType>, options<ParamType>Object</ParamType>)</Code> <Type>Promise\<Map\<string, any>></Type>
+*   {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
     *   Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.
 
         **Supported options:** Same as `get(key, options)`, above.
 
-*   <Code>put(key<ParamType>string</ParamType>, value<ParamType>any</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
+*   {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}any{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
     *   Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Keys are limited to a max size of 2048 bytes and values are limited to 128 KiB (131072 bytes).
 
         **Supported options:**
 
-        <Definitions>
+        {{<definitions>}}
 
-        *   <Code>allowUnconfirmed<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}allowUnconfirmed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   By default, the system will pause outgoing network messages from the Durable Object until all previous writes have been confirmed flushed to disk. In the unlikely event that the write fails, the system will reset the Object, discard all outgoing messages, and respond to any clients with errors instead. This way, Durable Objects can continue executing in parallel with a write operation, without having to worry about prematurely confirming writes, because it is impossible for any external party to observe the Object's actions unless the write actually succeeds. However, this does mean that after any write, subsequent network messages may be slightly delayed. Some applications may consider it acceptable to communicate on the basis of unconfirmed writes and may prefer to allow network traffic immediately. In this case, set `allowUnconfirmed` to `true` to opt out of the default behavior. Refer to [this blog post for an in-depth discussion](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
 
-        *   <Code>noCache<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}noCache{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   If true, then the key/value will be discarded from memory as soon as it has completed writing to disk. Use this when you expect this key will not be used again in the near future. This flag is only a hint: it will never change the semantics of your code, but it may affect performance. In particular, if you `get()` the key before the write to disk has completed, the copy from the write buffer will be returned, thus ensuring consistency with the latest call to `put()`.
 
-        </Definitions>
+        {{</definitions>}}
 
-        <Aside type="note" header="Automatic write coalescing">
+        {{<Aside type="note" header="Automatic write coalescing">}}
 
         If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
 
-        </Aside>
+        {{</Aside>}}
 
-        <Aside type="note" header="Write buffer behavior">
+        {{<Aside type="note" header="Write buffer behavior">}}
 
         `put()` returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
 
-        </Aside>
+        {{</Aside>}}
 
-*   <Code>put(entries<ParamType>Object</ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise</Type>
+*   {{<code>}}put(entries{{<param-type>}}Object{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
     *   Takes an Object and stores each of its keys and values to storage. Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. Supports up to 128 key-value pairs at a time. Each key is limited to a maximum size of 2048 bytes and each value is limited to 128 KiB (131072 bytes).
 
         **Supported options:** Same as `put(key, value, options)`, above.
 
-*   <Code>delete(key<ParamType>string</ParamType>)</Code> <Type>Promise\<boolean></Type>
+*   {{<code>}}delete(key{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Promise\<boolean>{{</type>}}
 
     *   Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
         **Supported options:** Same as `put()`, above.
 
-*   <Code>delete(keys<ParamType>Array\<string></ParamType>, options<ParamType>Object</ParamType><PropMeta>optional</PropMeta>)</Code> <Type>Promise\<number></Type>
+*   {{<code>}}delete(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<number>{{</type>}}
 
     *   Deletes the provided keys and their associated values. Returns a count of the number of key-value pairs deleted.
 
         **Supported options:** Same as `put()`, above.
 
-*   <Code>list()</Code> <Type>Promise\<Map\<string, any>></Type>
+*   {{<code>}}list(){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
     *   Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
-*   <Code>list(options<ParamType>Object</ParamType>)</Code> <Type>Promise\<Map\<string, any>></Type>
+*   {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
     *   Returns keys associated with the current Durable Object according to the parameters in the provided options object.
 
         **Supported options:**
 
-        <Definitions>
+        {{<definitions>}}
 
-        *   <Code>start<ParamType>string</ParamType></Code>
+        *   {{<code>}}start{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Key at which the list results should start, inclusive.
 
-        *   <Code>end<ParamType>string</ParamType></Code>
+        *   {{<code>}}end{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Key at which the list results should end, exclusive.
 
-        *   <Code>prefix<ParamType>string</ParamType></Code>
+        *   {{<code>}}prefix{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Restricts results to only include key-value pairs whose keys begin with the prefix.
 
-        *   <Code>reverse<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}reverse{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   If true, return results in descending lexicographic order instead of the default ascending order.
 
-        *   <Code>limit<ParamType>number</ParamType></Code>
+        *   {{<code>}}limit{{<param-type>}}number{{</param-type>}}{{</code>}}
 
             *   Maximum number of key-value pairs to return.
 
-        *   <Code>allowConcurrency<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}allowConcurrency{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   Same as the option to `get()`, above.
 
-        *   <Code>noCache<ParamType>boolean</ParamType></Code>
+        *   {{<code>}}noCache{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
             *   Same as the option to `get()`, above.
 
-        </Definitions>
+        {{</definitions>}}
 
-*   <Code>transaction(closure<ParamType>Function(txn)</ParamType>)</Code> <Type>Promise</Type>
+*   {{<code>}}transaction(closure{{<param-type>}}Function(txn){{</param-type>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
     *   Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
-        <Aside type="note" header="Deprecated">
+        {{<Aside type="note" header="Deprecated">}}
 
         Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.
 
-        </Aside>
+        {{</Aside>}}
 
-        <Definitions>
+        {{<definitions>}}
 
         *   `txn`
 
@@ -263,15 +263,15 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
                 Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-        </Definitions>
+        {{</definitions>}}
 
-*   <Code>deleteAll()</Code> <Type>Promise</Type>
+*   {{<code>}}deleteAll(){{</code>}} {{<type>}}Promise{{</type>}}
 
     *   Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
         **Supported options:** Same as `put()`, above.
 
-</Definitions>
+{{</definitions>}}
 
 ### `fetch()` handler method
 
@@ -313,21 +313,21 @@ let id = OBJECT_NAMESPACE.newUniqueId({jurisdiction: "eu"})
 
 The `jurisdiction` option for the `newUniqueId()` method creates a new Object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with IDs created by `newUniqueId()` and are not currently compatible with IDs created by `idFromName(name)`.
 
-<Aside type="note" header="ID logging">
+{{<Aside type="note" header="ID logging">}}
 
 Object IDs will be logged outside of the EU even if you specify a jurisdiction.
 
-</Aside>
+{{</Aside>}}
 
 Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
 
 The only jurisdiction currently supported is `eu` (the European Union).
 
-<Aside type="note" header="Unique IDs perform best">
+{{<Aside type="note" header="Unique IDs perform best">}}
 
 When you construct a new unique ID, the system knows that the same ID will not be generated by another Worker running on the other side of the world at the same time. Therefore, the Object can be instantiated nearby without waiting for any round-the-world synchronization. Whenever you have a convenient place to store the ID, it is recommended to use randomly-generated IDs for best performance.
 
-</Aside>
+{{</Aside>}}
 
 ### Deriving IDs from names
 
@@ -337,22 +337,22 @@ let id = OBJECT_NAMESPACE.idFromName(name)
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `name` <Type>string</Type>
+*   `name` {{<type>}}string{{</type>}}
     *   The Object name, an arbitrary string from which the ID is derived.
 
-</Definitions>
+{{</definitions>}}
 
 This method derives a unique object ID from the given name string. It will always return the same ID when given the same name as input.
 
-<Aside type="note" header="Name-derived IDs require global lookups at creation">
+{{<Aside type="note" header="Name-derived IDs require global lookups at creation">}}
 
 The first time you access a Durable Object based on an ID derived from a name, the system does not know anything about the Object. It is possible that a Worker on the opposite side of the world could have coincidentally decided to access the same Object at the same time. To guarantee that only one instance of the Object is created worldwide, the system must check whether the Object has been created anywhere else. Due to the inherent limit of the speed of light, this round-the-world check can take up to a few hundred milliseconds. After this check, the Object will be instantiated near where it was first requested.
 
 After the object has been accessed the first time, location information will be cached around the world so that subsequent lookups can be faster.
 
-</Aside>
+{{</Aside>}}
 
 ### Parsing previously-created IDs from strings
 
@@ -362,12 +362,12 @@ let id = OBJECT_NAMESPACE.idFromString(hexId)
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `hexId` <Type>string</Type>
+*   `hexId` {{<type>}}string{{</type>}}
     *   An ID string constructed by calling the `.toString()` method of an existing ID.
 
-</Definitions>
+{{</definitions>}}
 
 This method parses an ID that was previously stringified. This is useful in particular with IDs created using `newUniqueId()`, as these IDs need to be stored somewhere, probably as a string.
 
@@ -381,12 +381,12 @@ let stub = OBJECT_NAMESPACE.get(id)
 
 #### Parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `id` <Type>DurableObjectId</Type>
+*   `id` {{<type>}}DurableObjectId{{</type>}}
     *   An ID constructed using `newUniqueId()`, `idFromName()`, or `idFromString()` on this namespace.
 
-</Definitions>
+{{</definitions>}}
 
 This method constructs an Object stub, which is a local client that provides access to a remote Durable Object.
 
@@ -402,11 +402,11 @@ A stub is created using `OBJECT_NAMESPACE.get(id)` (above).
 
 Stubs implement E-order semantics. When you make multiple calls to the same stub, it is guaranteed that the calls will be delivered to the remote Object in the order in which you made them. This ordering guarantee often makes many distributed programming problems easier. However, there is a cost: due to random network disruptions or other transient issues, a stub may become disconnected from its remote Object. Once a stub is disconnected, it is permanently broken, and all in-flight calls and future calls will fail with exceptions. To make new requests to the Durable Object, you must call `OBJECT_NAMESPACE.get(id)` again to get a new stub, keeping in mind that there are no ordering guarantees between requests to the new stub versus the old one. If ordering is not a concern, you can create a new stub for every request.
 
-<Aside type="note" header="E-order">
+{{<Aside type="note" header="E-order">}}
 
 E-order is a concept deriving from the [E distributed programming language](https://en.wikipedia.org/wiki/E_\(programming_language\)). E-order is implemented by the [Cap'n Proto](https://capnproto.org) distributed object-capability RPC protocol, which Cloudflare Workers uses for internal communications.
 
-</Aside>
+{{</Aside>}}
 
 ### Sending HTTP requests
 

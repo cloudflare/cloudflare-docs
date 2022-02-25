@@ -10,7 +10,7 @@ meta:
 
 # 2021-12-10 – Emergency Release
 
-<TableWrap><table style="width: 100%"> <thead> <tr> <th>
+{{<table-wrap>}}<table style="width: 100%"> <thead> <tr> <th>
 Ruleset </th> <th>
 Rule ID </th> <th>
 Legacy Rule ID </th> <th>
@@ -36,4 +36,4 @@ Log4j RCE URI - CVE-2021-44228 </td> <td>
 N/A </td> <td>
 Block </td> </tr> </tbody>
 
-</table></TableWrap>
+</table>{{</table-wrap>}}

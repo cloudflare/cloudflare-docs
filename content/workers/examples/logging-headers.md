@@ -11,9 +11,9 @@ layout: example
 
 # Logging headers to console
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 async function handleRequest(request) {
@@ -29,7 +29,7 @@ addEventListener("fetch", event => {
 
 ***
 
-<ContentColumn>
+{{<content-column>}}
 
 ## Console-logging headers
 
@@ -120,4 +120,4 @@ Request headers: {
 }"
 ```
 
-</ContentColumn>
+{{</content-column>}}

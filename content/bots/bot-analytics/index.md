@@ -10,4 +10,4 @@ meta:
 
 Business and Enterprise customers can use **Bot Analytics** to dynamically examine bot traffic.
 
-<DirectoryListing path="/bot-analytics"/>
+{{<directory-listing>}}

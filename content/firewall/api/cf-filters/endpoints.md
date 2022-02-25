@@ -8,7 +8,7 @@ layout: list
 
 # Endpoints
 
-<ContentColumn>
+{{<content-column>}}
 
 To invoke a Cloudflare Filters API operation, append the endpoint to the Cloudflare API base URL:
 
@@ -20,17 +20,17 @@ For authentication instructions, refer to [Getting Started: Requests](https://ap
 
 For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 The Filters API endpoints require a value for `<ZONE_ID>`.
 
 To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the Zone ID associated with the domain for which you want to manage filters.
 
-</Aside>
+{{</Aside>}}
 
 The Cloudflare Filters API supports the operations outlined below. Visit the pages in this section for examples.
 
-</ContentColumn>
+{{</content-column>}}
 
 <table style='table-layout:fixed; width:100%'>
   <thead>

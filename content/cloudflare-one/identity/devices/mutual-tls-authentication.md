@@ -17,11 +17,11 @@ weight: 5
 </div>
 </details>
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 Adding mTLS to your application using your own certificate authority (CA) is only available on the Cloudflare enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 Mutual TLS (mTLS) authentication ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
@@ -33,13 +33,13 @@ Currently, mTLS does not work with HTTP3 traffic.
 
 ## Add mTLS authentication to your Access configuration
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 The mTLS certificate is used only to verify the client certificate. It does not control the SSL certificate presented during the [server hello](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
 mTLS is checked on a per host basis. Access sets a flag for when a client certificate was presented and successfully completed mTLS authentication. However, to actually enforce mTLS, you need an Access policy in place, and Access policies are both host and path specific. If you want to enforce mTLS on a specific path, you need to make sure your Access policies are configured accordingly.
 
-</Aside>
+{{</Aside>}}
 
 To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.teams.cloudflare.com):
 
@@ -220,11 +220,11 @@ The instructions here cover usage with a computer running MacOS.
 
 1.  In the same working directory, run the following command to add the client certificate into the MacOS Keychain.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 The command adds the client certificate to the trusted store on your device. **Only** proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
 
-</Aside>
+{{</Aside>}}
 
 ```sh
 $ open client.pem

@@ -10,11 +10,11 @@ import LBDefinition from "../\_partials/\_load-balancer-definition.md"
 
 <LBDefinition/>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For more background information on what load balancers are and how they work, check out our <a href="https://www.cloudflare.com/learning/performance/what-is-load-balancing/">Learning Center</a>.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -56,7 +56,7 @@ For an up-to-date list of load balancer properties, refer to [Load balancer prop
 
 The Cloudflare API supports the following commands for load balancers.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -73,52 +73,52 @@ The Cloudflare API supports the following commands for load balancers.
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-create-load-balancer">Create Load Balancer</a>
    </td>
-   <td><Code>GET</Code>
+   <td>{{<code>}}GET{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers{{</code>}}
    </td>
   </tr>
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-delete-load-balancer">Delete Load Balancer</a>
    </td>
-   <td><Code>DELETE</Code>
+   <td>{{<code>}}DELETE{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
    </td>
   </tr>
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-list-load-balancers">List Load Balancers</a>
    </td>
-   <td><Code>GET</Code>
+   <td>{{<code>}}GET{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers{{</code>}}
    </td>
   </tr>
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-load-balancer-details">Load Balancer Details</a>
    </td>
-   <td><Code>POST</Code>
+   <td>{{<code>}}POST{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
    </td>
   </tr>
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-patch-load-balancer">Overwrite specific properties</a>
    </td>
-   <td><Code>PATCH</Code>
+   <td>{{<code>}}PATCH{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
    </td>
   </tr>
   <tr>
    <td><a href="https://api.cloudflare.com/#load-balancers-update-load-balancer">Overwrite entire Load Balancer</a>
    </td>
-   <td><Code>PUT</Code>
+   <td>{{<code>}}PUT{{</code>}}
    </td>
-   <td><Code>/zones/:zone_id/load_balancers/:id</Code>
+   <td>{{<code>}}/zones/:zone_id/load_balancers/:id{{</code>}}
    </td>
   </tr>
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}

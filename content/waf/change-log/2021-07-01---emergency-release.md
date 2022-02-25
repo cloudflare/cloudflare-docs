@@ -10,7 +10,7 @@ meta:
 
 # 2021-07-01 – Emergency Release
 
-<TableWrap><table style="width: 100%"> <thead> <tr> <th>
+{{<table-wrap>}}<table style="width: 100%"> <thead> <tr> <th>
 Ruleset </th> <th>
 Rule </th> <th>
 Description </th> <th>
@@ -27,4 +27,4 @@ Block ReGeorg webshell </td> <td>
 N/A </td> <td>
 Disabled </td> </tr> </tbody>
 
-</table></TableWrap>
+</table>{{</table-wrap>}}

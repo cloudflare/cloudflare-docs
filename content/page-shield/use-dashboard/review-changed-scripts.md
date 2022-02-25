@@ -10,11 +10,11 @@ Page Shield analyzes the JavaScript dependencies in the pages of your domain ove
 
 You can configure a notification for [code change alerts](/page-shield/reference/alerts/) to receive a daily notification about changed scripts in your domain.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Available as a paid add-on for customers on an Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 When you receive such a notification:
 

@@ -8,4 +8,4 @@ weight: 4
 
 Configure devices to send DNS queries to Cloudflare, or proxy all traffic leaving the device through Cloudflare's network.
 
-<DirectoryListing path="/connections/connect-devices"/>
+{{<directory-listing>}}

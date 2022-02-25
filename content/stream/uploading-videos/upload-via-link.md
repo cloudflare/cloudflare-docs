@@ -90,4 +90,4 @@ https://github.com/cloudflare/cloudflare-docs-engine/issues/281
   </div>
 </figure>
 
-<p><Button type="primary" href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">View detailed API reference</Button></p>
+<p>{{<button type="primary" href="https://api.cloudflare.com/#stream-videos-upload-a-video-from-a-url">}}View detailed API reference{{</button>}}</p>

@@ -12,9 +12,9 @@ layout: example
 
 # Redirect
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ## Redirect all requests to one URL
 

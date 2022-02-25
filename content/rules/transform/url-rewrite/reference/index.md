@@ -10,4 +10,4 @@ meta:
 
 This section contains reference information on URL Rewrite Rules.
 
-<DirectoryListing path="/transform/url-rewrite/reference"/>
+{{<directory-listing>}}

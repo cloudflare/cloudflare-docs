@@ -36,11 +36,11 @@ User seats can be removed for Access and Gateway at **My Team** > **Users**. Rem
 
 *   **Gateway**: All filtering and routing via the WARP client will cease until the user re-enrolls with their WARP client
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 The Remove action will remove a user’s seat, but it will not permanently revoke their ability to authenticate. To permanently disable a user’s ability to authenticate, you must modify the policies that allow them to reach a given application or enroll a device in WARP.
 
-</Aside>
+{{</Aside>}}
 
 ### Revoking users
 

@@ -50,11 +50,11 @@ In most cases, domains may be transferred even if WHOIS privacy services have be
 
 Your new registrar needs to confirm with your old registrar that the transfer flow is authorized. To do that, your old registrar will provide an authorization code to you.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This code is often referred to as an authorization code, auth code, authinfo code, or transfer code. You will need to input that code to complete your transfer to Cloudflare. Cloudflare will use it to confirm the transfer is authentic.
 
-</Aside>
+{{</Aside>}}
 
 ### 5. Initiate your transfer to Cloudflare
 
@@ -99,11 +99,11 @@ Once you have requested your transfer, Cloudflare will begin processing it, and 
 
 After this step, your previous registrar will also email you to confirm your request to transfer. Most registrars will include a link to confirm the transfer request. If you click that link, you can accelerate the transfer operation. If you do not act on the email, the registrar can wait up to five days to process the transfer to Cloudflare. You may also be able to approve the transfer from within your current registrar dashboard.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Registrants transferring a `.us` domain will always receive a FOA email.
 
-</Aside>
+{{</Aside>}}
 
 ## Transfer statuses
 

@@ -10,11 +10,11 @@ import RegionMapping from "../../\_partials/\_region-mapping.md"
 
 When you [create a load balancer](/load-balancing/how-to/create-load-balancer/), their are several options for **Traffic Steering**, which decide how your load balancer routes traffic to attached and available pools.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Without purchasing **Traffic Steering**, non-Enterprise customers only have access to **Off** and **Random** for their steering options.
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -103,11 +103,11 @@ To add coordinates when creating or editing a pool:
 2.  Enter the latitude and longitude or drag a marker on the map.
 3.  Select **Save**.
 
-<Aside type="warning" header="Warning:">
+{{<Aside type="warning" header="Warning:">}}
 
 For accurate proximity steering, add GPS coordinates to all pools within the same load balancer.
 
-</Aside>
+{{</Aside>}}
 
 ## Random steering
 

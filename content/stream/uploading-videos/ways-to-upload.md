@@ -10,7 +10,7 @@ layout: list
 
 Stream provides four ways to upload videos to cover a diverse set of use cases.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Upload method | When to use |
 |------------------|-------------|
@@ -19,4 +19,4 @@ Stream provides four ways to upload videos to cover a diverse set of use cases.
 | [Direct creator uploads](/stream/uploading-videos/direct-creator-uploads/) | The end user is uploading videos but does not have access to your API tokens, such as if you have your users uploading content to your website or mobile app |
 | [Upload video file](/stream/uploading-videos/upload-video-file/) | When the video file is stored on a computer with access to your API tokens |
 
-</TableWrap>
+{{</table-wrap>}}

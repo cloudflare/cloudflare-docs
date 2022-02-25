@@ -81,7 +81,7 @@ Because ECMP is probabilistic, the algorithm routes roughly the same number of f
 
 For example, consider a scenario with many very low-bandwidth TCP connections and one very high-bandwidth TCP connection. Packets for the high-bandwidth connection have the same hash and thus use the same tunnel. As a result, that tunnel utilizes greater bandwidth than the others.
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 Magic Transit supports a "weight" field that you can apply to a tunnel so that a specified percentage of traffic uses that tunnel rather than other equal-cost tunnels.
 
@@ -91,4 +91,4 @@ Keep in mind that because ECMP balances flows probabilistically, the use of weig
 
 For more on Magic Transit tunnel weights, contact your Cloudflare customer service manager.
 
-</Aside>
+{{</Aside>}}

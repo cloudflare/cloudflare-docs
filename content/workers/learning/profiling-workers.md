@@ -70,11 +70,11 @@ Open a new tab in Chrome and enter `chrome://inspect` in the Chrome address bar 
 
 Select **inspect** to open DevTools.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Currently, Wrangler only supports the **Console**, **Sources** and **Profiler** tabs.
 
-</Aside>
+{{</Aside>}}
 
 ### Capturing a CPU profile
 

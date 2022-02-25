@@ -16,11 +16,11 @@ Use Custom Rules in the **Firewall** app to define the following rule types:
 
 Custom Rules are built upon the [Ruleset Engine](/ruleset-engine/) which you can use to define rules and actions in several Cloudflare products.
 
-<Aside type='warning'>
+{{<Aside type="warning">}}
 
 Custom Rules are only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

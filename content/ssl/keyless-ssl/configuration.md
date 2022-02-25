@@ -68,11 +68,11 @@ Bundle method|This should almost always be **Compatible**. Refer to [Uploading C
 
 Finally, you need to install the key server on your infrastructure, populate it with the SSL keys of the certificates you wish to use to terminate TLS at Cloudflare’s edge, and activate the key server so it can be mutually authenticated.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you plan to run Keyless SSL in a [high availability setup](/ssl/reference/high-availability/), you may need to set up additional infrastructure (load balancing and health checks).
 
-</Aside>
+{{</Aside>}}
 
 ### Install
 

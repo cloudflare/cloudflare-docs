@@ -44,11 +44,11 @@ If you want to have greater control over how customers use Cloudflare or if you 
 
 In general, this means that you will be making all the API calls to Cloudflare on behalf of customers. In this case, it is still recommended to create accounts and users that match 1:1 with your customers. This means changes made by customer `A` will go through user `A` and changes made by customer `B` will go through user `B`. This helps to avoid hitting rate limits across all customers if one user is particularly busy.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This capability is not enabled by default. Please contacct [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) if you need this functionality.
 
-</Aside>
+{{</Aside>}}
 
 Creating a user works as follows:
 
@@ -90,4 +90,4 @@ An example response for a successful creation:
 
 Now that the customer has access to the account, in the next step we will look at how to enable paid services for customers.
 
-<p><Button type="primary" href="/get-started/enabling-services">Step 3: Enabling services</Button></p>
+<p>{{<button type="primary" href="/get-started/enabling-services">}}Step 3: Enabling services{{</button>}}</p>

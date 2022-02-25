@@ -8,4 +8,4 @@ weight: 5
 
 Review the topics below for best practices related to BYOIP.
 
-<DirectoryListing path="/best-practices"/>
+{{<directory-listing>}}

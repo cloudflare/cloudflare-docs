@@ -8,4 +8,4 @@ weight: 6
 
 Review the content below for more information about Magic Firewall.
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

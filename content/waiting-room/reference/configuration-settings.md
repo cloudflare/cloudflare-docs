@@ -10,10 +10,10 @@ layout: list
 
 You can customize a variety of options for your waiting rooms.
 
-<ButtonGroup>
-  <Button type="primary" href="#dashboard-settings">Dashboard settings</Button>
-  <Button type="secondary" href="#additional-details">Additional details</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="#dashboard-settings">}}Dashboard settings{{</button>}}
+  {{<button type="secondary" href="#additional-details">}}Additional details{{</button>}}
+{{</button-group>}}
 
 ## Dashboard settings
 
@@ -91,11 +91,11 @@ You can customize a variety of options for your waiting rooms.
   </tbody>
 </table>
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 You can configure only one waiting room per `host/path` combination.
 
-</Aside>
+{{</Aside>}}
 
 ## Additional details
 

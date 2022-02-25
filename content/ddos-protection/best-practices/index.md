@@ -8,4 +8,4 @@ weight: 7
 
 Refer to the following pages for more information on DDoS protection best practices:
 
-<DirectoryListing path="/best-practices"/>
+{{<directory-listing>}}

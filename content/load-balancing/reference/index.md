@@ -8,4 +8,4 @@ weight: 50
 
 See the following pages for more information about Cloudflare Load Balancing:
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

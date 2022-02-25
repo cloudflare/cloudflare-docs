@@ -25,7 +25,7 @@ As APIs have become more prevalent, however, so have their problems:
 
 ## Features
 
-Cloudflare offers the following features to help learn about and secure your APIs: <DirectoryListing path="/products"/>
+Cloudflare offers the following features to help learn about and secure your APIs: {{<directory-listing>}}
 
 For additional details, see our [blog post](https://blog.cloudflare.com/api-abuse-detection/).
 

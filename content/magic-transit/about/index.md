@@ -16,4 +16,4 @@ Once packets hit Cloudflare’s network, traffic is inspected for attacks, filte
 
 For more on how Magic Transit works, review the information below.
 
-<DirectoryListing path="/about"/>
+{{<directory-listing>}}

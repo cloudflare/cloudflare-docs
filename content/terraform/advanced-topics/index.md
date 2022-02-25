@@ -6,4 +6,4 @@ weight: 4
 
 # Advanced topics
 
-<DirectoryListing path="/advanced-topics"/>
+{{<directory-listing>}}

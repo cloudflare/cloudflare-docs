@@ -36,11 +36,11 @@ The browser cache is controlled through the `Cache-Control` header sent in the r
 
 Other means to control Cloudflare’s cache that are not mentioned in this documentation include: Page rules and Cloudflare cache settings. Refer to the [How to Control Cloudflare’s cache support article](https://support.cloudflare.com/hc/en-us/articles/202775670) if you wish to avoid writing JavaScript with still some granularity of control.
 
-<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">
+{{<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">}}
 
 For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no back end (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
 
-</Aside>
+{{</Aside>}}
 
 ### `fetch`
 

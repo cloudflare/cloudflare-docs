@@ -8,4 +8,4 @@ weight: 8
 
 Refer to the following pages for more information about Cloudflare DDoS protection:
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

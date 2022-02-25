@@ -10,14 +10,14 @@ meta:
 
 # Cloudflare Time Services docs
 
-<ContentColumn>
+{{<content-column>}}
 
 Learn more about Cloudflare’s suite of time services.
 
-<ButtonGroup>
-  <Button type="primary" href="/ntp">NTP</Button>
-  <Button type="primary" href="/nts">NTS</Button>
-  <Button type="primary" href="/roughtime">Roughtime</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/ntp">}}NTP{{</button>}}
+  {{<button type="primary" href="/nts">}}NTS{{</button>}}
+  {{<button type="primary" href="/roughtime">}}Roughtime{{</button>}}
+{{</button-group>}}
 
-</ContentColumn>
+{{</content-column>}}

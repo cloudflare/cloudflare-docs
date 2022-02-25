@@ -12,11 +12,11 @@ Cloudflare encapsulates the ICMP reply packet and sends the probe across the GRE
 
 Every Cloudflare edge server configured to process your traffic sends a tunnel health check probe every 60 seconds. When a probe attempt fails, each server detecting the failure quickly probes up to two more times to obtain an accurate result. Because Cloudflare edge servers send probes every 60 seconds, you can expect your network to receive several hundred health check packets per second. This represents a relatively trivial amount of traffic.
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 To avoid control plane policies enforced by the origin network, tunnel health checks use an encapsulated ICMP reply instead of an ICMP echo request. To use echo request packets, contact your Cloudflare account team.
 
-</Aside>
+{{</Aside>}}
 
 <details>
 <summary>
@@ -37,13 +37,13 @@ There are three tunnel health states: **Healthy**, **Degraded**, and **Down**.
 
 Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/magic-transit/get-started/configure-tunnels/assign-tunnel-route-priorities/) during onboarding. Tunnel routes with lower values have priority over those with higher values.
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 Cloudflare edge servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among edge servers and because the Internet is not homogeneous.
 
 As a result, tunnel health may be in different states in different parts of the world at the same time. In this example, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
 
-</Aside>
+{{</Aside>}}
 
 ## Tunnel health check failure
 
@@ -72,9 +72,9 @@ Tunnels in a **Degraded** state transition to **Healthy** when the failure rate 
 
 Magic Transit’s tunnel health check system allows a tunnel to quickly transition from **Healthy** to **Degraded** or **Down**, but tunnel transition occurs slowly from **Degraded** or **Down** to **Healthy**. This scenario is referred to as hysteresis — which is when a system's output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 Cloudflare always attempts to send traffic over available tunnel routes with the highest priority, even when all configured tunnels are in an unhealthy state.
-</Aside>
+{{</Aside>}}
 
 ## Example
 

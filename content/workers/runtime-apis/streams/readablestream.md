@@ -12,22 +12,22 @@ cannot be created directly using the `ReadableStream` constructor.
 
 ## Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `locked` <Type>boolean</Type>
+*   `locked` {{<type>}}boolean{{</type>}}
     *   A Boolean value that indicates if the readable stream is locked to a reader.
 
-</Definitions>
+{{</definitions>}}
 
 ## Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>pipeTo(destination<ParamType>WritableStream</ParamType>, options<ParamType>PipeToOptions</ParamType>)</Code> <Type>Promise\<void></Type>
+*   {{<code>}}pipeTo(destination{{<param-type>}}WritableStream{{</param-type>}}, options{{<param-type>}}PipeToOptions{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
     *   Pipes the readable stream to a given writable stream `destination` and returns a promise that is fulfilled when the `write` operation succeeds or rejects it if the operation fails.
 
-*   <Code>getReader(options<ParamType>Object</ParamType>)</Code> <TypeLink href="/runtime-apis/streams/readablestreamdefaultreader">ReadableStreamDefaultReader</TypeLink>
+*   {{<code>}}getReader(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type-link href="/runtime-apis/streams/readablestreamdefaultreader">}}ReadableStreamDefaultReader{{</type-link>}}
 
     *   Gets an instance of `ReadableStreamDefaultReader` and locks the `ReadableStream` to that reader instance. This method accepts an object argument indicating options.  The only supported option is `mode`, which can be set to `byob` to create a [`ReadableStreamBYOBReader`](/workers/runtime-apis/streams/readablestreambyobreader/), as shown here:
 
@@ -35,21 +35,21 @@ cannot be created directly using the `ReadableStream` constructor.
         let reader = readable.getReader({ mode: "byob" })
         ```
 
-</Definitions>
+{{</definitions>}}
 
 ### `PipeToOptions`
 
-<Definitions>
+{{<definitions>}}
 
-*   `preventClose` <Type>bool</Type>
+*   `preventClose` {{<type>}}bool{{</type>}}
 
     *   When `true`, closure of the source `ReadableStream` will not cause the destination `WritableStream` to be closed.
 
-*   `preventAbort` <Type>bool</Type>
+*   `preventAbort` {{<type>}}bool{{</type>}}
 
     *   When `true`, errors in the source `ReadableStream` will no longer abort the destination `WritableStream`. `pipeTo` will return a rejected promise with the error from the source or any error that occurred while aborting the destination.
 
-</Definitions>
+{{</definitions>}}
 
 ## Related resources
 

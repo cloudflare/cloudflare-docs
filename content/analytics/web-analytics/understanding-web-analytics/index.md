@@ -6,4 +6,4 @@ weight: 5
 
 # Understanding Cloudflare Web Analytics
 
-<DirectoryListing path="/web-analytics/understanding-web-analytics"/>
+{{<directory-listing>}}

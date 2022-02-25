@@ -6,4 +6,4 @@ weight: 7
 
 # Runtime APIs
 
-<DirectoryListing path="/runtime-apis"/>
+{{<directory-listing>}}

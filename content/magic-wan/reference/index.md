@@ -8,4 +8,4 @@ weight: 0
 
 Review different configuration examples for Anycast GRE or IPsec tunnels and scoping along with region codes.
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

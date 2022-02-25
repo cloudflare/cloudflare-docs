@@ -12,10 +12,10 @@ When you use the Cloudflare API, you need to authenticate your requests so we kn
 
 When possible, use API tokens to interact with the Cloudflare API.
 
-<DirectoryListing path="/tokens"/>
+{{<directory-listing>}}
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Though you can still use API keys to access the Cloudflare API, these keys have [several limitations](/api/keys/#limitations) that make them less secure than API tokens.
 
-</Aside>
+{{</Aside>}}

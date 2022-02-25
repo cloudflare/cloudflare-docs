@@ -29,8 +29,8 @@ highlight: [3]
 }
 ```
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Currently, you cannot disable validation checks. They run early in Cloudflare's infrastructure before the configuration for domains has been loaded.
 
-</Aside>
+{{</Aside>}}

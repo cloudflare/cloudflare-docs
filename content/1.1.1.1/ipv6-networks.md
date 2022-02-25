@@ -10,13 +10,13 @@ While network infrastructure is shifting towards IPv6-only networks, providers s
 
 1.1.1.1 supports DNS64, a mechanism that synthesizes AAAA records from A records when no AAAA records exist. DNS64 allows configuring a DNS resolver to synthesize IPv6 addresses from IPv4 answers.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 You should only enable DNS64 if you are managing or using an IPv6-only network. While the resolver can synthesize IPv6 addresses, it cannot synthesize their record signatures for domains using DNSSEC, so a DNS client that is able to revalidate signatures would reject these extra records without signatures.
 
 A good tradeoff is to use a secure protocol such as DNS over TLS, or DNS over HTTPS between the client and the resolver to prevent tampering.
 
-</Aside>
+{{</Aside>}}
 
 ## Configure DNS64
 

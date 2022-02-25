@@ -6,4 +6,4 @@ weight: 4
 
 # Account options
 
-<DirectoryListing path="/account-options"/>
+{{<directory-listing>}}

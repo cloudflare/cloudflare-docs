@@ -16,11 +16,11 @@ The list of items displays sorted by IP address, ascending:
 
 ![View items in a list](/firewall/static/lists-view-items-in-list.png)
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation to fetch them.
 
-</Aside>
+{{</Aside>}}
 
 ## Add items to a list
 
@@ -32,7 +32,7 @@ IP Lists support:
 
 You can combine individual addresses and CIDR ranges in the same list.
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
 
@@ -41,7 +41,7 @@ For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of t
 *   `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
 *   `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
-</Aside>
+{{</Aside>}}
 
 You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.
 
@@ -79,13 +79,13 @@ The updated list displays.
 
 ### Add items in CSV format
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
 If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Lists API](/firewall/api/cf-lists/endpoints/).
 
-</Aside>
+{{</Aside>}}
 
 #### Use valid CSV file format
 
@@ -119,14 +119,14 @@ The **Add items to list** page updates to include the items from the CSV file:
 
 The updated list displays.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 *   IP addresses that were already in the list are updated with the description from the CSV file.
 *   IP addresses in the CSV file that were not already in the list are added to the list.
 
-</Aside>
+{{</Aside>}}
 
 ## Delete items from a list
 

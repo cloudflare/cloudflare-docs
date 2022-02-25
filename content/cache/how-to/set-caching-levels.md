@@ -15,11 +15,11 @@ Caching levels determine how much of your website’s static content Cloudflare 
 
 You can adjust the caching level from the dashboard under **Caching** > **Configuration** > **Caching level**.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Ignore Query String only disregards the query string for static file extensions. For example, Cloudflare serves the `style.css resource` to requests for either `style.css?this` or `style.css?that`.
 
-</Aside>
+{{</Aside>}}
 
 ## API Caching level values
 

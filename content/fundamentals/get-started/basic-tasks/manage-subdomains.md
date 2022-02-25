@@ -22,23 +22,23 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
 
 1.  Create a [proxied DNS A record](/dns/manage-dns-records/how-to/create-dns-records) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
-     <Example>
+     {{<example>}}
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `www` | `192.0.2.1`| Proxied |
 
-     </Example>
+     {{</example>}}
 
 2.  Use [Bulk redirects](/rules/bulk-redirects) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
 
-     <Example>
+     {{<example>}}
 
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
     | `www.example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
 
-     </Example>
+     {{</example>}}
 
 ### Redirect root domain to a subdomain
 
@@ -48,23 +48,23 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
 
 2.  Create a proxied DNS A record for your root domain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
-     <Example>
+     {{<example>}}
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | --- | --- | --- | --- |
     | A | `@` | `192.0.2.1`| Proxied |
 
-     </Example>
+     {{</example>}}
 
 3.  Use [Bulk redirects](/rules/bulk-redirects) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
 
-     <Example>
+     {{<example>}}
 
     | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
     | --------- | --------- | --- | --- |
     | `example.com` | `https://www.example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
 
-     </Example>
+     {{</example>}}
 
 ## SSL/TLS for subdomains
 

@@ -50,11 +50,11 @@ When EDNS is enabled, the DNS Firewall gives out the geographically correct answ
 3.  The DNS Firewall  will cache the answer from the origin, but only for that `/24`.
 4.  `203.0.113.0/24` now asks the same DNS question and the answer is again returned from the origin instead of the cache.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 EDNS limits the effectiveness of the DNS cache.
 
-</Aside>
+{{</Aside>}}
 
 Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
 

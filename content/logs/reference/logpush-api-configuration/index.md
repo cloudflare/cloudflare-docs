@@ -13,7 +13,7 @@ The table below summarizes the job operations available. All the examples in thi
 The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
 The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Operation | Description | URL |
 |---|---|---|
@@ -29,7 +29,7 @@ The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates t
 | POST | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
 | POST | Validate log options | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/reference/logpush-api-configuration/examples/example-logpush-curl/).
 
@@ -73,11 +73,11 @@ A challenge file will be written to the destination, and the filename will be in
 
 You will need to provide the token contained in the file when creating a job.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.sumologic.com/05Search/Live-Tail/About-Live-Tail) open to see the challenge file as soon as it's uploaded.
 
-</Aside>
+{{</Aside>}}
 
 ## Destination
 
@@ -123,11 +123,11 @@ There can be only one job writing to each unique destination. For S3 and GCS, a 
 
 ## Job object
 
-<Aside type="info" header="Info">
+{{<Aside type="info" header="Info">}}
 
 For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
 
-</Aside>
+{{</Aside>}}
 
 ## Options
 

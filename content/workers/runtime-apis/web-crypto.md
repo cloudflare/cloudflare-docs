@@ -30,114 +30,114 @@ Some common uses include:
 
 *   [Signing requests](/workers/examples/signing-requests/)
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 
-</Aside>
+{{</Aside>}}
 
 ## Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>crypto.getRandomValues(buffer<ParamType>ArrayBufferView</ParamType>)</Code> <Type>ArrayBufferView</Type>
+*   {{<code>}}crypto.getRandomValues(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type>}}ArrayBufferView{{</type>}}
 
-    *   Fills the passed <Code>ArrayBufferView</Code> with cryptographically sound random values and returns the <Code>buffer</Code>.
+    *   Fills the passed {{<code>}}ArrayBufferView{{</code>}} with cryptographically sound random values and returns the {{<code>}}buffer{{</code>}}.
 
         **Parameters:**
 
-        *   <Code>buffer<ParamType>ArrayBufferView</ParamType></Code>
+        *   {{<code>}}buffer{{<param-type>}}ArrayBufferView{{</param-type>}}{{</code>}}
 
-            *   Must be an <Code><Type>Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array</Type></Code>.
+            *   Must be an {{<code>}}{{<type>}}Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | BigInt64Array | BigUint64Array{{</type>}}{{</code>}}.
 
-*   <Code>crypto.randomUUID()</Code> <Type>string</Type>
+*   {{<code>}}crypto.randomUUID(){{</code>}} {{<type>}}string{{</type>}}
 
     *   Generates a new random (version 4) UUID as defined in [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt).
 
-</Definitions>
+{{</definitions>}}
 
 ### SubtleCrypto Methods
 
 These methods are all accessed via `crypto.subtle`, which is also [documented in detail on MDN](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto#Methods).
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>encrypt(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}encrypt(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with the encrypted data corresponding to the clear text,
         algorithm, and key given as parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>data<ParamType>BufferSource</ParamType></Code>
+        *   {{<code>}}data{{<param-type>}}BufferSource{{</param-type>}}{{</code>}}
 
-*   <Code>decrypt(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}decrypt(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm,
         and key given as parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/decrypt#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>data<ParamType>BufferSource</ParamType></Code>
+        *   {{<code>}}data{{<param-type>}}BufferSource{{</param-type>}}{{</code>}}
 
-*   <Code>sign(algorithm, key, data)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}sign(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key
         given as parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}string | object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+        *   {{<code>}}data{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-*   <Code>verify(algorithm, key, signature, data)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}verify(algorithm, key, signature, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with a Boolean value indicating if the signature given as a
         parameter matches the text, algorithm, and key that are also given as parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}string | object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/verify#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>signature<ParamType>ArrayBuffer</ParamType></Code>
+        *   {{<code>}}signature{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+        *   {{<code>}}data{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-*   <Code>digest(algorithm, data)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}digest(algorithm, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with a digest generated from the algorithm and text given as
         parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>string | object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}string | object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#Syntax).
 
-        *   <Code>data<ParamType>ArrayBuffer</ParamType></Code>
+        *   {{<code>}}data{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-*   <Code>generateKey(algorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey> | Promise\<CryptoKeyPair></Type>
+*   {{<code>}}generateKey(algorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey> | Promise\<CryptoKeyPair>{{</type>}}
 
     *   Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms,
         or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For
@@ -156,40 +156,40 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
-        *   <Code>extractable<ParamType>bool</ParamType></Code>
+        *   {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
 
-        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
             *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
-*   <Code>deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
+*   {{<code>}}deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
     *   Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key
         and specific algorithm given as parameters.
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
 
-        *   <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}baseKey{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>derivedKeyAlgorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}derivedKeyAlgorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Defines the algorithm the derived key will be used for in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax).
 
-        *   <Code>extractable<ParamType>bool</ParamType></Code>
+        *   {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
 
-        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
             *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#Syntax)
 
-*   <Code>deriveBits(algorithm, baseKey, length)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}deriveBits(algorithm, baseKey, length){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from
         the base key and specific algorithm given as parameters. It returns a
@@ -200,100 +200,100 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
         **Parameters:**
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits#Syntax).
 
-        *   <Code>baseKey<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}baseKey{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>length<ParamType>int</ParamType></Code>
+        *   {{<code>}}length{{<param-type>}}int{{</param-type>}}{{</code>}}
 
             *   Length of the bit string to derive.
 
-*   <Code>importKey(format, keyData, algorithm, extractable, keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
+*   {{<code>}}importKey(format, keyData, algorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
     *   Transform a key from some external, portable format into a `CryptoKey` for use with the Web
         Crypto API.
 
         **Parameters:**
 
-        *   <Code>format<ParamType>string</ParamType></Code>
+        *   {{<code>}}format{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Describes [the format of the key to be imported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
 
-        *   <Code>keyData<ParamType>ArrayBuffer</ParamType></Code>
+        *   {{<code>}}keyData{{<param-type>}}ArrayBuffer{{</param-type>}}{{</code>}}
 
-        *   <Code>algorithm<ParamType>object</ParamType></Code>
+        *   {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax).
 
-        *   <Code>extractable<ParamType>bool</ParamType></Code>
+        *   {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
 
-        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
             *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#Syntax)
 
-*   <Code>exportKey(format<ParamType>string</ParamType>, key<ParamType>CryptoKey</ParamType>)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}exportKey(format{{<param-type>}}string{{</param-type>}}, key{{<param-type>}}CryptoKey{{</param-type>}}){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Transform a `CryptoKey` into a portable format, if the `CryptoKey` is `extractable`.
 
         **Parameters:**
 
-        *   <Code>format<ParamType>string</ParamType></Code>
+        *   {{<code>}}format{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-*   <Code>wrapKey(format, key, wrappingKey, wrapAlgo)</Code> <Type>Promise\<ArrayBuffer></Type>
+*   {{<code>}}wrapKey(format, key, wrappingKey, wrapAlgo){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This
         renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
 
         **Parameters:**
 
-        *   <Code>format<ParamType>string</ParamType></Code>
+        *   {{<code>}}format{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Describes the [format in which the key will be exported](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax) before being encrypted.
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>wrappingKey<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}wrappingKey{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>wrapAlgo<ParamType>object</ParamType></Code>
+        *   {{<code>}}wrapAlgo{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
 
-*   <Code>unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>  unwrappedKeyAlgo, extractable,
-    keyUsages)</Code> <Type>Promise\<CryptoKey></Type>
+*   {{<code>}}unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>  unwrappedKeyAlgo, extractable,
+    keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
     *   Transform a key that was wrapped by `wrapKey()` back into a `CryptoKey`.
 
         **Parameters:**
 
-        *   <Code>format<ParamType>string</ParamType></Code>
+        *   {{<code>}}format{{<param-type>}}string{{</param-type>}}{{</code>}}
 
             *   Described the [data format of the key to be unwrapped](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
 
-        *   <Code>key<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}key{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>unwrappingKey<ParamType>CryptoKey</ParamType></Code>
+        *   {{<code>}}unwrappingKey{{<param-type>}}CryptoKey{{</param-type>}}{{</code>}}
 
-        *   <Code>unwrapAlgo<ParamType>object</ParamType></Code>
+        *   {{<code>}}unwrapAlgo{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the algorithm that was used to encrypt the wrapped key, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
 
-        *   <Code>unwrappedKeyAlgo<ParamType>object</ParamType></Code>
+        *   {{<code>}}unwrappedKeyAlgo{{<param-type>}}object{{</param-type>}}{{</code>}}
 
             *   Describes the key to be unwrapped, [in an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax).
 
-        *   <Code>extractable<ParamType>bool</ParamType></Code>
+        *   {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
 
-        *   <Code>keyUsages<ParamType>Array</ParamType></Code>
+        *   {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
             *   An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/unwrapKey#Syntax)
 
-</Definitions>
+{{</definitions>}}
 
 ### Supported algorithms
 
@@ -304,7 +304,7 @@ A checkmark (✓) indicates that this feature is believed to be fully supported 
 \[//]: #  An x (✘) indicates that this feature is part of the specification but not implemented.
 \[//]: #  If a feature only implements the operation partially, details are listed.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Algorithm                                         | sign()<br/>verify()  | encrypt()<br/>decrypt()   | digest() | deriveBits()<br/>deriveKey() | generateKey() | wrapKey()<br/>unwrapKey() | exportKey() | importKey() |
 | :------------------------------------------------ | :------------------- | :------------------------ | :------- | :--------------------------- | :------------ | :------------------------ | :---------- | :---------- |
@@ -327,13 +327,13 @@ A checkmark (✓) indicates that this feature is believed to be fully supported 
 | HKDF                                              |                      |                           |          | ✓                            |               |                           |             | ✓           |
 | PBKDF2                                            |                      |                           |          | ✓                            |               |                           |             | ✓           |
 
-</TableWrap>
+{{</table-wrap>}}
 
 **Footnotes:**
 
 1.  <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm is non-standard, a few things to keep in mind while using it:
 
-*   Use <Code>NODE-ED25519</Code> as the algorithm and namedCurve parameters.
+*   Use {{<code>}}NODE-ED25519{{</code>}} as the algorithm and namedCurve parameters.
 *   Unlike NodeJS, Cloudflare will not support raw import of private keys.
 *   The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
     Any notable compatibility notes will be communicated in release notes and via this developer document.

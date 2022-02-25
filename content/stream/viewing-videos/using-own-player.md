@@ -47,12 +47,12 @@ If a hint or combination of hints would cause an invalid manifest to be served, 
 
 Currently, the following hints are available:
 
-<Definitions>
+{{<definitions>}}
 
-*   `clientBandwidthHint` <Type>float</Type>
+*   `clientBandwidthHint` {{<type>}}float{{</type>}}
     *   Require all video representations in the manifest have a bitrate at least the provided Mbps. This can be used to enforce a minimum level of quality at the expense of users on slower connections.
 
-</Definitions>
+{{</definitions>}}
 
 #### Examples
 

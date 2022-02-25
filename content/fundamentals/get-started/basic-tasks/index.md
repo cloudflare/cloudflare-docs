@@ -6,4 +6,4 @@ weight: 1
 
 # Basic tasks
 
-<DirectoryListing path="/get-started/basic-tasks"/>
+{{<directory-listing>}}

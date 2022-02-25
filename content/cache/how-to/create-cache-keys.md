@@ -5,11 +5,11 @@ pcx-content-type: how-to
 
 # Create custom cache keys
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Creating custom cache keys is limited to Enterprise users only.
 
-</Aside>
+{{</Aside>}}
 
 1.  Log in to your Cloudflare account.
 2.  Select the domain that requires changes to the Cache Key Template.

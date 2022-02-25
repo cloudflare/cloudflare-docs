@@ -7,7 +7,7 @@ title: Firewall events
 
 The descriptions below detail the fields available for `firewall_events`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Value | Type |
 | -- | -- | -- |
@@ -40,4 +40,4 @@ The descriptions below detail the fields available for `firewall_events`.
 | RuleID | The Cloudflare security product-specific RuleID triggered by this request | string |
 | Source | The Cloudflare security product triggered by this request. <br />Possible sources are <em>unknown</em> | <em>asn</em> | <em>country</em> | <em>ip</em> | <em>iprange</em> | <em>securitylevel</em> | <em>zonelockdown</em> | <em>waf</em> | <em>firewallrules</em> | <em>uablock</em> | <em>ratelimit</em> | <em>bic</em> | <em>hot</em> | <em>l7ddos</em> | <em>validation</em> | <em>botfight</em> | <em>apishield</em> | <em>botmanagement</em> | <em>dlp</em> | <em>firewallmanaged</em> | <em>firewallcustom</em> | string |
 
-</TableWrap>
+{{</table-wrap>}}

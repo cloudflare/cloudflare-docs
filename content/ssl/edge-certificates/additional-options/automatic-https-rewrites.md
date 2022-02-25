@@ -16,11 +16,11 @@ If your site contains links or references to HTTP URLs that are also available s
 
 Mixed content is often due to factors not under the website owner’s control such as embedded third-party content or complex content management systems. By rewriting URLs from “http” to “https”, Automatic HTTPS Rewrites simplifies the task of making your entire website available over HTTPS, helping to eliminate mixed content errors and ensuring that all data loaded by your website is protected from eavesdropping and tampering.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For security reasons, this feature will run on URLs pointing to `localhost` if the URL is fetching an active resource (script, iframe, link, object, etc.).
 
-</Aside>
+{{</Aside>}}
 
 ## Enable Automatic HTTPS Rewrites
 

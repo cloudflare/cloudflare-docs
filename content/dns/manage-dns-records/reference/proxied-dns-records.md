@@ -10,11 +10,11 @@ When you *proxy* an **A**, **AAAA**, or **CNAME** DNS record for your applicatio
 
 This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server. This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/how-cloudflare-works) all requests for your application.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Because requests to proxied hostnames go through Cloudflare before reaching your origin server, these requests will appear to be coming from Cloudflare's IP addresses. You may need to adjust your server configuration to [allow Cloudflare IPs](https://support.cloudflare.com/hc/articles/201897700).
 
-</Aside>
+{{</Aside>}}
 
 ## When to proxy your DNS records
 
@@ -38,11 +38,11 @@ If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP)
 
 Additionally, you cannot proxy wildcard DNS records unless your domain is on an Enterprise plan.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you encounter a **CNAME** record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
-</Aside>
+{{</Aside>}}
 
 ### Other record types
 

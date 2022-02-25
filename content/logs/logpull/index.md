@@ -10,4 +10,4 @@ Cloudflare Logpull is a REST API for consuming request logs over HTTP. These log
 
 Review the following content to learn more about Logpull.
 
-<DirectoryListing path="/logpull"/>
+{{<directory-listing>}}

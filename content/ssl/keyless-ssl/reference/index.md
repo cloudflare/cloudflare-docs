@@ -10,4 +10,4 @@ meta:
 
 For more on Keyless SSL, refer to these articles:
 
-<DirectoryListing path="/keyless-ssl/reference"/>
+{{<directory-listing>}}

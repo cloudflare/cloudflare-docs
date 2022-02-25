@@ -21,22 +21,22 @@ let encoder = new TextEncoder()
 
 ### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `encoding` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</TypeLink> <PropMeta>read-only</PropMeta>
+*   `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The name of the encoder as a string describing the method the `TextEncoder` uses (always `utf-8`).
 
-</Definitions>
+{{</definitions>}}
 
 ### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   <Code>encode(input<TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">USVString</TypeLink>)</Code> <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</TypeLink>
+*   {{<code>}}encode(input{{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/USVString">}}USVString{{</type-link>}}){{</code>}} {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">}}Uint8Array{{</type-link>}}
 
     *   Encodes a string input.
 
-</Definitions>
+{{</definitions>}}
 
 ***
 
@@ -56,24 +56,24 @@ let decoder = new TextDecoder()
 
 ### Properties
 
-<Definitions>
+{{<definitions>}}
 
-*   `encoding` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</TypeLink> <PropMeta>read-only</PropMeta>
+*   `encoding` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   The name of the decoder that describes the method the `TextDecoder` uses.
 
-*   `fatal` <Type>boolean</Type> <PropMeta>read-only</PropMeta>
+*   `fatal` {{<type>}}boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   Indicates if the error mode is fatal.
 
-*   `ignoreBOM` <Type>boolean</Type> <PropMeta>read-only</PropMeta>
+*   `ignoreBOM` {{<type>}}boolean{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
     *   Indicates if the byte-order marker is ignored.
 
-</Definitions>
+{{</definitions>}}
 
 ### Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   `decode()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">DOMString</TypeLink>
+*   `decode()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString">}}DOMString{{</type-link>}}
     *   Decodes using the method specified in the `TextDecoder` object. Learn more at [MDN’s TextDecoder documentation](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode).
 
-</Definitions>
+{{</definitions>}}

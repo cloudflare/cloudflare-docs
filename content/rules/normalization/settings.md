@@ -12,16 +12,16 @@ meta:
 
 The Cloudflare dashboard provides two settings to manage URL normalization:
 
-<Definitions>
+{{<definitions>}}
 
-*   **Normalize incoming URLs** <PropMeta>(default: *On*)</PropMeta>
+*   **Normalize incoming URLs** {{<prop-meta>}}(default: *On*){{</prop-meta>}}
 
     *   Configures the URLs of all incoming traffic to Cloudflare:
 
         *   When enabled, all incoming URLs are normalized before they pass to subsequent Cloudflare features that can receive a URL as input, such as Page Rules, Firewall Rules, Workers, and Access.
         *   When disabled, incoming URLs are not normalized before passing to subsequent Cloudflare features.
 
-*   **Normalize URLs to origin** <PropMeta>(default: *Off*)</PropMeta>
+*   **Normalize URLs to origin** {{<prop-meta>}}(default: *Off*){{</prop-meta>}}
 
     *   Configures URLs sent to the origin:
 
@@ -30,13 +30,13 @@ The Cloudflare dashboard provides two settings to manage URL normalization:
 
     *   You can only view and enable this option when **Normalize incoming URLs** is enabled.
 
-</Definitions>
+{{</definitions>}}
 
 ## Configuration examples
 
 The following table shows how URL normalization settings affect incoming URLs before they pass to other Cloudflare features and to origin:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Incoming URL | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin
 \---|---|---|---|---
@@ -47,4 +47,4 @@ Incoming URL | Normalize incoming URLs | Normalize URLs to origin | URL passed t
 `www.example.com/%68ello` | *On*  | *On*  | `www.example.com/hello`   | `www.example.com/hello`
 `www.example.com/%68ello` | *Off* | *Off* | `www.example.com/%68ello` | `www.example.com/%68ello`
 
-</TableWrap>
+{{</table-wrap>}}

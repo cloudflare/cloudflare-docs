@@ -10,11 +10,11 @@ import TutorialsBeforeYouStart from "../../\_partials/\_tutorials-before-you-sta
 
 # Deploy a static WordPress site
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 As of August 2020, the WP2Static plugin is closed for downloads on WordPress.org but is still available [on GitHub](https://github.com/leonstafford/wp2static).
 
-</Aside>
+{{</Aside>}}
 
 <TutorialsBeforeYouStart/>
 

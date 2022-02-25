@@ -31,11 +31,11 @@ Unless you are using Rules to control which pages to be measured, using [automat
 
 If you used a [manual setup] instead, only those pages that render the JS snippet will be reported.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Since only one JS snippet can be rendered and used per page, you cannot have multiple snippets on the same page.
 
-</Aside> 
+{{</Aside>}} 
 
 ***
 

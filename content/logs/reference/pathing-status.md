@@ -71,7 +71,7 @@ $ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
 
 Certain combinations of pathing have been labeled in the Cloudflare **Threat Analytics** feature (in the **Analytics** app in the Cloudflare dashboard). The mapping is as follows:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Pathing | Label |
 |---|---|
@@ -91,7 +91,7 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 | `macro.chl.jschlErr` | Bot request |
 | `user.chl.captchaNew` | New CAPTCHA (user) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Understanding response fields
 
@@ -124,7 +124,7 @@ These occur for requests that did not pass any of the validation performed by th
 *   An attempt to improperly use the IP for an origin server.
 *   Domain ownership is unclear (for example, the domain is not in Cloudflare).
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
@@ -135,20 +135,20 @@ These occur for requests that did not pass any of the validation performed by th
 | `bad_host` | Bad or no Host header. | `err_host` | | `403` |
 | `no_existing_host` | Ownership lookup failed: host possibly not on Cloudflare. | `err_host` | | `409` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## User-based actions
 
 These occur for actions triggered from users based on the configuration for a specific IP (or IP range).
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctry`<br/> | The request was blocked. | `ban` | `user` | `403` |
 | `Asnum`<br/> `ip`<br/> `ipr24`<br/> `ipr16`<br/> `ip6`<br/> `ip6r64`<br/> `ip6r48`<br/> `ip6r32`<br/> `ctr`<br/> | <ul><li>The request was allowed.</li><li>WAF will not execute.</li></ul> | `wl` | `user` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -156,14 +156,14 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 
 The Cloudflare **Firewall Rules** app triggers actions based on matching customer-defined rules.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | `filter_based_firewall` | The request was blocked. | `ban` | | |
 | `filter_based_firewall` | The request was allowed. | `wl` | | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -171,13 +171,13 @@ To understand the behavior of challenge pages, see [JavaScript and Captcha Chall
 
 **Zone Lockdown** blocks visitors to particular URIs where the visitor's IP is not allowlisted.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | `zl` | Lock down applied. | `ban` | `user` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -185,13 +185,13 @@ To understand the behavior of challenge pages, see [JavaScript and Captcha Chall
 
 Challenge (Captcha or JavaScript) or block visitors who use a browser for which the User-Agent name matches a specific string.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | `ua` | Blocked User-Agent. | `ban` | `user` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -199,13 +199,13 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 
 Assert whether the source of the request is illegitimate or the request itself is malicious.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | <span style="font-weight: 400;">empty</span> | Blocked request. | `ban` | `bic` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -213,13 +213,13 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 
 Prevent hot linking from other sites.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | <span style="font-weight: 400;">empty</span> | Blocked request. | `ban` | `hot` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, see [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -227,13 +227,13 @@ To understand the behavior of challenge pages, see [JavaScript and Captcha Chall
 
 Drop DDoS attacks through L7 mitigation.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | <span style="font-weight: 400;">`l7ddos`</span> | Blocked request. | `ban` | `protect` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
@@ -241,7 +241,7 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 
 The macro stage is comprised of many different paths. They are categorized by the reputation of the visitor IP.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
@@ -256,7 +256,7 @@ The macro stage is comprised of many different paths. They are categorized by th
 | `bad_ok` | The reputation score of the IP is bad (or is a TOR IP) but the request was either for a favicon or security is turned off and as such, it is allowlisted. Alternatively, the threat score of the IP is in the accepted security level. | `wl` | `macro` | |
 | `unknown` | The `pathing_status` is unknown and the request is being processed as normal. | `wl` | `macro` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 All other paths in the MACRO stage issue a challenge. Possible scenarios include:
 
@@ -266,20 +266,20 @@ All other paths in the MACRO stage issue a challenge. Possible scenarios include
 
 ## Rate Limiting
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
 | `rate_limit` | Dropped request. | `ban` | `user` | |
 | `rate_limit` | IP is explicitly allowlisted. | `simulate` | `user` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 To understand the behavior of challenge pages, refer to [JavaScript and Captcha Challenge](#javascript-and-captcha-challenge).
 
 ## Special cases
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
@@ -287,11 +287,11 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 | `cdnjs` | Request to a cdnjs resource. | `wl` | `skip` | |
 | | Certain challenge forced by Cloudflare's special headers- | | `forced` | |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## JavaScript and Captcha Challenge
 
-<TableWrap>
+{{<table-wrap>}}
 
 | EdgePathingStatus | Description | EdgePathingOp | EdgePathingSrc | Status Code |
 |---|---|---|---|---|
@@ -303,4 +303,4 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 | <ul><li>`tokRedempSucc`</li></ul> | A blinded-token redemption was successful. | <p>`chl`</p> | | <ul><li>As per request.</li></ul> |
 | <ul><li>`tokRedempFail`</li></ul> | A blinded-token redemption failed. | `chl` | | <ul><li>As per request.</li></ul> |
 
-</TableWrap>
+{{</table-wrap>}}

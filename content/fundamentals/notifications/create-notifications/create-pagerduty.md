@@ -11,13 +11,13 @@ When a configuration you previously set up triggers a notification for PagerDuty
 
 To use PagerDuty as a connected service, you first need to [sign up for a PagerDuty account](https://www.pagerduty.com/sign-up/).
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 According to PagerDuty, you need an account with the following permissions to add a connected service: User, Admin, Manager, Global Admin, or Account Owner.
 
 Cloudflare accounts need at least one Business or Enterprise zone to be able to connect to PagerDuty.
 
-</Aside>
+{{</Aside>}}
 
 ## Connect PagerDuty to a Cloudflare account
 

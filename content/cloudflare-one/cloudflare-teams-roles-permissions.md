@@ -10,7 +10,7 @@ When creating a Cloudflare Zero Trust account, you will be given the Super Admin
 
 Only Super Administrators of Enterprise accounts will be able to assign or remove the following roles from users in their account. Scroll to the right to see a full list of permissions for each role.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | | Access Read | Access Edit | Gateway Read | Gateway Edit | Gateway Report | Billing Read | Billing Edit |
 | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -21,7 +21,7 @@ Only Super Administrators of Enterprise accounts will be able to assign or remov
 | Cloudflare for Teams Read Only | ✓ | - | ✓ | - | ✓ | ✓ | - | - |
 | Cloudflare for Teams Reporting | - | - | - | - | ✓ | ✓ | - | - |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Protecting Personally Identifiable Information (PII)
 

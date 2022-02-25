@@ -10,11 +10,11 @@ The goal of Search Engine Optimization (SEO) is to get your website to rank high
 
 In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to site speed — and search crawlers.
 
-<Aside type="note" header="Tip:">
+{{<Aside type="note" header="Tip:">}}
 
 For general guidelines around SEO, refer to [Google's recommendations](https://developers.google.com/search/docs/advanced/guidelines/overview).
 
-</Aside>
+{{</Aside>}}
 
 ## SEO improvements with Cloudflare
 

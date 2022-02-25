@@ -15,8 +15,8 @@ _build:
     *   Choosing a value for [Custom origin server](/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin/).
 6.  Click **Add Custom Hostname**.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 If you [issue a custom hostname certificate](/ssl/ssl-for-saas/common-tasks/issuing-certificates/) with wildcards enabled, you cannot customize TLS settings for these wildcard hostnames.
 
-</Aside>
+{{</Aside>}}

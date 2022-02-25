@@ -13,10 +13,10 @@ import ConfigureAlerts from "../\_partials/\_alerts-configure.md"
 
 <AlertsIntro/>
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Only available to customers on Business and Enterprise plans.
 
-</Aside>
+{{</Aside>}}
 
 <ConfigureAlerts/>

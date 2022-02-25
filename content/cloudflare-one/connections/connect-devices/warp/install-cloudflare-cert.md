@@ -6,11 +6,11 @@ weight: 3
 
 # Install the Cloudflare certificate
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
 
-</Aside>
+{{</Aside>}}
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
@@ -195,23 +195,23 @@ The root certificate is now installed and ready to be used.
 
 4.  Tap **Advanced** > **Encryption & Credentials**.
 
-<TableWrap>
+{{<table-wrap>}}
 
 |  |  |
 |------|------|
 | ![Android encrypt settings](/cloudflare-one/static/documentation/connections/android_advanced_encrypt.png) | ![Android cred settings](/cloudflare-one/static/documentation/connections/android_advanced_encrypt2.png) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 5.  Tap **Install a certificate > CA certificate**.
 
-<TableWrap>
+{{<table-wrap>}}
 
 |  |  |
 |------|------|
 | ![Android install cert](/cloudflare-one/static/documentation/connections/android_install_cert.png) | ![Android ca cert](/cloudflare-one/static/documentation/connections/android_ca_cert.png) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 7.  Tap **Install Anyway**.
 
@@ -243,13 +243,13 @@ The root certificate is now installed and ready to be used.
 
 5.  Click **Security & location** then click **Credentials** then click **Install from SD card**.
 
-<TableWrap>
+{{<table-wrap>}}
 
 |  |  |  |
 |------|------|------|
 | ![Click security & location](/cloudflare-one/static/documentation/connections/chromeOS4_cert.png) | ![click credentials](/cloudflare-one/static/documentation/connections/chromeOS5_cert.png) | ![click install from SD card](/cloudflare-one/static/documentation/connections/chromeOS6_cert.png) |
 
-</TableWrap>
+{{</table-wrap>}}
 
 6.  In the file open dialog select the `Cloudflare_CA.crt` file downloaded in step #1 and click **Open**.
 

@@ -6,7 +6,7 @@ weight: 5
 layout: list
 ---
 
-<ContentColumn>
+{{<content-column>}}
 
 # Cloudflare Notifications
 
@@ -29,4 +29,4 @@ Cloudflare Notifications is available in your [Cloudflare dashboard](https://das
 
 Go to our [Types of Notifications](/fundamentals/notification-available/) section to know more about what each Notification does and what do to when receiving one.
 
-</ContentColumn>
+{{</content-column>}}

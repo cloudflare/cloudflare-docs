@@ -14,7 +14,7 @@ Each variant has properties including the width and height of resized images.
 
 The **Fit** property describes how the width and height dimensions should be interpreted. The chart below describes each of the options:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Fit Options | Behavior|
 | --- | --- |
@@ -24,4 +24,4 @@ The **Fit** property describes how the width and height dimensions should be int
 | Crop        | Image will be shrunk and cropped to fit within the area specified by width and height. The image will not be enlarged. For images smaller than the given dimensions it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. |
 | Pad         | Image will be resized (shrunk or enlarged) to be as large as possible within the given width or height while preserving the aspect ratio, and the extra area will be filled with a background color (white by default). |
 
-</TableWrap>
+{{</table-wrap>}}

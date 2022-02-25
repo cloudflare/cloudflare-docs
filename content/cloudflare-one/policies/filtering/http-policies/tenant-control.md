@@ -43,43 +43,43 @@ This section covers policy configurations for common SaaS applications.
 
 ### Microsoft 365
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Microsoft Office365 | Allow | `Restrict-Access-To-Tenants`, `Restrict-Access-Context` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Slack
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Slack | Allow | `X-Slack-Allowed-Workspaces-Requester`, `X-Slack-Allowed-Workspaces` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### G Suite
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Google Workspace | Allow | `X-GooGApps-Allowed-Domains` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Dropbox
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Selector | Operator | Value | Action | Header name |
 | -- | -- | -- | -- | -- |
 | Application | In | Dropbox | Allow | `X-Dropbox-allowed-Team-Ids` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Using Tenant Control with Browser Isolation
 

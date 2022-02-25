@@ -33,11 +33,11 @@ The result includes rulesets across all phases at a given level (account or zone
 
 Also, the list of rulesets at the zone level includes the account-level rulesets you may want to deploy to the specified zone.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Not all zone-level phases support all types of rulesets, even if they are presented in the list returned by this API method. Check the documentation for each Cloudflare product for more information on which ruleset types are allowed in that product’s supported phases.
 
-</Aside>
+{{</Aside>}}
 
 The result does not include the list of rules in the ruleset. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to learn how to obtain the list of rules.
 
@@ -102,11 +102,11 @@ Use one of the following API endpoints:
 
 [gep-zone]: https://api.cloudflare.com/#zone-rulesets-get-entrypoint-ruleset
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Note: You can only use the *Get a zone ruleset* operation for zone-level phase entry points, that is, entry points where `kind` is set to `zone`.
 
-</Aside>
+{{</Aside>}}
 
 The API returns a `404 Not Found` HTTP status code under these conditions:
 
@@ -312,11 +312,11 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 </div>
 </details>
 
-\<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 When you view a specific version of a Managed Ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 
-</Aside>
+{{</Aside>}}
 
 ## List rules in a Managed Ruleset with a specific tag
 

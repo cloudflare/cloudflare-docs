@@ -34,11 +34,11 @@ Prior to setting up DNS Firewall, you need:
 6.  Click **Continue**.
 7.  On the following screen, save the values for **Your new DNS Firewall IP Addresses**.
 
-<Aside type="note" header="Note:">
+{{<Aside type="note" header="Note:">}}
 
 If you forget to save your new IP addresses, find your cluster and click **IP Addresses**.
 
-</Aside>
+{{</Aside>}}
 
 #### Using the API
 

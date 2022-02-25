@@ -103,7 +103,7 @@ Note that:
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Error code | Meaning                                                                                                  |
 | ---------- | ---------------------------------------------------------------------------------------------------------|
@@ -113,7 +113,7 @@ When a Worker running in production has an error that prevents it from returning
 | 1027       | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
 | 1042       | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
 
-</TableWrap>
+{{</table-wrap>}}
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 

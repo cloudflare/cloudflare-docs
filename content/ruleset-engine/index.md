@@ -22,7 +22,7 @@ The Ruleset Engine supports different Cloudflare products. Check each product's 
 
 ***
 
-<ButtonGroup>
-  <Button type="primary" href="/basic-operations">Basic operations</Button>
-  <Button type="secondary" href="/about">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/basic-operations">}}Basic operations{{</button>}}
+  {{<button type="secondary" href="/about">}}Learn more{{</button>}}
+{{</button-group>}}

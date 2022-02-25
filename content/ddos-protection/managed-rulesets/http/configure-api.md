@@ -18,11 +18,11 @@ You can define overrides at the ruleset, tag, and rule level for all Managed Rul
 
 When configuring the HTTP DDoS Attack Protection Managed Ruleset, use overrides to define a different **action** or **sensitivity level** from the default values. For more information on these rule parameters and the allowed values, see [Managed Ruleset override parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot disable its rules using an override with `"enabled": false`. Additionally, you must set the override `"expression"` field to `"true"`.
 
-</Aside>
+{{</Aside>}}
 
 ## Example
 

@@ -23,9 +23,9 @@ Links to applications not protected by Access can be added as **bookmarks**. To 
     *   Toggle on **Show application in the App Launcher** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
     *   \[Optional] Add a custom logo for your application by clicking **Custom** and entering a link to your desired image.
 
-     <Aside>
+     {{<Aside>}}
      If you're having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, <code>http://www.example.com/upload/logo.png</code> will not work. However, <code>https://www.example.com/upload/logo.png</code> will.
-     </Aside>
+     {{</Aside>}}
 
 6.  Click **Next**.
 

@@ -100,11 +100,11 @@ To reorder a rule in a list of ruleset rules, include a `position` field in the 
 
 *   `"index": <POSITION_NUMBER>` — Places the rule in the exact position specified by the integer number `<POSITION_NUMBER>`. Position numbers start with `1`. Existing rules in the ruleset from the specified position number onward are shifted one position (no rule is overwritten). For example, when you place a rule in position <var>n</var> using `index`, existing rules with index <var>n</var>, <var>n</var>+1, <var>n</var>+2, and so on, are shifted one position — their new position will be <var>n</var>+1, <var>n</var>+2, <var>n</var>+3, and so forth. If the index is out of range, the method returns 400 HTTP Status Code.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You can only use one of the arguments `before`, `after`, and `index` at a time.
 
-</Aside>
+{{</Aside>}}
 
 Reorder a rule without changing its definition by including only the `position` field in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` field and the `position` field.
 

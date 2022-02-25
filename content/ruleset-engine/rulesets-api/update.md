@@ -27,11 +27,11 @@ Use one of the following API endpoints:
 
 [uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You cannot update the name of the ruleset or its type. Do not include these fields in the `data` field of your `PUT` request.
 
-</Aside>
+{{</Aside>}}
 
 ## Example - Set the rules of a ruleset
 
@@ -174,11 +174,11 @@ For more information on deploying rulesets, check [Deploy rulesets](/ruleset-eng
 
 You can use this API method to update the description of an existing ruleset or phase entry point.
 
-\<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 
-</Aside>
+{{</Aside>}}
 
 <details open>
 <summary>Request</summary>

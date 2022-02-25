@@ -10,4 +10,4 @@ By default, Magic Firewall permits all ingress traffic that has passed through C
 
 The best approach is to replicate your current ingress perimeter firewall rules in Magic Firewall. If you are unable to export your current perimeter firewall rules, contact your Implementation Manager for help translating the rules into Magic Firewall rules.
 
-<DirectoryListing path="/best-practices"/>
+{{<directory-listing>}}

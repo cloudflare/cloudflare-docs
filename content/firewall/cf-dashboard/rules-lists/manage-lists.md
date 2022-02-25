@@ -37,11 +37,11 @@ To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf
 
 ## Delete a list
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 You can only delete a list when there are no Firewall Rules (enabled or disabled) that reference the list.
 
-</Aside>
+{{</Aside>}}
 
 To delete an IP List, follow these steps:
 

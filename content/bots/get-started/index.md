@@ -8,4 +8,4 @@ meta:
 
 # Get started with Cloudflare bot solutions
 
-<DirectoryListing path="/get-started"/>
+{{<directory-listing>}}

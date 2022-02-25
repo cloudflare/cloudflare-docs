@@ -6,11 +6,11 @@ weight: 6
 
 # Automated exposed credentials check
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 This feature is available to all paid plans.
 
-</Aside>
+{{</Aside>}}
 
 Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
 
@@ -41,11 +41,11 @@ Cloudflare recommends that you only use the following actions: *Exposed-Credenti
 
 ## Exposed credentials checks in custom rules
 
-\<Aside type='note'>
+{{<Aside type="note">}}
 
 Currently, exposed credentials checks in custom rules are only available via API.
 
-</Aside>
+{{</Aside>}}
 
 Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/), you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before Rate Limiting Rules.
 

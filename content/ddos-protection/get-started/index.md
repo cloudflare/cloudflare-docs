@@ -41,11 +41,11 @@ You must have one of the following:
 
 ### 1. Configure ruleset actions to Log
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The *Log* action is only available to Enterprise customers.
 
-</Aside>
+{{</Aside>}}
 
 Configure ruleset actions to *Log* for each of the [DDoS Attack Protection Managed Rulesets](/ddos-protection/managed-rulesets/).
 

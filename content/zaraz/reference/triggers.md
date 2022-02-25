@@ -22,13 +22,13 @@ A valid trigger has the following structure:
 
 The exact composition of the trigger will change depending on the type of rule you choose. Here is an example for a trigger based on a Match rule:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` |  *Contains* | `purchase`
 
-</TableWrap>
+{{</table-wrap>}}
 
 Refer to Rule types below for more information on the types of rules available, and [Zaraz event and system properties](/zaraz/reference/properties-reference/) for more information on the variables you can use to create triggers.
 
@@ -44,13 +44,13 @@ Zaraz tracks the variable you input in **Variable name**. For a complete list of
 
 **Trigger example: Click listener**
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \---       | ---           | ---             | ---
 *Match rule* | `{{ client.__zarazTrack }}` | *Contains* | `purchase`
 
-</TableWrap>
+{{</table-wrap>}}
 
 </div>
 </details>
@@ -63,31 +63,31 @@ Tracks clicks in a web page. You can set up click listeners using CSS selectors 
 
 **Trigger example for CSS selector:**
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
 \--- | --- | --- | ---
 *Click listener* | *CSS* | `#my-button` | `500`
 
-</TableWrap>
+{{</table-wrap>}}
 
 To improve the performance of the web page, you can limit a Click listener to a specific URL, by combining it with a Match rule. For example, to track button clicks on a specific page you can set up the following rules in a trigger:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
 \--- | --- | --- | ---
 *Click listener* | *CSS* | `#myButton` | `500`
 
-</TableWrap>
+{{</table-wrap>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | *Contains* | `/my-page-path`
 
-</TableWrap>
+{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
@@ -95,13 +95,13 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 
 **Trigger example for XPath:**
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Type | Selector | Wait for events
 \--- | --- | --- | ---
 *Click listener* | *XPath* | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`
 
-</TableWrap>
+{{</table-wrap>}}
 
 </div>
 </details>
@@ -114,31 +114,31 @@ Tracks form submissions using CSS selectors. Click the **Validate** toggle butto
 
 **Trigger example:**
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | CSS Selector | Validate
 \--- | --- | ---
 *Form submission* | `#my-form` | Toggle on or off
 
-</TableWrap>
+{{</table-wrap>}}
 
 To improve the performance of the web page, you can limit a Form submission trigger to a specific URL, by combining it with a Match rule. For example, to track a form on a specific page you can set up the following rules in a trigger:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | CSS Selector | Validate
 \--- | --- | ---
 *Form submission* | `#my-form` | Toggle on or off
 
-</TableWrap>
+{{</table-wrap>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | *Contains* | `/my-page-path`
 
-</TableWrap>
+{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 
@@ -153,31 +153,31 @@ Set up an interval of time in milliseconds before activating the trigger in **In
 
 **Trigger example:**
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Interval | Limit
 \--- | --- | ---
 *Timer* | `50` | `2`
 
-</TableWrap>
+{{</table-wrap>}}
 
 To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Interval | Limit
 \--- | --- | ---
 *Timer* | `50` | `2` |
 
-</TableWrap>
+{{</table-wrap>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 Rule type | Variable name | Match operation | Match string
 \--- | --- | --- | ---
 *Match rule* | `{{ system.page.url.pathname }}` | `Contains` | `/my-page-path`
 
-</TableWrap>
+{{</table-wrap>}}
 
 Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
 

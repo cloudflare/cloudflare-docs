@@ -22,11 +22,11 @@ To add a location to Cloudflare Zero Trust:
 
 If any of the above apply to your case, click **Delete** to the right of the IPv4 field.
 
-   <Aside>
+   {{<Aside>}}
 
 If you're using an Enterprise plan, you'll be able to manually change the IPv4 address.
 
-   </Aside>
+   {{</Aside>}}
 
 ![Add location](/cloudflare-one/static/documentation/connections/add-location.png)
 

@@ -34,11 +34,11 @@ You are now using encryption only for your DNS queries. Visit [1.1.1.1/help](htt
 
 ## Configure 1.1.1.1 manually
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you configure 1.1.1.1 manually, you will have to do it for every WiFi network your device connects to. This method does not work for cellular connections.
 
-</Aside>
+{{</Aside>}}
 
 1.  Go to **Settings** > **Wi-Fi**.
 

@@ -7,7 +7,7 @@ title: Gateway DNS
 
 The descriptions below detail the fields available for `gateway_dns`.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Field | Value | Type |
 | -- | -- | -- |
@@ -34,4 +34,4 @@ The descriptions below detail the fields available for `gateway_dns`.
 | SrcPort | The port used by the client when they sent the DNS request (for example, 0) | int |
 | UserID | User identity where the HTTP request originated from (for example, '00000000-0000-0000-0000-000000000000') | string |
 
-</TableWrap>
+{{</table-wrap>}}

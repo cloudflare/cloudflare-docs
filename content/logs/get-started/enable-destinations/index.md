@@ -8,4 +8,4 @@ weight: 44
 
 Enable pushing logs to your storage service, SIEM, or log management provider.
 
-<DirectoryListing path="/get-started/enable-destinations"/>
+{{<directory-listing>}}

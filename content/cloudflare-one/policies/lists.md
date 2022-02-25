@@ -6,9 +6,9 @@ weight: 11
 
 # Lists
 
-<Aside>
+{{<Aside>}}
 Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions. A CSV file containing a list of URLs or hostnames must be smaller than 2 MB. 
-</Aside>
+{{</Aside>}}
 
 With Cloudflare Zero Trust, you can create lists of URLs or hostnames to reference when creating [Secure Web Gateway policies](/cloudflare-one/policies/filtering/). This allows you to quickly create rules that match and take actions against several items at once.
 

@@ -10,6 +10,6 @@ Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log man
 
 Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
 
-<ButtonGroup>
-  <Button type="primary" href="/get-started/enable-destinations">Enable destinations</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="/get-started/enable-destinations">}}Enable destinations{{</button>}}
+{{</button-group>}}

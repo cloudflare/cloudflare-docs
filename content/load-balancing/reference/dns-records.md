@@ -38,11 +38,11 @@ For hostnames with existing DNS records, the LB record takes precedence when it 
     *   **LB record**: `*.example.com`
     *   **Outcome**: LB record takes precedence because it is as specific as the DNS record.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 This behavior only applies to [supported records](#supported-records) (determined by your plan type).
 
-</Aside>
+{{</Aside>}}
 
 ## Disabling a load balancer
 

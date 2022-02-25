@@ -8,7 +8,7 @@ weight: 0
 
 The quickest way to experiment with Cloudflare Workers is in the [Playground](https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank). It does not require any setup. The Playground is a sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site.
 
-<p><Button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">Launch playground</Button></p>
+<p>{{<button type="primary" href="https://cloudflareworkers.com/#36ebe026bf3510a2e5acace89c09829f:about:blank">}}Launch playground{{</button>}}</p>
 
 ***
 

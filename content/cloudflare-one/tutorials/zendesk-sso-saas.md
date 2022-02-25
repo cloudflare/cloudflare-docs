@@ -10,7 +10,7 @@ title: Configure Zendesk SSO with Access for SaaS
 
 This tutorial covers how to configure Zendesk SSO with Access for SaaS.
 
-<Aside>
+{{<Aside>}}
 
 For this tutorial, you will need:
 
@@ -18,7 +18,7 @@ For this tutorial, you will need:
 *   An integrated identity provider (IdP)
 *   Admin access to your Zendesk account
 
-</Aside>
+{{</Aside>}}
 
 **⏲️ Time to complete:**
 
@@ -42,9 +42,9 @@ For this tutorial, you will need:
     *   `<Cloudflare Firstname attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname`
     *   `<Cloudflare Last name attribute name>` => `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname`
 
-     <Aside type='note'>
+     {{<Aside type="note">}}
      This step is optional. If the name is not provided, Zendesk will [use the user’s email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v))
-     </Aside>
+     {{</Aside>}}
 
     ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
@@ -57,7 +57,7 @@ For this tutorial, you will need:
     *   SSO Endpoint => SAML SSO URL
     *   Public Key => Certificate Fingerprint
 
-     <Aside>
+     {{<Aside>}}
 
     The Public key must be transformed into a fingerprint. To do that:
 
@@ -67,7 +67,7 @@ For this tutorial, you will need:
     4.  Set the algorithm to SHA256.
     5.  Copy the Formatted Fingerprint Value.
 
-     </Aside>
+     {{</Aside>}}
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 

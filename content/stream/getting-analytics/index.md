@@ -6,4 +6,4 @@ weight: 4
 
 # Getting analytics
 
-<DirectoryListing path="/getting-analytics"/>
+{{<directory-listing>}}

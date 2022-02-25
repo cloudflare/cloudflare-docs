@@ -15,11 +15,11 @@ Workers scripts do not need to prepare an entire response body before delivering
 
 Minimizing buffering is especially important for processing or transforming response bodies larger than the Workers script memory limit. For these cases, streaming is the only implementation strategy.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 By default, Cloudflare Workers is capable of streaming responses using the [Streams APIs](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API). To maintain the streaming behavior, you should only modify the response body using the methods in the Streams APIs. If your Worker only forwards subrequest responses to the client verbatim without reading their body text, then its body handling is already optimal and you do not have to use these APIs.
 
-</Aside>
+{{</Aside>}}
 
 The two primitives developers use to perform active streaming are [`TransformStream`](/workers/runtime-apis/streams/transformstream/) and the [`ReadableStream.pipeTo()`](/workers/runtime-apis/streams/readablestream/#methods) method.
 
@@ -54,11 +54,11 @@ The runtime can continue running a function (`response.body.pipeTo(writable)`) a
 
 ## Common issues
 
-<Aside type="warning" header="Warning">
+{{<Aside type="warning" header="Warning">}}
 
 The Streams API is only available inside of the [Request context](/workers/runtime-apis/request/), inside the `fetch` event listener callback.
 
-</Aside>
+{{</Aside>}}
 
 ***
 

@@ -132,11 +132,11 @@ $ wrangler generate airtable-form-handler
 $ cd airtable-form-handler
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you have chosen to work with the [sample codebase on GitHub](https://github.com/cloudflare/workers-airtable-form), you can find a sample function in the `worker` directory.
 
-</Aside>
+{{</Aside>}}
 
 In the `wrangler.toml` file of your project's directory, add your Cloudflare account ID. [Refer to the Get started guide](/workers/get-started/guide#7-configure-your-project-for-deployment) to find your Cloudflare account ID.
 

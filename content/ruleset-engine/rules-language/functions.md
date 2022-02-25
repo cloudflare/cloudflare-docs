@@ -29,9 +29,9 @@ Transformation functions that do not take arrays as an argument type require the
 
 The Rules language supports these transformation functions:
 
-<Definitions>
+{{<definitions>}}
 
-*   <code>any(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+*   <code>any({{<type>}}Array{{</type>}}{'<'}{{<param-type>}}Boolean{{</param-type>}}{'>'})</code> {{<type>}}Boolean{{</type>}}
 
     *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>any</em> of the values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
@@ -41,7 +41,7 @@ The Rules language supports these transformation functions:
         any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
         </code>
 
-*   <code>all(<Type>Array</Type>{'<'}<ParamType>Boolean</ParamType>{'>'})</code> <Type>Boolean</Type>
+*   <code>all({{<type>}}Array{{</type>}}{'<'}{{<param-type>}}Boolean{{</param-type>}}{'>'})</code> {{<type>}}Boolean{{</type>}}
 
     *   Returns <code class="InlineCode">true</code> when the comparison operator in the argument returns `true` for <em>all</em> values in the argument array. Returns <code class="InlineCode">false</code> otherwise.
 
@@ -49,7 +49,7 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">all(http.request.headers\['content-type']\[\*] == "application/json")</code>
 
-*   <code>concat(<Type>String | Integer | bytes | Array elements</Type>)</code> <Type>String</Type>
+*   <code>concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Takes a comma-separated list of values. Concatenates the argument values into a single String.
 
@@ -57,20 +57,20 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">concat("String1"," ","String",2) == "String1 String2"</code>
 
-*   <code>ends\_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
+*   <code>ends\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
     *   Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
     *   *Example:*<br />
         If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
-        <Aside type='warning'>
+        {{<Aside type="warning">}}
 
         **Warning:** The `ends_with()` function is not available in [Firewall Rules](/firewall/).
 
-        </Aside>
+        {{</Aside>}}
 
-*   <code>len(<Type>String | bytes</Type>)</code> <Type>Integer</Type>
+*   <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
     *   Returns the byte length of a String or Bytes field.
 
@@ -78,7 +78,7 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">len(http.host)</code>
 
-*   <code>lower(<Type>String</Type>)</code> <Type>String</Type>
+*   <code>lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Converts a string field to lowercase. Only uppercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -86,7 +86,7 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">lower(http.host) == "www.cloudflare.com"</code>
 
-*   <code>regex\_replace(source<ParamType>String</ParamType>, regular\_expression<ParamType>String</ParamType>, replacement<ParamType>String</ParamType>)</code> <Type>String</Type>
+*   <code>regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
     *   Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
@@ -110,13 +110,13 @@ The Rules language supports these transformation functions:
         Replace with capture groups:<br />
         `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
-        <Aside type='warning'>
+        {{<Aside type="warning">}}
 
         **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
 
-        </Aside>
+        {{</Aside>}}
 
-*   <code>remove\_bytes(<Type>bytes</Type>)</code> <Type>bytes</Type>
+*   <code>remove\_bytes({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
 
     *   Returns a new byte array with all the occurrences of the given bytes removed.
 
@@ -124,20 +124,20 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">remove\_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
 
-*   <code>starts\_with(source<ParamType>String</ParamType>, substring<ParamType>String</ParamType>)</code> <Type>Boolean</Type>
+*   <code>starts\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
     *   Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
     *   *Example:*<br />
         If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
-        <Aside type='warning'>
+        {{<Aside type="warning">}}
 
         **Warning:** The `starts_with()` function is not available in [Firewall Rules](/firewall/).
 
-        </Aside>
+        {{</Aside>}}
 
-*   <code>to\_string(<Type>Integer | Boolean | IP address</Type>)</code> <Type>String</Type>
+*   <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Returns the string representation of an Integer, Boolean, or IP address value.
 
@@ -148,13 +148,13 @@ The Rules language supports these transformation functions:
         to_string(ssl) == 'true'
         ```
 
-        <Aside type='warning'>
+        {{<Aside type="warning">}}
 
         **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform).
 
-        </Aside>
+        {{</Aside>}}
 
-*   <code>upper(<Type>String</Type>)</code> <Type>String</Type>
+*   <code>upper({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Converts a string field to uppercase. Only lowercase ASCII bytes are converted. All other bytes are unaffected.
 
@@ -162,7 +162,7 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">upper(http.host) == "WWW.CLOUDFLARE.COM"</code>
 
-*   <code>url\_decode(<Type>String</Type>)</code> <Type>String</Type>
+*   <code>url\_decode({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
     *   Decodes a URL formatted string, as in the following:
 
@@ -174,11 +174,11 @@ The Rules language supports these transformation functions:
 
         <code class="InlineCode">any(url\_decode(http.request.body.form.values\[*])\[*] contains "an xss attack")</code>
 
-</Definitions>
+{{</definitions>}}
 
 ## Magic Firewall Functions
 
-*   <code>bit\_slice(<Type>String</Type>, <Type>Number</Type>, <Type>Number</Type>)</code> <Type>Number</Type>
+*   <code>bit\_slice({{<type>}}String{{</type>}}, {{<type>}}Number{{</type>}}, {{<type>}}Number{{</type>}})</code> {{<type>}}Number{{</type>}}
 
     *   Select a slice of contiguous bits from a string field. This is primarily intended for use with <code class="InlineCode">ip</code> and <code class="InlineCode">tcp</code>.
     *   The slice can be no longer than 31 bits, but multiple calls can be joined together via a logical expression.
@@ -186,11 +186,11 @@ The Rules language supports these transformation functions:
 
 ## HMAC validation
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 ### Overview
 
@@ -209,35 +209,35 @@ is_timed_hmac_valid_v0(
 
 The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
-<Definitions>
+{{<definitions>}}
 
-*   *Key* <Type>String literal</Type>
+*   *Key* {{<type>}}String literal{{</type>}}
 
     *   Specifies the secret cryptographic key for validating the HMAC.
 
-*   *MessageMAC* <Type>String</Type>
+*   *MessageMAC* {{<type>}}String{{</type>}}
 
     *   Contains a concatenation of these HMAC elements: *message*, *separator*, *timestamp*, *mac*. For a definition and an example, refer to [MessageMAC](#messagemac).
 
-*   *ttl* <Type>Integer literal</Type>
+*   *ttl* {{<type>}}Integer literal{{</type>}}
 
     *   Defines the time-to-live for the HMAC token, expressed in seconds. Determines how long the token is valid, relative to the time it was issued.
 
-*   *currentTimeStamp* <Type>Integer</Type>
+*   *currentTimeStamp* {{<type>}}Integer{{</type>}}
 
     *   Represents the Unix timestamp when Cloudflare received the request, expressed in seconds. Pass the `http.request.timestamp.sec` field as an approximate value to this argument.
 
-*   *lengthOfSeparator* <Type>Integer literal</Type> <PropMeta>optional</PropMeta>
+*   *lengthOfSeparator* {{<type>}}Integer literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Specifies the length of the *separator* between the *timestamp* and the *message* in the *MessageMAC*. Expressed in bytes, with a default value of 0.
 
-*   *flags* <Type>String literal</Type> <PropMeta>optional</PropMeta>
+*   *flags* {{<type>}}String literal{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   When you set this optional argument to `'s'`, the function expects the value of the base64-encoded *mac* in the *MessageMAC* argument to use the URL-safe character set with no padding.
 
     *   When you do **not** set the value of *flags* to `'s'`, you must URL encode the base64 value for *mac* in the *MessageMAC* argument.
 
-</Definitions>
+{{</definitions>}}
 
 ### Usage
 
@@ -299,13 +299,13 @@ For details on generating a MessageMAC, refer to [Implement token creation](http
 
 ## HMAC validation examples
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 When you do not use the optional *flags* argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for *mac* in the *MessageMAC* argument.
 
 For more information, refer to [HMAC Validation: Overview](#overview).
 
-</Aside>
+{{</Aside>}}
 
 ### Simple case
 

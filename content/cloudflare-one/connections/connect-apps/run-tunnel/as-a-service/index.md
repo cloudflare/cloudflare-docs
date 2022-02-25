@@ -12,4 +12,4 @@ Before you install Cloudflare Tunnel as a service on your OS, follow the [Tunnel
 
 Follow our guides to set up and run `cloudflared` as a service in your environment:
 
-<DirectoryListing path="/connections/connect-apps/run-tunnel/as-a-service"/>
+{{<directory-listing>}}

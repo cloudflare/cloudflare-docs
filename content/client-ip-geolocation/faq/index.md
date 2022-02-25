@@ -6,11 +6,11 @@ weight: 4
 
 # FAQ
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Client IP Geolocation is currently in closed Beta testing.
 
-</Aside>
+{{</Aside>}}
 
 ## Website operators
 

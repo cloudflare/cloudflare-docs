@@ -10,11 +10,11 @@ title: HTML forms
 
 In this tutorial, you will create a simple `<form>` using plain HTML and CSS and deploy it to Cloudflare Pages. While doing so, you will learn about some of the HTML form attributes and how to collect submitted data within a Worker.
 
-<Aside type="note" header="MDN Introductory Series">
+{{<Aside type="note" header="MDN Introductory Series">}}
 
 This tutorial will briefly touch upon the basics of HTML forms. For a more in-depth overview, refer to MDN's [Web Forms – Working with user data](https://developer.mozilla.org/en-US/docs/Learn/Forms) introductory series.
 
-</Aside>
+{{</Aside>}}
 
 This tutorial will make heavy use of Cloudflare Pages and [its Workers integration](/pages/platform/functions/). Refer to the [Get started guide](/pages/get-started/) guide to familiarize yourself with the platform.
 
@@ -57,11 +57,11 @@ To enable this, you must create a `<label>` element for each input and assign ea
 </form>
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Your `for` and `id` values do not need to exactly match the values shown above. You may use any `id` values so long as they are unique to the HTML document. A `<label>` can only be linked with an `<input>` if the `for` and `id` attributes match.
 
-</Aside>
+{{</Aside>}}
 
 When this `<form>` is submitted with valid data, its data contents are sent to the server. You may customize how and where this data is sent by declaring attributes on the form itself. If you do not provide these details, the `<form>` will POST the data to the current URL address, which is rarely the desired behavior. To fix this, at minimum, you need to define an [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-action) attribute with the target URL address, but declaring a [`method`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-method) is often recommended too, even if you are redeclaring the default `POST` value.
 
@@ -91,11 +91,11 @@ Because the `enctype` changed, the browser changes how it sends data to the serv
 
 The rest of this tutorial will focus on building an HTML form on Pages, including a Worker to receive and parse the form submissions.
 
-<Aside type="info" header="GitHub Repository">
+{{<Aside type="info" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/cloudflare/submit.pages.dev). It is a live Pages application with a [live demo](https://submit.pages.dev/) available, too.
 
-</Aside>
+{{</Aside>}}
 
 ### Setup
 
@@ -187,13 +187,13 @@ Copy and paste the following content into your `public/index.html` file:
 
 This HTML document will contain a form with a few fields for the user to fill out. Because there is no validation rules within the form, all fields are optional and the user is able to submit an empty form. For this example, this is intended behavior.
 
-<Aside type="note" header="Optional content">
+{{<Aside type="note" header="Optional content">}}
 
 Technically, only the `<form>` and its child elements are necessary. The `<head>` and the enclosing `<html>` and `<body>` tags are optional and not strictly necessary for a valid HTML document.
 
 The HTML page is also completely unstyled at this point, relying on the browsers' default UI and color palettes. Styling the page is entirely optional and not necessary for the form to function. If you would like to attach a CSS stylesheet, you may [add a `<link>` element](https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/Getting_started#adding_css_to_our_document). Refer to the finished tutorial's [source code](https://github.com/cloudflare/submit.pages.dev/blob/8c0594f48681935c268987f2f08bcf3726a74c57/public/index.html#L11) for an example or any inspiration – the only requirement is that your CSS stylesheet also resides within the `public` directory.
 
-</Aside>
+{{</Aside>}}
 
 ### Worker
 

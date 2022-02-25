@@ -48,7 +48,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option | Value             |
 | -------------------- | ---------------   |
@@ -56,7 +56,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Build command        | `npm run build`   |
 | Build directory      | `dist`            |
 
-</TableLayout>
+</div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
@@ -70,11 +70,11 @@ Cloudflare Pages will automatically rebuild your project and deploy it on every 
 
 Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 ## Learn more
 

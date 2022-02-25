@@ -10,11 +10,11 @@ meta:
 
 Google Cloud supports configuring [outbound server policy](https://cloud.google.com/dns/docs/server-policies-overview#dns-server-policy-out) within Cloud DNS. Policies are applied per Virtual Private Cloud (VPC) network, and will affect all resources within that VPC network, including any existing virtual machines.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you are using [Cloudflare Zero Trust](/cloudflare-one/), you can choose assigned [locations](/cloudflare-one/connections/connect-networks/locations) to apply custom [DNS policies](/cloudflare-one/policies/filtering/dns-policies-builder) via Gateway.
 
-</Aside>
+{{</Aside>}}
 
 To configure 1.1.1.1 for your Google Cloud VPC network(s):
 

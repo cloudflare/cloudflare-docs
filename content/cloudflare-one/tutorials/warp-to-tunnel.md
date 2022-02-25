@@ -43,9 +43,9 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 ![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
-<Aside>
+{{<Aside>}}
   If you already have `cloudflared` installed, make sure it's updated to the latest version before you continue with the tutorial. Some commands may not run with older versions of `cloudflared`. 
-</Aside>
+{{</Aside>}}
 
 ## Create a Tunnel
 
@@ -108,11 +108,11 @@ This example runs it from the command-line but we recommend running `cloudflared
 
 ## Route private IP ranges through WARP
 
-<Aside>
+{{<Aside>}}
 
 Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your private IP ranges to corresponding Cloudflare Tunnels.
 
-</Aside>
+{{</Aside>}}
 
 Users can reach this private service by logging into their Zero Trust account and the WARP agent.
 

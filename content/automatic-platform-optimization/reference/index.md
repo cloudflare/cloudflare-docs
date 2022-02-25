@@ -6,4 +6,4 @@ weight: 10
 
 # Reference
 
-<DirectoryListing path="/reference"/>
+{{<directory-listing>}}

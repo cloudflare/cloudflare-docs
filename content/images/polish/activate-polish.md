@@ -7,11 +7,11 @@ title: Activate Polish
 
 Images in the [cache must be purged](/cache/how-to/purge-cache) or expired before seeing any changes in Polish settings.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Do not activate Polish and Image Resizing simultaneously. Image Resizing already applies lossy compression, which makes Polish redundant.
 
-</Aside>
+{{</Aside>}}
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select the account and domain where you want to activate Polish.
 2.  Click **Speed** > **Optimization**.

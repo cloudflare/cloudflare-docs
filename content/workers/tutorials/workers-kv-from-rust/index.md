@@ -277,14 +277,14 @@ The following function is an example handler that writes to KV on a `PUT` reques
 
 Additionally, the example handler will read from KV when on `GET` requests, using the URL pathname as the key name. For example, a `GET /foo` request will return the `foo` key's value, if any.
 
-<Aside type="note" header="Important changes">
+{{<Aside type="note" header="Important changes">}}
 
 When compared to the `handle` function from the previous snippet, be aware of these important changes:
 
 1.  The `handle` function is asynchronous.
 2.  The `Url` and `UrlSearchParams` features are in use – they must be declared in the `Cargo.toml` feature set.
 
-</Aside>
+{{</Aside>}}
 
 The finalized `handle` function:
 

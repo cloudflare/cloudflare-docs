@@ -5,11 +5,11 @@ title: Fetching bulk analytics
 
 # Fetching bulk analytics
 
- <Aside type='note'>
+ {{<Aside type="note">}}
 
 Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
 
- </Aside>
+ {{</Aside>}}
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request.
 
@@ -32,17 +32,17 @@ There is no limit on number of filters per query.
 *   Device browser
 *   Quality level (only for quality level metric)
 
-<Aside>
+{{<Aside>}}
 
 View analytics is collected only when the Stream player is used. If you use a third party player, view metrics will not appear as part of these metrics. Review the example below to retrieve the time viewed for videos on your account in a single query.
 
-</Aside>
+{{</Aside>}}
 
-<Aside>
+{{<Aside>}}
 
 If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP requests](/analytics/graphql-api/getting-started) for more detailed information getting started with the Cloudflare GraphQL Analytics API.
 
-</Aside>
+{{</Aside>}}
 
 ## Example usage
 

@@ -13,11 +13,11 @@ Use the **API Shield** interface to configure [API Schema Validation](/api-shiel
 
 Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/products/schema-validation/#specifications).
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 
-</Aside>
+{{</Aside>}}
 
 ## Create an API Shield with Schema Validation
 
@@ -33,11 +33,11 @@ To configure Schema Validation in the Cloudflare dashboard:
 
     For example, if your API is available at `http://api.example.com/v1`, include a check for the *Hostname* field — equal to `api.example.com` — and a check for the *URI Path* field using a regular expression — matching the regex `^/v1`.
 
-     <Aside type="warning" note="Important">
+     {{<Aside type="warning" note="Important">}}
 
     To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
 
-     </Aside>
+     {{</Aside>}}
 
 5.  Click **Next**.
 
@@ -57,10 +57,10 @@ To configure Schema Validation in the Cloudflare dashboard:
 
 11. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
 
-     <Aside type='warning'>
+     {{<Aside type="warning">}}
 
     Currently, request body validations are not supported.
 
-     </Aside>
+     {{</Aside>}}
 
 12. Click **Done**.

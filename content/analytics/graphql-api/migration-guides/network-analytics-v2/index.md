@@ -18,7 +18,7 @@ Learn more about the [concepts introduced in Network Analytics v2](/analytics/gr
 
 The following table compares the features of NAv1 and NAv2:
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Feature | NAv1 | NAv2 |
 |---------|------|------|
@@ -29,28 +29,28 @@ The following table compares the features of NAv1 and NAv2:
 | Attack mitigation systems | dosd and gatebot | dosd, gatebot, flowtrackd\*, and Magic Firewall\* |
 | Examples of new fields | n/a | Rule ID<br/>GRE tunnel ID<br/>Packet size |
 
-</TableWrap>
+{{</table-wrap>}}
 
 \* Applicable only for Magic Transit customers.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The `attackId` field value may be different between NAv1 and NAv2 for the same attack.
 
-</Aside>
+{{</Aside>}}
 
 ## Node comparison
 
 NAv2 uses the same API endpoint but makes use of new nodes. While NAv1 has three nodes for aggregated roll-ups for all traffic and attacks, and one node for attacks, NAv2 has one node for all traffic and attacks, and four separate nodes for attacks that vary based on the mitigation system.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Node type      | NAv1 | NAv2 for Magic Transit | NAv2 for Spectrum |
 |----------------|------|------------------------|-------------------|
 | Main node(s)   | `ipFlows1mGroups`<br/>`ipFlows1hGroups`<br/>`ipFlows1dGroups` | `magicTransitNetworkAnalyticsAdaptiveGroups` | `spectrumNetworkAnalyticsAdaptiveGroups` |
 | Attack node(s) | `ipFlows1mAttacksGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsAdaptiveGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsAdaptiveGroups` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 Each row represents one packet sample. The data is sampled at Cloudflare’s edge at [various rates](/analytics/graphql-api/migration-guides/network-analytics-v2/node-reference/). You can also query the sample rate from the nodes using the `sample_interval` field.
 

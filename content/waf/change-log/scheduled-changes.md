@@ -8,7 +8,7 @@ layout: list
 
 # Scheduled changes
 
-<TableWrap><table style="width: 100%"> <thead> <tr> <th>
+{{<table-wrap>}}<table style="width: 100%"> <thead> <tr> <th>
 Announcement Date </th> <th>
 Change Date </th> <th>
 Ruleset </th> <th>
@@ -26,4 +26,4 @@ SAP - Code Injection - CVE:CVE-2022-22532 </td> <td>
 N/A </td> <td>
 Block </td> </tr> </tbody>
 
-</table></TableWrap>
+</table>{{</table-wrap>}}

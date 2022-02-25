@@ -6,4 +6,4 @@ weight: 4
 
 # Advanced options
 
-<DirectoryListing path="/advanced"/>
+{{<directory-listing>}}

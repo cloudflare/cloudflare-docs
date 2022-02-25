@@ -12,11 +12,11 @@ The Cloudflare Advanced TCP Protection Managed Ruleset, powered by [flowtrackd](
 
 The Cloudflare Advanced TCP Protection Managed Ruleset is disabled by default.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The Advanced TCP Protection Managed Ruleset is available in early access to all Magic Transit customers.
 
-</Aside>
+{{</Aside>}}
 
 ## Execution modes
 

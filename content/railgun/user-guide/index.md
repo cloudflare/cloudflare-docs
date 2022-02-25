@@ -8,4 +8,4 @@ meta:
 
 # General documentation for end users
 
-<DirectoryListing path="/user-guide"/>
+{{<directory-listing>}}

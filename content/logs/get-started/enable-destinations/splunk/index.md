@@ -52,11 +52,11 @@ To set up a Splunk Logpush job:
 1.  Create a job with the appropriate endpoint URL and authentication parameters.
 2.  Enable the job to begin pushing logs.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Splunk.
 
-</Aside>
+{{</Aside>}}
 
 <EnableReadPermissions/>
 
@@ -76,9 +76,9 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
         *   Using the command line.  For example: `python -c 'import uuid; print(uuid.uuid4())'`.
     *   **\<INSECURE\_SKIP\_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
-</Aside>
+{{</Aside>}}
 
 *   `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
 *   `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
@@ -165,7 +165,7 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
 2.  Click **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
 3.  Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
 
-  <TableWrap>
+  {{<table-wrap>}}
 
 Field | Operator | Value
 \------|----------|------
@@ -176,7 +176,7 @@ URI Query String | `contains` | `channel`
 AS Num | `equals` | `132892`
 User Agent | `equals` | `Go-http-client/2.0`
 
-  </TableWrap>
+  {{</table-wrap>}}
 
 1.  After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
 

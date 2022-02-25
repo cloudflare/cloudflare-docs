@@ -31,11 +31,11 @@ You cannot download the *exact* input file that you uploaded. However, depending
 
 *   By default, you can have up to 120 videos in the `inprogress`, `queued` or `downloading` state at the same time. Videos in the `error`, `ready` or `pendingupload` state do not count toward this limit. If you need the concurrency limit raised, please [contact Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) explaining your use case and why you would like the limit raised.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The limit to the number of videos only applies to videos being uploaded to Cloudflare Stream. This limit is not related to the number of end users streaming videos.
 
-</Aside>
+{{</Aside>}}
 
 *   An account cannot upload videos if the total video duration exceeds the video storage capacity purchased.
 
@@ -63,7 +63,7 @@ If the frame rate is variable we will drop frames (e.g. if there are more than 1
 
 You can embed the Stream player on the following platforms:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Browser         | Version
 \----------------|-----------------------------------
@@ -73,15 +73,15 @@ Edge            | Supported since Edge 89+
 Safari          | Supported since Safari version 14+
 Opera           | Supported since Opera version 75+
 
-</TableWrap>
+{{</table-wrap>}}
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Cloudflare Stream is not available on Chromium, as Chromium does not support H.264 videos.
 
-</Aside>
+{{</Aside>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 Mobile Platform   | Version
 \------------------|-----------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ UC Browser on Android | Supported on version 12.12+
 Samsung Internet | Supported on 13+
 Safari on iOS    | Supported on iOS 13.4+. Speed selector supported when not in fullscreen.
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### What are the recommended upload settings for video uploads?
 
@@ -106,7 +106,7 @@ If you are producing a brand new file for Cloudflare Stream, we recommend you us
 
 Below are bitrate recommendations for encoding new videos for Stream:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Resolution  |  Recommended bitrate
 \------------|---------
@@ -115,7 +115,7 @@ Resolution  |  Recommended bitrate
 480p  |	2.4 Mbps
 360p | 1 Mbps
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### If I cancel my stream subscription, are the videos deleted?
 

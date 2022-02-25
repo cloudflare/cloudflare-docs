@@ -31,7 +31,7 @@ Request traffic data may display a drop off near the last few minutes displayed 
 
 Worker invocation statuses indicate whether a Worker script executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker script invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/learning/debugging-workers/#error-pages-generated-by-workers) being returned to the client.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Invocation status      | Definition                                                               | Workers error code | GraphQL field          |
 | ---------------------- | ------------------------------------------------------------------------ | ------------------ | ---------------------- |
@@ -41,7 +41,7 @@ Worker invocation statuses indicate whether a Worker script executed successfull
 | Exceeded resources¹    | Worker script exceeded runtime limits                                    | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                     |                    | `internalError`        |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a script exceeding startup time or free tier limits.
 

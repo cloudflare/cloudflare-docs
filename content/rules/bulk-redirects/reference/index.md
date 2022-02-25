@@ -10,4 +10,4 @@ meta:
 
 Refer to the following pages for more information about Bulk Redirects:
 
-<DirectoryListing path="/bulk-redirects/reference"/>
+{{<directory-listing>}}

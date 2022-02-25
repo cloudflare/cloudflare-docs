@@ -15,77 +15,77 @@ Multiple attributes can be used together, added one after each other like this:
 
 ## Supported attributes
 
-<Definitions>
+{{<definitions>}}
 
-*   `autoplay` <Type>boolean</Type>
+*   `autoplay` {{<type>}}boolean{{</type>}}
 
     *   Tells the browser to immediately start downloading the video and play it as soon as it can. Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
-        <Aside>
+        {{<Aside>}}
 
         To disable video autoplay, the `autoplay` attribute needs to be removed altogether as this attribute. Setting `autoplay="false"` will not work; the video will autoplay if the attribute is there in the `<stream>` tag.
 
         In addition, some browsers now prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
-        </Aside>
+        {{</Aside>}}
 
-*   `controls` <Type>boolean</Type>
+*   `controls` {{<type>}}boolean{{</type>}}
 
     *   Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
 
-*   `height` <Type>integer</Type>
+*   `height` {{<type>}}integer{{</type>}}
 
     *   The height of the video's display area, in CSS pixels.
 
-*   `loop` <Type>boolean</Type>
+*   `loop` {{<type>}}boolean{{</type>}}
 
     *   A Boolean attribute; if included in the HTML tag, player will, automatically seek back to the start upon reaching the end of the video.
 
-*   `muted` <Type>boolean</Type>
+*   `muted` {{<type>}}boolean{{</type>}}
 
     *   A Boolean attribute which indicates the default setting of the audio contained in the video. If set, the audio will be initially silenced.
 
-*   `preload` <Type>string | null</Type>
+*   `preload` {{<type>}}string | null{{</type>}}
 
     *   This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. You may choose to include this attribute as a boolean attribute without a value, or you may specify the value `preload="auto"` to preload the beginning of the video. Not including the attribute or using `preload="metadata"` will just load the metadata needed to start video playback when requested.
 
-        <Aside>
+        {{<Aside>}}
 
         The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
-        </Aside>
+        {{</Aside>}}
 
-*   `poster` <Type>string</Type>
+*   `poster` {{<type>}}string{{</type>}}
 
     *   A URL for an image to be shown before the video is started or while the video is downloading. If this attribute isn't specified, a thumbnail image of the video is shown.
 
-*   `src` <Type>string</Type>
+*   `src` {{<type>}}string{{</type>}}
 
     *   The video id from the video you've uploaded to Cloudflare Stream should be included here.
 
-*   `width` <Type>integer</Type>
+*   `width` {{<type>}}integer{{</type>}}
 
     *   The width of the video's display area, in CSS pixels.
 
-</Definitions>
+{{</definitions>}}
 
 ## Methods
 
-<Definitions>
+{{<definitions>}}
 
-*   `play()` <TypeLink href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</TypeLink>
+*   `play()` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">}}Promise{{</type-link>}}
 
     *   Start video playback.
 
-*   `pause()` <Type>null</Type>
+*   `pause()` {{<type>}}null{{</type>}}
 
     *   Pause video playback.
 
-</Definitions>
+{{</definitions>}}
 
 ## Properties
 
-<Definitions>
+{{<definitions>}}
 
 *   `autoplay`
 
@@ -99,11 +99,11 @@ Multiple attributes can be used together, added one after each other like this:
 
     *   Returns the current playback time in seconds. Setting this value seeks the video to a new time.
 
-*   `duration` <PropMeta>readonly</PropMeta>
+*   `duration` {{<prop-meta>}}readonly{{</prop-meta>}}
 
     *   Returns the duration of the video in seconds.
 
-*   `ended` <PropMeta>readonly</PropMeta>
+*   `ended` {{<prop-meta>}}readonly{{</prop-meta>}}
 
     *   Returns whether the video has ended.
 
@@ -115,7 +115,7 @@ Multiple attributes can be used together, added one after each other like this:
 
     *   Sets or returns whether the audio should be played with the video
 
-*   `paused` <PropMeta>readonly</PropMeta>
+*   `paused` {{<prop-meta>}}readonly{{</prop-meta>}}
 
     *   Returns whether the video is paused
 
@@ -127,13 +127,13 @@ Multiple attributes can be used together, added one after each other like this:
 
     *   Sets or returns volume from 0.0 (silent) to 1.0 (maximum value)
 
-</Definitions>
+{{</definitions>}}
 
 ## Events
 
 ### Standard video element events
 
-<Definitions>
+{{<definitions>}}
 
 Stream supports most of the [standardized media element events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events).
 
@@ -221,13 +221,13 @@ Stream supports most of the [standardized media element events](https://develope
 
     *   Sent when the requested operation (such as playback) is delayed pending the completion of another operation (such as a seek).
 
-</Definitions>
+{{</definitions>}}
 
 ### Non-standard events
 
 Non-standard events are prefixed with `stream-` to distinguish them from standard events.
 
-<Definitions>
+{{<definitions>}}
 
 *   `stream-adstart`
 
@@ -241,4 +241,4 @@ Non-standard events are prefixed with `stream-` to distinguish them from standar
 
     *   Fires when `ad-url` attribute is present and the ad took too long to load.
 
-</Definitions>
+{{</definitions>}}

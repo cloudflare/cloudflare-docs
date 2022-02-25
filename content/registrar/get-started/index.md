@@ -6,4 +6,4 @@ weight: 3
 
 # Get started
 
-<DirectoryListing path="/get-started"/>
+{{<directory-listing>}}

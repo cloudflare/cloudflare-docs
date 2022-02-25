@@ -16,11 +16,11 @@ You can connect applications to Cloudflare Zero Trust over a number of different
 
 ## Rendering in the browser
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
 
-</Aside>
+{{</Aside>}}
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
 
@@ -32,20 +32,20 @@ Once enabled, when users authenticate and visit the URL of the application, Clou
 
 ## Automatic `cloudflared` authentication
 
-<Aside>
+{{<Aside>}}
 
 This should only be enabled if a [service token](/cloudflare-one/identity/service-auth/service-tokens/) cannot be used for your automated service.
 
-</Aside>
+{{</Aside>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Before you start |
 | ------------------- |
 | Ensure you have an automated service relying on `cloudflared` authentication |
 | Ensure you have an active IdP session when logging in through `cloudflared` |
 
-</TableWrap>
+{{</table-wrap>}}
 
 When you log into Access through `cloudflared`, your browser prompts you to allow access by
 displaying this page:

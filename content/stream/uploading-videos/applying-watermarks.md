@@ -42,39 +42,39 @@ To create, list, delete, or get information about the profile, you will need you
 
 ### Optional parameters
 
-<Definitions>
+{{<definitions>}}
 
-*   `name` <Type>string</Type> <PropMeta>default: *empty string*</PropMeta>
+*   `name` {{<type>}}string{{</type>}} {{<prop-meta>}}default: *empty string*{{</prop-meta>}}
 
     *   A short description for the profile. For example, "marketing videos."
 
-*   `opacity` <Type>float</Type> <PropMeta>default: 1.0</PropMeta>
+*   `opacity` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 1.0{{</prop-meta>}}
 
     *   Translucency of the watermark. 0.0 means completely transparent, and 1.0 means completely opaque. Note that if the watermark is already semi-transparent, setting this to 1.0 will not make it completely opaque.
 
-*   `padding` <Type>float</Type> <PropMeta>default: 0.05</PropMeta>
+*   `padding` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.05{{</prop-meta>}}
 
     *   Whitespace between the adjacent edges (determined by position) of the video and the watermark. 0.0 means no padding, and 1.0 means padded full video width or length.
 
     *   Stream will make sure that the watermark will be at about the same position across videos with different dimensions.
 
-*   `scale` <Type>float</Type> <PropMeta>default: 0.15 </PropMeta>
+*   `scale` {{<type>}}float{{</type>}} {{<prop-meta>}}default: 0.15 {{</prop-meta>}}
 
     *   The size of the watermark relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. 0.0 means no scaling (use the size of the watermark as-is), and 1.0 fills the entire video.
 
     *   The algorithm will make sure that the watermark will look about the same size across videos with different dimensions.
 
-*   `position` <Type>string (enum)</Type> <PropMeta>default: "upperRight"</PropMeta>
+*   `position` {{<type>}}string (enum){{</type>}} {{<prop-meta>}}default: "upperRight"{{</prop-meta>}}
 
     *   Location of the watermark. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`.
 
-        <Aside>
+        {{<Aside>}}
 
         Note that `center` will ignore the `padding` parameter.
 
-        </Aside>
+        {{</Aside>}}
 
-</Definitions>
+{{</definitions>}}
 
 ## Creating a Watermark profile
 

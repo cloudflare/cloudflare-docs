@@ -89,8 +89,8 @@ To enable Logpush to Amazon S3:
 }
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 Logpush uses multipart upload for S3. Aborted uploads will result in incomplete files remaining in your bucket. To minimize your storage costs, Amazon recommends configuring a lifecycle rule using the `AbortIncompleteMultipartUpload` action. Refer to [Uploading and copying objects using multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config).
 
-</Aside>
+{{</Aside>}}

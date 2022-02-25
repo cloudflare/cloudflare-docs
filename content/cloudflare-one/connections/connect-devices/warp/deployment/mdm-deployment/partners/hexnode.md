@@ -8,13 +8,13 @@ weight: 2
 
 ## Windows
 
-<Aside type='note' header='Requirements'>
+{{<Aside type="note" header="Requirements">}}
 
 *   A 64-bit machine with Windows 10 or Windows 8
 *   184 MB hard disk space and 3 MB memory
 *   Wi-Fi or LAN connection
 
-</Aside>
+{{</Aside>}}
 
 To set up Cloudflare for Teams on Windows using Hexnode:
 
@@ -58,7 +58,7 @@ To set up Cloudflare for Teams on Windows using Hexnode:
 
 ## macOS
 
-<Aside type='note' header='Requirements'>
+{{<Aside type="note" header="Requirements">}}
 
 *   macOS Catalina, High Sierra or Big Sur with a 64-bit CPU
 *   Minimum hard disk space 75 MB and memory 35 MB.
@@ -66,7 +66,7 @@ To set up Cloudflare for Teams on Windows using Hexnode:
 
 To set up Cloudflare for Teams on macOS using Hexnode:
 
-</Aside>
+{{</Aside>}}
 
 1.  Get the Cloudflare WARP client with identifier “com.apple.ManagedClient.preferences”.
 
@@ -124,11 +124,11 @@ This will push the app along with the configurations to the selected devices.
 
 ## iOS
 
-<Aside type='note' header='Requirements'>
+{{<Aside type="note" header="Requirements">}}
 
 *   Devices running iOS v11+
 
-</Aside>
+{{</Aside>}}
 
 To set up Cloudflare for Teams on iOS using Hexnode:
 
@@ -175,11 +175,11 @@ To set up Cloudflare for Teams on iOS using Hexnode:
 
 ## Android
 
-<Aside type='note' header='Requirements'>
+{{<Aside type="note" header="Requirements">}}
 
 *   Devices enrolled in the Android Enterprise program.
 
-</Aside>
+{{</Aside>}}
 
 To set up Cloudflare for Teams on Android using Hexnode:
 

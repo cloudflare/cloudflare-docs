@@ -26,13 +26,13 @@ If you only want specific subdomains redirected to HTTPS, redirect on a URL basi
 
 For example, you could forward traffic from a specific subdomain to HTTPS. You would likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `http://example.com/examples` go to `https://example.com/examples`.
 
-<Example>
+{{<example>}}
 
 | **Source URL** | **Target URL** | **Status** | **Selected parameters** |
 | --------- | --------- | --- | --- |
 | `https://example.com` | `https://example.com` | 301 | *Subpath matching* and *Preserve path suffix* |
 
-</Example>
+{{</example>}}
 
 ### Limitations
 

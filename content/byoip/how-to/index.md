@@ -8,4 +8,4 @@ weight: 4
 
 Review the content below to learn more about tasks related to BYOIP.
 
-<DirectoryListing path="/how-to"/>
+{{<directory-listing>}}

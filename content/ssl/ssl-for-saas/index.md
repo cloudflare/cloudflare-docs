@@ -38,7 +38,7 @@ SSL for SaaS is available as an add-on purchase for customers on any plan. For m
 
 ## Next steps
 
-<ButtonGroup>
-  <Button type="primary" href="getting-started">Get started</Button>
-  <Button type="secondary" href="https://blog.cloudflare.com/introducing-ssl-for-saas/" target="_blank">Learn more</Button>
-</ButtonGroup>
+{{<button-group>}}
+  {{<button type="primary" href="getting-started">}}Get started{{</button>}}
+  {{<button type="secondary" href="https://blog.cloudflare.com/introducing-ssl-for-saas/" target="_blank">}}Learn more{{</button>}}
+{{</button-group>}}

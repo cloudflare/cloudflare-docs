@@ -8,4 +8,4 @@ weight: 4
 
 Review the following topics to learn more about the basic concepts and components involved in Cloudflare Load Balancing.
 
-<DirectoryListing path="/understand-basics"/>
+{{<directory-listing>}}

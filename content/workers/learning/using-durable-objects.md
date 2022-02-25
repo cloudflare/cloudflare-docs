@@ -59,11 +59,11 @@ export class DurableObjectExample {
 
 A Worker can pass information to a Durable Object via headers, the HTTP method, the Request body, or the Request URI.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 HTTP requests received by a Durable Object do not come directly from the Internet. They come from other Worker code – possibly other Durable Objects, or just plain Workers. We'll see how to send such a request in a bit. Durable Objects use HTTP for familiarity, but we plan to introduce other protocols in the future.
 
-</Aside>
+{{</Aside>}}
 
 ### Accessing Persistent Storage from a Durable Object
 
@@ -124,11 +124,11 @@ export class Counter {
 }
 ```
 
-<Aside type="note" header="Built-in Caching">
+{{<Aside type="note" header="Built-in Caching">}}
 
 The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. However, in applications with more complex state, explicitly storing state in your object like above may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
-</Aside>
+{{</Aside>}}
 
 ### WebSockets in Durable Objects
 
@@ -194,19 +194,19 @@ export default {
 
 Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
 
-<Aside header="String-derived IDs vs. system-generated IDs">
+{{<Aside header="String-derived IDs vs. system-generated IDs">}}
 
 In the above example, we used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. [See the API reference docs for more information.](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker)
 
-</Aside>
+{{</Aside>}}
 
 ## Uploading a Durable Object Worker
 
-<Aside type="warning" header="Custom Wrangler installation instructions">
+{{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
 You must use [Wrangler version 1.19.3 or greater](/workers/cli-wrangler/install-update) in order to manage Durable Objects.
 
-</Aside>
+{{</Aside>}}
 
 The easiest way to upload Workers that implement or bind to Durable Objects is to use [Wrangler](/workers/cli-wrangler/), the Workers CLI. We recommend starting with one of our templates, the simplest of which can be used by running:
 
@@ -284,21 +284,21 @@ Migrations can also be used for transferring stored data between two Durable Obj
 
 The destination class (the class that stored objects are being transferred to) for a rename or transfer migration must be exported by the deployed script.
 
-<Aside type="warning" header="Important">
+{{<Aside type="warning" header="Important">}}
 
 After a rename or transfer migration, requests to the destination Durable Object class will have access to the source Durable Object's stored data.
 
 After a migration, any existing bindings to the original Durable Object class (for example, from other Workers) will automatically forward to the updated destination class. However, any Worker scripts bound to the updated Durable Object class must update their `[durable_objects]` configuration in the `wrangler.toml` file for their next deployment.
 
-</Aside>
+{{</Aside>}}
 
 Migrations can also be used to delete a Durable Object class and its stored objects.
 
-<Aside type="warning" header="Important">
+{{<Aside type="warning" header="Important">}}
 
 Running a delete migration will delete all Durable Object instances associated with the deleted class, including all of their stored data. Do not run a delete migration on a class without first ensuring that you are not relying on the Durable Objects within that class anymore. Copy any important data to some other location before deleting.
 
-</Aside>
+{{</Aside>}}
 
 ### Durable Object migrations in `wrangler.toml`
 
@@ -329,20 +329,20 @@ renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
 ```
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Note that `.toml` files do not allow line breaks in inline tables (the `{key = "value"}` syntax), but line breaks
 in the surrounding inline array are acceptable.
 
-</Aside>
+{{</Aside>}}
 
 ### Durable Object migrations through Wrangler CLI
 
-<Aside type="warning" header="Deprecation Notice">
+{{<Aside type="warning" header="Deprecation Notice">}}
 
 While CLI migrations initially served a way to quickly migrate Durable Objects, this method is now deprecated and will be removed in a future release.
 
-</Aside>
+{{</Aside>}}
 
 It is possible to define a migration purely through extra arguments to the `wrangler publish` command. When taking this route, any migrations listed in the `wrangler.toml` configuration file are ignored.
 

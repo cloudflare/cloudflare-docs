@@ -10,11 +10,11 @@ When you enable session affinity, your load balancer directs all requests from a
 
 Session affinity can also help reduce network requests, leading to savings for customers with usage-based billing.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Cloudflare only supports cookie-based session affinity. Other methods, such as TCP session affinity, are not supported.
 
-</Aside>
+{{</Aside>}}
 
 ## Process
 
@@ -39,21 +39,21 @@ If you enable Session Affinity, choose one of the following options:
 *   **By Cloudflare cookie only**: Sets a `CFLib` cookie to track the associated origin web server
 *   **By Cloudflare cookie and Client IP fallback**: Sets a `CFLib` cookie, but also uses the client IP address when no session affinity cookie is provided
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Session Affinity with Client IP fallback is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
-</Aside>
+{{</Aside>}}
 
 ### Origin Drain
 
 Drain or remove all traffic from an origin without affecting any active customers using Origin Drain. For more details on origin drain, refer to [Performing planned maintenance](/load-balancing/additional-options/planned-maintenance/#gradual-rotation).
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
 
-</Aside>
+{{</Aside>}}
 
 ***
 

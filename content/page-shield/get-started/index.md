@@ -23,11 +23,11 @@ For guidance on using Page Shield's Script Monitor dashboard, refer to [Monitor 
 
 ## Configure alerts
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Only available to customers on Business and Enterprise plans.
 
-</Aside>
+{{</Aside>}}
 
 <AlertsIntro/>
 

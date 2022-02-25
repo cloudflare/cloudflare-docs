@@ -8,7 +8,7 @@ meta:
 
 # Plans — SSL for SaaS
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table style="width:100%;border:1">
    <thead>
@@ -66,4 +66,4 @@ meta:
    </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}

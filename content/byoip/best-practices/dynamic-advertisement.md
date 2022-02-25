@@ -26,11 +26,11 @@ To avoid latency and the possibility of dropped routes, enable prefix advertisem
 
 3.  Remove the prefix advertisement that originates from your data center.
 
-<Aside>
+{{<Aside>}}
 
 If you do not remove the advertisement from your data center, some of your traffic may not route through Cloudflare for protection, depending on which routes your ISP prefers. If you want to continue advertising from your data center while using Magic Transit, one option is to advertise a less specific route (eg. a /23) and have Cloudflare advertise more specific routes (eg. /24s).
 
-</Aside>
+{{</Aside>}}
 
 ## Disable prefix advertisement
 

@@ -18,7 +18,7 @@ In the reference table below, the provided URL component examples are based on t
 https://user:password@www.example.com:443/search?q=term#results
 ```
 
-<TableWrap>
+{{<table-wrap>}}
 
 URL component | Supported in source URL | Supported in target URL
 \---|---|---
@@ -30,7 +30,7 @@ URL component | Supported in source URL | Supported in target URL
 **Query string**<br/>(for example, `q=term`) | No | Yes, if **Preserve query string** is false (optional)
 **Fragment**<br/>(for example, `results`) | No | Yes (optional)
 
-</TableWrap>
+{{</table-wrap>}}
 
 Bulk Redirects also support target URLs without an authority component, like the following URL:
 

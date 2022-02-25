@@ -12,11 +12,11 @@ Potential examples include:
 *   Removing rate limiting for an API
 *   Sharing brand assets and marketing materials
 
-<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 These rules can bypass Cloudflare's security features and are generally not recommended. Use with caution.
 
-</Aside>
+{{</Aside>}}
 
 ## Update Firewall Rules by ASN
 
@@ -44,11 +44,11 @@ This example uses:
   </tbody>
 </table>
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 Access to [Bot Management](/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan with Bot Management.
 
-</Aside>
+{{</Aside>}}
 
 ### Adjust rules by ASN
 

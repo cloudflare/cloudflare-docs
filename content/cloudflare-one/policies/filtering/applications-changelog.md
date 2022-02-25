@@ -11,7 +11,7 @@ We update the list of supported applications and app types periodically. Check o
 
 ## April 2021
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Application                   | App Type          | Month Added |
 |-------------------------------|-------------------|-------------|
@@ -29,4 +29,4 @@ We update the list of supported applications and app types periodically. Check o
 | Sync (Do Not Decrypt)         | Do Not Decrypt    | April 2021  |
 | Zomato (Do Not Decrypt)       | Do Not Decrypt    | April 2021  |
 
-</TableWrap>
+{{</table-wrap>}}

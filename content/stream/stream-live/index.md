@@ -6,4 +6,4 @@ weight: 6
 
 # Stream Live
 
-<DirectoryListing path="/stream-live"/>
+{{<directory-listing>}}

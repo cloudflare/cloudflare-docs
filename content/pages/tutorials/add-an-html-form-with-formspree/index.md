@@ -35,11 +35,11 @@ You may now begin working in the `new-project` directory you created.
 
 You will only be using plain HTML for this example project. The home page will include a Contact Us form that accepts a name, email address, and message.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 The form code is adapted from the HTML Forms tutorial. For a more in-depth explanation of how HTML forms work and additional learning resources, refer to the [HTML Forms tutorial](/pages/tutorials/forms/).
 
-</Aside>
+{{</Aside>}}
 
 The form code:
 
@@ -60,11 +60,11 @@ The form code:
 
 The `action` attribute determines where the form data is sent. You will update this later to send form data to Formspree. All `<input>` tags must have a unique `name` in order to capture the user's data. The `for` and `id` values must match in order to link the `<label>` with the corresponding `<input>` for accessibility tools like screen readers.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Refer to the [HTML Forms tutorial](/pages/tutorials/forms/#Overview) on how to build an HTML form.
 
-</Aside>
+{{</Aside>}}
 
 To add this form to your website, first, create a `public/index.html` in your project directory. The `public` directory should contain all front-end assets, and the `index.html` file will serve as the home page for the website.
 
@@ -100,11 +100,11 @@ Copy and paste the following content into your `public/index.html` file, which i
 
 Now you have an HTML document containing a Contact Us form with several fields for the user to fill out. However, you have not yet set the `action` attribute to a server that can handle the form data. You will do this in the next section of this tutorial.
 
-<Aside type="info" header="GitHub Repository">
+{{<Aside type="info" header="GitHub Repository">}}
 
 The source code for this example is [available on GitHub](https://github.com/formspree/formspree-example-cloudflare-html). It is a live Pages application with a [live demo](https://formspree-example-cloudflare-html.pages.dev/) available, too.
 
-</Aside>
+{{</Aside>}}
 
 ## The Formspree back end
 

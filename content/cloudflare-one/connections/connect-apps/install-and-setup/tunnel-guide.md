@@ -194,11 +194,11 @@ If you want to run the tunnel with a configuration file that is not in the [defa
 $ cloudflared tunnel --config path/config.yml run
 ```
 
-<Aside>
+{{<Aside>}}
 
 Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/).
 
-</Aside>
+{{</Aside>}}
 
 ## 7. Check the tunnel
 

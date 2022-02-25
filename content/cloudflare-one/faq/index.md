@@ -9,13 +9,13 @@ layout: list
 
 # FAQ
 
-<ContentColumn>
+{{<content-column>}}
 
 Below you'll find answers to the most commonly asked questions on Cloudflare Zero Trust, as well as a troubleshooting section to help you navigate common issues and errors you may come across.
 
 If you can't find the answer you're looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there.
 
-</ContentColumn>
+{{</content-column>}}
 
 ***
 
@@ -23,40 +23,40 @@ If you can't find the answer you're looking for, feel free to head over to our [
 
 For extra guidance on experiencing Cloudflare Zero Trust for the first time.
 
-<Button type="primary" href="/faq/teams-getting-started-faq/">Getting started  ❯</Button>
+{{<button type="primary" href="/faq/teams-getting-started-faq/">}}Getting started  ❯{{</button>}}
 
 ## General
 
 For general questions on Cloudflare Zero Trust and how it works.
 
-<Button type="primary"  href="/faq/teams-general-faq/">General  ❯</Button>
+{{<button type="primary" href="/faq/teams-general-faq/">}}General  ❯{{</button>}}
 
 ## Identity
 
 For questions on identity providers and accessing applications behind Cloudflare Zero Trust.
 
-<Button type="primary" href="/faq/teams-authentication-faq/">Identity ❯</Button>
+{{<button type="primary" href="/faq/teams-authentication-faq/">}}Identity ❯{{</button>}}
 
 ## Policies
 
 For questions on how policies work, and how to create and test them.
 
-<Button type="primary"  href="/faq/teams-policies-faq/">Policies ❯</Button>
+{{<button type="primary" href="/faq/teams-policies-faq/">}}Policies ❯{{</button>}}
 
 ## Devices
 
 For questions on device connectivity and the WARP client.
 
-<Button type="primary" href="/faq/teams-devices-faq/">Devices ❯</Button>
+{{<button type="primary" href="/faq/teams-devices-faq/">}}Devices ❯{{</button>}}
 
 ## Tunnels
 
 For questions on connecting applications with Tunnels.
 
-<Button type="primary"  href="/faq/cloudflare-tunnels-faq/">Tunnels ❯</Button>
+{{<button type="primary" href="/faq/cloudflare-tunnels-faq/">}}Tunnels ❯{{</button>}}
 
 ## Troubleshooting
 
 Got an unexpected error? See if it's covered in our troubleshooting section.
 
-<Button type="primary" href="/faq/teams-troubleshooting/">Troubleshooting ❯</Button>
+{{<button type="primary" href="/faq/teams-troubleshooting/">}}Troubleshooting ❯{{</button>}}

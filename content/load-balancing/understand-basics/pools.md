@@ -12,11 +12,11 @@ import PoolDefinition from "../\_partials/\_pool-definition.md"
 
 If you are familiar with DNS terminology, think of a pool as a “record set,” except Cloudflare only returns addresses that are considered healthy. You can attach health checks to individual pools for customized monitoring.
 
-<Aside>
+{{<Aside>}}
 
 For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
 
-</Aside>
+{{</Aside>}}
 
 ***
 
@@ -42,7 +42,7 @@ When your application needs specialized routing (CNAME setup or custom hosts lik
 
 The Cloudflare API supports the following commands for pools. Examples are given for user-level endpoint but apply to the account-level endpoint as well.
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <thead>
@@ -131,4 +131,4 @@ The Cloudflare API supports the following commands for pools. Examples are given
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}

@@ -8,4 +8,4 @@ weight: 6
 
 Refer to the following pages for more information about adjusting DDoS rules according to your situation:
 
-<DirectoryListing path="/managed-rulesets/adjust-rules"/>
+{{<directory-listing>}}

@@ -12,9 +12,9 @@ layout: example
 
 # Geolocation: Custom Styling
 
-<ContentColumn>
+{{<content-column>}}
   <p>{props.frontmatter.summary}</p>
-</ContentColumn>
+{{</content-column>}}
 
 ```js
 addEventListener('fetch', event => {

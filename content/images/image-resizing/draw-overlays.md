@@ -34,7 +34,7 @@ fetch(imageURL, {
 
 The `draw` property is an array. Overlays are drawn in the order they appear in the array (the last array entry is the topmost layer). Each item in the `draw` array is an object, which can have the following properties:
 
-<Definitions>
+{{<definitions>}}
 
 *   **`url`**
     *   Absolute URL of the image file to use for the drawing. It can be any of the supported file formats. For drawing watermarks or non-rectangular overlays, Cloudflare recommends that you use PNG or WebP images.
@@ -66,7 +66,7 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 *   `rotate`
     *   Number of degrees to rotate the overlay image by. Same as [for the main image](/images/image-resizing/resize-with-workers/#fetch-options).
 
-</Definitions>
+{{</definitions>}}
 
 ## Examples
 

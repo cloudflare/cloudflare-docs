@@ -12,11 +12,11 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api) to create a Custom Firewall
 
 You must deploy Custom Firewall rules to the `http_request_firewall_custom` phase entry point ruleset.
 
-<Aside type='warning' header='Important'>
+{{<Aside type="warning" header="Important">}}
 
 This feature is only available for selected customers on an Enterprise plan.
 
-</Aside>
+{{</Aside>}}
 
 ## Create a Custom Firewall rule
 

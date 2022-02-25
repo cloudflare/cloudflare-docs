@@ -55,10 +55,10 @@ The following example creates two files — one with the private key and another
 test matched data
 ```
 
-<Aside type='note' header='Encryption formats'>
+{{<Aside type="note" header="Encryption formats">}}
 
 The format of the encrypted payload can change over time. The `matched-data-cli` tool returns an error if it cannot decrypt a new encryption format.
 
 To fix this error, [download](https://github.com/cloudflare/matched-data-cli/releases) a newer version of the tool from GitHub and try again.
 
-</Aside>
+{{</Aside>}}

@@ -21,20 +21,20 @@ API property name: `"action"`.
 
 The action that will be performed for requests that match specific rules of Cloudflare's DDoS mitigation services. The available actions are:
 
-<Definitions>
+{{<definitions>}}
 
 *   **Log**
 
     *   API value: `"log"`.
     *   Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
-    \<Aside type="note">
+    {{<Aside type="note">}}
 
     You cannot configure the rule action to *Log* for rules with the `gatebot` tag or any rule whose `id` starts with `GB`.
 
     However, you can use the *Log* action in the global ruleset configuration. In this case, any rule with the `gatebot` tag or whose `id` starts with `GB` will ignore the ruleset configuration and use the default action as defined in the Managed Ruleset.
 
-      </Aside>
+      {{</Aside>}}
 
 *   **Block**
     *   API value: `"block"`.
@@ -56,7 +56,7 @@ The action that will be performed for requests that match specific rules of Clou
     *   API value: *N/A* (internal rule action that you cannot use in overrides).
     *   Performs a specific action according to a set of internal guidelines defined by Cloudflare. The executed action can be one of the above or an undisclosed mitigation action.
 
-</Definitions>
+{{</definitions>}}
 
 ## Sensitivity Level
 

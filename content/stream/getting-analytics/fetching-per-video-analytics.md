@@ -8,28 +8,28 @@ weight: 3
 
 Cloudflare measures the following metrics for every video play:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Metric            | Name              | Example | Unit
 \------------------|-------------------|---------|---------------------
 totalTimeViewedMs | Total time viewed | 1000    | Time in milliseconds
 totalImpressions  | Total views       | 50      | Impressions
 
-</TableWrap>
+{{</table-wrap>}}
 
 You can slice and dice your analytics by the following dimensions:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Dimension | Name     | Example
 \----------|----------|---------------------------------
 videoId   | Video ID | 40d67c87c6cd4b889a4fd57805225e85
 
-</TableWrap>
+{{</table-wrap>}}
 
 You can also filter the data using the following operators:
 
-<TableWrap>
+{{<table-wrap>}}
 
 Operator | Name                     | URL Encoded
 \---------|--------------------------|------------
@@ -40,7 +40,7 @@ Operator | Name                     | URL Encoded
 \>=      | Greater than or equal to | %3E%3D
 <=       | Less than or equal to    | %3C%3D
 
-</TableWrap>
+{{</table-wrap>}}
 
 Filters can be combined using OR and AND boolean logic. AND takes precedence over OR in all the expressions.
 The OR operator is defined using a comma (,) or OR keyword surrounded by whitespace.

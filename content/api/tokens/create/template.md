@@ -8,13 +8,13 @@ layout: list
 
 # API token templates
 
-<ContentColumn>
+{{<content-column>}}
 
 Below is a table of the currently available API token templates and the default [token permissions](/api/tokens/create/permissions/) they grant. You can start creating a token with one of these templates and modify the permissions and resources from there.
 
-</ContentColumn>
+{{</content-column>}}
 
-<TableWrap>
+{{<table-wrap>}}
 
 <table>
   <tbody>
@@ -138,4 +138,4 @@ Below is a table of the currently available API token templates and the default 
   </tbody>
 </table>
 
-</TableWrap>
+{{</table-wrap>}}

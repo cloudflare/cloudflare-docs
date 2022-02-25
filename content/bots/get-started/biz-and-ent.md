@@ -18,11 +18,11 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 *   Offers protection for static resources
 *   Provides robust analytics to help you understand bot traffic
 
-<Aside>
+{{<Aside>}}
 
 **Note**: If you have an Enterprise subscription without Bot Management, your application will also have Super Bot Fight Mode for Business.
 
-</Aside>
+{{</Aside>}}
 
 ## Enable Super Bot Fight Mode
 

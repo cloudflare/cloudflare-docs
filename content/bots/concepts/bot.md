@@ -8,11 +8,11 @@ weight: 1
 
 A **bot** is a software application programmed to do certain tasks. Bots can be used for good (chatbots, search engine crawlers) or for evil (inventory hoarding, credential stuffing).
 
-<Aside type="note" header="More information">
+{{<Aside type="note" header="More information">}}
 
 For more background, refer to [What is a bot?](https://www.cloudflare.com/learning/bots/what-is-a-bot/).
 
-</Aside>
+{{</Aside>}}
 
 ## Verified bots
 

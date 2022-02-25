@@ -11,11 +11,11 @@ import TutorialsBeforeYouStart from "../\_partials/\_tutorials-before-you-start.
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
 
-</Aside>
+{{</Aside>}}
 
 ## Setting up a new project
 
@@ -56,7 +56,7 @@ You will be asked to authorize access to your GitHub account if you have not alr
 
 Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
-<TableLayout>
+<div>
 
 | Configuration option  | Value              |
 | --------------------- | ------------------ |
@@ -65,15 +65,15 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Build directory       | `dist`             |
 | Environment Variables | `NODE_VERSION: 14` |
 
-</TableLayout>
+</div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-<Aside type="warning" header="Important">
+{{<Aside type="warning" header="Important">}}
 
 Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
-</Aside>
+{{</Aside>}}
 
 After completing configuration, select **Save and Deploy**.
 
@@ -83,11 +83,11 @@ Cloudflare Pages will automatically rebuild your project and deploy it on every 
 
 Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-</Aside>
+{{</Aside>}}
 
 ## Learn more
 

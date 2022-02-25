@@ -8,4 +8,4 @@ meta:
 
 # Command-line (Wrangler)
 
-<DirectoryListing path="/cli-wrangler"/>
+{{<directory-listing>}}

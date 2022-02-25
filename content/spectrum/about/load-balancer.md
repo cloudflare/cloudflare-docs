@@ -8,11 +8,11 @@ weight: 0
 
 You can configure Spectrum and Cloudflare's Load Balancing to provide TCP healthchecks, failover, and traffic steering to bring resiliency to your Spectrum applications. To prevent issues with DNS resolution for a Spectrum application, do not use the same Spectrum hostname as a current Load Balancing hostname.
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 This feature requires an Enterprise plan.  If you would like to upgrade, contact your account team.
 
-</Aside>
+{{</Aside>}}
 
 ## TCP health checks
 

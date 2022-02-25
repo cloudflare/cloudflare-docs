@@ -14,13 +14,13 @@ To create a new subdomain, you would first add the subdomain content at your hos
 
 Then, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) for that subdomain (`blog`, `store`).
 
-<Example>
+{{<example>}}
 
 | Type | Name | IPv4 address | Proxy status |
 | --- | --- | --- | --- |
 | A | `www` | `192.0.2.1`| Proxied |
 
-</Example>
+{{</example>}}
 
 ## Subdomain redirects
 

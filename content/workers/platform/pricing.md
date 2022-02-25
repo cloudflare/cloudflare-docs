@@ -13,14 +13,14 @@ All included usage is on a monthly basis.
 
 ## Workers
 
-<TableWrap>
+{{<table-wrap>}}
 
 |                      | Free plan                    | Paid Plan - Bundled                                          | Paid plan - Unbound                              |
 | -------------------- | ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
 | Requests             | 100,000 / day                | 10 million / month, +$0.50/million                                  | 1 million / month, + $0.15/million                        |
 | Duration             | 10ms CPU time / invocation   | 50 ms CPU time / invocation                                  | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>|
 
-</TableWrap>
+{{</table-wrap>}}
 
 1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your script. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
@@ -62,7 +62,7 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 
 ## Workers KV
 
-<TableWrap>
+{{<table-wrap>}}
 
 |                    | Free plan<sup>1</sup> | Paid plan                   |
 | ------------------ | --------------------- | --------------------------- |
@@ -72,7 +72,7 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 | List requests      | 1,000 / day           | 1 million, + $5.00/million  |
 | Stored data        | 1 GB                  | 1 GB, + $0.50/ GB-month     |
 
-</TableWrap>
+{{</table-wrap>}}
 
 1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
 
@@ -80,14 +80,14 @@ Total = ~$5.60 + Minimum $5/mo usage = $10.60
 
 Durable Objects are currently only available on the Workers Paid plan.
 
-<TableWrap>
+{{<table-wrap>}}
 
 |               | Paid plan                                                    |
 | ------------- | ------------------------------------------------------------ |
 | Requests      | 1 million, + $0.15/million                                   |
 | Duration      | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup>            |
 
-</TableWrap>
+{{</table-wrap>}}
 
 1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once.  Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage.  If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
@@ -136,7 +136,7 @@ Total = ~$38.73 USD + $409.72 USD + Minimum $5/mo usage = $453.45
 
 The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) is only accessible from within Durable Objects. Durable Objects do not have to use the storage API, but if your code does call methods on `state.storage`, it will incur the following additional charges:
 
-<TableWrap>
+{{<table-wrap>}}
 
 |                                               | Paid plan                   |
 | --------------------------------------------- | --------------------------- |
@@ -145,7 +145,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 | Delete requests<sup>3</sup>                   | 1 million, + $1.00/million  |
 | Stored data<sup>4</sup>                       | 1 GB, + $0.20/ GB-month     |
 
-</TableWrap>
+{{</table-wrap>}}
 
 1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
 2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns 80 KB of keys will be billed 20 request units.

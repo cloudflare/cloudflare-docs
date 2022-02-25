@@ -8,11 +8,11 @@ weight: 4
 
 The Cloudflare Exposed Credentials Check Managed Ruleset is a set of pre-configured rules for well-known CMS applications that perform a lookup against a public database of stolen credentials.
 
-\<Aside type='warning'>
+{{<Aside type="warning">}}
 
 The Cloudflare Exposed Credentials Check Managed Ruleset is only available in the Cloudflare WAF announced on March 2021.
 
-</Aside>
+{{</Aside>}}
 
 The Managed Ruleset includes rules for the following CMS applications:
 
@@ -31,11 +31,11 @@ Additionally, this Managed Ruleset also includes generic rules for other common 
 
 The default action for the rules in Managed Ruleset is *Exposed-Credential-Check Header* (named `rewrite` in the API).
 
-\<Aside type='note' header='Note'>
+{{<Aside type="note" header="Note">}}
 
 The Managed Ruleset contains an additional rule that blocks HTTP requests already containing the `Exposed-Credential-Check` HTTP header used by the *Exposed-Credential-Check Header* action. These requests could be used to trick the origin into believing that a request contained (or did not contain) exposed credentials.
 
-</Aside>
+{{</Aside>}}
 
 For more information on exposed credentials checks, refer to [Automated exposed credentials check](/waf/exposed-credentials-check/).
 
@@ -62,10 +62,10 @@ To configure the Exposed Credentials Check Managed Ruleset via API, create [over
 
 For examples of creating overrides using the API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
 
-<Aside type="note" header="Checking for exposed credentials in custom rules">
+{{<Aside type="note" header="Checking for exposed credentials in custom rules">}}
 
 Besides activating the Exposed Credentials Check Managed Ruleset, you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials.
 
 For more information, refer to [Create a custom rule checking for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
 
-</Aside>
+{{</Aside>}}

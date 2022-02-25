@@ -27,7 +27,7 @@ Regardless of whether your traffic is proxied, you have access to the following 
   <tbody>
    <tr>
       <td>IP address</td>
-      <td valign="top"><code>ip.src</code><br /><Type>IP&nbsp;address</Type></td>
+      <td valign="top"><code>ip.src</code><br />{{<type>}}IP&nbsp;address{{</type>}}</td>
       <td>
          <p>The client TCP IP address, which may be adjusted to reflect the actual address of the client by using HTTP headers such as
          <code class="InlineCode">X-Forwarded-For</code> or <code class="InlineCode">X-Real-IP</code>.
@@ -39,14 +39,14 @@ Regardless of whether your traffic is proxied, you have access to the following 
     </tr>
     <tr>
       <td>Load Balancer Region</td>
-      <td valign="top"><code>cf.load_balancer.region</code><br /><Type>bytes</Type></td>
+      <td valign="top"><code>cf.load_balancer.region</code><br />{{<type>}}bytes{{</type>}}</td>
       <td>
         <p>The <a href="/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
       </td>
     </tr>
     <tr>
       <td>Load Balancer Name</td>
-      <td valign="top"><code>cf.load_balancer.name</code><br /><Type>bytes</Type></td>
+      <td valign="top"><code>cf.load_balancer.name</code><br />{{<type>}}bytes{{</type>}}</td>
       <td>
         <p>The name of the load balancer executing these rules.</p>
         <p>Example value:
@@ -87,7 +87,7 @@ Cloudflare Load Balancers support the following unproxied fields:
   <tbody>
     <tr>
       <td>Query Type</td>
-      <td valign="top"><code>dns.qry.type</code><br /><Type>Int</Type></td>
+      <td valign="top"><code>dns.qry.type</code><br />{{<type>}}Int{{</type>}}</td>
       <td>
         <p>The numeric value of the <a href= "https://en.wikipedia.org/wiki/List_of_DNS_record_types">DNS query type</a>
         </p>
@@ -100,21 +100,21 @@ Cloudflare Load Balancers support the following unproxied fields:
     </tr>
       <tr>
       <td>Question</td>
-      <td valign="top"><code>dns.qry.typ</code><br /><Type>boolean</Type></td>
+      <td valign="top"><code>dns.qry.typ</code><br />{{<type>}}boolean{{</type>}}</td>
       <td>
         <p>A boolean indicating that the received DNS message was a question</p>
       </td>
     </tr>
     <tr>
       <td>Query Name</td>
-      <td valign="top"><code>dns.qry.name</code><br /><Type>Bytes</Type></td>
+      <td valign="top"><code>dns.qry.name</code><br />{{<type>}}Bytes{{</type>}}</td>
       <td>
         <p>The byte of the query name asked, such as <code>example.com</code> </p>
       </td>
     </tr>
     <tr>
       <td>Query Name Length</td>
-      <td valign="top"><code class>dns.qry.name.len</code><br /><Type>Int</Type></td>
+      <td valign="top"><code class>dns.qry.name.len</code><br />{{<type>}}Int{{</type>}}</td>
       <td>
         <p>The length in bytes of the query name.
         </p>

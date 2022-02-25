@@ -8,4 +8,4 @@ weight: 41
 
 Visit the following pages to see commonly asked questions:
 
-<DirectoryListing path="/faq"/>
+{{<directory-listing>}}

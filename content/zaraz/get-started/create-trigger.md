@@ -44,8 +44,8 @@ To create Blocking Triggers, start by [creating the trigger](#create-a-trigger) 
 4.  In **Blocking Triggers**, use the dropdown menu to add a trigger to block the event.
 5.  Click **Save**.
 
-<Aside type='note'>
+{{<Aside type="note">}}
 
 Blocking Triggers are useful if you wish to block specific events, or even specific tools from firing, while keeping others active. If you wish to turn off Zaraz entirely on specific pages/domains/subdomains, we recommend using [Page Rules to block Zaraz](/zaraz/advanced/block-zaraz/).
 
-</Aside>
+{{</Aside>}}

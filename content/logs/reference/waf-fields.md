@@ -10,7 +10,7 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 
 ## WAF Action
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Value | Action | Description |
 |---|---|---|
@@ -21,7 +21,7 @@ The Web Application Firewall (WAF) contains rules managed by Cloudflare to block
 | <span style="font-weight: 400;">`4`</span> | Challenge Drop | Unused. |
 | <span style="font-weight: 400;">`5`</span> | Log | Take no action other than logging the event. |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ## Deprecated fields for internal Cloudflare use
 

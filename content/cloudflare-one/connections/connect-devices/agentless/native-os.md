@@ -6,7 +6,7 @@ weight: 4
 
 # Native OS
 
-<Aside type="Warning" header="Warning">
+{{<Aside type="Warning" header="Warning">}}
 
 Enrolling devices using static IP addresses may prevent users from connecting to some of the public Wi-Fi networks that use captive portals. If users are experiencing connectivity issues related to captive portals, they should:
 
@@ -16,7 +16,7 @@ Enrolling devices using static IP addresses may prevent users from connecting to
 
 Alternatively, you can look into using the [WARP client](/cloudflare-one/connections/connect-devices/) to connect your devices to Cloudflare Zero Trust.
 
-</Aside>
+{{</Aside>}}
 
 ## Linux
 

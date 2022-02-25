@@ -24,11 +24,11 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment. Therefore, you should avoid setting Page Rules or custom caching on your site.
 
-<Aside type="note" header="Purging the cache">
+{{<Aside type="note" header="Purging the cache">}}
 
 If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="https://developers.cloudflare.com/cache/how-to/purge-cache#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served."
 
-</Aside>
+{{</Aside>}}
 
 For browser caching, Pages always sends `Etag` headers for `200 OK` responses, which the browser then returns in an `If-None-Match` header on subsequent requests for that asset. Pages compares the `If-None-Match` header from the request with the `Etag` it's planning to send, and if they match, Pages instead responds with a `304 Not Modified` that tells the browser it's safe to use what is stored in local cache.
 

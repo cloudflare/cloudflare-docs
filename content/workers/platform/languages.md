@@ -13,14 +13,14 @@ Workers is a polyglot platform. You can write Workers with a language you likely
 
 The Workers platform fully supports JavaScript. Cloudflare recommends using JavaScript and TypeScript. Find up-to-date [type definitions on GitHub](https://github.com/cloudflare/workers-types) and npm.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Language   | Template                                                                                                                |
 |------------|-------------------------------------------------------------------------------------------------------------------------|
 | JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                                             |
 | TypeScript | [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template)                       |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Resources on JavaScript / Typescript
 
@@ -33,7 +33,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 [WebAssembly](https://webassembly.org/) — abbreviated Wasm — is a binary format that many languages target during their compilation. This allows developers to write Workers using languages like C, C++, Rust, and more.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Language | Template                                                                                          |
 |----------|---------------------------------------------------------------------------------------------------|
@@ -41,7 +41,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 | C        | [cloudflare/worker-emscripten-template](https://github.com/cloudflare/worker-emscripten-template) |
 | Cobol    | [cloudflare/cobol-worker-template](https://github.com/cloudflare/cobol-worker-template)           |
 
-</TableWrap>
+{{</table-wrap>}}
 
 ### Resources on WebAssembly
 
@@ -52,7 +52,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 You can write Workers with any language that can compile to JavaScript, including the languages below.
 
-<TableWrap>
+{{<table-wrap>}}
 
 | Language     | Example project                                                                                 |
 |--------------|-------------------------------------------------------------------------------------------------|
@@ -65,6 +65,6 @@ You can write Workers with any language that can compile to JavaScript, includin
 | PHP          | [cloudflare/php-worker-hello-world](https://github.com/cloudflare/php-worker-hello-world)       |
 | FSharp       | [fable-compiler/cfworker-hello-world](https://github.com/fable-compiler/cfworker-hello-world)   |
 
-</TableWrap>
+{{</table-wrap>}}
 
 Refer to the [Cloudflare Workers announces broad language support](https://blog.cloudflare.com/cloudflare-workers-announces-broad-language-support/) blog post for more information.

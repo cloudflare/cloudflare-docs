@@ -20,13 +20,13 @@ For example, the *Allow* action takes precedence over the *Block* action. In a c
 
 There are two exceptions to this behavior: the *Log* and *Bypass* actions. Unlike other actions, *Log* and *Bypass* do not terminate further evaluation within Firewall Rules. This means that if a request matches two different rules and one of those rules specifies the *Log* or *Bypass* action, the second action will be triggered instead, even though *Log*/*Bypass* has precedence.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions).
 
-</Aside>
+{{</Aside>}}
 
-<TableWrap>
+{{<table-wrap>}}
   <table style="width: 100%">
   <thead>
     <tr>
@@ -173,4 +173,4 @@ For reference information on rule actions available for Cloudflare products powe
     </tbody>
 
   </table>
-</TableWrap>
+{{</table-wrap>}}

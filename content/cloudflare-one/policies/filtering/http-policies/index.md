@@ -6,11 +6,11 @@ weight: 4
 
 # HTTP policies
 
-<Aside>
+{{<Aside>}}
 
 Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> before creating HTTP policies.
 
-</Aside>
+{{</Aside>}}
 
 HTTP policies allow you to filter HTTP traffic on the L7 firewall. Gateway will intercept all HTTP and HTTPS traffic and apply the rules you have configured in your policy to either block, allow, or override specific elements such as websites, IP addresses, and file types.
 
@@ -29,11 +29,11 @@ Expressions are sets of conditions with which you can combine [selectors](#selec
 
 ### Selectors
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Policies created using the URL selector are case-sensitive.
 
-</Aside>
+{{</Aside>}}
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
@@ -113,11 +113,11 @@ These selectors depend on the `Content-Type` header being present in the request
 | -- | -- |
 | Security Categories | `any(http.request.uri.category[*] in {1})` |
 
-<Aside type="note" header="Host or Domain?">
+{{<Aside type="note" header="Host or Domain?">}}
 
 The `Host` selector matches the exact entry input by a customer in the value field or list. The `Domain` selector matches the exact entry and all subdomains in the value field or list.
 
-</Aside>
+{{</Aside>}}
 
 #### Device Posture
 
@@ -180,11 +180,11 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 ### Do Not Inspect
 
-<Aside type='Warning' header='Warning'>
+{{<Aside type="Warning" header="Warning">}}
 
 When a *Do Not Inspect* rule is created for a given hostname, application, or app type, no traffic will be inspected.
 
-</Aside>
+{{</Aside>}}
 
 *Do Not Inspect* lets administrators bypass certain elements from inspection. Administrators who wish to bypass a site must match against the host in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
 

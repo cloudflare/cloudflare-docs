@@ -179,11 +179,11 @@ There are two `POST` routes to handle: `/lookup` and `/webhook`. These new route
 
 Once your routes are set up, you need to actually handle the incoming request, which is available under the variable `request`. The `route` function on the router takes in a `request` argument, and returns a `response`.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 Note that you are able to use JavaScript features like async/await inside of your Workers application. This is because of Workers’ V8 runtime. Since `r.route` returns a Promise, you can write `await r.route(request)` to set `response` to the result of the resolved Promise.
 
-</Aside>
+{{</Aside>}}
 
 If there is no matching route (for example, if someone requests the path `/admin`), the function should return a response with a status code of `404`. `handleRequest` checks to see if `response` is `undefined`, and if it is, it sets `response` to a new `Response` with the body text “Not found”, and a status code of `404`.
 
@@ -663,11 +663,11 @@ export default async request => {
 
 The constant `SLACK_WEBHOOK_URL` represents the Slack Webhook URL that you created all the way back in the [Incoming Webhook](/workers/tutorials/build-a-slackbot/#incoming-webhook) section of this tutorial.
 
-<Aside type="warning">
+{{<Aside type="warning">}}
 
 Since this webhook allows developers to post directly to your Slack channel, keep it secret.
 
-</Aside>
+{{</Aside>}}
 
 To use this constant inside of your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command:
 
