@@ -56,19 +56,29 @@ async function markdown(file: string): Promise<void> {
   let output = '';
   let match: RegExpExecArray | null;
   let input = await fs.readFile(file, 'utf8');
-  let BACKTICKS = /^(\n+)?([`]{3})([A-Za-z]+?)\r?\n([^]+?)(\2)/gm;
+  let BACKTICKS = /^(\s+)?([`]{3})([A-Za-z]+?)\r?\n([^]+?)(\2)/gm;
 
   while (match = BACKTICKS.exec(input)) {
     let current = match.index;
-    let [full, lead, open, hint, inner, close] = match;
+    let [full, ws, open, hint, inner, close] = match;
     output += input.substring(last, current);
+
+    ws = ws || '';
 
     // codeblock => HTML markup
     let lang = (hint || 'txt').toLowerCase();
+
+    // dedent codeblock, only if indented
+    let spaces = ws.match(/[ ]+$/) || '';
+    if (spaces && spaces.length > 0) {
+      let rgx = new RegExp('^' + spaces, 'gm');
+      inner = inner.replace(rgx, '');
+    }
+
     let html = highlight(inner, lang);
 
     // prevent hugo from looking at "{{<" pattern
-    output += (lead || '') + html.replace(/\{\{\</g, '{\\{<');
+    output += '{{<raw>}}' + html.replace(/\{\{\</g, '{\\{<') + '{{</raw>}}';
 
     last = current + full.length;
   }
