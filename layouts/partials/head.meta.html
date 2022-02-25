@@ -1,0 +1,54 @@
+{{/* @see :: data/<Product>.yml */}}
+{{- $DATA := (index .Context.Site.Data .Product) -}}
+{{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+
+{{- $pt := default .Context.Title .Context.Params.meta.title -}}
+{{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
+
+<meta charset="utf-8">
+<title>{{ $title }}</title>
+<meta http-equiv="cleartype" content="on"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="application-name" content="{{ $title }}"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+<meta name="apple-mobile-web-app-title" content="{{ $title }}"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#f38020"/>
+
+<meta name="description" content="{{ $META.description }}" />
+
+<meta property="og:image" content="{{ $META.image }}"/>
+<meta property="og:title" content="{{ $title }}"/>
+<meta property="og:description" content="{{ $META.description }}"/>
+<meta property="og:type" content="website"/>
+
+<meta name="twitter:title" content="{{ $title }}"/>
+<meta name="twitter:image" content="{{ $META.image }}"/>
+<meta name="twitter:description" content="{{ $META.description }}"/>
+<meta name="twitter:creator" content="{{ $META.author }}"/>
+<meta name="twitter:card" content="summary_large_image"/>
+
+<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+
+{{- if $DATA.algolia -}}
+  <script defer async src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js"></script>
+
+  {{/* modified "script" partial */}}
+  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
+  {{- $script := (resources.Get "search.ts") | js.Build $opts -}}
+
+  {{- if hugo.IsProduction -}}
+    {{- $script = $script | minify | fingerprint "md5" -}}
+  {{- end -}}
+
+  <script
+    src="{{ $script.RelPermalink }}" defer
+    data-filters="{{ $DATA.algolia.filters }}"
+    data-index="{{ $DATA.algolia.index }}"
+    data-key="{{ $DATA.algolia.apikey }}"
+  ></script>
+{{- end -}}

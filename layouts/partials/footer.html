@@ -1,0 +1,20 @@
+<footer class="DocsFooter">
+  <div class="DocsFooter--content">
+    <div>
+      <span class="DocsFooter--edit-on-gh-link-wrapper">
+        {{- with .File -}}
+          {{ $url := printf "https://github.com/cloudflare/cloudflare-docs/blob/production/content/{{ .Path }}" -}}
+          {{- partial "external.link" (dict "text" "Edit on GitHub" "url" $url) }}
+        {{- end -}}
+      </span>
+
+      <span class="DocsFooter--content-dot-spacer">
+        &nbsp; · &nbsp;
+      </span>
+
+      <span class="DocsFooter--content-time">
+        Updated {{ partial "datetime" .Lastmod }}
+      </span>
+    </div>
+  </div>
+</footer>
