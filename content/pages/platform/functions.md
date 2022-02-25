@@ -323,7 +323,7 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to  **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a *KV namespace* from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![KV-Binding](KV-functions.png)
+![KV-Binding](../KV-functions.png)
 
 ## KV namespace locally
 
@@ -342,7 +342,7 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a *Durable Object namespace* from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![DO-Binding](DO-functions.png)
+![DO-Binding](../DO-functions.png)
 
 ## Durable Objects locally
 
@@ -354,7 +354,7 @@ An [environment variable](/workers/platform/environment-variables) is an injecte
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
-![ENV-Binding](ENV-functions.png)
+![ENV-Binding](../ENV-functions.png)
 
 ## Adding environment variables locally
 
