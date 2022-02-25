@@ -22,13 +22,13 @@ As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), 
 
 Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
-### 3. Next, define [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
+### 3. Next, define device enrollment permissions.
 
-Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules]((/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions)) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
-### 4. Install the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+### 4. Install the Cloudflare root certificate on your devices.
 
-Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Advanced security features including HTTP traffic inspection require users to install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ### 5. Download and deploy the WARP client to your devices.
 
@@ -60,9 +60,9 @@ As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), 
 
 Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust dashboard. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
-### 3. Next, define [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
+### 3. Next, define device enrollment permissions.
 
-Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. (optional) Add a location to Gateway.
 
