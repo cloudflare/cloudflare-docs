@@ -193,6 +193,13 @@ function normalize(tokens: (Token | string)[]) {
     lines.push(line);
   }
 
+  // check for useless newline
+  // ~> last line will be single-item Array
+  let last = lines.pop();
+  if (last.length !== 1 || last[0].content !== '\n') {
+    lines.push(last); // add it back, was useful
+  }
+
   return lines;
 }
 

@@ -71,7 +71,7 @@ async function markdown(file: string): Promise<void> {
     // dedent codeblock, only if indented
     let spaces = ws.match(/[ ]+$/) || '';
     if (spaces && spaces.length > 0) {
-      let rgx = new RegExp('^' + spaces, 'gm');
+      let rgx = new RegExp('^[ ]{' + spaces.length + '}', 'gm');
       inner = inner.replace(rgx, '');
     }
 

@@ -149,7 +149,7 @@ The table below lists the start and end time attributes that are valid for query
 
 Use the following query to build the timeseries graph in network analytics:
 
-```json
+```graphql
 ---
 header: Timeseries graph
 ---
@@ -183,7 +183,7 @@ query ipFlowTimeseries(
 
 This query returns an activity log summarizing minute-wise rollups of attack traffic in IP flows. The query groups the data by the fields listed in the `dimensions` object.
 
-```json
+```graphql
 ---
 header: Activity log query
 ---
@@ -236,7 +236,7 @@ query ipFlowEventLog(
 This query returns data about the top source IPs.
 The `limit` parameter controls the amount of records returned for each node. In the following code, the highlighted lines indicate where you configure `limit`.
 
-```json
+```graphql
 ---
 header: Top N Cards query
 highlight: [9,22,35,47,60,72]
@@ -333,7 +333,7 @@ query GetTopNBySource(
 
 This query returns data about the top destination IPs. The `limit` parameter controls the amount of records returned. In the following code, the highlighted lines indicate that the query returns the five highest results.
 
-```json
+```graphql
 ---
 header: Top N Cards - Destination
 highlight: [10,22]
@@ -385,7 +385,7 @@ Add the following line to the filter to indicate that you want to view TCP data:
 { ipProtocol: 'TCP' }
 ```
 
-```json
+```graphql
 ---
 header: TCP Flags query
 ---
@@ -419,7 +419,7 @@ Use different queries, depending on the time interval you want to examine and wh
 
 If the time interval is absolute, for example March 25th 09:00 to March 25th 17:00, then execute a query for attacks within those times. [Use the appropriate query node](#parameters-and-filters), for example `ipFlows1dGroups`, for the time interval.
 
-```json
+```graphql
 ---
 header: GetPreviousAttacks query - fetch previous attacks
 ---
@@ -443,7 +443,7 @@ query GetPreviousAttacks($accountTag: string, $filter: filter) {
 If the time interval is relative to the current time, for example the last 24 hours or the last 30 minutes, then make a query to the `ipFlows1mGroup` node to check whether there were attacks in the past five minutes. Attacks within the past five minutes are classed as ongoing: the Activity Log displays `Present`.
 The query response lists the `attackID` values of ongoing attacks.
 
-```json
+```graphql
 ---
 header: GetOngoingAttackIds query - check for ongoing attacks
 ---
@@ -462,7 +462,7 @@ query GetOngoingAttackIds($accountTag: string, $filter: filter) {
 
 If there are ongoing attacks, query the `ipFlows1mAttacksGroups` node, filtering with the `attackID` values from the previous query. The query below returns the maximum bit and packet rates.
 
-```json
+```graphql
 ---
 header: GetOngoingAttacks query - fetch data for ongoing attacks
 ---
