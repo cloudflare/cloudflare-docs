@@ -11,17 +11,14 @@ You can specify the order of the query result elements using the `orderBy` argum
 The default order for an aggregated dataset is by the fields on which the aggregated data is grouped. If you specify a different order, the aggregation group is appended to your specified ordering.
 
 {{<Aside type="note" header="Note">}}
-
 Ordering within nested structures is not supported.
-
 {{</Aside>}}
 
 ## Examples
 
 ### Raw data sorting
 
-```javascript
-
+```graphql
 firewallEventsAdaptive (orderBy: [clientCountryName_ASC]) {
     clientCountryName
 }
@@ -29,8 +26,7 @@ firewallEventsAdaptive (orderBy: [clientCountryName_ASC]) {
 
 ### Raw data sorting using multiple fields
 
-```javascript
-
+```graphql
 firewallEventsAdaptive (orderBy: [clientCountryName_ASC, datetime_DESC]) {
     clientCountryName
     datetime
@@ -39,8 +35,7 @@ firewallEventsAdaptive (orderBy: [clientCountryName_ASC, datetime_DESC]) {
 
 ### Group sorting by aggregation function
 
-```javascript
-
+```graphql
 httpRequests1hGroups (orderBy: [sum_bytes_DESC]){
     sum {
         bytes

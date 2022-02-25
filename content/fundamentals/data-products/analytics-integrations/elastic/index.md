@@ -96,7 +96,9 @@ Next, to configure your deployment:
 
 2.  Using the Elasticsearch endpoint for your new deployment (found on the main page), run the following command from a terminal, using the random password from above.
 
-        ./install-artifacts.sh -u elastic -p <RANDOM PASSWORD> -e https://_<YOUR DEPLOYMENT ENDPOINT>_:9243
+    ```txt
+    ./install-artifacts.sh -u elastic -p <RANDOM PASSWORD> -e https://_<YOUR DEPLOYMENT ENDPOINT>_:9243
+    ```
 
 3.  To install the Cloudflare dashboards, log in to the Kibana user interface using the **elastic** username and the randomly generated password.
 

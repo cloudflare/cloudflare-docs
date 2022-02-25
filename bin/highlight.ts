@@ -15,10 +15,10 @@ const RESTORE = !REPLACE && process.argv.includes('restore');
 
 const isMD = /\.md$/;
 const isBACKUP = /\.md\.backup$/;
-const YAML = /^\s*(---[^]+(?:---\r?\n))/;
+// const YAML = /^\s*(---[^]+(?:---\r?\n))/;
 
 async function walk(dir: string): Promise<void> {
-  let ignores = new Set(['images', 'static', 'media']);
+  let ignores = new Set(['static', 'media']);
   let files = await fs.readdir(dir, { withFileTypes: true });
 
   await Promise.all(
@@ -69,9 +69,9 @@ async function markdown(file: string): Promise<void> {
     let lang = (hint || 'txt').toLowerCase();
 
     // dedent codeblock, only if indented
-    let spaces = ws.match(/[ ]+$/) || '';
+    let [spaces] = ws.match(/[ ]+$/) || '';
     if (spaces && spaces.length > 0) {
-      let rgx = new RegExp('^[ ]{' + spaces.length + '}', 'gm');
+      let rgx = new RegExp('^([ ]){' + spaces.length + '}', 'gm');
       inner = inner.replace(rgx, '');
     }
 

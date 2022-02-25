@@ -196,7 +196,7 @@ function normalize(tokens: (Token | string)[]) {
   // check for useless newline
   // ~> last line will be single-item Array
   let last = lines.pop();
-  if (last.length !== 1 || last[0].content !== '\n') {
+  if (last.length !== 1 || last[0].content.trim().length > 1) {
     lines.push(last); // add it back, was useful
   }
 

@@ -72,7 +72,6 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     add authentication samlIdPPolicy samlPol_CloudflareAccess -rule true -action samlProf_CloudflareAccess
     bind authentication vserver nsidp -policy samlPol_CloudflareAccess
-
     ```
 
 3.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
