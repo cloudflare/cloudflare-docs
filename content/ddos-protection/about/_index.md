@@ -1,6 +1,7 @@
 ---
 title: About
 pcx-content-type: concept
+layout: single
 weight: 4
 meta:
   title: About Cloudflare DDoS Protection

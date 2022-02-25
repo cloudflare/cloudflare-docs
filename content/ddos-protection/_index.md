@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx-content-type: overview
+layout: single
 weight: 1
 meta:
   title: Cloudflare DDoS Protection
