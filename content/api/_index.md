@@ -1,6 +1,7 @@
 ---
 title: Quickstart
 pcx-content-type: tutorial
+layout: single
 weight: 1
 meta:
   title: Getting access to the Cloudflare API

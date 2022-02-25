@@ -1,31 +1,34 @@
-if (document.readyState !== 'loading') init();
-else addEventListener('DOMContentLoaded', init);
+(function () {
+  let btn: HTMLInputElement;
+  let media: MediaQueryList | void;
 
-let btn: HTMLInputElement;
-function setter(isDark: boolean) {
-  try {
-    if (btn) btn.checked = isDark;
-    let theme = isDark ? 'dark' : 'light';
-    document.documentElement.setAttribute('theme', theme);
-    localStorage.theme = JSON.stringify({ theme });
-  } catch (err) {
-    // security error
-  }
-}
+  if (document.readyState !== 'loading') init();
+  else addEventListener('DOMContentLoaded', init);
 
-function init() {
-  let media;
-  btn = document.querySelector('#ThemeToggle')!;
-  btn.addEventListener('change', () => setter(!!btn.checked));
-
-  // Shift+D for toggle
-  addEventListener('keydown', ev => {
-    if (ev.target !== document.body) return;
-    if (ev.which === 68 && ev.shiftKey) {
-      ev.preventDefault();
-      setter(!btn.checked);
+  function setter(isDark: boolean) {
+    try {
+      if (btn) btn.checked = isDark;
+      let theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('theme', theme);
+      localStorage.theme = JSON.stringify({ theme });
+    } catch (err) {
+      // security error
     }
-  });
+  }
+
+  function init() {
+    btn = document.querySelector('#ThemeToggle')!;
+    btn.addEventListener('change', () => setter(!!btn.checked));
+
+    // Shift+D for toggle
+    addEventListener('keydown', ev => {
+      if (ev.target !== document.body) return;
+      if (ev.which === 68 && ev.shiftKey) {
+        ev.preventDefault();
+        setter(!btn.checked);
+      }
+    });
+  }
 
   try {
     media = window.matchMedia('(prefers-color-scheme:dark)');
@@ -47,4 +50,4 @@ function init() {
   } catch (err) {
     // security error
   }
-}
+})();

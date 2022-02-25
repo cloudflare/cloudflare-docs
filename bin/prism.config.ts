@@ -193,6 +193,17 @@ function normalize(tokens: (Token | string)[]) {
     lines.push(line);
   }
 
+  let arr: Line[] = [];
+  while (line = lines.shift()) {
+    if (line.length > 1 && line[0].content === '\n') {
+      // remove extra leading "\n" items for non-whitespace lines
+    } else {
+      arr.push(line);
+    }
+  }
+
+  lines = arr;
+
   // check for useless newline
   // ~> last line will be single-item Array
   let last = lines.pop();

@@ -21,70 +21,23 @@ For authentication instructions, see [*Getting Started: Requests*](https://api.c
 
 For help with endpoints and pagination, see [*Getting Started: Endpoints*](https://api.cloudflare.com/#getting-started-endpoints).
 
+<style>
+  table { width: 100% }
+</style>
+
 ## Manage your waiting room
 
-<table style="width:100%">
-   <thead>
-        <tr>
-            <th>Operation</th>
-            <th>Method + URL stub</th>
-            <th>Notes</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-list-waiting_rooms'>List Waiting Rooms</a></td>
-            <td><code>GET&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms</code></td>
-            <td>List all waiting rooms for a zone.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-create-waiting-room'>Create Waiting Room</a></td>
-            <td><code>POST&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms</code></td>
-            <td>Create a waiting room.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-waiting-room-details'>Waiting Room Details</a></td>
-            <td><code>GET&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms/{'{:identifier}'}</code></td>
-            <td>Fetch a waiting room.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-update-waiting-room'>Update Waiting Room</a></td>
-            <td><code>PUT&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms/{'{:identifier}'}</code></td>
-            <td>Update a waiting room.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-delete-waiting-room'>Delete Waiting Room</a></td>
-            <td><code>DELETE&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms/{'{:identifier}'}</code></td>
-            <td>Delete a waiting room.</td>
-        </tr>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-patch-waiting-room'>Patch Waiting Room</a></td>
-            <td><code>PATCH&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms/{'{:identifier}'}</code></td>
-            <td>Patch a configured waiting room.</td>
-        </tr>
-   </tbody>
-</table>
+Operation | Method + URL stub | Notes
+--------- | ----------------- | -----
+[List Waiting Rooms](https://api.cloudflare.com/#waiting-room-list-waiting_rooms) | `GET zones/{:zone_identifier}/waiting_rooms` | List all waiting rooms for a zone.
+[Create Waiting Room](https://api.cloudflare.com/#waiting-room-create-waiting_room) | `POST zones/{:zone_identifier}/waiting_rooms` | Create a waiting room.
+[Waiting Room Details](https://api.cloudflare.com/#waiting-room-waiting-room-details) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Fetch a waiting room.
+[Update a Waiting Room](https://api.cloudflare.com/#waiting-room-update-waiting-room) | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Update a waiting room.
+[Delete a Waiting Room](https://api.cloudflare.com/#waiting-room-delete-waiting-room) | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.
+[Patch a Waiting Room](https://api.cloudflare.com/#waiting-room-patch-waiting-room) | `PATCH zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Patch a configured waiting room.
 
 ## Fetch the current status of a waiting room
 
-<table style="width:100%">
-    <thead>
-        <tr>
-            <th>Operation</th>
-            <th>Method + URL stub</th>
-            <th>Notes</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href='https://api.cloudflare.com/#waiting-room-get-waiting-room-status'>Get the current status of a waiting room</a></td>
-            <td><code>GET&nbsp;zones/{'{:zone_identifier}'}/waiting_rooms/{'{:identifier}'}/status</code></td>
-            <td>
-                <ul>
-                <li>Returns <code>queueing</code> if the queue is activated (clients are put in the waiting room).</li>
-                <li>Returns <code>not_queueing</code> if the queue is not activated or if the waiting room is suspended.</li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
+| Operation | Method + URL stub | Notes |
+| --------- | ----------------- | ----- |
+| [Get the current status of a waiting room](https://api.cloudflare.com/#waiting-room-get-waiting-room-status) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}/status` | <ul><li>Returns <code>queueing</code> if the queue is activated (clients are put in the waiting room).</li><li>Returns <code>not_queueing</code> if the queue is not activated or if the waiting room is suspended.</li></ul> |
