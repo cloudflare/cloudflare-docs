@@ -170,17 +170,21 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 
 See the example API request below to purge all mobile assets on the root web page.
 
+```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
     -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
+```
 
 ### Purge by geo
 
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
+```bash
     curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
     -H "X-Auth-Email: user@example.com"
     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
+```
 
 ## Purge varied images
 

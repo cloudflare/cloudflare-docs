@@ -9,10 +9,12 @@ meta:
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. For example, consider the following HTTP request on a TLS connection:
 
-    GET /logo.jpg HTTP/1.1
-    Host: www.cloudflare.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
-    Accept: image/jpg
+```bash
+GET /logo.jpg HTTP/1.1
+Host: www.cloudflare.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
+Accept: image/jpg
+```
 
 The default Cache Key constructed from this request combines aspects such as Cloudflare Zone ID, scheme, hostname, and path into a Cache Key similar to `1234:https://www.example.com/foo.jpg`. Zone ID and Path are always included in the Cache Key and cannot be modified.
 
