@@ -102,7 +102,7 @@ This will _only_ work once during initialization. Beyond that point the user has
 
 The `<video>` element does not force the browser to follow the value of this option; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 option, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
 
-        {{</Aside>}}
+      {{</Aside>}}
 
 - `poster` {{<prop-meta>}}defaults to the first frame of the video{{</prop-meta>}}
 
