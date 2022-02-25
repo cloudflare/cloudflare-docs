@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "module": "esnext",
+    "target": "es2020",
+    "noImplicitAny": true,
+    "keyofStringsOnly": true,
+    "resolveJsonModule": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "isolatedModules": false,
+    "removeComments": true,
+    "sourceMap": false,
+    "checkJs": true,
+    "noEmit": true
+  },
+  "include": [
+    "."
+  ]
+}

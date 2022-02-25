@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "migrate": "tsm main.ts"
+  },
+  "dependencies": {
+    "astray": "1.1.1",
+    "mdast-util-from-markdown": "1.2.0",
+    "mdast-util-to-markdown": "1.2.6",
+    "node-html-parser": "5.2.0",
+    "yaml": "1.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.12",
+    "tsm": "2.2.1"
+  }
+}
