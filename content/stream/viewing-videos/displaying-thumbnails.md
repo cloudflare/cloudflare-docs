@@ -10,13 +10,11 @@ weight: 5
 
 A thumbnail from your video can be generated using a special link where you specify the time from the video you'd like to get the thumbnail from.
 
-{{<example>}}
-
-    https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
+`
+https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
+`
 
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270" />
-
-{{</example>}}
 
 Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/security/signed-urls/) are required, you must use signed URL instead of video IDs.
 
@@ -72,7 +70,9 @@ Stream supports animated GIFs as thumbnails. Views using animated thumbnails do 
 
 ### Animated GIF thumbnails
 
-    https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
+`
+ https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s
+ `
 
 <img src="https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.gif?time=38s&height=200&duration=4s" />
 

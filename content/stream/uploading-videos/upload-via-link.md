@@ -63,7 +63,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/copy
 }
 ```
 
-## Step 2: Poll the API or wait for a [webhook](/stream/uploading-videos/using-webhooks/)
+## Step 2: Poll the API or wait for a webhook
 
 Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or use [webhooks](/stream/uploading-videos/using-webhooks/) to be notified when a video is ready for streaming.
 
