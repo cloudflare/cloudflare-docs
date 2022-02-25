@@ -1,0 +1,11 @@
+.DocsNoscript {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  font-size: .8em;
+  padding: .5em 1em;
+  background: rgba(var(--orange-rgb), .15);
+  border-radius: 0 0 .25em .25em;
+  z-index: 100;
+}

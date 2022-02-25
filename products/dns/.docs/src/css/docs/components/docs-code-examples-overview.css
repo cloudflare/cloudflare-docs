@@ -1,0 +1,120 @@
+.DocsCodeExamplesOverview {
+  margin: 2.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: var(--docs-content-gap);
+}
+
+.DocsCodeExamplesOverview--example {
+  border-radius: .5em;
+}
+
+.DocsCodeExamplesOverview--example-title {
+  font-size: 1.5em;
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: .5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.DocsCodeExamplesOverview--example-title .Link { /* TODO */
+  color: inherit;
+  --underline-opacity: .75;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--orange-rgb), var(--underline-opacity));
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+.DocsCodeExamplesOverview--example-description {
+  margin-bottom: 1em;
+}
+
+@media (min-width: 1153px) {
+  .DocsCodeExamplesOverview--example-description {
+    --lines: 2;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--lines);
+    -webkit-box-orient: vertical;
+    height: calc(1em * var(--lines) * var(--line-height));
+    overflow: hidden;
+  }
+}
+
+.DocsCodeExamplesOverview--example-description > *:last-child {
+  margin-bottom: 0;
+}
+
+.DocsCodeExamplesOverview--example-codeblock-link {
+  display: block;
+  position: relative;
+  color: inherit;
+}
+
+.DocsCodeExamplesOverview--example-codeblock-link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  --active-box-shadow-color: transparent;
+  box-shadow: inset 0 .0625em .1875em var(--active-box-shadow-color);
+  border-radius: .5em;
+}
+
+@media (hover: hover) {
+  .DocsCodeExamplesOverview--example-codeblock-link:hover:not(:active)::after {
+    background: rgba(255, 255, 255, .2);
+  }
+
+  [theme="dark"] .DocsCodeExamplesOverview--example-codeblock-link:hover:not(:active)::after {
+    background: rgba(var(--color-rgb), .05);
+  }
+}
+
+.DocsCodeExamplesOverview--example-codeblock-link:active::after {
+  background: rgba(var(--shadow-color-rgb), .05);
+  --active-box-shadow-color: rgba(var(--shadow-color-rgb), .2);
+}
+
+.DocsCodeExamplesOverview--example-codeblock-link pre {
+  height: 19em;
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+.DocsCodeExamplesOverview--example-codeblock-link pre,
+.DocsCodeExamplesOverview--example-codeblock-link pre code {
+  overflow: hidden;
+}
+
+@media (max-width: 1152px) {
+  .DocsCodeExamplesOverview {
+    margin-left: 0;
+    margin-right: 0;
+    grid-template-columns: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .DocsCodeExamplesOverview--example-title {
+    font-size: 1.375em;
+    margin-bottom: .5rem;
+  }
+
+  .DocsCodeExamplesOverview--example-codeblock-link {
+    margin-left: -1rem;
+    width: calc(100% + 2rem);
+  }
+
+  .DocsCodeExamplesOverview--example-codeblock-link::after {
+    border-radius: 0;
+  }
+
+  .DocsCodeExamplesOverview--example-codeblock-link pre {
+    height: 12.2em;
+    --border-radius: 0em;
+  }
+}

@@ -1,0 +1,46 @@
+.DocsMobileHeader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--docs-header-height);
+  background: var(--background-color);
+  box-shadow: 0 1px rgba(var(--color-rgb), .05);
+  z-index: 11;
+  --content-indent: .666em;
+}
+
+[theme="dark"] .DocsMobileHeader {
+  background: var(--gray-05);
+}
+
+@media (min-width: 769px) {
+  .DocsMobileHeader {
+    display: none;
+  }
+}
+
+.DocsMobileHeader--cloudflare-logo-link {
+  --font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  padding-left: var(--content-indent);
+  padding-right: var(--content-indent);
+  transition: opacity .2s ease, color .2s ease;
+}
+
+@media (hover: hover) {
+  .DocsMobileHeader--cloudflare-logo-link:hover {
+    opacity: .75;
+    color: rgba(var(--color-rgb), .75);
+  }
+}
+
+@media (hover: none) {
+  .DocsMobileHeader--cloudflare-logo-link:active {
+    opacity: .75;
+    color: rgba(var(--color-rgb), .75);
+  }
+}

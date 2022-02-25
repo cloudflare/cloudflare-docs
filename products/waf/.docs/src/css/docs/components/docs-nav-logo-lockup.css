@@ -1,0 +1,54 @@
+.DocsNavLogoLockup {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  --gap: var(--docs-logo-lockup-gap);
+}
+
+.DocsNavLogoLockup.DocsNavLogoLockup-with-small-gap {
+  --gap: var(--docs-logo-lockup-gap-small);
+}
+
+.DocsNavLogoLockup--logo {
+  --size: var(--logo-size, 2.5em);
+  height: var(--size);
+  width: var(--size);
+  color: var(--orange);
+  margin-right: var(--gap);
+  flex-shrink: 0;
+  fill: var(--orange);
+}
+
+/* When svg paths have gradiants this will override to just orange */ 
+.DocsNavLogoLockup--logo path {
+  fill: var(--orange);
+}
+
+.DocsNavLogoLockup--text {
+  font-size: var(--font-size, 1em);
+  font-weight: 700;
+  line-height: 1;
+  padding-top: .05em;
+  letter-spacing: -.03em;
+}
+
+@-moz-document url-prefix() {
+  .DocsNavLogoLockup--text {
+    letter-spacing: 0;
+  }
+}
+
+.DocsNavLogoLockup--text [data-text="Cloudflare"] ~ [data-text="Docs"] {
+  font-weight: 500;
+  margin-left: -.05em;
+}
+
+@media (max-width: 768px) {
+  .DocsNavLogoLockup--text {
+    font-weight: 600;
+  }
+
+  .DocsNavLogoLockup--text [data-text="Cloudflare"] ~ [data-text="Docs"] {
+    font-weight: 400;
+  }
+}

@@ -1,0 +1,75 @@
+.WorkerStarter {
+  display: block;
+  margin-top: 2.5rem;
+}
+
+.WorkerStarter + .WorkerStarter {
+  margin-top: 3rem;
+}
+
+.WorkerStarter--title {
+  font-size: 1.35em;
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: .3125em;
+}
+
+.WorkerStarter--title .Link { /* TODO */
+  color: inherit;
+  --underline-opacity: .75;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--orange-rgb), var(--underline-opacity));
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+@media (max-width: 768px) {
+  .WorkerStarter--title {
+    font-size: 1.375em;
+    margin-bottom: .5rem;
+  }
+}
+
+.WorkerStarter--description {
+  display: block;
+  margin-bottom: .4375rem;
+  width: calc(100% - var(--docs-body-sidebar-width));
+}
+
+.WorkerStarter--command {
+  position: relative;
+  font-size: .9em;
+  --copy-button-width: 4rem;
+  --height: 2.5rem;
+}
+
+.WorkerStarter--command-copy-button-wrapper {
+  position: absolute;
+  width: calc(var(--copy-button-width) - 2px);
+  height: var(--height);
+}
+
+.WorkerStarter--command-copy-button-wrapper button {
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  font-weight: 600;
+  background: var(--code-block-background-color);
+}
+
+[theme="light"] .WorkerStarter--command-copy-button-wrapper button {
+  background: var(--code-block-background-color-light-theme);
+}
+
+.WorkerStarter--command-codeblock-wrapper {
+  padding-left: var(--copy-button-width);
+}
+
+.WorkerStarter--command .WorkerStarter--command-codeblock-wrapper pre {
+  height: var(--height);
+  line-height: 1.4;
+  margin-bottom: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  overflow: hidden;
+}

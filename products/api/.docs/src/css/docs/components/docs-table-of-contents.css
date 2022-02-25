@@ -1,0 +1,57 @@
+.DocsTableOfContents {
+  list-style: none;
+  font-size: .94117647059em; /* 16 / 17 */
+  padding-left: 0;
+  width: 100%;
+}
+
+.DocsTableOfContents ul {
+  padding-left: 1.5em;
+  list-style: none;
+}
+
+.DocsTableOfContents ul ul {
+  font-size: .9em;
+  padding-left: 1.5em;
+  margin-bottom: .25em;
+}
+
+@media (max-height: 768px) {
+  .DocsTableOfContents ul ul {
+    display: none;
+  }
+}
+
+.DocsTableOfContents ul ul ul {
+  display: none;
+}
+
+.DocsTableOfContents-link {
+  display: inline-block;
+  line-height: 1.3;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+  padding: .2em 0;
+  margin: -.2em 0;
+}
+
+.DocsTableOfContents-link:hover {
+  color: var(--orange);
+}
+
+[js-focus-visible-polyfill-available] .DocsTableOfContents-link:focus {
+  outline: none;
+}
+
+.DocsTableOfContents-link[is-focus-visible]:focus {
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+.DocsTableOfContents-link:not([is-focus-visible]) {
+  --focus-size: 0;
+}

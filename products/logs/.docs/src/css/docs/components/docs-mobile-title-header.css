@@ -1,0 +1,78 @@
+.DocsMobileTitleHeader {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-right: .5rem;
+  height: var(--docs-header-height);
+  background: var(--background-color);
+  box-shadow: 0 1px rgba(var(--shadow-color-rgb), .075), 0 .2em .3em -.1em rgba(var(--shadow-color-rgb), .075);
+  z-index: 10;
+  --content-indent: .666em;
+}
+
+[theme="dark"] .DocsMobileTitleHeader {
+  background: var(--gray-05);
+}
+
+@media (min-width: 769px) {
+  .DocsMobileTitleHeader {
+    display: none;
+  }
+}
+
+.DocsMobileTitleHeader--logo-link {
+  --font-size: 1.333em;
+  display: flex;
+  align-items: center;
+  padding-left: var(--content-indent);
+  padding-right: var(--content-indent);
+  transition: opacity .2s ease, color .2s ease;
+}
+
+@media (hover: hover) {
+  .DocsMobileTitleHeader--logo-link:hover {
+    opacity: .75;
+    color: rgba(var(--color-rgb), .75);
+  }
+}
+
+@media (hover: none) {
+  .DocsMobileTitleHeader--logo-link:active {
+    opacity: .75;
+    color: rgba(var(--color-rgb), .75);
+  }
+}
+
+.DocsMobileTitleHeader--text-scaler {
+  /* --length set by React */
+  --font-size: 1em * (1 - ((var(--length) - 10) / 50));
+  font-size: clamp(.7em, var(--font-size), 1em);
+  display: inherit;
+}
+
+.DocsMobileTitleHeader--sidebar-toggle-button {
+  /* For pixel-fitted SVG */
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  padding: 0;
+}
+
+.DocsMobileTitleHeader--sidebar-toggle-button path {
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+[is-mobile-sidebar-open] .DocsMobileTitleHeader--sidebar-toggle-button path[data-index="1"] {
+  transform: translateY(15%) rotate(45deg);
+}
+
+[is-mobile-sidebar-open] .DocsMobileTitleHeader--sidebar-toggle-button path[data-index="2"] {
+  opacity: 0;
+}
+
+[is-mobile-sidebar-open] .DocsMobileTitleHeader--sidebar-toggle-button path[data-index="3"] {
+  transform: translateY(-15%) rotate(-45deg);
+}

@@ -1,0 +1,71 @@
+html[is-docs-page],
+html[is-docs-page] body {
+  scroll-behavior: smooth;
+  height: 100%;
+  overscroll-behavior-y: none;
+}
+
+.DocsPage {
+  --sixty-four-px-rem: 3.7647058824rem; /* 64 / 17 */
+  --docs-content-gap: var(--sixty-four-px-rem);
+  --docs-header-height: var(--sixty-four-px-rem);
+  --docs-sidebar-width: 18.25rem;
+  --docs-body-sidebar-width: var(--docs-sidebar-width);
+  --docs-page-side-padding: 1rem;
+  --docs-max-page-width: 1440px;
+  --docs-page-width: var(--docs-max-page-width);
+
+  --docs-sidebars-combined-width: calc(var(--docs-sidebar-width) + var(--docs-body-sidebar-width));
+  --docs-body-width: calc(var(--docs-page-width) - var(--docs-sidebars-combined-width));
+
+  --docs-logo-lockup-gap: .4rem;
+  --docs-logo-lockup-gap-small: .2rem;
+
+  position: relative;
+  width: 100%;
+  max-width: var(--docs-max-page-width);
+  min-height: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1439px) {
+  .DocsPage {
+    --docs-page-width: 100vw;
+
+    --docs-page-sidebar-preserverd-width: calc(100vw - var(--docs-sidebar-width)
+      - (var(--docs-max-page-width) - 2 * var(--docs-sidebar-width)));
+
+    --docs-body-sidebar-width: calc(15vw + var(--docs-page-sidebar-preserverd-width) / 4);
+  }
+}
+
+@media (max-width: 1350px) {
+  .DocsPage {
+    --docs-sidebar-width: 18rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  .DocsPage {
+    --docs-sidebar-width: 17rem;
+    --docs-body-sidebar-width: 18vw;
+  }
+}
+
+@media (max-width: 1152px) {
+  .DocsPage {
+    --docs-sidebar-width: calc(10rem + 12vw);
+    --docs-body-sidebar-width: 0px;
+  }
+}
+
+@media (max-width: 768px) {
+  .DocsPage {
+    --docs-header-height: 3rem;
+    padding-top: var(--docs-header-height);
+  }
+
+  html[is-docs-page][is-mobile-sidebar-open] {
+    overflow: hidden;
+  }
+}

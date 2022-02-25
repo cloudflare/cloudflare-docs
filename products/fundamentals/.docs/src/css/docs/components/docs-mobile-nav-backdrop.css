@@ -1,0 +1,24 @@
+.DocsMobileNavBackdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(var(--shadow-color-rgb), .5);
+  will-change: opacity;
+  transition: opacity .3s ease;
+  z-index: 8;
+}
+
+@media (min-width: 769px) {
+  .DocsMobileNavBackdrop {
+    display: none;
+  }
+}
+
+[is-mobile-sidebar-open] .DocsMobileNavBackdrop {
+  opacity: 1;
+  pointer-events: all;
+}

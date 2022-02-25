@@ -1,0 +1,20 @@
+{{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "esm" -}}
+{{- $script := (resources.Get .src) | js.Build $opts -}}
+
+{{- if hugo.IsProduction -}}
+	{{- $script = $script | minify -}}
+{{- end -}}
+
+{{- if .inline -}}
+  {{- if .defer }}
+    <script defer>{{ $script.Content | safeJS }}</script>
+  {{- else -}}
+    <script>{{ $script.Content | safeJS }}</script>
+  {{- end -}}
+{{- else -}}
+  {{- if hugo.IsProduction -}}
+    {{- $script = $script | fingerprint "md5" -}}
+  {{- end -}}
+
+  <script src="{{ $script.RelPermalink }}"{{ if .defer }} defer{{ end }}></script>
+{{- end -}}

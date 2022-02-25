@@ -1,0 +1,856 @@
+.DocsMarkdown {
+  word-wrap: break-word;
+}
+
+.DocsMarkdown img {
+  border-style: none;
+  box-sizing: content-box;
+  max-width: 100%;
+}
+
+.DocsMarkdown hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+.DocsMarkdown .small-img {
+  max-width:242px;
+  margin-bottom: 1em;  
+}
+
+.DocsMarkdown .medium-img {
+  max-width:311px;
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown .large-img {
+  max-width:450px;
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown .full-img {
+  max-width:692px;
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown--link {
+  text-decoration: none;
+  color: inherit;
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: .08;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: .3;
+  --background-color: rgba(var(--background-color-rgb), var(--background-color-alpha));
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  box-shadow: var(--focus-shadow);
+}
+
+.DocsMarkdown--link .DocsMarkdown--link-content {
+  background-color: var(--background-color);
+  border-bottom: 1px solid rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
+.DocsMarkdown--link-external-icon {
+  /* For pixel-fitted SVG */
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  margin-left: 4px;
+  opacity: .7;
+}
+
+.DocsMarkdown--link:focus .DocsMarkdown--link-external-icon {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .DocsMarkdown--link:hover .DocsMarkdown--link-external-icon {
+    opacity: 1;
+  }
+}
+
+[js-focus-visible-polyfill-available] .DocsMarkdown--link:focus {
+  outline: none;
+}
+
+.DocsMarkdown--link[is-focus-visible] {
+  border-color: transparent;
+}
+
+.DocsMarkdown--link:not([is-focus-visible]) {
+  --focus-size: 0;
+}
+
+.DocsMarkdown--link:hover {
+  --background-color-alpha: .15;
+}
+
+.DocsMarkdown--link-content > code {
+  --padding: 0;
+  --background: transparent;
+}
+
+.DocsMarkdown--link[data-is-type-link="true"] .DocsMarkdown--link-content {
+  background: transparent;
+  border: none;
+}
+
+@media (min-width: 1025px) {
+  .DocsMarkdown--link[data-is-type-link="true"] .DocsMarkdown--link-external-icon {
+    top: 1px;
+  }
+}
+
+.DocsMarkdown--link[data-is-type-link="true"] .DocsMarkdown--link-content > code {
+  --color-rgb: var(--orange-3-rgb);
+  --background: var(--background-color);
+}
+
+.DocsMarkdown code .DocsMarkdown--link[data-is-type-link="true"] {
+  margin-left: .5em;
+}
+
+[theme="dark"] .DocsMarkdown--link {
+  --background-color-alpha: .03;
+  --border-bottom-color-rgb: var(--orange-rgb);
+  --border-bottom-color-alpha: .35;
+  color: var(--code-orange);
+}
+
+[theme="dark"] .DocsMarkdown--link:hover {
+  --background-color-alpha: .08;
+}
+
+.DocsMarkdown strong {
+  font-weight: 600;
+}
+
+.DocsMarkdown ol ol,
+.DocsMarkdown ul ol {
+  list-style-type: lower-roman;
+}
+
+.DocsMarkdown ol ol ol,
+.DocsMarkdown ol ul ol,
+.DocsMarkdown ul ol ol,
+.DocsMarkdown ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.DocsMarkdown dd {
+  margin-left: 0;
+}
+
+.DocsMarkdown p,
+.DocsMarkdown ol,
+.DocsMarkdown ul,
+.DocsMarkdown dl,
+.DocsMarkdown blockquote {
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown pre,
+.DocsMarkdown figure,
+.DocsMarkdown table {
+  margin-bottom: 2em;
+}
+
+.DocsMarkdown figure {
+  margin-top: 2em;
+}
+
+.DocsMarkdown li pre,
+.DocsMarkdown li figure,
+.DocsMarkdown li table {
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown h1,
+.DocsMarkdown h2,
+.DocsMarkdown h3,
+.DocsMarkdown h4,
+.DocsMarkdown h5,
+.DocsMarkdown h6,
+p.DocsMarkdown--small-header {
+  font-weight: 600;
+}
+
+.DocsMarkdown h2,
+.DocsMarkdown h3,
+.DocsMarkdown h4,
+.DocsMarkdown h5,
+.DocsMarkdown h6,
+p.DocsMarkdown--small-header {
+  line-height: 1.25;
+  margin-bottom: .5em;
+}
+
+.DocsMarkdown h2 {
+  margin-top: 1.55em;
+}
+
+.DocsMarkdown h3,
+.DocsMarkdown h4,
+.DocsMarkdown h5,
+.DocsMarkdown h6 {
+  margin-top: 1.8em;
+}
+
+p.DocsMarkdown--small-header {
+  margin-top: 1.5em;
+  margin-bottom: .75em;
+}
+
+.DocsMarkdown h2 + h3,
+.DocsMarkdown h3 + h4,
+.DocsMarkdown h4 + h5,
+.DocsMarkdown h5 + h6 {
+  margin-top: 1em;
+}
+
+@media (min-width: 1440px) {
+  .DocsMarkdown h3,
+  .DocsMarkdown h4,
+  .DocsMarkdown h5,
+  .DocsMarkdown h6 {
+    margin-top: 2em;
+  }
+}
+
+.DocsMarkdown h1 {
+  font-size: 2.4em;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  margin-bottom: .375em;
+}
+
+@-moz-document url-prefix() {
+  .DocsMarkdown h1 {
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown h1 {
+    font-size: 2.25em;
+  }
+}
+
+@media (max-width: 374px) {
+  .DocsMarkdown h1 {
+    font-size: 2em;
+  }
+}
+
+.DocsMarkdown h2 {
+  font-size: 1.6666em;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown h2 {
+    font-size: 1.5em;
+  }
+}
+
+.DocsMarkdown h3 {
+  font-size: 1.25em;
+}
+
+.DocsMarkdown h4 {
+  font-size: 1em;
+}
+
+.DocsMarkdown h2 code,
+.DocsMarkdown h3 code,
+.DocsMarkdown h4 code,
+.DocsMarkdown h5 code {
+  --background: transparent;
+  --padding: 0;
+}
+
+.DocsMarkdown h2 code,
+.DocsMarkdown h3 code {
+  --inline-code-font-size: .9375em;
+}
+
+.DocsMarkdown h4 code,
+.DocsMarkdown h5 code {
+  --inline-code-font-size: 1em;
+}
+
+.DocsMarkdown h5,
+.DocsMarkdown h6,
+p.DocsMarkdown--small-header {
+  font-size: .875em;
+}
+
+.DocsMarkdown ul {
+  list-style: disc;
+}
+
+.DocsMarkdown ol,
+.DocsMarkdown ul {
+  padding-left: 1.25em;
+}
+
+.DocsMarkdown li {
+  margin-bottom: .5em;
+}
+
+.DocsMarkdown ol ol,
+.DocsMarkdown ol ul,
+.DocsMarkdown ul ol,
+.DocsMarkdown ul ul {
+  margin-bottom: .75em;
+}
+
+.DocsMarkdown li > p + ul {
+  margin-top: -.5em;
+}
+
+.DocsMarkdown dl {
+  padding: 0
+}
+
+.DocsMarkdown dl dt {
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+  padding: 0
+}
+
+.DocsMarkdown dl dd {
+  margin-bottom: 1.25em;
+  padding: .25em 0 0 2em;
+}
+
+.DocsMarkdown--definitions {
+  margin: 1.25em 0;
+}
+
+.DocsMarkdown h3 + .DocsMarkdown--definitions,
+.DocsMarkdown h4 + .DocsMarkdown--definitions {
+  margin-top: 1em;
+}
+
+.DocsMarkdown--definitions > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.DocsMarkdown--definitions > ul > li:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.DocsMarkdown--definitions > ul > li > p:first-child {
+  margin: 0;
+}
+
+.DocsMarkdown--definitions > ul > li > code:first-child,
+.DocsMarkdown--definitions > ul > li > p:first-child > code:first-child {
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 600;
+  --padding: 0 .3em;
+}
+
+.DocsMarkdown--definitions > ul > li > ul {
+  list-style: none;
+  padding-left: 2em;
+  margin-top: .25em;
+}
+
+.DocsMarkdown hr {
+  height: 1px;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 1px solid rgba(var(--color-rgb), .1);
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.DocsMarkdown--prop-meta {
+  color: rgba(var(--color-rgb), .85);
+  font-size: .75em;
+  font-weight: 500;
+  padding: 0 2px;
+}
+
+code .DocsMarkdown--prop-meta {
+  font-family: var(--sans-serif-font-family);
+  font-size: .8125em;
+  margin-left: .4375em;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+[theme="dark"] .DocsMarkdown blockquote,
+[theme="dark"] .DocsMarkdown dl,
+[theme="dark"] .DocsMarkdown ol,
+[theme="dark"] .DocsMarkdown p,
+[theme="dark"] .DocsMarkdown pre,
+[theme="dark"] .DocsMarkdown table,
+[theme="dark"] .DocsMarkdown ul {
+  color: var(--gray-7);
+}
+
+.DocsMarkdown > pre {
+  --outdent: 1rem;
+}
+
+[page-type="example"] .DocsMarkdown > pre {
+  --outdent: 0px;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown > pre {
+    --border-radius: 0em;
+  }
+}
+
+.DocsMarkdown blockquote,
+.DocsMarkdown dl,
+.DocsMarkdown p,
+.DocsMarkdown table {
+  max-width: 100%;
+}
+
+.DocsMarkdown blockquote {
+  position: relative;
+  margin: 1.5em 0;
+}
+
+.DocsMarkdown blockquote > p {
+  font-style: italic;
+}
+
+.DocsMarkdown blockquote > p > em {
+  font-style: normal;
+}
+
+.DocsMarkdown blockquote cite {
+  font-weight: bold;
+  font-style: normal;
+  font-size: .9em;
+}
+
+.DocsMarkdown blockquote cite::before {
+  content: "— ";
+}
+
+.DocsMarkdown blockquote::after {
+  position: absolute;
+  content: "";
+  top: 1.5em;
+  bottom: 0;
+  left: -1rem;
+  width: 2px;
+  background: rgba(var(--color-rgb), .2);
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown blockquote {
+    margin-left: 1rem;
+  }
+}
+
+.DocsMarkdown blockquote::before {
+  quotes: "“" "”";
+  content: open-quote;
+  position: absolute;
+  top: .05em;
+  left: -.8em;
+  display: inline-block;
+  font-family: Arial;
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 1;
+  height: .5em;
+  width: .7em;
+}
+
+.DocsMarkdown--aside {
+  font-size: .9em;
+  margin: 1.5em 0;
+  padding: 1em 1.3333em;
+  border-left: .28125em solid rgba(var(--color-rgb), .5);
+  background-color: rgba(var(--color-rgb), .125);
+  border-radius: 0 .5em .5em 0;
+}
+
+.DocsMarkdown--aside-header {
+  font-weight: 600;
+  margin-bottom: .25em;
+}
+
+.DocsMarkdown--aside[data-type="warning"] {
+  border-left-color: rgba(var(--orange-5-rgb), .5);
+  background-color: rgba(var(--orange-5-rgb), .125);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="warning"] {
+  border-left-color: rgba(var(--orange-5-rgb), .7);
+  background-color: rgba(var(--orange-6-rgb), .04);
+}
+
+.DocsMarkdown--aside[data-type="note"] {
+  border-left-color: rgba(var(--blue-4-rgb), .4);
+  background-color: rgba(var(--blue-4-rgb), .1);
+}
+
+.DocsMarkdown--aside[data-type="note"] .DocsMarkdown--link {
+  --background-color-rgb: var(--blue-4-rgb);
+  --border-bottom-color-rgb: var(--blue-2-rgb);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="note"] {
+  border-left-color: rgba(var(--blue-4-rgb), .8);
+  background-color: rgba(var(--blue-6-rgb), .05);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="note"] .DocsMarkdown--link {
+  color: inherit;
+  --background-color-rgb: var(--blue-6-rgb);
+  --background-color-alpha: .1;
+  --border-bottom-color-rgb: var(--blue-7-rgb);
+}
+
+[theme="dark"] .DocsMarkdown--aside[data-type="note"] .DocsMarkdown--link:hover {
+  --background-color-alpha: .2;
+}
+
+.DocsMarkdown a[name]:not([href])::before,
+.DocsMarkdown h2[id]::before,
+.DocsMarkdown h3[id]::before,
+.DocsMarkdown h4[id]::before,
+.DocsMarkdown h5[id]::before,
+.DocsMarkdown h6[id]::before {
+  content: "";
+  display: block;
+  --offset: 2rem;
+  height: var(--offset);
+  margin-top: calc(-1 * var(--offset));
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown a[name]:not([href])::before,
+  .DocsMarkdown h2[id]::before,
+  .DocsMarkdown h3[id]::before,
+  .DocsMarkdown h4[id]::before,
+  .DocsMarkdown h5[id]::before,
+  .DocsMarkdown h6[id]::before {
+    --offset: calc(var(--docs-header-height) + 2rem);
+  }
+}
+
+.DocsMarkdown--header-anchor-positioner {
+  position: absolute;
+}
+
+blockquote .DocsMarkdown--header-anchor-positioner {
+  display: none;
+}
+
+.DocsMarkdown--header-anchor {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  height: 1.25em;
+  opacity: 0;
+  padding-right: .125em;
+  transition: opacity .15s, color .15s;
+}
+
+.DocsMarkdown--header-anchor::before {
+  content: "#";
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown--header-anchor {
+    margin-top: -.125em;
+    padding-right: .0625em;
+  }
+
+  .DocsMarkdown--header-anchor::before {
+    font-size: 1.1rem;
+  }
+}
+
+.DocsMarkdown--header-anchor:focus,
+.DocsMarkdown h2:hover .DocsMarkdown--header-anchor,
+.DocsMarkdown h3:hover .DocsMarkdown--header-anchor,
+.DocsMarkdown h4:hover .DocsMarkdown--header-anchor {
+  opacity: 1;
+}
+
+.DocsMarkdown table {
+  word-break: break-word;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0;
+  --border-color: rgba(var(--color-rgb), .1);
+}
+
+.DocsMarkdown th {
+  word-break: normal;
+  vertical-align: bottom;
+  font-weight: bold;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.DocsMarkdown th,
+.DocsMarkdown td {
+  padding: .66em 1em;
+  text-align: left;
+}
+
+.DocsMarkdown th[align="right"],
+.DocsMarkdown td[align="right"] {
+  text-align: right;
+}
+
+.DocsMarkdown td:not([valign]) {
+  vertical-align: top;
+}
+
+.DocsMarkdown th:first-child,
+.DocsMarkdown td:first-child {
+  padding-left: 0;
+}
+
+.DocsMarkdown th:last-child,
+.DocsMarkdown td:last-child {
+  padding-right: 0;
+}
+
+.DocsMarkdown th {
+  padding-bottom: .1875em;
+}
+
+.DocsMarkdown tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.DocsMarkdown details summary {
+  padding: 0 .8em;
+  line-height: 2;
+  background: rgba(var(--color-rgb), .05);
+  border-radius: .25em;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.DocsMarkdown details summary {
+  cursor: pointer;
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+}
+
+[js-focus-visible-polyfill-available] .DocsMarkdown details summary:focus {
+  outline: none;
+}
+
+.DocsMarkdown details summary:not([is-focus-visible]) {
+  --focus-size: 0em;
+}
+
+.DocsMarkdown details {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown details summary + div {
+  padding: 1em 1.9em;
+  border: 1px solid rgba(var(--color-rgb), .1);
+  border-top: 0;
+  border-bottom-left-radius: .25em;
+  border-bottom-right-radius: .25em;
+}
+
+.DocsMarkdown details[open] {
+  margin-bottom: 1.5em;
+}
+
+.DocsMarkdown details[open] summary {
+  background: rgba(var(--color-rgb), .1);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.DocsMarkdown sub {
+  font-size: .8em;
+  vertical-align: baseline;
+  position: relative;
+  top: .35em;
+}
+
+.DocsMarkdown sup {
+  font-size: .8em;
+  vertical-align: baseline;
+  position: relative;
+  top: -.35em;
+}
+
+.DocsMarkdown var {
+  font-style: italic;
+}
+
+.DocsMarkdown kbd {
+  font-family: inherit;
+  font-size: .9em;
+  padding: .3em .4em;
+  background: rgba(var(--color-rgb), .025);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--color-rgb), .2),
+    inset 0 -1px rgba(var(--color-rgb), .25),
+    0 1px rgba(var(--color-rgb), .4);
+  border-radius: .25em;
+}
+
+[theme="dark"] .DocsMarkdown kbd {
+  background: rgba(var(--orange-rgb), .1);
+  box-shadow: inset 0 0 0 1px rgba(var(--orange-rgb), .5);
+  border-radius: .4em;
+}
+
+.DocsMarkdown--demo {
+  position: relative;
+}
+
+.DocsMarkdown--demo:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.DocsMarkdown--demo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 0 0 0 1px rgba(var(--color-rgb), .15);
+  pointer-events: none;
+}
+
+.DocsMarkdown--demo iframe {
+  background: #fff;
+  height: 100%;
+  width: 100%;
+}
+
+.DocsMarkdown figure[data-type="youtube"] {
+  background: #000;
+}
+
+.DocsMarkdown--table-wrap {
+  --table-border-width: 1px;
+  border: var(--table-border-width) solid rgba(var(--color-rgb), .15);
+  padding: .25em 0;
+  border-radius: .3125em;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.DocsMarkdown--table-wrap:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.DocsMarkdown--table-wrap-inner {
+  display: flex;
+}
+
+.DocsMarkdown--table-wrap table {
+  min-width: calc(var(--docs-body-width) - (2 * var(--docs-content-gap)) - (2 * var(--table-border-width)));
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .DocsMarkdown--table-wrap table {
+    min-width: calc(
+      100vw -
+      (2 * var(--docs-content-horizontal-padding)) -
+      (2 * var(--table-border-width))
+    );
+  }
+}
+
+.DocsMarkdown--table-wrap table {
+  word-break: initial;
+}
+
+.DocsMarkdown--table-wrap tr > *:first-child {
+  position: sticky;
+  left: 0;
+  white-space: nowrap;
+  padding-left: 1em;
+  background: var(--background-color);
+  box-shadow: 5px 0 5px -3px var(--background-color);
+}
+
+.DocsMarkdown--table-wrap tr > *:last-child {
+  padding-right: 1em;
+}
+
+.DocsMarkdown--content-column {
+  width: calc(100% - var(--docs-body-sidebar-width));
+}
+
+.DocsMarkdown--content-column:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown--button-group-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -.375em;
+}
+
+.DocsMarkdown--button-group-content > a,
+.DocsMarkdown--button-group-content > button {
+  margin: .375em;
+}
+
+.DocsMarkdown--example {
+  padding: 1em 1.25em;
+  margin: -.5em auto 1.25em;
+  border: 1px solid rgba(var(--color-rgb), .1);
+  border-radius: .125em;
+}
+
+.DocsMarkdown--example hr {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.DocsMarkdown > *:first-child,
+.DocsMarkdown ul > *:first-child,
+.DocsMarkdown ol > *:first-child,
+.DocsMarkdown li > *:first-child,
+.DocsMarkdown blockquote > *:first-child,
+.DocsMarkdown details > *:first-child,
+.DocsMarkdown details summary + div > *:first-child,
+.DocsMarkdown--content-column > *:first-child,
+.DocsMarkdown--example > *:first-child,
+.DocsMarkdown--aside > *:first-child {
+  margin-top: 0;
+}
+
+.DocsMarkdown > *:last-child,
+.DocsMarkdown ul > *:last-child,
+.DocsMarkdown ol > *:last-child,
+.DocsMarkdown li > *:not(ul):not(ol):not(pre):not(figure):not(table):last-child,
+.DocsMarkdown blockquote > *:last-child,
+.DocsMarkdown details > *:last-child,
+.DocsMarkdown details summary + div > *:last-child,
+.DocsMarkdown--content-column > *:last-child,
+.DocsMarkdown--example > *:last-child,
+.DocsMarkdown--aside > *:last-child {
+  margin-bottom: 0;
+}

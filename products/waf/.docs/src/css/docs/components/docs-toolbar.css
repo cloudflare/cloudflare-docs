@@ -1,0 +1,90 @@
+.DocsToolbar {
+  position: absolute;
+  left: var(--docs-sidebar-width);
+  top: 0;
+  right: 0;
+  display: flex;
+  height: var(--docs-header-height);
+  z-index: 2;
+}
+
+.DocsToolbar--search {
+  flex: 1;
+  max-width: var(--docs-body-width);
+  margin-right: auto;
+}
+
+[search-disabled] .DocsToolbar--search {
+  visibility: hidden;
+}
+
+.DocsToolbar--feedback {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.DocsToolbar--feedback svg {
+  width: 1em;
+  margin-right: 0.5em;
+  height: 1em;
+}
+
+.DocsToolbar--tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--docs-page-side-padding);
+}
+
+.DocsToolbar--tools-spacer {
+  display: inline-flex;
+  height: 1em;
+  width: 1em;
+}
+
+.DocsToolbar--tools-icon-item {
+  display: inline-flex;
+  height: 1.647058823rem;
+  width: 1.647058823rem;
+  color: rgba(var(--color-rgb), .7);
+}
+
+[theme="light"] .DocsToolbar--tools-icon-item {
+  color: var(--gray-3);
+}
+
+.DocsToolbar--tools-icon-item-content > a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: .1em;
+}
+
+@media (max-width: 768px) {
+  .DocsToolbar {
+    left: 0;
+    z-index: 12;
+    pointer-events: none;
+  }
+
+  .DocsToolbar--tools {
+    pointer-events: all;
+    padding-left: 0;
+    padding-right: .9rem;
+  }
+
+  .DocsToolbar--search {
+    flex-basis: 3em;
+    flex-grow: 0;
+    margin-left: auto;
+    margin-right: 0;
+    max-width: 100vw;
+  }
+
+  .DocsToolbar--feedback,
+  .DocsToolbar--tools-spacer,
+  .DocsToolbar--tools-icon-item {
+    display: none;
+  }
+}

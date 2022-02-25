@@ -1,0 +1,16 @@
+{{- $current := .Page.RelPermalink -}}
+{{- $len := len (split $current "/") -}}
+
+<ul>
+{{- range (where .Site.Pages "Section" .Page.Section).ByWeight -}}
+  {{- $x := .RelPermalink -}}
+  {{- $self := eq $x $current -}}
+  {{- $delta := sub (len (split $x "/")) $len -}}
+  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+  <li>
+    {{ $link := printf "[%s](%s)" .Title .RelPermalink -}}
+    {{- .Page.RenderString $link -}}
+  </li>
+  {{- end -}}
+{{- end -}}
+</ul>

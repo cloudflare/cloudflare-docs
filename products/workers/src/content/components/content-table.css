@@ -1,5 +1,0 @@
-.DocsTutorials--column[data-column="type"] {
-  width: 8em;
-  padding-left: calc(var(--gap) / 2);
-  padding-right: calc(var(--gap) / 2);
-}

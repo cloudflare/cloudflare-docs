@@ -1,0 +1,28 @@
+.TagsFilter {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -.25em;
+}
+
+.TagsFilter--button {
+  --border-color: rgba(var(--color-rgb), .2);
+  padding: .25em .3125em;
+  margin: .3125em .25em;
+  border-radius: .125em;
+}
+
+.TagsFilter--button[is-focus-visible] {
+  --border-color: rgba(var(--orange-rgb), .7);
+}
+
+.TagsFilter--button-active {
+  pointer-events: none;
+}
+
+[theme="light"] .TagsFilter--button-active {
+  --border-color: transparent;
+}
+
+[theme="dark"] .TagsFilter--button-active {
+  color: var(--code-orange);
+}

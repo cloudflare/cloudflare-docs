@@ -1,0 +1,30 @@
+.DocsFooter {
+  margin-left: var(--docs-sidebar-width);
+  padding: 3.5rem 0; /* TODO */
+  padding-left: var(--docs-content-gap);
+  padding-right: calc(var(--docs-body-sidebar-width) + var(--docs-content-gap));
+  --border-color: rgba(var(--color-rgb), .08);
+  border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+  .DocsFooter {
+    margin-left: 0;
+    padding: 2rem 1rem 4rem
+  }
+}
+
+.DocsFooter--content {
+  display: flex;
+}
+
+@media (max-width: 414px) {
+  .DocsFooter--edit-on-gh-link-wrapper {
+    display: block;
+    margin-bottom: .5em;
+  }
+
+  .DocsFooter--content-dot-spacer {
+    display: none;
+  }
+}
