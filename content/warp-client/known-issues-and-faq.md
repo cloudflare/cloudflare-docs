@@ -20,7 +20,7 @@ As our [Network Map](https://www.cloudflare.com/network/) shows, we have locatio
 
 Cloudflare WARP Client in WARP mode was meant to ensure all your traffic is kept private between you and the [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/) (that is, the site you are connecting to), but not from the origin itself. In a number of cases, if the origin site you are communicating with cannot determine who you are and where you are from, it cannot serve locale-relevant content to you (that is, anything related to a customized user experience, such as language or regional configurations).
 
-Sites inside Cloudflare network are able to see this information. If a site is showing you your IP address, chances are they are in our network. Most sites outside our network, however, are unable to see this information and instead see the nearest egress server to their server. We are working to see if in the future we can find a way to more easily share this information with a limited number of sites outside Cloudflare's network, where it is relevant to both parties.
+Sites inside Cloudflare's network are able to see this information. If a site is showing you your IP address, chances are they are in our network. Most sites outside our network, however, are unable to see this information and instead see the nearest egress server to their server. We are working to see if in the future we can find a way to more easily share this information with a limited number of sites outside Cloudflare's network, where it is relevant to both parties.
 
 ## Why has my throughput dropped while using WARP?
 
