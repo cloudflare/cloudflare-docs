@@ -1,0 +1,20 @@
+{{- $target := printf "%sexamples/" .Page.FirstSection.RelPermalink -}}
+{{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
+
+<ul class="DocsCodeExamplesOverview" style="list-style: none">
+  {{- range $pages.ByWeight -}}
+    {{- $x := .RelPermalink -}}
+    {{- $isExample := (strings.HasPrefix $x $target) -}}
+    {{- if and (ne $x $target) $isExample -}}
+    <li class="DocsCodeExamplesOverview--example">
+      <div class="DocsCodeExamplesOverview--example-title">
+        {{- .Page.RenderString (printf "[%s](%s)" .Title .RelPermalink) -}}
+      </div>
+
+      <div class="DocsCodeExamplesOverview--example-description">
+        <p>{{ .Params.summary }}</p>
+      </div>
+    </li>
+    {{- end -}}
+  {{- end -}}
+</ul>
