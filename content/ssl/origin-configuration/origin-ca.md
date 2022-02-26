@@ -47,9 +47,7 @@ To add an Origin CA certificate to your origin web server
 1.  Upload the Origin CA certificate (created in [Step 1](#1-create-an-origin-ca-certificate)) to your origin web server.
 2.  Update your web server configuration:
 
-     <details>
- <summary>Configuration guides for popular servers</summary>
- <div>
+     Configuration guides for popular servers
 
     - [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
     - [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
@@ -64,8 +62,7 @@ To add an Origin CA certificate to your origin web server
 
     If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.
 
-     </div>
- </details>
+
 
 3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
