@@ -1,0 +1,25 @@
+{{ define "main" }}
+  <div class="DocsPage">
+    {{- partial "topbar.mobile" . -}}
+    {{- partial "sidebar.nav" . -}}
+
+    <div class="DocsToolbar">
+      {{- partial "topbar.search" . -}}
+      {{- partial "topbar.tools" . -}}
+    </div>
+
+    <main class="DocsBody">
+      {{ partial "sidebar.toc" . }}
+
+      <div id="docs-content" data-reach-skip-nav-content></div>
+
+      <div class="DocsContent" page-type="document">
+        <article class="DocsMarkdown">
+          {{- .Content -}}
+        </article>
+      </div>
+    </main>
+
+    {{ partial "footer" . }}
+  </div>
+{{ end }}

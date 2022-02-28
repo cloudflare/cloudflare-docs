@@ -1,0 +1,8 @@
+{{- $href := (.Get "href") -}}
+{{- $title := (.Get "title") -}}
+{{- $wrap := default false (.Get "wrap") -}}
+
+<a class="ProductGrid--link" data-wrap-title="{{ $wrap }}" href="{{ $href }}">
+  <div>{{ safeHTML .Inner }}</div>
+  <span>{{ $title }}</span>
+</a>

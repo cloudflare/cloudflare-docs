@@ -1,0 +1,17 @@
+{{- $id := .Get "id" -}}
+{{- $ratio := default "16 / 9" (.Get "aspect") -}}
+{{- $fallback := printf "YouTube video with ID %s" $id -}}
+{{- $css := printf "--aspect-ratio:calc(%s)" $ratio -}}
+
+<figure data-type="youtube">
+  <div class="AspectRatio" style="{{ $css | safeCSS }}">
+    <iframe
+      class="AspectRatio--content"
+      src="https://www.youtube.com/embed/{{ $id }}"
+      title="{{ default $fallback (.Get "title") }}"
+      frameBorder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  </div>
+</figure>

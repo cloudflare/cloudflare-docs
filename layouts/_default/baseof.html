@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available>
+  <head>
+    {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
+
+    <link rel="stylesheet" href="/style.css"/>
+    {{- block "styles" . -}}{{- end -}}
+
+    {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
+    {{- partial "script" (dict "src" "main.ts" "defer" true) -}}
+    {{- block "scripts" . -}}{{- end -}}
+
+    <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
+    <script data-source="docs" async defer src="https://feedback.developers.cloudflare.com/sdk.js"></script>
+    <link rel="preload" href="https://feedback.developers.cloudflare.com/sdk.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+    <noscript><link rel="stylesheet" href="https://feedback.developers.cloudflare.com/sdk.css"/></noscript>
+  </head>
+  <body>
+    {{- block "main" . -}}{{- end -}}
+    {{- partial "gtag" -}}
+  </body>
+</html>
