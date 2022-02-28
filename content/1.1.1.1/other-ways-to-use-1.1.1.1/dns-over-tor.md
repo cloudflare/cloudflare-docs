@@ -6,11 +6,11 @@ title: DNS over Tor
 
 # DNS over Tor
 
-<Aside type='warning'>
+{{<Aside type='warning'>}}
 
 The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
 
-</Aside>
+{{</Aside>}}
 
 If you do not want to disclose your IP address to the resolver, you can use our Tor onion service. Resolving DNS queries through the Tor network guarantees a significantly higher level of anonymity than making the requests directly. Not only does doing so prevent the resolver from ever seeing your IP address, but it also prevents your ISP from knowing that you attempted to resolve a domain name.
 
@@ -40,11 +40,11 @@ Also, if you use the Tor Browser, you can head to the resolver's address to see 
 https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/
 ```
 
-<Aside type="note" header="Note">
+{{<Aside type="note" header="Note">}}
 
 The HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
 
-</Aside>
+{{</Aside>}}
 
 If you ever forget 1.1.1.1's address, use cURL to retrieve it:
 
@@ -65,7 +65,7 @@ The hidden resolver is set up to listen on TCP ports 53 and 853 for DNS over TCP
 $ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
 ```
 
-From here, you can follow the regular guide for [setting up 1.1.1.1](../../setup), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
+From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
 
 ### DNS over UDP
 
@@ -79,7 +79,7 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
-1. Download `cloudflared` by following the guide for [connecting to 1.1.1.1 using DNS over HTTPS clients](../../encryption/dns-over-https/dns-over-https-client).
+1. Download `cloudflared` by following the guide for [connecting to 1.1.1.1 using DNS over HTTPS clients](/1.1.1.1/encryption/dns-over-https/dns-over-https-client).
 1. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
 	```sh
