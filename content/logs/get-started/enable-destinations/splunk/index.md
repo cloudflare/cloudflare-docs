@@ -76,7 +76,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   - **\<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 {{<Aside type="note" header="Note">}}
-Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the <a href="/faq#logpush-faq">Logpush FAQ</a> for more information.
+Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the [Logpush FAQ](/logs/faq/#logpush-faq) for more information.
 {{</Aside>}}
 
 - `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
@@ -88,7 +88,7 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 
 - **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
 
-- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/get-started/logpush-configuration-api/understanding-logpush-api/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+- **logpull_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Logpush API options](/logs/reference/logpush-api-configuration/#options). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
 
 Example request using cURL:
 
