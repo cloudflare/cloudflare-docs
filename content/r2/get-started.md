@@ -6,8 +6,6 @@ meta:
   title: Get started guide
 ---
 
-{{<content-column>}}
-
 # R2 (beta) get started guide
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
@@ -264,5 +262,3 @@ By completing this guide, you have successfully installed Wrangler and deployed 
 
 1. [Workers Tutorials](https://developers.cloudflare.com/workers/tutorials)
 2. [Workers Examples](https://developers.cloudflare.com/workers/examples)
-
-{{</content-column>}}
