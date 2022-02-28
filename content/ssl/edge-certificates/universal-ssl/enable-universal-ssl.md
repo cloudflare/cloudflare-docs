@@ -26,7 +26,7 @@ For non-authoritative or partial domains (domains on a CNAME setup), Universal S
   - Immediately if you add [Domain Control Validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) records to your authoritative DNS.
   - After a brief period of downtime if you **do not** add DCV records (once your traffic is proxied).
 
-Unless you cover and validate multiple subdomains with an [advanced certificate](/ssl/advanced-certificate-manager/), you will need to proxy and validate each new subdomains as they are added.
+Unless you cover and validate multiple subdomains with an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/), you will need to proxy and validate each new subdomains as they are added.
 
 ## Disable Universal SSL
 
@@ -36,7 +36,7 @@ If you disable your domain's Universal SSL certificate, Cloudflare removes that 
 
 ### Potential errors
 
-To avoid errors with your domain, either [upload a custom certificate](/ssl/custom-certificates/) or purchase [Advanced Certificate Manager](/ssl/advanced-certificate-manager/) before disabling Universal SSL.
+To avoid errors with your domain, either [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) before disabling Universal SSL.
 
 If you disable Universal SSL, you may experience errors with the following scenarios:
 
@@ -55,7 +55,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 
 To disable Universal SSL:
 
-1.  Make sure you have [uploaded a custom certificate](/ssl/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/advanced-certificate-manager/) to protect your domain.
+1.  Make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
 2.  Log in to the Cloudflare dashboard and select your account.
 3.  Select your domain.
 4.  Go to **SSL/TLS** > **Edge Certificates**.
