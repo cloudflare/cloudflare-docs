@@ -12,7 +12,7 @@ For each connection, Spectrum logs a connect event and either a disconnect or er
 
 ## Configuring Logpush
 
-Spectrum [log events](/logs/log-fields/) can be configured through the [dashboard](/logs/logpush/logpush-dashboard/) and [API](/logs/logpush/logpush-configuration-api/).
+Spectrum [log events](/logs/reference/log-fields/) can be configured through the dashboard or API, depending on your preferred [destination](/logs/get-started/enable-destinations/).
 
 ## Status Codes
 
