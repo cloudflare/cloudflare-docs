@@ -6,4 +6,4 @@ title: Infrastructure
 
 # Infrastructure
 
-<DirectoryListing path="/infrastructure"/>
+{{<directory-listing>}}
