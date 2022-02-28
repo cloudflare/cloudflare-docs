@@ -20,7 +20,9 @@ Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](
 
 ### Certificate value
 
-Cloudflare uses a [specific CA](/ssl/static/authenticated_origin_pull_ca.pem) to sign certificates for the Authenticated Origin Pull service.
+Cloudflare uses a specific CA to sign certificates for the Authenticated Origin Pull service.
+
+If you need the value for that CA, [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem).
 
 ### Setup instructions
 
