@@ -1,5 +1,5 @@
 ---
-weight: 6
+weight: 7
 pcx-content-type: reference
 title: Terms of use
 ---

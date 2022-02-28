@@ -1,5 +1,5 @@
 ---
-weight: 5
+weight: 6
 pcx-content-type: reference
 title: Privacy
 ---

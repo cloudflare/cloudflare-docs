@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 3
 pcx-content-type: reference
 title: Encryption
 ---
