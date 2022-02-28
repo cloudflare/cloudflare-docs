@@ -10,5 +10,5 @@ pcx-content-type: how-to
 1. From the Azure portal side menu, select **Virtual Networks**.
 1. Navigate to the virtual network associated with your virtual machine (VM).
 1. Select **DNS Servers** > **Custom**, and add two entries:
-    {{<render file="_all-ipv4.md">}}
+    {{<render file="_ipv4.md">}}
 1. Click **Save**.

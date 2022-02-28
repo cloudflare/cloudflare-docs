@@ -6,7 +6,7 @@ title: DNS over Tor
 
 # DNS over Tor
 
-{{<Aside type='warning'>}}
+{{<Aside type="warning">}}
 
 The hidden resolver is still an experimental service and should not be used in production or for other critical uses.
 

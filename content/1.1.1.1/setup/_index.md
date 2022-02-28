@@ -1,10 +1,10 @@
 ---
 weight: 2
 pcx-content-type: reference
-title: Setup
+title: Set up
 ---
 
-# Setup Cloudflare 1.1.1.1 resolver
+# Set up Cloudflare 1.1.1.1 resolver
 
 By default, the DNS server your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
@@ -47,7 +47,7 @@ Use the following DNS resolvers to block malware and adult content.
 Cloudflare returns `0.0.0.0` if the [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) or IP in a DNS query is classified as malicious.
 
 
-{{<Aside type='note' header='Domain miscategorization'>}}
+{{<Aside type="note" header="Domain miscategorization">}}
 
 If you are using 1.1.1.1 for Families and see a domain that you believe is miscategorized, [fill in this form](https://radar.cloudflare.com/categorization-feedback/) to bring it to our attention. Your submission will remain anonymous.
 
@@ -107,5 +107,6 @@ security.cloudflare-dns.com
 ```txt
 family.cloudflare-dns.com
 ```
+
 </div>
 </details>
