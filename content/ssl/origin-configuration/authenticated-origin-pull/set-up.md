@@ -22,7 +22,7 @@ Authenticated Origin Pull does not work when your [**SSL/TLS encryption mode**](
 
 Cloudflare uses the following CA to sign certificates for the Authenticated Origin Pull service:
 
-```text
+```txt
 -----BEGIN CERTIFICATE-----
 MIIGCjCCA/KgAwIBAgIIV5G6lVbCLmEwDQYJKoZIhvcNAQENBQAwgZAxCzAJBgNV
 BAYTAlVTMRkwFwYDVQQKExBDbG91ZEZsYXJlLCBJbmMuMRQwEgYDVQQLEwtPcmln
