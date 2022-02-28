@@ -10,4 +10,4 @@ Bot Fight Mode and Super Bot Fight Mode use the same underlying technology that 
 *   Protect entire domains without endpoint restrictions
 *   Cannot be customized, adjusted, or reconfigured via Firewall Rules
 
-Although these products are designed to fight malicious actors on the Internet, they may challenge API or mobile app traffic. For more granular control, upgrade to [Bot Management for Enterprise](/bots/bm-subscription/).
+Although these products are designed to fight malicious actors on the Internet, they may challenge API or mobile app traffic. For more granular control, upgrade to [Bot Management for Enterprise](/bots/plans/bm-subscription/).
