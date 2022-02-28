@@ -1,5 +1,5 @@
 ---
-order: 4
+weight: 4
 title: Gaming consoles
 pcx-content-type: how-to
 ---

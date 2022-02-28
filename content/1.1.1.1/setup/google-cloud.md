@@ -1,5 +1,5 @@
 ---
-order: 5
+weight: 5
 title: Google Cloud
 pcx-content-type: how-to
 ---

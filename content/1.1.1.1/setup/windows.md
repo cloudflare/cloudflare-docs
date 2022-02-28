@@ -1,5 +1,5 @@
 ---
-order: 10
+weight: 10
 title: Windows
 pcx-content-type: how-to
 ---

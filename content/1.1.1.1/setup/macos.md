@@ -1,5 +1,5 @@
 ---
-order: 8
+weight: 8
 title: macOS
 pcx-content-type: how-to
 ---

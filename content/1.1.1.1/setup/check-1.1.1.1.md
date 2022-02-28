@@ -1,5 +1,5 @@
 ---
-order: 11
+weight: 11
 pcx-content-type: reference
 title: Check connection to 1.1.1.1
 ---
