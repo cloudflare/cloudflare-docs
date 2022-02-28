@@ -119,6 +119,6 @@ Returns
 
 <div class="medium-img">
 
-![Google sheets function](../static/google-sheet-result.png)
+![Google sheets function](/1.1.1.1/static/google-sheet-result.png)
 
 </div>
