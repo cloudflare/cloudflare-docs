@@ -103,9 +103,7 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td>Yes</td>
       <td>
-        A <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into{' '}
-        <code>host/path</code>, greater than 200 and less than or equal to{' '}
-        <strong>total active users</strong>.
+        A <a href="#new-users-per-minute">threshold</a> of users per minute that can be allowed into <code>host/path</code>, greater than 200 and less than or equal to <strong>total active users</strong>.
       </td>
       <td>Set to 100% of peak traffic to ensure users are only queued when necessary</td>
     </tr>
@@ -116,9 +114,7 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td>No</td>
       <td>
-        The amount of time in minutes (between 1 and 30) that a user who left <code>host/path</code>{' '}
-        can come <a href="#session-duration">directly back</a> without having to go into the waiting
-        room. Defaults to 5 minutes.
+        The amount of time in minutes (between 1 and 30) that a user who left <code>host/path</code> can come <a href="#session-duration">directly back</a> without having to go into the waiting room. Defaults to 5 minutes.
       </td>
       <td></td>
     </tr>
@@ -138,9 +134,7 @@ You can customize a variety of options for your waiting rooms.
       </td>
       <td>No</td>
       <td>
-        Only available to Enterprise customers with purchase. If true, users only have{' '}
-        <code>session duration</code> minutes to browse your site. If false, a user's session cookie
-        is renewed on every request.
+        Only available to Enterprise customers with purchase. If true, users only have <code>session duration</code> minutes to browse your site. If false, a user's session cookie is renewed on every request.
       </td>
       <td></td>
     </tr>

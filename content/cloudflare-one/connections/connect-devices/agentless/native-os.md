@@ -28,10 +28,10 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 1. Click **Edit**.
 1. Click **IPv4**.\
-    Remove any IP addresses that may already be listed.
+   Remove any IP addresses that may already be listed.
 1. Add the following IP addresses:
-    - **172.64.36.1**
-    - **172.64.36.2**
+   - **172.64.36.1**
+   - **172.64.36.2**
 1. Click **Apply**.
 
 #### IPv6
@@ -49,8 +49,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. In the command line, type: `sudo vim /etc/resolv.conf`
 1. Press the **i** key on your keyboard to edit the document
 1. Replace the nameserver lines with:
-    - **172.64.36.1**
-    - **172.64.36.2**
+   - **172.64.36.1**
+   - **172.64.36.2**
 1. Press the **ESC** key on your keyboard to save and exit vim.
 1. Type `:wq`.
 
@@ -69,8 +69,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Click **Advanced**.
 1. Select the **DNS** tab, and remove any IP addresses that may be already listed.
 1. Add the following IP addresses:
-    - **172.64.36.1**
-    - **172.64.36.2**
+   - **172.64.36.1**
+   - **172.64.36.2**
 1. Click **OK**.
 1. Click **Apply**.
 
@@ -98,8 +98,8 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Select **Internet Protocol Version 4**.
 1. Click **Properties**.
 1. Remove any IP addresses that may be already listed and add the following IP addresses in their place:
-    - **172.64.36.1**
-    - **172.64.36.2**
+   - **172.64.36.1**
+   - **172.64.36.2**
 1. Click **OK**.
 
 ### IPv6
@@ -113,4 +113,4 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Click **Properties**.
 1. Click **Use The Following DNS Server Addresses**.
 1. Add the IPv6 address that we listed based on your location configuration
-1.Click **OK**.
+   1.Click **OK**.

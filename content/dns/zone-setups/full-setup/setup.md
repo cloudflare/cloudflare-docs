@@ -128,4 +128,3 @@ This is not an exhaustive list of provider-specific instructions, but the follow
 - [Tucows](http://www.tucowsdomains.com/name-server-dns-changes/how-do-i-change-my-name-servers-dns/)
 - [Yahoo!](http://support.hostgator.com/articles/how-to-change-name-servers-with-yahoo-com)
 - [Yola](https://www.yola.com/tutorials/article/Changing-the-name-servers-1285944436498/Publishing_domains_and_email)
-
