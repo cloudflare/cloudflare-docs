@@ -10,7 +10,7 @@ meta:
 
 # R2 (beta) get started guide
 
-Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the large egress bandwidth fees associated with typical cloud storage services.
+Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
 {{<Aside type="note" header="Beta registration">}}
 
