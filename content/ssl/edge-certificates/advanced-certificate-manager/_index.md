@@ -31,5 +31,5 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 
 ## Related resources
 
-*   [Manage certificates](/ssl/manage-certificates/)
-*   [Common API commands](/ssl/api-commands/)
+*   [Manage certificates](manage-certificates/)
+*   [Common API commands](api-commands/)
