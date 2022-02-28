@@ -31,5 +31,5 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 
 ## Related resources
 
-*   [Manage certificates](manage-certificates/)
-*   [Common API commands](api-commands/)
+*   [Manage certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/)
+*   [Common API commands](/ssl/edge-certificates/advanced-certificate-manager/api-commands/)

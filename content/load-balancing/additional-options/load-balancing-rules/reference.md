@@ -66,7 +66,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 - `Timestamp`
 - `Header`
 
-For the most up to date list of these fields, [create a load balancing rule](../create-rules/) in the UI.
+For the most up to date list of these fields, [create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/) in the UI.
 
 For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields).
 

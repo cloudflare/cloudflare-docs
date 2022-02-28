@@ -56,7 +56,7 @@ Though this process happens relatively quickly, your application may experience 
 
 {{<Aside type="warning">}}
 
-For additional help, refer to [Troubleshooting DCV](../troubleshooting/).
+For additional help, refer to [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
 
 {{</Aside>}}
 
