@@ -20,7 +20,7 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 ## Before you start
 
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
 
 ---
 
@@ -28,23 +28,23 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1.  Navigate to the Zero Trust Dashboard to create a new application.
 
-2.  Select the `Applications` page from the sidebar.
+1.  Select the `Applications` page from the sidebar.
 
-3.  Click **Add application**.
+1.  Click **Add application**.
 
-![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
+  ![App List](/cloudflare-one/static/zero-trust-security/ssh/app-list.png)
 
 1.  Choose **Self-hosted** on the next page.
 
-![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
+  ![Add App](/cloudflare-one/static/zero-trust-security/ssh/add-app.png)
 
 1.  Input a subdomain where your application will be available to users.
 
-![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
+  ![Configure](/cloudflare-one/static/zero-trust-security/ssh/configure-app.png)
 
 1.  Next, create rules that control who can reach the application.
 
-![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
+  ![Add Rules](/cloudflare-one/static/zero-trust-security/ssh/app-rules.png)
 
 1.  Finally, click **Save** to save the policy.
 
@@ -58,19 +58,19 @@ Cloudflare Tunnel creates a secure, outbound-only connection between this machin
 
 1.  Download the version of `cloudflared` that matches your architecture from the [available releases](https://github.com/cloudflare/cloudflared/releases).
 
-2.  Place the `cloudflared` executable in a location accessible to the OS, for example:
+1.  Place the `cloudflared` executable in a location accessible to the OS, for example:
 
-```sh
-C:\Cloudflared\bin\cloudflared.exe
-```
+  ```sh
+  C:\Cloudflared\bin\cloudflared.exe
+  ```
 
 1.  Next, run `CMD` as an administrator to install the service.
 
-```bash
-C:\Cloudflared\bin\cloudflared.exe service install
-```
+  ```bash
+  C:\Cloudflared\bin\cloudflared.exe service install
+  ```
 
-By default, the agent will run as a Local Account service and will look for the configuration and certificate file in the systemprofile.
+  By default, the agent will run as a Local Account service and will look for the configuration and certificate file in the systemprofile.
 
 1.  Run the following command to create a new directory within systemprofile, replacing the `System32` value if needed to match your architecture.
 
@@ -88,17 +88,17 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 
 1.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```txt
-C:\Cloudflared\bin\cloudflared.exe login
-```
+  ```txt
+  C:\Cloudflared\bin\cloudflared.exe login
+  ```
 
 1.  `cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
 
-If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
+  If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
 1.  Choose any hostname presented in the list. Cloudflare will issue a certificate scoped to your account. You do not need to pick the specific hostname where you will serve the Tunnel.
 
-2.  Copy the file to the `systemprofile` directory created previously.
+1.  Copy the file to the `systemprofile` directory created previously.
 
 ```txt
 copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
@@ -126,25 +126,25 @@ You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/conf
 
 1.  Create a `YAML` file that `cloudflared` can reach. By default `cloudflared` will look for the file in the `C:\Users\%USERNAME%\.cloudflared\` folder of your Windows machine.
 
-2.  Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the example ID below in the first two lines with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
+1.  Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the example ID below in the first two lines with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
 
-```yaml
-tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
-credentials-file: C:\Users\%USERNAME%\.cloudflared\6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+  ```yaml
+  tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
+  credentials-file: C:\Users\%USERNAME%\.cloudflared\6ff42ae2-765d-4adf-8112-31c55c1551ef.json
 
-ingress:
-  - hostname: azure.widgetcorp.tech
-    service: rdp://localhost:3389
-  - service: http_status:404
-  # Catch-all rule, which responds with 404 if traffic doesn't match any of
-  # the earlier rules
-```
+  ingress:
+    - hostname: azure.widgetcorp.tech
+      service: rdp://localhost:3389
+    - service: http_status:404
+    # Catch-all rule, which responds with 404 if traffic doesn't match any of
+    # the earlier rules
+  ```
 
 1.  Make sure the file is saved to the following location:
 
-```txt
-C:\Users\%USERNAME%\.cloudflared\config.yml
-```
+  ```txt
+  C:\Users\%USERNAME%\.cloudflared\config.yml
+  ```
 
 with `%USERNAME%` being your Windows username (this is your user folder).
 
@@ -163,15 +163,15 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1.  Navigate to `dash.cloudflare.com` and choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy. Click **+ Add record**.
 
-![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
+  ![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
 
 1.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
 
-`6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
+  `6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com`
 
 1.  Click **Save**.
 
-![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
+  ![Add DNS](/cloudflare-one/static/zero-trust-security/ssh/add-dns.png)
 
 ## Run the Tunnel
 
@@ -193,15 +193,15 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 
 1.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified, but in this example we will use `3389` as it is the default port for RDP connections.
 
-```txt
-C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:3389
-```
+  ```txt
+  C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:3389
+  ```
 
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
 1.  Open your RDP client and configure the client to point to `localhost:3389`. Do not input the hostname.
 
-2.  When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
+1.  When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
 ## Configuring A Desktop Shortcut
 
@@ -211,13 +211,13 @@ You can help end users connect without requiring the command line by providing t
 
 1.  Ensure that `cloudflared.exe` is installed on the end user device and available in the Windows Path.
 
-2.  Right-click on the Windows desktop and select **New > Shortcut**.
+1.  Right-click on the Windows desktop and select **New > Shortcut**.
 
-3.  In the wizard that appears, paste in the path to your `cloudflared.exe` file, followed by this command with the hostname your team uses:
+1.  In the wizard that appears, paste in the path to your `cloudflared.exe` file, followed by this command with the hostname your team uses:
 
-```txt
-C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:3389
-```
+  ```txt
+  C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:3389
+  ```
 
 1.  Click **Next** and complete the wizard.
 
@@ -241,30 +241,30 @@ MacOS users can save a command shortcut that will launch the RDP flow.
 
 1.  The command below can be saved as a `.command` file that can be launched on login:
 
-```txt
-var=/Applications/CF-RDP-Tunnel.command &&
-echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:3389 &" > $var &&
-chmod +x $var
-```
+  ```txt
+  var=/Applications/CF-RDP-Tunnel.command &&
+  echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:3389 &" > $var &&
+  chmod +x $var
+  ```
 
 1.  Check that everything is successful by running the following command:
 
-```sh
-$ lsof -nP -iTCP:3389 | grep LISTEN
-```
+  ```sh
+  $ lsof -nP -iTCP:3389 | grep LISTEN
+  ```
 
-If needed, you can kill the process by running the following command:
+  If needed, you can kill the process by running the following command:
 
-```sh
-$ sudo kill -9 [process id]
-```
+  ```sh
+  $ sudo kill -9 [process id]
+  ```
 
-The command from Step 1 can then be configured to run at device login by navigating to **System Preferences > Users & Groups**.
+  The command from Step 1 can then be configured to run at device login by navigating to **System Preferences > Users & Groups**.
 
 1.  Select the `+` sign.
 
-2.  Navigate to **Macintosh HD > Applications**.
+1.  Navigate to **Macintosh HD > Applications**.
 
-3.  Double click on the previously created `CF-RDP-Tunnel.command` file.
+1.  Double click on the previously created `CF-RDP-Tunnel.command` file.
 
 The default behavior in MacOS is for the Terminal window to stay open. You can configure it to close automatically.

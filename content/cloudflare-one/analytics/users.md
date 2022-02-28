@@ -33,9 +33,9 @@ Wokplace records show the amount of unique sessions the user has initiated from 
 
 1.  In the Users page, locate the user whose workplace records you want to see.
 
-2.  Click **View**.
+1.  Click **View**.
 
-3.  In the **User details** section, under the **Most recent location** field, click on the View all button.
+1.  In the **User details** section, under the **Most recent location** field, click on the View all button.
 
 ![Workplace records](/cloudflare-one/static/documentation/logs/workplace-records.png)
 

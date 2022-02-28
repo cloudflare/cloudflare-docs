@@ -18,7 +18,7 @@ To enable AV scanning:
 
 1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
 
-2.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
+1.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 
 When a file is blocked due to the presence of malware, it is logged as a Block decision:
 

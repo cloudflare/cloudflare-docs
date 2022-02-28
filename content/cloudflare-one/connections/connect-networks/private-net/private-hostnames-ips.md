@@ -31,8 +31,8 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 ## Enable UDP support
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
-2.  Scroll down to Firewall settings.
-3.  Ensure the Proxy is enabled and both TCP and UDP are selected.
+1.  Scroll down to Firewall settings.
+1.  Ensure the Proxy is enabled and both TCP and UDP are selected.
 
     ![Enable UDP](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/enable-udp.png)
 
@@ -44,9 +44,9 @@ Next, we need to create a [Local Domain Fallback](/cloudflare-one/connections/co
 
     ![Manage Local Domains](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/manage-local-domain-fallback.png)
 
-2.  Click **Manage**.
+1.  Click **Manage**.
 
-3.  Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
+1.  Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 
 ![Create Local Domains](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 

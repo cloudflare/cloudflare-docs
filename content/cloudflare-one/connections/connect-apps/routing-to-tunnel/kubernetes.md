@@ -12,20 +12,20 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 | Before you start                                                               |
 | ------------------------------------------------------------------------------ |
-| 1. [Enable Cloudflare Load Balancers](/load-balancing/create-load-balancer-ui) |
-| 2. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)  |
+| [Enable Cloudflare Load Balancers](/load-balancing/create-load-balancer-ui) |
+| [Create a tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)  |
 
 ## Deploy `cloudflared` to an upstream service
 
 1.  Create at least two Tunnels; each with their own dedicated Tunnel ID and associated credentials file.
 
-2.  Upload the credentials file for each Tunnel as k8s secrets.
+1.  Upload the credentials file for each Tunnel as k8s secrets.
 
-3.  Create a service that represents your application. In doing so, updates to the application do not impact the Tunnel configuration. For example, an `httpbin` service can be used.
+1.  Create a service that represents your application. In doing so, updates to the application do not impact the Tunnel configuration. For example, an `httpbin` service can be used.
 
-4.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to the service IP of the upstream service. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
+1.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to the service IP of the upstream service. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-5.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
+1.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
 
 Once configured, you can update `cloudflared` by updating one deployment and then proceeding to the next one once you've verified the newly updated cloudflared pod is running and connected.
 
@@ -33,8 +33,8 @@ Once configured, you can update `cloudflared` by updating one deployment and the
 
 1.  Create at least two Tunnels; each with their own dedicated Tunnel ID and associated credentials file.
 
-2.  Upload the credentials file for each Tunnel as k8s secrets.
+1.  Upload the credentials file for each Tunnel as k8s secrets.
 
-3.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to an ingress controller. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
+1.  Create two deployments with one replica each using `cloudflared`. Configure `cloudflared` to point to an ingress controller. Mount the secrets created in Step 1 and point `cloudflared` to the right path.
 
-4.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.
+1.  In the Cloudflare dashboard, create a Load Balancer pool and [point the pool](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to the two or more Cloudflare Tunnel connections.

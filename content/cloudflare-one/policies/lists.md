@@ -22,36 +22,36 @@ You can create a list by:
 If you'd like to test how this feature works, here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv/). You can upload it to the Zero Trust dashboard following the instructions below:
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Lists**.
-2.  Click **Upload CSV**.
+1.  Click **Upload CSV**.
 
-![Upload CSV](/cloudflare-one/static/documentation/policies/upload-csv.png)
+    ![Upload CSV](/cloudflare-one/static/documentation/policies/upload-csv.png)
 
 1.  Next, specify a **List name**, enter an optional description, and choose URLs as the **List type**.
-2.  Drag and drop a file into the CSV File window, or click **Select a file**.
-3.  Click **Create**.
+1.  Drag and drop a file into the CSV File window, or click **Select a file**.
+1.  Click **Create**.
 
 Your list will now appear in the Lists page.
 
 ## Creating a manual list
 
 1.  On the Zero Trust dashboard, navigate to **Gateway > Lists**.
-2.  Click **Create manual list**.
+1.  Click **Create manual list**.
 
-![Manual list](/cloudflare-one/static/documentation/policies/upload-csv.png)
+    ![Manual list](/cloudflare-one/static/documentation/policies/upload-csv.png)
 
 1.  Next, specify a **List name**, enter an optional description, and choose URLs as the **List type**.
-2.  Enter your elements manually in the _Add entries_ field.
-3.  Click **Save**.
+1.  Enter your elements manually in the _Add entries_ field.
+1.  Click **Save**.
 
 ## Editing a list
 
 1.  In the Lists page, locate the list you want to edit.
 
-2.  Click **Edit**. This will allow you to:
+1.  Click **Edit**. This will allow you to:
 
     - Edit your list details (name and description) by clicking on the three-dots menu to the right of your list's name.
     - Delete the list by clicking on the three-dots menu to the right of your list's name.
     - Delete individual entries.
     - Manually add entries to your list.
 
-3.  Once you’ve edited your list, click **Save**.
+1.  Once you’ve edited your list, click **Save**.

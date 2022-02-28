@@ -30,25 +30,25 @@ For this tutorial, you will need:
 
     ![AWS SSO](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-sso-search.png)
 
-2.  Add **AWS Single Sign** on to your AWS account.
+1.  Add **AWS Single Sign** on to your AWS account.
 
-3.  Click **Choose an identity source**.
+1.  Click **Choose an identity source**.
 
-4.  Change the identity source to **External Identity provider**.
+1.  Change the identity source to **External Identity provider**.
 
-5.  Click **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
+1.  Click **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
 
     ![AWS metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-metadata.png)
 
-6.  Copy the **AWS SSO ACS URL**.
+1.  Copy the **AWS SSO ACS URL**.
 
 ## Configure Cloudflare
 
 1.  In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
 
-2.  Select _SaaS_ as the application type to begin creating a SaaS application.
+1.  Select _SaaS_ as the application type to begin creating a SaaS application.
 
-3.  Copy the following fields from your AWS account and input them in the Zero Trust application configuration:
+1.  Copy the following fields from your AWS account and input them in the Zero Trust application configuration:
 
     | AWS value              | Cloudflare value                   |
     | ---------------------- | ---------------------------------- |
@@ -59,17 +59,17 @@ For this tutorial, you will need:
 
     ![AWS application](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-application.png)
 
-4.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
+1.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 
-5.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration:
+1.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration:
 
     ![AWS Cloudflare metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-cloudflare-metadata.png)
 
-6.  Click **Next**.
+1.  Click **Next**.
 
-7.  Now create a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to determine who has access to your application.
+1.  Now create a [Zero Trust policy](/cloudflare-one/policies/zero-trust/) to determine who has access to your application.
 
-8.  Save your policy and return to the AWS SSO dashboard.
+1.  Save your policy and return to the AWS SSO dashboard.
 
 ## Complete the AWS configuration
 

@@ -27,17 +27,17 @@ Once you have installed `cloudflared`, you can use it to retrieve a Cloudflare A
 
 1.  To generate a token, run the following command:
 
-```sh
-$ cloudflared access login https://example.com
-```
+    ```sh
+    $ cloudflared access login https://example.com
+    ```
 
-With this command, `cloudflared` launches a browser window containing the same Access login page found when attempting to access a web application.
+    With this command, `cloudflared` launches a browser window containing the same Access login page found when attempting to access a web application.
 
-2.  Select your identity provider and log in.
+1.  Select your identity provider and log in.
 
 If the browser window does not launch, you can use the unique URL that is automatically printed to the command line.
 
-3.  Once you have successfully authenticated, the browser returns the token to `cloudflared` in a cryptographic transfer and stores it.
+1.  Once you have successfully authenticated, the browser returns the token to `cloudflared` in a cryptographic transfer and stores it.
 
 The token is valid for the session duration configured by the Access administrator.
 
@@ -91,7 +91,7 @@ Set up a token as an environment variable as follows:
     $ export TOKEN=$(cloudflared access token -app=http://example.com)
     ```
 
-2.  Confirm the token was saved with the following:
+1.  Confirm the token was saved with the following:
 
     ```sh
     $ echo $TOKEN
