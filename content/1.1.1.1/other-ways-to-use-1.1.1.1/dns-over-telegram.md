@@ -1,6 +1,7 @@
 ---
-order:
+weight: 0
 pcx-content-type: how-to
+title: DNS over Telegram
 ---
 
 # DNS over Telegram

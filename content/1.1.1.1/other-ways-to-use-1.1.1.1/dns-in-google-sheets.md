@@ -1,6 +1,7 @@
 ---
-order:
+weight: 0
 pcx-content-type: tutorial
+title: DNS in Google Sheets
 ---
 
 # DNS in Google Sheets

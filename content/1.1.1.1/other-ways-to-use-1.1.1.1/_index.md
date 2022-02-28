@@ -1,6 +1,7 @@
 ---
-order: 4
+weight: 4
 pcx-content-type: navigation
+title: Other ways to use 1.1.1.1
 ---
 
 # Other ways to use 1.1.1.1
