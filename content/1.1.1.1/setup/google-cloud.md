@@ -1,20 +1,18 @@
 ---
-weight: 5
+weight: 6
 title: Google Cloud
 pcx-content-type: how-to
 ---
-
-import Resolver from "../_partials/_ipv4.md"
 
 # Set up 1.1.1.1 - Google Cloud
 
 Google Cloud supports configuring [outbound server policy](https://cloud.google.com/dns/docs/server-policies-overview#dns-server-policy-out) within Cloud DNS. Policies are applied per Virtual Private Cloud (VPC) network, and will affect all resources within that VPC network, including any existing virtual machines.
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you are using [Cloudflare Zero Trust](https://developers.cloudflare.com/cloudflare-one/), you can choose assigned [locations](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/locations) to apply custom [DNS policies](https://developers.cloudflare.com/cloudflare-one/policies/filtering/dns-policies-builder) via Gateway.
 
-</Aside>
+{{</Aside>}}
 
 To configure 1.1.1.1 for your Google Cloud VPC network(s):
 
@@ -28,7 +26,7 @@ To configure 1.1.1.1 for your Google Cloud VPC network(s):
 
 1. Under **Alternate DNS servers**, click **Add Item** and type:
 
-    <Resolver />
+    {{<render file="_ipv4.md">}}
 
 1. Click **Create**.
 

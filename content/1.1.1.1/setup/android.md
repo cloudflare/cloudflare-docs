@@ -1,18 +1,14 @@
 ---
-weight: 2
+weight: 3
 title: Android
 pcx-content-type: how-to
 ---
-
-import CaptivePortals from "../_partials/_captive-portals.md"
-import Ipv4 from "../_partials/_all-ipv4.md"
-import Ipv6 from "../_partials/_all-ipv6.md"
 
 # Set up 1.1.1.1 - Android
 
 [1.1.1.1: Faster Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) is the preferred method of setting up 1.1.1.1 DNS resolver and 1.1.1.1 for Families. It allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to. 
 
-The app also allows you to enable encryption for DNS queries or enable [WARP mode](https://developers.cloudflare.com/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
+The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
 
 You can select between the options available in the app's settings. By default, 1.1.1.1:Faster Internet is configured to WARP mode. 
 
@@ -52,8 +48,8 @@ Before making changes, take note of any DNS addresses you might have and save th
 1. Click **Modify Network**.
 1. Select the checkbox **Show Advanced Options**.
 1. Change the IP Settings to **Static**.
-1. <Ipv4 />
-1. <Ipv6 />
+1. {{<render file="_all-ipv4.md">}}
+1. {{<render file="_all-ipv6.md">}}
 1. Click **Save**. You may need to disconnect from the WiFi and reconnect for the changes to take place.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}

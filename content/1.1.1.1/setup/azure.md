@@ -1,10 +1,8 @@
 ---
-weight: 3
+weight: 4
 title: Azure
 pcx-content-type: how-to
 ---
-
-import Resolver from "../_partials/_ipv4.md"
 
 # Set up 1.1.1.1 - Azure
 
@@ -12,5 +10,5 @@ import Resolver from "../_partials/_ipv4.md"
 1. From the Azure portal side menu, select **Virtual Networks**.
 1. Navigate to the virtual network associated with your virtual machine (VM).
 1. Select **DNS Servers** > **Custom**, and add two entries:
-    <Resolver />
+    {{<render file="_all-ipv4.md">}}
 1. Click **Save**.

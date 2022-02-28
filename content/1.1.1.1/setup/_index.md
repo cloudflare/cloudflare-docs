@@ -8,7 +8,7 @@ title: Setup
 
 By default, the DNS server your devices use is provided by your Internet provider. To start using 1.1.1.1 for your DNS queries, you will need to change the DNS settings in your device or router.
 
-You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
+You can also set up 1.1.1.1 for Families for an added layer of protection on your home network against malware and adult content. 1.1.1.1 for Families leverages Cloudflare's global network to ensure that it is fast and secure around the world, and includes the same [strong privacy guarantees](/1.1.1.1/privacy/public-dns-resolver/) that we committed to when we launched 1.1.1.1.
 
 ## 1.1.1.1 for Families
 
@@ -47,13 +47,13 @@ Use the following DNS resolvers to block malware and adult content.
 Cloudflare returns `0.0.0.0` if the [fully qualified domain name (FQDN)](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) or IP in a DNS query is classified as malicious.
 
 
-<Aside type='note' header='Domain miscategorization'>
+{{<Aside type='note' header='Domain miscategorization'>}}
 
 If you are using 1.1.1.1 for Families and see a domain that you believe is miscategorized, [fill in this form](https://radar.cloudflare.com/categorization-feedback/) to bring it to our attention. Your submission will remain anonymous.
 
 We review these submissions to improve Cloudflare’s categorization.
 
-</Aside>
+{{</Aside>}}
 
 ## DNS over HTTPS (DoH)
 

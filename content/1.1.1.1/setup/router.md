@@ -1,11 +1,8 @@
 ---
-weight: 9
+weight: 10
 title: Router
 pcx-content-type: how-to
 ---
-
-import Ipv4 from "../_partials/_all-ipv4.md"
-import Ipv6 from "../_partials/_all-ipv6.md"
 
 # Set up 1.1.1.1 - Router
 
@@ -18,8 +15,8 @@ import Ipv6 from "../_partials/_all-ipv6.md"
 1. Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
 1. In the admin console, find the place where **DNS settings** are set. This may be contained within categories such as **WAN** and **IPv6** (Asus Routers) or **Internet** (Netgear Routers). Consult your router's documentation for details.
 1. Take note of any DNS addresses that are currently set and save them in a safe place in case you need to use them later.
-1. <Ipv4 />
-1. <Ipv6 />
+1. {{<render file="_all-ipv4.md">}}
+1. {{<render file="_all-ipv6.md">}}
 1. Save the updated settings.
 
 ## Using DNS-Over-TLS on OpenWRT

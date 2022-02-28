@@ -1,11 +1,8 @@
 ---
-weight: 4
+weight: 5
 title: Gaming consoles
 pcx-content-type: how-to
 ---
-
-import Resolver from "../_partials/_ipv4.md"
-import ResolverIpv6 from "../_partials/_ipv6.md"
 
 # Set up 1.1.1.1 - Gaming consoles
 
@@ -18,9 +15,9 @@ import ResolverIpv6 from "../_partials/_ipv6.md"
 1. Change **DHCP Host Name** to **Do Not Specify**.
 1. Set **DNS Settings** to **Manual**.
 1. Change **Primary DNS** and **Secondary DNS** to:
-    <Resolver />
+    {{<render file="_ipv4.md">}}
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
-    <ResolverIpv6 />
+    {{<render file="_ipv6.md">}}
 1. Set **MTU Settings** to **Automatic**.
 1. Set **Proxy Server** to **Do Not Use**.
 
@@ -31,9 +28,9 @@ import ResolverIpv6 from "../_partials/_ipv6.md"
 1. Next, go to **Advanced Settings** > **DNS Settings**.
 1. Select **Manual**.
 1. Set **Primary DNS** and **Secondary DNS** to:
-    <Resolver />
+    {{<render file="_ipv4.md">}}
 1. If you have the option to add more DNS servers, you can add the IPv6 addresses as well:
-    <ResolverIpv6 />
+    {{<render file="_ipv6.md">}}
 1. When you are done, you will be shown a confirmation screen. Press **B** to save.
 
 ## Nintendo
@@ -47,9 +44,9 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 1. Set **Auto-Obtain DNS** to **No**.
 1. Click **Detailed Setup**.
 1. Set **Primary DNS** and **Secondary DNS** to:
-    <Resolver />
+    {{<render file="_ipv4.md">}}
 1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
-    <ResolverIpv6 />
+    {{<render file="_ipv6.md">}}
 1. Click **Save**.
 1. Click **OK**.
 
@@ -60,5 +57,5 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 1. Select your Internet connection and then select **Change Settings**.
 1. Click **DNS Settings** > **Manual**.
 1. Set **Primary DNS** and **Secondary DNS** to:
-    <Resolver />
+    {{<render file="_ipv4.md">}}
 1. Press **Save** > **OK**.

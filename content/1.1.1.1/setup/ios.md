@@ -1,18 +1,14 @@
 ---
-weight: 6
+weight: 7
 title: iOS
 pcx-content-type: how-to
 ---
-
-import CaptivePortals from "../_partials/_captive-portals.md"
-import Ipv4 from "../_partials/_all-ipv4.md"
-import Ipv6 from "../_partials/_all-ipv6.md"
 
 # Set up 1.1.1.1 - iOS
 
 [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) is the preferred method of setting up 1.1.1.1 DNS resolver and 1.1.1.1 for Families in iOS devices. It allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to, and solves iOS inability of using an alternative DNS resolver in cellular connections. 
 
-The app also allows you to enable encryption for DNS queries or enable [WARP mode](https://developers.cloudflare.com/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
+The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
 
 You can select between the options available in the app's settings. By default, 1.1.1.1:Faster Internet is configured to WARP mode. 
 
@@ -32,11 +28,11 @@ You can select between the options available in the app's settings. By default, 
 
 ## Configure 1.1.1.1 manually
 
-<Aside type="note">
+{{<Aside type="note">}}
 
 If you configure 1.1.1.1 manually, you will have to do it for every WiFi network your device connects to. This method does not work for cellular connections.
 
-</Aside>
+{{</Aside>}}
 
 Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
@@ -45,8 +41,8 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 1. Scroll down and select **Configure DNS**.
 1. Change the configuration from **Automatic** to **Manual**.
 1. Select **Add Server**.
-1. <Ipv4 />
-1. <Ipv6 />
+1. {{<render file="_all-ipv4.md">}}
+1. {{<render file="_all-ipv6.md">}}
 1. Select **Save**.
 
-<CaptivePortals/>
+{{<render file="_captive-portals.md">}}
