@@ -14,21 +14,21 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 1.  On the [Zero Trust dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
 
-2.  Navigate to the **HTTP tab**.
+1.  Navigate to the **HTTP tab**.
 
-3.  [Create a new rule](/cloudflare-one/policies/filtering/http-policies/), or edit an existing one.
+1.  [Create a new rule](/cloudflare-one/policies/filtering/http-policies/), or edit an existing one.
 
-4.  In the **Selector** drop-down menu, select the _Application_ option.
+1.  In the **Selector** drop-down menu, select the _Application_ option.
 
-5.  In the **Operator** drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your rule.
+1.  In the **Operator** drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your rule.
 
-6.  In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
+1.  In the **Value** drop-down menu, check the applications or app types you would like to control with your rule.
 
-![Applications](/cloudflare-one/static/documentation/policies/http-applications-operator.png)
+  ![Applications](/cloudflare-one/static/documentation/policies/http-applications-operator.png)
 
 1.  Next, select an [**Action**](#supported-actions-for-applications) for your rule.
 
-2.  Click **Create rule** to finalize your changes.
+1.  Click **Create rule** to finalize your changes.
 
 ## Supported applications and app types
 

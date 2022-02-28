@@ -31,19 +31,19 @@ In order for your users to be able to authenticate, you must [deploy the WARP cl
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Lists**.
 
-2.  Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
+1.  Click **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's API endpoint.
 
-3.  Give your list a descriptive name, as this name will appear when configuring your Access policies.
+1.  Give your list a descriptive name, as this name will appear when configuring your Access policies.
 
     ![Create List](/cloudflare-one/static/zero-trust-security/corp-device/list-create.png)
 
-4.  Set List Type to Serial Number.
+1.  Set List Type to Serial Number.
 
-5.  Input the serial numbers of the devices your team manages, or upload your CSV file.
+1.  Input the serial numbers of the devices your team manages, or upload your CSV file.
 
     ![Add Serial Number](/cloudflare-one/static/zero-trust-security/corp-device/list-add-serial.png)
 
-6.  Click **Save**.
+1.  Click **Save**.
 
 Once saved, the serial number list will appear in your list view.
 
@@ -55,14 +55,14 @@ To do that:
 
 1.  Navigate to **Access > Applications**.
 
-2.  To add to an existing application, choose the specific resource from the **Applications** page in the Access section of the sidebar.
+1.  To add to an existing application, choose the specific resource from the **Applications** page in the Access section of the sidebar.
 
-3.  Click **Edit**.
+1.  Click **Edit**.
 
-4.  Select the **Rules** tab and edit an existing rule. To add a new rule, click **Add a Rule**.
+1.  Select the **Rules** tab and edit an existing rule. To add a new rule, click **Add a Rule**.
 
-5.  Add a **Require** rule and choose _Device Posture - Serial Number List_ from the drop-down menu.
+1.  Add a **Require** rule and choose _Device Posture - Serial Number List_ from the drop-down menu.
 
-6.  Choose the list of devices to require and click **Save rule**.
+1.  Choose the list of devices to require and click **Save rule**.
 
 Once saved, any device attempting to reach the application will need to connect from a device that uses Cloudflare WARP and presents a serial number in the list created.

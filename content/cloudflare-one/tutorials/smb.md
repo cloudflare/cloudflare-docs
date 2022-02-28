@@ -14,13 +14,13 @@ You can set up this connection by downloading and installing the Cloudflare daem
 🗺️ This walkthrough covers how to:
 
 1.  [How to connect the machine hosting the file share to Cloudflare](#host-machine)
-2.  [How to connect from a client machine](#client-machine)
+1.  [How to connect from a client machine](#client-machine)
 
 ## Before you start
 
 1.  Create a Cloudflare account
-2.  Add an active zone to Cloudflare
-3.  [Install the `cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) on the host and client machines
+1.  Add an active zone to Cloudflare
+1.  [Install the `cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/) on the host and client machines
 
 ---
 
@@ -28,23 +28,23 @@ You can set up this connection by downloading and installing the Cloudflare daem
 
 1.  Make sure `cloudflared` is installed on the machine hosting the file share.
 
-2.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
+1.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
 
-```bash
-\cloudflared.exe tunnel login
-```
+    ```bash
+    \cloudflared.exe tunnel login
+    ```
 
-`cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
+    `cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
 
-If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
+    If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
-2.  Once you login, Cloudflare will display the sites that you added to your account.
+1.  Once you login, Cloudflare will display the sites that you added to your account.
 
-3.  Select the site where you will create a subdomain to represent the SMB file share.
+1.  Select the site where you will create a subdomain to represent the SMB file share.
 
-4.  For example, if you plan to share the drive at `smb.site.com` select site.com from the list.
+1.  For example, if you plan to share the drive at `smb.site.com` select site.com from the list.
 
-5.  Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
+1.  Once selected, `cloudflared` will download a wildcard certificate for the site. This certificate will allow cloudflared to create a DNS record for a subdomain of the site.
 
 ## Secure the subdomain with Cloudflare Access
 
@@ -67,17 +67,17 @@ Run the following command to connect the drive to Cloudflare, replacing the `smb
 
 1.  Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
 
-2.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
+1.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
 
-```bash
-\cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445
-```
+    ```bash
+    \cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445
+    ```
 
-This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
+    This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
 1.  Open your SMB client and configure the client to point to `tcp:localhost:8445`. Do not input the hostname.
 
-2.  When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
+1.  When the client launches, `cloudflared` will launch a browser window and prompt the user to authenticate with your SSO provider.
 
 ## Windows-specific requirements
 

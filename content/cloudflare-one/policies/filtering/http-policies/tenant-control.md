@@ -23,19 +23,19 @@ This is a walkthrough of how to add custom headers for Microsoft 365. The proced
 
 1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies** > **HTTP**.
 
-2.  Create a policy with the following values:
+1.  Create a policy with the following values:
 
     - Action: `Allow`
     - Selector: `Application`
     - Operator: `In`
     - Value: select the application you would like to inject custom headers for.
 
-3.  Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
+1.  Under **Policy Settings**, add a custom header. You can add as many custom headers as needed.
 
     - Custom Header Name: Restrict-Access-To-Tenants
     - Custom Header Value: contoso.com,fabrikam.onmicrosoft.com,72f988bf-86f1-41af-91ab-2d7cd011db4
 
-4.  Click **Create policy**.
+1.  Click **Create policy**.
 
 Your Allow policy is now displayed in the list of HTTP rules. When an end user attempts to authenticate to an Office 365 application with a personal account, authentication will fail.
 

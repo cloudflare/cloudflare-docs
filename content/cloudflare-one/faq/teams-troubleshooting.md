@@ -31,12 +31,12 @@ We present an HTTP error page in the following cases:
 
 1.  **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
 
-- The server certificate issuer is unknown or is not trusted by the service.
-- The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
-- There is at least one expired certificate in the certificate chain for the server certificate
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
+  - There is at least one expired certificate in the certificate chain for the server certificate
 
 1.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch.
-2.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+1.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
 
@@ -74,7 +74,7 @@ A browser isolation session is a connection from your local browser to a remote 
 This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
 
 1.  In the Google Admin console, navigate to **Security** > **API controls**.
-2.  Check the _Trust internal, domain-owned apps_ option.
+1.  Check the _Trust internal, domain-owned apps_ option.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
@@ -89,7 +89,7 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
 1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel).
+1.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 

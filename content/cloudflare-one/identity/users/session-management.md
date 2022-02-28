@@ -53,9 +53,9 @@ To immediately terminate all active sessions for a specific application:
 
 1.  On the Zero Trust dashboard, navigate to **Access > Applications** and locate the application for which you would like to revoke active sessions.
 
-2.  Click **Edit** for that application.
+1.  Click **Edit** for that application.
 
-3.  In the Overview page, click **Revoke existing tokens**.
+1.  In the Overview page, click **Revoke existing tokens**.
 
 ![revoke-users](/cloudflare-one/static/documentation/identity/users/revoke-token.png)
 
@@ -69,13 +69,13 @@ If you want to permanently revoke a user's access:
 
 1.  Disable their account in your IdP so that they cannot authenticate, then revoke their Access user session.
 
-2.  On the Zero Trust dashboard, navigate to **My Team** > **Users**.
+1.  On the Zero Trust dashboard, navigate to **My Team** > **Users**.
 
-Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
+    Users who have authenticated in the current calendar month will be displayed. Search for or select the user you need to revoke.
 
-![revoke-users](/cloudflare-one/static/documentation/identity/users/connected-user-list.png)
+    ![revoke-users](/cloudflare-one/static/documentation/identity/users/connected-user-list.png)
 
-3.  Click **Revoke session** and confirm.
+1.  Click **Revoke session** and confirm.
 
 ![revoke-users](/cloudflare-one/static/documentation/identity/users/revoke-user-session.png)
 
@@ -97,11 +97,11 @@ To reach the settings menu:
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
-2.  Locate the application for which you would like to enable these settings.
+1.  Locate the application for which you would like to enable these settings.
 
-3.  Click **Edit**.
+1.  Click **Edit**.
 
-4.  Select **Settings**.
+1.  Select **Settings**.
 
 ![Settings menu](/cloudflare-one/static/documentation/identity/users/cookies.png)
 

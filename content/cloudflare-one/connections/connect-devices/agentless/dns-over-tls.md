@@ -16,20 +16,20 @@ Cloudflare supports DoT on standard port `853` and is compliant with [RFC7858](h
 
 Each Gateway location has a unique DoT hostname. Locations and corresponding DoT hostnames have policies associated with them.
 
-1.  Visit your [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
-2.  Navigate to the **Locations** page to visualize your location.
-3.  If you have more than one location set up, you will see a list of all your locations.
-4.  Expand the location card for the location whose DoT hostname you'd like to retrieve.
+1. Visit your [Zero Trust dashboard](https://dash.teams.cloudflare.com/).
+1. Navigate to the **Locations** page to visualize your location.
+1. If you have more than one location set up, you will see a list of all your locations.
+1. Expand the location card for the location whose DoT hostname you'd like to retrieve.
 
 ![Expand location card](/cloudflare-one/static/documentation/connections/expand-locations-card.png)
 
-4.  Get the **DoT hostname** for the location.
+1. Get the **DoT hostname** for the location.
 
 In the example below, the DoT hostname is: `9y65g5srsm.cloudflare-gateway.com`.
 
 ![Get unique subdomain](/cloudflare-one/static/documentation/connections/get-unique-subdomain.png)
 
-5.  Take note of the **DoT hostname**.
+1. Take note of the **DoT hostname**.
 
 ### Configure your DoT client
 

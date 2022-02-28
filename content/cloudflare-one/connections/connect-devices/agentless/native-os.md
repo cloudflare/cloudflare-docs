@@ -10,9 +10,9 @@ weight: 4
 
 Enrolling devices using static IP addresses may prevent users from connecting to some of the public Wi-Fi networks that use captive portals. If users are experiencing connectivity issues related to captive portals, they should:
 
-1.  Remove the static IP addresses from the device.
-2.  Connect to the Wi-Fi network.
-3.  Once the connection has been established, add the static IP addresses back.
+1. Remove the static IP addresses from the device.
+1. Connect to the Wi-Fi network.
+1. Once the connection has been established, add the static IP addresses back.
 
 Alternatively, you can look into using the [WARP client](/cloudflare-one/connections/connect-devices/) to connect your devices to Cloudflare Zero Trust.
 
@@ -24,93 +24,93 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 
 #### IPv4
 
-1.  Click **System** > **Preferences** > **Network Connections**.
-2.  Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
-3.  Click **Edit**.
-4.  Click **IPv4**.\
+1. Click **System** > **Preferences** > **Network Connections**.
+1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Click **Edit**.
+1. Click **IPv4**.\
     Remove any IP addresses that may already be listed.
-5.  Add the following IP addresses:
+1. Add the following IP addresses:
     - **172.64.36.1**
     - **172.64.36.2**
-6.  Click **Apply**.
+1. Click **Apply**.
 
 #### IPv6
 
-1.  Click **System** > **Preferences** > **Network Connections**.
-2.  Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
-3.  Click **IPv6**.
-4.  Add the IPv6 address from that we listed based on your location configuration
-5.  Click **Apply**.
+1. Click **System** > **Preferences** > **Network Connections**.
+1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
+1. Click **IPv6**.
+1. Add the IPv6 address from that we listed based on your location configuration
+1. Click **Apply**.
 
 ### Debian
 
 #### IPv4
 
-1.  In the command line, type: `sudo vim /etc/resolv.conf`
-2.  Press the **i** key on your keyboard to edit the document
-3.  Replace the nameserver lines with:
+1. In the command line, type: `sudo vim /etc/resolv.conf`
+1. Press the **i** key on your keyboard to edit the document
+1. Replace the nameserver lines with:
     - **172.64.36.1**
     - **172.64.36.2**
-4.  Press the **ESC** key on your keyboard to save and exit vim.
-5.  Type `:wq`.
+1. Press the **ESC** key on your keyboard to save and exit vim.
+1. Type `:wq`.
 
 #### IPv6
 
-1.  In the command line, type: `sudo vim /etc/resolv.conf`
-2.  Add the IPv6 address from that we listed based on your location configuration.
-3.  Press the **ESC** key on your keyboard to save and exit vim.
-4.  Type `:wq`.
+1. In the command line, type: `sudo vim /etc/resolv.conf`
+1. Add the IPv6 address from that we listed based on your location configuration.
+1. Press the **ESC** key on your keyboard to save and exit vim.
+1. Type `:wq`.
 
 ## Mac
 
 ### IPv4
 
-1.  Go to **System Preferences** > **Network**.
-2.  Click **Advanced**.
-3.  Select the **DNS** tab, and remove any IP addresses that may be already listed.
-4.  Add the following IP addresses:
+1. Go to **System Preferences** > **Network**.
+1. Click **Advanced**.
+1. Select the **DNS** tab, and remove any IP addresses that may be already listed.
+1. Add the following IP addresses:
     - **172.64.36.1**
     - **172.64.36.2**
-5.  Click **OK**.
-6.  Click **Apply**.
+1. Click **OK**.
+1. Click **Apply**.
 
 ### IPv6
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **Locations** tab.
-2.  Expand your location by clicking on it.
-3.  Note the **IPv6 address**.
-4.  On your computer, go to **System Preferences** > **Network**.
-5.  Click **Advanced**.
-6.  Select the **DNS** tab, and remove any IP addresses that may already be listed.
-7.  Add the **IPv6 address** you got from your location card.
-8.  Click **OK**.
-9.  Click **Apply**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **Locations** tab.
+1. Expand your location by clicking on it.
+1. Note the **IPv6 address**.
+1. On your computer, go to **System Preferences** > **Network**.
+1. Click **Advanced**.
+1. Select the **DNS** tab, and remove any IP addresses that may already be listed.
+1. Add the **IPv6 address** you got from your location card.
+1. Click **OK**.
+1. Click **Apply**.
 
 ## Windows
 
 ### IPv4
 
-1.  Click on **Start** menu, then click on Control Panel.
-2.  Click on **Network and Internet**.
-3.  Click on **Change Adapter Settings**.
-4.  Right click on the Wi-Fi network you are connected to.
-5.  Click **Properties**.
-6.  Select **Internet Protocol Version 4**.
-7.  Click **Properties**.
-8.  Remove any IP addresses that may be already listed and add the following IP addresses in their place:
+1. Click on **Start** menu, then click on Control Panel.
+1. Click on **Network and Internet**.
+1. Click on **Change Adapter Settings**.
+1. Right click on the Wi-Fi network you are connected to.
+1. Click **Properties**.
+1. Select **Internet Protocol Version 4**.
+1. Click **Properties**.
+1. Remove any IP addresses that may be already listed and add the following IP addresses in their place:
     - **172.64.36.1**
     - **172.64.36.2**
-9.  Click **OK**.
+1. Click **OK**.
 
 ### IPv6
 
-1.  Click on **Start** > **Control Panel**.
-2.  Click on **Network and Internet**.
-3.  Click on **Change Adapter Settings**.
-4.  Right click on the Wi-Fi network you are connected to.
-5.  Click **Properties**.
-6.  Select **Internet Protocol Version 6**.
-7.  Click **Properties**.
-8.  Click **Use The Following DNS Server Addresses**.
-9.  Add the IPv6 address that we listed based on your location configuration
-10. Click **OK**.
+1. Click on **Start** > **Control Panel**.
+1. Click on **Network and Internet**.
+1. Click on **Change Adapter Settings**.
+1. Right click on the Wi-Fi network you are connected to.
+1. Click **Properties**.
+1. Select **Internet Protocol Version 6**.
+1. Click **Properties**.
+1. Click **Use The Following DNS Server Addresses**.
+1. Add the IPv6 address that we listed based on your location configuration
+1.Click **OK**.
