@@ -1,0 +1,6 @@
+{{- $date := . -}}
+<time
+  class="relative"
+  datetime={{ $date.Format "2006-01-02T15:04:05-07:00" }}
+  title={{ $date.Format "2006-01-02" }}
+>{{ $date.Format "January 2, 2006" }}</time>
