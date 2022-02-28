@@ -105,7 +105,7 @@ NSLookup(B1, B2)
 
 <div class="medium-img">
 
-![Google sheets function](../static/google-sheet-function.png)
+![Google sheets function](/1.1.1.1/static/google-sheet-function.png)
 
 </div>
 
