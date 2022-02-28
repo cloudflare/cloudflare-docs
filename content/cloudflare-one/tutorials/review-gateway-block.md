@@ -23,7 +23,7 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 ## Before you start
 
 1.  [Add Gateway to your account](/cloudflare-one/setup/)
-2.  Deploy Gateway rules to a network or group of [devices](/cloudflare-one/policies/filtering/dns-policies/)
+1.  Deploy Gateway rules to a network or group of [devices](/cloudflare-one/policies/filtering/dns-policies/)
 
 ---
 

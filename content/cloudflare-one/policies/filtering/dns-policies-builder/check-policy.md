@@ -18,9 +18,9 @@ If you are using a policy to block `example.com`, you can do the following to se
 
 1.  Open your terminal.
 
-2.  Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
+1.  Type `dig example.com` (`nslookup example.com`) if you are using Windows) and press enter.
 
-3.  If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
+1.  If the Block page is **disabled** for the policy, then you should see `REFUSED` in the answer section:
 
 ![Blocked when block page disabled](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
 

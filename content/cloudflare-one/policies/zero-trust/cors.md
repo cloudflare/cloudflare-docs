@@ -62,8 +62,8 @@ Requests that do not include the cookie will be redirected to the Cloudflare Acc
 You can use the command-line tool `curl` to review your configuration. To do so, you will need three prerequisites:
 
 1.  An OPTIONS request
-2.  An origin header
-3.  The Access-Control-Request-Method
+1.  An origin header
+1.  The Access-Control-Request-Method
 
 The example `curl` command below includes all three.
 
@@ -94,8 +94,8 @@ cf-request-id: 0244b54354000082d7b991f200000001
 In general, we recommend the following steps when troubleshooting CORS issues:
 
 1.  Capture a HAR file with the issue described, as well as the JS console log output recorded simultaneously. This is because the HAR file alone will not give full visibility on the reason behind cross-origin issues.
-2.  Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
-3.  If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
+1.  Ensure that the application has set `credentials: 'same-origin'` in all fetch or XHR requests.
+1.  If you are using the [cross-origin setting](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) on script tags, these must be set to "use-credentials".
 
 {{<Aside type="Warning" header="CORS is failing on the same domain">}}
 CORS checks do not occur on the same domain. If this error occurs, it is likely the user flow is making a sub-request without the cookie.

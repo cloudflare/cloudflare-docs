@@ -32,8 +32,8 @@ There are a number of VNC versions, deployments and instances. This tutorial foc
 ## Before you start
 
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-2.  [Enable Cloudflare Zero Trust on your account](/cloudflare-one/setup/)
-3.  [Connect your identity provider to Cloudflare Zero Trust](/cloudflare-one/identity/idp-integration/)
+1.  [Enable Cloudflare Zero Trust on your account](/cloudflare-one/setup/)
+1.  [Connect your identity provider to Cloudflare Zero Trust](/cloudflare-one/identity/idp-integration/)
 
 ## Configure VNC on your virtual machine
 
@@ -41,7 +41,7 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
 
 1.  Open a terminal window for your VM.
 
-2.  Run the following commands to install the VNC software.
+1.  Run the following commands to install the VNC software.
 
     ```bash
     $ sudo apt-get update
@@ -63,7 +63,7 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
     $ sudo apt-get install ubuntu-gnome-desktop
     ```
 
-3.  Once installed, you can create the VNC server instance with the following command:
+1.  Once installed, you can create the VNC server instance with the following command:
 
     ```bash
     $ sudo tightvncserver
@@ -71,21 +71,21 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
 
     ![VNC password](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-password.png)
 
-4.  Select a password for the VNC server. This password will be used during login for your browser VNC server.
+1.  Select a password for the VNC server. This password will be used during login for your browser VNC server.
 
-5.  Run the following command, which will take you to your VNC server configuration directory.
+1.  Run the following command, which will take you to your VNC server configuration directory.
 
     ```bash
     $ cd .vnc
     ```
 
-6.  Open your `xstartup` file.
+1.  Open your `xstartup` file.
 
     ```bash
     $ vim xstartup
     ```
 
-7.  Update the file to the following configuration (this is for demonstration purposes, browser based VNC will work with most configurations):
+1.  Update the file to the following configuration (this is for demonstration purposes, browser based VNC will work with most configurations):
 
     ```txt
     xsetroot -solid grey
@@ -103,7 +103,7 @@ This section covers how to install a VNC server with TightVNC and the Gnome User
 
     ![VNC xstartup file](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-xstartup.png)
 
-8.  Run the following command to create your VNC server:
+1.  Run the following command to create your VNC server:
 
     ```bash
     $ vncserver
@@ -115,25 +115,25 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 1.  Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#build-from-source) to install `cloudflared`
 
-2.  Authenticate `cloudflared` with the command:
+1.  Authenticate `cloudflared` with the command:
 
     ```bash
     $ cloudflared tunnel login
     ```
 
-3.  Create a Tunnel with the command:
+1.  Create a Tunnel with the command:
 
     ```bash
     $ cloudflared tunnel create <NAME>
     ```
 
-4.  Create a Tunnel configuration file with the command:
+1.  Create a Tunnel configuration file with the command:
 
     ```bash
     $ vim config.yml
     ```
 
-5.  Add the following configuration to your configuration file.
+1.  Add the following configuration to your configuration file.
 
     ```txt
     tunnel: <NAME>
@@ -145,9 +145,9 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
     As you do that, replace the `hostname` value with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
 
-6.  [Route your Tunnel](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) to your website.
+1.  [Route your Tunnel](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) to your website.
 
-7.  Run your Tunnel:
+1.  Run your Tunnel:
 
     ```bash
     $ cloudflared tunnel --config path/config.yaml run <NAME>
@@ -155,7 +155,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
     ![Run Tunnel](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-run-tunnel.png)
 
-8.  Follow [this guide](/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+1.  Follow [this guide](/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 
@@ -165,19 +165,19 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 1.  Open your [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to the **Access > Applications** tab.
 
-2.  Click **Add an application**.
+1.  Click **Add an application**.
 
-3.  Select **Self-hosted**.
+1.  Select **Self-hosted**.
 
-4.  Name the application and set the domain to which you would like to expose the VNC server:
+1.  Name the application and set the domain to which you would like to expose the VNC server:
 
     ![Name application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-domain-application.png)
 
-5.  Add a Zero Trust policy. In this example we are only allowing users with emails ending in `@example.com`.
+1.  Add a Zero Trust policy. In this example we are only allowing users with emails ending in `@example.com`.
 
     ![Create policy](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
-6.  In **`cloudflared` settings**, set **Application Type** to be _VNC_.
+1.  In **`cloudflared` settings**, set **Application Type** to be _VNC_.
 
 And now you are ready to use the VNC terminal directly in the browser. Users will first see a login screen with your configured identity providers:
 

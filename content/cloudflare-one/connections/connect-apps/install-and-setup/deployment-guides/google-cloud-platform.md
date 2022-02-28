@@ -19,27 +19,27 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
 
 1.  From the Cloud Console, navigate to **Compute Engine**.
 
-2.  Under Compute Engine, select **VM Instances**.
+1.  Under Compute Engine, select **VM Instances**.
 
-3.  In the main window, select **Create Instance**.
+1.  In the main window, select **Create Instance**.
 
-4.  Name your VM Instance. In this example, we will name it GCP-01.
+1.  Name your VM Instance. In this example, we will name it GCP-01.
 
-5.  Configure your VM Instance. The following settings are recommended to get started:
+1.  Configure your VM Instance. The following settings are recommended to get started:
 
-        {{<Aside type="note">}}
+    {{<Aside type="note">}}
 
     We support a number of operating systems and versions, so make a selection based on your requirements.
     {{</Aside>}}
 
-        *   **Machine Family:** General Purpose
-        *   **Series:** E2
-        *   **Machine Type:** e2-micro
-        *   **Boot Disk:** Debian GNU/Linux 10
-        *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
-        *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
+    *   **Machine Family:** General Purpose
+    *   **Series:** E2
+    *   **Machine Type:** e2-micro
+    *   **Boot Disk:** Debian GNU/Linux 10
+    *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
+    *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
-6.  Add a startup script for testing access. Here is an example:
+1.  Add a startup script for testing access. Here is an example:
 
     ```sh
     #!/bin/bash
@@ -52,7 +52,7 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
     EOF
     ```
 
-7.  Spin up your VM Instance by clicking **Create**.
+1.  Spin up your VM Instance by clicking **Create**.
 
 # Deploying `cloudflared`
 
@@ -60,9 +60,9 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 
 1.  Run `sudo su` to gain full admin rights to the Virtual Machine.
 
-2.  Run `apt install wget` to install any relevant dependencies for our fresh Virtual Machine.
+1.  Run `apt install wget` to install any relevant dependencies for our fresh Virtual Machine.
 
-3.  Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
+1.  Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
 
     ```sh
     wget <https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64>
@@ -70,31 +70,31 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     chmod a+x /usr/local/bin/cloudflared
     ```
 
-4.  Run the following command to ensure you have the most updated `cloudflared` version. The command should auto-run after pasting.
+1.  Run the following command to ensure you have the most updated `cloudflared` version. The command should auto-run after pasting.
 
     ```sh
     cloudflared update
     ```
 
-5.  Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
+1.  Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
 
     ```sh
     $ cloudflared tunnel login
     ```
 
-6.  Create a tunnel.
+1.  Create a tunnel.
 
     ```sh
     $ cloudflared tunnel create GCP-01`
     ```
 
-7.  Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
+1.  Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
 
     ```sh
     cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
     ```
 
-8.  Make a directory for your configuration file.
+1.  Make a directory for your configuration file.
 
     ```sh
     mkdir /etc/cloudflared
@@ -104,13 +104,13 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     cd /etc/cloudflared
     ```
 
-9.  Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
+1.  Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
 
     ```sh
     vim config.yml
     ```
 
-10. Hit `i` to begin editing the file and copy-paste the following settings in it.
+1. Hit `i` to begin editing the file and copy-paste the following settings in it.
 
     ```text
     tunnel: <Tunnel ID/name>
@@ -125,9 +125,9 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     transport-loglevel: info
     ```
 
-11. Hit `space` and then type `:x` to save and exit.
+1. Hit `space` and then type `:x` to save and exit.
 
-12. Run `cloudflared` as a service.
+1. Run `cloudflared` as a service.
 
 ```sh
 cloudflared service install

@@ -25,13 +25,13 @@ Before you start, make sure Carbon Black installed on your machine.
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team > Devices > Device posture**.
 
-2.  Select **+Add**.
+1.  Select **+Add**.
 
     ![Device posture attributes](/cloudflare-one/static/documentation/identity/devices/device-posture-partners.png)
 
-3.  Select **Carbon Black**.
+1.  Select **Carbon Black**.
 
-4.  You will be prompted for the following information:
+1.  You will be prompted for the following information:
 
     - **Name:** A unique identifier for this Carbon Black device posture check
     - **Operating system:** You’ll need to configure one posture check per operating system (macOS and Windows currently supported)
@@ -39,4 +39,4 @@ Before you start, make sure Carbon Black installed on your machine.
     - **Certificate thumbprint (optional):** The thumbprint of the publishing certificate used to sign the binary. This proves the binary came from Carbon Black and is the recommended way to validate the process
     - **SHA256 checksum (optional):** Used to validate the SHA256 signature of the binary. This verifies the binary exactly matches the one you expect to be there. Note: do not fill out this field unless you strictly control updates to Carbon Black, as this will change between versions
 
-5.  Once you have configured your Carbon Black instance, you can then add Carbon Black device posture checks to any application protected by Access.
+1.  Once you have configured your Carbon Black instance, you can then add Carbon Black device posture checks to any application protected by Access.

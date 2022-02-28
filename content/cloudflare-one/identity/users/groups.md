@@ -34,14 +34,14 @@ Once the group is set up, you can use it to configure rules within your applicat
 To create and manage groups:
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **My Teams** section.
-2.  Open the Groups tab.
-3.  Click **Add a Group**.
-4.  Enter a name for the group.
-5.  Specify as many rules as needed to define your user group.
+1.  Open the Groups tab.
+1.  Click **Add a Group**.
+1.  Enter a name for the group.
+1.  Specify as many rules as needed to define your user group.
 
-![Group Rules](/cloudflare-one/static/documentation/identity/users/group-rules.png)
+    ![Group Rules](/cloudflare-one/static/documentation/identity/users/group-rules.png)
 
-6.  Click **Save**.
+1.  Click **Save**.
 
 ## Group criteria
 

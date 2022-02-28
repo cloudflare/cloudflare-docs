@@ -16,13 +16,13 @@ To set up a generic OIDC:
 
 1.  Visit your identity provider and create a client/app.
 
-2.  When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1.  When creating a client/app, your IdP may request an **authorized redirect URI**. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-3.  Copy the content of these fields:
+1.  Copy the content of these fields:
 
     - Client ID
     - Client secret
@@ -32,17 +32,17 @@ To set up a generic OIDC:
 
     You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL.”
 
-4.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-5.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-6.  Choose **OpenID Connect** on the next page.
+1.  Choose **OpenID Connect** on the next page.
 
-7.  In the **Name** field, enter your IdP. Then, paste in the **Client ID** and **Client secret**.
+1.  In the **Name** field, enter your IdP. Then, paste in the **Client ID** and **Client secret**.
 
-8.  Click **Save**.
+1.  Click **Save**.
 
-9.  To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
+1.  To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
 On success, a confirmation screen displays.
 

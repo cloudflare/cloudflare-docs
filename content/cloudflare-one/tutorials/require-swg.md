@@ -42,9 +42,9 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Navigate to **Settings > Devices > Device enrollment**.
 
-2.  Click **Manage**.
+1.  Click **Manage**.
 
-3.  Click **Add a rule**.
+1.  Click **Add a rule**.
 
     ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -52,7 +52,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
-4.  Click **Save**.
+1.  Click **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
@@ -77,15 +77,15 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
-2.  Once the client is installed, click the gear icon.
+1.  Once the client is installed, click the gear icon.
 
     ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
-3.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
+1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
     ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-4.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
@@ -100,9 +100,9 @@ You can now build rules in Cloudflare Access applications that require users con
 To add a `Require Gateway` rule:
 
 1.  Navigate to **My Team** > **Devices**.
-2.  In the **Device posture** tab, click **+ Add** in the **WARP client checks** card.
-3.  Select `Gateway` from the options listed.
-4.  Click **Save** on the next screen.
+1.  In the **Device posture** tab, click **+ Add** in the **WARP client checks** card.
+1.  Select `Gateway` from the options listed.
+1.  Click **Save** on the next screen.
 
 You can now build rules with your organization's Cloudflare Gateway configuration.
 
@@ -112,15 +112,15 @@ To build Access policies that require Gateway:
 
 1.  Navigate to **Access**> **Applications**.
 
-2.  Edit an existing application or add a new one.
+1.  Edit an existing application or add a new one.
 
-3.  In the application of your choice, edit an existing rule or add a new one.
+1.  In the application of your choice, edit an existing rule or add a new one.
 
-4.  In the rule builder view, click **+ Add require** and select `Gateway` from both drop-down menus.
+1.  In the rule builder view, click **+ Add require** and select `Gateway` from both drop-down menus.
 
     ![Add Policy](/cloudflare-one/static/zero-trust-security/require-swg/require-gateway.png)
 
-5.  Save the rule and the application.
+1.  Save the rule and the application.
 
 Requests and logins to the application will now require the user to go through Cloudflare Gateway.
 

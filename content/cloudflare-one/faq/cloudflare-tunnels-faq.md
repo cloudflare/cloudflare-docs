@@ -74,7 +74,7 @@ The `--loglevel` flag indicates the logging level, which can be one of {`debug`,
 ### Check SSL/TLS encryption mode
 
 1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
-2.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
+1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
 
 ![SSL encryption mode](/cloudflare-one/static/documentation/connections/ssl-encryption-mode.png)
 
