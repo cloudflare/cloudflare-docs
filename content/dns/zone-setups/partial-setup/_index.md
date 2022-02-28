@@ -10,8 +10,8 @@ weight: 2
 
 ## How to
 
-*   [Set up a partial domain](/dns/setup/)
-*   [Convert a partial domain to a full domain](/dns/convert-partial-to-full/)
+*   [Set up a partial domain](setup/)
+*   [Convert a partial domain to a full domain](convert-partial-to-full/)
 
 ## Availability
 

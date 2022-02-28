@@ -10,7 +10,7 @@ weight: 1
 
 ## How to
 
-For more details, refer to [Set up a full domain](/dns/setup/).
+For more details, refer to [Set up a full domain](setup/).
 
 ## Availability
 
