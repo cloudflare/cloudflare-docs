@@ -64,4 +64,28 @@ You can connect to machines over RDP using Cloudflare's Zero Trust platform.
 
 1. Next, click on **Start** > **regedit** and select **Registry Editor**.
 
-1. Navigate to the following 
+1. Navigate to the following location:
+
+    ```txt
+    Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Cloudflared
+    ```
+
+1. Right-click on `imagepath` and change the value to:
+
+    ```txt
+    C:\Users\<userName>\Downloads\cloudflared.exe --config
+    ```
+
+1. Next, run your tunnel.
+
+    ```txt
+    C:\Users\<userName>\.cloudflared\config.yml  tunnel run
+    ```
+
+1. Click on **Start** > **services**, then click on **Services**.
+1. Right-click on **Argo Tunnel Agent** > right-click > Start.. Argo Tunnel Agent service should be **Running**.
+1. From the command line on your terminal window, run the following command:
+
+    ```txt
+    sc query cloudflared
+    ```

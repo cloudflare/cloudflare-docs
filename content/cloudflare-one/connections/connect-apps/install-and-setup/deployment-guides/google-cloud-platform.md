@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Deploy cloudflared in GCP
+title: GCP
 weight: 8
 ---
 
@@ -104,7 +104,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     cd /etc/cloudflared
     ```
 
-1.  Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
+1.  Build a configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
 
     ```sh
     vim config.yml
