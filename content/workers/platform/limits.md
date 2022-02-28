@@ -116,16 +116,16 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 {{<table-wrap>}}
 
-| Feature                                 | Limit
-| --------------------------------------- | ------
-| [Number of objects](#durable-objects)   | unlimited
-| [Storage per account](#durable-objects) | 50 GB (can be raised by contacting Cloudflare)
-| [Storage per class](#durable-objects)   | unlimited
-| [Storage per object](#durable-objects)  | unlimited
-| [Key size](#durable-objects)            | 2048 bytes
-| [Value size](#durable-objects)          | 128 KiB
-| [Websocket message size](#durable-objects) | 1 MiB                        
-| [CPU per request](#durable-objects)     | 30s
+| Feature                                    | Limit                                          |
+| ------------------------------------------ | ---------------------------------------------- |
+| [Number of objects](#durable-objects)      | unlimited                                      |
+| [Storage per account](#durable-objects)    | 50 GB (can be raised by contacting Cloudflare) |
+| [Storage per class](#durable-objects)      | unlimited                                      |
+| [Storage per object](#durable-objects)     | unlimited                                      |
+| [Key size](#durable-objects)               | 2048 bytes                                     |
+| [Value size](#durable-objects)             | 128 KiB                                        |
+| [Websocket message size](#durable-objects) | 1 MiB                                          |
+| [CPU per request](#durable-objects)        | 30s                                            |
 
 {{</table-wrap>}}
 
