@@ -8,7 +8,7 @@ layout: list
 
 # Scheduled changes
 
-<table-wrap><table style="width: 100%"> <thead> <tr> <th>
+{{<table-wrap>}}<table style="width: 100%"> <thead> <tr> <th>
 Announcement Date </th> <th>
 Change Date </th> <th>
 Ruleset </th> <th>
@@ -27,4 +27,4 @@ N/A </td> <td>
 Block </td> </tr> 
 </tbody>
 
-</table></table-wrap>
+</table>{{</table-wrap>}}
