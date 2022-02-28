@@ -10,7 +10,7 @@ There are several DoH clients you can use to connect to 1.1.1.1.
 
 ## cloudflared
 
-1. [Download and install the `cloudflared` daemon](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation).
+1. [Download and install the `cloudflared` daemon](/cloudflare-one/connections/connect-apps/install-and-setup/installation).
 1. Verify that the `cloudflared` daemon is installed by entering the following command:
 
     ```sh
