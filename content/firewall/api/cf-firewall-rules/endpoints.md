@@ -62,8 +62,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         <code class="InlineCode">GET&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code>
       </td>
       <td>
-        Lists all current Firewall Rules. Results return paginated with 25 items per page by
-        default. Use optional parameters to narrow results.{' '}
+        Lists all current Firewall Rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.
       </td>
     </tr>
     <tr>

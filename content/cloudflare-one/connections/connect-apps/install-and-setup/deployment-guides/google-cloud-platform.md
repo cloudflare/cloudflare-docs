@@ -32,12 +32,12 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
     We support a number of operating systems and versions, so make a selection based on your requirements.
     {{</Aside>}}
 
-    *   **Machine Family:** General Purpose
-    *   **Series:** E2
-    *   **Machine Type:** e2-micro
-    *   **Boot Disk:** Debian GNU/Linux 10
-    *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
-    *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
+    - **Machine Family:** General Purpose
+    - **Series:** E2
+    - **Machine Type:** e2-micro
+    - **Boot Disk:** Debian GNU/Linux 10
+    - **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
+    - **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
 1.  Add a startup script for testing access. Here is an example:
 
@@ -110,7 +110,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     vim config.yml
     ```
 
-1. Hit `i` to begin editing the file and copy-paste the following settings in it.
+1.  Hit `i` to begin editing the file and copy-paste the following settings in it.
 
     ```text
     tunnel: <Tunnel ID/name>
@@ -125,9 +125,9 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     transport-loglevel: info
     ```
 
-1. Hit `space` and then type `:x` to save and exit.
+1.  Hit `space` and then type `:x` to save and exit.
 
-1. Run `cloudflared` as a service.
+1.  Run `cloudflared` as a service.
 
 ```sh
 cloudflared service install
