@@ -262,7 +262,7 @@ By completing this guide, you have successfully installed Wrangler and deployed 
 
 ## Related resources
 
-[Workers Tutorials](https://developers.cloudflare.com/workers/tutorials)
-[Workers Examples](https://developers.cloudflare.com/workers/examples)
+1. [Workers Tutorials](https://developers.cloudflare.com/workers/tutorials)
+2. [Workers Examples](https://developers.cloudflare.com/workers/examples)
 
 {{</content-column>}}
