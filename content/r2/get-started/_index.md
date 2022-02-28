@@ -69,7 +69,7 @@ R2 requires a Wrangler version of `1.19.8` or higher. To check your Wrangler ver
 Create your bucket by running:
 
 ```sh
-wrangler r2 bucket create <your-bucket-name>
+wrangler r2 bucket create <YOUR_BUCKET_NAME>
 ```
 
 To check that your bucket was created, run:
@@ -95,33 +95,33 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
 ```sh
-wrangler generate <your-worker-name>
+wrangler generate <YOUR_WORKER_NAME>
 ```
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID. 
 
-Find your Account ID by going logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
+Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
 
 ```toml
-name = "<your-worker-name>"
+name = "<YOUR_WORKER_NAME>"
 type = "javascript"
 compatibility_date = "2022-02-10"
  
-account_id = "your-account-id" # ← Replace with your Account ID.
+account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
 ```
 
-To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<your-bucket-name>` you used to create your bucket in [step 3](#create-your-bucket):
+To bind your R2 bucket to your Worker, add the following to your `wrangler.toml` file. Update the `binding` property to a valid JavaScript variable identifier and `bucket_name` to the `<YOUR_BUCKET_NAME>` you used to create your bucket in [step 3](#create-your-bucket):
 
 ```toml
 [[r2_buckets]]
 binding = 'MY_BUCKET' # <~ valid JavaScript variable name
-bucket_name = '<your_bucket_name>'
+bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
 Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration).
 
-## 5. Accessing your R2 bucket from your Worker
+## 5. Access your R2 bucket from your Worker
 
 Within your Worker code, your bucket is now available under the `MY_BUCKET` variable and you can begin interacting with it.
 
@@ -213,9 +213,9 @@ This command will prompt you to enter a secret in your terminal:
 
 ```sh
 wrangler secret put AUTH_KEY_SECRET
-Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <your-worker-name>:
+Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the script named <YOUR_WORKER_NAME>:
 *********
-🌀  Creating the secret for script name <your-worker-name>
+🌀  Creating the secret for script name <YOUR_WORKER_NAME>
 ✨  Success! Uploaded secret AUTH_KEY_SECRET.
 ```
 
