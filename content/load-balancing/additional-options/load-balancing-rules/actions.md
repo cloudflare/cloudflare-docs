@@ -16,7 +16,7 @@ Each load balancing rule includes one or more actions.
 
 ## Supported Actions
 
-This table lists the actions available for Load Balancing rules. For a walkthrough, refer to [Create Load Balancing rules](../create-rules/).
+This table lists the actions available for Load Balancing rules. For a walkthrough, refer to [Create Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/create-rules/).
 
 <table style='width:100%'>
   <thead>

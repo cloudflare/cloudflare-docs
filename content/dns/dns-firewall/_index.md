@@ -39,6 +39,6 @@ DNS Firewall is only available to customers on the [Enterprise plan](https://www
 
 ## Resources
 
-*   [Setup](setup/)
-*   [Analytics](analytics/)
-*   [FAQs](faq/)
+*   [Setup](/dns/dns-firewall/setup/)
+*   [Analytics](/dns/dns-firewall/analytics/)
+*   [FAQs](/dns/dns-firewall/faq/)

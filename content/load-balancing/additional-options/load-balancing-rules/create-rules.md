@@ -12,7 +12,7 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 ## Prerequisites
 
-- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](../reference/).
+- **Understand whether Cloudflare proxies your traffic**: Depending on the nature of your traffic, you may have access to different fields for your load balancing rules. For more details, see [Supported fields and expressions](/load-balancing/additional-options/load-balancing-rules/reference/).
 
 ---
 
@@ -28,15 +28,15 @@ Create and manage [Load Balancing rules](/load-balancing/additional-options/load
 
 5.  Click **Create Custom Rule**.
 
-6.  In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](../reference/).
+6.  In the **Field** drop-down list, choose an HTTP property. For more details, see [Supported fields](/load-balancing/additional-options/load-balancing-rules/reference/).
 
-7.  In the **Operator** drop-down list, choose an operator. For more details, see [Operators](../reference/#operators).
+7.  In the **Operator** drop-down list, choose an operator. For more details, see [Operators](/load-balancing/additional-options/load-balancing-rules/reference/#operators).
 
 8.  Enter the value to match. When the field is an ordered list, **Value** is a drop-down list. Otherwise, **Value** is a text input.
 
 9.  \[Optional] To create a compound expression using logical operators, click **And** or **Or**.
 
-10. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](../actions/).
+10. For an action, choose **Respond with fixed response** or **Override** and enter additional details. For a full list of actions, see [Actions](/load-balancing/additional-options/load-balancing-rules/actions/).
 
 11. (Optional) Click **Add another override**.
 
