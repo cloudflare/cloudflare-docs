@@ -1,6 +1,7 @@
 ---
-order:
+weight: 0
 pcx-content-type: tutorial
+title: Connect to 1.1.1.1 using DoH clients
 ---
 
 # Connect to 1.1.1.1 using DoH clients

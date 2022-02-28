@@ -1,6 +1,7 @@
 ---
-order:
+weight: 0
 pcx-content-type: how-to
+title: Configure DoH on your browser
 ---
 
 # Configure DoH on your browser

@@ -1,5 +1,5 @@
 ---
-weight:
+weight: 0
 pcx-content-type: reference
 title: Using JSON
 ---
