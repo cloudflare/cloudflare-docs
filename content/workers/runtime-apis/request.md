@@ -172,7 +172,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-    *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
+    *   A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers). {{<Aside type="note">}} Note that, compared to browsers, Cloudflare Workers imposes very few restrictions on what headers you are allowed to send. For example, a browser will not allow you to set the `Cookie` header, since the browser is responsible for handling cookies itself. Workers, however, has no special understanding of cookies, and treats the `Cookie` header like any other header. </Aside> <Aside type="warning">In the event that the response is a redirect, and the redirect mode is set to `follow` (see below), then all headers will be forwarded to the redirect destination, even if the destination is a different hostname or domain. This includes sensitive headers like `Cookie`, `Authorization`, or any application-specific headers. If this is not the behavior you want, you should set redirect mode to `manual` and implement your own redirect policy. Note that redirect mode defaults to `manual` for requests that originated from the Worker's client, so this warning only applies to `fetch()`es made by a Worker that are not proxying the original request.{{</Aside>}}
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
@@ -180,7 +180,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
 *   `redirect` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-    *   Contains the mode for how redirects are handled. It may be one of `follow`, `error`, or `manual`.
+    *   The redirect mode to use: `follow`, `error`, or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the `3xx` redirect response will be returned to the caller as-is. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
 *   `url` {{<type>}}string{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
