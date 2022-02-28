@@ -122,7 +122,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">1484063137</code>
          </p>
-         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/rules-language/functions/#hmac-validation">validation function</a>.
+         <p>When validating HMAC tokens in an expression, pass this field as the <em>currentTimestamp</em> argument to the <code class="InlineCode">is_timed_hmac_valid_v0()</code> <a href="/ruleset-engine/rules-language/functions/#hmac-validation">validation function</a>.
          </p>
       </td>
    </tr>
@@ -891,7 +891,7 @@ The Cloudflare Rules language supports these HTTP header fields:
       <td valign="top"><code>http.request.accepted_languages</code><br />{{<type>}}Array&lt;String&gt;{{</type>}}</td>
       <td>
          <p>Represents the list of language tags provided in the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"><code>Accept-Language</code></a> HTTP request header, sorted by weight (<code class="InlineCode">;q=&lt;weight&gt;</code>, with a default weight of <code class="InlineCode">1</code>) in descending order.</p>
-         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/rules-language/values#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
+         <p>If the HTTP header is not present in the request or is empty, <code class="InlineCode">http.request.accepted_languages[0]</code> will return a "<a href="/ruleset-engine/rules-language/values/#final-notes">missing value</a>", which the <code class="InlineCode">concat()</code> function will handle as an empty string.</p>
          <p>If the HTTP header includes the language tag <code class="InlineCode">*</code> it will not be stored in the array.</p>
          <p>Example 1:<br/>
          Request with header <code class="InlineCode">Accept-Language: fr-CH, fr;q=0.8, en;q=0.9, de;q=0.7, *;q=0.5</code>. In this case:<br/>

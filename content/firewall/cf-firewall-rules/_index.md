@@ -107,7 +107,7 @@ This table outlines the Firewall Rules features and entitlements available with 
   <td>Yes</td>
 </tr>
 <tr>
-  <td>Number of <a href='/cf-firewall-rules/rules-lists'>IP Lists</a></td>
+  <td>Number of <a href='rules-lists/'>IP Lists</a></td>
   <td>1</td>
   <td>10</td>
   <td>10</td>
