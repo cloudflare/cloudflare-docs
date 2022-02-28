@@ -11,7 +11,7 @@ meta:
 Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict).
 
 {{<Aside type="note">}}
-For more background information on Origin CA certificates, see the <a href="https://blog.cloudflare.com/cloudflare-ca-encryption-origin/">introductory blog post</a>.
+For more background information on Origin CA certificates, see the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).</a>.
 {{</Aside>}}
 
 ---
@@ -47,25 +47,19 @@ To add an Origin CA certificate to your origin web server
 1.  Upload the Origin CA certificate (created in [Step 1](#1-create-an-origin-ca-certificate)) to your origin web server.
 2.  Update your web server configuration:
 
-     <details>
- <summary>Configuration guides for popular servers</summary>
- <div>
+  * [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
+  * [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
+  * [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
+  * [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
+  * [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
+  * [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
+  * [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
+  * [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
+  * [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
+  * [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
-    - [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
-    - [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
-    - [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
-    - [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
-    - [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
-    - [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-    - [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
-    - [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
-    - [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
-    - [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
-    If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.
-
-     </div>
- </details>
+  {{<Aside type="note">}}If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
 3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
@@ -85,8 +79,8 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
 
-- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem/) (do not use with Apache cPanel)
-- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem/)
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
 
 ## Revoke an Origin CA certificate
 
