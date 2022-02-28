@@ -12,6 +12,7 @@ This feature is only available if you are using the following identity providers
 
 - Okta
 - Azure AD
+- OpenID Connect (OIDC)
 
 To enforce an MFA requirement to an application:
 
