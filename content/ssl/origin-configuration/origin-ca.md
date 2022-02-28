@@ -79,8 +79,8 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
 
-- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem/) (do not use with Apache cPanel)
-- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem/)
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
 
 ## Revoke an Origin CA certificate
 
