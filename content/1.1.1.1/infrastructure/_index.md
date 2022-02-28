@@ -1,6 +1,7 @@
 ---
-order: 3
+weight: 3
 pcx-content-type: navigation
+title: Infrastructure
 ---
 
 # Infrastructure
