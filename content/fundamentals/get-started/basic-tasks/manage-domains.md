@@ -63,4 +63,4 @@ Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/
 
 ## Manage subdomains
 
-For more details about subdomains (`www.example.com` or `blog.example.com`), refer to [Manage subdomains](/fundamentals/manage-subdomains/).
+For more details about subdomains (`www.example.com` or `blog.example.com`), refer to [Manage subdomains](/fundamentals/get-started/manage-subdomains/).

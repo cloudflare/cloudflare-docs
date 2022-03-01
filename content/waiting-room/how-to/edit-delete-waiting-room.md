@@ -8,11 +8,7 @@ weight: 5
 
 You can manage your waiting rooms using the [Waiting Rooms dashboard](/waiting-room/how-to/waiting-room-dashboard/) or the [API](/waiting-room/reference/waiting-room-api/).
 
-{{<Aside type="note">}}
-
-For details about updating an active waiting room, see <a href="/reference/best-practices">Best practices</a>.
-
-{{</Aside>}}
+{{<Aside type="note">}}For details about updating an active waiting room, refer to [Best practices](/waiting-room/reference/best-practices/).{{</Aside>}}
 
 ## Using the dashboard
 

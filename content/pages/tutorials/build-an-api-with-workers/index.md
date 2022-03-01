@@ -430,4 +430,4 @@ In this tutorial, you built a full blog application by combining a front end dep
 
 If you enjoyed this tutorial, refer to the [headless CMS tutorial] to learn how to build a blog using Nuxt.js and Sanity.io.
 
-[headless cms tutorial]: /tutorials/build-a-blog-using-nuxt-and-sanity
+[headless cms tutorial]: /pages/tutorials/build-a-blog-using-nuxt-and-sanity/
