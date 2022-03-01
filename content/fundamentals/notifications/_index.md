@@ -27,6 +27,6 @@ Cloudflare Notifications is available in your [Cloudflare dashboard](https://das
 
 ## What to do when receiving Notifications
 
-Go to our [Types of Notifications](/fundamentals/notification-available/) section to know more about what each Notification does and what do to when receiving one.
+Go to our [Types of Notifications](/fundamentals/notifications/notification-available/) section to know more about what each Notification does and what do to when receiving one.
 
 {{</content-column>}}

@@ -98,7 +98,7 @@ For user resources, the only option is referencing one's self which is done with
 
 ### Permission groups
 
-The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/create/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+The last piece to defining a policy is what Permission Groups should be applied. You can see the full list of permission groups either in [the docs here](/api/tokens/create/permissions/), or [fetched via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission Groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### Define the restrictions
 
