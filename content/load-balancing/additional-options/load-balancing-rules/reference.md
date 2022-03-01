@@ -41,7 +41,7 @@ Regardless of whether your traffic is proxied, you have access to the following 
       <td>Load Balancer Region</td>
       <td valign="top"><code>cf.load_balancer.region</code><br />{{<type>}}bytes{{</type>}}</td>
       <td>
-        <p>The <a href="/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
+        <p>The <a href="/load-balancing/understand-basics/traffic-steering/pool-level-steering#geo-steering">region name</a> of the data center processing the request.</p>
       </td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 - `Timestamp`
 - `Header`
 
-For the most up to date list of these fields, [create a load balancing rule](/load-balancing/create-rules/) in the UI.
+For the most up to date list of these fields, [create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/) in the UI.
 
 For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields).
 

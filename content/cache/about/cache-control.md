@@ -142,7 +142,7 @@ The table below lists directives and their behaviors when Origin Cache-Control i
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code>
+        Does not cache <code>#headers</code> values mentioned in <code>Private=#headers</code>{' '}
         directive.
       </td>
     </tr>
@@ -225,7 +225,8 @@ Certain scenarios also affect Origin Cache-Control behavior when it is enabled o
         Content may be cached
       </td>
       <td colspan="5" rowspan="1">
-        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or <code>s-maxage</code> is also present
+        Content is cached only <code>if must-revalidate</code>, <code>public</code>, or{' '}
+        <code>s-maxage</code> is also present
       </td>
     </tr>
     <tr>
@@ -299,7 +300,8 @@ Review the examples below to learn which directives to use with the Cache-Contro
 <details>
   <summary>Cache assets in proxy caches but REQUIRE revalidation by the proxy when served</summary>
   <div>
-    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or <code>Cache-Control: public, s-maxage=0</code>
+    <code>Cache-Control: public, no-cache, proxy-revalidate</code> or{' '}
+    <code>Cache-Control: public, s-maxage=0</code>
   </div>
 </details>
 

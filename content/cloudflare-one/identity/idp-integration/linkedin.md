@@ -38,35 +38,35 @@ To configure LinkedIn as an IdP:
 
 1.  Select the **Sign In with LinkedIn** option.
 
-1.  Click the **API Terms of Use** link to read the terms of use.
+1. Click the **API Terms of Use** link to read the terms of use.
 
-1.  If you agree to the terms, check the **I have read and agree to these terms** option.
+1. If you agree to the terms, check the **I have read and agree to these terms** option.
 
-1.  Click **Create app**.
+1. Click **Create app**.
 
-1.  Go to your account Settings page.
+1. Go to your account Settings page.
 
     ![LinkedIn account settings](/cloudflare-one/static/documentation/identity/linkedin/lin5.png)
 
-1.  Click the **Auth** tab.
+1. Click the **Auth** tab.
 
-1.  Copy the **Client ID** and **Client Secret**.
+1. Copy the **Client ID** and **Client Secret**.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-1.  Select **LinkedIn** as your IdP.
+1. Select **LinkedIn** as your IdP.
 
-1.  In the **App ID** and **Client secret** fields, input the **Client ID** and **Client secret** values you've copied from the Application credentials tab in the LinkedIn Developer Portal.
+1. In the **App ID** and **Client secret** fields, input the **Client ID** and **Client secret** values you've copied from the Application credentials tab in the LinkedIn Developer Portal.
 
-1.  Click **Save**.
+1. Click **Save**.
 
-1.  In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and click the **pencil icon** to edit the settings.
+1. In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and click the **pencil icon** to edit the settings.
 
     ![LinkedIn OAuth 2.0 settings](/cloudflare-one/static/documentation/identity/linkedin/lin8.png)
 
-1.  Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

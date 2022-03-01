@@ -30,7 +30,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/additional-options/customize-waiting-room">Customized templates</a>
+        <a href="/waiting-room/additional-options/customize-waiting-room/">Customized templates</a>
       </td>
       <td>No</td>
       <td>No</td>
@@ -38,7 +38,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/reference/queueing-methods">Queueing method</a>
+        <a href="/waiting-room/reference/queueing-methods/">Queueing method</a>
       </td>
       <td>First In First Out (FIFO)</td>
       <td>First In First Out (FIFO)</td>
@@ -46,7 +46,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/reference/configuration-settings">Disable session renewal</a>
+        <a href="/waiting-room/reference/configuration-settings/">Disable session renewal</a>
       </td>
       <td>No</td>
       <td>No</td>
@@ -54,7 +54,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/additional-options/mobile-traffic">Mobile app traffic</a>
+        <a href="/waiting-room/additional-options/mobile-traffic/">Mobile app traffic</a>
       </td>
       <td>No</td>
       <td>No</td>
@@ -62,7 +62,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/additional-options/create-events">Scheduled events</a>
+        <a href="/waiting-room/additional-options/create-events/">Scheduled events</a>
       </td>
       <td>No</td>
       <td>No</td>

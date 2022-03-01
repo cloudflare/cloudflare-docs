@@ -63,31 +63,31 @@ To set up JumpCloud SAML as your identity provider:
 
 1.  Under **SAML SUBJECT NAMEID**, choose **email**.
 
-1.  Set the **SAML SUBJECT NAMEID FORMAT** to:
+1. Set the **SAML SUBJECT NAMEID FORMAT** to:
 
     ```text
     urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
     ```
 
-1.  Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
+1. Under USER ATTRIBUTES enter `email` for the name and `email` for the value.
 
-1.  Leave other settings at default.
+1. Leave other settings at default.
 
-1.  Click **save**.
+1. Click **save**.
 
     Remember to assign this application to users or groups.
 
     ![JumpCloud Application dialog](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-1.  Select **SAML**.
+1. Select **SAML**.
 
-1.  Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
+1. Input a **Name**, a **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing Certificate**.
 
-1.  Click **Save**.
+1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 

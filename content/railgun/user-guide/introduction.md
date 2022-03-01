@@ -19,7 +19,6 @@ Typically, the markup of websites, or the body a JSON API response, does not cha
 ## Requirements
 
 {{<table-wrap>}}
-
 <table>
 <tr>
 <th>&nbsp;</th>

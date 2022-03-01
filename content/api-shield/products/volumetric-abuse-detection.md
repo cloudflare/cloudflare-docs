@@ -14,7 +14,7 @@ Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate
 
 ## Process
 
-After [API Discovery](/api-shield/api-discovery/), Cloudflare looks for endpoint abuse based on common user traffic.
+After [API Discovery](/api-shield/products/api-discovery/), Cloudflare looks for endpoint abuse based on common user traffic.
 
 For example, your API might see different levels of traffic to a `/reset-password` endpoint than a `/login` endpoint. Additionally, your `/login` endpoint might see higher than average traffic after a successful marketing campaign.
 

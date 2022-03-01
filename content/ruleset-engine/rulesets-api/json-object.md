@@ -126,7 +126,8 @@ The table lists the properties of a ruleset object.
       </td>
       <td>A list of rules to include in the ruleset.</td>
       <td>
-        Array of JSON objects (see <a href="#rule-object-structure-and-properties">rule JSON object</a>)
+        Array of JSON objects (see{' '}
+        <a href="#rule-object-structure-and-properties">rule JSON object</a>)
       </td>
       <td></td>
     </tr>

@@ -11,7 +11,7 @@ weight: 2
 Certificates are parsed and checked for validity before being accepted. Each certificate uploaded must:
 
 - Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
-- Not have a [key file password](/ssl/remove-file-key-password/).
+- Not have a [key file password](/ssl/edge-certificates/custom-certificates/remove-file-key-password/).
 - Not be expiring in less than 14 days from time of upload.
 - Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
 - Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
@@ -41,12 +41,9 @@ To upload a custom SSL certificate in the dashboard:
 
 5.  Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or click **Paste from file**).
 
-         {{<Aside type="note">}}
+    {{<Aside type="note">}}If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.{{</Aside>}}
 
-    If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
-    {{</Aside>}}
-
-6.  Choose the appropriate [**Bundle Method**](/ssl/bundling-methodologies/).
+6.  Choose the appropriate [**Bundle Method**](/ssl/edge-certificates/custom-certificates/bundling-methodologies/).
 
 7.  Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
@@ -57,7 +54,7 @@ To upload a custom SSL certificate in the dashboard:
 
 9.  Click **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
-10. (optional) [Add a CAA DNS record](/ssl/caa-records/).
+10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/custom-certificates/caa-records/).
 
 ---
 
@@ -125,7 +122,7 @@ $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_cert
 
 {{<render file="_caa-records-definition.md">}}
 
-For more guidance, refer to [Create a CAA record](/ssl/caa-records/).
+For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-certificates/caa-records/).
 
 ## Update a certificate
 

@@ -8,7 +8,7 @@ weight: 3
 
 {{<render file="_custom-certificates-definition.md">}}
 
-Custom certificates require that you [upload the certificate](uploading/), [manually renew these certificates](renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
+Custom certificates require that you [upload the certificate](uploading/), [manually renew these certificates](/ssl/edge-certificates/custom-certificates/renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
 
 Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
 
