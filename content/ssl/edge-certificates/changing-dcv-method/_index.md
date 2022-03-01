@@ -18,7 +18,7 @@ If your domain is on a full setup (Cloudflare runs your [authoritative nameserve
 
 ### Custom certificates
 
-If your domain is using a [custom certificate](/ssl/custom-certificates/), you need to handle DCV on your own when you obtain certificates from a CA.
+If your domain is using a [custom certificate](/ssl/edge-certificates/custom-certificates/), you need to handle DCV on your own when you obtain certificates from a CA.
 
 ## Perform DCV
 
@@ -56,7 +56,7 @@ Though this process happens relatively quickly, your application may experience 
 
 {{<Aside type="warning">}}
 
-For additional help, refer to [Troubleshooting DCV](/ssl/troubleshooting/).
+For additional help, refer to [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
 
 {{</Aside>}}
 

@@ -26,7 +26,7 @@ Beyond the [performance and caching benefits](/fundamentals/get-started/how-clou
 
 #### Pending domains
 
-When your [domain status](/zone-setups/reference/domain-status) is **Pending Nameserver Update**, that domain's DNS records cannot yet be proxied.
+When your [domain status](/dns/zone-setups/reference/domain-status) is **Pending Nameserver Update**, that domain's DNS records cannot yet be proxied.
 
 This means that pending domains cannot take advantage of Cloudflare caching and other settings — even if the proxy status is enabled for their DNS records — and any requests to your DNS records will return your origin server's IP address and not Cloudflare IP addresses.
 

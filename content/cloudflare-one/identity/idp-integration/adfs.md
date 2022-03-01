@@ -47,45 +47,45 @@ To create a Relying Party Trust:
 
 1.  Select the **AD FS profile** option.
 
-1.  Click **Next**. The **Configure Certificate** step displays.
+1. Click **Next**. The **Configure Certificate** step displays.
 
-1.  Leave the **Certificate** options at their defaults.
+1. Leave the **Certificate** options at their defaults.
 
-1.  Click **Next**. The **Configure URL** step displays.
+1. Click **Next**. The **Configure URL** step displays.
 
     ![Configure URL](/cloudflare-one/static/documentation/identity/adfs/adfs-6.png)
 
-1.  Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
+1. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
 
-1.  In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **Relying party SAML 2.0 SSO service URL** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Next**. The **Configure Identifiers** step displays.
+1. Click **Next**. The **Configure Identifiers** step displays.
 
     ![Configure Identifiers](/cloudflare-one/static/documentation/identity/adfs/adfs-7.png)
 
-1.  Paste your callback URL in the **Relying party trust identifier** field.
+1. Paste your callback URL in the **Relying party trust identifier** field.
 
-1.  Click **Next**. In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication. Our example does not configure multi-factor authentication.
+1. Click **Next**. In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication. Our example does not configure multi-factor authentication.
 
     ![Configure Multi-factor Authentication Now?](/cloudflare-one/static/documentation/identity/adfs/adfs-8.png)
 
-1.  Click **Next**. The **Choose Issuance Authorization Rules** step displays.
+1. Click **Next**. The **Choose Issuance Authorization Rules** step displays.
 
     ![Choose Issuance Authorization Rules](/cloudflare-one/static/documentation/identity/adfs/adfs-9.png)
 
-1.  Select the **Permit all users to access this relying party** option.
+1. Select the **Permit all users to access this relying party** option.
 
-1.  Click **Next**. The **Ready to Add Trust** step displays.
+1. Click **Next**. The **Ready to Add Trust** step displays.
 
     ![Ready to Add Trust](/cloudflare-one/static/documentation/identity/adfs/adfs-10.png)
 
-1.  Review your settings.
+1. Review your settings.
 
-1.  Click **Next**. Cloudflare now relies on ADFS for user-identity authorization.
+1. Click **Next**. Cloudflare now relies on ADFS for user-identity authorization.
 
 The **Edit Claim Rules for CF Login** screen automatically displays.
 
@@ -119,17 +119,17 @@ To create Claim Rules:
 
     ![Edit - Create Transient Name Identifier](/cloudflare-one/static/documentation/identity/adfs/adfs-15.png)
 
-1.  Enter a descriptive **Claim rule name**.
+1. Enter a descriptive **Claim rule name**.
 
-1.  Select **E-Mail Address** from the **Incoming claim type** drop-down list.
+1. Select **E-Mail Address** from the **Incoming claim type** drop-down list.
 
-1.  Select **Name ID** from the **Outgoing claim type** drop-down list.
+1. Select **Name ID** from the **Outgoing claim type** drop-down list.
 
-1.  Select **Transient Identifier** from the **Outgoing name ID format** drop-down list.
+1. Select **Transient Identifier** from the **Outgoing name ID format** drop-down list.
 
-1.  Ensure that the **Pass through all claim values** option is selected.
+1. Ensure that the **Pass through all claim values** option is selected.
 
-1.  Click **OK**.
+1. Click **OK**.
 
 Both Claim Rules are now available to export to your Cloudflare Access account.
 
@@ -163,7 +163,7 @@ To export the certificate:
 
 1.  Click **Next**.
 
-1.  Click **Finish**.
+1. Click **Finish**.
 
     Note the file path for later.
 

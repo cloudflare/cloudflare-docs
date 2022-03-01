@@ -36,42 +36,42 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Enter a strong application secret on the **Trust** section.
 
-1.  Under **Service Provider Configuration** enter your application’s authentication domain as the resource application URL.
+1. Under **Service Provider Configuration** enter your application’s authentication domain as the resource application URL.
 
-1.  Under **Authorized Redirect URIs** click **Add**.
+1. Under **Authorized Redirect URIs** click **Add**.
 
     ![Centrify OpenID Connect](/cloudflare-one/static/documentation/identity/centrify/centrify-5.png)
 
-1.  Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. Under **Authorized Redirect URIs** enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Save**.
+1. Click **Save**.
 
     ![Centrify Trust](/cloudflare-one/static/documentation/identity/centrify/centrify-6.png)
 
-1.  Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
+1. Take note of the Client ID, Client Secret, OpenID Connect Issuer URL, and Application ID from the Settings tab.
 
          {{<Aside>}}
 
     Do not use the forward slash from the **Settings** tab.
     {{</Aside>}}
 
-1.  Navigate to the **User Access** tab.
+1. Navigate to the **User Access** tab.
 
-1.  Select the roles to grant access to your application.
+1. Select the roles to grant access to your application.
 
     ![Centrify User Access](/cloudflare-one/static/documentation/identity/centrify/centrify-7.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-1.  Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
+1. Paste in the **Client ID**, **Client Secret**, **Centrify account URL** and **Application ID**.
 
-1.  Click **Save**.
+1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 

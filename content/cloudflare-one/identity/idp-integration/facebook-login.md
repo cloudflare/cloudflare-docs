@@ -34,33 +34,33 @@ Use these steps to set up Facebook as your identity provider.
 
 1.  Enter your **Site URL**.
 
-1.  Click **Save**.
+1. Click **Save**.
 
-1.  Click **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
+1. Click **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
 
-1.  Click **Settings > Basic** on the left-hand menu.
+1. Click **Settings > Basic** on the left-hand menu.
 
     ![Facebook Settings](/cloudflare-one/static/documentation/identity/facebook/fb6.png)
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-1.  Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
+1. Copy the App ID and App Secret into the **OAuth ID** and **OAuth Secret** fields.
 
-1.  Click **Save**.
+1. Click **Save**.
 
-1.  On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
+1. On [developers.facebook.com](https://developers.facebook.com/), set the **Use Strict Mode for Redirect URIs** slider to **Yes**.
 
-1.  In the **Valid OAuth redirect URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **Valid OAuth redirect URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain), followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1.  Click **Save Changes**.
+1. Click **Save Changes**.
 
-1.  On the Zero Trust dashboard, click **Save**.
+1. On the Zero Trust dashboard, click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Facebook.
 

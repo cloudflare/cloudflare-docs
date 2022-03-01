@@ -24,8 +24,7 @@ Cloudflare Specials </td> <td>
 100519 </td> <td>
 Magento - CVE:CVE-2022-24086 </td> <td>
 N/A </td> <td>
-Block </td> </tr>
-
+Block </td> </tr> 
 </tbody>
 
 </table>{{</table-wrap>}}
