@@ -193,10 +193,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
           according to the rule configuration.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases{' '}
-          <code>http_request_transform</code>, <code>http_request_late_transform</code>, and{' '}
-          <code>http_response_headers_transform</code>.
+          Only available for <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases <code>http_request_transform</code>, <code>http_request_late_transform</code>, and <code>http_response_headers_transform</code>.
         </p>
         <p>
           In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To
@@ -220,9 +217,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
           by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>,
-          in the <code>http_request_redirect</code> phase.
+          Only available for <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>, in the <code>http_request_redirect</code> phase.
         </p>
         <p>
           In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To

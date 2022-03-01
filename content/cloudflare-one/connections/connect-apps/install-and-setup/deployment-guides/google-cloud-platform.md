@@ -32,12 +32,12 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
     We support a number of operating systems and versions, so make a selection based on your requirements.
     {{</Aside>}}
 
-    *   **Machine Family:** General Purpose
-    *   **Series:** E2
-    *   **Machine Type:** e2-micro
-    *   **Boot Disk:** Debian GNU/Linux 10
-    *   **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
-    *   **Networking, Disks, Security, Management, Sole-Tenancy:** Management
+    - **Machine Family:** General Purpose
+    - **Series:** E2
+    - **Machine Type:** e2-micro
+    - **Boot Disk:** Debian GNU/Linux 10
+    - **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
+    - **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
 1.  Add a startup script for testing access. Here is an example:
 
