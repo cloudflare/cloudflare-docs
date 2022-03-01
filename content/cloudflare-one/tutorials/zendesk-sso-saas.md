@@ -47,7 +47,7 @@ For this tutorial, you will need:
 
     This step is optional. If the name is not provided, Zendesk will [use the user's email address as their name](https://support.zendesk.com/hc/en-us/articles/203663676#topic_dzb_gl5_2v)
 
-    {{</Aside>}}
+     {{</Aside>}}
 
     ![Zendesk attributes](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-attributes.png)
 
@@ -57,8 +57,8 @@ For this tutorial, you will need:
 
 1.  Copy the Cloudflare IdP values and add them to the following Zendesk Fields:
 
-    - SSO Endpoint => SAML SSO URL
-    - Public Key => Certificate Fingerprint
+    *   SSO Endpoint => SAML SSO URL
+    *   Public Key => Certificate Fingerprint
 
     {{<Aside type="note">}}
 
@@ -66,15 +66,15 @@ For this tutorial, you will need:
 
     1.  Copy the Public Key Value.
     1.  Paste the Public Key into [SAML X.509 Certificate Fingerprint - Online SHA1 Decoder | SAMLTool.com](https://www.samltool.com/fingerprint.php).
-    1.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-    1.  Set the algorithm to SHA256.
-    1.  Copy the Formatted Fingerprint Value.
-
+    1. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+    1. Set the algorithm to SHA256.
+    1. Copy the Formatted Fingerprint Value.
+    
     {{</Aside>}}
 
     ![Zendesk fingerprint](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-fingerprint.png)
 
-1.  Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
+1. Go to `https://<yourdomain>.zendesk.com/admin/security/staff_members` and enable **External Authentication** > **Single Sign On**.
 
     ![Zendesk external authentication](/cloudflare-one/static/zero-trust-security/zendesk-sso-saas/zendesk-external-auth.png)
 

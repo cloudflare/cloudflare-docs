@@ -31,17 +31,18 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl-for-saas/reference/hostname-analytics">Custom analytics</a>
+          <a href="/ssl/ssl-for-saas/reference/hostname-analytics/">Custom analytics</a>
         </strong>
       </td>
       <td colspan="2" style="text-align:center">
-        Available, but subject to <a href="https://developers.cloudflare.com/analytics/graphql-api/limits">limits by plan</a>
+        Available, but subject to
+        <a href="/analytics/graphql-api/limits/">limits by plan</a>
       </td>
     </tr>
     <tr>
       <td>
         <strong>
-          <a href="/ssl-for-saas/hostname-specific-behavior/custom-origin">Custom origin</a>
+          <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-origin/">Custom origin</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -50,7 +51,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl-for-saas/custom-certificates">Custom certificates</a>
+          <a href="/ssl/ssl-for-saas/custom-certificates/">Custom certificates</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -59,7 +60,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl-for-saas/custom-certificates/certificate-signing-requests">CSR support</a>
+          <a href="/ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/">CSR support</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>
@@ -89,7 +90,7 @@ meta:
     <tr>
       <td>
         <strong>
-          <a href="/ssl-for-saas/hostname-specific-behavior/custom-metadata">Custom metadata</a>
+          <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/">Custom metadata</a>
         </strong>
       </td>
       <td style="text-align:center">No</td>

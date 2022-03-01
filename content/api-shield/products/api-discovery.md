@@ -31,7 +31,7 @@ API Discovery runs this process across all your authenticated endpoints, eventua
 - `password_reset`
 - `logout`
 
-This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](/api-shield/volumetric-abuse-detection/) and [sequential](/api-shield/sequential-abuse-detection/) attacks.
+This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](/api-shield/products/volumetric-abuse-detection/) and [sequential](/api-shield/products/sequential-abuse-detection/) attacks.
 
 {{<render file="_blog-post.md">}}
 

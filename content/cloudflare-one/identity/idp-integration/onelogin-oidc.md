@@ -42,31 +42,31 @@ To set up OneLogin as your identity provider:
 
 1.  In the **Portal** section, enter a name for your application in the **Display Name** field.
 
-1.  Click **Save**.
+1. Click **Save**.
 
-1.  Select the **Access** tab.
+1. Select the **Access** tab.
 
     ![OneLogin OIDC Add Application Access page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-6.png)
 
-1.  Add the **Roles** that can access this application.
+1. Add the **Roles** that can access this application.
 
-1.  Select the **SSO** tab.
+1. Select the **SSO** tab.
 
     ![OneLogin OIDC Add Application SSO page](/cloudflare-one/static/documentation/identity/onelogin/onelogin-oidc-7.png)
 
-1.  Click **Show client secret**.
+1. Click **Show client secret**.
 
-1.  Copy both the **Client ID** and **Client Secret**.
+1. Copy both the **Client ID** and **Client Secret**.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1.  Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-1.  Select Centrify as your IdP.
+1. Select Centrify as your IdP.
 
-1.  Paste in your copied **Client ID** and **Client secret**.
+1. Paste in your copied **Client ID** and **Client secret**.
 
-1.  Click **Save**.
+1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to OneLogin.
 
