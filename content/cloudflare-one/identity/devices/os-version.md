@@ -12,7 +12,7 @@ weight: 5
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Windows, Mac      | WARP with Gateway                                                                         | All plans                                                     |
+| All      | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -54,4 +54,15 @@ defaults read loginwindow SystemVersionStampAsString
 
 ```txt
 (Get-CimInstance Win32_OperatingSystem).version
+```
+
+### On Linux
+Linux currently relies on the system Kernel version instead of some specific distro version. The kernel version must be converted to a valid semer for us 
+
+1.  Open a Terminal window.
+1.  Use the `uname -r` command to get the complete version
+1.  Strip off all but the first 3 whole numbers. For instance if the command above returned `5.14.0-25.el9.x86_64` then the valid semver would be `5.14.0`
+
+```txt
+uname -r
 ```
