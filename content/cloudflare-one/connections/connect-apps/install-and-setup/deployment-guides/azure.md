@@ -8,7 +8,7 @@ weight: 8
 
 The purpose of this guide is to walk through some best practices for accessing private resources on AWS by deploying Cloudflare's lightweight connector, `cloudflared`. 
 
-We will walk through how to initialize a service on a linux VM in Azure, and route to it from another VM running `cloudflared`. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
+We will walk through how to initialize a service on a Linux VM in Azure, and route to it from another VM running `cloudflared`. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ We will walk through how to initialize a service on a linux VM in Azure, and rou
 
 ## Create your environment
 
-Make sure you sign up for Azure, and create a new subscription.
+Make sure you sign up for Azure and create a new subscription.
 
 1. First, create your first resource group.
 
@@ -31,7 +31,7 @@ Make sure you sign up for Azure, and create a new subscription.
 
     ![Azure keypair](/cloudflare-one/static/documentation/connections/connect-apps/azure-3.png)
 
-Create two ubuntu 20.04 LTS VMs, and make sure you record their internal IP addresses. Azure by default uses the `10.0.0.0/8` subnet.
+Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addresses. Azure by default uses the `10.0.0.0/8` subnet.
 
 ## Deploy `cloudflared`
 

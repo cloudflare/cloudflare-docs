@@ -8,7 +8,7 @@ weight: 8
 
 The purpose of this guide is to walk through some best practices for accessing private resources on AWS by deploying Cloudflare's lightweight connector, `cloudflared`. 
 
-We will walk through how to initialize a service on a linux VM in AWS, and route to it from another VM running cloudflared. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
+We will walk through how to initialize a service on a Linux VM in AWS, and route to it from another VM running cloudflared. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
 
 # Prerequisites
 
@@ -21,23 +21,23 @@ We will walk through how to initialize a service on a linux VM in AWS, and route
 
     ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-console.png)
 
-1. Next, select the appropriate AMI. In this instance, we are using ubuntu 18.0.
+1. Next, select the appropriate AMI. In this instance, we are using Ubuntu 18.0.
 
     ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-step-2.png)
 
-1. When selecting your instance type, pick `t2.micro`. This type is available for the free tier.
+1. When selecting your instance type, choose `t2.micro`. This type is available for the free tier.
 
 1. Click **Next: Configure Instance Details**.
 
-1. Because we are leaving this device on the default VPC, you won't need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Click **Next: Add Storage**, and then click **Next: Add Tags**.
+1. Because we are leaving this device on the default VPC, you will not need to make any changes in the next couple of steps, nor will you need to add additional storage or tags. Click **Next: Add Storage**, and then click **Next: Add Tags**.
 
     ![AWS console](/cloudflare-one/static/documentation/connections/connect-apps/aws-step-3.png)
 
 1. Next, advance to **Security Group Settings** and add two policies: 
-    * Ensure SSH is only accessible from your IP to prevent it being open to the world.
+    * Ensure SSH is only accessible from your IP to prevent it being publicly accessible.
     * Allow traffic from `172.31.0.0/16`, which is the default internal IP range that AWS will give your device.
 
-1. Deploy two `t2.micro` devices, and then build a key pair. You will need to [download the `.pem` file](//connections/connect-devices/warp/install-cloudflare-cert) in order to use SSH in the next steps.
+1. Deploy two `t2.micro` devices, and then build a key pair. You will need to [download the `.pem` file](/connections/connect-devices/warp/install-cloudflare-cert) in order to use SSH in the next steps.
 
 1. Finally, make sure you locate the Public IPv4 DNS address inside the instance summary on the AWS console. You will need that parameter as well in order to use SSH.
 

@@ -23,7 +23,7 @@ _build:
     vim config.yml
     ```
 
-1. Hit `i` to begin editing the file and copy-paste the following settings in it.
+1. Type `i` to begin editing the file and copy-paste the following settings in it.
 
     ```text
     tunnel: <Tunnel ID/name>
@@ -38,7 +38,7 @@ _build:
     transport-loglevel: info
     ```
 
-1. Hit `space` and then type `:x` to save and exit.
+1. Press `space` and then type `:x` to save and exit.
 
 1. Run `cloudflared` as a service.
 
