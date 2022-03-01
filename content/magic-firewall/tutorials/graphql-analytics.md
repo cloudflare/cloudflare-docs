@@ -82,7 +82,7 @@ query {
 
 ### Obtain analytics for a specific rule
 
-Use the example to display the total number of packets and bits of the top ten suspected malicious traffic streams that have hit the Magic Firewall rule `tme_anonymizer_test` in the last hour. Sort the results by 5-minute-average-packet-rate.
+Use the example below to display the total number of packets and bits for the top ten suspected malicious traffic streams within the last hour. After receiving the results, you can sort by packet rates with a five minute average. 
 
 For each stream, display the:
 
