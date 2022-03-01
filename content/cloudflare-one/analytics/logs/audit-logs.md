@@ -154,4 +154,4 @@ Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Acc
 
 For instructions on setting up Logpush, see [Manage the Logpush API](/logs/logpush/logpush-configuration-api/).
 
-For more on exporting per-request Access logs, see [Understanding the Logpush API](/logs/logpush/logpush-configuration-api/understanding-logpush-api/).
+For more on exporting per-request Access logs, see [Understanding the Logpush API](/logs/reference/logpush-api-configuration/).

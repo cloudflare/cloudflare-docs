@@ -128,7 +128,7 @@ Copy the `Form Endpoint` URL and paste it into the `action` attribute of the for
 </form>
 ```
 
-Now when you submit your form, you should be redirected to a Thank You page. The form data will be submitted to your account on [Formspree.io](/pages/formspree.io/).
+Now when you submit your form, you should be redirected to a Thank You page. The form data will be submitted to your account on [Formspree.io](https://formspree.io/).
 
 You can now adjust your form processing logic to change the [redirect page](https://help.formspree.io/hc/en-us/articles/360012378333--Thank-You-redirect), update the [notification email address](https://help.formspree.io/hc/en-us/articles/115008379348-Changing-a-form-email-address), or add plugins like [Google Sheets](https://help.formspree.io/hc/en-us/articles/360036563573-Use-Google-Sheets-to-send-your-submissions-to-a-spreadsheet), [Slack](https://help.formspree.io/hc/en-us/articles/360045648933-Send-Slack-notifications) and more.
 
