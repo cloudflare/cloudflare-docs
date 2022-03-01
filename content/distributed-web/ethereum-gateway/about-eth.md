@@ -65,7 +65,7 @@ the Ethereum network](/distributed-web/ethereum-gateway/interacting-with-the-eth
 
 If you want to be able to access the Ethereum network accessible from a custom
 domain name, you can do that using Cloudflare’s Ethereum Gateway. To
-learn how, refer to [Connecting your Website](/distributed-web//ethereum-gateway/connecting-your-website/).
+learn how, refer to [Connecting your Website](/distributed-web/ethereum-gateway/connecting-your-website/).
 
 ## Going Further
 
