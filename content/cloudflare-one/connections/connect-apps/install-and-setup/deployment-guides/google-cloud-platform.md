@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Deploy cloudflared in GCP
+title: GCP
 weight: 8
 ---
 
@@ -94,51 +94,4 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
     cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
     ```
 
-1.  Make a directory for your configuration file.
-
-    ```sh
-    mkdir /etc/cloudflared
-    ```
-
-    ```sh
-    cd /etc/cloudflared
-    ```
-
-1.  Build our configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
-
-    ```sh
-    vim config.yml
-    ```
-
-1.  Hit `i` to begin editing the file and copy-paste the following settings in it.
-
-    ```text
-    tunnel: <Tunnel ID/name>
-    credentials-file: /root/.cloudflared/<Tunnel ID>.json
-    protocol: quic
-    warp-routing:
-       enabled: true
-    logfile: /var/log/cloudflared.log
-    #cloudflared to the origin debug
-    loglevel: debug
-    #cloudflared to cloudflare debug
-    transport-loglevel: info
-    ```
-
-1.  Hit `space` and then type `:x` to save and exit.
-
-1.  Run `cloudflared` as a service.
-
-```sh
-cloudflared service install
-```
-
-```sh
-systemctl start cloudflared
-```
-
-```sh
-systemctl status cloudflared
-```
-
-Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to secure your private resources.
+{{<render file="_cloudflared-cloud-deployment.md">}}
