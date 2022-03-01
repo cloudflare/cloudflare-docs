@@ -78,11 +78,11 @@ query {
 }
 ```
 
-## Example queries for Magic Firewall
+## Example query for Magic Firewall
 
-### Anonymizer rule
+### Obtain analytics for a specific rule
 
-Use the examples to display the total number of packets and bits of the top ten suspected malicious traffic streams that have hit the Magic Firewall rule `tme_anonymizer_test` in the last hour. Sort the results by 5-minute-average-packet-rate.
+Use the example to display the total number of packets and bits of the top ten suspected malicious traffic streams that have hit the Magic Firewall rule `tme_anonymizer_test` in the last hour. Sort the results by 5-minute-average-packet-rate.
 
 For each stream, display the:
 
@@ -90,68 +90,6 @@ For each stream, display the:
 - Ingress Cloudflare data centers that received it 
 - Total traffic volume in bits and packets received within the hour 
 - Actions taken by the firewall rule
-
-```graphql
-query{
-    viewer {
-      accounts(filter: {accountTag: "<account ID>"}) {
-        magicFirewallNetworkAnalyticsAdaptiveGroups(
-        filter: {
-            ruleId: "<ruleID>",
-            datetime_geq: "2022-01-12T10:00:00Z", 
-            datetime_leq: "2022-01-12T11:00:00Z"
-  }
-        limit: 10,
-        orderBy: [avg_packetRateFiveMinutes_DESC])
-        {
-            sum {
-              bits
-              packets  
-            }
-            dimensions {
-              coloCity
-              ipDestinationAddress
-              ipSourceAddress
-              outcome
-            }
-        }
-    }
-}
-}
-```
-
-### Botnetcc rule
-
-```graphql
-query{
-    viewer {
-      accounts(filter: {accountTag: "<account ID>"}) {
-        magicFirewallNetworkAnalyticsAdaptiveGroups(
-        filter: {
-            ruleId: "<ruleID>",
-            datetime_geq: "2022-01-12T10:00:00Z", 
-            datetime_leq: "2022-01-12T11:00:00Z"
-  }
-        limit: 10,
-        orderBy: [avg_packetRateFiveMinutes_DESC])
-        {
-            sum {
-              bits
-              packets  
-            }
-            dimensions {
-              coloCity
-              ipDestinationAddress
-              ipSourceAddress
-              outcome
-            }
-        }
-    }
-}
-}
-```
-
-### Malware rule
 
 ```graphql
 query{
