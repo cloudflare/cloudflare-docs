@@ -19,6 +19,6 @@ If you **do not** use Cloudflare for your authoritative nameservers (a CNAME set
 
 {{<Aside type="note">}}
 
-For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) or upload a [custom certificate]("/ssl/edge-certificates/custom-certificates) before proxying traffic to Cloudflare.
+For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) or upload a [custom certificate](/ssl/edge-certificates/custom-certificates) before proxying traffic to Cloudflare.
 
 {{</Aside>}}

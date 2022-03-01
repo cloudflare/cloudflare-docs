@@ -37,10 +37,10 @@ We have verified interoperability with the following modules:
 
 We’ve also tested with the following Cloud HSM offerings:
 
-*   [AWS CloudHSM](/ssl/keyless-ssl/hardware-security-models/aws-cloud-hsm/)
-*   [IBM Cloud HSM](/ssl/keyless-ssl/hardware-security-models/ibm-cloud-hsm/)
-*   [Azure Dedicated HSM](/ssl/keyless-ssl/hardware-security-models/azure-dedicated-hsm/)
-*   [Azure Managed HSM](/ssl/keyless-ssl/hardware-security-models/azure-managed-hsm/)
-*   [Google Cloud HSM](/ssl/keyless-ssl/hardware-security-models/google-cloud-hsm/)
+*   [AWS CloudHSM](/ssl/keyless-ssl/hardware-security-modules/aws-cloud-hsm/)
+*   [IBM Cloud HSM](/ssl/keyless-ssl/hardware-security-modules/ibm-cloud-hsm/)
+*   [Azure Dedicated HSM](/ssl/keyless-ssl/hardware-security-modules/azure-dedicated-hsm/)
+*   [Azure Managed HSM](/ssl/keyless-ssl/hardware-security-modules/azure-managed-hsm/)
+*   [Google Cloud HSM](/ssl/keyless-ssl/hardware-security-modules/google-cloud-hsm/)
 
 If you have deployed Keyless SSL with an HSM model not listed above, please email keyless@cloudflare.com with details.
