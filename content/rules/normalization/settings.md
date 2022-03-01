@@ -10,9 +10,20 @@ meta:
 
 # URL normalization settings
 
-The Cloudflare dashboard provides two settings to manage URL normalization:
+The Cloudflare dashboard provides the following settings to manage URL normalization:
 
 {{<definitions>}}
+
+- **Normalization type** {{<prop-meta>}}(default: _RFC-3986_){{</prop-meta>}}
+
+  - Selects the type of normalization to perform:
+
+    - _RFC-3986_ – Applies URL normalization strictly according to [RFC-3986](https://datatracker.ietf.org/doc/html/rfc3986).
+
+    - _Cloudflare_ – In addition to what is defined in RFC-3986, applies the following URL normalization techniques:
+
+      - Normalize back slashes (`\`) into forward slashes (`/`).
+      - Merge successive forward slashes (for example, `//` will be normalized to `/`).
 
 - **Normalize incoming URLs** {{<prop-meta>}}(default: _On_){{</prop-meta>}}
 
@@ -38,13 +49,19 @@ The following table shows how URL normalization settings affect incoming URLs be
 
 {{<table-wrap>}}
 
-| Incoming URL              | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin      |
-| ------------------------- | ----------------------- | ------------------------ | ----------------------------- | ------------------------- |
-| `www.example.com/hello`   | _On_                    | _Off_                    | `www.example.com/hello`       | `www.example.com/hello`   |
-| `www.example.com/hello`   | _On_                    | _On_                     | `www.example.com/hello`       | `www.example.com/hello`   |
-| `www.example.com/hello`   | _Off_                   | _Off_                    | `www.example.com/hello`       | `www.example.com/hello`   |
-| `www.example.com/%68ello` | _On_                    | _Off_                    | `www.example.com/hello`       | `www.example.com/%68ello` |
-| `www.example.com/%68ello` | _On_                    | _On_                     | `www.example.com/hello`       | `www.example.com/hello`   |
-| `www.example.com/%68ello` | _Off_                   | _Off_                    | `www.example.com/%68ello`     | `www.example.com/%68ello` |
+| Incoming URL | Normalization type | Normalize incoming URLs | Normalize URLs to origin | URL passed to Cloudflare edge | URL passed to origin |
+| ---|---|---|---|---|--- |
+| `www.example.com/hello` | (any)  | _Off_ | _Off_ | `www.example.com/hello`   | `www.example.com/hello` |
+| `www.example.com/hello` | (any)  | _On_  | _Off_ | `www.example.com/hello`   | `www.example.com/hello` |
+| `www.example.com/hello` | (any)  | _On_  | _On_  | `www.example.com/hello`   | `www.example.com/hello` |
+| `example.com/%68ello` | (any) | _Off_ | _Off_ | `example.com/%68ello` | `example.com/%68ello` |
+| `example.com/%68ello` | (any) | _On_  | _Off_ | `example.com/hello`   | `example.com/%68ello` |
+| `example.com/%68ello` | (any) | _On_  | _On_  | `example.com/hello`   | `example.com/hello` |
+| `example.com/%68ello//pa\th` | _RFC-3986_ | _Off_ | _Off_ | `example.com/%68ello//pa\th` | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_ | _On_  | _Off_ | `example.com/hello//pa\th`   | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _RFC-3986_ | _On_  | _On_  | `example.com/hello//pa\th`   | `example.com/hello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _Off_ | _Off_ | `example.com/%68ello//pa\th` | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_ | _Off_ | `example.com/hello/pa/th` | `example.com/%68ello//pa\th` |
+| `example.com/%68ello//pa\th` | _Cloudflare_ | _On_ | _On_  | `example.com/hello/pa/th` | `example.com/hello/pa/th` |
 
 {{</table-wrap>}}
