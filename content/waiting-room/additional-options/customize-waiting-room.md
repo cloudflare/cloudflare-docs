@@ -26,11 +26,7 @@ To choose the default, unbranded waiting room:
 
 ## Custom waiting room
 
-{{<Aside type="note">}}
-
-Only certain customers can customize their waiting rooms. For more details, see our <a href="/plans">Plans</a> page.
-
-{{</Aside>}}
+{{<Aside type="note">}}Only certain customers can customize their waiting rooms. For more details, see our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 To customize a waiting room:
 

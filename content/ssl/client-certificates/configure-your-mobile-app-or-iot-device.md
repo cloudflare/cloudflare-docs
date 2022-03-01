@@ -405,7 +405,7 @@ Response status code: 201
 
 ## Step 5 — Enable mTLS
 
-After creating Cloudflare-issued certificates, the next step is to [enable mTLS](/ssl/enable-mtls/) for the hosts you want to protect with API Shield.
+After creating Cloudflare-issued certificates, the next step is to [enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you want to protect with API Shield.
 
 ***
 

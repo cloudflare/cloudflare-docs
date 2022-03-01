@@ -358,9 +358,9 @@ else:
     print("Failed to retrieve data: GraphQL API responded with {} status code".format(req.status_code))
 ```
 
-[1]: /graphql-api/features/data-sets
-[2]: /graphql-api/getting-started/authentication/api-token-auth
-[3]: /graphql-api/getting-started/querying-basics
+[1]: /analytics/graphql-api/features/data-sets/
+[2]: /analytics/graphql-api/getting-started/authentication/api-token-auth/
+[3]: /analytics/graphql-api/getting-started/querying-basics/
 [4]: https://pandas.pydata.org/pandas-docs/stable/index.html
-[5]: /graphql-api/migration-guides/network-analytics-v2
+[5]: /analytics/graphql-api/migration-guides/network-analytics-v2/
 [6]: https://www.splunk.com
