@@ -73,7 +73,7 @@ Newest changes are listed first.
   </tbody>
 </table>
 
-With the `global_navigator` flag set, a new global `navigator` property is available from within Workers. Currently, it exposes only a single `navigator.userAgent` property whose value is set to `Cloudflare-Workers`. This property can be used to reliably determine whether code is running within the Workers environment.
+With the `global_navigator` flag set, a new global `navigator` property is available from within Workers. Currently, it exposes only a single `navigator.userAgent` property whose value is set to `'Cloudflare-Workers'`. This property can be used to reliably determine whether code is running within the Workers environment.
 
 ### Setters/getters on API object prototypes
 

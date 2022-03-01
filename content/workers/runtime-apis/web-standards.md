@@ -117,4 +117,4 @@ The Workers’ Runtime’s URL class behavior differs from the URL Spec document
 
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for instance, to reliably determine that code is running within the Workers environments.
+When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for instance, to reliably determine that code is running within the Workers environment.
