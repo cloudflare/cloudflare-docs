@@ -50,12 +50,6 @@ To remedy a false positive:
 
 _\* Not available in Network Analytics dashboard yet._
 
-{{<Aside type="warning">}}
-
-The **DDoS** tab under **Firewall** is currently only available to the WAF/CDN customers.
-
-{{</Aside>}}
-
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
 ## Updating the adjusted rules at a later date
