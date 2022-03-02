@@ -42,7 +42,7 @@ If an image is marked to require a signed URL, it cannot be accessed without a t
     // https://imagedelivery.net/cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
     const stringToSign = url.pathname + '?' + url.searchParams.toString();
-    // e.g. /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
+    // for example, /cheeW4oKsx5ljh8e8BoL2A/bc27a117-9509-446b-8c69-c81bfeac0a01/mobile?exp=1631289275
 
     // Generate the signature
     const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(stringToSign));
