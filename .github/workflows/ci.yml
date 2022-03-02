@@ -2,9 +2,6 @@ name: CI
 
 on:
   push:
-    paths-ignore:
-      - '_ignore/**' # todo
-      - '_components/**' # todo
     branches:
       - '**'
     tags-ignore:
@@ -12,23 +9,23 @@ on:
   pull_request:
     branches:
       - production
-      - dev # todo
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-      - run: pnpm install
-      # - run: pnpm run lint
+  # lint:
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 16
+  #     - name: (env) pnpm
+  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+  #     - run: pnpm install
+  #     - run: pnpm run lint
 
   compile:
+    id: build
     name: Compiles
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +43,9 @@ jobs:
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
       - run: pnpm install
       - run: hugo --minify
+
+  crawl:
+    id: crawl
+    name: Broken Links
+    if: steps.build.outputs.exit_code == 0
+    run: pnpm run crawl
