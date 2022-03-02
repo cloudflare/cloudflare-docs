@@ -183,6 +183,40 @@ Windows offers two options to install the certificate, each having a different i
 
 The root certificate is now installed and ready to be used.
 
+### Linux
+
+The location where the root certificate should be installed is different depending on your Linux distribution. Please follow the specific instructions for your flavor of Linux.
+
+#### Debian / Ubuntu
+
+1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+1. Copy the certificate to the user store.
+
+  ```bash
+  cp Cloudflare_CA.pem /usr/share/ca-certificates
+  ```
+  
+1. Import the certificate
+
+```bash
+sudo dpkg-reconfigure ca-certificates
+```
+
+#### CentOS / RedHat
+
+1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+1. Copy the certificate to the trust store.
+
+  ```bash
+  sudo cp Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+  ```
+
+3. Import the certificate.
+
+```bash
+sudo update-ca-trust
+```
+
 ### Android
 
 1.  [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
@@ -281,7 +315,7 @@ The command to install the certificate with Python on Windows automatically incl
 gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
 ```
 
-#### Python on Mac
+#### Python on Mac and Linux
 
 1.  Install the `certifi` package.
 
@@ -355,7 +389,7 @@ git config -l
 gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
 ```
 
-#### Git on Mac
+#### Git on Mac and Linux
 
 1.  Configure Git to trust the Cloudflare certificate with the following command.
 
@@ -367,7 +401,14 @@ gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
 
 The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem/) file type.
 
-    npm config set cafile [PATH_TO_CLOUDFLARE_CERT]
+```bash
+npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
+```
+On some systems you may need to set the following in your path/export list
+
+```bash
+export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
+```
 
 ### Google Cloud SDK
 
@@ -405,6 +446,6 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 
 If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment variable to use the Cloudflare root certificate. Commands are available for different operating systems in the instructions available [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
-## IntelliJ IDEA
+### IntelliJ IDEA
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
