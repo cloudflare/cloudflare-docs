@@ -3,18 +3,18 @@ pcx-content-type: how-to
 title: Domain Joined
 weight: 15
 meta:
-  title: Domain Joined (beta)
+  title: Domain Joined
 ---
 
-# Domain Joined (beta)
+# Domain Joined
 
 <details>
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ------ | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Beta   | Windows           | WARP with Gateway                                                                         | All plans                                                     |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows           | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>

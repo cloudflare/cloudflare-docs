@@ -106,7 +106,7 @@ Alternatively, download the client from one of the following links after checkin
       <td>
         <strong>OS Ver</strong>
       </td>
-      <td>CentOS 8, RHEL, Ubuntu, Debian</td>
+      <td>CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Debian 9, Debian 10, Debian 11</td>
     </tr>
     <tr>
       <td>

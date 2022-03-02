@@ -1,6 +1,5 @@
 ---
 pcx-content-type: how-to
-hidden: true
 title: CrowdStrike
 weight: 4
 ---

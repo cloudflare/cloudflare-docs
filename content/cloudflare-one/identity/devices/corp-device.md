@@ -66,3 +66,40 @@ To do that:
 1.  Choose the list of devices to require and click **Save rule**.
 
 Once saved, any device attempting to reach the application will need to connect from a device that uses Cloudflare WARP and presents a serial number in the list created.
+
+## Determine the serial number
+
+Operating systems display version numbers in different ways. This section covers how to retrieve the version number in each OS, in a format matching what the OS Version posture check expects.
+
+{{<Aside type="note">}}
+
+You must ensure the version is entered is a valid `x.x.x` SemVer. If the command below only returns a value of `x.x`, you must append a `.0` so the complete version follows the `x.x.0` format.
+
+{{</Aside>}}
+
+### On macOS
+
+1.  Open a terminal window.
+1.  Use the `system_profiler` command to check for the value of `SPHardwareDataTypeng` and retrieve the serial number.
+
+```txt
+system_profiler SPHardwareDataTypeng
+```
+
+### On Windows
+
+1.  Open a Powershell window.
+1.  Use the `Get-CimInstance` command to get the SerialNumber property of the `Win32_BIOS` class.
+
+```txt
+Get-CimInstance Win32_BIOS
+```
+
+### On Linux
+
+1.  Open a Terminal Window
+1.  Use the `dmidecode` command to get the version property `system-serial-number`.
+
+```txt
+sudo dmidecode -s system-serial-number
+```
