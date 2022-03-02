@@ -12,8 +12,8 @@ Use the **Rules** app in the Cloudflare dashboard to define [URL normalization](
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2.  Go to **Rules** > **Settings**.
+1.  Go to **Rules** > **Settings**.
 
     ![Configure Normalization](/rules/static/normalization/url-normalization-settings.png)
 
-3.  Under **Configure Normalization**, enable or disable the [available URL normalization settings](/rules/normalization/settings/).
+1.  Under **Configure Normalization**, configure the [available URL normalization settings](/rules/normalization/settings/).

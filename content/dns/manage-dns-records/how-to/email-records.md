@@ -12,7 +12,7 @@ There are two reasons to set up email records for your domain: to make sure emai
 
 ## Add MX records
 
-To route emails to your mail server, you need to [create two DNS records](/dns/create-dns-records/) within Cloudflare:
+To route emails to your mail server, you need to [create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/) within Cloudflare:
 
 1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
 

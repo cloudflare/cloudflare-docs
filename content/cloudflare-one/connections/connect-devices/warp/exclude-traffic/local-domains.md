@@ -27,11 +27,11 @@ Traffic destined to domains entered in the Local Domain Fallback configuration i
 
 You can add or remove domains from the Local Domains list at any time.
 
-1.  On the Zero Trust dashboard, navigate to **Settings** > **Network**.
+1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
 
-2.  Under **Local Domain Fallback**, click **Manage**.
+1. Under **Local Domain Fallback**, click **Manage**.
 
-3.  On this page, you will find a list of domains Cloudflare Zero Trust excludes. You can customize this list to add or remove any items from it. All prefixes under the domain are subject to the local domain fallback rule (ex. all entries are interpreted as \*.example.com)
+1. On this page, you will find a list of domains Cloudflare Zero Trust excludes. You can customize this list to add or remove any items from it. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`)
 
 ## Add a domain
 

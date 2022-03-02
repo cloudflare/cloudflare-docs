@@ -31,17 +31,17 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 1.  Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-2.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+1.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
 
-3.  Click **Add an application** and choose `Self-hosted`.
+1.  Click **Add an application** and choose `Self-hosted`.
 
-4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
+1.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
+  ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
 1.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
 
-![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+  ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
 1.  Click **Next** again and add the application.
 

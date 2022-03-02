@@ -151,7 +151,7 @@ Below is an example of the request response workflow:
 
     - The `FetchEvent` object also provides [two other methods](/workers/runtime-apis/fetch-event/#methods) to handle unexpected exceptions and operations that may complete after a response is returned.
 
-Learn more about [the `FetchEvent` lifecycle](/workers/learning/fetch-event-lifecycle/).
+Learn more about [the `FetchEvent` lifecycle](/workers/runtime-apis/fetch-event/#lifecycle-methods).
 
 ### 5b. Routing and filtering requests
 

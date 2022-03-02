@@ -20,31 +20,31 @@ This section covers how to create, renew, and revoke a service token.
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth**.
 
-2.  Go to the **Service Tokens** tab.
+1.  Go to the **Service Tokens** tab.
 
-3.  Click **Create Service Token**.
+1.  Click **Create Service Token**.
 
-4.  Next, name the service token.
+1.  Next, name the service token.
 
-The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
+    The name allows you to easily identify events related to the token in the logs and to revoke the token individually.
 
-![Name Service Token](/cloudflare-one/static/documentation/identity/users/service-token-name.png)
+    ![Name Service Token](/cloudflare-one/static/documentation/identity/users/service-token-name.png)
 
 1.  Click **Generate token**.
 
-The next page will display the generated `Client ID` and `Client Secret` for the service token.
+    The next page will display the generated `Client ID` and `Client Secret` for the service token.
 
 1.  In the next page, copy the `Client Secret`.
 
-![Access Service Token card](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
+    ![Access Service Token card](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
 
-{{<Aside type="warning" header="Important">}}
+    {{<Aside type="warning" header="Important">}}
 
-This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+    This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
 
-{{</Aside>}}
+    {{</Aside>}}
 
-6.  Click **Close**.
+1.  Click **Close**.
 
 You can now use the service token when you create [service auth policies](/cloudflare-one/policies/zero-trust/). When creating these policies, use the `Service Auth` action to ensure that the identity provider login screen is not required for end users.
 
@@ -70,7 +70,7 @@ To revoke a service token immediately:
 
 1.  On the [Teams dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Service Auth > Service Tokens**.
 
-2.  Click **Delete** for the token you need to revoke and delete.
+1.  Click **Delete** for the token you need to revoke and delete.
 
 When revoking service tokens, keep in mind:
 
@@ -87,18 +87,18 @@ To configure a service token expiration alert:
 
 1.  Navigate to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
-2.  Select the **Notifications** tab.
+1.  Select the **Notifications** tab.
 
-3.  Click **Create**.
+1.  Click **Create**.
 
-4.  Select the Event Type “Expiring Access Service Token”.
+1.  Select the Event Type “Expiring Access Service Token”.
 
-5.  Enter a name for your alert, and an optional description.
+1.  Enter a name for your alert, and an optional description.
 
     ![Expiration notification](/cloudflare-one/static/documentation/identity/users/notification-token.png)
 
-6.  If you'd like to add other recipients for the notification email, click _+Add email recipient_.
+1.  If you'd like to add other recipients for the notification email, click _+Add email recipient_.
 
-7.  Click **Create**.
+1.  Click **Create**.
 
 Your alert has now been set, and is now visible in the **Notifications** tab of the Cloudflare dashboard.

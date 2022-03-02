@@ -48,8 +48,8 @@ Refer to the [ingress rules page](/cloudflare-one/connections/connect-apps/confi
 You can create your configuration file using any text editor. For example, to create a configuration file in the [default `cloudflared` directory](#storing-a-configuration-file) with vim:
 
 1.  `cd` into your system's default directory for `cloudflared`.
-2.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/#origin-configuration).
-3.  Name and save your file by typing `:wq file-name.yaml` and exit vim.
+1.  Open vim and type in the necessary [keys and values](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/#origin-configuration).
+1.  Name and save your file by typing `:wq file-name.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
 
@@ -74,9 +74,9 @@ $ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
 When making changes to the configuration file for a given tunnel, we suggest relying on [`cloudflared` replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) to propagate the new configuration with minimal downtime.
 
 1.  Have a `cloudflared` instance running with the original version of the configuration file.
-2.  Start a `cloudflared` replica running with the updated version of the configuration file.
-3.  Wait for the replica to be fully running and usable.
-4.  Stop the first instance of `cloudflared`.
+1.  Start a `cloudflared` replica running with the updated version of the configuration file.
+1.  Wait for the replica to be fully running and usable.
+1.  Stop the first instance of `cloudflared`.
 
 Your `cloudflared` will now be running with the updated version of your configuration file.
 

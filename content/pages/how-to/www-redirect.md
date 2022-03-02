@@ -9,7 +9,7 @@ In this tutorial, you will learn how to redirect the `www` subdomain to your ape
 
 {{<Aside type= "note">}}
 
-Although it is generally recommended to use [Bulk Redirects](/pages/use-bulk-redirects.md/) when redirecting between domains, for smaller use cases, such as a single redirect from `www.example.com` to `example.com`, a single Page Rule will work just as well.
+Although it is generally recommended to use [Bulk Redirects](/pages/how-to/use-bulk-redirects/) when redirecting between domains, for smaller use cases, such as a single redirect from `www.example.com` to `example.com`, a single Page Rule will work just as well.
 
 {{</Aside>}}
 

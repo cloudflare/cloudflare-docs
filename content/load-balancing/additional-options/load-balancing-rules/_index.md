@@ -12,11 +12,11 @@ Use load balancing rules to customize the behavior of your load balancer. For ex
 
 ## More details
 
-You can [create Load Balancing rules](/load-balancing/create-rules/) whenever you create or edit a load balancer in **Traffic** > **Load Balancing**.
+You can [create Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/create-rules/) whenever you create or edit a load balancer in **Traffic** > **Load Balancing**.
 
-As with Cloudflare [Firewall rules](/firewall/cf-firewall-rules), each Load Balancing rule is a combination of two elements: an [expression](/load-balancing/expressions/) and an [action](/load-balancing/actions/). Expressions define the criteria for an HTTP request to trigger an action. The action tells Cloudflare how to handle the request.
+As with Cloudflare [Firewall rules](/firewall/cf-firewall-rules), each Load Balancing rule is a combination of two elements: an [expression](/load-balancing/additional-options/load-balancing-rules/expressions/) and an [action](/load-balancing/additional-options/load-balancing-rules/actions/). Expressions define the criteria for an HTTP request to trigger an action. The action tells Cloudflare how to handle the request.
 
-When building expressions for Load Balancing rules, refer to [Supported fields and operators](/load-balancing/reference/) for definitions and usage.
+When building expressions for Load Balancing rules, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/) for definitions and usage.
 
 ## Availability
 

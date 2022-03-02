@@ -29,12 +29,12 @@ To set up Split Tunnels:
 
 1.  On the Zero Trust dashboard, navigate to **Settings** > **Network**.
 
-2.  Under **Split Tunnels**, select the mode you want to choose.
+1.  Under **Split Tunnels**, select the mode you want to choose.
 
     - **(default) Exclude IPs and domains**. All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
     - **Include IPs and Domains**. Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
-3.  If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
+1.  If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
 
     On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. Add or remove any desired items and click **Save**.
 
@@ -61,9 +61,9 @@ Valid domains include:
 Domain-based split tunneling works alongside DNS by dynamically excluding or including the route to the IP address(es) returned in the DNS lookup request. This has a few ramifications you should be aware of before deploying in your organization:
 
 1.  Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
-2.  You may inadvertently exclude or include additional hostnames that happen to share an IP address.
-3.  Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/http-policies/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
-4.  If a DNS result has been previously cached it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
+1.  You may inadvertently exclude or include additional hostnames that happen to share an IP address.
+1.  Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/http-policies/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
+1.  If a DNS result has been previously cached it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
 
 {{</Aside>}}
 

@@ -16,65 +16,65 @@ To set up SAML with Centrify as your identity provider:
 
     ![Centrify Apps page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-1.png)
 
-2.  Select **Add Web Apps**.
+1.  Select **Add Web Apps**.
 
-3.  Click the **Custom** tab.
+1.  Click the **Custom** tab.
 
-4.  Next to the **SAML** icon click **Add**.
+1.  Next to the **SAML** icon click **Add**.
 
     ![Centrify Settings Add Application details page](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-3.png)
 
-5.  Enter the required information for your application.
+1.  Enter the required information for your application.
 
-6.  Click **Save**.
+1.  Click **Save**.
 
-7.  Click **Settings** in the left pane.
+1.  Click **Settings** in the left pane.
 
-8.  In the middle menu pane, select **Trust**.
+1.  In the middle menu pane, select **Trust**.
 
-9.  Choose the **Manual Configuration** option.
+1.  Choose the **Manual Configuration** option.
 
-10. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1. In the **SP Entity ID** and **Assertion Consumer Service (ACS) URL fields**, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-11. Click **Save**.
+1. Click **Save**.
 
-12. In the middle menu pane, select **User Access**.
+1. In the middle menu pane, select **User Access**.
 
-13. Click **Add**. The **Select Role** dialog displays.
+1. Click **Add**. The **Select Role** dialog displays.
 
     ![Centrify Settings Select Role dialog](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-6.png)
 
-14. Complete your roles access assignments. The Role rules display on the **User Access** card.
+1. Complete your roles access assignments. The Role rules display on the **User Access** card.
 
     ![Centrify Added Roles list](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-7.png)
 
-15. In the middle menu pane, select **SAML Response**.
+1. In the middle menu pane, select **SAML Response**.
 
-16. Click **Active > Add** to create a new **Attribute Name**, **Email**.
+1. Click **Active > Add** to create a new **Attribute Name**, **Email**.
 
     ![Centrify Settings Email Attribute](/cloudflare-one/static/documentation/identity/saml-centrify/saml-centrify-9.png)
 
-17. Enter the user email addresses in the **Attribute Value** field.
+1. Enter the user email addresses in the **Attribute Value** field.
 
-18. Click **Save**.
+1. Click **Save**.
 
-19. Select **Settings** again from the left menu pane, and **Trust**.
+1. Select **Settings** again from the left menu pane, and **Trust**.
 
-20. Select the **Manual Configuration** option.
+1. Select the **Manual Configuration** option.
 
-21. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-22. Under **Login methods**, click **Add new**.
+1. Under **Login methods**, click **Add new**.
 
-23. Select SAML.
+1. Select SAML.
 
-24. Copy and paste the corresponding information from Centrify into the fields.
+1. Copy and paste the corresponding information from Centrify into the fields.
 
-25. Click **Save**.
+1. Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 
@@ -92,9 +92,9 @@ To get your Cloudflare metadata file:
 
     Replace `<your-team-name>` with your [team name](/cloudflare-one/glossary/#team-name).
 
-2.  Save the file in XML format.
+1.  Save the file in XML format.
 
-3.  Upload the XML document to your **Centrify** account.
+1.  Upload the XML document to your **Centrify** account.
 
 ## Example API configuration
 

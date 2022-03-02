@@ -61,9 +61,9 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Navigate to **Settings > Devices > Device enrollment**.
 
-2.  Click **Manage**.
+1.  Click **Manage**.
 
-3.  Click **Add a rule**.
+1.  Click **Add a rule**.
 
     ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -71,7 +71,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
-4.  Click **Save**.
+1.  Click **Save**.
 
 ## Collect your Team domain
 

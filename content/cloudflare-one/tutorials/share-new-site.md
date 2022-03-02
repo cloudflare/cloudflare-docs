@@ -27,8 +27,8 @@ You can use Cloudflare Tunnel to quickly share projects you are working on with 
 ## Before you start
 
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
-3.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
+1.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+1.  [Enable Argo Smart Routing for your account](https://support.cloudflare.com/hc/articles/115000224552-Configuring-Argo-through-the-UI)
 
 ---
 
@@ -112,11 +112,11 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 1.  Once enabled, navigate to the `Applications` page in the Zero Trust dashboard.
 
-2.  Click **Add an application**.
+1.  Click **Add an application**.
 
-3.  Choose **self-hosted** from the options presented.
+1.  Choose **self-hosted** from the options presented.
 
-4.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
+1.  In the policy builder, add the subdomain of your new DNS record that represents your Cloudflare Tunnel connection.
 
     ![App Picker](/cloudflare-one/static/secure-origin-connections/share-new-site/configure-app.png)
 

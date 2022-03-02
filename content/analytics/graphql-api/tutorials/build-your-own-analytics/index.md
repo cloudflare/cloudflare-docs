@@ -10,7 +10,7 @@ In this example, we are going to see how to use the GraphQL Analytics API to bui
 
 ![GraphQL recipe](../static/graphQL-recipe-cacheVisual.gif)
 
-The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You will just need to enter your email address, API token, and your zone ID, and then click the **Fetch analytics** button. To download an example of a `CSS` file, you can click [here](/analytics/static/downloads/main.css/).
+The following code will build a page with all the requirements to fetch from GraphQL and plot the cached and uncached bandwidth for the given zone. You will just need to enter your email address, API token, and your zone ID, and then click the **Fetch analytics** button. To download an example of a `CSS` file, you can click [here](/analytics/static/downloads/main.css).
 
 ## Code
 

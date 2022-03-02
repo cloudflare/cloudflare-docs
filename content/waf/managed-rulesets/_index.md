@@ -18,15 +18,15 @@ Cloudflare provides the following Managed Rulesets in the WAF:
   </thead>
   <tbody>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/managed-rulesets/cloudflare-managed-ruleset'>Cloudflare Managed Ruleset</a></td>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/cloudflare-managed-ruleset/'>Cloudflare Managed Ruleset</a></td>
       <td>Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.</td>
     </tr>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/managed-rulesets/owasp-core-ruleset'>Cloudflare OWASP Core Ruleset</a></td>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/owasp-core-ruleset/'>Cloudflare OWASP Core Ruleset</a></td>
       <td>Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.</td>
     </tr>
     <tr>
-      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/managed-rulesets/exposed-credentials-check'>Cloudflare Exposed Credentials Check</a></td>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/exposed-credentials-check/'>Cloudflare Exposed Credentials Check</a></td>
       <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
     </tr>
   </tbody>

@@ -12,7 +12,7 @@ This page provides reference information about the different types of DNS record
 
 ## IP address resolution
 
-At least one **IP address resolution** record is required for each domain on Cloudflare. These records are the only ones you can [proxy](/dns/proxied-dns-records/) through Cloudflare.
+At least one **IP address resolution** record is required for each domain on Cloudflare. These records are the only ones you can [proxy](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 
 ### A and AAAA
 
@@ -28,7 +28,7 @@ These records include the following fields:
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxied-dns-records/).
+- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ### CNAME
 
@@ -44,7 +44,7 @@ These records include the following fields:
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxied-dns-records/).
+- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 You can use CNAME records to point to other CNAME records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid A or AAAA record) if this hostname is meant to proxy traffic.
 

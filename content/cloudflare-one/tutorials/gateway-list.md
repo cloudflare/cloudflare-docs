@@ -34,11 +34,11 @@ You can manually create a list or upload a CSV to Cloudflare Zero Trust.
 
 1.  To begin, navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and go to **My Team > Lists** page.
 
-![List Create](/cloudflare-one/static/secure-web-gateway/gateway-list/lists.png)
+    ![List Create](/cloudflare-one/static/secure-web-gateway/gateway-list/lists.png)
 
 1.  Click **Upload CSV** to add a CSV.
 
-2.  Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
+1.  Name the list and choose its type. A list can only include objects of the same type. You can add an optional comment. Next, click **select a file** and then **Create**.
 
     ![List Add](/cloudflare-one/static/secure-web-gateway/gateway-list/list-create.png)
 
