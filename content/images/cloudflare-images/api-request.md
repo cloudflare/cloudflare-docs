@@ -9,16 +9,23 @@ weight: 3
 To make your first request to the Images API, you must obtain these pieces of information:
 
 <details>
-  <summary>Your Cloudflare Account ID</summary>
-  <div>
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your
-    account and website. 2. In the **Overview** app, scroll down to find your Account ID.
-  </div>
+<summary>Your Cloudflare Account ID</summary>
+<div>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your
+account and website.
+2. In **Overview**, scroll down to find your Account ID.
+
+</div>
 </details>
 
 <details>
-  <summary>Your Global API Key or API Token</summary>
-  <div>Refer to [API tokens](/images/cloudflare-images/upload-images/api-token/).</div>
+<summary>Your Global API Key or API Token</summary>
+<div>
+
+Refer to [API tokens](/images/cloudflare-images/upload-images/api-token/).
+
+</div>
 </details>
 
 Once you have this information, you are ready to upload your first image to Cloudflare Images using the API:
