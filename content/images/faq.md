@@ -111,7 +111,7 @@ Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/h
 
 ### Are Image Resizing errors billed?
 
-Cloudflare considers some Image Resizing request errors for billing, as well as requests for images that do not exist. Below is a list of `cf-resized` headers that are billed:
+Cloudflare considers some Image Resizing request errors for billing. Below is a list of `cf-resized` headers that are billed:
 
 * `9401`: Invalid resize options.
 * `9412`: Origin file type invalid.
