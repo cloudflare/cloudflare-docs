@@ -5,7 +5,10 @@ title: Fetching bulk analytics
 
 # Fetching bulk analytics
 
-You can use GraphQL for client side and server side data related to your Streams. With client side analytics, you can retrieve bulk analytics information for every video in your account. Use server side analytics to view a detailed breakdown of billing of minutes viewed for your account.
+Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two data sets:
+
+- Client-side Metrics: Data collected from the Stream Player. If you use your own player, it will not be reflected in this data set.
+- Server-side Metrics: Data collected from server-side logs and used for billing purposes.
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
