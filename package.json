@@ -18,6 +18,7 @@
     "@types/node": "16.11.12",
     "@types/prettier": "2.4.3",
     "@types/prismjs": "1.16.6",
+    "node-html-parser": "5.2.0",
     "prettier": "2.5.1",
     "prismjs": "1.26.0",
     "tsm": "2.2.1"
