@@ -1,6 +1,5 @@
 ---
 pcx-content-type: how-to
-hidden: true
 title: Uptycs
 weight: 4
 ---
@@ -19,4 +18,6 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 
 ## Set up Uptycs
 
-We will update this section shortly.
+1. Open your Uptycs console.
+1. Navigate to **Account Settings** > **API Key**.
+1. Generate and download your `.json` file which contains your key, secret and ID.

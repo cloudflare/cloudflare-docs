@@ -3,18 +3,18 @@ pcx-content-type: how-to
 title: Firewall
 weight: 17
 meta:
-  title: Firewall (beta)
+  title: Firewall
 ---
 
-# Firewall (beta)
+# Firewall
 
 <details>
 <summary>Feature availability</summary>
 <div>
 
-| Status | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ------ | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Beta   | macOS, Windows    | WARP with Gateway                                                                         | All plans                                                     |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| macOS, Windows    | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
