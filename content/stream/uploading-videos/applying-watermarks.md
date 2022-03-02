@@ -33,7 +33,7 @@ tus-upload --chunk-size 5242880 \
 
 ### Step 3: Done
 
-![Watermarked Video](/stream/cat.png)
+![Watermarked Video](../cat.png)
 
 ## Profiles
 

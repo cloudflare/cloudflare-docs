@@ -14,4 +14,6 @@ To start using Super Bot Fight Mode:
     *   For more details on supported file types, refer to [Static resource protection](/bots/reference/static-resources/)
     *   For more details on invisible code injection, refer to [JavaScript detections](/bots/reference/javascript-detections/).
 
-{{<Aside type="warning" header="Warning">}}If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.{{</Aside>}}
+{{<Aside type="warning" header="Warning">}}
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+{{</Aside>}}

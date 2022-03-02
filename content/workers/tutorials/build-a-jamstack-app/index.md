@@ -14,7 +14,7 @@ title: Build a todo list JAMstack application
 
 In this tutorial, you will build a todo list application using HTML, CSS, and JavaScript. The application data will be stored in [Workers KV](/workers/runtime-apis/kv/).
 
-![Preview](../media/finished.png)
+![Preview](./media/finished.png)
 
 Before starting this project, you should have some experience with HTML, CSS, and JavaScript. You will learn:
 

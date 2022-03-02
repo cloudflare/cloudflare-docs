@@ -181,7 +181,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 

@@ -63,7 +63,7 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
     cloudflared.exe tunnel create <Tunnel Name>
     ```
 
-    This will generate a [credentials file](/cloudflare-one/connections/connect-apps/tunnel-useful-terms/#credentials-file) in `.json` format.
+    This will generate a [credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) in `.json` format.
 
 1. [Create a configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file) with the following content:
 

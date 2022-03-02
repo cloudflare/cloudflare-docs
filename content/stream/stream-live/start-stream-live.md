@@ -15,7 +15,7 @@ You can start a live stream using the Stream Dashboard or the API. After you sub
 1.  Enter a name for your Live Input and click **Create Live Input**.
 1.  After you have created a Live Input, you can retrieve the RTMPS URL and Key.
 
-![Your Live Input's RTMPS URL and key](/stream/rtmps-key.png)
+![Your Live Input's RTMPS URL and key](../rtmps-key.png)
 
 Within seconds of you pushing your live stream to Cloudflare Stream, you should see the live video stream:
 

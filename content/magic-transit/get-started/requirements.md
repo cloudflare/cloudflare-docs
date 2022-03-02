@@ -20,7 +20,7 @@ The routers at your GRE tunnel endpoints must meet the following requirements to
 
 ## Draft Letter of Authorization
 
-Draft a [Letter of Authorization (LOA)](/byoip/loa) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](/byoip/loa/loa-template) for an example.
+Draft a [Letter of Authorization (LOA)](/byoip/about/loa/) that identifies the prefixes you want to advertise and gives Cloudflare permission to announce them. The LOA is required by Cloudflare's transit providers so they can accept the routes Cloudflare advertises on your behalf. See this [LOA template](/byoip/about/loa/) for an example.
 
 {{<Aside type="note" header="Note">}}
 
@@ -30,7 +30,7 @@ The Letter of Authorization must be a PDF. Transit providers may reject the LOA 
 
 ## Verify Internet Routing Registry entries
 
-Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/irr-records/verify-irr-entries).
+Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/how-to/verify-irr-entries/).
 
 ## Set maximum segment size
 
