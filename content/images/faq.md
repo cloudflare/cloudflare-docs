@@ -35,7 +35,7 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 
 **CI** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
 
-**IR** - Cloudflare charges when there are cache misses.
+**IR** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
 
 </div>
 </details>
@@ -108,6 +108,17 @@ Yes. Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels la
 ### Resizing failed and I received an error response with a code. What does it mean?
 
 Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
+
+### Are Image Resizing errors billed?
+
+Cloudflare considers some Image Resizing request errors for billing. Below is a list of `cf-resized` headers that are billed:
+
+* `9401`: Invalid resize options.
+* `9412`: Origin file type invalid.
+* `9413`: Image too big.
+* `9511`: Unsupported image format.
+
+Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information about these error codes.
 
 ### Why does upscaling a PNG with Workers increase its file size?
 
