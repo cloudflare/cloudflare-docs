@@ -63,7 +63,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
       </td>
       <td>
         Lists all current Firewall Rules. Results return paginated with 25 items per page by
-        default. Use optional parameters to narrow results.{' '}
+        default. Use optional parameters to narrow results.
       </td>
     </tr>
     <tr>
