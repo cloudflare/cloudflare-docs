@@ -5,20 +5,26 @@ title: Fetching bulk analytics
 
 # Fetching bulk analytics
 
-  {{<Aside type="note">}}
+You can use GraphQL for client side and server side data related to your Streams. With client side analytics, you can retrieve bulk analytics information for every video in your account. Use server side analytics to view a detailed breakdown of billing of minutes viewed for your account.
+
+For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
+
+{{<Aside type="note">}}
 Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
-  {{</Aside>}}
+{{</Aside>}}
 
-Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request.
+## Client side analytics
 
-## Metrics available
+Stream has a GraphQL analytics API that can be used to get bulk analytics for every video in your account with one HTTP request.
+
+### Metrics
 
 *   Number of views (number of times the video playback has been started)
 *   Time viewed in seconds
 *   Number of video buffering events
 *   Number of times quality level has changed
 
-## Filters available
+### Filters
 
 There is no limit on number of filters per query.
 
@@ -42,7 +48,7 @@ If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP req
 
 {{</Aside>}}
 
-## Example usage
+### Examples
 
 Here is how you would get the view count and minutes viewed for the videos in your Stream account:
 
@@ -89,7 +95,7 @@ curl --request POST \
 --data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      videoPlaybackEventsAdaptiveGroups(\n        filter: {\n          date_geq: \"2020-09-01\"\n          date_lt: \"2020-09-25\"\n        }\n        orderBy:[uid_ASC]\n        limit: 10000\n      ) {\n        count\n        sum {\n          timeViewedMinutes\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
 ```
 
-### Response:
+### Response
 
 The response will look something like below. Things to remember:
 
@@ -195,6 +201,62 @@ The response will look something like below. Things to remember:
   "errors": null
 }
 
+```
+
+## Server side analytics
+
+### Metrics
+
+- Date and time an event occurred at Cloudflare's edge
+- Media source for the minutes viewed
+- Video ID
+
+### Filters
+
+- `date`
+- `datetime`
+- `mediaType`
+- `UID`
+
+### Example
+
+Here is the exact cURL request:
+
+```bash
+curl --request POST \
+--url https://api.cloudflare.com/client/v4/graphql \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer $TOKEN' \
+--data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      streamMinutesViewedAdaptiveGroups(\n        filter: {\n          date_lt: \"2022-03-01\"\n          date_gt: \"2022-02-01\"\n        }\n        orderBy:[sum_minutesViewed_DESC]\n        limit: 10\n      ) {\n             sum {\n          minutesViewed\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
+```
+
+### Response
+
+```graphql
+query {
+  viewer {
+    accounts(filter:{
+      accountTag:"<ACCOUNT_ID>"
+
+    }) {
+      streamMinutesViewedAdaptiveGroups(
+        filter: {
+          date_lt: "2022-03-01"
+          date_gt: "2022-02-01"
+        }
+        limit: 10
+        orderBy:[sum_minutesViewed_DESC]
+      ) {
+        sum {
+          minutesViewed
+        }
+        dimensions{
+          uid
+        }
+      }
+    }
+  }
+}
 ```
 
 ## Pagination
