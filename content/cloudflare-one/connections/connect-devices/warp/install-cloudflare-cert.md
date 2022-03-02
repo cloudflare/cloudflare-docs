@@ -184,29 +184,34 @@ Windows offers two options to install the certificate, each having a different i
 The root certificate is now installed and ready to be used.
 
 ### Linux
-The location needed to install the root certificate differs depending on your distribution, please follow the specific instructions for your flavor of Linux.
+
+The location where the root certificate should be installed is different depending on your Linux distribution. Please follow the specific instructions for your flavor of Linux.
 
 #### Debian / Ubuntu
-1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
-2. Copy the certificate to the user store
 
-```bash
-cp Cloudflare_CA.pem /usr/share/ca-certificates
-```
-3. Import the certificate
+1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+1. Copy the certificate to the user store.
+
+  ```bash
+  cp Cloudflare_CA.pem /usr/share/ca-certificates
+  ```
+  
+1. Import the certificate
 
 ```bash
 sudo dpkg-reconfigure ca-certificates
 ```
 
 #### CentOS / RedHat
-1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
-2. Copy the certificate to the trust store
 
-```bash
-sudo cp Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
-```
-3. Import the certificate
+1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+1. Copy the certificate to the trust store.
+
+  ```bash
+  sudo cp Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+  ```
+
+3. Import the certificate.
 
 ```bash
 sudo update-ca-trust
