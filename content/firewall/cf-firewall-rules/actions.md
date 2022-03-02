@@ -22,7 +22,7 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
 
 {{<Aside type="note">}}
 
-For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions).
+For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions/).
 
 {{</Aside>}}
 

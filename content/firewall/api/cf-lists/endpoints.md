@@ -46,7 +46,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
         <a href="https://api.cloudflare.com/#rules-lists-create-list">Create a List</a>
       </td>
       <td>
-        <code class="InlineCode">POST accounts/{'<ACCOUNT_ID>'}/rules/lists</code>
+        <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">Creates an empty list.</td>
     </tr>
@@ -55,7 +55,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
         <a href="https://api.cloudflare.com/#rules-lists-list-lists">List Lists</a>
       </td>
       <td>
-        <code class="InlineCode">GET accounts/{'<ACCOUNT_ID>'}/rules/lists</code>
+        <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         Fetch all lists for the account. (This request does not fetch the items in the lists.)
@@ -67,7 +67,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}
+          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
@@ -81,21 +81,17 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}
+          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         <p>
-          Updates the <code class="InlineCode">description</code> of a list. You cannot edit the{' '}
-          <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you
-          cannot update items in a list.
+          Updates the <code class="InlineCode">description</code> of a list. You cannot edit the 
+          <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items 
+          in a list.
         </p>
         <p>
-          To update an item in a list, use the{' '}
-          <a href="https://api.cloudflare.com/#rules-lists-replace-list-items">
-            Replace List Items
-          </a>{' '}
-          operation.
+          To update an item in a list, use the <a href="https://api.cloudflare.com/#rules-lists-replace-list-items">Replace List Items</a> operation.
         </p>
       </td>
     </tr>
@@ -105,11 +101,11 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}
+          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;
         </code>
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
-        Deletes the list, but only when no filters reference it.{' '}
+        Deletes the list, but only when no filters reference it.
       </td>
     </tr>
   </tbody>
@@ -142,7 +138,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items
+          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
         </code>
       </td>
       <td>
@@ -157,7 +153,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          GET accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items/{'<ITEM_ID>'}
+          GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items/&lt;ITEM_ID&gt;
         </code>
       </td>
       <td>
@@ -170,7 +166,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          POST accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items
+          POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
         </code>
       </td>
       <td>
@@ -190,13 +186,12 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          PUT accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items
+          PUT accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
         </code>
       </td>
       <td>
         <p>
-          Deletes all current items in the list and replaces them with{' '}
-          <code class="InlineCode">items</code>.
+          Deletes all current items in the list and replaces them with <code class="InlineCode">items</code>.
         </p>
         <p>
           When <code class="InlineCode">items</code> is empty, deletes <strong>all</strong> items in
@@ -213,7 +208,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       </td>
       <td>
         <code class="InlineCode">
-          DELETE accounts/{'<ACCOUNT_ID>'}/rules/lists/{'<LIST_ID>'}/items
+          DELETE accounts/&lt;ACCOUNT_ID&gt;/rules/lists/&lt;LIST_ID&gt;/items
         </code>
       </td>
       <td>
