@@ -18,6 +18,6 @@ The following Uptycs values are needed to set up the Uptycs posture check:
 
 ## Set up Uptycs
 
-1. Open your Uptycs console
-1. Navigate to **Account Settings** > **API Key**
-1. Generate and download your .json file which contains your key, secret and ID.
+1. Open your Uptycs console.
+1. Navigate to **Account Settings** > **API Key**.
+1. Generate and download your `.json` file which contains your key, secret and ID.
