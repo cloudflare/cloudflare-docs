@@ -30,7 +30,7 @@ await NAMESPACE.put(key, value)
 {{<definitions>}}
 
 *   `key` {{<type>}}string{{</type>}}
-    *   The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
+    *   The key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid. Keys have a maximum length of 512 bytes.
 
 *   `value` {{<type>}}string{{</type>}} | {{<type>}}ReadableStream{{</type>}} | {{<type>}}ArrayBuffer{{</type>}}
     *   The value to store. The type is inferred.
