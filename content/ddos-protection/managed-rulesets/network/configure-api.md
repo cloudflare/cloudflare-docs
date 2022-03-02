@@ -8,7 +8,7 @@ meta:
 
 # Configure Network-layer DDoS Attack Protection via API
 
-Configure the Cloudflare Network-layer DDoS Attack Protection Managed Ruleset by defining overrides at the account level using the [Rulesets API](/ruleset-engine/rulesets-api).
+Configure the Cloudflare Network-layer DDoS Attack Protection Managed Ruleset by defining overrides at the account level using the [Rulesets API](/ruleset-engine/rulesets-api/).
 
 Each account has the Network-layer DDoS Attack Protection Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l4` phase entry point ruleset explicitly. You only have to create a rule in the phase entry point to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -30,9 +30,9 @@ You can only define overrides for the Network-layer DDoS Attack Protection Manag
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l4` phase at the account level. The request includes several overrides to adjust the default behavior of the Network-layer DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
-*   All rules of the Network-layer DDoS Attack Protection Managed Ruleset will have their sensitivity set to `medium`.
-*   All rules tagged with the tag `{tag-name}` will have their sensitivity set to `low`.
-*   The rule with ID `{rule-id}` will use the `block` action.
+* All rules of the Network-layer DDoS Attack Protection Managed Ruleset will have their sensitivity set to `medium`.
+* All rules tagged with the tag `{tag-name}` will have their sensitivity set to `low`.
+* The rule with ID `{rule-id}` will use the `block` action.
 
 The overrides apply to all packets matching the rule expression: `ip.dst in { 1.1.1.0/24 }`.
 
@@ -116,4 +116,4 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
