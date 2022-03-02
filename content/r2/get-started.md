@@ -84,7 +84,7 @@ You will need to bind your bucket to a Worker.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a runtime variable that the Workers runtime provides to your code. The capability of these variables can perform a number of operations depending on what they are bound to; for example, a binding may offer the [KV Namespace API](/workers/runtime-apis/kv), the [Durable Object API](/workers/runtime-apis/durable-objects), the [R2 API](#api), or it may be one of your user-defined environment variables. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv), [Durable Objects](/workers/runtime-apis/durable-objects), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
