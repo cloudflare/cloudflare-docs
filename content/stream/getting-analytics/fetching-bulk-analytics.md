@@ -5,7 +5,7 @@ title: Fetching bulk analytics
 
 # Fetching bulk analytics
 
-You can use GraphQL for client side nd server side data related to your Streams. With client side analytics, you can retrieve bulk analytics information for every video in your account. Use server side analytics to view a detailed breakdown of billing of minutes viewed for your account.
+You can use GraphQL for client side and server side data related to your Streams. With client side analytics, you can retrieve bulk analytics information for every video in your account. Use server side analytics to view a detailed breakdown of billing of minutes viewed for your account.
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
@@ -15,7 +15,7 @@ Currently, Stream Analytics are only available for video plays that use the Stre
 
 ## Client side analytics
 
-Stream has a GraphQL analytics API that can be used to get bulk analytics for every in your account with one HTTP request.
+Stream has a GraphQL analytics API that can be used to get bulk analytics for every video in your account with one HTTP request.
 
 ### Metrics
 
@@ -207,7 +207,6 @@ The response will look something like below. Things to remember:
 
 ### Metrics
 
-- Date an event occurred at Cloudflare's edge
 - Date and time an event occurred at Cloudflare's edge
 - Media source for the minutes viewed
 - Video ID
@@ -237,7 +236,7 @@ curl --request POST \
 query {
   viewer {
     accounts(filter:{
-      accountTag:"<ACCOUNT ID>"
+      accountTag:"<ACCOUNT_ID>"
 
     }) {
       streamMinutesViewedAdaptiveGroups(
