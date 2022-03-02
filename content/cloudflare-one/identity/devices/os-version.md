@@ -57,12 +57,13 @@ defaults read loginwindow SystemVersionStampAsString
 ```
 
 ### On Linux
-Linux currently relies on the system Kernel version instead of some specific distro version. The kernel version must be converted to a valid semer for us 
+
+Linux currently relies on the system Kernel version instead of a specific distro version. For the OS Version check to work, the kernel version must be converted to a valid SemVer.
 
 1.  Open a Terminal window.
-1.  Use the `uname -r` command to get the complete version
-1.  Strip off all but the first 3 whole numbers. For instance if the command above returned `5.14.0-25.el9.x86_64` then the valid semver would be `5.14.0`
-
+1.  Run the `uname -r` command to get the complete version.
+1.  The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
+ 
 ```txt
 uname -r
 ```
