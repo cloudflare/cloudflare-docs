@@ -55,7 +55,9 @@ To test that your connection is working, navigate to **Settings** > **Authentica
 
 {{<Aside type="Warning">}}
 
-If you encounter the error **Failed to fetch user/group information from the identity**, please double-check your Okta configuration and try again. This error does not signal any Access-specific misconfiguration.
+If you encounter the error **Failed to fetch user/group information from the identity**, please double-check your Okta configuration:
+  * If you have more than 100 Okta groups, ensure you include the API token.
+  * The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
 
 {{</Aside>}}
 
