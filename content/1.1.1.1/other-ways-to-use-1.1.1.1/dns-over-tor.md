@@ -80,13 +80,13 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
 1. Download `cloudflared` by following the guide for [connecting to 1.1.1.1 using DNS over HTTPS clients](/1.1.1.1/encryption/dns-over-https/dns-over-https-client).
-1. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
+2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
 	```sh
 	$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
 	```
 
-1. Instruct your machine to treat the `.onion` address as localhost:
+3. Instruct your machine to treat the `.onion` address as localhost:
 
 	```bash
 	$ cat << EOF >> /etc/hosts
@@ -94,7 +94,7 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 	EOF
 	```
 
-1. Finally, start a local DNS over UDP daemon:
+4. Finally, start a local DNS over UDP daemon:
 
 	```sh
 	$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"

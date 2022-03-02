@@ -9,53 +9,53 @@ pcx-content-type: how-to
 ## PS4
 
 1. Go to **Settings** > **Network** > **Set Up Internet Connection**.
-1. Select **WiFi** or **LAN** depending on your Internet connection.
-1. Select **Custom**.
-1. Set **IP Address Settings** to **Automatic**.
-1. Change **DHCP Host Name** to **Do Not Specify**.
-1. Set **DNS Settings** to **Manual**.
-1. Change **Primary DNS** and **Secondary DNS** to:
+2. Select **WiFi** or **LAN** depending on your Internet connection.
+3. Select **Custom**.
+4. Set **IP Address Settings** to **Automatic**.
+5. Change **DHCP Host Name** to **Do Not Specify**.
+6. Set **DNS Settings** to **Manual**.
+7. Change **Primary DNS** and **Secondary DNS** to:
     {{<render file="_ipv4.md">}}
-1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
+8. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
     {{<render file="_ipv6.md">}}
-1. Set **MTU Settings** to **Automatic**.
-1. Set **Proxy Server** to **Do Not Use**.
+9. Set **MTU Settings** to **Automatic**.
+10. Set **Proxy Server** to **Do Not Use**.
 
 ## Xbox One
 
 1. Open the Network screen by pressing the Xbox button on your controller.
-1. Go to **Settings** > **Network** > **Network Settings**.
-1. Next, go to **Advanced Settings** > **DNS Settings**.
-1. Select **Manual**.
-1. Set **Primary DNS** and **Secondary DNS** to:
-    {{<render file="_ipv4.md">}}
-1. If you have the option to add more DNS servers, you can add the IPv6 addresses as well:
+2. Go to **Settings** > **Network** > **Network Settings**.
+3. Next, go to **Advanced Settings** > **DNS Settings**.
+4. Select **Manual**.
+5. Set **Primary DNS** and **Secondary DNS** to:
+   {{<render file="_ipv4.md">}}
+6. If you have the option to add more DNS servers, you can add the IPv6 addresses as well:
     {{<render file="_ipv6.md">}}
-1. When you are done, you will be shown a confirmation screen. Press **B** to save.
+7. When you are done, you will be shown a confirmation screen. Press **B** to save.
 
 ## Nintendo
 
 The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Nintendo 2DS XL, Nintendo 3DS, Nintendo 3DS XL, and Nintendo 2DS.
 
 1. Go to the home menu and choose **System Settings** (the wrench icon).
-1. Select **Internet Settings** > **Connection Settings**.
-1. Select your Internet connection and then select **Change Settings**.
-1. Select **Change DNS**.
-1. Set **Auto-Obtain DNS** to **No**.
-1. Click **Detailed Setup**.
-1. Set **Primary DNS** and **Secondary DNS** to:
+2. Select **Internet Settings** > **Connection Settings**.
+3. Select your Internet connection and then select **Change Settings**.
+4. Select **Change DNS**.
+5. Set **Auto-Obtain DNS** to **No**.
+6. Click **Detailed Setup**.
+7. Set **Primary DNS** and **Secondary DNS** to:
     {{<render file="_ipv4.md">}}
-1. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
+8. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
     {{<render file="_ipv6.md">}}
-1. Click **Save**.
-1. Click **OK**.
+9. Click **Save**.
+10. Click **OK**.
 
 ## Nintendo Switch
 
 1. Press the home button and select **System Settings**.
-1. Scroll down and select **Internet** > **Internet Settings**.
-1. Select your Internet connection and then select **Change Settings**.
-1. Click **DNS Settings** > **Manual**.
-1. Set **Primary DNS** and **Secondary DNS** to:
+2. Scroll down and select **Internet** > **Internet Settings**.
+3. Select your Internet connection and then select **Change Settings**.
+4. Click **DNS Settings** > **Manual**.
+5. Set **Primary DNS** and **Secondary DNS** to:
     {{<render file="_ipv4.md">}}
-1. Press **Save** > **OK**.
+6. Press **Save** > **OK**.

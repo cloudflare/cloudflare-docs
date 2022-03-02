@@ -15,16 +15,16 @@ You can select between the options available in the app's settings. By default, 
 ## Set up 1.1.1.1: Faster Internet
 
 1. Download [1.1.1.1: Faster Internet from the App Store](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) for free.
-1. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
-1. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
-1. Toggle the **WARP** button to **Connected**.
+2. Launch 1.1.1.1: Faster Internet and accept the Terms of Service.
+3. Install the VPN profile that allows your phone to connect securely to 1.1.1.1.
+4. Toggle the **WARP** button to **Connected**.
 
 ### Enable 1.1.1.1 for Families
 
 1. Open 1.1.1.1: Faster Internet.
-1. Tap the **menu button**.
-1. Select **Advanced** > **Connection options**.
-1. In **DNS settings** > **1.1.1.1 for Families**, select the option you want to use.
+2. Tap the **menu button**.
+3. Select **Advanced** > **Connection options**.
+4. In **DNS settings** > **1.1.1.1 for Families**, select the option you want to use.
 
 ## Configure 1.1.1.1 manually
 
@@ -37,12 +37,12 @@ If you configure 1.1.1.1 manually, you will have to do it for every WiFi network
 Take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
 1. Go to **Settings** > **WiFi**.
-1. Select the **'i'** icon next to the WiFi network you are connected to.
-1. Scroll down and select **Configure DNS**.
-1. Change the configuration from **Automatic** to **Manual**.
-1. Select **Add Server**.
-1. {{<render file="_all-ipv4.md">}}
-1. {{<render file="_all-ipv6.md">}}
-1. Select **Save**.
+2. Select the **'i'** icon next to the WiFi network you are connected to.
+3. Scroll down and select **Configure DNS**.
+4. Change the configuration from **Automatic** to **Manual**.
+5. Select **Add Server**.
+6. {{<render file="_all-ipv4.md">}}
+7. {{<render file="_all-ipv6.md">}}
+8. Select **Save**.
 
 {{<render file="_captive-portals.md">}}

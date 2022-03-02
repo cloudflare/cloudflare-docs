@@ -11,7 +11,7 @@ Setting up a static IP address to configure a DNS server may prevent you from co
 
 If you are experiencing connectivity issues related to captive portals:
 1. Remove the static IP addresses from the device or disable the 1.1.1.1 app.
-1. Connect to the WiFi network.
-1. Once the connection has been established, re-add the static IP addresses or enable the 1.1.1.1 app.
+2. Connect to the WiFi network.
+3. Once the connection has been established, re-add the static IP addresses or enable the 1.1.1.1 app.
 
 {{</Aside>}}

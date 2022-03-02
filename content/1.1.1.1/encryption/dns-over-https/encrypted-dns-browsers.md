@@ -13,35 +13,35 @@ Some browsers might already have this setting enabled.
 ## Mozilla Firefox
 
 1. Click the menu button.
-1. Select **Settings**.
-1. In the **General** menu, scroll down to access **Network Settings**.
-1. Click **Settings**.
-1. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
+2. Select **Settings**.
+3. In the **General** menu, scroll down to access **Network Settings**.
+4. Click **Settings**.
+5. Click **Enable DNS over HTTPS**. By default, it resolves to Cloudflare DNS.
 
 ## Google Chrome
 
 1. Click the three-dot menu in your browser
-1. Click **Settings**.
-1. Click **Privacy and security** > **Security**.
-1. Scroll down and enable **Use secure DNS**.
-1. Click the **With** option, and from the drop-down menu choose *Cloudflare (1.1.1.1)*.
+2. Click **Settings**.
+3. Click **Privacy and security** > **Security**.
+4. Scroll down and enable **Use secure DNS**.
+5. Click the **With** option, and from the drop-down menu choose *Cloudflare (1.1.1.1)*.
 
 ## Microsoft Edge
 
 1. Click the three-dot menu in your browser.
-1. Click **Settings**.
-1. Click **Privacy, Search, and Services**, and scroll down to **Security**.
-1. Enable **Use secure DNS**.
-1. Click **Choose a service provider**.
-1. Click the **Enter custom provider** drop-down menu and choose *Cloudflare (1.1.1.1)*.
+2. Click **Settings**.
+3. Click **Privacy, Search, and Services**, and scroll down to **Security**.
+4. Enable **Use secure DNS**.
+5. Click **Choose a service provider**.
+6. Click the **Enter custom provider** drop-down menu and choose *Cloudflare (1.1.1.1)*.
 
 ## Brave
 
 1. Click the menu button in your browser.
-1. Click **Settings**.
-1. Click **Security and Privacy** > **Security**.
-1. Enable **Use secure DNS**.
-1. Click **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
+2. Click **Settings**.
+3. Click **Security and Privacy** > **Security**.
+4. Enable **Use secure DNS**.
+5. Click **With Custom** and choose *Cloudflare (1.1.1.1)* as a service provider from the drop-down menu.
 
 ## How to check if browser is configured correctly
 

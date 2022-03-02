@@ -12,17 +12,16 @@ pcx-content-type: how-to
     * D-Link routers typically use `http://192.168.0.1`.
     * Ubiquiti routers typically use `http://unifi.ubnt.com`.
 
-1. Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
-1. In the admin console, find the place where **DNS settings** are set. This may be contained within categories such as **WAN** and **IPv6** (Asus Routers) or **Internet** (Netgear Routers). Consult your router's documentation for details.
-1. Take note of any DNS addresses that are currently set and save them in a safe place in case you need to use them later.
-1. {{<render file="_all-ipv4.md">}}
-1. {{<render file="_all-ipv6.md">}}
-1. Save the updated settings.
+2. Enter the router credentials. For consumer routers, the default credentials for the admin console are often found under or behind the device.
+3. In the admin console, find the place where **DNS settings** are set. This may be contained within categories such as **WAN** and **IPv6** (Asus Routers) or **Internet** (Netgear Routers). Consult your router's documentation for details.
+4. Take note of any DNS addresses that are currently set and save them in a safe place in case you need to use them later.
+5. {{<render file="_all-ipv4.md">}}
+6. {{<render file="_all-ipv6.md">}}
+7. Save the updated settings.
 
 ## Using DNS-Over-TLS on OpenWRT
 
 It is possible to encrypt DNS traffic out from your router using DNS-over-TLS if it is running OpenWRT. For more details, see our blog post on the topic: [Adding DNS-Over-TLS support to OpenWRT (LEDE) with Unbound](https://blog.cloudflare.com/dns-over-tls-for-openwrt/).
-
 
 ## FRITZ!Box
 
