@@ -30,7 +30,7 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 3. From the **Developer Tools** pane, switch to the **Network** tab.
 4. From the **Network** tab, clear the network content.
 5. Refresh the **Magic Firewall Rules** page to repopulate the **Network** tab with the HTTP request and response packets between the browser and Cloudflare API.
-6. In the list of items, locate the three digit number with a **fetch** type. This will show you yur Magic Firewalll rules.
+6. In the list of items, locate the three digit number with a **fetch** type. This will show you your Magic Firewalll rules.
 7. Click the item and then click the **Response** tab. A list of all of your Magic Firewall rules and their descriptions display similar to the example below.
 
 ```bash
@@ -57,7 +57,7 @@ For additional information about the Analytics schema, refer to [Explore the Ana
 ```graphql
 query {
   viewer {
-    accounts(filter: {accountTag: "<your account ID>"}) {
+    accounts(filter: {accountTag: "<YOUR_ACCOUNT_ID>"}) {
       magicFirewallSamplesAdaptiveGroups(
         filter: {datetime_geq: "2022-01-05T11:00:00Z", 
           datetime_leq: "2022-01-05T12:00:00Z"}, 
@@ -94,10 +94,10 @@ For each stream, display the:
 ```graphql
 query{
     viewer {
-      accounts(filter: {accountTag: "<account ID>"}) {
+      accounts(filter: {accountTag: "<ACCOUNT_ID>"}) {
         magicFirewallNetworkAnalyticsAdaptiveGroups(
         filter: {
-            ruleId: "<ruleID>",
+            ruleId: "<RULE_ID>",
             datetime_geq: "2022-01-12T10:00:00Z", 
             datetime_leq: "2022-01-12T11:00:00Z"
   }
