@@ -1,9 +1,17 @@
-.magic-box-clear {
-  top: 15px;
-}
-
 .CoveoSearchInterface {
   min-width: inherit !important;
+}
+
+.coveo-modal-content {
+  top: 50px;
+}
+
+.CoveoSearchInterface svg {
+  display: inline-block !important;
+}
+
+.CoveoSearchInterface p {
+  margin-bottom: 0 !important;
 }
 
 .CoveoSearchInterface .magic-box .magic-box-input,
@@ -11,7 +19,8 @@
 .CoveoDynamicFacet,
 .CoveoDynamicFacetRange, 
 .CoveoDynamicHierarchicalFacet,
-.CoveoSearchInterface input {
+.CoveoSearchInterface input,
+.CoveoSearchInterface.coveo-small-facets .coveo-facet-dropdown-header {
   background: transparent !important;
 }
 
@@ -31,6 +40,22 @@
 .coveo-dynamic-facet-breadcrumb-value
 {
   color: inherit !important;
+}
+
+[theme="dark"] .coveo-combobox-values {
+  background-color: var(--gray-05) !important;
+}
+[theme="dark"] .coveo-combobox-values li:hover {
+  background-color: var(--gray-00) !important;
+}
+
+[theme="dark"] .coveo-modal-backdrop {
+  background-color: var(--gray-05) !important;
+}
+
+[theme="dark"] .coveo-modal-body,
+[theme="dark"] .coveo-modal-header {
+  background-color: var(--gray-00) !important;
 }
 
 [theme="dark"] .CoveoResult a.CoveoResultLink, 
