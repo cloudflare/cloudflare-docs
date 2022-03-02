@@ -11,21 +11,7 @@ on:
       - production
 
 jobs:
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 16
-  #     - name: (env) pnpm
-  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
-  #     - run: pnpm install
-  #     - run: pnpm run lint
-
   compile:
-    id: build
     name: Compiles
     runs-on: ubuntu-latest
     steps:
@@ -39,13 +25,26 @@ jobs:
         with:
           hugo-version: '0.92.0'
           extended: true
+
       - name: (env) pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+
       - run: pnpm install
+
       - run: hugo --minify
 
-  crawl:
-    id: crawl
-    name: Broken Links
-    if: steps.build.outputs.exit_code == 0
-    run: pnpm run crawl
+      - name: Broken Links
+        run: pnpm run crawl
+        if: success()
+  # lint:
+  #   name: Lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: 16
+  #     - name: (env) pnpm
+  #       run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+  #     - run: pnpm install
+  #     - run: pnpm run lint
