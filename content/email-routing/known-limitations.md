@@ -30,4 +30,4 @@ Due to the nature of email forwarding, restrictive DMARC policies might make for
 
 ## Sending or replying to an email from your Cloudflare domain
 
-Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address. For example, if you created a `info@my-company.com` custom address which forwards emails to `my-name@gmail.com`, whenever you reply to these forwarded emails the reply will come from `my-name@gmail.com`, not `info@my-company.com`.
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
