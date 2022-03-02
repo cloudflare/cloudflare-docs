@@ -3,7 +3,7 @@ pcx-content-type: how-to
 title: Analytics
 weight: 10
 meta:
-  title: Images Analytics
+  title: Images analytics
 ---
 
 # Images analytics
