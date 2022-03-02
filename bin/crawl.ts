@@ -11,6 +11,7 @@ import * as fs from 'fs/promises';
 import { join, resolve, extname } from 'path';
 import { parse } from 'node-html-parser';
 
+let WARNS = 0;
 let ERRORS = 0;
 
 const ROOT = resolve('.');
@@ -154,12 +155,16 @@ async function task(file: string) {
   );
 
   if (messages.length > 0) {
-    ERRORS += messages.length;
-
     let output = file.substring(PUBDIR.length);
+
     messages.forEach(msg => {
-      output += '\n  ';
-      output += msg.type === 'error' ? '✘' : '⚠';
+      if (msg.type === 'error') {
+        output += '\n  ✘';
+        ERRORS++;
+      } else {
+        output += '\n  ⚠';
+        WARNS++;
+      }
       output += '  ' + (msg.text || msg.value);
       if (VERBOSE) output += '\n    ' + msg.html;
     });
@@ -171,11 +176,18 @@ async function task(file: string) {
 try {
   await walk(PUBDIR);
 
-  if (ERRORS > 0) {
-    process.exitCode = 1;
-    console.log('\n~> DONE w/ %s error(s)\n\n', ERRORS.toLocaleString());
-  } else {
+  if (!ERRORS && !WARNS) {
     console.log('\n~> DONE~!\n\n');
+  } else {
+    let msg = '\n~> DONE with:';
+    if (ERRORS > 0) {
+      process.exitCode = 1;
+      msg += '\n    - ' + ERRORS.toLocaleString() + ' error(s)';
+    }
+    if (WARNS > 0) {
+      msg += '\n    - ' + WARNS.toLocaleString() + ' warning(s)';
+    }
+    console.log(msg + '\n\n');
   }
 } catch (err) {
   console.error(err.stack || err);
