@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Viewing videos
-weight: 2
+weight: 3
 ---
 
 # Viewing videos
