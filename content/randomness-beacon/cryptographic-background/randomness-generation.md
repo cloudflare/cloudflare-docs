@@ -8,7 +8,7 @@ weight: 2
 
 In this section, we describe how to use this collective key pair to generate publicly-verifiable, unbiasable, and unpredictable randomness in a distributed manner.
 
-First, we explain pairing-based cryptography (PBC), which has become quite popular, and is used in many modern consensus protocols or zero-knowledge proofs, such as zk-SNARKs. We'll then show how drand uses PBC for the randomness beacon generation phase for threshold Boneh-Lynn-Shacham (BLS) signatures. Finally, we'll discuss how drand links the generated threshold BLS signatures into a randomness chain.
+First, we explain pairing-based cryptography (PBC), which has become quite popular, and is used in many modern consensus protocols or zero-knowledge proofs, such as zk-SNARKs. We will then show how drand uses PBC for the randomness beacon generation phase for threshold Boneh-Lynn-Shacham (BLS) signatures. Finally, we will discuss how drand links the generated threshold BLS signatures into a randomness chain.
 
 ## Pairing-based Cryptography
 
@@ -19,11 +19,11 @@ Pairing-based cryptography is based on bilinear groups `(𝔾1,𝔾2,𝔾𝑡)`,
 - **Non-degeneracy:** `𝑒≠1`
 
 - **Computability:** There exists an efficient algorithm to compute `𝑒`.
-  drand currently uses the Barreto-Naehrig curve BN256.
+  Drand currently uses the Barreto-Naehrig curve BN256.
 
 ## BLS Signatures
 
-To generate publicly-verifiable, unbiasable, distributed randomness, drand utilizes threshold Boneh-Lynn-Shacham (BLS) signatures. First we'll describe regular BLS signatures and then the threshold variant.
+To generate publicly-verifiable, unbiasable, distributed randomness, drand utilizes threshold Boneh-Lynn-Shacham (BLS) signatures. First we will describe regular BLS signatures and then the threshold variant.
 
 BLS signatures are short signatures that rely on bilinear pairings and consist only of a single element in `𝔾1`. They are deterministic in the sense they depend only on the message and the signer’s key, unlike other signature schemes, such as ECDSA, that require a fresh random value for each signed message to be secure. Put differently, any two BLS signatures on a given message produced with the same key are identical. In drand, we utilize this property to achieve unbiasability for randomness generation.
 
@@ -41,7 +41,7 @@ Let `𝐻:{0,1}∗→𝔾1` denote a cryptographic hash function that maps arbit
 
 To verify that a BLS signature `𝜎` on a message `𝑚` is valid, the verifier checks if `𝑒(𝐻(𝑚),𝑋)=𝑒(𝜎,𝑔2)` holds using the signer’s public key `𝑋`.
 
-It's easy to see that this equation holds for valid signatures since `𝑒(𝐻(𝑚),𝑋)=𝑒(𝐻(𝑚),𝑔𝑥2)=𝑒(𝐻(𝑚),𝑔2)𝑥=𝑒(𝑥𝐻(𝑚),𝑔2)=𝑒(𝜎,𝑔2)`.
+It is easy to see that this equation holds for valid signatures since `𝑒(𝐻(𝑚),𝑋)=𝑒(𝐻(𝑚),𝑔𝑥2)=𝑒(𝐻(𝑚),𝑔2)𝑥=𝑒(𝑥𝐻(𝑚),𝑔2)=𝑒(𝜎,𝑔2)`.
 
 ## Threshold BLS Signature
 

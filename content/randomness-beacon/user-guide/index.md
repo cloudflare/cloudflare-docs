@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx-content-type: tutorial
 title: User Guide
 weight: 4
 ---

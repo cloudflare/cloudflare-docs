@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx-content-type: tutorial
 title: Operator Guide
 weight: 5
 ---
