@@ -196,7 +196,7 @@ if (response.ok || response.redirected) {
 
 ## An example worker
 
-Assuming you [set up a Worker](/workers/learning/getting-started) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
+Assuming you [set up a Worker](/workers/get-started/guide/) on `https://example.com/image-resizing` to handle URLs like `https://example.com/image-resizing?width=80&image=https://example.com/uploads/avatar1.jpg`:
 
 ```js
 addEventListener("fetch", event => {

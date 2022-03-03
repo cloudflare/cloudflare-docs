@@ -399,7 +399,7 @@ gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
 
 ### npm
 
-The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem/) file type.
+The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
 
 ```bash
 npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]

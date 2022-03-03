@@ -9,7 +9,7 @@ Browser Isolation is enabled by configuring a HTTP policy with an Isolate action
 
 ## Before you start
 
-The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](/gateway/connecting-to-gateway/install-cloudflare-cert).
+The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
 
 ## Manage HTTP policies
 
@@ -62,7 +62,7 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 In the settings (Gateway → Policies → Settings) page, click the toggle to enable filtering once clients have been deployed and certificates installed. If you do not enable filtering, your rules will not apply.
 
 {{<Aside>}}
-Note: It usually takes about 60 seconds for a new policy to be configured for users and you may need to restart your web browser to establish a <a href="/feedback/faq#how-long-does-it-take-for-l7-firewall-policies-to-apply">filtered connection</a> for open websites.
+Note: It usually takes about 60 seconds for a new policy to be configured for users and you may need to restart your web browser to establish a <a href="/browser-isolation/feedback/faq/#how-long-does-it-take-for-l7-firewall-policies-to-apply">filtered connection</a> for open websites.
 {{</Aside>}}
 
 ## Start browsing

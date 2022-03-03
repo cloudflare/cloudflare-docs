@@ -102,7 +102,7 @@ You can now run the Tunnel. The command below will connect this instance of `clo
 cloudflared tunnel run grafana
 ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ![Config File](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
 

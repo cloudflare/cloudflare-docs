@@ -28,7 +28,7 @@ If your customers already have their applications on Cloudflare, they cannot con
 *   Web Application Firewall (WAF)
 *   SSL settings
 
-For more information on these features, refer to [hostname specific behavior](/ssl/hostname-specific-behavior/).
+For more information on these features, refer to [hostname specific behavior](/ssl/ssl-for-saas/hostname-specific-behavior/).
 
 ## Availability
 

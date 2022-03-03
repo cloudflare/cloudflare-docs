@@ -105,7 +105,7 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 Once enabled, navigate to the `Applications` page in the Zero Trust Dashboard. Click `Add an application`.
 
-![Applications Page](/cloudflare-one/static/secure-origin-connections/share-new-site/applications.png)
+![Applications Page](/cloudflare-one/static/documentation/applications/add-saas-application.png)
 
 Choose self-hosted from the options presented.
 

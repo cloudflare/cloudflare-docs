@@ -12,7 +12,7 @@ Both options rely on Cloudflare's Load Balancer to send traffic for a single hos
 
 | Before you start                                                               |
 | ------------------------------------------------------------------------------ |
-| [Enable Cloudflare Load Balancers](/load-balancing/create-load-balancer-ui) |
+| [Enable Cloudflare Load Balancers](/load-balancing/how-to/create-load-balancer/) |
 | [Create a tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)  |
 
 ## Deploy `cloudflared` to an upstream service

@@ -38,4 +38,4 @@ Once run, this command will establish an outbound-only connection to Cloudflareâ
 
 You can also:
 
-*   [Run a tunnel as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/)
+*   [Run a tunnel as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/)
