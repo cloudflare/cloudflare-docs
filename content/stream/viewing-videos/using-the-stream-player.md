@@ -67,10 +67,8 @@ Player options are configured with querystring parameters in the iframe's `src` 
   - If the autoplay flag is included as a querystring parameter, the player will attempt to autoplay the video. If you don't want the video to autoplay, don't include the autoplay flag at all (instead of setting it to `autoplay=false`.) Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
     {{<Aside>}}
-
 Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
-
-        {{</Aside>}}
+    {{</Aside>}}
 
 - `controls` {{<prop-meta>}}default: `true`{{</prop-meta>}}
 

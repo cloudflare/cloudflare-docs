@@ -14,7 +14,7 @@ Many applications for the web are built using industry standards like [PostgreSQ
 
 In this tutorial, you will explore how to integrate with PostgREST and PostgreSQL using Workers.
 
-![Example GIF](/workers/example.gif)
+![Example GIF](example.gif)
 
 ## Prerequisites
 
@@ -119,7 +119,7 @@ async function handleRequest(request) {
   const { data, error } = await client
     .from('users')
     .select()
-  
+
   if (error) throw error
 
   return new Response(JSON.stringify(data), {

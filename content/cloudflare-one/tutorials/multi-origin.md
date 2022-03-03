@@ -96,7 +96,7 @@ At this point, you have created and configured your Cloudflare Tunnel connection
 
 `$ cloudflared tunnel run`
 
-We recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/) in production. You can also run `cloudflared` [with the Cloudflare Load Balancer](/cloudflare-one/tutorials/migrate-lb-tunnel/) alongside traditional, IP-exposed, origin servers during a migration for a zero-downtime cutover.
+We recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) in production. You can also run `cloudflared` [with the Cloudflare Load Balancer](/cloudflare-one/tutorials/migrate-lb-tunnel/) alongside traditional, IP-exposed, origin servers during a migration for a zero-downtime cutover.
 
 ## Create or modify DNS records
 

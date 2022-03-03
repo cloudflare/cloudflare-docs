@@ -29,4 +29,4 @@ Isolation policies are applied to requests that include `Accept: text/html*`. Th
 
 ### Bypass common cert pinning sites
 
-See [Gateway recommended rules](/gateway/connecting-to-gateway/Troubleshooting#im-using-a-common-application-and-it-seems-unable-to-connect-when-i-inspect-http-traffic-or-presents-an-untrusted-certificate-error)
+See [Gateway recommended rules](/cloudflare-one/faq/teams-troubleshooting/#i-see-untrusted-certificate-warnings-for-every-page-and-i-am-unable-to-browse-the-internet)

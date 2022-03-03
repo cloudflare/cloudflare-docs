@@ -98,4 +98,4 @@ If you would like to begin the migration process before March 31, 2021, please c
 
 ## What if I have additional questions?
 
-If you have any questions, please contact your Cloudflare Account Team or [SaaSv2@cloudflare.com](/ssl/aaSv2@cloudflare.com/).
+If you have any questions, please contact your Cloudflare Account Team or [SaaSv2@cloudflare.com](mailto:saasv2@cloudflare.com).

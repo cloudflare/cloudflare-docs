@@ -9,13 +9,13 @@ meta:
 
 ## Install WARP client
 
-Download and install the WARP client here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows.
+Download and install the [WARP client for Windows](/warp-client/get-started/windows/).
 
 ## Install the Cloudflare Root CA
 
 Advanced security features including Browser Isolation require users to install and trust the Cloudflare root certificate on their machine or device.
 
-Follow this article to configure the Cloudflare root certificate on your device: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert
+Follow this article to configure the Cloudflare root certificate on your device: /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert
 
 ## Manually configure a Cloudflare for Teams device registration
 
