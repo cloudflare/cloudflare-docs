@@ -152,7 +152,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>
-         <code class="InlineCode">ip.src <strong>in</strong> {'{ 93.184.216.0 93.184.216.1 }'}</code>
+         <code class="InlineCode">ip.src <strong>in</strong> { 93.184.216.0 93.184.216.1 }</code>
       </td>
     </tr>
   </tbody>
