@@ -110,10 +110,8 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         BYPASS
       </td>
       <td colspan="5" rowspan="1">
-        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to{' '}
-        <code>no-cache</code>, <code>private</code>, or <code>max-age=0</code> even though
-        Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling{' '}
-        <a href="/cache/about/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
+        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though
+        Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling <a href="/cache/about/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
         your origin web server sends cookies in the response header.
       </td>
     </tr>

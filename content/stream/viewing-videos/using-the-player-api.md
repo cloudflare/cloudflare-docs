@@ -119,7 +119,7 @@ This will _only_ work once during initialization. Beyond that point the user has
     {{<Aside>}}
 
 The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
-    
+
     {{</Aside>}}
 
 - `primaryColor` {{<type>}}string{{</type>}}

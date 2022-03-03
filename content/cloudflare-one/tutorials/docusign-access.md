@@ -53,9 +53,9 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
     The Public key must be transformed into a fingerprint. To do that:
 
 1.  Copy the Public Key Value.
-1. Paste the Public Key into VIM or another code editor.
-1. Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-1. Set the file extension to `.crt` and save.
+1.  Paste the Public Key into VIM or another code editor.
+1.  Wrap the value in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+1.  Set the file extension to `.crt` and save.
     {{</Aside>}}
 
 ## Configure your DocuSign SSO instance
