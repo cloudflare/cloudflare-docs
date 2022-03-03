@@ -28,3 +28,4 @@ To set up your static routes, refer to [Create static routes](/magic-wan/get-sta
 - Remote Port of 500
 - 0s reauth time or no reauth
 - 4h rekey time
+- Disable anti-replay protection
