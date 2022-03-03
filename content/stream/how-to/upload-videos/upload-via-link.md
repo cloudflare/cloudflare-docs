@@ -1,7 +1,7 @@
 ---
 title: Upload via link
 pcx-content-type: how to
-weight: 4
+weight: 2
 meta:
   title: Upload via link
 ---
@@ -43,13 +43,13 @@ Make an HTTP request to the Stream API with the video's URL using the informatio
 
 ## 2: Poll the API or wait for a webhook
 
-Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or you can use [webhooks](/how-to/use-webhooks) to be notified when the video is ready for streaming.
+Because Stream must download and encode the video, the video might not be available for a few seconds to a few minutes depending on the length of your video. You should poll the Stream API until `readyToStream` is `true`, or you can use [webhooks](/stream/how-to/use-webhooks) to be notified when the video is ready for streaming.
 
 ## 3: View the video
 
-Use the video's `uid` to refer to the video after it uploads or use the `uid` to play the video using the [Stream video player](/how-to/view-videos/stream-player).
+Use the video's `uid` to refer to the video after it uploads or use the `uid` to play the video using the [Stream video player](/stream/how-to/view-videos/stream-player).
 
-If you are using your own player or rendering the video in a mobile app, refer to [View videos with third-party players](/viewing-videos/using-the-player-api).
+If you are using your own player or rendering the video in a mobile app, refer to [View videos with third-party players](/stream/how-to/view-videos/player-api).
 
 <!--
 Update to Stream component once available

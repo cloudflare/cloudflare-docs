@@ -1,7 +1,7 @@
 ---
 title: Direct creator uploads
 pcx-content-type: tutorial
-weight: 5
+weight: 4
 meta:
   title: Direct creator uploads
 ---
