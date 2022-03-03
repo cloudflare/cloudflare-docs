@@ -4237,6 +4237,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   color: var(--orange);
 }
 
-[theme="light"] .DocsMarkdown td > strong > a {
+[theme="light"] .DocsMarkdown--aside > p > a {
+  color: var(--orange);
+}
+
+[theme="dark"] .DocsMarkdown--aside > p > a {
   color: var(--orange);
 }
