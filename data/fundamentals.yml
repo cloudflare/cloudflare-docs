@@ -22,6 +22,6 @@ algolia:
 
 externals:
   - title: How Cloudflare works
-    url: https://developers.cloudflare.com/fundamentals/get-started/how-cloudflare-works
+    url: /fundamentals/get-started/how-cloudflare-works/
   - title: Cloudflare homepage
     url: https://cloudflare.com

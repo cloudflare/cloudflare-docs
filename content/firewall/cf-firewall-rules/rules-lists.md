@@ -32,8 +32,8 @@ Cloudflare scans public, open proxy lists for reachable, open proxies. After ver
 
 The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. Regardless of plan, you can store up to a total of 10,000 items, spread across all of your lists.
 
-{{<table-wrap>}}<table style="width: 100%">
-
+{{<table-wrap>}}
+<table style="width: 100%">
   <thead>
     <tr>
       <td></td>
@@ -56,7 +56,8 @@ The number of IP Lists you can create depends on the Cloudflare plans associated
       <td>10</td>
     </tr>
   </tbody>
-</table>{{</table-wrap>}}
+</table>
+{{</table-wrap>}}
 
 {{<Aside type="note" header="Important">}}
 
@@ -83,4 +84,4 @@ Both the Cloudflare dashboard and the Cloudflare API support IP Lists.
 
 To use IP Lists in an expression from the Cloudflare dashboard, refer to [Use lists in expressions](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/).
 
-To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values#lists) in the Rules language reference.
+To refer to an IP List in a Cloudflare Filters API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.

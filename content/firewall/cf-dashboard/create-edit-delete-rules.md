@@ -14,7 +14,7 @@ Note that a simple expression has the following syntax:
 
     <field> <comparison operator> <value>
 
-For more information, refer to [Expressions](/ruleset-engine/rules-language/expressions) and [Actions](/firewall/cf-firewall-rules/actions/).
+For more information, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/).
 
 ## Expression Builder and Editor
 
@@ -46,35 +46,35 @@ Create a Firewall Rule based on the filters and exclusions you select within Fir
 
 To create a new Firewall Rule:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2.  Navigate to **Firewall** > **Firewall Rules**.
+1. Navigate to **Firewall** > **Firewall Rules**.
 
-3.  Click **Create a Firewall Rule**.
+1. Click **Create a Firewall Rule**.
 
-4.  In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
+1. In the **Create Firewall Rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
 
     ![Create Firewall Rule](/firewall/static/create-firewall-rule-1.png)
 
-5.  Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
+1. Under **When incoming requests match…**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
     ![Select field](/firewall/static/firewall-rules-expression-builder-3.png)
 
-6.  Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
+1. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
     ![Select operator](/firewall/static/firewall-rules-expression-builder-4.png)
 
     In the screenshot above, note that the **Expression Editor** area displays a text-only version of your expression. For more on Expression Editor and the Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/expression-preview-editor/).
 
-7.  Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
+1. Now specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input. In this example the value _United Kingdom_ is set using the **Country** drop-down list.
 
     ![Select value](/firewall/static/firewall-rules-expression-builder-value.png)
 
-8.  To set an action for your rule, use the **Action** drop-down list. In this example the _Block_ action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
+1. To set an action for your rule, use the **Action** drop-down list. In this example the _Block_ action tells Cloudflare to refuse requests that originate from countries other than the United Kingdom.
 
     ![Select action](/firewall/static/firewall-rules-expression-builder-5.png)
 
-9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
+1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
 
 After you choose an option, you are returned to the **Rules List**, which displays your new rule:
 
@@ -102,9 +102,9 @@ In the confirmation dialog that appears, click **Delete** to confirm and complet
 
 By default, Cloudflare evaluates Firewall Rules in **list order**, where rules are evaluated in the order they appear in the **Rules List**. When list ordering is enabled, the Rules List allows you to drag and drop Firewall Rules into position, as shown below.
 
-<img src="/firewall/static/firewall-rules-expression-builder-10.gif" alt="Order Firewall Rules" />
+![Order Firewall Rules](/firewall/static/firewall-rules-expression-builder-10.gif)
 
-Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, refer to [Order and Priority](/firewall/cf-firewall-rules/order-priority/).
+Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates Firewall Rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering. For more on working with priority ordering, refer to [Order and priority](/firewall/cf-firewall-rules/order-priority/).
 
 ### Enable and disable rules
 

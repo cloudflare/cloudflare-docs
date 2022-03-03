@@ -46,7 +46,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
         <a href="https://api.cloudflare.com/#filters-create-filters">Create filters</a>
       </td>
       <td>
-        <code class="InlineCode">POST zones/{'<ZONE_ID>'}/filters</code>
+        <code class="InlineCode">POST zones/&lt;ZONE_ID&gt;/filters</code>
       </td>
       <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
     </tr>
@@ -55,7 +55,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
         <a href="https://api.cloudflare.com/#filters-list-filters">Get filters</a>
       </td>
       <td>
-        <code class="InlineCode">GET zones/{'<ZONE_ID>'}/filters</code>
+        <code class="InlineCode">GET zones/&lt;ZONE_ID&gt;/filters</code>
       </td>
       <td>
         Lists all current filters. Results return paginated with 25 items per page by default. Use
@@ -68,7 +68,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
       </td>
       <td>
         <code class="InlineCode">
-          GET zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}
+          GET zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
         </code>
       </td>
       <td>Retrieve a single filter by ID.</td>
@@ -78,7 +78,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
         <a href="https://api.cloudflare.com/#filters-update-filters">Update filters</a>
       </td>
       <td>
-        <code class="InlineCode">PUT zones/{'<ZONE_ID>'}/filters</code>
+        <code class="InlineCode">PUT zones/&lt;ZONE_ID&gt;/filters</code>
       </td>
       <td>
         Handled as a single transaction. All filters must exist for operation to succeed. If there
@@ -91,7 +91,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
       </td>
       <td>
         <code class="InlineCode">
-          PUT zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}
+          PUT zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
         </code>
       </td>
       <td>Update a single filter by ID.</td>
@@ -101,7 +101,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
         <a href="https://api.cloudflare.com/#filters-delete-filters">Delete filters</a>
       </td>
       <td>
-        <code class="InlineCode">DELETE zones/{'<ZONE_ID>'}/filters</code>
+        <code class="InlineCode">DELETE zones/&lt;ZONE_ID&gt;/filters</code>
       </td>
       <td>
         <p>Delete existing filters. Must specify list of filter IDs.</p>
@@ -117,7 +117,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
       </td>
       <td>
         <code class="InlineCode">
-          DELETE zones/{'<ZONE_ID>'}/filters/{'<FILTER_ID>'}
+          DELETE zones/&lt;ZONE_ID&gt;/filters/&lt;FILTER_ID&gt;
         </code>
       </td>
       <td>Delete a filter by ID.</td>

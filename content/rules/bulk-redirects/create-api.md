@@ -52,7 +52,7 @@ The response will be similar to the following:
 }
 ```
 
-For more information on list operations, refer to the [Rules Lists API](/firewall/api/cf-lists) documentation.
+For more information on list operations, refer to the [Rules Lists API](/firewall/api/cf-lists/) documentation.
 
 ## 2. Add items to the list
 
@@ -118,12 +118,12 @@ If the operation already completed successfully, the response will be similar to
 
 Since Bulk Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Bulk Redirect Rule.
 
-Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create) and supplying a list of rules for the ruleset.
+Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
 
 A Bulk Redirect Rule must have:
 
-*   `action` set to `redirect`
-*   An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
+* `action` set to `redirect`
+* An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
 
 The following request of the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 

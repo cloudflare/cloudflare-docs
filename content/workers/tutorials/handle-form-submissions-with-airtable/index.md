@@ -16,7 +16,7 @@ Cloudflare Workers excels as a performant serverless functions platform. This ma
 
 In this tutorial, you will use Workers and [Airtable](https://airtable.com) to persist form submissions from a front-end user interface. Airtable is a great, free-to-use spreadsheet solution that has an approachable API for developers. Workers will handle incoming form submissions and use Airtable's [REST API](https://airtable.com/api) to asynchronously persist the data in an Airtable base (Airtable's term for a spreadsheet) for later reference.
 
-![Example GIF of complete Airtable and serverless function integration](/workers/example.gif)
+![Example GIF of complete Airtable and serverless function integration](example.gif)
 
 [The source for this project can be found on GitHub](https://github.com/cloudflare/workers-airtable-form). Note that this codebase includes both a front-end component (built with [React](https://reactjs.org) and [Tailwind CSS](https://tailwindcss.com)) and a serverless function for handling the interaction with Airtable.
 
@@ -50,7 +50,7 @@ The simplified HTML markup for this form:
 
   <div>
     <label for="phone">
-      Phone 
+      Phone
       <span>Optional</span>
     </label>
     <input type="text" name="phone" id="phone" autocomplete="tel" placeholder="+1 (123) 456-7890" />
@@ -81,7 +81,7 @@ For example, if you fill in the `first_name` input with the text `"Hello"`, subm
 
 The `<form>` used in the example front-end UI builds on these basics, adding some CSS classes via Tailwind CSS, and adding the fields needed for a Contact-style form: First name, Last name, Email, Phone, Subject, and Message.
 
-![The completed form in the front-end user interface](/workers/ui.png)
+![The completed form in the front-end user interface](ui.png)
 
 The code for this form can be [found on GitHub](https://github.com/cloudflare/workers-airtable-form/blob/main/frontend/src/Form.js). Of particular note is the `form` action, which has a placeholder for your serverless function URL, and the `method` attribute, which tells the form to submit information using the [HTTP `POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) method.
 
@@ -155,7 +155,7 @@ When your serverless function is completed, it will send data up to an Airtable 
 
 If you do not have an Airtable account, create one (the free plan is sufficient to complete this tutorial). In Airtable's dashboard, create a new base by selecting **Start from scratch**:
 
-![Creating a new base in Airtable's user interface](/workers/new-base.png)
+![Creating a new base in Airtable's user interface](new-base.png)
 
 After you have created a new base, you can set it up for use with the front-end form. Delete the existing columns, and create six columns, with the following field types:
 
@@ -170,21 +170,21 @@ After you have created a new base, you can set it up for use with the front-end 
 
 The completed fields should look like the below screenshot in the Airtable UI. Note that the field names are case-sensitive: if you change them to anything else, you will need to exactly match your new field names in the API request you make to Airtable later in the tutorial.
 
-![An example of the configured Airtable column headers in a table](/workers/columns.png)
+![An example of the configured Airtable column headers in a table](columns.png)
 
 Finally, give your base's table a name. Right-click the table name at the top left of the screen (it will likely have a name like Table 1) and give it a more descriptive name, like Form Submissions.
 
-![Renaming the Airtable table inside of the user interface](/workers/form-submissions.png)
+![Renaming the Airtable table inside of the user interface](form-submissions.png)
 
 With your new Airtable base set up, you can copy the values from Airtable's UI that you need to make API requests.
 
 Refer to [Airtable's API page](https://airtable.com/api) and select your new base. In the API documentation page, find your **Airtable base ID** (the highlighted text in the below screenshot). You can also check the **Show API key** checkbox in the top right of the window, to easily access your Airtable API key from the same page.
 
-![The Airtable API documentation for a base, with the Airtable Base ID and a toggle for showing your Airtable API key highlighted](/workers/api-details.png)
+![The Airtable API documentation for a base, with the Airtable Base ID and a toggle for showing your Airtable API key highlighted](api-details.png)
 
 Further down the page, you will begin to see example requests, showing you how to authenticate with the Airtable API externally, by providing an `Authorization` header in the format `Bearer $API_KEY`. The key after `Bearer` is your Airtable API key — make sure to keep it a secret.
 
-![An example request in Airtable's API documentation, with the Airtable API key highlighted](/workers/api-key.png)
+![An example request in Airtable's API documentation, with the Airtable API key highlighted](api-key.png)
 
 To make this API key available in your codebase, use the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
@@ -259,8 +259,8 @@ const submitHandler = async request => {
   } = Object.fromEntries(body)
 
   // The keys in "fields" are case-sensitive, and
-  // should exactly match the field names you set up 
-  // in your Airtable table, such as "First Name". 
+  // should exactly match the field names you set up
+  // in your Airtable table, such as "First Name".
   const reqBody = {
     fields: {
       "First Name": first_name,
@@ -342,7 +342,7 @@ You will notice that your function is deployed to a unique URL — for example, 
 
 After you have deployed your new form (refer to the [HTML forms](/pages/tutorials/forms) tutorial if you need help creating a form), you should be able to submit a new form submission and see the value show up immediately in Airtable:
 
-![Example GIF of complete Airtable and serverless function integration](/workers/example.gif)
+![Example GIF of complete Airtable and serverless function integration](example.gif)
 
 ## Conclusion
 

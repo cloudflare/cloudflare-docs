@@ -14,7 +14,7 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 {{<Aside type="warning" header="Important">}}
 
-- The execution order diagram does not include products powered by the [Ruleset Engine](/ruleset-engine/) like the [WAF](/waf/) or [Transform Rules](/rules/transform).
+- The execution order diagram does not include products powered by the [Ruleset Engine](/ruleset-engine/) like the [WAF](/waf/) or [Transform Rules](/rules/transform/).
 
 - You can use [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass the [Cloudflare Web Application Firewall (WAF)](/waf/).
 
@@ -28,7 +28,7 @@ When **priority ordering** is enabled, Cloudflare evaluates Firewall Rules in or
 
 Users with relatively small numbers of Firewall Rules (no more than 200) will find that list ordering is enabled by default. When list ordering is enabled, the **Rules List** allows you to drag and drop Firewall Rules into position, as shown below:
 
-<img src="/firewall/static/firewall-rules-order-and-priority-2.gif" />
+![The user drags a Firewall Rule in the Rules List to reorder it](/firewall/static/firewall-rules-order-and-priority-2.gif)
 
 Once there are more than 200 total rules, including inactive rules, you must manage evaluation using priority ordering. When you cross this threshold, the Firewall Rules interface automatically switches to priority ordering.
 
@@ -36,21 +36,21 @@ Once there are more than 200 total rules, including inactive rules, you must man
 
 Although priority ordering is enabled automatically when the number of active and inactive Firewall Rules exceeds 200, you can manually enable priority ordering at any time from the **Rules List**. To manually enable priority ordering, click **Ordering** and then select the **Priority Numbers** radio button, as shown below:
 
-<img src="/firewall/static/firewall-rules-order-and-priority-3.gif" />
+![Under Firewall, the user clicks Ordering and then Priority Numbers](/firewall/static/firewall-rules-order-and-priority-3.gif)
 
 Once priority ordering is enabled, you can set a priority number for each Firewall Rule.
 
 To set the priority number for a Firewall Rule, follow these steps:
 
-1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
+1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon).
 
     The **Edit Firewall Rule** panel will open.
 
-2.  Locate the **Priority** field and enter a positive integer value.
+1. Locate the **Priority** field and enter a positive integer value.
 
-![Edit Firewall Rule page](/firewall/static/firewall-rules-order-and-priority-4.png)
+    ![Edit Firewall Rule page](/firewall/static/firewall-rules-order-and-priority-4.png)
 
-1.  Click **Save** to commit your changes and return to the **Rules List**.
+1. Click **Save** to commit your changes and return to the **Rules List**.
 
 The **Priority** column displays the priority value for each rule.
 
@@ -72,6 +72,7 @@ While your priority numbering scheme can be arbitrary, keep the following in min
 - **Rules without a priority number are evaluated last**, in order of their action precedence. For example, a rule with the _Log_ action is evaluated before a rule that has the _Block_ action. For more on action precedence, refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions/).
 - **Avoid using the number 1 as a priority** so that you can easily maintain and modify rule order.
 - **Consider grouping ranges of priority numbers into categories** that have some meaning for your deployment. Here are some examples:
-  - 5000-9999: Trusted IP addresses
-  - 10000-19999: Blocking rules for bad crawlers
-  - 20000-29999: Blocking rules for abusive users/spam
+
+    - 5000-9999: Trusted IP addresses
+    - 10000-19999: Blocking rules for bad crawlers
+    - 20000-29999: Blocking rules for abusive users/spam

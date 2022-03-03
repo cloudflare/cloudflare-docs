@@ -17,13 +17,13 @@ weight: 2
 1.  Click **OK**.
 1.  In the **Name** field, we recommend entering the version number of the package being uploaded.
 1.  In the **Publisher** field, we recommend entering `Cloudflare, Inc`.
-1. In the **Command-line arguments** field, enter a valid set of command-line arguments as described above.
+1.  In the **Command-line arguments** field, enter a valid set of command-line arguments as described above.
     - Example: `/quiet ORGANIZATION="exampleorg" SERVICE_MODE="warp" GATEWAY_UNIQUE_ID="fmxk762nrj" SUPPORT_URL="http://support.example.com"`
-1. You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
-1. Add the users or groups who require Cloudflare WARP.
-1. Click **Next**.
-1. Review your configuration.
-1. Click **Create**.
+1.  You do not need to fill other optional fields. Once you have entered all the necessary values, click **Next**.
+1.  Add the users or groups who require Cloudflare WARP.
+1.  Click **Next**.
+1.  Review your configuration.
+1.  Click **Create**.
 
 Intune is now configured to deploy the WARP client.
 

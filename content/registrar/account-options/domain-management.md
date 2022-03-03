@@ -15,10 +15,10 @@ When your domain is registered with Cloudflare, you can review your domain statu
 
 Cloudflare redacts WHOIS information from your domain by default. However, we do store the authentic WHOIS record for your domain. You may edit the WHOIS contact data for any domain. To do that:
 
-1.  Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
-2.  From **Overview**, scroll down to **Manage domain**.
-3.  Select the domain you want to edit and click **Manage** > **Contacts**.
-4.  Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
+1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
+2. From **Overview**, scroll down to **Manage domain**.
+3. Select the domain you want to edit and click **Manage** > **Contacts**.
+4. Click **Edit** in any of the contacts you previously set up. This allows you to update the contact information for the selected domain only. It will not update the contact information for other domains within the account.
 
 Refer to [Registrant contact updates](/registrar/account-options/domain-contact-updates/) for more information.
 
@@ -28,9 +28,9 @@ The first time you transfer or register a new domain, a Default Contact is creat
 
 To edit the Default Contact information:
 
-1.  Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
-2.  From **Overview**, scroll down to **Manage domain**.
-3.  In the **Default Contact** card, click **Edit**.
+1. Make sure you are [logged in to the Cloudflare dashboard](https://dash.cloudflare.com/login) and have selected your account and domain.
+2. From **Overview**, scroll down to **Manage domain**.
+3. In the **Default Contact** card, click **Edit**.
 
 ## Automatic renewal of domain
 

@@ -50,7 +50,7 @@ This example uses:
 
 {{<Aside type="warning" header="Important">}}
 
-Access to [Bot Management](/bots/get-started/bm-subscription) requires a Cloudflare Enterprise plan with Bot Management.
+Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management.
 
 {{</Aside>}}
 

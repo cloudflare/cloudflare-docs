@@ -10,7 +10,7 @@ Flow-based monitoring works with [Magic Transit on demand](/magic-transit/on-dem
 
 You can choose to activate IP advertisement via the Cloudflare dashboard or API. After Magic Transit is activated and your traffic is flowing through Cloudflare, you only receive the clean traffic back to your network over your GRE tunnels.
 
-To activate IP advertisement via the Cloudflare dashboard, refer to [​using the IP Prefixes page to configure dynamic advertisement](/byoip/dynamic-advertisement/configure-dynamic-advertisement#use-the-ip-prefixes-page-to-configure-dynamic-advertisement).
+To activate IP advertisement via the Cloudflare dashboard, refer to [​using the IP Prefixes page to configure dynamic advertisement](/byoip/how-to/configure-dynamic-advertisement/#use-the-ip-prefixes-page-to-configure-dynamic-advertisement).
 
 To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-properties).
 

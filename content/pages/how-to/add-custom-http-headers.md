@@ -15,7 +15,7 @@ More advanced customization of HTTP headers is available through Cloudflare Work
 
 If you have not deployed a Worker before, get started with our [tutorial](/workers/get-started/guide). For the purpose of this tutorial, accomplish steps one ("Sign up for a Workers account") through four ("Generate a new project") before returning to this page.
 
-Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/getting-started#adding-a-custom-domain).
+Before continuing, ensure that your Cloudflare Pages project is connected to a [custom domain](/pages/get-started/#adding-a-custom-domain).
 
 ## Writing a Workers function
 

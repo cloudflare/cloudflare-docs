@@ -44,6 +44,37 @@ Most developers will not need to use `compatibility_flags`; instead, Cloudflare 
 
 Newest changes are listed first.
 
+### Global `navigator`
+
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <strong>Default as of</strong>
+      </td>
+      <td>2022-03-21</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Flag to enable</strong>
+      </td>
+      <td>
+        <code>global_navigator</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Flag to disable</strong>
+      </td>
+      <td>
+        <code>no_global_navigator</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+With the `global_navigator` flag set, a new global `navigator` property is available from within Workers. Currently, it exposes only a single `navigator.userAgent` property whose value is set to `'Cloudflare-Workers'`. This property can be used to reliably determine whether code is running within the Workers environment.
+
 ### Setters/getters on API object prototypes
 
 <table>

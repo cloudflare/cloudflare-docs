@@ -1,7 +1,7 @@
 ---
+weight: 0
 pcx-content-type: tutorial
 title: DNS over Tor
-weight: 0
 ---
 
 # DNS over Tor
@@ -25,13 +25,13 @@ Before you start, head to the [Tor Project website](https://www.torproject.org/d
 If you use Tor from the command line, create the following configuration file:
 
 ```txt
-SOCKSPort 9150
+$ SOCKSPort 9150
 ```
 
 Then you can run tor with:
 
-```txt
-tor -f tor.conf
+```sh
+$ tor -f tor.conf
 ```
 
 Also, if you use the Tor Browser, you can head to the resolver's address to see the usual 1.1.1.1 page:
@@ -46,7 +46,7 @@ The HTTPS certificate indicator should say "Cloudflare, Inc. (US)."
 
 {{</Aside>}}
 
-**Tip:** If you ever forget the `dns4torblahblahblah.onion` address, use cURL:
+If you ever forget 1.1.1.1's address, use cURL to retrieve it:
 
 ```sh
 $ curl -sI https://tor.cloudflare-dns.com | grep -i alt-svc
@@ -65,7 +65,7 @@ The hidden resolver is set up to listen on TCP ports 53 and 853 for DNS over TCP
 $ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
 ```
 
-From here, you can follow the regular guide for [Setting up 1.1.1.1](/1.1.1.1/setup-1.1.1.1/), except you should always use `127.0.0.1` instead of 1.1.1.1. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
+From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup/), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
 
 ### DNS over UDP
 
@@ -79,27 +79,27 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
-1.  Download `cloudflared` by following the guide for [Running a DNS over HTTPS Client](/1.1.1.1/encrypted-dns/dns-over-https/dns-over-https-client/).
+1. Download `cloudflared` by following the guide for [connecting to 1.1.1.1 using DNS over HTTPS clients](/1.1.1.1/encryption/dns-over-https/dns-over-https-client/).
 
-2.  Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
+2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
-    ```sh
-    $ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
-    ```
+```sh
+$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
+```
 
-3.  Instruct your machine to treat the `.onion` address as localhost:
+3. Instruct your machine to treat the `.onion` address as localhost:
 
-    ```bash
-    $ cat << EOF >> /etc/hosts
-    127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
-    EOF
-    ```
+```bash
+$ cat << EOF >> /etc/hosts
+127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
+EOF
+```
 
-4.  Finally, start a local DNS over UDP daemon:
+4. Finally, start a local DNS over UDP daemon:
 
-    ```sh
-    $ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-    INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-    INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
-    INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
-    ```
+```sh
+$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
+INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
+```

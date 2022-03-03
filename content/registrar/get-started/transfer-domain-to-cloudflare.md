@@ -83,9 +83,9 @@ In the final stage of the transfer process, input the contact information for yo
 
 You can modify the contact information, if needed:
 
-1.  From your **Account Home**, select **Registrar**.
-2.  Under the **Manage** tab, select **Edit** in the **Default Contact** card.
-3.  Update your information.
+1. From your **Account Home**, select **Registrar**.
+2. Under the **Manage** tab, select **Edit** in the **Default Contact** card.
+3. Update your information.
 
 After entering the contact information, agree to the domain registration terms of service by selecting **Confirm transfer**.
 
