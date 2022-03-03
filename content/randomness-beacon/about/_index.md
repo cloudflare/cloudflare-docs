@@ -6,7 +6,7 @@ weight: 2
 
 # About the drand project
 
-The drand project aims to address the current lack of services providing distributed public randomness. Distributed to increase the resilience and trustworthiness, drand provides a standalone randomness-as-a-service network that is application agnostic. For example, similar to NTP networks serving timing information across the globe.
+The drand project aims to address the current lack of services providing distributed public randomness. Distributed to increase the resilience and trustworthiness, drand provides a standalone randomness-as-a-service network that is application agnostic. This is similar to how NTP networks serve timing information across the globe.
 
 Drand follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), relying on well-researched cryptographic building blocks and open-source software design principles and libraries, such as protobuf and gRPC, to ensure high performance and interoperability. Drand also attempts to use sane security defaults, such as having TLS enabled by default.
 
