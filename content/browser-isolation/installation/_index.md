@@ -11,4 +11,3 @@ If your device meets the system requirements, follow the setup instructions for 
 
 *   [Windows](/browser-isolation/installation/windows/)
 *   [macOS](/browser-isolation/installation/macos/)
-*   [ChromeOS](/browser-isolation/installation/chromeos/)

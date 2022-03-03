@@ -9,7 +9,7 @@ Browser Isolation is enabled by configuring a HTTP policy with an Isolate action
 
 ## Before you start
 
-The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](/gateway/connecting-to-gateway/install-cloudflare-cert).
+The Cloudflare Gateway L7 firewall will intercept and inspect all HTTP and HTTPS traffic over ports 80 and 443. The inspection of HTTPS traffic requires breaking the TLS connection between the user and the origin server. Cloudflare Gateway presents a certificate to the user and securely connects to the origin on their behalf; however, this requires the Cloudflare certificate to be installed and trusted on each user's device. See [Install Cloudflare Root CA for more information](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
 
 ## Manage HTTP policies
 
