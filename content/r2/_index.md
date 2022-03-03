@@ -15,7 +15,7 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{<Aside type="note" header="Beta registration">}}
 
-As of February 2022, R2 is under development. You can [sign up to join the waitlist for access](https://www.cloudflare.com/r2-storage/).
+As of February 2022, R2 is under development. Sign up to [join the waitlist for access](https://www.cloudflare.com/r2-storage/).
 
 {{</Aside>}}
 
