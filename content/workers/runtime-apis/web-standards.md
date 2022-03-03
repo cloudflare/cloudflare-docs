@@ -111,9 +111,19 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 
 {{<Aside type="note">}}
 
-The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
+The default URL class behavior differs from the URL Spec documented above.
+
+A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
+
+If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
 
 {{</Aside>}}
+
+## URLPattern API
+
+The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
 
 ## `navigator.userAgent`
 
