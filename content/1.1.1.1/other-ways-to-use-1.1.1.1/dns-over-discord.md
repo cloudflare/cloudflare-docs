@@ -80,7 +80,7 @@ The refresh button is available on all responses to the `dig` command, including
 
 <div class="medium-img">
 
-![Refreshing dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif/)
+![Refreshing dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif)
 
 </div>
 
