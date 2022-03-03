@@ -99,11 +99,3 @@ Below you have the two possible responses:
 ```
 
 In the first example, the parameter `"logstream": true` is returned, this means that the job is Logpush v2. In the second example, the response does not include the parameter `logstream:true`, meaning that this job is using v1.
-
-## How can I update my Logpush job from v1 to v2?
-
-Simply updating a Logpush job it does not push the job from v1 to v2. You will need to use the `logstream` parameter and set it to true to upgrade to v2:
-
-`curl -sX PUT https://api.cloudflare.com/client/v4/zones/ZONE_ID/logpush/jobs/<job id> -H 'x-auth-email:email' -H 'x-auth-key:key' -d '{"logstream":true}'`
-
-You   cannot   use   the   Logpush   UI   for   creating   v2   jobs – the   API   must   be used.   However,   once   a   job   is   created,   it   will   show   up   in   the   UI   and   can   be   updated there,   although   the   UI   will   not   distinguish   Logstream   jobs   from   Logpush   jobs.
