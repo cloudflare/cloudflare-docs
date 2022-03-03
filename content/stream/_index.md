@@ -3,7 +3,7 @@ title: Getting started
 pcx-content-type: overview
 weight: 1
 meta:
-  title: Cloudflare StreamGetting started
+  title: Cloudflare Stream
 ---
 
 # Cloudflare Stream

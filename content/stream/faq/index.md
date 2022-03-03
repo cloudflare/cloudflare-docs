@@ -1,7 +1,7 @@
 ---
 title: FAQ
 pcx-content-type: faq
-weight: 7
+weight: 6
 meta:
   title: Frequently asked questions about Cloudflare Stream
 ---
