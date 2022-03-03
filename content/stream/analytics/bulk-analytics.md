@@ -15,12 +15,6 @@ Fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
-{{<Aside type="note">}}
-
-Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
-
-{{</Aside>}}
-
 ## Client side analytics
 
 ## Metrics
