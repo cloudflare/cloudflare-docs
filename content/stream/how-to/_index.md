@@ -1,7 +1,7 @@
 ---
 title: How to
 pcx-content-type: navigation
-weight: 1
+weight: 3
 meta:
   title: How to
 ---
