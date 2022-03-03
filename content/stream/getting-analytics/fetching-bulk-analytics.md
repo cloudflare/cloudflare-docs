@@ -12,10 +12,6 @@ Cloudflare Stream lets you fetch usage data in bulk using the GraphQL API. Strea
 
 For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
 
-{{<Aside type="note">}}
-Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
-{{</Aside>}}
-
 ## Client side analytics
 
 Stream has a GraphQL analytics API that can be used to get bulk analytics for every video in your account with one HTTP request.
