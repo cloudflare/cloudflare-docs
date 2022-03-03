@@ -8,9 +8,9 @@ pcx-content-type: how-to
 
 [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627) is the preferred method of setting up 1.1.1.1 DNS resolver and 1.1.1.1 for Families in iOS devices. It allows you to automatically configure your phone to use 1.1.1.1 on any network you connect to, and solves iOS inability of using an alternative DNS resolver in cellular connections. 
 
-The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
+The app also allows you to enable encryption for DNS queries or enable [WARP mode](/warp-client/), which keeps all your HTTP traffic private and secure, including your DNS queries to 1.1.1.1.
 
-You can select between the options available in the app's settings. By default, 1.1.1.1:Faster Internet is configured to WARP mode. 
+You can select between the options available in the app's settings. By default, 1.1.1.1: Faster Internet is configured to WARP mode. 
 
 ## Set up 1.1.1.1: Faster Internet
 

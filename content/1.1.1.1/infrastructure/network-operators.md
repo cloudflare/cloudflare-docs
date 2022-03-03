@@ -6,7 +6,7 @@ title: Network operators
 
 # Network operators
 
-Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) and [1.1.1.1 for Families](/1.1.1.1/setup#1111-for-families/) in place of operating their own recursive DNS infrastructure.
+Network operators, including Internet Service Providers (ISPs), device manufacturers, public WiFi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) and [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) in place of operating their own recursive DNS infrastructure.
 
 Using 1.1.1.1 can improve performance for end-users due to Cloudflare's extensive [global network](https://www.cloudflare.com/network/), as well as provide higher overall cache hit rates due to our regional caches.
 
@@ -44,7 +44,7 @@ Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3` | `https://family.clo
 
 {{</table-wrap>}}
 
-You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/setup#1111-for-families/) endpoints.
+You may wish to provide end users with options to change from the default 1.1.1.1 resolver to one of the [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) endpoints.
 
 ## Rate Limiting
 
@@ -55,4 +55,4 @@ Best practices include:
 * Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
 * A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
 
-If you are a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use-case and we will be happy to discuss further.
+If you are a network operator and still have outstanding questions, contact `resolver@cloudflare.com` with your use case and we will be happy to discuss further.

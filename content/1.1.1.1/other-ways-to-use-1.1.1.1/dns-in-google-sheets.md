@@ -26,7 +26,7 @@ function NSLookup(type, domain) {
   var url = 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(domain) + '&type=' + encodeURIComponent(type);
 
   var options = {
-    "muteHttpExceptions": true,
+    muteHttpExceptions: true,
     "headers": {
       "accept": "application/dns-json"
     }
@@ -68,7 +68,6 @@ function NSLookup(type, domain) {
   var outputString = outputData.join(',');
 
   return outputString;
-
 }
 ```
 
@@ -105,7 +104,7 @@ NSLookup(B1, B2)
 
 <div class="medium-img">
 
-![Google sheets function](/1.1.1.1/static/google-sheet-function.png/)
+![Google sheets function](/1.1.1.1/static/google-sheet-function.png)
 
 </div>
 
@@ -119,6 +118,6 @@ Returns
 
 <div class="medium-img">
 
-![Google sheets function](/1.1.1.1/static/google-sheet-result.png/)
+![Google sheets function](/1.1.1.1/static/google-sheet-result.png)
 
 </div>

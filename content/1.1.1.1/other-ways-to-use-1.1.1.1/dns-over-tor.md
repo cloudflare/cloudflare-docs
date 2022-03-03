@@ -65,7 +65,7 @@ The hidden resolver is set up to listen on TCP ports 53 and 853 for DNS over TCP
 $ PORT=853; socat TCP4-LISTEN:${PORT},reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:${PORT},socksport=9150
 ```
 
-From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
+From here, you can follow the regular guide for [setting up 1.1.1.1](/1.1.1.1/setup/), except you should always use `127.0.0.1` instead of `1.1.1.1`. If you need to access the proxy from another device, simply replace `127.0.0.1` in `socat` commands with your local IP address.
 
 ### DNS over UDP
 

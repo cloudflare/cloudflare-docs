@@ -14,8 +14,8 @@ order: 1
 
 Unlike most DNS resolvers, 1.1.1.1 does not sell user data to advertisers. 1.1.1.1 has also been measured to be the [fastest DNS resolver available](https://www.dnsperf.com/#!dns-resolvers) — it is deployed in hundreds of cities worldwide, and has access to the addresses of millions of domain names on the same servers it runs on.
 
-Beyond the regular service, 1.1.1.1 also offers a [version made for families](/1.1.1.1/setup#1111-for-families/) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/1.1.1.1/encryption/dns-over-https/) or [DNS over TLS (DoT)](/1.1.1.1/encryption/dns-over-tls/) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/).
+Beyond the regular service, 1.1.1.1 also offers a [version made for families](/1.1.1.1/setup/#1111-for-families) with additional protection against malware and adult content, and an encrypted service through [DNS over HTTPS (DoH)](/1.1.1.1/encryption/dns-over-https/) or [DNS over TLS (DoT)](/1.1.1.1/encryption/dns-over-tls/) for increased security and privacy. You can also access 1.1.1.1 [as a Tor hidden service](/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/).
 
 1.1.1.1 is completely free. Setting it up takes minutes and requires no special software.
 
-{{<content-column>}}
+{{</content-column>}}

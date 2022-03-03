@@ -36,7 +36,7 @@ Use the following DNS resolvers to block malicious content:
 <summary>Block malware and adult content</summary>
 <div>
 
-Use the following DNS resolvers to block malware and adult content.
+Use the following DNS resolvers to block malware and adult content:
 
 * `1.1.1.3`
 * `1.0.0.3`
@@ -86,6 +86,7 @@ https://family.cloudflare-dns.com/dns-query
 </details>
 
 ## DNS over TLS (DoT)
+
 1.1.1.1 for Families also supports DoT if you have a compliant client, such as a compatible DoT router. DoT allows you to encrypt your DNS queries, protecting you from spoofing, malicious actors, and others. You can learn more about DoT in the [Learning Center article on DNS encryption](https://www.cloudflare.com/learning/dns/dns-over-tls/).
 
 To configure an encrypted DoT connection to 1.1.1.1 for Families, type one of the following URLs into the appropriate field of your DoT-compliant client:
