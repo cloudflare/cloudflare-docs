@@ -6,7 +6,7 @@ title: 1.1.1.1 Public DNS Resolver
 
 # 1.1.1.1 Public DNS Resolver
 
-*Last updated September 30, 2020*
+_Last updated September 30, 2020_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
