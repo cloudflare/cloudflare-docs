@@ -93,7 +93,7 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 {{</table-wrap>}}
 
-{{<Aside type="note" header="Free vs. Paid plan pricing">}}
+{{<Aside type="note" header="Free versus Paid plan pricing">}}
 
 Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the specific KV operations you are allowed under each plan with their pricing.
 
