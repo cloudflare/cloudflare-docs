@@ -80,25 +80,26 @@ $ socat UDP4-LISTEN:53,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3f
 [As explained in the blog post](https://blog.cloudflare.com/welcome-hidden-resolver/), our favorite way of using the hidden resolver is using DNS over HTTPS (DoH). To set it up:
 
 1. Download `cloudflared` by following the guide for [connecting to 1.1.1.1 using DNS over HTTPS clients](/1.1.1.1/encryption/dns-over-https/dns-over-https-client/).
+
 2. Start a Tor SOCKS proxy and use `socat` to forward port TCP:443 to localhost:
 
-	```sh
-	$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
-	```
+```sh
+$ socat TCP4-LISTEN:443,reuseaddr,fork SOCKS4A:127.0.0.1:dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion:443,socksport=9150
+```
 
 3. Instruct your machine to treat the `.onion` address as localhost:
 
-	```bash
-	$ cat << EOF >> /etc/hosts
-	127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
-	EOF
-	```
+```bash
+$ cat << EOF >> /etc/hosts
+127.0.0.1 dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion
+EOF
+```
 
 4. Finally, start a local DNS over UDP daemon:
 
-	```sh
-	$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-	INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
-	INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
-	INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
-	```
+```sh
+$ cloudflared proxy-dns --upstream "https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+INFO[0000] Adding DNS upstream                           url="https://dns4torpnlfs2ifuz2s2yf3fc7rdmsbhm6rw75euj35pac6ap25zgqad.onion/dns-query"
+INFO[0000] Starting DNS over HTTPS proxy server          addr="dns://localhost:53"
+INFO[0000] Starting metrics server                       addr="127.0.0.1:35659"
+```
