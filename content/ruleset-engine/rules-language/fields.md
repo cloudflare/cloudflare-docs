@@ -108,7 +108,7 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"app": ["test"]}'}</code>
+         <br /><code class="InlineCode">{"app": ["test"]}</code>
          </p>
       </td>
    </tr>
@@ -220,7 +220,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">37.78044</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-lon">
@@ -231,7 +231,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">-122.39055</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-city">
@@ -242,7 +242,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">San Francisco</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-asnum">
@@ -360,7 +360,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 {{<Aside type="note">}}
 
-Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription) enabled.
+Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
 {{</Aside>}}
 
@@ -398,7 +398,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="https://developers.cloudflare.com/bots/concepts/ja3-fingerprint">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-fingerprint/">JA3 Fingerprints</a>.
           </p>
         </td>
     </tr>
@@ -413,7 +413,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Represents the edge IP address to which the HTTP request has resolved to.
           </p>
-          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
+          <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
         </td>
     </tr>
@@ -726,7 +726,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
         <br /><code class="InlineCode">any(http.request.uri.args["search"][*] == "red+apples")</code>
         </p>
         <p>Example value:
-        <br /><code class="InlineCode">{'{"search": ["red+apples"]}'}</code>
+        <br /><code class="InlineCode">{"search": ["red+apples"]}</code>
         </p>
       </td>
     </tr>
@@ -818,7 +818,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <br /><code class="InlineCode">any(http.request.headers["content-type"][*] == "application/json")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"content-type": ["application/json"]}'}</code>
+         <br /><code class="InlineCode">{"content-type": ["application/json"]}</code>
          </p>
       </td>
    </tr>
@@ -901,7 +901,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <p>Example 2:<br/>
          Request without an <code class="InlineCode">Accept-Language</code> HTTP header and a URI of <code class="InlineCode">https://www.example.com/my-path</code>. In this case:<br/>
          <code class="InlineCode">concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"</code>.</p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
   </tbody>
@@ -975,7 +975,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          <br /><code class="InlineCode">any(http.request.body.form["username"][*] == "admin")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{username": ["admin"]}'}</code>
+         <br /><code class="InlineCode">{username": ["admin"]}</code>
          </p>
       </td>
     </tr>
@@ -1034,7 +1034,7 @@ The Rules language includes fields that represent properties of HTTP response he
 
 {{<Aside type="note">}}
 
-You can only use HTTP response header fields in [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets) ruleset.
+You can only use HTTP response header fields in [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/) and in filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset.
 
 {{</Aside>}}
 
@@ -1062,7 +1062,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
          <br /><code class="InlineCode">any(http.response.headers["server"][*] == "nginx")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"server": ["nginx"]}'}</code>
+         <br /><code class="InlineCode">{"server": ["nginx"]}</code>
          </p>
       </td>
    </tr>
