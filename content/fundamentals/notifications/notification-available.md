@@ -69,9 +69,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1.  Confirm that your primary nameservers are up and running.
-2.  Confirm that the ACLs on your primary nameservers are configured correctly.
-3.  Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1. Confirm that your primary nameservers are up and running.
+2. Confirm that the ACLs on your primary nameservers are configured correctly.
+3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -90,9 +90,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1.  Confirm that the primary nameserver that is failing is up and running.
-2.  Confirm that the ACL on the primary nameserver that is failing is configured correctly.
-3.  Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1. Confirm that the primary nameserver that is failing is up and running.
+2. Confirm that the ACL on the primary nameserver that is failing is configured correctly.
+3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -229,8 +229,8 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1.  Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2.  {{<render file="_errors.md">}}
+1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
+2. {{<render file="_errors.md">}}
 
 </div>
 </details>
