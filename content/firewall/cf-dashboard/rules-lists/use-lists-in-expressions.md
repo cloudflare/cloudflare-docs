@@ -10,13 +10,13 @@ weight: 371
 
 To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/):
 
-1.  Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
+1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
     ![Managed open proxies list](/firewall/static/cf-open-proxies-list.png)
 
-2.  Select an IP List from the **Value** drop-down list.
+1. Select an IP List from the **Value** drop-down list.
 
-3.  When you are done composing your rule, click **Deploy** to commit your changes and enable your rule. Click **Save as draft** if you are not ready to enable the rule.
+1. When you are done composing your rule, click **Deploy** to commit your changes and enable your rule. Click **Save as draft** if you are not ready to enable the rule.
 
 ## Expression Editor
 

@@ -69,154 +69,154 @@ The table below lists a **sample** of known bots that Firewall Rules currently d
     <tbody>
         <tr>
             <td>
-                <p>ahrefs</p>
+                ahrefs
             </td>
             <td>
-                <p>Ahrefs SEO bot</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>apple</p>
-            </td>
-            <td>
-                <p>Applebot is the web crawler for Apple, for products like Siri and Spotlight Suggestions</p>
+                Ahrefs SEO bot
             </td>
         </tr>
         <tr>
             <td>
-                <p>archive.org</p>
+                apple
             </td>
             <td>
-                <p>Archive.org bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>baidu</p>
-            </td>
-            <td>
-                <p>Baidu search engine bots</p>
+                Applebot is the web crawler for Apple, for products like Siri and Spotlight Suggestions
             </td>
         </tr>
         <tr>
             <td>
-                <p>better uptime</p>
+                archive.org
             </td>
             <td>
-                <p>Bot for monitoring website uptime</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>bing</p>
-            </td>
-            <td>
-                <p>Bing search engine bots</p>
+                Archive.org bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>feedbin</p>
+                baidu
             </td>
             <td>
-                <p>Feedbin.com bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>google</p>
-            </td>
-            <td>
-                <p>Google search engine bots</p>
+                Baidu search engine bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>grapeshot</p>
+                better uptime
             </td>
             <td>
-                <p>Grapeshot (Oracle) SEO bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>linkedin</p>
-            </td>
-            <td>
-                <p>LinkedIn bots</p>
+                Bot for monitoring website uptime
             </td>
         </tr>
         <tr>
             <td>
-                <p>mail.ru</p>
+                bing
             </td>
             <td>
-                <p>Mail.ru bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>naver</p>
-            </td>
-            <td>
-                <p>Naver (South Korean) search engine bots</p>
+                Bing search engine bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>pingdom</p>
+                feedbin
             </td>
             <td>
-                <p>Pingdom.com monitoring bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>pinterest</p>
-            </td>
-            <td>
-                <p>Pinterest bots</p>
+                Feedbin.com bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>seznam</p>
+                google
             </td>
             <td>
-                <p>Seznam search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>sogou</p>
-            </td>
-            <td>
-                <p>Sogou search engine bots</p>
+                Google search engine bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>uptimerobot</p>
+                grapeshot
             </td>
             <td>
-                <p>Uptime Robot monitoring bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>yahoo</p>
-            </td>
-            <td>
-                <p>Yahoo! search engine bots</p>
+                Grapeshot (Oracle) SEO bots
             </td>
         </tr>
         <tr>
             <td>
-                <p>yandex</p>
+                linkedin
             </td>
             <td>
-                <p>Yandex search engine bots</p>
+                LinkedIn bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                mail.ru
+            </td>
+            <td>
+                Mail.ru bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                naver
+            </td>
+            <td>
+                Naver (South Korean) search engine bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                pingdom
+            </td>
+            <td>
+                Pingdom.com monitoring bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                pinterest
+            </td>
+            <td>
+                Pinterest bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                seznam
+            </td>
+            <td>
+                Seznam search engine bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                sogou
+            </td>
+            <td>
+                Sogou search engine bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                uptimerobot
+            </td>
+            <td>
+                Uptime Robot monitoring bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                yahoo
+            </td>
+            <td>
+                Yahoo! search engine bots
+            </td>
+        </tr>
+        <tr>
+            <td>
+                yandex
+            </td>
+            <td>
+                Yandex search engine bots
             </td>
         </tr>
     </tbody>
@@ -229,8 +229,8 @@ There may be situations in which you want to enforce a blocking or challenging a
 
 Cloudflare supports two methods to permit requests through Firewall Rules expressions:
 
-1.  Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
-2.  Create an independent Firewall rule with an _Allow_ action
+1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
+1. Create an independent Firewall rule with an _Allow_ action
 
 {{<Aside type="note" header="Note">}}
 
@@ -282,8 +282,8 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>Expression</td>
       <td>
         <em>
-          (http.host eq "example.com" and cf.threat_score &gt; 5) and not (ip.src in{' '}
-          {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'})
+          (http.host eq "example.com" and cf.threat_score &gt; 5) and not (ip.src in
+          {192.0.2.1 198.51.100.42 203.0.113.0/24})
         </em>
       </td>
     </tr>
@@ -297,7 +297,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>
         Action: <em>allow</em>
         <br />
-        Expression: <em>ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'}</em>
+        Expression: <em>ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}</em>
       </td>
     </tr>
     <tr>
@@ -332,7 +332,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     </tr>
     <tr>
       <td>Expression</td>
-      <td><em>(ip.geoip.asnum in {'{7224 15169}'})</em></td>
+      <td><em>(ip.geoip.asnum in {7224 15169})</em></td>
     </tr>
     <tr>
       <td colspan="2">
@@ -346,7 +346,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     <tr>
       <td>Expression</td>
       <td>
-        <em>(ip.geoip.asnum in {'{7224 15169}'}) and not cf.client.bot)</em>
+        <em>(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</em>
       </td>
     </tr>
     <tr>
@@ -369,7 +369,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
       <td>Rule 2</td>
       <td>
         Action: <em>block (or challenge)</em><br />
-        Expression: <em>(ip.geoip.asnum in {'{7224 15169}'})</em>
+        Expression: <em>(ip.geoip.asnum in {7224 15169})</em>
       </td>
     </tr>
   </tbody>
