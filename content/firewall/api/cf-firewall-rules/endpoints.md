@@ -48,7 +48,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         </a>
       </td>
       <td>
-        <code class="InlineCode">POST&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code>
+        <code class="InlineCode">POST&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
     </tr>
@@ -59,11 +59,11 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         </a>
       </td>
       <td>
-        <code class="InlineCode">GET&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code>
+        <code class="InlineCode">GET&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>
         Lists all current Firewall Rules. Results return paginated with 25 items per page by
-        default. Use optional parameters to narrow results.{' '}
+        default. Use optional parameters to narrow results.
       </td>
     </tr>
     <tr>
@@ -74,7 +74,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
       </td>
       <td>
         <code class="InlineCode">
-          GET&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}
+          GET&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules/&lt;RULE_ID&gt;
         </code>
       </td>
       <td>Retrieve a single Firewall Rule by ID.</td>
@@ -86,7 +86,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         </a>
       </td>
       <td>
-        <code class="InlineCode">PUT&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code>
+        <code class="InlineCode">PUT&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>
         Handled as a single transaction. All rules must exist for operation to succeed. If there is
@@ -101,7 +101,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
       </td>
       <td>
         <code class="InlineCode">
-          PUT&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}
+          PUT&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules/&lt;RULE_ID&gt;
         </code>
       </td>
       <td>Update a single Firewall Rule by ID.</td>
@@ -113,7 +113,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
         </a>
       </td>
       <td>
-        <code class="InlineCode">DELETE&nbsp;zones/{'<ZONE_ID>'}/firewall/rules</code>
+        <code class="InlineCode">DELETE&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules</code>
       </td>
       <td>
         <p>Delete existing Firewall Rules. Must specify list of Firewall Rule IDs.</p>
@@ -131,7 +131,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
       </td>
       <td>
         <code class="InlineCode">
-          DELETE&nbsp;zones/{'<ZONE_ID>'}/firewall/rules/{'<RULE_ID>'}
+          DELETE&nbsp;zones/&lt;ZONE_ID&gt;/firewall/rules/&lt;RULE_ID&gt;
         </code>
       </td>
       <td>

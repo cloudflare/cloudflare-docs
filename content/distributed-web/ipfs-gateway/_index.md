@@ -52,7 +52,7 @@ A CID will typically look something like this:
 However, the same hash could be encoded with
 [Base32](https://en.wikipedia.org/wiki/Base32) and there are a slew of other
 supported hash algorithms including [SHA-3](https://en.wikipedia.org/wiki/SHA-3)
-and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_\(hash_function\)).
+and [BLAKE2](https://en.wikipedia.org/wiki/BLAKE_(hash_function)).
 
 ### Uploading to IPFS
 
@@ -88,9 +88,9 @@ the file would have the CID `QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`.
 You could then access the file in two ways.
 
 1.  Requesting the file directly:<br />
-    https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy
+    `https://cloudflare-ipfs.com/ipfs/QmXnnyufdzAWL5CqZ2RnSNgPbvCc1ALT73s6epPrRnZ1Xy`
 2.  Requesting the file by name, from the directory:<br />
-    https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt
+    `https://cloudflare-ipfs.com/ipfs/QmdbaSQbGU6Wo9i5LyWWVLuU8g6WrYpWh2K4Li4QuuE8Fr/example\_text.txt`
 
 While the CID of a file will only change if the file itself changes, the CID of
 a directory changes any time **any** of the files in it change, or if any files
@@ -108,7 +108,7 @@ remember the CIDs of websites on IPFS. The trick is to put the entire website
 inside a directory, compute the CID of the directory, and put that CID into a
 special DNS record associated with a domain called a DNSLink.
 
-This way, when a gateway gets a request for https://example.com/index.html, the
+This way, when a gateway gets a request for `https://example.com/index.html`, the
 gateway can lookup the CID of the directory from example.com's DNS and then
 serve the file `index.html` from that directory. When a new version is ready to
 be published, the site owner updates their DNSLink DNS record to contain the new

@@ -34,7 +34,7 @@ Using these two selectors in the HTTP rule builder, you can have more granular c
 
 ### Applications
 
-A full list of supported applications and their respective app types are available to download [here](/cloudflare-one/static/documentation/applications.csv/).
+A full list of supported applications and their respective app types are available to download [here](/cloudflare-one/static/documentation/applications.csv).
 
 ### App types
 
@@ -76,7 +76,7 @@ Gateway periodically updates the _Do Not Decrypt_ app type to include new applic
 
 {{<Aside>}}
 
-<b>Google Drive for Desktop</b> allows you to configure the app to trust the <a href="/connections/connect-devices/warp/install-cloudflare-cert">
+<b>Google Drive for Desktop</b> allows you to configure the app to trust the <a href="/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/">
   Cloudflare Root Certificate
 </a> Gateway presents. Doing so will allow you to inspect the traffic to and from Google Drive, instead
 of setting up a <i>Do Not Inspect</i> rule and lose visibility on that traffic. To trust the Cloudflare

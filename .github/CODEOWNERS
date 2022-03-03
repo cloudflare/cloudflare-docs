@@ -1,128 +1,128 @@
 # 1.1.1.1
-products/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
+content/1.1.1.1/ @cloudflare/PCX @cloudflare/dns
 
 # Analytics
-products/analytics/ @soheiokamoto @jherre @tlozoot @tanushreesharma-cf @cloudflare/PCX
+content/analytics/ @soheiokamoto @jherre @tlozoot @tanushreesharma-cf @cloudflare/PCX
 
 # API
-products/api/ @cloudflare/sdk @cloudflare/PCX
+content/api/ @cloudflare/sdk @cloudflare/PCX
 
 # APO
-products/automatic-platform-optimization/ @cloudflare/PCX
+content/automatic-platform-optimization/ @cloudflare/PCX
 
 # Bot management
-products/bots/ @cloudflare/PCX
+content/bots/ @cloudflare/PCX
 
 # Browser Isolation
-products/browser-isolation/ @cloudflare/PCX
+content/browser-isolation/ @cloudflare/PCX
 
 # BYOIP
-products/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
+content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 
 # Cache
-products/cache/ @cloudflare/PCX
+content/cache/ @cloudflare/PCX
 
 # Cloudflare One
-products/cloudflare-one/ @cloudflare/PCX
+content/cloudflare-one/ @cloudflare/PCX
 
 # Developers homepage
 developers.cloudflare.com/ @cloudflare/PCX
 
 # DDoS Protection
-products/ddos-protection/ @cloudflare/PCX
+content/ddos-protection/ @cloudflare/PCX
 
 # Distributed Web
-products/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
+content/distributed-web/ @lukevalenta @thibmeu @jhoyla @Lekensteyn @cloudflare/PCX
 
 # Documentation Engine
-products/docs-engine/ @cloudflare/PCX
+content/docs-engine/ @cloudflare/PCX
 
 # Email Routing
-products/email-routing/ @cloudflare/PCX
+content/email-routing/ @cloudflare/PCX
 
 # Events
-products/events/ @ConzorKingKong @cloudflare/PCX
+content/events/ @ConzorKingKong @cloudflare/PCX
 
 # Firewall Rules
-products/firewall/ @cloudflare/firewall @cloudflare/PCX
+content/firewall/ @cloudflare/firewall @cloudflare/PCX
 
 # Fundamentals
-products/fundamentals/ @cloudflare/PCX
+content/fundamentals/ @cloudflare/PCX
 
 # HTTP/3
-products/http3/ @ConzorKingKong @cloudflare/PCX
+content/http3/ @ConzorKingKong @cloudflare/PCX
 
 # Cloudflare Images
-products/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
+content/images/ @kornelski @GregBrimble @sejoker @cloudflare/PCX
 
 # Load Balancing
-products/load-balancing/ @ConzorKingKong @cloudflare/PCX
+content/load-balancing/ @ConzorKingKong @cloudflare/PCX
 
 # Logs
-products/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @tanushreesharma-cf @cloudflare/PCX
+content/logs/ @soheiokamoto @jherre @tlozoot @bharatnc @tanushreesharma-cf @cloudflare/PCX
 
 # Magic Transit
-products/magic-transit/ @annikagarbers @cloudflare/PCX
+content/magic-transit/ @annikagarbers @cloudflare/PCX
 
 # Magic Firewall
-products/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
+content/magic-firewall/ @arges @annikagarbers @cloudflare/PCX
 
 # Network Interconnect
-products/network-interconnect @ConzorKingKong @cloudflare/PCX
+content/network-interconnect @ConzorKingKong @cloudflare/PCX
 
 # Pages
-products/pages/ @cloudflare/workers-docs @cloudflare/PCX
+content/pages/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Page Shield
-products/page-shield/ @cloudflare/PCX
+content/page-shield/ @cloudflare/PCX
 
 # Railgun
-products/railgun/ @cloudflare/PCX
+content/railgun/ @cloudflare/PCX
 
 # Randomness Beacon
-products/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
+content/randomness-beacon/ @lukevalenta @armfazh @cloudflare/PCX
 
 # Registrar
-products/registrar/ @cloudflare/PCX
+content/registrar/ @cloudflare/PCX
 
 # Rules
-products/rules/ @cloudflare/PCX
+content/rules/ @cloudflare/PCX
 
 # Ruleset Engine
-products/ruleset-engine/ @cloudflare/PCX
+content/ruleset-engine/ @cloudflare/PCX
 
 # Security Center
-products/security-center/ @cloudflare/PCX
+content/security-center/ @cloudflare/PCX
 
 # Spectrum
-products/spectrum/ @ConzorKingKong @cloudflare/PCX
+content/spectrum/ @ConzorKingKong @cloudflare/PCX
 
 # SSL
-products/ssl/ @ConzorKingKong @cloudflare/PCX
+content/ssl/ @ConzorKingKong @cloudflare/PCX
 
 # Stream
-products/stream/ @renandincer @third774 @Everlag @zaidf @mbetz08 @bkrebsbach @cloudflare/PCX
+content/stream/ @renandincer @third774 @Everlag @zaidf @mbetz08 @bkrebsbach @cloudflare/PCX
 
 # Tenant
-products/tenant/ @garrettgalow @cloudflare/PCX
+content/tenant/ @garrettgalow @cloudflare/PCX
 
 # Terraform
-products/terraform/ @ConzorKingKong @cloudflare/PCX
+content/terraform/ @ConzorKingKong @cloudflare/PCX
 
 # Time Services
-products/time-services/ @lukevalenta @wbl @armfazh @cloudflare/PCX
+content/time-services/ @lukevalenta @wbl @armfazh @cloudflare/PCX
 
 # WAF
-products/waf/ @cloudflare/firewall @cloudflare/PCX
+content/waf/ @cloudflare/firewall @cloudflare/PCX
 
 # Waiting Room
-products/waiting-room/ @cloudflare/PCX
+content/waiting-room/ @cloudflare/PCX
 
 # Warp Client
-products/warp-client/ @cloudflare/PCX
+content/warp-client/ @cloudflare/PCX
 
 # Workers
-products/workers/ @cloudflare/workers-docs @cloudflare/PCX
+content/workers/ @cloudflare/workers-docs @cloudflare/PCX
 
 # Zaraz
-products/zaraz/ @cloudflare/PCX
+content/zaraz/ @cloudflare/PCX

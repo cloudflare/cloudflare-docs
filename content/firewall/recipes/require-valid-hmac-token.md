@@ -13,7 +13,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ## HMAC token validation
 
-Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
+Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
 
 This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
@@ -35,7 +35,7 @@ where
 
 The Firewall Rule below blocks requests to `example.com` that do not include a valid HMAC.
 
-The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/ruleset-engine/rules-language/functions#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/ruleset-engine/rules-language/functions#messagemac):
+The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/ruleset-engine/rules-language/functions/#messagemac):
 
 <table>
   <thead>
@@ -73,9 +73,9 @@ Since the expression in this example uses the `not` operator, it only matches wh
 
 {{<Aside type="warning" header="Important">}}
 
-When you do not use the optional _flags_ argument for `_is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional _flags_ argument for `is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
-For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rules-language/functions#hmac-validation).
+For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rules-language/functions/#hmac-validation).
 
 {{</Aside>}}
 

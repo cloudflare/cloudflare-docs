@@ -21,7 +21,7 @@ meta:
 
 Repeat steps 4-8 for all of the websites you want to track with Web Analytics by going to **Quick Actions** > **Add a site** from the Web Analytics Sites page. From this page you can also click **Manage site** inside each website's card to adjust Web Analytics for your site at any time.
 
-For more information on how many sites you can track, refer to [Limits](/analytics/understanding-web-analytics/limits/).
+For more information on how many sites you can track, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 
 ## Sites proxied through Cloudflare
 
@@ -36,6 +36,6 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 Repeat steps 3-4 for all of the websites you want to track with Web Analytics. Web Analytics are enabled by default for sites proxied through Cloudflare that previously used Browser Insights. Adjust Web Analytics for your site at any time by clicking **Manage site** from the Web Analytics Sites page.
 
-For more information on how many sites you can track, refer to [Limits](/analytics/understanding-web-analytics/limits/).
+For more information on how many sites you can track, refer to [Limits](/analytics/web-analytics/understanding-web-analytics/limits/).
 
 For more information on how to configure which sites or pages you track with Web Analytics, refer to [Rules](/analytics/web-analytics/configuring-web-analytics/rules/).

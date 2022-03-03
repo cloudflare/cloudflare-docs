@@ -36,6 +36,6 @@ The Network-layer DDoS Attack Protection Managed Ruleset protects Cloudflare cus
 
 ## Related Cloudflare products
 
-Magic Transit customers can create custom [Magic Firewall](/magic-firewall) rules to block additional network-layer attacks.
+Magic Transit customers can create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
 
 Spectrum customers can use [IP Access](https://support.cloudflare.com/hc/articles/217074967) rules to block additional network-layer attacks.

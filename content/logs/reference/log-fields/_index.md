@@ -15,12 +15,8 @@ Unless otherwise noted, fields are available in both Logpush v1 (Logpush prior t
 
 For log field **ClientIPClass**, Cloudflare recommends using [Bot Tags](/bots/about/cloudflare-bot-tags) to classify IPs.
 
-## Zone-scoped datasets
-
-{{<directory-listing>}}
-
-## Account-scoped datasets
-
-{{<directory-listing>}}
+## Datasets
+- [Zone-scoped datasets](/logs/reference/log-fields/zone)
+- [Account-scoped datasets](/logs/reference/log-fields/account)
 
 For more information on logs available in Cloudflare for Teams, refer to [Teams logs](/cloudflare-one/analytics/logs).

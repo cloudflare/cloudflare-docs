@@ -28,8 +28,8 @@ Rule Preview requires access to a Cloudflare Enterprise plan.
 
 To test a Firewall Rule with Rule Preview:
 
-1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
-2.  Click **Test rule** to trigger the test.
+1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
+1. Click **Test rule** to trigger the test.
 
 ![Expression Builder Test Rule button](/firewall/static/firewall-rules-preview-1.png)
 
@@ -70,8 +70,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
     <tbody>
       <tr>
         <td>
-          <strong>AS Number</strong>
-          <p />
+          <strong>AS Number</strong><br/>
           <strong><code class="InlineCode">ip.geoip.asnum</code></strong>
         </td>
         <td>&#x2705;</td>
@@ -85,11 +84,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Country
-            <p />
-            <code class="InlineCode">ip.geoip.country</code></strong
-          >
+          <strong>Country</strong><br/>
+          <strong><code class="InlineCode">ip.geoip.country</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -102,11 +98,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Hostname
-            <p />
-            <code class="InlineCode">http.host</code></strong
-          >
+          <strong>Hostname</strong><br/>
+          <strong><code class="InlineCode">http.host</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -119,11 +112,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >IP Address
-            <p />
-            <code class="InlineCode">ip.src</code></strong
-          >
+          <strong>IP Address</strong><br/>
+          <strong><code class="InlineCode">ip.src</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -136,11 +126,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Referer
-            <p />
-            <code class="InlineCode">http.referer</code></strong
-          >
+          <strong>Referer</strong><br/>
+          <strong><code class="InlineCode">http.referer</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -153,11 +140,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Request method
-            <p />
-            <code class="InlineCode">http.request.method</code></strong
-          >
+          <strong>Request method</strong><br/>
+          <strong><code class="InlineCode">http.request.method</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -170,11 +154,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >SSL
-            <p />
-            <code class="InlineCode">ssl</code></strong
-          >
+          <strong>SSL</strong><br/>
+          <strong><code class="InlineCode">ssl</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>❌</td>
@@ -187,11 +168,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI
-            <p />
-            <code class="InlineCode">http.request.uri</code></strong
-          >
+          <strong>URI</strong><br/>
+          <strong><code class="InlineCode">http.request.uri</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -204,11 +182,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI path
-            <p />
-            <code class="InlineCode">http.request.uri.path</code></strong
-          >
+          <strong>URI path</strong><br/>
+          <strong><code class="InlineCode">http.request.uri.path</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -221,11 +196,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI query string
-            <p />
-            <code class="InlineCode">http.request.uri.query</code></strong
-          >
+          <strong>URI query string</strong><br/>
+          <strong><code class="InlineCode">http.request.uri.query</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -238,11 +210,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >User agent
-            <p />
-            <code class="InlineCode">http.user_agent</code></strong
-          >
+          <strong>User agent</strong><br/>
+          <strong><code class="InlineCode">http.user_agent</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>

@@ -53,6 +53,14 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta.
 
+{{<Aside type="Warning">}}
+
+If you encounter the error **Failed to fetch user/group information from the identity**, please double-check your Okta configuration:
+  * If you have more than 100 Okta groups, ensure you include the API token.
+  * The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
+
+{{</Aside>}}
+
 ## Example API Configuration
 
 ```json

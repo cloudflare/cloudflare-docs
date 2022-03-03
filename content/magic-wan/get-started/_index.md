@@ -14,7 +14,7 @@ Before you can begin using Magic WAN, be sure to complete the onboarding steps b
 
 The onboarding process begins with an initial kickoff call where Cloudflare engages with your organization to confirm the scope and timeline for setting up Magic WAN.
 
-After your call with Cloudflare, verify that you meet the [onboarding requirements](/magic-wan/verify-requirements/).
+After your call with Cloudflare, verify that you meet the [onboarding requirements](/magic-wan/get-started/verify-requirements/).
 
 ## 2. [Configure tunnels](/magic-wan/get-started/configure-tunnels/)
 

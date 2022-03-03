@@ -10,17 +10,17 @@ weight: 351
 
 To create an IP List, follow these steps:
 
-1.  In the **Lists** interface, click **Create new list**.
+1. In the **Lists** interface, click **Create new list**.
 
-The **Create new list** page displays.
+    The **Create new list** page displays.
 
-![Create new list](/firewall/static/lists-create-new.png)
+    ![Create new list](/firewall/static/lists-create-new.png)
 
-1.  Enter a name for your list, observing the following guidelines:
+1. Enter a name for your list, observing the following guidelines:
 
     - Use only lowercase letters, numbers and the underscore (`_`) character in the name. A valid name satisfies this regular expression:
 
-      `^[a-z0-9_]+$`
+          ^[a-z0-9_]+$
 
     - The maximum length for a list name is 50 characters.
 
@@ -31,6 +31,7 @@ The **Create new list** page displays.
 3.  Click **Create**.
 
 The **Add items to list** page displays.
+
 ![Add items to list](/firewall/static/lists-add-items-page.png)
 
 To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
@@ -45,9 +46,9 @@ You can only delete a list when there are no Firewall Rules (enabled or disabled
 
 To delete an IP List, follow these steps:
 
-1.  In the Cloudflare dashboard, navigate to **Configurations** > **Lists**.
+1. In the Cloudflare dashboard, navigate to **Configurations** > **Lists**.
 
-2.  Hover your pointer over the **Delete** button associated with the list you want to delete.
+1. Hover your pointer over the **Delete** button associated with the list you want to delete.
 
     - When the list is used in a Firewall Rule, a tooltip displays with notification that you cannot delete the list:
 
@@ -55,9 +56,9 @@ To delete an IP List, follow these steps:
 
     - When the list is not used in a Firewall Rule, **Delete** link highlights, indicating you can delete the list.
 
-3.  Click **Delete**.
+1. Click **Delete**.
 
-4.  In the confirmation dialog, click **Delete** to confirm the operation.
+1. In the confirmation dialog, click **Delete** to confirm the operation.
 
 The **Lists** card displays the updated collection of lists.
 

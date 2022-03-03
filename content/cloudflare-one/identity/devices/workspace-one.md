@@ -1,6 +1,5 @@
 ---
 pcx-content-type: how-to
-hidden: true
 title: Workspace ONE
 weight: 4
 ---

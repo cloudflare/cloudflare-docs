@@ -10,7 +10,7 @@ meta:
 
 ## Overview
 
-The **Expression Editor** is a text-only interface for creating Firewall Rule expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language).
+The **Expression Editor** is a text-only interface for creating Firewall Rule expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/).
 
 For example, only the Expression Editor supports grouping symbols. Cloudflare designed the Rules language with [Wireshark Display Filters®](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html) in mind, so although there are some subtle differences, Wireshark users should feel right at home with Cloudflare rules and be able to easily port their existing rules to Cloudflare.
 
@@ -26,17 +26,17 @@ The Expression Editor is located in the **Create Firewall Rule** and **Edit Fire
 
 To edit an expression in the editor:
 
-1.  In the **Firewall Rules** tab, use the **Create a Firewall rule** button to create a new rule, or click the **wrench** icon to edit an existing rule.
+1. In the **Firewall Rules** tab, use the **Create a Firewall rule** button to create a new rule, or click the **wrench** icon to edit an existing rule.
 
     ![Firewall Rules tab](/firewall/static/firewall-rules-expressions-editor-1.png)
 
     The **Create Firewall Rule** page displays.
 
-2.  To switch to the Expression Editor in the **Create Firewall Rule** page, click **Edit expression**.
+1. To switch to the Expression Editor in the **Create Firewall Rule** page, click **Edit expression**.
 
     ![Edit Expression link in Create Firewall Rule page](/firewall/static/firewall-rules-expressions-editor-2.png)
 
-3.  Use the text input to edit your expression. To commit your changes, click **Deploy** or **Save as draft**.
+1. Use the text input to edit your expression. To commit your changes, click **Deploy** or **Save as draft**.
 
 To switch from the editor to the Expression Builder, click **Use expression builder**.
 

@@ -55,7 +55,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   <tbody style="vertical-align:top">
     <tr>
       <td>
-        <a href="/rulesets-api/view/#list-existing-rulesets">List existing rulesets</a>
+        <a href="/ruleset-engine/rulesets-api/view/#list-existing-rulesets">List existing rulesets</a>
       </td>
       <td>
         <code>GET</code>
@@ -66,7 +66,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/view/#view-a-specific-ruleset">View a specific ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset">View a specific ruleset</a>
       </td>
       <td>
         <code>GET</code>
@@ -77,7 +77,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/view/#list-all-versions-of-a-ruleset">
+        <a href="/ruleset-engine/rulesets-api/view/#list-all-versions-of-a-ruleset">
           List all versions of a ruleset
         </a>
       </td>
@@ -90,7 +90,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/view/#view-a-specific-version-of-a-ruleset">
+        <a href="/ruleset-engine/rulesets-api/view/#view-a-specific-version-of-a-ruleset">
           View a specific version of a ruleset
         </a>
       </td>
@@ -103,7 +103,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
+        <a href="/ruleset-engine/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
           List rules in a Managed Ruleset with a specific tag
         </a>
       </td>
@@ -130,7 +130,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   <tbody style="vertical-align:top">
     <tr>
       <td>
-        <a href="/rulesets-api/create">Create ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/create/">Create ruleset</a>
       </td>
       <td>
         <code>POST</code>
@@ -155,7 +155,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   <tbody style="vertical-align:top">
     <tr>
       <td>
-        <a href="/rulesets-api/update">Update or deploy a ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/update/">Update or deploy a ruleset</a>
       </td>
       <td>
         <code>PUT</code>
@@ -170,7 +170,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/add-rule">Add rule to ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/add-rule/">Add rule to ruleset</a>
       </td>
       <td>
         <code>POST</code>
@@ -186,7 +186,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/update-rule">Update a rule in a ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/update-rule/">Update a rule in a ruleset</a>
       </td>
       <td>
         <code>PATCH</code>
@@ -201,7 +201,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/delete-rule">Delete a rule in a ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/delete-rule/">Delete a rule in a ruleset</a>
       </td>
       <td>
         <code>DELETE</code>
@@ -226,7 +226,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
   <tbody style="vertical-align:top">
     <tr>
       <td>
-        <a href="/rulesets-api/delete#delete-ruleset">Delete ruleset</a>
+        <a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset">Delete ruleset</a>
       </td>
       <td>
         <code>DELETE</code>
@@ -237,7 +237,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     </tr>
     <tr>
       <td>
-        <a href="/rulesets-api/delete#delete-ruleset-version">Delete ruleset version</a>
+        <a href="/ruleset-engine/rulesets-api/delete/#delete-ruleset-version">Delete ruleset version</a>
       </td>
       <td>
         <code>DELETE</code>

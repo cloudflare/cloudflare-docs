@@ -193,9 +193,8 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
           according to the rule configuration.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases{' '}
-          <code>http_request_transform</code>, <code>http_request_late_transform</code>, and{' '}
+          Only available for <a href="/rules/transform/">Transform Rules</a>, in phases
+          <code>http_request_transform</code>, <code>http_request_late_transform</code>, and
           <code>http_response_headers_transform</code>.
         </p>
         <p>
@@ -220,8 +219,7 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
           by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>,
+          Only available for <a href="/rules/bulk-redirects/">Bulk Redirect Rules</a>,
           in the <code>http_request_redirect</code> phase.
         </p>
         <p>
@@ -238,6 +236,6 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
 
 {{<Aside type="note">}}
 
-Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions) for more information.
+Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 
 {{</Aside>}}

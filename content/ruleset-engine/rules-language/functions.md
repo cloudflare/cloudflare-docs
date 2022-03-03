@@ -49,7 +49,7 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    <code>all(http.request.headers\['content-type']\[\*] == "application/json")</code>
+    `all(http.request.headers['content-type'][*] == "application/json")`
 
 - <code>concat({{<type>}}String | Integer | bytes | Array elements{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -58,19 +58,18 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    <code>concat("String1"," ","String",2) == "String1 String2"</code>
+    `concat("String1"," ","String",2) == "String1 String2"`
 
 - <code>ends\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-      *   Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source ends with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-      *   *Example:*<br />
-          If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
+  - *Example:*<br />
+    If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
-          {{<Aside type="warning">}}
-
-  **Warning:** The `ends_with()` function is not available in [Firewall Rules](/firewall/).
-  {{</Aside>}}
+{{<Aside type="warning">}}
+The `ends_with()` function is not available in [Firewall Rules](/firewall/).
+{{</Aside>}}
 
 - <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
 
@@ -79,7 +78,7 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    <code>len(http.host)</code>
+    `len(http.host)`
 
 - <code>lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -88,36 +87,35 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    <code>lower(http.host) == "www.cloudflare.com"</code>
+    `lower(http.host) == "www.cloudflare.com"`
 
 - <code>regex\_replace(source{{<param-type>}}String{{</param-type>}}, regular\_expression{{<param-type>}}String{{</param-type>}}, replacement{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
 
-      *   Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
+    - Replaces a part of a source string matched by a regular expression with a replacement string, returning the result. The replacement string can contain references to regular expression capture groups.
 
-      *   *Examples:*
+    - *Examples:*
 
-          Literal match replace:<br />
-          `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
+      Literal match replace:<br />
+      `regex_replace("/foo/bar", "/bar$", "/baz") == "/foo/baz"`
 
-          If there is no match, the input string does not change:<br />
-          `regex_replace("/x", "^/y$", "/mumble") == "/x"`
+      If there is no match, the input string does not change:<br />
+      `regex_replace("/x", "^/y$", "/mumble") == "/x"`
 
-          Match is case sensitive by default:<br />
-          `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
+      Match is case sensitive by default:<br />
+      `regex_replace("/foo", "^/FOO$", "/x") == "/foo"`
 
-          When there are multiple matches, only one replacement occurs (the first one):<br />
-          `regex_replace("/a/a", "/a", "/b") == "/b/a"`
+      When there are multiple matches, only one replacement occurs (the first one):<br />
+      `regex_replace("/a/a", "/a", "/b") == "/b/a"`
 
-          Escape a `$` in the replacement string by prefixing it with another `$`:<br />
-          `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
+      Escape a `$` in the replacement string by prefixing it with another `$`:<br />
+      `regex_replace("/b", "^/b$", "/b$$") == "/b$"`
 
-          Replace with capture groups:<br />
-          `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
+      Replace with capture groups:<br />
+      `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
-          {{<Aside type="warning">}}
-
-  **Warning:** You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
-  {{</Aside>}}
+{{<Aside type="warning">}}
+You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform/). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
+{{</Aside>}}
 
 - <code>remove\_bytes({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
 
@@ -126,35 +124,33 @@ The Rules language supports these transformation functions:
   - <em>Example:</em>
     <br />
 
-    <code>remove\_bytes(http.host, "\x2e\x77") == "cloudflarecom"</code>
+    `remove_bytes(http.host, "\x2e\x77") == "cloudflarecom"`
 
 - <code>starts\_with(source{{<param-type>}}String{{</param-type>}}, substring{{<param-type>}}String{{</param-type>}})</code> {{<type>}}Boolean{{</type>}}
 
-      *   Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
+  - Returns `true` when the source starts with a given substring. Returns `false` otherwise. The source cannot be a literal value (for example, `"foo"`).
 
-      *   *Example:*<br />
-          If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
+  - *Example:*<br />
+    If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
-          {{<Aside type="warning">}}
-
-  **Warning:** The `starts_with()` function is not available in [Firewall Rules](/firewall/).
-  {{</Aside>}}
+{{<Aside type="warning">}}
+The `starts_with()` function is not available in [Firewall Rules](/firewall/).
+{{</Aside>}}
 
 - <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}
 
-      *   Returns the string representation of an Integer, Boolean, or IP address value.
+  - Returns the string representation of an Integer, Boolean, or IP address value.
 
-      *   *Examples:*
+  - *Examples:*
 
-          ```txt
-          to_string(cf.bot_management.score) == '5'
-          to_string(ssl) == 'true'
-          ```
+    ```txt
+    to_string(cf.bot_management.score) == '5'
+    to_string(ssl) == 'true'
+    ```
 
-          {{<Aside type="warning">}}
-
-  **Warning:** You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform).
-  {{</Aside>}}
+{{<Aside type="warning">}}
+You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform/).
+{{</Aside>}}
 
 - <code>upper({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -169,14 +165,16 @@ The Rules language supports these transformation functions:
 
   - Decodes a URL formatted string, as in the following:
 
-    - <code>%20</code> and <code>+</code> decode to space characters <code> </code>
+    - — <code>%20</code> and <code>+</code> decode to space characters <code> </code>
 
-    - <code>%E4%BD</code> decodes to <code>ä½ </code>
+    - — <code>%E4%BD</code> decodes to <code>ä½ </code>
 
   - <em>Example:</em>
     <br />
 
-    <code>any(url\_decode(http.request.body.form.values\[*])\[*] contains "an xss attack")</code>
+    ```txt
+    any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+    ```
 
 {{</definitions>}}
 
@@ -254,7 +252,7 @@ http.host == "download.example.com"
 and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
 ```
 
-For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](/firewall/recipes).
+For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](/firewall/recipes/).
 
 ### MessageMAC
 
@@ -286,12 +284,12 @@ and is composed of these parentheses-delimited expressions:
       <td valign="top"><nlineCode">&verify=</code></td>
     </tr>
     <tr>
-      <td valign="top"><code>(\d{'{10}'})</code></td>
+      <td valign="top"><code>(\d{10})</code></td>
       <td>The 10-digit Unix <em>timestamp</em> when the MAC was issued, expressed in seconds.</td>
       <td valign="top"><nlineCode">1484063137</code></td>
     </tr>
     <tr>
-      <td valign="top"><code>(.{'{43,}'})</code></td>
+      <td valign="top"><code>(.{43,})</code></td>
       <td><p>A base64-encoded version of the <em>MAC</em>. When you do not set the value of the <em>urlSafe</em> argument in the HMAC validation function to <code>'s'</code>, you must URL encode the base64 value for <em>mac</em>.</p>
       <p>When the base64 MAC encoding is URL-safe, the value for <em>mac</em> contains 43 bytes. Otherwise, the value will be 44 bytes or more, because of URL encoding.</p></td>
       <td valign="top"><nlineCode">IaLGSmELTvlhfd0ItdN6PhhHTFhzx<br />73EX8uy%2FcSDiIU%3D</code></td>

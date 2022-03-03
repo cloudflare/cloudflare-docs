@@ -121,7 +121,7 @@ The `uploadURL` provided in the `result` body of a successful request should be
 passed along to the end-user to make their upload request.
 
 The `uid` references the reserved media object's unique identifier and can be
-kept as a reference to query our [API](/stream/getting-started/searching/).
+kept as a reference to query our API.
 
 ## Direct creator upload request from end users
 

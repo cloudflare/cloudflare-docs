@@ -197,6 +197,8 @@ function normalize(tokens: (Token | string)[]) {
   while ((line = lines.shift())) {
     if (line.length > 1 && line[0].content === '\n') {
       // remove extra leading "\n" items for non-whitespace lines
+      line[0].content = ""
+      arr.push(line)
     } else {
       arr.push(line);
     }

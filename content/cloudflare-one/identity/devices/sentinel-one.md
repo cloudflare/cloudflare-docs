@@ -12,7 +12,7 @@ weight: 4
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | Minimum WARP version required    | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows    | WARP with Gateway                                                                         | macOS: 1.4.27, Windows: 1.4.25.0 | All plans                                                     |
+| macOS, Windows, Linux    | WARP with Gateway                                                                         | macOS: 1.4.27, Windows: 1.4.25.0 | All plans                                                     |
 
 </div>
 </details>

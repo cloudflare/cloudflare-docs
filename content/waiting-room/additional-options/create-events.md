@@ -10,11 +10,7 @@ When you want to customize the behavior of a waiting room for a specific period 
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-{{<Aside type="note">}}
-
-Only some customers can support scheduled events with their waiting rooms. For more details, see our <a href="/plans">Plans</a> page.
-
-{{</Aside>}}
+{{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, see our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 ## Create an event
 
@@ -22,7 +18,7 @@ At the moment, you can only create an event using the API.
 
 To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](/waiting-room/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/additional-options/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
 {{<Aside type="note">}}
 
