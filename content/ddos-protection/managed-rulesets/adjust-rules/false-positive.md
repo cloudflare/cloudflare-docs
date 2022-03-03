@@ -12,13 +12,11 @@ In these cases, Cloudflare’s DDoS Protection systems may flag that traffic as 
 
 To remedy a false positive:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-2.  Navigate to the analytics dashboard and apply filters to the displayed data.
+1. Navigate to the analytics dashboard and apply filters to the displayed data.
 
-     <details>
- <summary>For WAF/CDN customers</summary>
- <div>
+    <details><summary>For WAF/CDN customers</summary><div>
 
     1\. Select the zone that is experiencing DDoS attack false positives.
 
@@ -26,41 +24,31 @@ To remedy a false positive:
 
     2\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
-     </div>
- </details>
+    </div></details>
 
-     <details>
- <summary>For Magic Transit and Spectrum customers</summary>
- <div>
+    <details><summary>For Magic Transit and Spectrum customers</summary><div>
 
     1\. In the account home page, open **Network Analytics**.
 
     2\. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
-     </div>
- </details>
+    </div></details>
 
-3.  Scroll down to the **Activity log**.
+1. Scroll down to the **Activity log**.
 
-4.  Click **Edit columns** and enable **Rule ID**\*.
+1. Click **Edit columns** and enable **Rule ID**\*.
 
-5.  Copy the rule ID from one of the DDoS log entries.
+1. Copy the rule ID from one of the DDoS log entries.
 
-6.  Navigate to **Firewall** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+1. Navigate to **Firewall** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
-7.  Click **Browse rules** and paste the Rule ID in the search field.
+1. Click **Browse rules** and paste the Rule ID in the search field.
 
-8.  Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
+1. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the action of the rule to _Log_.
 
-9.  Click **Next** and then **Save**.
+1. Click **Next** and then **Save**.
 
 _\* Not available in Network Analytics dashboard yet._
-
-{{<Aside type="warning">}}
-
-The **DDoS** tab under **Firewall** is currently only available to the WAF/CDN customers.
-
-{{</Aside>}}
 
 Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
 
