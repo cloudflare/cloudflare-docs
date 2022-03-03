@@ -20,7 +20,7 @@ This guide will instruct you through setting up Wrangler to deploying your first
 
 ## 1. Install Wrangler
 
-To create your R2 bucket, install [Wrangler](/get-started/guide#2-install-the-workers-cli), the Workers CLI.
+To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
 To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://www.npmjs.com/get-npm). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
@@ -40,7 +40,7 @@ or install with cargo:
 $ cargo install wrangler
 ```
 
-Refer to the Wrangler [Install/Update](/cli-wrangler/install-update) page for more information.
+Refer to the Wrangler [Install/Update](/workers/cli-wrangler/install-update) page for more information.
 
 ## 2. Authenticate Wrangler
 
@@ -99,7 +99,7 @@ Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command t
 wrangler generate <YOUR_WORKER_NAME>
 ```
 
-Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID. 
+Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
 
 Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
 
@@ -107,7 +107,7 @@ Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > 
 name = "<YOUR_WORKER_NAME>"
 type = "javascript"
 compatibility_date = "2022-02-10"
- 
+
 account_id = "YOUR_ACCOUNT_ID" # ← Replace with your Account ID.
 workers_dev = true
 ```
@@ -132,27 +132,27 @@ An R2 bucket is able to READ, LIST, WRITE, and DELETE objects. You can see an ex
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
- 
+
 async function handleRequest(request) {
   const url = new URL(request.url);
   const key = url.pathname.slice(1);
- 
+
   switch (request.method) {
     case 'PUT':
       await MY_BUCKET.put(key, request.body);
       return new Response(`Put ${key} successfully!`);
    case 'GET':
      const { value } = await MY_BUCKET.get(key);
- 
+
      if (value === null) {
        return new Response('Object Not Found', { status: 404 });
      }
- 
+
      return new Response(value);
    case 'DELETE':
      await MY_BUCKET.delete(key);
      return new Response('Deleted!', { status: 200 });
- 
+
     default:
       return new Response('Route Not Found.', { status: 404 });
   }
@@ -161,7 +161,7 @@ async function handleRequest(request) {
 
 ## 6. Bucket access and privacy
 
-With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors. 
+With the above code added to your Worker, every incoming request has the ability to interact with your bucket. This means your bucket is publicly exposed and its contents can be accessed and modified by undesired actors.
 
 You must now define authorization logic to determine who can perform what actions to your bucket. This logic lives within your Worker's code, as it is your application's job to determine user privileges. The following is a short list of resources related to access and authorization practices:
 
@@ -169,9 +169,9 @@ You must now define authorization logic to determine who can perform what action
 2. [Using Custom Headers](/workers/examples/auth-with-headers): Allow or deny a request based on a known pre-shared key in a header.
 3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
 
-Continuing with your newly created bucket and Worker, you will need to protect all bucket operations. 
+Continuing with your newly created bucket and Worker, you will need to protect all bucket operations.
 
-For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret. 
+For PUT and DELETE requests, you will make use of a new `AUTH_KEY_SECRET` environment variable, which you will define later as a Wrangler secret.
 
 For GET requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
@@ -181,7 +181,7 @@ const ALLOW_LIST = ['cat-pic.jpg'];
 const hasValidHeader = request => {
   return request.headers.get('X-Custom-Auth-Key') === AUTH_KEY_SECRET;
 };
- 
+
 function authorizeRequest(request, key) {
   switch (request.method) {
     case 'PUT':
@@ -193,17 +193,17 @@ function authorizeRequest(request, key) {
       return false;
   }
 }
- 
+
 async function handleRequest(request) {
   const url = new URL(request.url);
   const key = url.pathname.slice(1);
- 
+
   if (!authorizeRequest(request, key)) {
     return new Response('Forbidden', { status: 403 });
   }
   // ...
 ```
- 
+
 For this to work, you need to create a secret via Wrangler:
 
 ```sh
@@ -220,7 +220,7 @@ Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the
 ✨  Success! Uploaded secret AUTH_KEY_SECRET.
 ```
 
-This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker. 
+This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker.
 
 ## 7. Deploy your bucket
 
@@ -263,5 +263,5 @@ By completing this guide, you have successfully installed Wrangler and deployed 
 
 ## Related resources
 
-1. [Workers Tutorials](https://developers.cloudflare.com/workers/tutorials)
-2. [Workers Examples](https://developers.cloudflare.com/workers/examples)
+1. [Workers Tutorials](/workers/tutorials/)
+2. [Workers Examples](/workers/examples/)
