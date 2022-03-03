@@ -8,17 +8,24 @@ meta:
 
 # Bulk analytics
 
+Fetch usage data in bulk using the GraphQL API. Stream's GraphQL API exposes two data sets:
+
+- Client-side Metrics: Data collected from the Stream Player. If you use your own player, it will not be reflected in this data set.
+- Server-side Metrics: Data collected from server-side logs and used for billing purposes.
+
+For additional information on using GraphQL, refer to [Get started with GraphQL Analytics API](/analytics/graphql-api/getting-started/).
+
 {{<Aside type="note">}}
 
 Currently, Stream Analytics are only available for video plays that use the Stream Player. If you are using a third-party player, you will not see analytics for video plays from third-party players.
 
 {{</Aside>}}
 
-Stream has a GraphQL analytics API that can be used to get bulk analytics for all videos in your account with one HTTP request. If you are newer to GraphQL, refer to [Cloudflare GraphQL analytics for HTTP requests](https://developers.cloudflare.com/analytics/graphql-api/getting-started) for more detailed information on getting started with the Cloudflare GraphQL Analytics API.
+## Client side analytics
 
 ## Metrics
 
-View analytics are only collected when the Stream Player is used. Review the [example](#example---view-count-and-minutes-viewed) below to retrieve the time viewed for videos on your account in a single query.
+Stream has a GraphQL analytics API that can be used to get bulk analytics for every video in your account with one HTTP request.
 
   - Number of views (number of times the video playback has been started)
   - Time viewed in seconds
@@ -186,6 +193,60 @@ The response will look something like below. Things to remember:
     }
   },
   "errors": null
+}
+```
+
+## Server side analytics
+
+### Metrics
+
+- Date and time an event occurred at Cloudflare's edge
+- Media source for the minutes viewed
+- Video ID
+
+### Filters
+
+- `date`
+- `datetime`
+- `mediaType`
+- `UID`
+
+### Example
+
+
+```bash
+curl --request POST \
+--url https://api.cloudflare.com/client/v4/graphql \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer $TOKEN' \
+--data '{"query":"query {\n  viewer {\n    accounts(filter:{\n      accountTag:\"$ACCOUNT_ID\"\n\n    }) {\n      streamMinutesViewedAdaptiveGroups(\n        filter: {\n          date_lt: \"2022-03-01\"\n          date_gt: \"2022-02-01\"\n        }\n        orderBy:[sum_minutesViewed_DESC]\n        limit: 10\n      ) {\n             sum {\n          minutesViewed\n        }\n        dimensions{\n          uid\n        }\n      }\n    }\n  }\n}\n\n"}'
+```
+
+### Response
+
+```graphql
+query {
+  viewer {
+    accounts(filter:{
+      accountTag:"<ACCOUNT_ID>"
+    }) {
+      streamMinutesViewedAdaptiveGroups(
+        filter: {
+          date_lt: "2022-03-01"
+          date_gt: "2022-02-01"
+        }
+        limit: 10
+        orderBy:[sum_minutesViewed_DESC]
+      ) {
+        sum {
+          minutesViewed
+        }
+        dimensions{
+          uid
+        }
+      }
+    }
+  }
 }
 ```
 

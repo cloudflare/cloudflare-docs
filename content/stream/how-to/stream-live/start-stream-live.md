@@ -113,6 +113,7 @@ Refer to the API information below to update or delete live inputs.
 
 ### Requirements
 
+* Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream. 
 * Stream Live requires input GOP duration (keyframe interval) to be between four and ten seconds.
 * Closed GOPs are required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is the default in most encoder software such as OBS.
 * Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs.
