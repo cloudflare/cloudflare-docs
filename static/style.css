@@ -4226,21 +4226,21 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 }
 [theme="dark"] .DocsMarkdown td > a {
-  color: var(--orange);
+  color: var(--code-orange);
 }
 
 [theme="light"] .DocsMarkdown td > a {
-  color: var(--orange);
+  color: var(--code-orange);
 }
 
 [theme="dark"] .DocsMarkdown td > strong > a {
-  color: var(--orange);
+  color: var(--code-orange);
 }
 
 [theme="light"] .DocsMarkdown--aside > p > a {
-  color: var(--orange);
+  color: var(--code-orange);
 }
 
 [theme="dark"] .DocsMarkdown--aside > p > a {
-  color: var(--orange);
+  color: var(--code-orange);
 }
