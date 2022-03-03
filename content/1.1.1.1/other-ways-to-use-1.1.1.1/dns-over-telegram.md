@@ -1,53 +1,55 @@
 ---
+weight: 0
 pcx-content-type: how-to
 title: DNS over Telegram
-weight: 0
 ---
 
 # DNS over Telegram
 
-To perform DNS over Telegram, you will need Telegram, an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
+To perform DNS lookups over Telegram, you will need Telegram, an end-to-end encrypted messaging app. You can download it on [telegram.org](https://telegram.org/).
 
-You will also need to add the 1.1.1.1 bot to your friends list in Telegram before using this functionality:
+You will also need to add the 1.1.1.1 bot to your friends list in Telegram before using this functionality.
 
-1.  Open the Telegram app.
-2.  Click **Contacts**.
-3.  Search for `onedotonedotonedotonedotbot`.
-4.  Click the **1.1.1.1 bot** when it appears in the search results, and press **Start**.
-5.  You can send a single domain name, which will default to returning the AAAA record. For example:
+## Add 1.1.1.1 bot to your Telegram friends list
 
-<br />
+1. Open the Telegram app.
+2. Click **Contacts**.
+3. Search for `onedotonedotonedotonedotbot`.
+4. Click the **1.1.1.1 bot** when it appears in the search results, and press **Start**.
 
-<div class="medium-img">
+## Perform DNS lookups
 
-![Search](/1.1.1.1/static/example-com.png)
+You can send a single domain name, which will default to returning the AAAA record. For example:
+
+```txt
+dig @1.1.1.1 AAAA example.com
+```
+
+You can also send a record type followed by a domain name.
+
+<details>
+<summary>Supported DNS record types</summary>
+<div>
+
+* `A`
+* `AAAA`
+* `CAA`
+* `CNAME`
+* `DNSKEY`
+* `DS`
+* `MX`
+* `NS`
+* `NSEC`
+* `NSEC3`
+* `RRSIG`
+* `SOA`
+* `TXT`
 
 </div>
-
-<br />
-
-Or you can send a record type followed by a domain name. The record types supported are:
-
-- A
-- AAAA
-- CAA
-- CNAME
-- DNSKEY
-- DS
-- MX
-- NS
-- NSEC
-- NSEC3
-- RRSIG
-- SOA
-- TXT
-
-<br />
+</details>
 
 Example:
 
-<div class="medium-img">
-
-![Search](/1.1.1.1/static/aaaa-example-com.png)
-
-</div>
+```txt
+dig @1.1.1.1 AAAA example.com
+```
