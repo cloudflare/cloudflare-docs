@@ -14,7 +14,7 @@ Stream decides which bitrate, resolution, and codec is best for you and delivers
 
 Additionally, you can use all of the Stream Live features as long as you have a Cloudflare subscription. If you cancel your Stream subscription, videos are removed within 30 days.
 
-Refer to the [Reference](/reference) for more information on supported browsers and mobile platforms.
+Refer to the [Reference](/stream/reference) for more information on supported browsers and mobile platforms.
 
 For information about pricing, refer to [Simplified pricing of Cloudflare Stream](https://www.cloudflare.com/products/cloudflare-stream/) at the bottom of the Stream page.
 

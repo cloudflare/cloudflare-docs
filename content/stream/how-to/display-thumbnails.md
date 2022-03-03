@@ -18,7 +18,7 @@ A thumbnail from your video can be generated using a special link where you spec
 https://videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81/thumbnails/thumbnail.jpg?time=68s&height=270
 ```
 
-Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/how-to/secure-your-stream#signed-url-tokens) are required, you must use a signed URL instead of a video ID.
+Using the `poster` query parameter in the embed URL, you can set a thumbnail to any time in your video. If [signed URLs](/stream/how-to/secure-your-stream#signed-url-tokens) are required, you must use a signed URL instead of a video ID.
 
 ```html
 <iframe
