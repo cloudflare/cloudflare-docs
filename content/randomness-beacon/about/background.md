@@ -3,10 +3,10 @@ title: Background
 pcx-content-type: concept
 weight: 2
 meta:
-  title: Where did it all begin?
+  title: Background
 ---
 
-# Where did it all begin?
+# Background
 
 Over the years, a generation of public randomness (often referred to as _common coins_) has attracted interest from the cryptography research community. Many distributed systems, including various consensus mechanisms, anonymity networks such as Tor, or blockchain systems, assume access to such public randomness. However, it remained a major unsolved issue to generate public randomness in a distributed, scalable, and robust way. Currently, there is no service deployed to produce this type of randomness. The only choice is a centralized, prototype-only randomness beacon run by [NIST](https://www.nist.gov/).
 
@@ -18,6 +18,6 @@ In early 2017, the [DEDIS](https://dedis.epfl.ch/) team at [EPFL](https://www.ep
 
 In September 2017, Nicolas, a PhD student at DEDIS, started coding drand with the help of Philipp to deploy, for the first time, a distributed service providing public randomness in an application-agnostic, secure, and efficient way. A short time later, Cloudflare released an optimized Golang implementation of the BN256 pairing curve, which is now integrated in both Kyber and drand to simplify development and deployment.
 
-As drand has gained maturity, an increasing number of organizations (including NIST, Cloudflare, Kudelski Security, the University of Chile, and Protocol Labs) started taking interest, and decided to collectively work on setting up a [drand](https://github.com/dedis/drand) network spanning these organizations. To support the use of public randomness in web applications, [Mathilde Raynal](https://people.epfl.ch/mathilde.raynal?lang=en), a master student at DEDIS, started developing a JavaScript proof-of-concept frontend, called [_drandjs_](https://github.com/PizzaWhisperer/drandjs), to interact with drand servers.
+As drand gained maturity, an increasing number of organizations (including NIST, Cloudflare, Kudelski Security, the University of Chile, and Protocol Labs) started taking interest, and decided to collectively work on setting up a [drand](https://github.com/dedis/drand) network spanning these organizations. To support the use of public randomness in web applications, [Mathilde Raynal](https://people.epfl.ch/mathilde.raynal?lang=en), a master student at DEDIS, started developing a JavaScript proof-of-concept frontend, called [drandjs](https://github.com/PizzaWhisperer/drandjs), to interact with drand servers.
 
 In spring 2020, a team at Protocol Labs led efforts to take drand from an experimental to production-ready network. These efforts included significant protocol upgrades, establishment of a governance model for the distributed network, and increased operational security of node operators. Check out the [drand blog](https://drand.love/blog/2020/08/10/drand-launches-v1-0/) for more details.
