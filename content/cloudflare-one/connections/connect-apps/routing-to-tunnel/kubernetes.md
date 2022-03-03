@@ -10,9 +10,9 @@ You can deploy Cloudflare Tunnel to route traffic to Kubernetes clusters. Cloudf
 
 Both options rely on Cloudflare's Load Balancer to send traffic for a single hostname to two or more instances of `cloudflared`, allowing you to update or modify `cloudflared` without downtime. Those instances of `cloudflared` should point to a service or ingress controller that runs in front of your Kubernetes cluster.
 
-| Before you start                                                            |
-| --------------------------------------------------------------------------- |
-| [Enable Cloudflare Load Balancers](/load-balancing/create-load-balancer-ui) |
+| Before you start                                                               |
+| ------------------------------------------------------------------------------ |
+| [Enable Cloudflare Load Balancers](/load-balancing/how-to/create-load-balancer/) |
 | [Create a tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)  |
 
 ## Deploy `cloudflared` to an upstream service

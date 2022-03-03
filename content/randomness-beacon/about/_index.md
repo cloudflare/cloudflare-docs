@@ -1,13 +1,13 @@
 ---
 pcx-content-type: concept
-title: About Drand
+title: About drand
 weight: 2
 ---
 
-# About Drand
+# About the drand project
 
-Drand (pronounced "dee-rand") is a distributed randomness beacon daemon written in Golang. Servers running drand can be linked with each other to produce collective, publicly verifiable, unbiased, unpredictable random values at fixed intervals using bilinear pairings and threshold cryptography.
+The drand project aims to address the current lack of services providing distributed public randomness. Distributed to increase the resilience and trustworthiness, drand provides a standalone randomness-as-a-service network that is application agnostic. This is similar to how NTP networks serve timing information across the globe.
 
-Drand is meant to be an Internet infrastructure level service that provides randomness to applications, similar to how NTP provides timing information and Certificate Transparency servers provide certificate revocation information.
+Drand follows the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle). It relies on well-researched cryptographic building blocks and open-source software design principles and libraries, such as protobuf and gRPC, to ensure high performance and interoperability. Drand also attempts to use sane security defaults, such as having TLS enabled by default.
 
-For the most up-to-date documentation on drand, please visit [drand.love](https://drand.love).
+Beyond that, drand adds new features important for its practical deployment, such as being able to securely add and remove members of the network through [resharing](https://ieeexplore.ieee.org/document/1183515) while keeping the same shared public key necessary for randomness verification.

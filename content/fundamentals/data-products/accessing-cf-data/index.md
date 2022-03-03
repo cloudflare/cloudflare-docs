@@ -14,7 +14,7 @@ Access the following analytics from the Cloudflare Dashboard:
 
 - Zone Analytics - Analytics gathered by each Cloudflare product, which are available within the **Analytics** application and within individual product applications
   - **Analytics** application - Aggregated traffic, security, and performance metrics for each orange-clouded domain. Data available on the **Analytics** application includes:
-    - Traffic - Requests, Data transfer, Page views, Visits, and [API requests](/api-security/products/api-discovery#api-requests)
+    - Traffic - Requests, Data transfer, Page views, Visits, and [API requests](/api-shield/products/api-discovery/#api-requests)
     - Security - Total Threats, Top Crawlers/Bots, Rate Limiting, Total Threats Stopped
     - Performance - Origin Performance, Bandwidth Saved
     - DNS - DNS Queries by Response Code, Record Type, and Cloudflare Data Center
@@ -32,8 +32,8 @@ Access the following analytics from the Cloudflare Dashboard:
 
 Access Cloudflare Logs in one of two ways:
 
-- Via [Logpush](/logs/logpush) (recommended) - Push request or event logs from Cloudflare to your cloud service provider.
-- Via [Logpull](/logs/logpull-api) - Download only HTTP request logs using the [Logpull API](https://api.cloudflare.com/#logs-received-properties).
+- Via [Logpush](/logs/about/) (recommended) - Push request or event logs from Cloudflare to your cloud service provider.
+- Via [Logpull](/logs/logpull/) - Download only HTTP request logs using the [Logpull API](https://api.cloudflare.com/#logs-received-properties).
 
 ## GraphQL APIs
 

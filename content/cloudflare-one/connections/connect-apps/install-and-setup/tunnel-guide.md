@@ -196,7 +196,7 @@ $ cloudflared tunnel --config path/config.yml run
 
 {{<Aside>}}
 
-Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/).
+Cloudflare Tunnel can install itself as a system service on Linux and Windows and as a launch agent on macOS. For more information, refer to [Run as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/).
 
 {{</Aside>}}
 

@@ -30,7 +30,7 @@ In addition, some browsers now prevent videos with audio from playing automatica
 
 - `controls` {{<type>}}boolean{{</type>}}
 
-  - Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/recipes/custom-player-ui/)
+  - Shows the default video controls such as buttons for play/pause, volume controls. You may choose to build buttons and controls that work with the player. [See an example.](/stream/viewing-videos/using-own-player/)
 
 - `height` {{<type>}}integer{{</type>}}
 

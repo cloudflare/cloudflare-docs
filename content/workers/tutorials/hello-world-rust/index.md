@@ -124,7 +124,7 @@ You have completed writing a Cloudflare Workers function with Rust-generated Was
 
 Wrangler has built-in support for bundling, uploading, and releasing your Cloudflare Workers application. To do this, run `wrangler publish`, which will build and publish your code:
 
-![Publish](../media/publish.gif)
+![Publish](./media/publish.gif)
 
 ## Related resources
 

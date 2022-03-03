@@ -189,17 +189,13 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       </td>
       <td>
         <p>
-          Adjusts the URI path, query string, and/or HTTP headers of requests and responses,
-          according to the rule configuration.
+          Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.
         </p>
         <p>
-          Only available for <a href="/rules/transform/">Transform Rules</a>, in phases
-          <code>http_request_transform</code>, <code>http_request_late_transform</code>, and
-          <code>http_response_headers_transform</code>.
+          Only available for <a href="/rules/transform/">Transform Rules</a>, in phases <code>http_request_transform</code>, <code>http_request_late_transform</code>, and <code>http_response_headers_transform</code>.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To
-          use this action, create a Transform Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Transform Rule.
         </p>
       </td>
       <td>No</td>
@@ -215,16 +211,13 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
       </td>
       <td>
         <p>
-          Navigates the user from a source URL to a target URL, according to the rule configuration,
-          by replying with an HTTP redirect.
+          Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for <a href="/rules/bulk-redirects/">Bulk Redirect Rules</a>,
-          in the <code>http_request_redirect</code> phase.
+          Only available for <a href="/rules/bulk-redirects/">Bulk Redirect Rules</a>, in the <code>http_request_redirect</code> phase.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To
-          use this action, create a Bulk Redirect Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule.
         </p>
       </td>
       <td>Yes</td>
@@ -235,7 +228,5 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-
 Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions/) for more information.
-
 {{</Aside>}}

@@ -58,7 +58,7 @@ title: Changelog
 - The `unhandledrejection` and `rejectionhandled` events are now supported.
 - The `ReadableStreamDefaultReader` and `ReadableStreamBYOBReader` constructors are now supported.
 - Added non-standard `ReadableStreamBYOBReader` method `.readAtLeast(size, buffer)` that can be used to return a buffer with at least `size` bytes. The `buffer` parameter must be an `ArrayBufferView`. Behavior is identical to `.read()` except that at least `size` bytes are read, only returning fewer if EOF is encountered. One final call to `.readAtLeast()` is still needed to get back a `done = true` value.
-- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to: https://developers.cloudflare.com/workers/platform/compatibility-dates
+- The compatibility flags `formdata_parser_supports_files`, `fetch_refuses_unknown_protocols`, and `durable_object_fetch_requires_full_url` have been scheduled to be turned on by default as of 2021-11-03, 2021-11-10, and 2021-11-10, respectively. For more details, refer to [Compatibility Dates](/workers/platform/compatibility-dates/)
 
 ## 2021-10-14
 
