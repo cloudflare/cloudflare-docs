@@ -1,8 +1,8 @@
 ---
 _build:
-publishResources: false
-render: never
-list: never
+  publishResources: false
+  render: never
+  list: never
 ---
 
 Depending on what you want to configure, choose one of the following DNS addresses for IPv4:
