@@ -3334,7 +3334,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsMarkdown--table-wrap table {
   word-break: normal;
 }
-@media (hover: hover) {
+/* @media (hover: hover) {
   .DocsMarkdown--table-wrap:hover {
     width: calc(100% + var(--docs-body-sidebar-width));
   }
@@ -3342,7 +3342,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     background-color: var(--background-color);
     z-index: 1;
   }
-}
+} */
 .DocsMarkdown--table-wrap tr > :first-child {
   position: -webkit-sticky;
   position: sticky;
