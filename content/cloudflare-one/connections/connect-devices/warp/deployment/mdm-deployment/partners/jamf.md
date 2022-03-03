@@ -148,7 +148,7 @@ For a description of each argument and what it means, see [deployment parameters
 1.  Upload a valid plist file. You can start with our example above and modify it for your organization.
 1.  Click **Save**.
 1.  Navigate to **Scope** to configure which devices in your organization will receive this profile.
-1. Click **Save**.
+1.  Click **Save**.
 
 Jamf is now configured to deploy the Cloudflare WARP client.
 
@@ -184,10 +184,10 @@ For a description of each argument and what it means, see [deployment parameters
 1.  In the search box, enter: `1.1.1.1: Faster Internet`.
 1.  Click **Next**.
 1.  Click **Add** in the row for _1.1.1.1: Faster Internet by Cloudflare Inc._. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
-1. Navigate to **Scope**.
-1. Specify the devices in your organization that will receive the application.
-1. Navigate to **App Configuration** and copy/paste the XML from above.
-1. Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
-1. Click **Save**.
+1.  Navigate to **Scope**.
+1.  Specify the devices in your organization that will receive the application.
+1.  Navigate to **App Configuration** and copy/paste the XML from above.
+1.  Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
+1.  Click **Save**.
 
 Jamf is now configured to deploy the WARP client.

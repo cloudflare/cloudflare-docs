@@ -28,8 +28,8 @@ To retrieve those values:
 1.  Ensure that the **Status** is **Enabled**.
 1.  Click **Save**.
 1.  Copy the Client ID and Client Secret to a safe place.
-1. Retrieve the correct Region-Specific Token URL from the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
-1. Obtain your REST API URL by going to the WS1 dashboard and navigating to **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
+1.  Retrieve the correct Region-Specific Token URL from the [VMware documentation](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_ConsoleBasics/GUID-BF20C949-5065-4DCF-889D-1E0151016B5A.html). Copy the Region-specific token URL to a safe place.
+1.  Obtain your REST API URL by going to the WS1 dashboard and navigating to **Groups & Settings** > **All Settings** > **System** > **Advance** > **Site URLs** > **REST API URL**.
 
 ## Configure the provider on the Zero Trust Dashboard
 
