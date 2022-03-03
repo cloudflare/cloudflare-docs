@@ -12,4 +12,4 @@ The available fields when defining a Bulk Redirect Rule filter expression are th
 
 {{<render file="transform/_transform-phase-fields.md">}}
 
-For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions).
+For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).

@@ -99,7 +99,7 @@ At the left of the `in` operator you can only use fields directly and not values
 - `http.request.full_uri`
 - `raw.http.request.full_uri`
 
-Refer to [Fields](/ruleset-engine/rules-language/fields) for more information.
+Refer to [Fields](/ruleset-engine/rules-language/fields/) for more information.
 
 {{</Aside>}}
 
