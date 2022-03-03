@@ -43,19 +43,19 @@ To set up PingIdentity (SAML) as your identity provider:
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-1. Select SAML.
+1.  Select SAML.
 
-1. In the **IdP Entity ID** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1.  In the **IdP Entity ID** field, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-1. Fill the other fields with values from your Ping dashboard.
+1.  Fill the other fields with values from your Ping dashboard.
 
-1. Click **Save**.
+1.  Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 

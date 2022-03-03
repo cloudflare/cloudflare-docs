@@ -56,7 +56,7 @@ You should now be able to send queries through the DNS over HTTPS protocol.
 
 1. Open **Settings**.
 1. In your address bar, type the following and hit **Enter**:
-    `chrome://flags/#dns-over-https`. This will take you to Secure DNS lookups.
+   `chrome://flags/#dns-over-https`. This will take you to Secure DNS lookups.
 1. Click on the **Secure DNS lookups** radio button to enable DoH.
 
 Read more about [enabling DNS over HTTPS](https://www.chromium.org/developers/dns-over-https) on Chrome.

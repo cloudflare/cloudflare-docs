@@ -86,9 +86,7 @@ The Cloudflare Rules Lists API supports the operations outlined below. Visit the
       </td>
       <td style="width:25%; word-wrap:break-word; white-space:normal">
         <p>
-          Updates the <code class="InlineCode">description</code> of a list. You cannot edit the 
-          <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items 
-          in a list.
+          Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.
         </p>
         <p>
           To update an item in a list, use the <a href="https://api.cloudflare.com/#rules-lists-replace-list-items">Replace List Items</a> operation.
