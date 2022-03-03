@@ -58,7 +58,7 @@ tus-upload --chunk-size 5242880 \
 
 When you are done, your video displays your watermark.
 
-![Watermarked Video](../static/cat.png)
+![Watermarked Video](/stream/static/cat.png)
 
 ## Upload a local image file directly
 

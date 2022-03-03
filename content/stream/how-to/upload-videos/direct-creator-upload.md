@@ -53,7 +53,7 @@ If the uploads from your creators are under 200 MB, you can use basic uploads. F
 
 The `uploadURL` provided in the `result` body of a successful request should be passed along to the end user to make their upload request.
 
-The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/how-to/search-for-videos/).
+The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/how-to/search-for-videos/).
 
 ## Request from end users
 
@@ -150,7 +150,7 @@ async function handleRequest(request) {
 }
 ```
 
-After you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to your endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/how-to/upload-videos/upload-video-file#resumable-uploads-with-tus-for-large-files).
+After you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to your endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/how-to/upload-videos/upload-video-file#resumable-uploads-with-tus-for-large-files).
 
 ### Test the endpoint
 
@@ -177,6 +177,6 @@ In the example below, the `Upload-Metadata` header is instructing Stream to only
 `NjAw` is the base64 encoded value for "600" (or 10 minutes).
 ## Track user upload progress
 After the creation of a unique one-time upload URL, you can retain the `uid` returned in the response to track the progress of a user's upload in one of two ways:
-- [Query the media API](/how-to/search-for-videos/) with the UID to understand its status.
-- [Create a webhook subscription](/how-to/use-webhooks/) to receive notifications
+- [Query the media API](/stream/how-to/search-for-videos/) with the UID to understand its status.
+- [Create a webhook subscription](/stream/how-to/use-webhooks/) to receive notifications
 regarding the status of videos.  These notifications include the video's UID.

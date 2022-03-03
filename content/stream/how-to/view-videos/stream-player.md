@@ -8,7 +8,7 @@ meta:
 
 # View with the Stream Player
 
-The Stream Player can be placed on a web page in an iframe element with the video UID or [signed token](/how-to/secure-your-stream) by replacing `$VIDEOID` in the example below. The Stream Player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
+The Stream Player can be placed on a web page in an iframe element with the video UID or [signed token](/stream/how-to/secure-your-stream) by replacing `$VIDEOID` in the example below. The Stream Player is also available as a [React](https://www.npmjs.com/package/@cloudflare/stream-react) or [Angular](https://www.npmjs.com/package/@cloudflare/stream-angular) component.
 
 ```html
 <iframe
@@ -78,7 +78,7 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
 - `defaultTextTrack`
 
-  - Initializes the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [add captions](/how-to/add-captions). If the specified language code has no captions available, the player behaves as though no language code was provided.
+  - Initializes the player with the specified language code's text track enabled. The value should be the BCP-47 language code that was used to [add captions](/stream/how-to/add-captions). If the specified language code has no captions available, the player behaves as though no language code was provided.
 
     {{<Aside type="note">}}
 

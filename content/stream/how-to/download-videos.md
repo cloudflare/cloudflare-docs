@@ -24,7 +24,7 @@ You cannot download the exact input file that you uploaded. However, depending o
 
 Enable downloads for an uploaded video after it is ready to view by making an HTTP request to the `/downloads` endpoint.
 
-To get notified when a video is ready to view, refer to [Webhooks for process notifications](/how-to/use-webhooks).
+To get notified when a video is ready to view, refer to [Webhooks for process notifications](/stream/how-to/use-webhooks).
 
 The downloads API response will include all available download types for the video, the download URL for each type, and the processing status of the download file.
 
@@ -77,7 +77,7 @@ If your video is public, the MP4 is also publicly accessible, but if your video 
 
 To access the MP4 for a private video, generate a signed URL just as you would for regular viewing with an additional flag called `downloadable` set to `true`. Download links will not work for videos which already require signed URLs if the `downloadable` flag is not present in the token.
 
-For more information about using signed URLs with videos, refer to [Secure your Stream](/how-to/secure-your-stream).
+For more information about using signed URLs with videos, refer to [Secure your Stream](/stream/how-to/secure-your-stream).
 
 ```json
 ---
