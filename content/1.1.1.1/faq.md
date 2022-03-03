@@ -24,7 +24,7 @@ Visit [1.1.1.1/help](https://1.1.1.1/help) to make sure your system is connected
 
 DNS resolvers are like address books for the Internet. They translate the name of places to addresses so that your browser can figure out how to get there. DNS resolvers do this by working backwards from the top until they find the website your are looking for.
 
-Every resolver knows how to find the invisible `.` at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the `.` file, and resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/). 
+Every resolver knows how to find the invisible `.` at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the `.` file, and resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/).
 
 The resolver asks one of the root servers where to find the next link in the chain — the top-level domain (abbreviated to TLD) or domain ending. An example of a TLD is `.com` or `.org`. Luckily, the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
 

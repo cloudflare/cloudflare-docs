@@ -48,7 +48,7 @@ You may wish to provide end users with options to change from the default 1.1.1.
 
 ## Rate Limiting
 
-Operators using 1.1.1.1 for typical Internet-facing applications and/or users should not encounter any rate limiting for their users. In some rare cases, security scanning use-cases or proxied traffic may be rate limited to protect our infrastructure as well as upstream DNS infrastructure from potential abuse. 
+Operators using 1.1.1.1 for typical Internet-facing applications and/or users should not encounter any rate limiting for their users. In some rare cases, security scanning use-cases or proxied traffic may be rate limited to protect our infrastructure as well as upstream DNS infrastructure from potential abuse.
 
 Best practices include:
 
