@@ -110,7 +110,7 @@ NSLookup(B1, B2)
 
 <br/>
 
-Returns 
+Returns
 
 ```txt
 198.41.214.162, 198.41.215.162

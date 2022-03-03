@@ -24,7 +24,7 @@ Before you start, head to the [Tor Project website](https://www.torproject.org/d
 
 If you use Tor from the command line, create the following configuration file:
 
-```sh
+```txt
 $ SOCKSPort 9150
 ```
 
