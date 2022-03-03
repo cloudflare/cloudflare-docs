@@ -49,11 +49,11 @@ An incoming request which matches multiple rules' URL patterns will inherit all 
 
 | Request URL                                   | Headers                                                                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| https://custom.domain/secure/page             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
-| https://custom.domain/static/image.jpg        | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet`                                                                     |
-| https://myproject.pages.dev/home              | `X-Robots-Tag: noindex`                                                                                                               |
-| https://myproject.pages.dev/secure/page       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
-| https://myproject.pages.dev/static/styles.css | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
+| `https://custom.domain/secure/page`             | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff ` <br /> `Referrer-Policy: no-referrer`                               |
+| `https://custom.domain/static/image.jpg`        | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet`                                                                     |
+| `https://myproject.pages.dev/home`              | `X-Robots-Tag: noindex`                                                                                                               |
+| `https://myproject.pages.dev/secure/page`       | `X-Frame-Options: DENY` <br /> `X-Content-Type-Options: nosniff` <br /> `Referrer-Policy: no-referrer` <br /> `X-Robots-Tag: noindex` |
+| `https://myproject.pages.dev/static/styles.css` | `Access-Control-Allow-Origin: *` <br /> `X-Robots-Tag: nosnippet, noindex`                                                            |
 
 {{</table-wrap>}}
 
