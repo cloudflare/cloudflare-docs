@@ -28,7 +28,7 @@ If you are using the Akamai CDN in front of Cloudflare, it is recommended that y
 - Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
 - Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
 
-For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset > Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
+For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
 
 ## Using VPNs, NATs, and other third-party services
 
