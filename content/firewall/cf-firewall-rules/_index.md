@@ -18,7 +18,7 @@ Fundamentally, Firewall Rules gives you the power to proactively inspect incomin
 
 To write Firewall Rule expressions, use the Rules language, a powerful expression language inspired in the Wireshark Display Filter language. Even though Cloudflare Firewall Rules is not based on the [Ruleset Engine](/ruleset-engine/), Firewall Rules expressions use the same syntax of the Cloudflare Rules language.
 
-For more information on rule expressions and the available operators, fields, and functions, refer to [Rules language](/ruleset-engine/rules-language).
+For more information on rule expressions and the available operators, fields, and functions, refer to [Rules language](/ruleset-engine/rules-language/).
 
 ## Working with Firewall Rules
 
@@ -119,7 +119,7 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 ## Get started
 
-Unless you are already an advanced user, refer to [Expressions](/ruleset-engine/rules-language/expressions) and [Actions](/firewall/cf-firewall-rules/actions/) to learn more about the basic elements of Firewall Rules.
+Unless you are already an advanced user, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/) to learn more about the basic elements of Firewall Rules.
 
 To get started building your own Firewall Rules, refer to [Manage Firewall Rules in the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/).
 
@@ -127,4 +127,4 @@ Those eager to dive straight into the technical details can refer to these topic
 
 *   [Common use cases](/firewall/recipes/)
 *   [Manage Firewall Rules via the APIs](/firewall/api/)
-*   [Cloudflare Rules language](/ruleset-engine/rules-language)
+*   [Cloudflare Rules language](/ruleset-engine/rules-language/)
