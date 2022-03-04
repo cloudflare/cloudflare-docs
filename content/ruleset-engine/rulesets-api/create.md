@@ -2,7 +2,7 @@
 title: Create ruleset
 pcx-content-type: reference
 type: overview
-weight: 785
+weight: 5
 layout: list
 ---
 

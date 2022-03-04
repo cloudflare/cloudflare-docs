@@ -2,7 +2,7 @@
 pcx-content-type: reference
 type: overview
 title: Delete rulesets
-weight: 789
+weight: 10
 layout: list
 ---
 

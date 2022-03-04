@@ -2,8 +2,7 @@
 title: Work with Managed Rulesets
 pcx-content-type: navigation
 type: overview
-alwaysopen: true
-weight: 751
+weight: 6
 layout: list
 ---
 

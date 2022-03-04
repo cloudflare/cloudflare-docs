@@ -1,8 +1,7 @@
 ---
 title: Override a Managed Ruleset
 pcx-content-type: how-to
-alwaysopen: true
-weight: 753
+weight: 3
 ---
 
 # Override a Managed Ruleset

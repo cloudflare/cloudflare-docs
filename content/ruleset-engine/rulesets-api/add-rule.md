@@ -2,7 +2,7 @@
 pcx-content-type: reference
 type: overview
 title: Add rule to ruleset
-weight: 787
+weight: 7
 layout: list
 ---
 

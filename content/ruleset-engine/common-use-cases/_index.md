@@ -1,8 +1,7 @@
 ---
 title: Workflow examples
 pcx-content-type: navigation
-alwaysopen: true
-weight: 771
+weight: 8
 ---
 
 # Workflow examples

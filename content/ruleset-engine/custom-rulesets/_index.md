@@ -1,8 +1,7 @@
 ---
 title: Work with custom rulesets
 pcx-content-type: navigation
-alwaysopen: true
-weight: 761
+weight: 7
 ---
 
 # Work with custom rulesets

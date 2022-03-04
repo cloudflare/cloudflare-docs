@@ -1,8 +1,7 @@
 ---
 title: Create a custom ruleset
 pcx-content-type: how-to
-alwaysopen: true
-weight: 762
+weight: 2
 ---
 
 # Create a custom ruleset
@@ -52,4 +51,4 @@ header: Response
 }
 ```
 
-You can include a list of rules in the custom ruleset creation request. However, if you have not added any rules, see how to [add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/).
+You can include a list of rules in the custom ruleset creation request. If you have not added any rules, refer to [Add rules to a custom ruleset](/ruleset-engine/custom-rulesets/add-rules-ruleset/) for more information.

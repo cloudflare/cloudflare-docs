@@ -1,8 +1,7 @@
 ---
 pcx-content-type: how-to
-alwaysopen: true
 title: Deploy a custom ruleset
-weight: 764
+weight: 4
 ---
 
 # Deploy a custom ruleset
