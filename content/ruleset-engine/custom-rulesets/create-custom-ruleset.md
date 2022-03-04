@@ -7,7 +7,14 @@ weight: 762
 
 # Create a custom ruleset
 
-The following `POST` request creates a new custom ruleset. Set the `kind` field to `custom` and specify the name of the phase where you want to create the custom ruleset in the `phase` field.
+Use the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) API operation to create a custom ruleset, making sure that you:
+
+* Set the `kind` field to `custom`.
+* Specify the name of the phase where you want to create the custom ruleset in the `phase` field.
+
+## Example
+
+The following request creates a new custom ruleset:
 
 ```json
 ---
