@@ -11,7 +11,7 @@ layout: list
 
 {{<content-column>}}
 
-Below you will find answers to the most commonly asked questions regarding Cloudflare Logs. If you cannot find the answer you are looking for, feel free to head over to our [community page](https://community.cloudflare.com/) and post your question there.
+Below you will find answers to the most commonly asked questions regarding Cloudflare Logs. If you cannot find the answer you are looking for, go to the [community page](https://community.cloudflare.com/) and post your question there.
 
 {{</content-column>}}
 
