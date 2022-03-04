@@ -62,6 +62,8 @@ You can check your Logpush version through a `GET` request. Either:
 
 `curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`
 
+or
+
 `curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>'`
 
 Below you have the two possible responses:
