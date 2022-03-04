@@ -10,7 +10,7 @@ You can require an image to only be accessible with a signed URL token. To make 
 
 ```bash
 curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID/images/v1/direct_upload \
+  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/direct_upload \
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer :token' \
   --data '{
