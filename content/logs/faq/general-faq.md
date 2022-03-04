@@ -26,4 +26,4 @@ Yes. The time period for which you pull or receive logs is based on our processi
 
 ## Can I receive logs in a format other than JSON?
 
-Not at this time. Talk to your account manager or Cloudflare Support if you are interested in other formats and we will consider them for the future.
+Not at this time. Talk to your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) if you are interested in other formats and we will consider them for the future.
