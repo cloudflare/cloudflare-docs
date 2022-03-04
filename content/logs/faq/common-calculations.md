@@ -10,7 +10,7 @@ weight: 4
 
 ## How can I calculate bytes served by the origin from Cloudflare Logs?
 
-The best way to calculate bytes served by the origin is to use the `CacheResponseBytes` field in Cloudflare Logs, and to filter only requests that come from origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
+The best way to calculate bytes served by the origin is to use the `CacheResponseBytes` field in Cloudflare Logs, and to filter only requests that come from the origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
 
 ## How do I calculate bandwidth usage for my zone?
 
