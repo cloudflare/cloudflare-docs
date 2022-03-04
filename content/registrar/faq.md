@@ -31,7 +31,7 @@ Transferring a domain adds time to the current expiration date, unless your doma
 
 ### What happens to my nameservers when I transfer my domain to Cloudflare?
 
-Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Active domains on Cloudflare use nameservers assigned by Cloudflare. When you transfer your registration, your nameservers will not be modified.
+Cloudflare Registrar only supports transfers of domains that are active on Cloudflare. Domains on Cloudflare use nameservers assigned by Cloudflare to the associated account and those nameservers must remain in place for the domain to be Active.
 
 ### How can I see the status of my domain transfer?
 
