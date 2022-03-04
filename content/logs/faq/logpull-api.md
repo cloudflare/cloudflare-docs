@@ -4,7 +4,7 @@ tittle: Logpull API
 weight: 3
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/logs/faq)
 
 # Logpull API
 

@@ -4,7 +4,7 @@ title: Logpush
 weight: 2
 ---
 
-[❮ Back to FAQ](/faq)
+[❮ Back to FAQ](/logs/faq)
 
 # Logpush
 
