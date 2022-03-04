@@ -14,4 +14,4 @@ The best way to calculate bytes served by the origin is to use the `CacheRespons
 
 ## How do I calculate bandwidth usage for my zone?
 
-Bandwidth (or data transfer) can be calculated by adding the `EdgeResponseBytes` field in HTTP request logs. There are some types of requests that are not factored into bandwidth calculations. In order to only include relevant requests in calculations, add a filter `ClientRequestSource = 'eyeball'`.
+Bandwidth (or data transfer) can be calculated by adding the `EdgeResponseBytes` field in HTTP request logs. There are some types of requests that are not factored into bandwidth calculations. In order to only include relevant requests in calculations, add the filter `ClientRequestSource = 'eyeball'`.
