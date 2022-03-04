@@ -54,7 +54,7 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 
 ## Does Logpush integrate with the Cloudflare Splunk App?
 
-Yes. See [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
+Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
 ## How can I check my Logpush job version?
 
