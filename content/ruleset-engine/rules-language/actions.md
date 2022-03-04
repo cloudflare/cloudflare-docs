@@ -33,11 +33,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong>
+        <strong>Legacy CAPTCHA</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>challenge</code>
       </td>
       <td>
@@ -49,11 +47,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>JS Challenge</strong>
+        <strong>JS Challenge</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>js_challenge</code>
       </td>
       <td>
@@ -71,11 +67,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Managed Challenge (Recommended)</strong>
+        <strong>Managed Challenge (Recommended)</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>managed_challenge</code>
       </td>
       <td>
@@ -95,11 +89,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Block</strong>
+        <strong>Block</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>block</code>
       </td>
       <td>
@@ -109,11 +101,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Skip</strong>
+        <strong>Skip</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>skip</code>
       </td>
       <td>
@@ -146,11 +136,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Log</strong>
+        <strong>Log</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>log</code>
       </td>
       <td>
@@ -162,11 +150,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Execute</strong>
+        <strong>Execute</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>execute</code>
       </td>
       <td>
@@ -180,11 +166,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Rewrite</strong>
+        <strong>Rewrite</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>rewrite</code>
       </td>
       <td>
@@ -202,11 +186,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Redirect</strong>
+        <strong>Redirect</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>redirect</code>
       </td>
       <td>

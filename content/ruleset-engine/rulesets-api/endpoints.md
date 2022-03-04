@@ -1,7 +1,7 @@
 ---
 title: Endpoints
 pcx-content-type: reference
-weight: 783
+weight: 3
 ---
 
 # Endpoints
@@ -26,9 +26,9 @@ To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudf
 https://api.cloudflare.com/client/v4
 ```
 
-For authentication instructions, see [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, see [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
 {{<Aside>}}
 
