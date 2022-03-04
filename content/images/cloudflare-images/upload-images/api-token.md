@@ -12,11 +12,11 @@ Refer to [Creating API tokens](/api/tokens/create#getting-started) to learn how 
 
 ## Try your API token with the Images API
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2.  Click **Images**.
-3.  In the Images tab, click **Use API**.
-4.  In **API token**, paste your API token.
-5.  Input the name of the image you want to use in **Image File Name**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Click **Images**.
+3. In the Images tab, click **Use API**.
+4. In **API token**, paste your API token.
+5. Input the name of the image you want to use in **Image File Name**.
 
 The **cURL command** message box will show you the complete command you can use:
 
