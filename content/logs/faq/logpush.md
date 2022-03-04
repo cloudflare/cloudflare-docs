@@ -60,7 +60,8 @@ Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501
 
 You can check your Logpush version through a `GET` request. Either:
 
-`curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs` 
+`curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`
+
 `curl -s -X GET 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>'`
 
 Below you have the two possible responses:
