@@ -2,7 +2,7 @@
 type: overview
 pcx-content-type: navigation
 hideChildren: true
-tittle: FAQ
+title: FAQ
 Weight: 130
 layout: list
 ---
