@@ -66,9 +66,9 @@ The `fetch()` function accepts parameters in the second argument inside the `{cf
 
 * `format`
   * Output format to generate. Options are:
-    * `avif` — generate images in AVIF format if possible (with WebP as a fallback).
-    * `webp` — generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
-    * `json` — instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
+    * `avif` — Generate images in AVIF format if possible (with WebP as a fallback).
+    * `webp` — Generate images in Google WebP format. Set `quality` to `100` to get the WebP lossless format.
+    * `json` — Instead of generating an image, outputs information about the image in JSON format. The JSON object will contain image size (before and after resizing), source image’s MIME type, file size, etc.
 
     Other supported formats (PNG, JPEG, animated GIF) are used by default if no other format is specified.
 
