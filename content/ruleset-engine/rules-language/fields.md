@@ -276,7 +276,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">GB</code>
          </p>
-         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-subdivision-1-iso-code">
@@ -286,7 +286,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
-         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-subdivision-2-iso-code">
@@ -298,7 +298,7 @@ The Cloudflare Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-SWK</code>
          </p>
-         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-is-in-european-union">
@@ -428,7 +428,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr>
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the internet.
+          <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
           </p>
           <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
           </p>
@@ -484,7 +484,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>cf.colo.region</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-        Region of the data center that is handling this traffic. <br />
+        Region of the data center that is handling this traffic.<br />
         Example value: <code class="InlineCode"> WNAM </code>
         </td>
     </tr>
@@ -499,7 +499,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>icmp.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets.<br />
          Example value:
          <code class="InlineCode">8</code>
         </td>
@@ -508,7 +508,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>icmp.code</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets.<br />
          Example value:
          <code class="InlineCode">2</code>
         </td>
@@ -524,7 +524,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.dst</code><br />{{<type>}}IP Address{{</type>}}</p>
         </td>
         <td>
-         The destination address as specified in the IP packet. <br />
+         The destination address as specified in the IP packet.<br />
          Example value:
          <code class="InlineCode">192.0.2.2</code>
         </td>
@@ -536,14 +536,14 @@ The Cloudflare Rules language supports these dynamic fields:
          Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
          Example value:
          <code class="InlineCode">GB</code>
-         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
     <tr>
         <td><p><code>ip.hdr_len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The length of the IPv4 header in bytes. <br />
+         The length of the IPv4 header in bytes.<br />
          Example value:
          <code class="InlineCode">5</code>
         </td>
@@ -552,7 +552,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The length of the packet including the header. <br />
+         The length of the packet including the header.<br />
          Example value:
          <code class="InlineCode">60</code>
         </td>
@@ -561,7 +561,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.opt.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set. <br />
+         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set.<br />
          Example value:
          <code class="InlineCode">25</code>
         </td>
@@ -570,7 +570,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.proto</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-        The transport layer for the packet, if it can be determined. <br />
+        The transport layer for the packet, if it can be determined.<br />
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
         </td>
     </tr>
@@ -585,7 +585,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.ttl</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-        The time-to-live of the IP Packet. <br />
+        The time-to-live of the IP Packet.<br />
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>

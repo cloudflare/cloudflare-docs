@@ -1,8 +1,7 @@
 ---
 title: Set WordPress rules to Block
 pcx-content-type: configuration
-alwaysopen: true
-weight: 772
+weight: 2
 meta:
   title: Use tag overrides to set WordPress rules to Block
 ---

@@ -14,7 +14,9 @@ A rule that executes a ruleset consists of:
 
 *   The **ID of the ruleset** you want to execute.
 *   An **expression**.
-*   An **action**. Set the action to `execute`. The rules in the ruleset execute when a request satisfies the expression.
+*   An **action**, set to `execute`.
+
+The rules in the ruleset execute when a request satisfies the expression.
 
 {{<Aside type="note">}}
 
@@ -83,8 +85,10 @@ header: Response
 }
 ```
 
-See [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) and [Work with custom rulesets](/ruleset-engine/custom-rulesets/) for more information.
+## Related resources
+
+Refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) and [Work with custom rulesets](/ruleset-engine/custom-rulesets/) for more information.
 
 For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/ruleset-engine/rulesets-api/update/).
 
-For examples of deploying rulesets, see [Workflow examples](/ruleset-engine/common-use-cases/).
+For examples of deploying rulesets, refer to [Workflow examples](/ruleset-engine/common-use-cases/).

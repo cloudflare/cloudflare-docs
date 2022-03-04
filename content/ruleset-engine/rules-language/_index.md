@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Rules language
-weight: 776
+weight: 9
 ---
 
 # Rules language

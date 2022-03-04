@@ -1,8 +1,7 @@
 ---
 pcx-content-type: configuration
-alwaysopen: true
 title: Deploy a Managed Ruleset with ruleset, tag, and rule overrides
-weight: 775
+weight: 5
 ---
 
 # Deploy a Managed Ruleset with ruleset, tag, and rule overrides

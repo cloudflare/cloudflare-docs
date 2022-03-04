@@ -99,8 +99,8 @@ For example:
 
 ## Get started
 
-To view existing rulesets and their properties, see [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
+To view existing rulesets and their properties, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
+For more information on deploying Managed Rulesets and defining overrides, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
 
-For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
+For more information on creating and deploying custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
