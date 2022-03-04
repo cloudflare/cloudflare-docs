@@ -37,6 +37,6 @@ For questions about the Logpull API.
 
 ## Common calculations
 
-For questions about commons calculations.
+For questions about common calculations.
 
 {{<button type="primary"  href="/logs/faq/common-calculations/">}}Common calculations ❯{{</button>}}
