@@ -14,13 +14,13 @@ You can enable and configure Managed Rulesets for a zone in the **WAF** tab of t
 
 ## Deploy a Managed Ruleset
 
-Under **Deploy Managed Rulesets**, click **Add to WAF** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
+Under **Deploy Managed Rulesets**, click **Add** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
 
-When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **Web Application Firewall (WAF)**, that deploys the Managed Ruleset.
+When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **WAF**, that deploys the Managed Ruleset.
 
 ## Enable or disable a Managed Ruleset
 
-Under **Web Application Firewall (WAF)**, click the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
+Under **WAF**, click the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
 
 ## Configure a Managed Ruleset
 
@@ -45,7 +45,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 2. Go to **Firewall** > **WAF**.
 
-3. Under **Web Application Firewall (WAF)** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
+3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
 
 4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
@@ -67,7 +67,7 @@ To view the rules of a Managed Ruleset:
 
 2. Go to **Firewall** > **WAF**.
 
-3. Under **Web Application Firewall (WAF)** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
+3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
 
 4. Click **Browse rules**.
 
