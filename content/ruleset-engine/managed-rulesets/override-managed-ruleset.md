@@ -60,8 +60,8 @@ Specific overrides take precedence over more general ones, and rule overrides ta
 
 You can override the following rule properties:
 
-*   `"action"` (`"block"`, `"challenge"`, `"log"`)
-*   `"enabled"` (`true`, `false`)
+* `"action"`
+* `"enabled"`
 
 {{<Aside type="note" header="Note">}}
 
@@ -131,4 +131,4 @@ curl -X PUT \
 </div>
 </details>
 
-For additional examples of configuring overrides, see [Workflow examples](/ruleset-engine/common-use-cases/).
+For additional examples of configuring overrides, refer to [Workflow examples](/ruleset-engine/common-use-cases/).
