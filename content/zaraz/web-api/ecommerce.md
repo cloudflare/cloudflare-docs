@@ -14,14 +14,14 @@ To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz ac
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
-2.  Click **Zaraz** > **Settings**.
-3.  Enable **Ecommerce tracking**.
-4.  Click **Save**.
-5.  Locate the tool you want to use with ecommerce tracking and click **Edit**.
-6.  Click **Settings**.
-7.  Under **Advanced**, enable **Ecommerce tracking**.
-8.  Click **Save**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and website.
+2. Click **Zaraz** > **Settings**.
+3. Enable **Ecommerce tracking**.
+4. Click **Save**.
+5. Locate the tool you want to use with ecommerce tracking and click **Edit**.
+6. Click **Settings**.
+7. Under **Advanced**, enable **Ecommerce tracking**.
+8. Click **Save**.
 
 ## Add ecommerce tracking to your website
 
