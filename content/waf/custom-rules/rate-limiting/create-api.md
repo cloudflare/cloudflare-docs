@@ -18,7 +18,7 @@ For API guidance on the previous version of Cloudflare Rate Limiting, refer to t
 
 {{</Aside>}}
 
-A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/custom-rules/rate-limiting/parameters/) for more information on this field and its parameters.
+A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more information on this field and its parameters.
 
 You must deploy Rate Limiting rules to the `http_ratelimit` phase.
 
