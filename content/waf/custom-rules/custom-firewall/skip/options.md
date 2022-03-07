@@ -41,6 +41,7 @@ The available skip options in Custom Firewall rules are the following:
 
   - | Product name in the dashboard                                                                | API value       |
     | -------------------------------------------------------------------------------------------- | --------------- |
+    | [Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/free/) and [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro/) are not currently supported                   | NA              |
     | [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131)                     | `zoneLockdown`  |
     | [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)               | `uaBlock`       |
     | [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086)              | `bic`           |
