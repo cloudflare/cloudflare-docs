@@ -30,13 +30,11 @@ Any country not explicitly defined will fall back to using the corresponding `re
 
 {{<Aside type="note">}}Country steering is only accessible via the API.{{</Aside>}}
 
-## Region steering
+### Region steering
 
 Cloudflare has 13 geographic regions that span the world. The region of a client is determined by the region of the Cloudflare data center that answers the client’s DNS query.
 
-### Define region pools
-
-If you define region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.
+{{<Aside type="note">}}If you define region pools for a load balancer, you cannot delete these pools until you remove them from the load balancer configuration.{{</Aside>}}
 
 #### Via the dashboard
 
