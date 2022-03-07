@@ -26,8 +26,6 @@ Firewall Analytics captures all traffic actioned or flagged by a Cloudflare secu
 
 ## Availability
 
-Firewall Analytics is available at **Firewall** > **Overview**.
-
 The available features vary according to your Cloudflare plan:
 
 {{<table-wrap>}}

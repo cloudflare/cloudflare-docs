@@ -28,7 +28,7 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 
 ## Availability
 
-The new Cloudflare WAF announced in March 2021 is available for selected customers on paid plans. The exact features and limits depend on your current plan. Rate limiting is a paid add-on on all plans.
+The new Cloudflare WAF announced in March 2021 is available for select customers on paid plans. The exact features and limits depend on your current plan. Rate limiting is a paid add-on on all plans.
 
 ## Related resources
 

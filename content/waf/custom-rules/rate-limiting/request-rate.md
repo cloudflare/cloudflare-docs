@@ -8,13 +8,13 @@ layout: list
 
 # Determining the request rate
 
-{{<Aside type="warning">}}
+Cloudflare keeps separate request counters for Rate Limiting rules for each value combination of the rule characteristics.
 
-This feature is only available for selected customers on an Enterprise plan.
+{{<Aside type="note">}}
+
+This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
-
-Cloudflare keeps separate request counters for Rate Limiting rules for each value combination of the rule characteristics.
 
 For example, consider a rule configured with the following characteristics:
 

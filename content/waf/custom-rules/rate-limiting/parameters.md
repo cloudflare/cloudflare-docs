@@ -6,12 +6,6 @@ weight: 18
 
 # Rate limiting parameters
 
-{{<Aside type="warning">}}
-
-This feature is only available for selected customers on an Enterprise plan.
-
-{{</Aside>}}
-
 The available Rate Limiting rule parameters are the following:
 
 {{<definitions>}}
