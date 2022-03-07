@@ -117,11 +117,17 @@ The device will show a message: _This website is trying to open Settings to how 
 
 1.  Tap **Allow**.
 
-1.  Navigate to **Settings** > **General** > **Profile** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+1.  Navigate to **Settings** > **General** > **VPN & Device Management** and the new downloaded profile should be listed.
+
+{{<Aside type="note">}}
+
+Alternatively you can navigate to **Settings** and a new **Profile Downloaded** section should be shown directly beneath your iCloud user account info.
+
+{{</Aside>}}
 
 ![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile1.jpg)
 
-1.  Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+1.  Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
 1.  Next, a certificate warning will appear. Tap **Install**.
 
@@ -195,7 +201,7 @@ The location where the root certificate should be installed is different dependi
   ```bash
   cp Cloudflare_CA.pem /usr/share/ca-certificates
   ```
-  
+
 1. Import the certificate
 
 ```bash
