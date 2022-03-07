@@ -14,4 +14,6 @@ When building a SaaS application, you may want to enforce mTLS to protect sensit
 
 ## Enable mTLS
 
-Once you have [added a custom hostname](/ssl/ssl-for-saas/getting-started/), go to the Cloudflare Zero Trust dashboard and [add mTLS authentication](/cloudflare-one/identity/devices/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) with a few clicks.
+Once you have [added a custom hostname](/ssl/ssl-for-saas/getting-started/), you can enable mTLS by using Cloudflare Access. Go to the Cloudflare Zero Trust dashboard and [add mTLS authentication](/cloudflare-one/identity/devices/mutual-tls-authentication/) with a few clicks.
+
+{{<Aside type="note">}}Currently, you cannot add mTLS policies for custom hostnames using [API Shield](/api-shield/products/mtls/). However, this functionality will be available in the future.{{</Aside>}}
