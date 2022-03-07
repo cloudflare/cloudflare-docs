@@ -65,6 +65,11 @@ For reference information on rule actions available for Cloudflare products powe
               containing one or more of the following Cloudflare Firewall
               products/features:
               <ul>
+                <li>
+              {{<Aside type="warning" header="Important">}}
+               Bof Fight Mode and [Super Bot Fight Mode] are not currently supported.
+              {{</Aside>}}
+                </li>
                 <li>User-agent Blocking</li>
                 <li>Browser Integrity Check</li>
                 <li>Hotlinking Protection</li>
@@ -94,7 +99,7 @@ For reference information on rule actions available for Cloudflare products powe
             <li>
               The scope of the <em>Allow</em> action is limited to Firewall
               Rules; matching requests are <strong>not</strong> exempt from
-              action by other Cloudflare Firewall products, such as IP Access
+              action by other Cloudflare Firewall products, such as Bot Fight Mode, IP Access
               Rules, WAF, etc.
             </li>
             <li>
