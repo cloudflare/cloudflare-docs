@@ -12,7 +12,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Rate Limiting 
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is only available for select customers on an Enterprise plan.
 
 For API guidance on the previous version of Cloudflare Rate Limiting, refer to the [Cloudflare API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-properties).
 

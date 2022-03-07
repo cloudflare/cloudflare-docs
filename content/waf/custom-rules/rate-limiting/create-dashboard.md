@@ -12,7 +12,7 @@ Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** ap
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is only available for select customers on an Enterprise plan.
 
 For guidance on the previous version of Cloudflare Rate Limiting, available at **Firewall** > **Tools**, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 

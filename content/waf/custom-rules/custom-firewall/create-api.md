@@ -14,7 +14,7 @@ You must deploy Custom Firewall rules to the `http_request_firewall_custom` phas
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
 

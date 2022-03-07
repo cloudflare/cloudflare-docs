@@ -10,7 +10,7 @@ You can manage Custom Rules under the **Custom Rules** tab in the **Firewall** a
 
 {{<Aside type="warning" header="Important">}}
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
 

@@ -10,7 +10,7 @@ Rate Limiting rules allow you to define rate limits for incoming requests matchi
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan. Contact your account team to get access.
+This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
 
 For guidance on the previous version of Cloudflare Rate Limiting, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 

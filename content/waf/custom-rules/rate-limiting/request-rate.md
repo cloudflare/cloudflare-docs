@@ -12,7 +12,7 @@ Cloudflare keeps separate request counters for Rate Limiting rules for each valu
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan.
+This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
 
