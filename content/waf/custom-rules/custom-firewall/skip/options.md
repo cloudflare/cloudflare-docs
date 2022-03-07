@@ -51,4 +51,10 @@ The available skip options in Custom Firewall rules are the following:
 
   - The API values are case sensitive.
 
+{{<Aside type="warning">}}
+
+Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to [Cloudflare bot solutions](/bots/).
+
+{{</Aside>}}
+
 {{</definitions>}}
