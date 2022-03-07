@@ -171,8 +171,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 If you invoke `put()` (or `delete()`) multiple times without performing any `await`s in the meantime, the operations will automatically be combined and submitted atomically. That is, even in the case of a machine failure, either all of the writes will have been stored to disk or none of them will have.
 {{</Aside>}}
 
-        {{<Aside type="note" header="Write buffer behavior">}}
-
+{{<Aside type="note" header="Write buffer behavior">}}
 The `put()` method returns a `Promise`, but most applications can discard this promise without `await`ing it. The `Promise` usually completes immediately, because `put()` writes to an in-memory write buffer that is flushed to disk asynchronously. However, if an application performs a very large number of `put()`s without waiting for any I/O, the write buffer could theoretically grow large enough to cause the isolate to exceed its 128MB memory limit. To avoid this scenario, such applications should `await` the `Promise`s returned by `put()`. The system will then apply backpressure onto the application, slowing it down so that the write buffer has time to flush. Note that these `await`s will disable automatic write coalescing.
 {{</Aside>}}
 
@@ -236,10 +235,10 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Runs the sequence of storage operations called on `txn` in a single transaction that either commits successfully or aborts.
 
-    <aside class="DocsMarkdown--aside" role="note" data-type="note">
-  <div class="DocsMarkdown--aside-header">Deprecated</div>
-  {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
-</aside>
+      <aside class="DocsMarkdown--aside" role="note" data-type="note">
+        <div class="DocsMarkdown--aside-header">Deprecated</div>
+        {{<markdown>}}Explicit transactions are no longer necessary. Any series of write operations with no intervening `await` will automatically be submitted atomically, and the system will prevent concurrent events from executing while `await`ing a read operation (unless you use `allowConcurrency: true`). Therefore, a series of reads followed by a series of writes (with no other intervening I/O) are automatically atomic and behave like a transaction.{{</markdown>}}
+      </aside>
 
   - {{<code>}}txn{{</code>}}
 
