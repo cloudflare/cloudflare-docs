@@ -97,7 +97,7 @@ You can also create and edit static routes using [Magic Transit Static Routes AP
 2.  Next to **Static routes configuration**, click **Configure**.
 3.  On the **Static Routes** page, click **Create** to add a new route.
 4.  Enter the information for your route.
-5.  While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
+5.  _(Optional)_ We highly recommend testing your route before adding it by clicking **Test routes**.
 6.  If your test was successful, click **Add routes** when you are done.
 
 ### Edit a static route
