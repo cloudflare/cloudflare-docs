@@ -14,7 +14,7 @@ Zaraz relies on events and triggers to determine when to load the tools you need
 
 Every tool action needs a trigger, and a trigger can be based on an event, or a condition. A tool without actions will not do anything.
 
-Some tools come with a preconfigured  `Pageview` action, that uses the Pageview system trigger. For example, when adding Google Analytics to your site, Zaraz will, by default, send Pageviews whenever a page is loaded. Other tools might not use the concept of Pageview, and so they would require you to create triggers and define your own actions. Whatever the case, Zaraz is flexible and allows you to configure it for your use cases and needs.
+Some tools come with a preconfigured `Pageview` action, that uses the Pageview system trigger. For example, when adding Google Analytics to your site, Zaraz will, by default, send Pageviews whenever a page is loaded. Other tools might not use the concept of Pageview, and so they would require you to create triggers and define your own actions. Whatever the case, Zaraz is flexible and allows you to configure it for your use cases and needs.
 
 ## ​Web API
 

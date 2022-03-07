@@ -6,7 +6,7 @@ weight: 5
 
 # Zaraz Set
 
-Sometimes you might want to make a variable available in all your events without manually setting it every time you are using `zaraz.track()`. For the purposes of this example, we are going to assume users in your system have a unique identifier that you want to send to your tools. You might have many `zaraz.track()` calls all sharing this one parameter:
+You may want to make a variable available in all your events without manually setting it every time you are using `zaraz.track()`. For the purpose of this example, assume users in your system have a unique identifier that you want to send to your tools. You might have many `zaraz.track()` calls all sharing this one parameter:
 
 ```js
 zaraz.track("form completed", {userId: "ABC-123"})
@@ -20,7 +20,7 @@ zaraz.track("button clicked", {userId: “ABC-123”, value: 200})
 zaraz.track("cart viewed", {items: 3, userId: “ABC-123”})
 ```
 
-As you can see, all the events are collecting the `userId` key, and the code for setting that key repeats itself. With `zaraz.set(key, value, [options])` you can avoid repetition by setting the key once when the page loads. Zaraz will then attach this key to all future `zaraz.track()` calls. In the above example, you can remove the `userId` key from all `zaraz.track()` calls, if you call `zaraz.set(“userId”, “ABC-123”)` once, before the `zaraz.track()` calls.
+In the provided example, all the events are collecting the `userId` key, and the code for setting that key repeats itself. With `zaraz.set(key, value, [options])` you can avoid repetition by setting the key once when the page loads. Zaraz will then attach this key to all future `zaraz.track()` calls. In the above example, you can remove the `userId` key from all `zaraz.track()` calls, if you call `zaraz.set(“userId”, “ABC-123”)` once, before the `zaraz.track()` calls.
 
 Keys that are sent using `zaraz.set()` can be used inside tool actions exactly like keys in the `eventProperties` of `zaraz.track()`. So, the above `product` key is accessible through `{{ client.product }}`, which Zaraz will replace replace with `tshirt`.
 
