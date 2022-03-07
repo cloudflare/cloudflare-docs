@@ -4,6 +4,7 @@ pcx-content-type: reference
 weight: 221
 meta:
   title: Firewall Rules actions
+layout: list
 ---
 
 # Firewall Rules actions
@@ -31,9 +32,9 @@ For reference information on rule actions available for Cloudflare products powe
   <table style="width: 100%">
   <thead>
     <tr>
-      <td><strong>Action</strong></td>
-      <td><strong>Description</strong></td>
-      <td><strong>Order of Precedence</strong></td>
+      <th>Action</th>
+      <th>Description</th>
+      <th>Order of Precedence</th>
     </tr>
   </thead>
     <tbody>
@@ -61,9 +62,9 @@ For reference information on rule actions available for Cloudflare products powe
             </li>
             <li>Available to all plans</li>
             <li>
-              Matching requests exempt from evaluation by a user-defined list
+              <p>Matching requests exempt from evaluation by a user-defined list
               containing one or more of the following Cloudflare Firewall
-              products/features:
+              products/features:</p>
               <ul>
                 <li>User-agent Blocking</li>
                 <li>Browser Integrity Check</li>
@@ -73,6 +74,7 @@ For reference information on rule actions available for Cloudflare products powe
                 <li>Zone Lockdown (PRO, BIZ, ENT)</li>
                 <li>WAF Managed Rules (PRO, BIZ, ENT)</li>
               </ul>
+              <p><strong>Note:</strong> Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</p>
             </li>
             <li>
               Requests which match the <em>Bypass</em> action are still subject
@@ -94,7 +96,7 @@ For reference information on rule actions available for Cloudflare products powe
             <li>
               The scope of the <em>Allow</em> action is limited to Firewall
               Rules; matching requests are <strong>not</strong> exempt from
-              action by other Cloudflare Firewall products, such as IP Access
+              action by other Cloudflare Firewall products, such as Bot Fight Mode, IP Access
               Rules, WAF, etc.
             </li>
             <li>
@@ -124,7 +126,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>4</td>
       </tr>
       <tr>
-        <td><em>Managed Challenge (Recommended)</em></td>
+        <td><em>Managed Challenge<br/>(Recommended)</em></td>
         <td>
           <ul>
             <li>
