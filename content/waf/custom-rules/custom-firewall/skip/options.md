@@ -41,7 +41,6 @@ The available skip options in Custom Firewall rules are the following:
 
   - | Product name in the dashboard                                                                | API value       |
     | -------------------------------------------------------------------------------------------- | --------------- |
-    | [Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/free/) and [Super Bot Fight Mode](https://developers.cloudflare.com/bots/get-started/pro/) are not currently supported                   | NA              |
     | [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131)                     | `zoneLockdown`  |
     | [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)               | `uaBlock`       |
     | [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086)              | `bic`           |
@@ -51,5 +50,11 @@ The available skip options in Custom Firewall rules are the following:
     | [WAF Managed Rules](https://support.cloudflare.com/hc/articles/200172016) (previous version) | `waf`           |
 
   - The API values are case sensitive.
+
+{{<Aside type="warning">}}
+
+Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to [Cloudflare bot solutions](/bots/).
+
+{{</Aside>}}
 
 {{</definitions>}}
