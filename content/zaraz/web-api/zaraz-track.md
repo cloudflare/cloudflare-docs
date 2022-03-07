@@ -20,7 +20,7 @@ Only the first parameter is required. This parameter should be a string specifyi
 
 After using `zaraz.track()` in your website to track an action:
 
-1.  Create a trigger that matches your [`zaraz.track()` call](/zaraz/get-started/create-trigger/), with `{{ client.__zarazTrack }}` in your trigger's variable name, and the parameter you are tracking in **Match string**. Following the above example, you would input `purchase` in **Match string**.
-2.  Add an [event that uses that trigger](/zaraz/get-started/send-events/).
+1. Create a trigger that matches your [`zaraz.track()` call](/zaraz/get-started/create-trigger/), with `{{ client.__zarazTrack }}` in your trigger's variable name, and the parameter you are tracking in **Match string**. Following the above example, you would input `purchase` in **Match string**.
+2. Add an [event that uses that trigger](/zaraz/get-started/send-events/).
 
 For more information regarding the properties you can use with `zaraz.track()`, refer to [Event properties](/zaraz/reference/properties-reference/#event-properties).
