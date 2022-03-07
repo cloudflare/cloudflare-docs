@@ -10,7 +10,7 @@ meta:
 
 [Mutual TLS (mTLS)](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) adds an extra layer of protection to application connections by validating certificates on the server and the client.
 
-When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints — those related payment processing, database updates, and more — from external or even other customer traffic.
+When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints — those related to payment processing, database updates, and more — from external or even other customer traffic.
 
 ## Enable mTLS
 
