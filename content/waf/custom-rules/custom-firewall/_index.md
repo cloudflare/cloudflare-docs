@@ -10,7 +10,7 @@ Custom Firewall rules allow you to control incoming traffic by filtering request
 
 {{<Aside type="note">}}
 
-This feature is only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager if you want to get access.
+This feature is only available for selected customers on an Enterprise plan. Contact your account team to get access.
 
 {{</Aside>}}
 
