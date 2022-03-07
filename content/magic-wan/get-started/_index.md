@@ -16,9 +16,9 @@ The onboarding process begins with an initial kickoff call where Cloudflare enga
 
 After your call with Cloudflare, verify that you meet the [onboarding requirements](/magic-wan/get-started/verify-requirements/).
 
-## 2. [Configure tunnels](/magic-wan/get-started/configure-tunnels/)
+## 2. Configure tunnels
 
-Cloudflare sets up Anycast tunnels for Magic WAN based on the configuration details you provide. This process usually takes about four days.
+Cloudflare sets up Anycast tunnels for Magic WAN based on the [configuration details](/magic-wan/get-started/configure-tunnels/) you provide. This process usually takes about four days.
 
 ## 3. Run pre-flight checks
 
