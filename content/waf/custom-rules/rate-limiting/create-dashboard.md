@@ -8,7 +8,7 @@ layout: list
 
 # Create Rate Limiting rules in the dashboard
 
-Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
+Create Rate Limiting rules in the **Rate Limiting Rules** tab, in **Security** > **WAF**.
 
 {{<Aside type="note">}}
 
@@ -24,9 +24,9 @@ To create a new Rate Limiting rule:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2.  Navigate to **Firewall** > **Custom Rules**.
+3.  Navigate to **Security** > **WAF** > **Rate Limiting Rules**.
 
-3.  Click **Create Custom rule** > **Rate limiting rule**.
+3.  Click **Create rate limiting rule**.
 
 4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 

@@ -8,9 +8,9 @@ meta:
 
 # Deploy Managed Rulesets for a zone in the dashboard
 
-You can enable and configure Managed Rulesets for a zone in the **WAF** tab of the Firewall app.
+You can enable and configure Managed Rulesets for a zone in the **Managed Rules** tab, in **Security** > **WAF**.
 
-![WAF tab of Firewall app](/waf/static/waf-managed-rules-tab.png)
+![Managed Rules tab of Security > WAF](/waf/static/waf-managed-rules-tab.png)
 
 ## Deploy a Managed Ruleset
 
@@ -43,7 +43,7 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Go to **Firewall** > **WAF**.
+2. Go to **Security** > **WAF** > **Managed Rules**.
 
 3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
 
@@ -65,7 +65,7 @@ To view the rules of a Managed Ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Go to **Firewall** > **WAF**.
+2. Go to **Security** > **WAF** > **Managed Rules**.
 
 3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
 

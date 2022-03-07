@@ -6,7 +6,7 @@ weight: 6
 
 # Manage Custom Rules in the dashboard
 
-You can manage Custom Rules under the **Custom Rules** tab in the **Firewall** app.
+You can manage Custom Rules in the **Custom Rules** tab, in **Security** > **WAF**.
 
 {{<Aside type="warning" header="Important">}}
 

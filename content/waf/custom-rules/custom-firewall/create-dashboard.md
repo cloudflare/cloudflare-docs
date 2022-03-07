@@ -8,7 +8,7 @@ layout: list
 
 # Create Custom Firewall rules in the dashboard
 
-Create Custom Firewall rules under the **Custom Rules** tab in the **Firewall** app.
+Create Custom Firewall rules in the **Custom Rules** tab, in **Security** > **WAF**.
 
 {{<Aside type="note">}}
 
@@ -24,9 +24,9 @@ To create a new Custom Firewall rule:
 
 2.  Select the **Websites** tab and choose the site for which you want to create a rule.
 
-3.  Navigate to **Firewall** > **Custom Rules**.
+3.  Navigate to **Security** > **WAF** > **Custom Rules**.
 
-4.  Click **Create Custom rule** > **Firewall rule**.
+4.  Click **Create custom rule**.
 
 5.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 

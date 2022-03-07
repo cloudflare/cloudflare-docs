@@ -10,9 +10,9 @@ meta:
 
 Configure payload logging for a ruleset in the ruleset configuration page.
 
-1.  Open **Firewall** > **WAF**.
+1.  Open **Security** > **WAF** > **Managed Rules**.
 
-    ![Displays the content of the WAF tab in the Firewall app](/waf/static/waf-managed-rules-tab.png)
+    ![Displays the content of the Managed Rules tab in Security > WAF](/waf/static/waf-managed-rules-tab.png)
 
 2.  To configure payload logging for a ruleset you had already deployed in the WAF, click **Edit** next to the Managed Ruleset name under **WAF**.
 
