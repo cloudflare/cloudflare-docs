@@ -22,7 +22,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `{{ system.page.query.QUERY_PARAM }}` | String | Returns the value of a URL query parameter. Replace QUERY_PARAM with the name of your parameter. |
+| `{{ system.page.query.QUERY_PARAM }}` | String | Returns the value of a URL query parameter. Replace `QUERY_PARAM` with the name of your parameter. |
 | `{{ system.page.title }}` | String | Returns the page title. |
 | `{{ system.page.url.search }}` | String | Returns search parameters provided, beginning with the leading `?` character. |
 | `{{ system.page.url.pathname }}` | String | Returns the path of the URL, including the initial `/`. Does not include the query string or fragment. |
@@ -63,7 +63,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `{{ client.__zarazTrack }}` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track/) for more information.                                                     |
+| `{{ client.__zarazTrack }}` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track/) for more information. |
 | `{{ client.PARAMETER }}` | String | Returns a specific parameter value sent using the Set method of the Web API. Replace `PARAMETER` with the name of your parameter. Refer to [Zaraz Set](/zaraz/web-api/zaraz-set/) for more information. |
 
 {{</table-wrap>}}
