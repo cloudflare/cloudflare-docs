@@ -38,7 +38,7 @@ Below are examples of the east_branch deployment on the Orchestrator.
 
 ## Configure Anycast tunnels
 
-Refer to [Specify tunnel endpoints](/magic-wan/get-started/configure-tunnels/specify-tunnel-endpoints) for more information about configuring your Anycast tunnels.
+Refer to [Specify tunnel endpoints](/magic-wan/get-started/configure-tunnels/specify-tunnel-endpoints/) for more information about configuring your Anycast tunnels.
 
 ![GRE tunnel for SD-WAN appliance](/magic-wan/static/gre-tunnel-sdwan.png)
 
