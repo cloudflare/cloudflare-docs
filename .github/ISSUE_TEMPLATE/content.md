@@ -1,9 +1,9 @@
 ---
-name: Improve existing docs
-about: Submit this issue to help us improve documentation
-title: ''
+name: Documentation content
+about: Request documentation content edits or additions.
 labels: documentation
 assignees: ''
+title: ''
 ---
 
 ### Expected Behavior
