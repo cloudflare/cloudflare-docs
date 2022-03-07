@@ -115,9 +115,9 @@ The device will show a message: _This website is trying to open Settings to how 
 
 ![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.jpg)
 
-1.  Tap **Allow**.
+2.  Tap **Allow**.
 
-1.  Navigate to **Settings** > **General** > **VPN & Device Management** and the new downloaded profile should be listed.
+3.  Navigate to **Settings** > **General** > **VPN & Device Management** and the new downloaded profile should be listed.
 
 {{<Aside type="note">}}
 
@@ -127,25 +127,25 @@ Alternatively you can navigate to **Settings** and a new **Profile Downloaded** 
 
 ![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile1.jpg)
 
-1.  Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+4.  Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
-1.  Next, a certificate warning will appear. Tap **Install**.
+5.  Next, a certificate warning will appear. Tap **Install**.
 
 If a second prompt is displayed, tap **Install** again.
 
-1.  Next, the **Profile Installed** screen will appear. Tap **Done**.
+6.  Next, the **Profile Installed** screen will appear. Tap **Done**.
 
 The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
-1.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
+7.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
 The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
 
 ![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.jpg)
 
-1.  Tap the slide button next to the Cloudflare certificate you just installed.
+8.  Tap the slide button next to the Cloudflare certificate you just installed.
 
-1.  A confirmation dialogue will appear. Tap **Continue**.
+9.  A confirmation dialogue will appear. Tap **Continue**.
 
 ![iOS cert confirm](/cloudflare-one/static/documentation/connections/ios_cert_trust2.jpg)
 
