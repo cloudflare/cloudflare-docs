@@ -8,17 +8,17 @@ layout: list
 
 # Create Rate Limiting rules via API
 
-{{<Aside type="warning">}}
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Rate Limiting rule via API.
 
-This feature is only available for selected customers on an Enterprise plan.
+{{<Aside type="note">}}
 
-For API guidance on the previous version of Rate Limiting rules, refer to the [Cloudflare API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-properties).
+This feature is only available for select customers on an Enterprise plan.
+
+For API guidance on the previous version of Cloudflare Rate Limiting, refer to the [Cloudflare API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-properties).
 
 {{</Aside>}}
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api) to create a Rate Limiting rule via API.
-
-A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. See [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more information on this field and its parameters.
+A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more information on this field and its parameters.
 
 You must deploy Rate Limiting rules to the `http_ratelimit` phase.
 

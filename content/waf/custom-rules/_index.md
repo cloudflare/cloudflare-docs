@@ -18,7 +18,7 @@ Custom Rules are built upon the [Ruleset Engine](/ruleset-engine/) which you can
 
 {{<Aside type="warning">}}
 
-Custom Rules are only available for selected customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
+Custom Rules are only available for select customers on an Enterprise plan. Contact your account team to get access.
 
 {{</Aside>}}
 

@@ -8,6 +8,8 @@ meta:
 
 # Firewall Analytics — Paid plans
 
+Firewall Analytics is available at **Firewall** > **Overview**.
+
 ## Adjusting displayed data
 
 You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs, except for the **Denial-of-service attacks mitigated** graph.

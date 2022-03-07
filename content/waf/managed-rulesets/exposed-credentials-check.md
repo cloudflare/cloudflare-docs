@@ -8,7 +8,7 @@ weight: 4
 
 The Cloudflare Exposed Credentials Check Managed Ruleset is a set of pre-configured rules for well-known CMS applications that perform a lookup against a public database of stolen credentials.
 
-{{<Aside type="warning">}}
+{{<Aside type="note">}}
 
 The Cloudflare Exposed Credentials Check Managed Ruleset is only available in the Cloudflare WAF announced on March 2021.
 

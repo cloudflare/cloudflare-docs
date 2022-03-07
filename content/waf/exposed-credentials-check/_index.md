@@ -6,15 +6,15 @@ weight: 6
 
 # Automated exposed credentials check
 
+Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
+
+Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
+
 {{<Aside type="note">}}
 
 This feature is available to all paid plans.
 
 {{</Aside>}}
-
-Many web applications have suffered credential stuffing attacks in the recent past. In these attacks there is a massive number of login attempts using username/password pairs from databases of exposed credentials.
-
-Cloudflare offers you automated checks for exposed credentials using Cloudflare Web Application Firewall (WAF).
 
 The WAF provides two mechanisms for this check:
 
