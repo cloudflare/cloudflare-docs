@@ -15,7 +15,7 @@
 
       if (text.length > 0) {
         redirect += '#q=' + encodeURIComponent(text);
-        redirect += '&f:source=[Developer%20docs]';
+        // redirect += '&f:source=[Developer%20docs]';
       }
 
       return location.assign(redirect);
