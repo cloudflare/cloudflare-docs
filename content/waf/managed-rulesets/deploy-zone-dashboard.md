@@ -125,6 +125,6 @@ Select **Do not apply to new rules** to apply your configurations to the selecte
 
 Select **Apply to new rules** if you want to apply your configurations to any new rules with the select tag.
 
-     {{</Aside>}}
+    {{</Aside>}}
 
 5. Click **Save**.
