@@ -113,7 +113,7 @@ sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 The device will show a message: _This website is trying to open Settings to how you a configuration profile. Do you want to allow this?_
 
-![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.jpg)
+![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
 
 2.  Tap **Allow**.
 
@@ -125,7 +125,7 @@ Alternatively you can navigate to **Settings** and a new **Profile Downloaded** 
 
 {{</Aside>}}
 
-![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile1.jpg)
+![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile.PNG)
 
 4.  Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
 
@@ -135,19 +135,21 @@ If a second prompt is displayed, tap **Install** again.
 
 6.  Next, the **Profile Installed** screen will appear. Tap **Done**.
 
+![iOS profile installed](/cloudflare-one/static/documentation/connections/ios_profile_installed.PNG)
+
 The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
 7.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
 The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
 
-![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.jpg)
+![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.PNG)
 
 8.  Tap the slide button next to the Cloudflare certificate you just installed.
 
 9.  A confirmation dialogue will appear. Tap **Continue**.
 
-![iOS cert confirm](/cloudflare-one/static/documentation/connections/ios_cert_trust2.jpg)
+![iOS cert confirm](/cloudflare-one/static/documentation/connections/ios_cert_trust2.PNG)
 
 The root certificate is now installed and ready to be used.
 
