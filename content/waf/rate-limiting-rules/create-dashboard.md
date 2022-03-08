@@ -34,7 +34,7 @@ To create a new Rate Limiting Rule:
 
 5.  Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-rate/) for more information.
+6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
 7.  Under **And rate exceeds**, define the rate limit and the time period to consider when determining the request rate.
 

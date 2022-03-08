@@ -29,14 +29,14 @@ Besides these two parameters, Rate Limiting Rules require the following addition
 *   **Requests per period** — The number of requests over the period of time that will trigger the Rate Limiting Rule.
 *   **Mitigation timeout** — Once the request rate is reached, the Rate Limiting Rule blocks further requests for the period of time defined in this field.
 
-Refer to [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more details on these parameters.
+Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more details on these parameters.
 
-Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ***
 
 ## Next steps
 
-To configure Rate Limiting Rules using the Cloudflare dashboard, use the **Rate Limiting Rules** tab in **Security** > **WAF**. For more information, refer to [Create Rate Limiting Rules in the dashboard](/waf/custom-rules/rate-limiting/create-dashboard/).
+To configure Rate Limiting Rules using the Cloudflare dashboard, use the **Rate Limiting Rules** tab in **Security** > **WAF**. For more information, refer to [Create Rate Limiting Rules in the dashboard](/waf/rate-limiting-rules/create-dashboard/).
 
-You can also configure Rate Limiting Rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create Rate Limiting Rules via API](/waf/custom-rules/rate-limiting/create-api/) for more information.
+You can also configure Rate Limiting Rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create Rate Limiting Rules via API](/waf/rate-limiting-rules/create-api/) for more information.

@@ -1,29 +1,28 @@
 ---
 pcx-content-type: concept
 title: Custom Rules
-weight: 4
+weight: 2
 ---
 
 # Custom Rules
 
-Custom Rules allow you to protect your website and your APIs from malicious incoming traffic by filtering requests.
+Custom Rules allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
 
-Custom Rules are built upon the [Ruleset Engine](/ruleset-engine/) which you can use to define rules and actions in several Cloudflare products.
+{{<Aside type="note">}}
 
-{{<Aside type="warning">}}
-
-Custom Rules are only available for select customers on an Enterprise plan. Contact your account team to get access.
+This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
 
 {{</Aside>}}
 
+Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), Custom Rules have an **expression** and an **action**:
+
+* The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
+* The **action** specifies what to perform when there is a match for the rule.
+
 ***
 
-## Rule execution order
+## Next steps
 
-Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
+To create Custom Rules using the Cloudflare dashboard, refer to [Create Custom Rules in the dashboard](/waf/custom-rules/create-dashboard/).
 
-* [Firewall Rules](/firewall/cf-firewall-rules/), available in **WAF** > **Firewall Rules**
-* [Custom Rules](/waf/custom-rules/custom-firewall/), available in **WAF** > **Custom Rules**
-* [Rate Limiting Rules](/waf/custom-rules/rate-limiting/), available in **WAF** > **Rate Limiting Rules**
-* [Managed Rulesets](/waf/managed-rulesets/), available in **WAF** > **Managed Rules**
-* [Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **WAF** > **Rate Limiting Rules**
+You can also create Custom Rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create Custom Rules via API](/waf/custom-rules/create-api/) for more information.

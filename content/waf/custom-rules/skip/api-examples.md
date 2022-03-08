@@ -10,7 +10,7 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api) to configure Custom Rules via API.
 
-The `skip` action supports different [skip options](/waf/custom-rules/custom-firewall/skip/options/), according to the security features or products that you wish to skip.
+The `skip` action supports different [skip options](/waf/custom-rules/skip/options/), according to the security features or products that you wish to skip.
 
 The following sections provide examples for the different skip rule scenarios available for Custom Firewall rules.
 
@@ -72,7 +72,7 @@ curl -X POST \
 }'
 ```
 
-Refer to [Available skip options](/waf/custom-rules/custom-firewall/skip/options/) for the list of phases you can skip.
+Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of phases you can skip.
 
 ## Skip security products
 
@@ -100,4 +100,4 @@ curl -X POST \
 }'
 ```
 
-Refer to [Available skip options](/waf/custom-rules/custom-firewall/skip/options/) for the list of products you can skip.
+Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of products you can skip.

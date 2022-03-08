@@ -24,7 +24,7 @@ The available skip options in Custom Firewall rules are the following:
 
   - API action parameter: `phases`.
 
-  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [Rate Limiting rules](/waf/custom-rules/rate-limiting/) and/or [WAF Managed Rulesets](/waf/managed-rulesets/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
+  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [Rate Limiting Rules](/waf/rate-limiting-rules/) and/or [WAF Managed Rulesets](/waf/managed-rulesets/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
 
   - The phases you can skip are the following:
 

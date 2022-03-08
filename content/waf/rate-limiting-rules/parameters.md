@@ -77,9 +77,9 @@ Use `cf.unique_visitor_id` to handle situations such as requests under NAT shari
 
 - If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting Rule characteristic, follow these recommendations:
 
-  - Create a [Custom Rule](/waf/custom-rules/custom-firewall/) that blocks requests with more than one value for the cookie.
+  - Create a [Custom Rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
   - Validate the cookie value at the origin before performing any demanding server operations.
 
-- Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting Rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/custom-rules/rate-limiting/request-rate/), which could unexpectedly trigger the rule for many visitors.
+- Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting Rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/rate-limiting-rules/request-rate/), which could unexpectedly trigger the rule for many visitors.
 
   To prevent this situation, Cloudflare recommends that you use a second characteristic in your Rate Limiting Rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.

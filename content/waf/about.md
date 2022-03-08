@@ -77,6 +77,16 @@ Currently, creating and deploying custom rulesets is only available via API.
 
 To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in the Ruleset Engine documentation.
 
+## Rule execution order
+
+Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
+
+* [Firewall Rules](/firewall/cf-firewall-rules/), available in **WAF** > **Firewall Rules**
+* [Custom Rules](/waf/custom-rules/), available in **WAF** > **Custom Rules**
+* [Rate Limiting Rules](/waf/rate-limiting-rules/), available in **WAF** > **Rate Limiting Rules**
+* [Managed Rulesets](/waf/managed-rulesets/), available in **WAF** > **Managed Rules**
+* [Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **WAF** > **Rate Limiting Rules**
+
 ---
 
 ## Next steps
