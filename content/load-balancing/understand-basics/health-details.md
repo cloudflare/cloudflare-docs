@@ -57,7 +57,7 @@ When an [individual origin becomes unhealthy](#how-an-origin-becomes-unhealthy),
 
 ### Traffic distribution
 
-When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Traffic steering policy](load-balancing/understand-basics/traffic-steering/steering-policies/):
+When a pool reaches **Critical** health, your load balancer will begin diverting traffic according to its [Traffic steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/):
 
 - **Off**:
 
