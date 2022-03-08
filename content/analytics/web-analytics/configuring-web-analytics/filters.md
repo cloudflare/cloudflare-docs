@@ -7,11 +7,11 @@ title: Filters
 
 To filter the data shown on Web Analytics:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**.
-2.  Click the website you want to check.
-3.  Click **Add filter**.
-4.  In the **New filter** box, choose your criteria from the dropdown.
-5.  Click **Apply**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Web Analytics**.
+2. Click the website you want to check.
+3. Click **Add filter**.
+4. In the **New filter** box, choose your criteria from the dropdown.
+5. Click **Apply**.
 
 ![Web Analytics add filter](/analytics/static/images/dash-web_analytics-filters.png)
 
