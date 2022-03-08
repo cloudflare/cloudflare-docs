@@ -7,13 +7,13 @@ title: Refactor a Worker to a Pages Function.
 
 When building with Workers there is the option of running your worker separately from your application. A good usecase for this is if the logic in your worker is used by more than one application. 
 
-However, when you handle things like forms submissions or want to ship a small piece of logic that is unique to your project. The logic can live in the same file system as your project while running on Cloudflare's edge network. You can now use [Pages Functions](../platform/functions.md).
+However, when you handle things like forms submissions or want to ship a small piece of logic that is unique to your project. The logic can live in the same file system as your project while running on Cloudflare's edge network. You can now use [Pages Functions](https://developers.cloudflare.com/pages/platform/functions/).
 
 # Handling form entries with Airtable
 
 [Airtable](https://airtable.com/) can be used to store entires of information in different tables for the same account, which makes it a good usecase for handling specific forms for differnt projects with Pages Functions.
 
-Previously, you would have created a worker in a folder using [wrangler](../../workers/cli-wrangler/install-update.md) and manage this worker from within your project or on another server.
+Previously, you would have created a worker in a folder using [wrangler](https://developers.cloudflare.com/workers/cli-wrangler/install-update/) and manage this worker from within your project or on another server.
 
 For example, an airtable function that handles a form submission will have the default worker response to a `fetch` action that responsed to a `request` with a handler. 
 
@@ -139,7 +139,7 @@ const HandleAirtableData = async function onRequest({ body, env }) {
 };
 ```
 
-You can test your function [locally using wrangler 2](../platform/functions.md).
+You can test your function [locally using wrangler 2](https://developers.cloudflare.com/pages/platform/functions/#develop-and-preview-locally).
 
 
 # General refactoring steps 
@@ -148,6 +148,6 @@ You can test your function [locally using wrangler 2](../platform/functions.md).
 
 2. Pass `context` object as argment to your new `OnRequest` method to be able to access your `request`,`env`,`params` and `next`.
 
-3. Handle logic that needs to be executed before or after route handles with middleware. Learn more about [using Middleware](../platform/functions.md) in the Functions documentation 
+3. Handle logic that needs to be executed before or after route handles with middleware. Learn more about [using Middleware](https://developers.cloudflare.com/pages/platform/functions/#adding-middleware) in the Functions documentation 
 
 
