@@ -20,7 +20,7 @@ Waiting Rooms also benefit **your visitors** by:
 - Showing estimated wait times that are continuously updated.
 - Opening up new spots more quickly by tracking dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration).
 - Remembering each visitor's status to prevent someone from losing their place in line or having to re-queue if they leave your site.
-- Appearing in your own [branding and style](/waiting-room/additional-options/customize-waiting-room/), which enhances trust and lets you provide additional information as needed.
+- Appearing in your own [branding and style](/waiting-room/how-to/customize-waiting-room/), which enhances trust and lets you provide additional information as needed.
 
 ## How it works
 

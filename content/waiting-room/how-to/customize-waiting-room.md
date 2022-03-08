@@ -109,7 +109,7 @@ If you are using images or other resources for your customized waiting room, **d
 To preview the appearance of a waiting room:
 
 1.  In your application, go to **Traffic** > **Waiting Rooms**.
-2.  Either [create a waiting room](/waiting-room/how-to/create-via-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
+2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
 4.  Click **Preview Waiting Room**:
 
@@ -124,7 +124,7 @@ If you see something unexpected when previewing your waiting room, review your c
 
 You can use the Waiting Room API to customize the web page served to visitors when they are placed in a virtual waiting room.
 
-In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/waiting-room/additional-options/customize-waiting-room/):
+In the following PATCH request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/waiting-room/how-to/customize-waiting-room/):
 
 ```shell
 curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/{waiting-room-id}"
