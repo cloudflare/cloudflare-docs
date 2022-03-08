@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Custom Rules
-weight: 2
+weight: 4
 ---
 
 # Custom Rules

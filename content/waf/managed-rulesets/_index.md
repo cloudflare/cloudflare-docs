@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Managed Rulesets
-weight: 5
+weight: 6
 ---
 
 # Managed Rulesets
