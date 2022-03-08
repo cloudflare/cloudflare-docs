@@ -22,17 +22,16 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 
 Beginning with a quick overview of the Workers runtime architecture:
 
-<div className="security-page-workers-architecture-diagram">
-
-![Workers architecture diagram](./media/Workers-architecture.svg)
-
+<div class="security-page-workers-architecture-diagram">
+  <img alt="Workers architecture diagram" src="./media/Workers-architecture.svg">
 </div>
-<style dangerouslySetInnerHTML={{__html: `
+
+<style>
   [theme="dark"] .security-page-workers-architecture-diagram {
     filter: invert(1);
     -webkit-filter: invert(1);
   }
-`}}/>
+</style>
 
 There are two fundamental parts of designing a code sandbox: secure isolation and API design.
 
@@ -191,9 +190,7 @@ let end = Date.now();
 The values of `start` and `end` will always be exactly the same. The attacker cannot use `Date` to measure the execution time of their code, which they would need to do to carry out an attack.
 
 {{<Aside type="note">}}
-
 This measure was implemented in mid-2017, before Spectre was announced. This measure was implemented because Cloudflare was already concerned about side channel timing attacks. The Workers team has designed the system with side channels in mind.
-
 {{</Aside>}}
 
 Similarly, multi-threading and shared memory are not permitted in Workers. Everything related to the processing of one event happens on the same thread. Otherwise, one would be able to race threads in order to guess and check the underlying timer. Multiple Workers are not allowed to operate on the same request concurrently. For example, if you have installed a Cloudflare App on your zone which is implemented using Workers, and your zone itself also uses Workers, then a request to your zone may actually be processed by two Workers in sequence. These run in the same thread.
@@ -201,9 +198,7 @@ Similarly, multi-threading and shared memory are not permitted in Workers. Every
 At this point, measuring code execution time locally is prevented. However, it can still be measured remotely. For example, the HTTP client that is sending a request to trigger the execution of the Worker can measure how long it takes for the Worker to respond. Such a measurement is likely to be very noisy, as it would have to traverse the Internet and incur general networking costs. Such noise can be overcome, in theory, by executing the attack many times and taking an average.
 
 {{<Aside type="note">}}
-
 It has been suggested that if Workers reset its execution environment on every request, that Workers would be in a much safer position against timing attacks. Unfortunately, it is not so simple. The execution state could be stored in a client — not the Worker itself — allowing a Worker to resume its previous state on every new request.
-
 {{</Aside>}}
 
 In adversarial testing and with help from leading Spectre experts, Cloudflare has not been able to develop a remote timing attack that works in production. However, the lack of a working attack does not mean that Workers should stop building defenses. Instead, the Workers team is currently testing some more advanced measures.
