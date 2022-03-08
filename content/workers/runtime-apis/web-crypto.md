@@ -31,9 +31,7 @@ Some common uses include:
 - [Signing requests](/workers/examples/signing-requests/)
 
 {{<Aside type="warning" header="Warning">}}
-
 The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
-
 {{</Aside>}}
 
 ## Methods
@@ -64,8 +62,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}encrypt(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with the encrypted data corresponding to the clear text,
-    algorithm, and key given as parameters.
+  - Returns a Promise that fulfills with the encrypted data corresponding to the clear text, algorithm, and key given as parameters.
 
     **Parameters:**
 
@@ -79,8 +76,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}decrypt(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm,
-    and key given as parameters.
+  - Returns a Promise that fulfills with the clear data corresponding to the ciphertext, algorithm, and key given as parameters.
 
     **Parameters:**
 
@@ -94,8 +90,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}sign(algorithm, key, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key
-    given as parameters.
+  - Returns a Promise that fulfills with the signature corresponding to the text, algorithm, and key given as parameters.
 
     **Parameters:**
 
@@ -109,8 +104,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}verify(algorithm, key, signature, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with a Boolean value indicating if the signature given as a
-    parameter matches the text, algorithm, and key that are also given as parameters.
+  - Returns a Promise that fulfills with a Boolean value indicating if the signature given as a parameter matches the text, algorithm, and key that are also given as parameters.
 
     **Parameters:**
 
@@ -126,8 +120,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}digest(algorithm, data){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with a digest generated from the algorithm and text given as
-    parameters.
+  - Returns a Promise that fulfills with a digest generated from the algorithm and text given as parameters.
 
     **Parameters:**
 
@@ -139,9 +132,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}generateKey(algorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey> | Promise\<CryptoKeyPair>{{</type>}}
 
-  - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms,
-    or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For
-    example, to generate a new AES-GCM key:
+    - Returns a Promise that fulfills with a newly-generated `CryptoKey`, for symmetrical algorithms, or a `CryptoKeyPair`, containing two newly generated keys, for asymmetrical algorithms. For example, to generate a new AES-GCM key:
 
     ```js
     let keyPair = await crypto.subtle.generateKey(
@@ -154,22 +145,21 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
     );
     ```
 
-    **Parameters:**
+  **Parameters:**
 
-    - {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
+  - {{<code>}}algorithm{{<param-type>}}object{{</param-type>}}{{</code>}}
 
-      - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+    - Describes the algorithm to be used, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
-    - {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
+  - {{<code>}}extractable{{<param-type>}}bool{{</param-type>}}{{</code>}}
 
-    - {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
+  - {{<code>}}keyUsages{{<param-type>}}Array{{</param-type>}}{{</code>}}
 
-      - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
+    - An Array of strings indicating the [possible usages of the new key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey#Syntax).
 
 - {{<code>}}deriveKey(algorithm, baseKey, derivedKeyAlgorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
-  - Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key
-    and specific algorithm given as parameters.
+  - Returns a Promise that fulfills with a newly generated `CryptoKey` derived from the base key and specific algorithm given as parameters.
 
     **Parameters:**
 
@@ -191,12 +181,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}deriveBits(algorithm, baseKey, length){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from
-    the base key and specific algorithm given as parameters. It returns a
-    Promise which will be fulfilled with an `ArrayBuffer` containing the derived bits. This method
-    is very similar to `deriveKey()`, except that `deriveKey()` returns a `CryptoKey` object rather
-    than an `ArrayBuffer`. Essentially, `deriveKey()` is composed of `deriveBits()` followed by
-    `importKey()`.
+  - Returns a Promise that fulfills with a newly generated buffer of pseudo-random bits derived from the base key and specific algorithm given as parameters. It returns a Promise which will be fulfilled with an `ArrayBuffer` containing the derived bits. This method is very similar to `deriveKey()`, except that `deriveKey()` returns a `CryptoKey` object rather than an `ArrayBuffer`. Essentially, `deriveKey()` is composed of `deriveBits()` followed by `importKey()`.
 
     **Parameters:**
 
@@ -212,8 +197,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}importKey(format, keyData, algorithm, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
-  - Transform a key from some external, portable format into a `CryptoKey` for use with the Web
-    Crypto API.
+  - Transform a key from some external, portable format into a `CryptoKey` for use with the Web Crypto API.
 
     **Parameters:**
 
@@ -247,8 +231,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 - {{<code>}}wrapKey(format, key, wrappingKey, wrapAlgo){{</code>}} {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
-  - Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This
-    renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
+  - Transform a `CryptoKey` into a portable format, and then encrypt it with another key. This renders the `CryptoKey` suitable for storage or transmission in untrusted environments.
 
     **Parameters:**
 
@@ -264,8 +247,7 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
       - Describes the algorithm to be used to encrypt the exported key, including any required parameters, in [an algorithm-specific format](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/wrapKey#Syntax).
 
-- {{<code>}}unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>  unwrappedKeyAlgo, extractable,
-  keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
+- {{<code>}}unwrapKey(format, key, unwrappingKey, unwrapAlgo,<br/>  unwrappedKeyAlgo, extractable, keyUsages){{</code>}} {{<type>}}Promise\<CryptoKey>{{</type>}}
 
   - Transform a key that was wrapped by `wrapKey()` back into a `CryptoKey`.
 
@@ -297,12 +279,11 @@ These methods are all accessed via `crypto.subtle`, which is also [documented in
 
 ### Supported algorithms
 
-Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI), as shown in the following table.
-The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
+Workers implements all operation of the [WebCrypto standard](https://www.w3.org/TR/WebCryptoAPI), as shown in the following table. The Workers team continuously adds support for more algorithms — [share your use case with the community](https://community.cloudflare.com/c/developers/workers).
 
-A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.
-\[//]: # An x (✘) indicates that this feature is part of the specification but not implemented.
-\[//]: # If a feature only implements the operation partially, details are listed.
+A checkmark (✓) indicates that this feature is believed to be fully supported according to the spec.<br>
+An x (✘) indicates that this feature is part of the specification but not implemented.<br>
+If a feature only implements the operation partially, details are listed.
 
 {{<table-wrap>}}
 
@@ -334,14 +315,11 @@ A checkmark (✓) indicates that this feature is believed to be fully supported 
 1.  <a name="footnote-1"></a> Non-standard EdDSA is supported for the Ed25519 curve. Since this algorithm
     is non-standard, a few things to keep in mind while using it:
 
-- Use {{<code>}}NODE-ED25519{{</code>}} as the algorithm and namedCurve parameters.
-- Unlike NodeJS, Cloudflare will not support raw import of private keys.
-- The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior.
-  Any notable compatibility notes will be communicated in release notes and via this developer document.
+    - Use {{<code>}}NODE-ED25519{{</code>}} as the algorithm and namedCurve parameters.
+    - Unlike NodeJS, Cloudflare will not support raw import of private keys.
+    - The algorithm implementation may change over time. While Cloudflare cannot guarantee it at this time, Cloudflare will strive to maintain backward compatibility and compatibility with NodeJS's behavior. Any notable compatibility notes will be communicated in release notes and via this developer document.
 
-2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare
-    Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm
-    — do not rely upon MD5 for security.
+2.  <a name="footnote-2"></a> MD5 is not part of the WebCrypto standard but is supported in Cloudflare Workers for interacting with legacy systems that require MD5. MD5 is considered a weak algorithm — do not rely upon MD5 for security.
 
 ---
 
