@@ -32,8 +32,8 @@ Currently, this mode is available on desktop clients only. When WARP is configur
 
 Because this feature restricts WARP to just applications configured to use the local proxy, leaving all other traffic unencrypted over the Internet by default, we have hidden it in the **Advanced** menu. To turn it on:
 
-1.  Navigate to **Preferences** > **Advanced** and select **Configure Proxy**.
-2.  On the window that opens, check the box and configure the port you want to listen on.
+1. Navigate to **Preferences** > **Advanced** and select **Configure Proxy**.
+2. On the window that opens, check the box and configure the port you want to listen on.
 
 This will enable the **WARP via Local Proxy** option in the **WARP Settings** menu.
 

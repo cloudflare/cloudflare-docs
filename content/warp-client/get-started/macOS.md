@@ -8,11 +8,11 @@ meta:
 
 # macOS desktop client
 
-1.  [Download **Cloudflare_WARP.zip**](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
-2.  Navigate to the downloads folder.
-3.  Open **Cloudflare_WARP.zip**.
-4.  Open the **Cloudflare_WARP.pkg** file that was extracted.
-5.  Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+1. [Download **Cloudflare_WARP.zip**](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
+2. Navigate to the downloads folder.
+3. Open **Cloudflare_WARP.zip**.
+4. Open the **Cloudflare_WARP.pkg** file that was extracted.
+5. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
 ![macOS Menu Bar](/warp-client/static/macOSMenuBar.png)
 
