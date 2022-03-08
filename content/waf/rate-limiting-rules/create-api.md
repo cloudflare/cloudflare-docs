@@ -18,7 +18,7 @@ For API guidance on the previous version of rate limiting rules, refer to the [C
 
 {{</Aside>}}
 
-A rate limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on this field and its parameters.
+A rate limiting rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on this field and its parameters.
 
 You must deploy rate limiting rules to the `http_ratelimit` phase.
 
