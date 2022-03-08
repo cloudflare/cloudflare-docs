@@ -6,6 +6,6 @@ weight: 5
 
 # Additional options
 
-Beyond [creating a simple waiting room](/waiting-room/get-started/), you may want to further customize how your waiting room appears or functions.
+Beyond [creating a waiting room](/waiting-room/get-started/), you may want to further customize how your waiting room functions.
 
 {{<directory-listing>}}

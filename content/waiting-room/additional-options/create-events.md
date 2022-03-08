@@ -10,7 +10,7 @@ When you want to customize the behavior of a waiting room for a specific period 
 
 Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-{{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, see our [Plans](/waiting-room/plans/) page.{{</Aside>}}
+{{<Aside type="note">}}Only some customers can support scheduled events with their waiting rooms. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 ## Create an event
 
