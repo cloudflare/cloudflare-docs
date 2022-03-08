@@ -34,7 +34,7 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 </TableLayout>
 
-Unlike many of our framework guides, the build command and build directory for your site are going to be completely custom. If you do not need a build step, input `exit 0` into the **Build command** field and specify a **Build output directory** where your application's content lives.
+Unlike many of the framework guides, the build command and build directory for your site are going to be completely custom. If you do not need a build step, leave the **Build command** field empty and specify a **Build output directory**. The build output directory is where your application's content lives.
 
 After configuring your site, you can begin your first deploy. Your custom build command (if provided) will run, and Pages will deploy your static site.
 
