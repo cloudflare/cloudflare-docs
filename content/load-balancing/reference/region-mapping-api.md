@@ -6,11 +6,9 @@ meta:
   title: Cloudflare Region API
 ---
 
-# Region API
+# Load Balancing Regions API
 
-## Overview
-
-Cloudflare’s Region API has several uses:
+Cloudflare’s Load Balancing Regions API has several uses:
 
 - Identify which countries/areas (states/provinces in the case of the U.S. and Canada) are part of a specific Cloudflare Load Balancer region.
 - Identify the Cloudflare Load Balancer region for a particular country/area (states/provinces in the case of the U.S. and Canada).

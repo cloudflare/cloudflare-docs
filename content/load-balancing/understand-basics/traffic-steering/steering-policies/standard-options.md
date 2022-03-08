@@ -6,15 +6,15 @@ weight: 1
 
 # Standard steering policies
 
-Standard steering policies include **Off - standard failover** and **Random**.
+Standard steering policies include **Off - Failover** and **Random**.
 
 These are the only steering policies available to non-Enterprise customers who have not purchased **Traffic Steering**.
 
-## Off - standard failover
+## Off - Failover
 
-Standard failover directs traffic from unhealthy pools — determined by [health checks](/load-balancing/understand-basics/monitors/) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/load-balancing/reference/common-configurations/#active---passive-failover).
+Failover steering uses the pool order to determine failover priority (the failover order).
 
-Standard failover uses the pool order to determine failover priority (the failover order).
+Failover directs traffic from unhealthy pools — determined by [health checks](/load-balancing/understand-basics/monitors/) and the **Health Threshold** — to the next healthy pool in the configuration. Customers commonly use this option to set up [active - passive failover](/load-balancing/reference/common-configurations/#active---passive-failover).
 
 If all pools are marked unhealthy, Load Balancing will direct traffic to the fallback pool. The default fallback pool is the last pool listed in the Load Balancing configuration.
 

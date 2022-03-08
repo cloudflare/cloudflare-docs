@@ -1,6 +1,6 @@
 ---
 pcx-content-type: navigation
-title: Policies
+title: Steering policies
 weight: 1
 ---
 
