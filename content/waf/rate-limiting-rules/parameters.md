@@ -48,11 +48,11 @@ The available Rate Limiting Rule parameters are the following:
 
   - You should not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting Rule. Refer to [Recommendations](#recommendations) for details.
 
-  - {{<Aside type="note">}}
+{{<Aside type="note">}}
 
 Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
 
-        {{</Aside>}}
+{{</Aside>}}
 
 - `period` {{<type>}}Number{{</type>}}
 
