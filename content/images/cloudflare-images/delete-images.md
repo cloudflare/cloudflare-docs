@@ -25,6 +25,8 @@ curl -X DELETE https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images
 --header 'Authorization: Bearer :token'
 ```
 
+AUTH METHOD DIFFERS FROM https://api.cloudflare.com/#cloudflare-images-properties X-Auth-Key X-Auth-Email, which one is the right one?
+
 You will receive a response similar to this:
 
 ```json
