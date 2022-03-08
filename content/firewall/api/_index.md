@@ -8,7 +8,7 @@ meta:
 
 # Manage Firewall Rules via the APIs
 
-When it comes to programmatic Firewall Rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI based **Firewall Rules** feature of the **Firewall** app in the dashboard.
+When it comes to programmatic Firewall Rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI-based **Firewall Rules** feature in **Security**.
 
 These APIs are the following:
 

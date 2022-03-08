@@ -8,13 +8,13 @@ layout: list
 
 # Create Rate Limiting Rules in the dashboard
 
-Create Rate Limiting Rules in the **Rate Limiting Rules** tab, in **Security** > **WAF**.
+Create Rate Limiting Rules in **Security** > **WAF** > **Rate Limiting Rules**.
 
 {{<Aside type="note">}}
 
 This feature is only available for select customers on an Enterprise plan.
 
-For guidance on the previous version of Cloudflare Rate Limiting, available at **Firewall** > **Tools**, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
+For guidance on the previous version of Cloudflare Rate Limiting, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}
 

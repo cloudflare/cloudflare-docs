@@ -40,7 +40,7 @@ Using the same hostname for CSP reporting may interfere with other Cloudflare pr
 To configure the CSP reporting endpoint:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2.  Go to **Firewall** > **Page Shield**.
+2.  Go to **Security** > **Page Shield**.
 3.  In **Script Monitor**, click **Configure Reporting Endpoint**.
 4.  Select **Cloudflare-owned endpoint** or **Same hostname**.
 5.  Click **Apply**.

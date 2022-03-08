@@ -8,29 +8,29 @@ meta:
 
 # Configure a Custom Rule with the Skip action
 
-Use the *Skip* action in a Custom Firewall rule to skip one or more security features. A rule configured with the *Skip* action is also known as a skip rule.
+Use the *Skip* action in a Custom Rule to skip one or more security features. A rule configured with the *Skip* action is also known as a skip rule.
 
 For more information on the available options, refer to [Available skip options](/waf/custom-rules/skip/options/).
 
 ## Using the dashboard
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
 
-2.  Go to **Firewall** > **Custom Rules**.
+2. Go to **Security** > **WAF** > **Custom Rules**.
 
-3.  [Create a Custom Firewall rule](/waf/custom-rules/create-dashboard/) by clicking **Create custom rule** > **Firewall rule**, or edit an existing Custom Firewall rule.
+3. [Create a Custom Rule](/waf/custom-rules/create-dashboard/) by clicking **Create custom rule**, or edit an existing Custom Rule.
 
-4.  Define the rule name and the rule expression.
+4. Define the rule name and the rule expression.
 
-5.  Under **Choose action**, select *Skip* from the dropdown.
+5. Under **Choose action**, select *Skip* from the dropdown.
 
     <div class="large-img">
       <img alt="Skip action options in Custom Rules" src="/waf/static/custom-rules/skip-action-options.png"/>
     </div>
 
-1.  Configure the desired [skip options](/waf/custom-rules/skip/options/).
+6. Configure the desired [skip options](/waf/custom-rules/skip/options/).
 
-2.  Save your changes.
+7. Save your changes.
 
 ## Using the API
 

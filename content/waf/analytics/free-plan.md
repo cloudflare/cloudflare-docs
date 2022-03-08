@@ -8,7 +8,7 @@ meta:
 
 # Firewall Analytics — Free plan
 
-Firewall Analytics is available at **Firewall** > **Overview**.
+Firewall Analytics is available at **Security** > **Overview**.
 
 ## Adjusting displayed data
 

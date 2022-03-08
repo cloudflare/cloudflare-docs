@@ -8,7 +8,7 @@ meta:
 
 # Deploy Managed Rulesets for a zone in the dashboard
 
-You can enable and configure Managed Rulesets for a zone in the **Managed Rules** tab, in **Security** > **WAF**.
+You can enable and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed Rules**.
 
 ![Managed Rules tab of Security > WAF](/waf/static/waf-managed-rules-tab.png)
 

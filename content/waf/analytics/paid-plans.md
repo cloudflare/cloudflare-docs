@@ -8,7 +8,7 @@ meta:
 
 # Firewall Analytics — Paid plans
 
-Firewall Analytics is available at **Firewall** > **Overview**.
+Firewall Analytics is available at **Security** > **Overview**.
 
 ## Adjusting displayed data
 
@@ -44,7 +44,7 @@ You can adjust the scope of Firewall Analytics to one of the listed source value
 
 {{<Aside type="note">}}
 
-A deleted Firewall Rule or Rate Limiting rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
+A deleted Firewall Rule or Rate Limiting Rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
 
 {{</Aside>}}
 

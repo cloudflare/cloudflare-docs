@@ -8,7 +8,7 @@ meta:
 
 # Manage Firewall Rules in the Cloudflare dashboard
 
-Firewall Rules is a feature of the **Firewall** app in the Cloudflare UI (dashboard).
+To configure Firewall Rules in the Cloudflare dashboard, open **Firewall Rules** in **Security** > **WAF**.
 
 As depicted in the image below, the **Firewall Rules** dashboard interface lets you:
 

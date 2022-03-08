@@ -8,7 +8,7 @@ meta:
 
 # Available skip options
 
-The available skip options in Custom Firewall rules are the following:
+The available skip options in Custom Rules are the following:
 
 {{<definitions>}}
 

@@ -8,7 +8,7 @@ layout: list
 
 # Create Custom Rules in the dashboard
 
-Create Custom Rules in the **Custom Rules** tab, in **Security** > **WAF**.
+Create Custom Rules in **Security** > **WAF** > **Custom Rules**.
 
 {{<Aside type="note">}}
 

@@ -40,7 +40,7 @@ Both interfaces are available in the **Create Firewall Rule** page. This article
 
 {{<Aside type="note" header="Note">}}
 
-Create a Firewall Rule based on the filters and exclusions you select within Firewall Analytics by clicking **Create firewall rule** in **Firewall** > **Overview**.
+Create a Firewall Rule based on the filters and exclusions you select within Firewall Analytics by clicking **Create firewall rule** in **Security** > **Overview**.
 
 {{</Aside>}}
 
@@ -48,7 +48,7 @@ To create a new Firewall Rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Navigate to **Firewall** > **Firewall Rules**.
+1. Navigate to **Security** > **WAF** > **Firewall Rules**.
 
 1. Click **Create a Firewall Rule**.
 

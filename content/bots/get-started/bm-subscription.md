@@ -24,7 +24,7 @@ Our Solutions Engineering team will work with you to begin setting up the produc
 
 ### Before you begin
 
-- Make sure you have purchased Bot Management for Enterprise (should be visible at **Firewall** > **Bots**).
+- Make sure you have purchased Bot Management for Enterprise (should be visible at **Security** > **Bots**).
 - Review the following concepts:
 
   - [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
@@ -35,13 +35,13 @@ Our Solutions Engineering team will work with you to begin setting up the produc
 
 Decide whether you want to enable [JavaScript detections](/bots/reference/javascript-detections/) to help identify bots.
 
-To enable this feature, go to **Firewall** > **Bots**.
+To enable this feature, go to **Security** > **Bots**.
 
 ### Step 2 — Monitor domain traffic
 
 Before deploying Bot Management on live traffic, use [Bot Analytics](/bots/bot-analytics/bm-subscription/) to determine your domain's sensitivity to bot traffic.
 
-Go to **Firewall** > **Bots** and examine the following traffic segments:
+Go to **Security** > **Bots** and examine the following traffic segments:
 
 - **Automated traffic**: Bot scores of 1
 - **Likely automated traffic**: Bots scores of 2 through 29

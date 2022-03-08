@@ -37,6 +37,6 @@ Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) 
 
 ## Next steps
 
-To configure Rate Limiting Rules using the Cloudflare dashboard, use the **Rate Limiting Rules** tab in **Security** > **WAF**. For more information, refer to [Create Rate Limiting Rules in the dashboard](/waf/rate-limiting-rules/create-dashboard/).
+To configure Rate Limiting Rules in the Cloudflare dashboard, go to **Security** > **WAF** > **Rate Limiting Rules**. For more information, refer to [Create Rate Limiting Rules in the dashboard](/waf/rate-limiting-rules/create-dashboard/).
 
 You can also configure Rate Limiting Rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create Rate Limiting Rules via API](/waf/rate-limiting-rules/create-api/) for more information.

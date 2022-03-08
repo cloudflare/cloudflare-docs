@@ -18,9 +18,10 @@ Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers o
 
 * **Page Rules**: Trigger certain actions when a request matches a URL pattern. For more information, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427).
 
-## Related products
+## Related features
 
-The following Cloudflare products also allow you to define rules for different purposes:
+The following Cloudflare security features also allow you to define rules for different purposes:
 
 * [Firewall Rules](/firewall/)
-* [Custom Rules](/waf/custom-rules/), which includes Custom Firewall rules and Rate Limiting rules
+* [Custom Rules](/waf/custom-rules/)
+* [Rate Limiting Rules](/waf/rate-limiting-rules/)

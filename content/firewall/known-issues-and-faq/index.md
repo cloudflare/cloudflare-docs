@@ -234,7 +234,7 @@ Cloudflare supports two methods to permit requests through Firewall Rules expres
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare Firewall Rules does not bypass security measures defined in other **Firewall** app features.
+Cloudflare Firewall Rules does not bypass other security measures configured in **Security**.
 
 {{</Aside>}}
 

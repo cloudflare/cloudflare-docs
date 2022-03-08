@@ -35,7 +35,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Navigate to **Firewall** > **Overview**.
+    2\. Navigate to **Security** > **Overview**.
 
     3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
@@ -55,7 +55,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 1. Copy the rule ID from one of the DDoS log entries.
 
-1. Navigate to **Firewall** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+1. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
 1. Click **Browse rules** and paste the Rule ID in the search field.
 

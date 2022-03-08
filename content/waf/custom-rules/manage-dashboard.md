@@ -6,7 +6,7 @@ weight: 6
 
 # Manage Custom Rules in the dashboard
 
-You can manage Custom Rules in the **Custom Rules** tab, in **Security** > **WAF**.
+Manage Custom Rules in **Security** > **WAF** > **Custom Rules**.
 
 {{<Aside type="warning" header="Important">}}
 
