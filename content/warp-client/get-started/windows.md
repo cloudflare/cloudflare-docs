@@ -8,10 +8,10 @@ meta:
 
 # Windows desktop client
 
-1.  [Download **Cloudflare_WARP_Release-x64.msi**](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi).
-2.  Navigate to the **Downloads** folder.
-3.  Open `Cloudflare_WARP_Release-x64.msi`.
-4.  Follow the instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+1. [Download **Cloudflare_WARP_Release-x64.msi**](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi).
+2. Navigate to the **Downloads** folder.
+3. Open `Cloudflare_WARP_Release-x64.msi`.
+4. Follow the instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
 ![Windows system tray](/warp-client/static/windowsSysTray.png)
 
@@ -37,6 +37,6 @@ The Windows application places log files in two locations based on what part of 
 
 ## How to remove the application
 
-1.  Click the **Start** menu and search for **Settings**. You can also press <kbd>⊞ Win</kbd> + <kbd>i</kbd>).
-2.  Select **Apps** > **App & Features**.
-3.  Scroll down to Cloudflare WARP and select **Uninstall**.
+1. Click the **Start** menu and search for **Settings**. You can also press <kbd>⊞ Win</kbd> + <kbd>i</kbd>).
+2. Select **Apps** > **App & Features**.
+3. Scroll down to Cloudflare WARP and select **Uninstall**.
