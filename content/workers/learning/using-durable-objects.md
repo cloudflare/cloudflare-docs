@@ -68,7 +68,7 @@ HTTP requests received by a Durable Object do not come directly from the Interne
 
 ### Accessing Persistent Storage from a Durable Object
 
-Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) via the first parameter passed to the Durable Object constructor.  While access to a Durable Object is single-threaded, it is important to remember that request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
+Durable Objects gain access to a [persistent storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api) via the first parameter passed to the Durable Object constructor. While access to a Durable Object is single-threaded, it is important to remember that request executions can still interleave with each other when they wait on I/O, such as when waiting on the promises returned by persistent storage methods or `fetch` requests.
 
 ```js
 export class DurableObjectExample {
