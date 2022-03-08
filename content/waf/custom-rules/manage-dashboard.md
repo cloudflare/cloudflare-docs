@@ -16,8 +16,7 @@ This feature is only available for select customers on an Enterprise plan.
 
 The Custom Rules interface allows you to:
 
-- [Create Custom Firewall rules](/waf/custom-rules/custom-firewall/create-dashboard/)
-- [Create Rate Limiting rules](/waf/custom-rules/rate-limiting/create-dashboard/)
+- [Create Custom Rules](/waf/custom-rules/custom-firewall/create-dashboard/)
 - Browse and filter rules
 - Edit and delete rules
 - Enable or disable rules
