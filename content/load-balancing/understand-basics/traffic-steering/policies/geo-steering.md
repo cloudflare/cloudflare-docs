@@ -14,7 +14,7 @@ You can assign multiple pools to the same area and the load balancer will use th
 
 ### PoP steering
 
-When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer) include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
 
 For help finding data center identifiers, refer to [this community thread](https://community.cloudflare.com/t/is-there-a-way-to-retrieve-cloudflare-pops-list-and-locations-programmatically/234643).
 
@@ -24,7 +24,7 @@ Any data center not explicitly defined will fall back to using the corresponding
 
 ### Country steering 
 
-When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer) include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
