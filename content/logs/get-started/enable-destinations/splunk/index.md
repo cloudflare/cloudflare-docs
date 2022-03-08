@@ -33,6 +33,10 @@ To enable the Cloudflare Logpush service:
 8.  Enter or select the following destination information:
 
     - **Splunk raw HTTP Event Collector URL**
+    
+    {{<Aside type="note" header="Note">}}
+You may notice an API request failed with 504 error when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname. Refer to [Send data to HTTP Event Collector on Splunk Cloud Platform](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#Send_data_to_HTTP_Event_Collector) for more details.
+{{</Aside>}}
     - **Channel ID**
     - **Auth Token**
     - **Source Type**
