@@ -26,7 +26,7 @@ To start, enable Durable Objects for your account by logging into [the Cloudflar
 There are three steps to creating and using a Durable Object:
 
 *   [Writing the class](#writing-a-class-that-defines-a-durable-object) that defines a Durable Object.
-*   [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch]() API.
+*   [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/fetch/) API.
 *   [Uploading the Durable Object and Worker](#uploading-a-durable-object-worker) to Cloudflare's servers using Wrangler.
 
 ## Writing a class that defines a Durable Object
