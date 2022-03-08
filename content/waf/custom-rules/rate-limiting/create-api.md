@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
 type: overview
-title: Create Rate Limiting rules via API
+title: Create Rate Limiting Rules via API
 weight: 16
 layout: list
 ---
 
-# Create Rate Limiting rules via API
+# Create Rate Limiting Rules via API
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Rate Limiting rule via API.
 
@@ -20,13 +20,13 @@ For API guidance on the previous version of Cloudflare Rate Limiting, refer to t
 
 A Rate Limiting rule is similar to a regular rule handled by the ruleset engine, but contains an additional `ratelimit` field with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/custom-rules/rate-limiting/parameters/) for more information on this field and its parameters.
 
-You must deploy Rate Limiting rules to the `http_ratelimit` phase.
+You must deploy Rate Limiting Rules to the `http_ratelimit` phase.
 
-## Create a Rate Limiting rule
+## Create a Rate Limiting Rule
 
-To create a Rate Limiting rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (refer to the example below).
+To create a Rate Limiting Rule, add a rule with a `ratelimit` field to the `http_ratelimit` phase entry point ruleset by issuing a `PUT` request (refer to the example below).
 
-Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
+Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate Limiting Rules must appear at the end of the rules list.
 
 ```json
 ---
