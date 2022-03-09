@@ -186,7 +186,7 @@ Note that you pass HTML content to the preview endpoint in the `custom_html` fie
 
 Example request:
 
-```shell
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms/preview"
      -H "X-Auth-Email: user@example.com"
      -H "X-Auth-Key: xxxxxxxx"
