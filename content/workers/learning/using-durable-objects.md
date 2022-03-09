@@ -26,7 +26,7 @@ To start, enable Durable Objects for your account by logging into [the Cloudflar
 There are three steps to creating and using a Durable Object:
 
 *   [Writing the class](#writing-a-class-that-defines-a-durable-object) that defines a Durable Object.
-*   [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/fetch/) API.
+*   [Instantiating and communicating with a Durable Object](#instantiating-and-communicating-with-a-durable-object) from another Worker via the [Fetch](/workers/runtime-apis/durable-objects/#fetch-handler-method) API.
 *   [Uploading the Durable Object and Worker](#uploading-a-durable-object-worker) to Cloudflare's servers using Wrangler.
 
 ## Writing a class that defines a Durable Object
@@ -149,7 +149,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project’s dire
 
 {{<Aside type="note" header="What is a binding?">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), Durable Objects, or [R2 Buckets](/r2/get-started/). A binding is a runtime variable that the Workers runtime provides to your code. 
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/) or Durable Objects. A binding is a runtime variable that the Workers runtime provides to your code. 
 
 You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding’s variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](/workers/platform/environment-variables/) documentation for more information.
 
@@ -207,7 +207,7 @@ export default {
 
 Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
 
-{{<Aside header="String-derived IDs and system-generated IDs">}}
+{{<Aside header="String-derived IDs versus system-generated IDs">}}
 
 In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for more information.
 
