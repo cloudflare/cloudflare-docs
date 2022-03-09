@@ -50,7 +50,7 @@ Create your waiting room by:
 
 ### Appearance (optional)
 
-Some customers can [customize the design](/waiting-room/how-to/customize-waiting-room/) of their waiting room by editing the page HTML and CSS.
+Some customers can [customize the design](/waiting-room/how-to/customize-waiting-room/) of their waiting room by editing the page's HTML and CSS.
 
 If you have this ability, think about how you want the page to appear.
 
