@@ -213,7 +213,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 After [generating a preview URL](https://api.cloudflare.com/#waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
-```shell
+```txt
 GET https://waitingrooms.dev/preview/{preview-id}
 ```
 
