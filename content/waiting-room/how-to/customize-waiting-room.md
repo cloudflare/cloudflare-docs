@@ -176,7 +176,7 @@ POST https://api.cloudflare.com/client/v4/zones/<zone_id>/waiting_rooms/preview
 
 In the request body, include the customized HTML content in the `custom_html` field:
 
-```shell
+```html
 {
     "custom_html": "<p>Include custom HTML here</p>"
 }
