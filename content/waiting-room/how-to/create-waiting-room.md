@@ -30,9 +30,8 @@ A waiting room can be created from the dashboard or via API.
 
 Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
-```shell
+```txt
 POST zones/{zone_identifier}/waiting_rooms
-```
 
 The Cloudflare API base URL is:
 
