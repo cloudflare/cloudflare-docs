@@ -39,7 +39,7 @@ async function handleRequest(request) {
     return submitHandler(request);
   }
 
-  return new Response.redirect(FORM_URL);
+  return fetch(request.url);
 }
 
 async function submitHandler(request) {
@@ -102,7 +102,7 @@ export async function onRequestPost({ request, env }) {
 
 ```
 
-The above code takes a `request` and `env` as argumnents which passes this props down to the `submitHandler` fucntion. Which stays the same as the original Worker function. However, becasue Functions allow you to specify the HTTPS request type you can remove the `request.method` check, as this is handled by naming the request type. 
+The above code takes a `request` and `env` as argumnents which passes this props down to the `submitHandler` function. Which stays the same as the original Worker function. However, becasue Functions allow you to specify the HTTPS request type you can remove the `request.method` check, as this is handled by naming the request type. 
 
 ```js
 async function submitHandler({ request, env }) {
