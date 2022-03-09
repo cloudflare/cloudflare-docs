@@ -53,10 +53,10 @@ Configure your waiting room with the following required parameters in the `data`
 
 The following parameters are optional:
 
-*   `path` - The path within the host for which you want to configure a waiting room. The waiting room will be enabled for all subpaths as well.
-*   `description` - A description of the the waiting room.
-*   `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
-*   `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is  used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://api.cloudflare.com/#waiting-room-properties).
+*  `path` - The path within the host for which you want to configure a waiting room. The waiting room will be enabled for all subpaths as well.
+*  `description` - A description of the waiting room.
+*  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
+*  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://api.cloudflare.com/#waiting-room-properties).
 
 ## Example
 
