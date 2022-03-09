@@ -129,7 +129,7 @@ export class Counter {
 
 The Durable Object's storage has a built-in in-memory cache of its own – if you `get()` a value that was read or written recently, the result will be instantly returned from cache. Instead of writing initialization code like above, you could `get("value")` whenever you need it, and rely on the built-in cache to make this fast. Refer to the [Counter example](#example---counter) below for an example of this approach. 
 
-However, in applications with more complex state, explicitly storing state in your Object [like above](/workers/learning/using-durable-objects/#in-memory-state-in-a-durable-object) may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
+However, in applications with more complex state, [explicitly storing state in your Object](/workers/learning/using-durable-objects/#in-memory-state-in-a-durable-object) may be easier than making storage API calls on every access. Depending on the configuration of your project, write your code in the way that is easiest for you.
 
 {{</Aside>}}
 
@@ -139,7 +139,7 @@ As part of Durable Objects, Workers can act as WebSocket endpoints – including
 
 While technically any Worker can speak WebSocket in this way, WebSockets are most useful when combined with Durable Objects. When a client connects to your application using a WebSocket, you need a way for server-generated events to be sent back to the existing socket connection. Without Durable Objects, there is no way to send an event to the specific Worker holding a WebSocket. With Durable Objects, you can forward the WebSocket to an Object. Messages can then be addressed to that Object by its unique ID, and the Object can then forward those messages down the WebSocket to the client.
 
-For more information, refer to the [Using WebSockets](/workers/learning/using-websockets/). For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo).
+For more information, refer to [Using WebSockets](/workers/learning/using-websockets/). For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -161,7 +161,7 @@ The fetch handler in the example below implements the Worker that talks to the D
 
 We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
 
-ES Modules differ from regular JavaScript files in that they have imports and exports. As you [saw above](/workers/learning/using-durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
+ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/learning/using-durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
 ```js
 // In modules-syntax workers, you use `export default` to export your script's
@@ -257,7 +257,7 @@ The `[durable_objects]` section has 1 subsection:
     *   `class_name` - Required. The class name you wish to bind to.
     *   `script_name` - Optional. Defaults to the current [environment's](/workers/platform/environments/) script.
 
-If you are using Wrangler [environments](/workers/platform/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Objects are not inherited. For example, an environment named `staging`:
+If you are using Wrangler [environments](/workers/platform/environments/), you must specify any Durable Object bindings you wish to use on a per-environment basis. Durable Object bindings are not inherited. For example, an environment named `staging`:
 
 ```toml
 [env.staging]
@@ -413,7 +413,7 @@ The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) a
 
 Not all Cloudflare locations host Durable Objects, so Objects may not be created in the same data center where they are first requested.
 
-Currently, Durable Objects do not migrate between locations after initial creation. Durable Objects will be exploring automatic migration compatibility in the future.
+Currently, Durable Objects do not migrate between locations after initial creation. Cloudflare will be exploring automatic migration compatibility in the future.
 
 ### Performance
 
