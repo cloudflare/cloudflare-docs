@@ -20,7 +20,7 @@ A waiting room can be created from the dashboard or via API.
 4.  Click **Next**.
 5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed.
 6.  Click **Next**.
-7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
+7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room/).
 8.  Click **Save**. Your new waiting room will be enabled by default.
 
 
