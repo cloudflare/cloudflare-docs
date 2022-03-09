@@ -61,7 +61,7 @@ The following parameters are optional:
 
 The following example API request configures a waiting room.
 
-```json
+```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
      -H "X-Auth-Email: user@example.com" \
      -H "X-Auth-Key: xxxxxxxx" \
