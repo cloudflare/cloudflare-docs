@@ -13,9 +13,6 @@ content/automatic-platform-optimization/ @cloudflare/PCX
 # Bot management
 content/bots/ @cloudflare/PCX
 
-# Browser Isolation
-content/browser-isolation/ @cloudflare/PCX
-
 # BYOIP
 content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 
