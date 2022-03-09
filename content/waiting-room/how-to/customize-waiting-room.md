@@ -134,7 +134,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
 
-```shell
+```bash
 {
   "success": true,
   "errors": [],
@@ -196,7 +196,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The preview endpoint returns a temporary URL in the response body where you can preview your custom page:
 
-```shell
+```bash
 {
   "result": {
     "preview_url": "https://waitingrooms.dev/preview/111111111111"
