@@ -18,9 +18,9 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 
-- Fulfilled all the [prerequisites](/waiting-room/about/#prerequisites)
+- Fulfilled all the [prerequisites](/waiting-room/#prerequisites)
 - Previously [created a waiting room](/waiting-room/get-started/)
-- Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/waiting-room/additional-options/customize-waiting-room/) of your waiting room)
+- Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/waiting-room/how-to/customize-waiting-room/) of your waiting room)
 
 ---
 
