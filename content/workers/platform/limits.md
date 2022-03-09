@@ -296,4 +296,4 @@ The size of chunked response bodies (`Transfer-Encoding: chunked`) is not known 
 
 Durable Objects scale well across Objects, but each object is inherently single-threaded. A baseline of 100 req/sec is a good floor estimate of the request rate an individual Object can handle, though this will vary with workload.
 
-Durable Objects have been built such that the number of objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
+Durable Objects have been built such that the number of Objects in the system do not need to be limited. You can create and run as many separate objects as you want. The main limit to your usage of Durable Objects is the total storage limit per account - if you need more storage, contact your account team.
