@@ -19,13 +19,11 @@ You can now use [Pages Functions](/pages/platform/functions/), which are serverl
 
 An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
 
-[Airtable](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to create a folder and use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
+[Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to create a folder and use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
 
-This step creates the boilderplate to write your Airtable submission Worker. After writting your Worker you can deploy it to Cloudflare Edge network with your credentials.
+This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker you can deploy it to Cloudflare Edge network with your credentials.
 
-An example of this Airtable Worker that handles a form submission will have the default Worker response to a `fetch` action that responses to a `request` with a handler. 
-
-In the Worker code below, you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using the credentials.  
+An example of a Worker that handles Airtable form submission can be seen in the code below. Every Worker will have the default response to a `fetch` action with a `request` handler. Here you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using the credentials.  
 
 ```js
 addEventListener("fetch", (event) => {
@@ -89,7 +87,7 @@ const HandleAirtableData = (body) => {
 
 # Using a Pages Functions
 
-[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages togther with your frontend. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Which is a good usecase for our Airtable example.
+[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages togther with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Which is a good usecase for our Airtable example.
 
 While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions. First, you will create a `functions` folder in the base of your application and within this folder you can create a `form.js` file to handle form submissions.
 
