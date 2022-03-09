@@ -6,11 +6,9 @@ weight: 5
 
 # Rate Limiting Rules
 
-Rate Limiting Rules allow you to define rate limits for incoming requests matching an expression, as well as actions to take when those rate limits are reached.
+Rate Limiting Rules allow you to define rate limits for requests matching an expression, and which action to take when those rate limits are reached.
 
 {{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan. Contact your account team to get access.
 
 For guidance on the previous version of Cloudflare Rate Limiting, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
@@ -33,7 +31,28 @@ Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for mo
 
 Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
-***
+---
+
+## Availability
+
+{{<table-wrap style="font-size:90%">}}
+
+Feature | Free | Pro | Business | Enterprise Core | Enterprise Advanced |
+---|---|---|---|---|---
+Available fields<br/>in expression | URL | URL | URL, Method, Request headers, Source IP | URL, Method, Request headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
+Counting characteristics | IP | IP | IP | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3*
+Counting expression | — | — | Yes | Yes | Yes
+Available fields<br/>in counting expression | — | — | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
+Maximum sampling period | 1&nbsp;minute | 1 minute | 5 minutes | 10 minutes | 1 hour
+Available Timeout | 60, 3600 | 60, 3600 | 60, 3600, 86400 | 30–86400 | 30–86400
+Custom response | — | — | Yes | Yes | Yes
+Max. number of rules | 1 | 10 | 15 | 100 | 100
+Available actions | Block | Block, Log, Managed Challenge | Block, Log, Managed Challenge | Block, Log, Managed Challenge | Block, Log, Managed Challenge, JS Challenge, Legacy CAPTCHA
+
+{{</table-wrap>}}
+
+\* Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
+
 
 ## Next steps
 
