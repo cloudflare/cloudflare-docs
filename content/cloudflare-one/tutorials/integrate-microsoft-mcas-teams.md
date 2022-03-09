@@ -23,10 +23,7 @@ Follow the guide for [Managing API tokens for Microsoft Cloud App Security](http
 ## Using the API to query banned applications
 
 Once you have the API token and API URL, use curl to get the list of banned applications from Microsoft MCAS:
-
-```txt
-curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -v &quot;https://&ltMCAS API URL&gt/api/discovery_block_scripts/?format=120&amp;type=banned&quot; -H &quot;Authorization: Token &ltAPI token&gt&quot;</span></div></span></span></span></code></pre>{{</raw>}}
 
 This will return a list of banned hostnames. In this case, Angie's List is the banned application.
 
@@ -37,16 +34,10 @@ This will return a list of banned hostnames. In this case, Angie's List is the b
 As you can see, the banned hostnames are preceded by a `.`. To use this output for a Zero Trust List, we need to do some text processing.
 
 1.  Run the curl API call and direct the output to a file, in this case `mcas.txt`:
-
-    ```txt
-    curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -v &quot;https://&ltMCAS API URL&gt/api/discovery_block_scripts/?format=120&amp;type=banned&quot; -H &quot;Authorization: Token &ltAPI token&gt&quot; &gt mcas.txt</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Remove the leading `.`, for example by running `sed` from the CLI:
-
-    ```txt
-    sed -i 's/^.//' mcas.txt
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sed -i 's/^.//' mcas.txt</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  This will give you the list of hostnames without leading `.`.
 
@@ -55,10 +46,7 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
 ## Using the API to query allowed applications
 
 If you would like to get a list of all of the MCAS allowed applications, you can use the same API query, but instead of using `type=banned`, use `type=allowed`. This will return a much larger list.
-
-```sh
-curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -v &quot;https://&ltMCAS API URL&gt/api/discovery_block_scripts/?format=120&amp;type=allowed&quot; -H &quot;Authorization: Token &ltAPI token&gt&quot;</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Adding a hostname list in the Zero Trust Dashboard
 

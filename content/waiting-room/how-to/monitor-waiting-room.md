@@ -31,10 +31,7 @@ The **Status** column displays the current state of the waiting room:
 ## Status in the API
 
 [Check whether traffic is queueing in a configured waiting room](https://api.cloudflare.com/#waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
-
-```shell
-GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">GET zones/{zone_identifier}/waiting_rooms/{identifier}/status</span></div></span></span></span></code></pre>{{</raw>}}
 
 The response is:
 
@@ -42,10 +39,7 @@ The response is:
 - `not_queueing` if the room is empty or if the waiting room is suspended.
 
 To check whether a configured waiting room is suspended or whether the traffic is force-queued to the waiting room, append the following endpoint to the Cloudflare API base URL.
-
-```shell
-GET zones/{zone_identifier}/waiting_rooms/{identifier}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">GET zones/{zone_identifier}/waiting_rooms/{identifier}</span></div></span></span></span></code></pre>{{</raw>}}
 
 The endpoint above [fetches all settings](https://api.cloudflare.com/#waiting-room-waiting-room-details) for a configured waiting room:
 

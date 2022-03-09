@@ -40,19 +40,13 @@ To claim a `*.workers.dev` subdomain, such as `my-subdomain.workers.dev`, go to 
 ### Matching Behavior
 
 Route patterns look like this:
-
-```txt
-https://*.example.com/images/*
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://*.example.com/images/*</span></div></span></span></span></code></pre>{{</raw>}}
 
 This pattern would match all HTTPS requests destined for a subhost of
 example.com and whose paths are prefixed by `/images/`.
 
 A pattern to match all requests looks like this:
-
-```txt
-*example.com/*
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">*example.com/*</span></div></span></span></span></code></pre>{{</raw>}}
 
 While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expression) pattern, route patterns follow specific rules:
 
@@ -67,11 +61,7 @@ While they look similar to a [regex](https://en.wikipedia.org/wiki/Regular_expre
 - Route patterns are case sensitive, for example, `example.com/Images/*` and `example.com/images/*` are two distinct routes.
 
 A route can be specified without being associated with a Worker; this will act to negate any less specific patterns. For example, consider this pair of route patterns, one with a Workers script and one without:
-
-```txt
-*example.com/images/cat.png -> <no script>
-*example.com/images/*       -> worker-script
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">*example.com/images/cat.png -&gt &ltno script&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">*example.com/images/*       -&gt worker-script</span></div></span></span></span></code></pre>{{</raw>}}
 
 In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
 

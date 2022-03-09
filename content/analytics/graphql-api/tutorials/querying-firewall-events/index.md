@@ -10,179 +10,133 @@ In this example, we are going to use the GraphQL Analytics API to query for Fire
 The following API call will request Firewall Events over a one hour period, and output the requested fields. Be sure to replace `CLOUDFLARE_ZONE_ID`, `CLOUDFLARE_EMAIL`, and `CLOUDFLARE_API_KEY` with your zone tag and API credentials, and adjust the `datetime_geg` and `datetime_leq` values to your liking.
 
 ## API Call
-
-```bash
-PAYLOAD='{
-  "query": "query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter_InputObject) {
-    viewer {
-      zones(filter: { zoneTag: $zoneTag }) {
-        firewallEventsAdaptive(
-          filter: $filter
-          limit: 10
-          orderBy: [datetime_DESC]
-        ) {
-          action
-          clientAsn
-          clientCountryName
-          clientIP
-          clientRequestPath
-          clientRequestQuery
-          datetime
-          source
-          userAgent
-        }
-      }
-    }
-  }",
-  "variables": {
-    "zoneTag": "CLOUDFLARE_ZONE_ID",
-    "filter": {
-      "datetime_geq": "2020-04-24T11:00:00Z",
-      "datetime_leq": "2020-04-24T12:00:00Z"
-    }
-  }
-}'
-
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-assign-left CodeBlock--token-variable">PAYLOAD</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">  &quot;query&quot;: &quot;query ListFirewallEvents($zoneTag: string, $filter: FirewallEventsAdaptiveFilter_InputObject) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    viewer {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">      zones(filter: { zoneTag: $zoneTag }) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        firewallEventsAdaptive(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          filter: $filter</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          limit: 10</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          orderBy: [datetime_DESC]</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        ) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          action</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          clientAsn</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          clientCountryName</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          clientIP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          clientRequestPath</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          clientRequestQuery</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          datetime</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          source</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">          userAgent</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">      }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">  }&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">  &quot;variables&quot;: {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;zoneTag&quot;: &quot;CLOUDFLARE_ZONE_ID&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;filter&quot;: {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">      &quot;datetime_geq&quot;: &quot;2020-04-24T11:00:00Z&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">      &quot;datetime_leq&quot;: &quot;2020-04-24T12:00:00Z&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">}'</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -X POST </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: CLOUDFLARE_EMAIL&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;X-Auth-key: CLOUDFLARE_API_KEY&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --data </span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-variable">$(</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-builtin CodeBlock--token-class-name">echo</span><span class="CodeBlock--token-string CodeBlock--token-variable"> $PAYLOAD</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-variable">)</span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  https://api.cloudflare.com/client/v4/graphql/</span></div></span></span></span></code></pre>{{</raw>}}
 
 The results returned will be in JSON (as requested), so piping the output to `jq` will make them easier to read, e.g.,:
-
-```bash
-curl \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  --data "$(echo $PAYLOAD)" \
-  https://api.cloudflare.com/client/v4/graphql/ | jq .
-#=> {
-#=>   "data": {
-#=>     "viewer": {
-#=>       "zones": [
-#=>         {
-#=>           "firewallEventsAdaptive": [
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "block",
-#=>               "clientAsn": "5089",
-#=>               "clientCountryName": "GB",
-#=>               "clientIP": "203.0.113.69",
-#=>               "clientRequestPath": "/%3Cscript%3Ealert()%3C/script%3E",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:11:24Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "58224",
-#=>               "clientCountryName": "IR",
-#=>               "clientIP": "2.183.175.37",
-#=>               "clientRequestPath": "/api/v2",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:00:54Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
-#=>             },
-#=>             {
-#=>               "action": "log",
-#=>               "clientAsn": "58224",
-#=>               "clientCountryName": "IR",
-#=>               "clientIP": "2.183.175.37",
-#=>               "clientRequestPath": "/api/v2",
-#=>               "clientRequestQuery": "",
-#=>               "datetime": "2020-04-24T10:00:54Z",
-#=>               "source": "waf",
-#=>               "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
-#=>             }
-#=>           ]
-#=>         }
-#=>       ]
-#=>     }
-#=>   },
-#=>   "errors": null
-#=> }
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -X POST </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: CLOUDFLARE_EMAIL&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  -H </span><span class="CodeBlock--token-string">&quot;X-Auth-key: CLOUDFLARE_API_KEY&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --data </span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-variable">$(</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-builtin CodeBlock--token-class-name">echo</span><span class="CodeBlock--token-string CodeBlock--token-variable"> $PAYLOAD</span><span class="CodeBlock--token-string CodeBlock--token-variable CodeBlock--token-variable">)</span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  https://api.cloudflare.com/client/v4/graphql/ </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">.</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt   &quot;data&quot;: {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt     &quot;viewer&quot;: {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt       &quot;zones&quot;: [</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt         {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt           &quot;firewallEventsAdaptive&quot;: [</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;block&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;5089&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;GB&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;203.0.113.69&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/%3Cscript%3Ealert()%3C/script%3E&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:11:24Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;58224&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;IR&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;2.183.175.37&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/api/v2&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:00:54Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             {</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;action&quot;: &quot;log&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientAsn&quot;: &quot;58224&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientCountryName&quot;: &quot;IR&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientIP&quot;: &quot;2.183.175.37&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestPath&quot;: &quot;/api/v2&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;clientRequestQuery&quot;: &quot;&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;datetime&quot;: &quot;2020-04-24T10:00:54Z&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;source&quot;: &quot;waf&quot;,</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt               &quot;userAgent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt             }</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt           ]</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt         }</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt       ]</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt     }</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt   },</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt   &quot;errors&quot;: null</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">#=&gt }</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}

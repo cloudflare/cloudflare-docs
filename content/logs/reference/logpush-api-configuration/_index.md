@@ -36,40 +36,21 @@ For concrete examples, see the tutorial [Manage Logpush with cURL](/logs/referen
 ## Connecting
 
 The Logpush API requires credentials like any other Cloudflare API.
-
-```bash
-$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" \
-    'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -s -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: &ltEMAIL&gt&quot;</span><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: &ltAPI_KEY&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">'https://api.cloudflare.com/client/v4/zones/&ltZONE_ID&gt/logpush/jobs'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Ownership
 
 Before creating a new job, ownership of the destination must be proven.
 
 To issue an ownership challenge token to your destination:
-
-```bash
-$ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership \
--H "X-Auth-Email: <EMAIL>" \ 
--H "X-Auth-Key: <API_KEY>" \
--H "Content-Type: application/json" \ 
---data '{"destination_conf":"s3://<BUCKET_PATH>?region=us-west-2"}' | jq .
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -s -X POST https://api.cloudflare.com/client/v4/zones/</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">ZONE_ID</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">/logpush/ownership </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: &ltEMAIL&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain"> </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: &ltAPI_KEY&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain"> </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">--data </span><span class="CodeBlock--token-string">'{&quot;destination_conf&quot;:&quot;s3://&ltBUCKET_PATH&gt?region=us-west-2&quot;}'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">.</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
-
-```bash
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "valid": true,
-    "message": "",
-    "filename": "<path-to-challenge-file>.txt"
-  },
-  "success": true
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;valid&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;message&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;filename&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;&ltpath-to-challenge-file&gt.txt&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean">true</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 You will need to provide the token contained in the file when creating a job.
 
@@ -101,23 +82,13 @@ For more information on the value for your cloud storage provider, consult the f
 *   [Sumo Logic HTTP Source](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source)
 
 To check if a destination is already in use:
-
-```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists -d '{"destination_conf":"s3://foo"}' | jq .
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -s -XPOST https://api.cloudflare.com/client/v4/zones/</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">ZONE_ID</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">/logpush/validate/destination/exists -d </span><span class="CodeBlock--token-string">'{&quot;destination_conf&quot;:&quot;s3://foo&quot;}'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">.</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Response
-
-```bash
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "exists": false
-  },
-  "success": true
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;exists&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean">false</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean">true</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 There can be only one job writing to each unique destination. For S3 and GCS, a destination is defined as bucket + path. This means two jobs can write to the same bucket, but must write to different subdirectories in that bucket.
 
@@ -134,13 +105,8 @@ For a detailed description, refer to [Logpush job object definition](https://api
 Logpush repeatedly pulls logs on your behalf and uploads them to your destination.
 
 Log options, such as fields or sampling rate, are configured in the **logpull\_options** job parameter (refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)). For example, the following query gets data from the Logpull API:
-
-```bash
-curl -sv \
-    -H'X-Auth-Email: <EMAIL>' \
-    -H'X-Auth-Key: <API_KEY>' \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/received?start=2018-08-02T10:00:00Z&end=2018-08-02T10:01:00Z&fields=RayID,EdgeStartTimestamp"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -sv </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H</span><span class="CodeBlock--token-string">'X-Auth-Email: &ltEMAIL&gt'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H</span><span class="CodeBlock--token-string">'X-Auth-Key: &ltAPI_KEY&gt'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/zones/&ltZONE_ID&gt/logs/received?start=2018-08-02T10:00:00Z&amp;end=2018-08-02T10:01:00Z&amp;fields=RayID,EdgeStartTimestamp&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 In Logpush, the Logpull options would be: `"logpull_options": "fields=RayID,EdgeStartTimestamp"`. Refer to [Logpull API parameters](/logs/logpull/requesting-logs/#parameters) for more info.
 
@@ -156,24 +122,13 @@ The four options that you can customize are:
 **Note**: The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the UI will set this option to false.
 
 To check if **logpull\_options** are valid:
-
-```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin -d '{"logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true","dataset": "http_requests"}' | jq .
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -s -XPOST https://api.cloudflare.com/client/v4/zones/</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">ZONE_ID</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">/logpush/validate/origin -d </span><span class="CodeBlock--token-string">'{&quot;logpull_options&quot;:&quot;fields=RayID,ClientIP,EdgeStartTimestamp&amp;timestamps=rfc3339&amp;CVE-2021-44228=true&quot;,&quot;dataset&quot;: &quot;http_requests&quot;}'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">.</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Response
-
-```bash
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "valid": true,
-    "message": "",
-  },
-  "success": true
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;valid&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;message&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean">true</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Audit
 

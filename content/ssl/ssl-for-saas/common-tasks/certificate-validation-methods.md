@@ -74,19 +74,10 @@ Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard
 At your origin, make the `http_body` available in a TXT record at the path specified in `http_url`. This path should also be publicly accessible to anyone on the Internet so your CA can access it.
 
 Here is an example NGINX configuration that would return a token:
-
-```txt
-location "/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt" {
-        return 200 "ca3-be794c5f757b468eba805d1a705e44f6\n";
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">location &quot;/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        return 200 &quot;ca3-be794c5f757b468eba805d1a705e44f6\n&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
 
 Once your configuration is live, test that the DCV text file is in place with `curl`:
-
-```bash
-$ curl "http://http-preval.example.com/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt"
-ca3-be794c5f757b468eba805d1a705e44f6
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;http://http-preval.example.com/.well-known/pki-validation/ca3-0052344e54074d9693e89e27486692d6.txt&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ca3-be794c5f757b468eba805d1a705e44f6</span></div></span></span></span></code></pre>{{</raw>}}
 
 On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
 

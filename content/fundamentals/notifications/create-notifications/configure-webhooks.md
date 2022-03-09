@@ -52,12 +52,7 @@ If you use a service that is not covered by Cloudflare's currently available web
 After clicking save and test, your webhook should now be configured as a destination you can use to attach to policies. 
 
 When Cloudflare sends you a webhook, it will have the following schema:
-
-```txt
-{
-    "text": Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly.
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    &quot;text&quot;: Hello World! This is a test message sent from https://cloudflare.com. If you can see this, your webhook is configured properly.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
 
 In the above example, `"text"` will vary depending on the alert that was fired.
 

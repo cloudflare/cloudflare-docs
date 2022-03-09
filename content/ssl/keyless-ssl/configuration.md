@@ -97,11 +97,7 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
 ### Populate keys
 
 Install your private keys in `/etc/keyless/keys/` and set the user and group to keyless with 400 permissions. Keys must be in PEM or DER format and have an extension of `.key`:
-
-```bash
-$ ls -l /etc/keyless/keys
--r-------- 1 keyless keyless 1675 Nov 18 16:44 example.com.key
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">ls</span><span class="CodeBlock--token-plain"> -l /etc/keyless/keys</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-r-------- </span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> keyless keyless </span><span class="CodeBlock--token-number">1675</span><span class="CodeBlock--token-plain"> Nov </span><span class="CodeBlock--token-number">18</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">16</span><span class="CodeBlock--token-plain">:44 example.com.key</span></div></span></span></span></code></pre>{{</raw>}}
 
 When running multiple key servers, make sure all required keys are distributed to each key server. Customers typically will either use a configuration management tool such as Salt or Puppet to distribute keys or mount `/etc/keyless/keys` to a network location accessible only by your key servers. Keys are read on boot into memory, so a network path must be accessible during the gokeyless process start/restart.
 

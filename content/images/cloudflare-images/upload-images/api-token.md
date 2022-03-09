@@ -19,7 +19,4 @@ Refer to [Creating API tokens](/api/tokens/create#getting-started) to learn how 
 5. Input the name of the image you want to use in **Image File Name**.
 
 The **cURL command** message box will show you the complete command you can use:
-
-```bash
-curl -X POST -F file=@./MY_IMAGE -H "Authorization: Bearer MY_TOKEN" https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/images/v1
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X POST -F </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">file</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-plain">@./MY_IMAGE -H </span><span class="CodeBlock--token-string">&quot;Authorization: Bearer MY_TOKEN&quot;</span><span class="CodeBlock--token-plain"> https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/images/v1</span></div></span></span></span></code></pre>{{</raw>}}

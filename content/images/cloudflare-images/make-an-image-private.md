@@ -7,15 +7,7 @@ weight: 5
 # Make an image private
 
 You can require an image to only be accessible with a signed URL token. To make an image private, pass a JSON blob with the `requireSignedURLs` property set to `true` at the time you request a one-time upload URL:
-
-```bash
-curl --request POST \
-  --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/v1/direct_upload \
-  --header 'Content-Type: application/json' \
-  --header 'Authorization: Bearer :token' \
-  --data '{
-	  "requireSignedURLs":"true"
-   }'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> --request POST </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --url https://api.cloudflare.com/client/v4/accounts/</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">ACCOUNT_ID</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">/images/v1/direct_upload </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --header </span><span class="CodeBlock--token-string">'Content-Type: application/json'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --header </span><span class="CodeBlock--token-string">'Authorization: Bearer :token'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  --data </span><span class="CodeBlock--token-string">'{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">	  &quot;requireSignedURLs&quot;:&quot;true&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">   }'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 If an image is marked to require signed URLs, it can only be accessed using a signed URL token or using a Variant with **Always allow public access** property checked.

@@ -17,98 +17,33 @@ SoftHSMv2 should not be considered any more secure than storing private keys dir
 ## 1. Install and configure SoftHSMv2
 
 First, we install SoftHSMv2 and configure it to store tokens in the default location `/var/lib/softhsm/tokens`. We also need to give the `softhsm` group permission to this directory as this is how the `keyless` user will access this directory.
-
-```bash
-$ sudo apt-get install -y softhsm2 opensc
-
-#...
-
-$ cat <<EOF | sudo tee /etc/softhsm/softhsm2.conf
-directories.tokendir = /var/lib/softhsm/tokens
-objectstore.backend = file
-log.level = DEBUG
-slots.removable = false
-EOF
-
-$ sudo mkdir /var/lib/softhsm/tokens
-$ sudo chown root:softhsm $_
-$ sudo chmod 0770 /var/lib/softhsm/tokens
-$ sudo usermod -G softhsm keyless
-$ sudo usermod -G softhsm $(whoami)
-
-$ echo 'export SOFTHSM2_CONF=/etc/softhsm/softhsm2.conf' | tee -a ~/.profile
-$ source ~/.profile
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">apt-get</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain"> -y softhsm2 opensc</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-comment">#...</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt&lt</span><span class="CodeBlock--token-string">EOF</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> </span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation CodeBlock--token-operator">|</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> </span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation CodeBlock--token-function">sudo</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> </span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation CodeBlock--token-function">tee</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> /etc/softhsm/softhsm2.conf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">directories.tokendir = /var/lib/softhsm/tokens</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">objectstore.backend = file</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">log.level = DEBUG</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">slots.removable = false</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">EOF</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">mkdir</span><span class="CodeBlock--token-plain"> /var/lib/softhsm/tokens</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">chown</span><span class="CodeBlock--token-plain"> root:softhsm </span><span class="CodeBlock--token-variable">$_</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">chmod</span><span class="CodeBlock--token-plain"> 0770 /var/lib/softhsm/tokens</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">usermod</span><span class="CodeBlock--token-plain"> -G softhsm keyless</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">usermod</span><span class="CodeBlock--token-plain"> -G softhsm </span><span class="CodeBlock--token-variable CodeBlock--token-variable">$(</span><span class="CodeBlock--token-variable CodeBlock--token-function">whoami</span><span class="CodeBlock--token-variable CodeBlock--token-variable">)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">echo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">'export SOFTHSM2_CONF=/etc/softhsm/softhsm2.conf'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">tee</span><span class="CodeBlock--token-plain"> -a ~/.profile</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">source</span><span class="CodeBlock--token-plain"> ~/.profile</span></div></span></span></span></code></pre>{{</raw>}}
 
 ---
 
 ## 2. Create a token and private keys, and generate CSRs
 
 Next, we create a token in slot 0 called `test-token` and secure it with a PIN of `1234`. In this slot we’ll store the RSA keys for our SSL certificates for `keyless-softhsm.example.com`.
-
-```bash
-$ sudo -u keyless softhsm2-util --init-token --slot 0 --label test-token --pin 1234 --so-pin 4321
-The token has been initialized.
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> -u keyless softhsm2-util --init-token --slot </span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-plain"> --label test-token --pin </span><span class="CodeBlock--token-number">1234</span><span class="CodeBlock--token-plain"> --so-pin </span><span class="CodeBlock--token-number">4321</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">The token has been initialized.</span></div></span></span></span></code></pre>{{</raw>}}
 
 Using cfssl, we generate the [private keys and Certificate Signing Requests (CSRs)](https://github.com/cloudflare/cfssl), the latter of which will be sent to a Certificate Authority (CA) for signing.
-
-```bash
-$ cat <<EOF | tee csr.json
-{
-    "hosts": [
-        "keyless-softhsm.example.com"
-    ],
-    "CN": "keyless-softhsm.example.com",
-    "key": {
-        "algo": "rsa",
-        "size": 2048
-    },
-    "names": [{
-        "C": "US",
-        "L": "San Francisco",
-        "O": "TLS Fun",
-        "OU": "Technical Operations",
-        "ST": "California"
-    }]
-}
-EOF
-
-$ cfssl genkey csr.json | cfssljson -bare certificate
-2018/08/12 00:52:22 [INFO] generate received request
-2018/08/12 00:52:22 [INFO] received CSR
-2018/08/12 00:52:22 [INFO] generating key: rsa-2048
-2018/08/12 00:52:22 [INFO] encoded CSR
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt&lt</span><span class="CodeBlock--token-string">EOF</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> </span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation CodeBlock--token-operator">|</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> </span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation CodeBlock--token-function">tee</span><span class="CodeBlock--token-string CodeBlock--token-bash CodeBlock--token-punctuation"> csr.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;hosts&quot;: [</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;keyless-softhsm.example.com&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    ],</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;CN&quot;: &quot;keyless-softhsm.example.com&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;key&quot;: {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;algo&quot;: &quot;rsa&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;size&quot;: 2048</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    },</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    &quot;names&quot;: [{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;C&quot;: &quot;US&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;L&quot;: &quot;San Francisco&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;O&quot;: &quot;TLS Fun&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;OU&quot;: &quot;Technical Operations&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">        &quot;ST&quot;: &quot;California&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">    }]</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">EOF</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cfssl genkey csr.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> cfssljson -bare certificate</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">2018</span><span class="CodeBlock--token-plain">/08/12 00:52:22 </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-plain">INFO</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain"> generate received request</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">2018</span><span class="CodeBlock--token-plain">/08/12 00:52:22 </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-plain">INFO</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain"> received CSR</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">2018</span><span class="CodeBlock--token-plain">/08/12 00:52:22 </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-plain">INFO</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain"> generating key: rsa-2048</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">2018</span><span class="CodeBlock--token-plain">/08/12 00:52:22 </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-plain">INFO</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain"> encoded CSR</span></div></span></span></span></code></pre>{{</raw>}}
 
 ---
 
 ## 3. Convert and import the key
 
 Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import, we specify the token and PIN from token initialization and provide a unique hexadecimal ID and label to the key.
-
-```bash
-$ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in certificate-key.pem -out certificate-key.p8
-$ sudo chown keyless certificate-key.p8
-
-$ sudo -u keyless softhsm2-util --pin 1234 --import ./certificate-key.p8 --token test-token --id a000 --label rsa-privkey
-Found slot 915669571 with matching token label.
-The key pair has been imported.
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in certificate-key.pem -out certificate-key.p8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">chown</span><span class="CodeBlock--token-plain"> keyless certificate-key.p8</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> -u keyless softhsm2-util --pin </span><span class="CodeBlock--token-number">1234</span><span class="CodeBlock--token-plain"> --import ./certificate-key.p8 --token test-token --id a000 --label rsa-privkey</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Found slot </span><span class="CodeBlock--token-number">915669571</span><span class="CodeBlock--token-plain"> with matching token label.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">The key pair has been imported.</span></div></span></span></span></code></pre>{{</raw>}}
 
 After importing we ask `pkcs11-tool` to confirm the objects have been successfully stored in the token.
-
-```bash
-$ sudo -u keyless pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so -l -p 1234 --token test-token --list-objects
-Public Key Object; RSA 2048 bits
-  label:      rsa-privkey
-  ID:         a000
-  Usage:      verify
-Private Key Object; RSA
-  label:      rsa-privkey
-  ID:         a000
-  Usage:      sign
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> -u keyless pkcs11-tool --module /usr/lib/softhsm/libsofthsm2.so -l -p </span><span class="CodeBlock--token-number">1234</span><span class="CodeBlock--token-plain"> --token test-token --list-objects</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Public Key Object</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain"> RSA </span><span class="CodeBlock--token-number">2048</span><span class="CodeBlock--token-plain"> bits</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  label:      rsa-privkey</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  ID:         a000</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Usage:      verify</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Private Key Object</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain"> RSA</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  label:      rsa-privkey</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  ID:         a000</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Usage:      sign</span></div></span></span></span></code></pre>{{</raw>}}
 
 ---
 
@@ -117,21 +52,11 @@ Private Key Object; RSA
 With the keys in place, it’s time to build the configuration file that the key server will read on startup. The `id` refers to the hexadecimal ID you provided to the `softhsm2-util` import statement; we used `a000` so it is encoded as `%a0%00`. The `module-path` will vary slightly based on the Linux distribution you are using. On Debian it should be `/usr/lib/softhsm/libsofthsm2.so`.
 
 Open up `/etc/keyless/gokeyless.yaml` and immediately after
-
-```yaml
-private_key_stores:
-  - dir: /etc/keyless/keys
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yaml" language="yaml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">private_key_stores</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">dir</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /etc/keyless/keys</span></div></span></span></span></code></pre>{{</raw>}}
 
 add
-
-```yaml
-- uri: pkcs11:token=test-token;id=%a0%00?module-path=/usr/lib/softhsm/libsofthsm2.so&pin-value=1234&max-sessions=1
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yaml" language="yaml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">uri</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> pkcs11</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">token=test</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">token;id=%a0%00</span><span class="CodeBlock--token-punctuation">?</span><span class="CodeBlock--token-plain">module</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">path=/usr/lib/softhsm/libsofthsm2.so</span><span class="CodeBlock--token-important">&amp;pin-value=1234&amp;max-sessions=1</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Save the config file, restart `gokeyless`, and verify it started successfully.
-
-```bash
-$ sudo systemctl restart gokeyless.service
-$ sudo systemctl status gokeyless.service -l
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> systemctl restart gokeyless.service</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> systemctl status gokeyless.service -l</span></div></span></span></span></code></pre>{{</raw>}}

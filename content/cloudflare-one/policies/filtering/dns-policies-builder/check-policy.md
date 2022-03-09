@@ -39,10 +39,7 @@ Once you have configured your Gateway policy to block the category, the test dom
 #### One-word categories
 
 Test domains use the following format for categories with one-word names:
-
-```txt
-NAME_OF_CATEGORY.testcategory.com
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">NAME_OF_CATEGORY.testcategory.com</span></div></span></span></span></code></pre>{{</raw>}}
 
 | Category       | Test domain                     |
 | -------------- | ------------------------------- |

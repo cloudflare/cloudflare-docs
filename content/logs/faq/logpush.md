@@ -40,13 +40,9 @@ The proper way to resolve the issue is to fix the certificates. This flag is onl
 ## How can I verify that my Splunk HEC is working correctly before setting up a job?
 
 Ensure that you can publish events to your Splunk instance through `curl` without the `-k` flag and with the **insecure-skip-verify** parameter set to `false`, as in the following example:
-
-```bash
-curl  "https://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>" \
-   -H "Authorization: Splunk <SPLUNK_AUTH_TOKEN>" \
-   -d '{"BotScore":99,"BotScoreSrc":"Machine Learning","CacheCacheStatus":"miss","CacheResponseBytes":2478}'
-{"text":"Success","code":0}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;https://&ltSPLUNK_ENDPOINT_URL&gt?channel=&ltSPLUNK_CHANNEL_ID&gt&amp;insecure-skip-verify=&ltINSECURE_SKIP_VERIFY&gt&amp;sourcetype=&ltSOURCE_TYPE&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   -H </span><span class="CodeBlock--token-string">&quot;Authorization: Splunk &ltSPLUNK_AUTH_TOKEN&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   -d </span><span class="CodeBlock--token-string">'{&quot;BotScore&quot;:99,&quot;BotScoreSrc&quot;:&quot;Machine Learning&quot;,&quot;CacheCacheStatus&quot;:&quot;miss&quot;,&quot;CacheResponseBytes&quot;:2478}'</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-string">&quot;text&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-string">&quot;Success&quot;</span><span class="CodeBlock--token-plain">,</span><span class="CodeBlock--token-string">&quot;code&quot;</span><span class="CodeBlock--token-plain">:0</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Can I use any HEC network port in the Splunk destination conf?
 

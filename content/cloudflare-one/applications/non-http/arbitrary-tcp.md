@@ -29,10 +29,8 @@ Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and
 ### 2. Authenticate the Cloudflare daemon
 
 Run the following command to authenticate `cloudflared` into your Cloudflare account.
-
-```sh
-$ cloudflared tunnel login
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel login</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 `cloudflared` will open a browser window and prompt you to login to your Cloudflare account. If you are working on a machine that does not have a browser, or a browser window does not launch, you can copy the URL from the command-line output and visit the URL in a browser on any machine.
 
@@ -51,10 +49,8 @@ For example, if you share the resource at `tcp.site.com`, build a policy to only
 `cloudflared` can proxy connections to nonstandard ports.
 
 Run the following command to connect the resource to Cloudflare, replacing the `tcp.site.com` and `7870` values with your site and port.
-
-```sh
-$ cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel --hostname tcp.site.com --url tcp://localhost:7870</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is terminated, end users will not be able to connect.
 
@@ -67,10 +63,8 @@ Follow the same steps above to download and install `cloudflared` on the client 
 ### 2. Connect to the resource
 
 Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
-
-```sh
-$ cloudflared access tcp --hostname tcp.site.com --url localhost:9210
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared access tcp --hostname tcp.site.com --url localhost:9210</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 

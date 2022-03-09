@@ -42,19 +42,13 @@ You must ensure the version is entered is a valid `x.x.x` Semver. If the command
 
 1.  Open a terminal window.
 1.  Use the `defaults` command to check for the value of `SystemVersionStampAsString`.
-
-```txt
-defaults read loginwindow SystemVersionStampAsString
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">defaults read loginwindow SystemVersionStampAsString</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Windows
 
 1.  Open a Powershell window.
 1.  Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
-
-```txt
-(Get-CimInstance Win32_OperatingSystem).version
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">(Get-CimInstance Win32_OperatingSystem).version</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Linux
 
@@ -63,7 +57,4 @@ Linux currently relies on the system Kernel version instead of a specific distro
 1.  Open a Terminal window.
 1.  Run the `uname -r` command to get the complete version.
 1.  The valid SemVer would be the first 3 whole numbers of the output you obtain in the previous step. For instance, if the command above returned `5.14.0-25.el9.x86_64`, the valid SemVer would be `5.14.0`.
- 
-```txt
-uname -r
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">uname -r</span></div></span></span></span></code></pre>{{</raw>}}

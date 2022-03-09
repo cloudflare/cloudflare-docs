@@ -61,11 +61,7 @@ Filters can be combined using OR and AND boolean logic.
 - AND operator is defined using a semicolon `;` or the AND keyword surrounded by whitespace.
 
 ## Analytics request structure
-
-```txt
-/api/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=METRICS&dimensions=DIMENSIONS&filters=FILTERS&since=FROM_TS&sort=SORT&until=TO_TS&limit=LIMIT
-/api/v4/zones/{zone_id}/spectrum/analytics/events/bytime?metrics=METRICS&dimensions=DIMENSIONS&filters=FILTERS&since=FROM_TS&sort=SORT&until=TO_TS&limit=LIMIT
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/api/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=METRICS&amp;dimensions=DIMENSIONS&amp;filters=FILTERS&amp;since=FROM_TS&amp;sort=SORT&amp;until=TO_TS&amp;limit=LIMIT</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/api/v4/zones/{zone_id}/spectrum/analytics/events/bytime?metrics=METRICS&amp;dimensions=DIMENSIONS&amp;filters=FILTERS&amp;since=FROM_TS&amp;sort=SORT&amp;until=TO_TS&amp;limit=LIMIT</span></div></span></span></span></code></pre>{{</raw>}}
 
 - METRICS is one or more metrics (such as count) to compute
 - DIMENSIONS can be used to break down the data by given attributes
@@ -83,10 +79,5 @@ Filters can be combined using OR and AND boolean logic.
   - hour
 
 ## Analytics query example
-
-```bash
-curl -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
-   -H "X-Auth-Email: you@email.com" \
-   -H "X-Auth-Key: 0000" \
-   -H "Content-Type: application/json"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X GET </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&amp;dimensions=event,appID&amp;since=2018-01-01T16:57:00Z&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: you@email.com&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: 0000&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}

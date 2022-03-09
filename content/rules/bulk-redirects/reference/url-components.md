@@ -13,10 +13,7 @@ meta:
 The source and target URLs of a URL Redirect support different URL components.
 
 In the reference table below, the provided URL component examples are based on the following URL:
-
-```txt
-https://user:password@www.example.com:443/search?q=term#results
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://user:password@www.example.com:443/search?q=term#results</span></div></span></span></span></code></pre>{{</raw>}}
 
 {{<table-wrap>}}
 
@@ -33,7 +30,4 @@ https://user:password@www.example.com:443/search?q=term#results
 {{</table-wrap>}}
 
 Bulk Redirects also support target URLs without an authority component, like the following URL:
-
-```txt
-magnet:?xt=urn:btih:2bd9d334e8d1e5bd7768755173222db5c6dea13b&dn=archlinux-2021.07.01-x86_64.iso
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">magnet:?xt=urn:btih:2bd9d334e8d1e5bd7768755173222db5c6dea13b&amp;dn=archlinux-2021.07.01-x86_64.iso</span></div></span></span></span></code></pre>{{</raw>}}

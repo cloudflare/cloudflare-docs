@@ -52,55 +52,35 @@ If you already have `cloudflared` installed, make sure it's updated to the lates
 You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge.
 
 Begin by [creating a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with an associated name. This example uses the name `grafana`.
-
-```bash
-cloudflared tunnel create grafana
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel create grafana</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![Create Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/create-tunnel.png)
 
 You can confirm the ID of the Tunnel by running the following command.
-
-```bash
-cloudflared tunnel list
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel list</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![List Tunnel](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/list-tunnel.png)
 
 Next, you will need to create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
 This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
-
-```bash
-cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel route </span><span class="CodeBlock--token-function">ip</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">add</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">100.64</span><span class="CodeBlock--token-plain">.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![Route Add](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/route-add.png)
 
 Similar to the `list` command, you can confirm the routes enrolled with the following command.
-
-```bash
-cloudflared tunnel route ip show
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel route </span><span class="CodeBlock--token-function">ip</span><span class="CodeBlock--token-plain"> show</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![IP List](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/ip-list.png)
 
 ## Configure and run the Tunnel
 
 Next, create a configuration file for the Tunnel. The following template contains the required fields but can be further modified as needed.
-
-```yaml
-tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
-credentials-file: /root/.cloudflared/8e343b13-a087-48ea-825f-9783931ff2a5.json
-warp-routing:
-  enabled: true
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yaml" language="yaml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">tunnel</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> 8e343b13</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">a087</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">48ea</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">825f</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">9783931ff2a5</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">credentials-file</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /root/.cloudflared/8e343b13</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">a087</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">48ea</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">825f</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">9783931ff2a5.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">warp-routing</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-key CodeBlock--token-atrule">enabled</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean CodeBlock--token-important">true</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 You can now run the Tunnel. The command below will connect this instance of `cloudflared` to Cloudflare's network. Traffic inside of your organization, from enrolled WARP agents, will be sent to this instance when the destination is this private IP range.
-
-```bash
-cloudflared tunnel run grafana
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel run grafana</span></div></span></span></span></code></pre>{{</raw>}}
 
 This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 

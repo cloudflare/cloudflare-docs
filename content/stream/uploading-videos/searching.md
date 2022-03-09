@@ -14,9 +14,5 @@ To make API requests you will need a [Cloudflare API token](https://www.cloudfla
 ## cURL example
 
 This example lists media where the name matches `puppy.mp4`.
-
-```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream?search=puppy" \
-     -H "Authorization: Bearer $TOKEN" \
-     -H "Content-Type: application/json"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X GET </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/accounts/</span><span class="CodeBlock--token-string CodeBlock--token-variable">$ACCOUNT</span><span class="CodeBlock--token-string">/stream?search=puppy&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H </span><span class="CodeBlock--token-string">&quot;Authorization: Bearer </span><span class="CodeBlock--token-string CodeBlock--token-variable">$TOKEN</span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}

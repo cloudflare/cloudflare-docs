@@ -39,12 +39,7 @@ To enable Authenticated Origin Pull globally on a zone:
     <div>
 
     For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/path/to/origin-pull-ca.pem</code>.
-
-    ```txt
-    SSLVerifyClient require
-    SSLVerifyDepth 1
-    SSLCACertificateFile /path/to/origin-pull-ca.pem
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">SSLVerifyClient require</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">SSLVerifyDepth 1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">SSLCACertificateFile /path/to/origin-pull-ca.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
      </div>
     </details>
@@ -54,11 +49,7 @@ To enable Authenticated Origin Pull globally on a zone:
     <div>
 
     For this example, you would have saved the <a href="#certificate-value">certificate</a> to <code>/etc/nginx/certs/cloudflare.crt</code>.
-
-    ```txt
-    ssl_client_certificate /etc/nginx/certs/cloudflare.crt;
-    ssl_verify_client on;
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ssl_client_certificate /etc/nginx/certs/cloudflare.crt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ssl_verify_client on;</span></div></span></span></span></code></pre>{{</raw>}}
 
     </div>
 

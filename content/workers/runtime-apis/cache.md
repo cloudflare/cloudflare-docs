@@ -24,18 +24,14 @@ This individualized zone cache object differs from Cloudflare’s Global CDN. Fo
 ## Accessing Cache
 
 The `caches.default` API is strongly influenced by the web browsers’ Cache API, but there are some important differences. For instance, Cloudflare Workers runtime exposes a single global cache object.
-
-```js
-let cache = caches.default;
-await cache.match(request);
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-keyword">let</span><span class="CodeBlock--token-plain"> cache </span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-plain"> caches</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">default</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-keyword">await</span><span class="CodeBlock--token-plain"> cache</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">match</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 You may create and manage additional Cache instances via the [`caches.open`](https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/open) method.
-
-```js
-let myCache = await caches.open('custom:cache');
-await myCache.match(request);
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-keyword">let</span><span class="CodeBlock--token-plain"> myCache </span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-keyword">await</span><span class="CodeBlock--token-plain"> caches</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">open</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">'custom:cache'</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-keyword">await</span><span class="CodeBlock--token-plain"> myCache</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">match</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ---
 
@@ -73,10 +69,8 @@ Use the `Cache-Control` method to store the response without the `Set-Cookie` he
 ## Methods
 
 ### Put
-
-```js
-cache.put(request, response);
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cache</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">put</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> response</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 {{<definitions>}}
 
@@ -118,10 +112,8 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 `cache.put` returns a `413` error if `Cache-Control` instructs not to cache or if the response is too large.
 
 ### `Match`
-
-```js
-cache.match(request, options);
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cache</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">match</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> options</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 {{<definitions>}}
 
@@ -178,10 +170,8 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 `cache.match` returns a `504` error when the content is stale.
 
 ### `Delete`
-
-```js
-cache.delete(request, options);
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cache</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">delete</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> options</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 {{<definitions>}}
 

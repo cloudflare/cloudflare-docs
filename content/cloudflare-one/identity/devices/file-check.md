@@ -58,34 +58,23 @@ The process to determine the signing thumbprint of a file varies depending on th
 ### On macOS
 
 1.  Create a directory.
-
-    ```sh
-    $ ~/Desktop % mkdir tmp
-
-    $ ~/Desktop % cd tmp
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">~/Desktop % mkdir tmp</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">~/Desktop % cd tmp</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Run the following command to extract certificates for the WARP application:
-
-    ```sh
-    $ ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">~/Desktop/tmp % codesign -d --extract-certificates &quot;/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP&quot; Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Next, run the following command to extract the SHA1 thumbprint:
-
-    ```sh
-    $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
-    SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Windows
 
 1.  Open a PowerShell window.
 1.  Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
-
-```txt
-Get-AuthenticodeSignature -FilePath c:\myfile.exe
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Get-AuthenticodeSignature -FilePath c:\myfile.exe</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Determine the SHA-256 value
 
@@ -95,16 +84,11 @@ The SHA-256 value almost always changes between versions of a file/application.
 
 1.  Open a Terminal window.
 1.  Use the `shasum` command to find the SHA256 value of the file. For example:
-
-```sh
-$ shasum -a 256 myfile
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">shasum -a 256 myfile</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Windows
 
 1.  Open a PowerShell window.
 1.  Use the `get-filehash` command to find the SHA256 value of the file. For example:
-
-```txt
-get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">get-filehash -path &quot;C:\myfile.exe&quot; -Algorithm SHA256 | format-list</span></div></span></span></span></code></pre>{{</raw>}}

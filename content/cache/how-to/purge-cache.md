@@ -169,22 +169,14 @@ To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` 
 For a Cache Key based on device type, purge the asset by passing the `CF-Device-Type` header with the API purge request (valid headers include mobile, desktop, and tablet).
 
 See the example API request below to purge all mobile assets on the root web page.
-
-```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
-    -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
-    -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X POST </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: user@example.com&quot;</span><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> --data </span><span class="CodeBlock--token-string">'{&quot;files&quot;:[{&quot;url&quot;:&quot;http://my.website.com/&quot;,&quot;headers&quot;:{&quot;CF-Device-Type&quot;:&quot;mobile&quot;}}]}'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Purge by geo
 
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
-
-```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
-    -H "X-Auth-Email: user@example.com"
-    -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X POST </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: user@example.com&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41&quot;</span><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> --data </span><span class="CodeBlock--token-string">'{&quot;files&quot;:[{&quot;url&quot;:&quot;http://my.website.com/&quot;, &quot;headers&quot;:{&quot;Cf-Ipcountry&quot;:&quot;ES&quot;}}]}'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Purge varied images
 

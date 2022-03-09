@@ -31,10 +31,8 @@ Alternatively, download the latest release directly.
 ## macOS
 
 Download and install `cloudflared` via Homebrew:
-
-```sh
-$ brew install cloudflare/cloudflare/cloudflared
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">brew install cloudflare/cloudflare/cloudflared</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).
 
@@ -57,10 +55,7 @@ A Docker image of `cloudflared` is [available on DockerHub](https://hub.docker.c
 ## Update `cloudflared`
 
 You can update cloudflared by running the following command.
-
-```bash
-cloudflared update
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared update</span></div></span></span></span></code></pre>{{</raw>}}
 
 The update will cause `cloudflared` to restart which would impact traffic currently being served. You can perform zero-downtime upgrades by using Cloudflare's Load Balancer product or by using multiple `cloudflared` instances.
 
@@ -88,16 +83,12 @@ If you are not using Cloudflare's Load Balancer, you can use multiple instances 
 Windows systems require services to have a unique name and display name. You can run multiple instances of `cloudflared` by creating `cloudflared` services with unique names.
 
 First, install and configure `cloudflared`. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
-
-```bash
-sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sc.exe create </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">unique-name</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">binPath</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'&ltpath-to-exe&gt'</span><span class="CodeBlock--token-plain"> --config </span><span class="CodeBlock--token-string">'&ltpath-to-config&gt'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">displayname</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">&quot;Unique Name&quot;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Proceed to create additional services with unique names. You can now start each unique service.
-
-```bash
-sc.exe start <unique-name>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sc.exe start </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">unique-name</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Deprecated versions
 
