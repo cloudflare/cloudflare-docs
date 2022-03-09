@@ -2,6 +2,8 @@
 weight: 12
 pcx-content-type: reference
 title: Check connection to 1.1.1.1
+meta:
+    title: Check if you are connected to 1.1.1.1 resolver
 ---
 
 # Check if you are connected to 1.1.1.1
