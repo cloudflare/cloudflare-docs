@@ -30,7 +30,6 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
-const FORM_URL = "https://egghead-cloudflare-pages-site.pages.dev";
 
 async function handleRequest(request) {
   const url = new URL(request.url);
@@ -102,7 +101,7 @@ export async function onRequestPost({ request, env }) {
 
 ```
 
-The above code takes a `request` and `env` as argumnents which passes this props down to the `submitHandler` function. Which stays the same as the original Worker function. However, becasue Functions allow you to specify the HTTPS request type you can remove the `request.method` check, as this is handled by naming the request type. 
+The above code takes a `request` and `env` as arguments which passes this props down to the `submitHandler` function, which remains unchanged from the original Worker. However, because Functions allow you to specify the HTTPS request type you can remove the `request.method` check, as this is handled by naming the request type. 
 
 ```js
 async function submitHandler({ request, env }) {
