@@ -433,6 +433,13 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
+        <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata">custom metadata</a> JSON object set by SSL for SaaS customers.
+          </p>
+        </td>
+    </tr>
+    <tr>
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
