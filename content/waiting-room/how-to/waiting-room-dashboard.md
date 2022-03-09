@@ -13,6 +13,4 @@ To access **Waiting Rooms** on the Cloudflare dashboard:
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your application.
 2.  Click **Traffic** > **Waiting Rooms**.
 
-![Waiting Rooms User Interface](/waiting-room/static/sidebar.png)
-
 Use the dashboard to [create, edit, update, and delete](/waiting-room/how-to/) waiting rooms.
