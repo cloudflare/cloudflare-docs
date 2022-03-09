@@ -65,8 +65,8 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Account Settings Write                                       | Grants write access to Account resources, account membership, and account level features.             |
 | Account WAF Read                                             | Grants read access to Account WAF.                                                                    |
 | Account WAF Write                                            | Grants write access to Account WAF.                                                                   |
-| Argo Tunnel Read                                             | Grants access to view Argo Tunnels.                                                                   |
-| Argo Tunnel Write                                            | Grants access to create and delete Argo Tunnels.                                                      |
+| Cloudflare Tunnel Read                                             | Grants access to view Cloudflare Tunnels.                                                                   |
+| Cloudflare Tunnel Write                                            | Grants access to create and delete Cloudflare Tunnels.                                                      |
 | Billing Read                                                 | Grants read access to billing profile, subscriptions, and access to fetch invoices and entitlements.  |
 | Billing Write                                                | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
