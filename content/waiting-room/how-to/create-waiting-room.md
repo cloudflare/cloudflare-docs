@@ -35,7 +35,7 @@ POST zones/{zone_identifier}/waiting_rooms
 
 The Cloudflare API base URL is:
 
-```shell
+```txt
 https://api.cloudflare.com/client/v4
 ```
 
