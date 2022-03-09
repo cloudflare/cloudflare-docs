@@ -17,7 +17,7 @@ Create a new project using `npx`, giving it the title `my-nuxt-app` in your term
 $ npx create-nuxt-app my-nuxt-app
 ```
 
-You'll be prompted with some questions (project name, UI option, linter, or testing framework, etc), when asked which deployment target to use, select **static** as your option for hosting.
+You will be prompted to fill in various fields, such as `Project name`, `UI option`, `Linting tools`, and `Testing framework`, in your terminal. When asked which deployment target to use, you will be given two options: **Server** and **Static**. Select **Static** as your option for hosting.
 
 Next, navigate to the project and run it using the command:
 
