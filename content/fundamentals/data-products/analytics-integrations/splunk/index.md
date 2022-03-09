@@ -67,7 +67,7 @@ Where:
 - `port`: 443 or 8088
 - `endpoint`: services/collector/raw
 
-For example: `https://prd-p-0qk3h.splunkcloud.com:8088/services/collector/raw`. Refer to the [Splunk Documentation](https://docs.splunk.com/Documentation/SplunkCloud/8.1.2011/Data/UsetheHTTPEventCollector) for more details and examples.
+For example: `https://prd-p-0qk3h.splunkcloud.com:8088/services/collector/raw`. Refer to the [Splunk Documentation](https://docs.splunk.com/Documentation/SplunkCloud/latest/Data/UsetheHTTPEventCollector) for more details and examples.
 
 **Post Installation Notes**
 
@@ -79,7 +79,7 @@ You also can find the Index Name manually by visiting **Settings** > **Advanced 
 
 ![Splunk search macros](/fundamentals/static/images/splunk/screenshots/splunk-settings-advanced-search-search-macros.png)
 
-The Cloudflare App for Splunk comes with a custom Cloudflare Data Model that has an acceleration time frame of 1 day but is not accelerated by default. If you enable [Data Model acceleration](https://docs.splunk.com/Documentation/Splunk/7.2.6/Knowledge/Acceleratedatamodels), we recommend that the Data Model is only accelerated for 1 or 7 days to ensure there are no adverse effects within your Splunk environment.
+The Cloudflare App for Splunk comes with a custom Cloudflare Data Model that has an acceleration time frame of 1 day but is not accelerated by default. If you enable [Data Model acceleration](https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Acceleratedatamodels), we recommend that the Data Model is only accelerated for 1 or 7 days to ensure there are no adverse effects within your Splunk environment.
 
 Enable or disable acceleration after the initial configuration by accessing the app Set up page by clicking the **Apps** dropdown, then **Manage Apps** > **Cloudflare Set Up**.
 
