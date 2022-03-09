@@ -2,6 +2,8 @@
 pcx-content-type: concept
 title: Geo
 weight: 2
+meta:
+  title: Geo steering
 ---
 
 # Geo steering

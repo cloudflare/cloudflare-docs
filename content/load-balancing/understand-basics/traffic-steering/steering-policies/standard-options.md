@@ -2,6 +2,8 @@
 pcx-content-type: concept
 title: Standard
 weight: 1
+meta:
+  title: Standard traffic steering policies
 ---
 
 # Standard steering policies

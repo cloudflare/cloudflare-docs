@@ -2,6 +2,8 @@
 pcx-content-type: navigation
 title: Steering policies
 weight: 1
+meta:
+  title: Traffic steering policies
 ---
 
 # Traffic steering policies
