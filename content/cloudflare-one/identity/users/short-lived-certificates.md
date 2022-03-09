@@ -45,6 +45,12 @@ For testing purposes, you can run the following command to generate a Unix user 
 $ sudo adduser jdoe
 ```
 
+Or you can run the following command to generate a Unix user as alias to current user:
+
+```sh
+$ sudo useradd --badnames -c "alias to $(id -un)" -d "$HOME" -g $(id -g) -G "$(id -G | sed 's/[[:digit:]]* //; s/ /,/g')" -M -o -s "$SHELL" -u $(id -u) $(id -un)
+```
+
 ## 4. **Save your public key**
 
 1.  Save the public key generated from the dashboard in Step 2 as a new `.pub` file to your local system.
@@ -135,13 +141,8 @@ If you prefer to configure manually, these are the required commands:
 
 ```bash
 Host vm.example.com
-    ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com >&2 <&1'
-```
-
-```bash
-Host cfpipe-vm.example.com
-    HostName vm.example.com
-    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+    User jdoe
+    ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; exec /usr/local/bin/cloudflared access ssh --hostname %h'
     IdentityFile ~/.cloudflared/vm.example.com-cf_key
     CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
 ```
