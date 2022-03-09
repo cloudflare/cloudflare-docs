@@ -14,8 +14,6 @@ You can monitor the status of your waiting rooms using the [dashboard](#status-i
 
 Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
 
-![Waiting Rooms User Interface](/waiting-room/static/wr-dashboard.png)
-
 The **Status** column displays the current state of the waiting room:
 
 - **Not Queueing**:
