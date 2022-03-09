@@ -170,7 +170,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
 
 Before making an API request to configure a waiting room web page with customized HTML, you can preview your custom HTML by uploading it to a preview endpoint:
 
-```shell
+```txt
 POST https://api.cloudflare.com/client/v4/zones/<zone_id>/waiting_rooms/preview
 ```
 
