@@ -3,21 +3,29 @@ pcx-content-type: how-to
 title: Refactor a Worker to a Pages Function.
 ---
 
-# Refactor a Worker to a Pages Function.
+# Refactor a Worker to a Pages Function
 
-When building with Workers there is the option of running your worker separately from your application. A good usecase for this is if the logic in your worker is used by more than one application. 
+In this guide you will learn how to refactor a Worker to a Pages Functions that can be hosted with your application on Cloudflare Pages. 
 
-However, when you handle things like forms submissions or want to ship a small piece of logic that is unique to your project. The logic can live in the same file system as your project while running on Cloudflare's edge network. You can now use [Pages Functions](/pages/platform/functions/).
+# Building a worker to handle form submissions
 
-# Handling form entries with Airtable
+When building an appplication that handles some logic with Workers, you may want to run your Worker separately from your application if the logic in your Worker is used by more than one application. 
 
-[Airtable](https://airtable.com/) can be used to store entires of information in different tables for the same account, which makes it a good usecase for handling specific forms for differnt projects with Pages Functions.
+However, when you handle things like forms submissions or want to ship a small piece of logic that is unique to your project. The logic can live in the same file system as your project while running on Cloudflare's edge network. 
 
-Previously, you would have created a worker in a folder using [wrangler](/workers/cli-wrangler/install-update/) and manage this worker from within your project or on another server.
+You can now use [Pages Functions](/pages/platform/functions/), which are serverless functions that live within the same filesystem as your application and can be deployed with your frontend on Cloudflare Pages. 
 
-For example, an airtable function that handles a form submission will have the default worker response to a `fetch` action that responsed to a `request` with a handler. 
+# Handling form entries with Airtable with a Worker
 
-In the Airtable code below, you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using the credentials.  
+An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
+
+[Airtable](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to create a folder and use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
+
+This step creates the boilderplate to write your Airtable submission Worker. After writting your Worker you can deploy it to Cloudflare Edge network with your credentials.
+
+An example of this Airtable Worker that handles a form submission will have the default Worker response to a `fetch` action that responses to a `request` with a handler. 
+
+In the Worker code below, you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using the credentials.  
 
 ```js
 addEventListener("fetch", (event) => {
@@ -59,7 +67,6 @@ async function submitHandler(request) {
   };
 
   return HandleAirtableData(reqBody);
-  // return Response.redirect(FORM_URL)
 }
 
 const HandleAirtableData = (body) => {
@@ -82,11 +89,13 @@ const HandleAirtableData = (body) => {
 
 # Using a Pages Functions
 
-While the above code works perfectly, you can handle this logic with your client in the same app with Pages Functions. First you will create a `functions` folder in the base of your application and within this folder you can create a `form.js` file to handle form submissions.
+[Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages togther with your frontend. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Which is a good usecase for our Airtable example.
+
+While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions. First, you will create a `functions` folder in the base of your application and within this folder you can create a `form.js` file to handle form submissions.
 
 ## Refactoring the worker 
 
-Every worker has a `addEventListener` to listen for fetch events but you will not be needing this in a Pages function, You will `export` a single `OnRequest` function and depending on the HTTPS request it handles you will name it accordly. In the case of accepting form submissions and posting to an airtable you will export a single `OnRequestPost` function like so:
+Every worker has a `addEventListener` to listen for fetch events but you will not be needing this in a Pages Function, You will `export` a single `OnRequest` function and depending on the HTTPS request it handles you will name it accordly. In the case of accepting form submissions and posting to an airtable you will export a single `OnRequestPost` function like so:
 
 ```js
 export async function onRequestPost({ request, env }) {
@@ -95,7 +104,7 @@ export async function onRequestPost({ request, env }) {
 
 ```
 
-The above code takes a `request` and `env` as argumnents which passes this props down to the `submitHandler` fucntion. Which stays the same as the original function. However,becasue Functions allow you to specify the HTTPS request type you can remove the `request.method` check. 
+The above code takes a `request` and `env` as argumnents which passes this props down to the `submitHandler` fucntion. Which stays the same as the original Worker function. However, becasue Functions allow you to specify the HTTPS request type you can remove the `request.method` check, as this is handled by naming the request type. 
 
 ```js
 async function submitHandler({ request, env }) {
