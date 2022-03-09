@@ -40,9 +40,15 @@ To delete the ruleset, update or delete any rules that reference the ruleset and
 ### Example
 
 The following example request deletes an existing ruleset.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><span class="CodeBlock--header">Request</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X DELETE </span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/accounts/&ltACCOUNT_ID&gt/rulesets/&ltRULESET_ID&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-H </span><span class="CodeBlock--token-string">&quot;Authorization: Bearer &ltAPI_TOKEN&gt&quot;</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+---
+header: Request
+---
+curl -X DELETE \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>"
+```
 
 ## Delete ruleset version
 
@@ -73,6 +79,12 @@ To delete the ruleset version, update or delete any rules that reference the rul
 ### Example
 
 The following example request deletes a version of an existing ruleset.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><span class="CodeBlock--header">Request</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X DELETE </span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/accounts/&ltACCOUNT_ID&gt/rulesets/&ltRULESET_ID&gt/versions/&ltVERSION_NUMBER&gt&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">-H </span><span class="CodeBlock--token-string">&quot;Authorization: Bearer &ltAPI_TOKEN&gt&quot;</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+---
+header: Request
+---
+curl -X DELETE \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>" \
+-H "Authorization: Bearer <API_TOKEN>"
+```

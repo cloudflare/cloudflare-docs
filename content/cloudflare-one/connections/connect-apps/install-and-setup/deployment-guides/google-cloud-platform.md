@@ -40,7 +40,17 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
     - **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
 1.  Add a startup script for testing access. Here is an example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment CodeBlock--token-unselectable">#!/bin/bash</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">apt update</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">apt -y install apache2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cat &lt&ltEOF &gt /var/www/html/index.html</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lthtml&gt&ltbody&gt&lth1&gtHello Cloudflare!&lt/h1&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltp&gtThis page was created from a startup script for a Cloudflare demo.&lt/p&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt/body&gt&lt/html&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">EOF</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    #!/bin/bash
+    apt update
+    apt -y install apache2
+    cat <<EOF > /var/www/html/index.html
+    <html><body><h1>Hello Cloudflare!</h1>
+    <p>This page was created from a startup script for a Cloudflare demo.</p>
+    </body></html>
+    EOF
+    ```
 
 1.  Spin up your VM Instance by clicking **Create**.
 
@@ -53,20 +63,35 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 1.  Run `apt install wget` to install any relevant dependencies for our fresh Virtual Machine.
 
 1.  Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">wget &lthttps://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">chmod a+x /usr/local/bin/cloudflared</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    wget <https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64>
+    mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+    chmod a+x /usr/local/bin/cloudflared
+    ```
 
 1.  Run the following command to ensure you have the most updated `cloudflared` version. The command should auto-run after pasting.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared update</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    cloudflared update
+    ```
 
 1.  Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel login</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cloudflared tunnel login
+    ```
 
 1.  Create a tunnel.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create GCP-01`</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cloudflared tunnel create GCP-01`
+    ```
 
 1.  Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel route ip add 10.128.0.4/32 GCP-01</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
+    ```
 
 {{<render file="_cloudflared-cloud-deployment.md">}}

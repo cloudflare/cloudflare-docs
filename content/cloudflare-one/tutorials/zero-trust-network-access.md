@@ -57,15 +57,25 @@ Next, you will need to configure your private network server to connect to Cloud
 1.  [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the server.
 
 1.  Authenticate `cloudflared` on the server by running the following command, then follow the prompt to authenticate via URL provided.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel login</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cloudflared tunnel login
+    ```
 
 1.  Next, create a tunnel for the device:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create &ltTUNNEL NAME&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cloudflared tunnel create <TUNNEL NAME>
+    ```
 
 1.  Create a YAML config file for the tunnel with the following configuration:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">tunnel: &ltYOUR TUNNEL ID&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">credentials-file: /root/.cloudflared/&ltYOUR TUNNEL ID&gt.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">warp-routing:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">enabled: true</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    tunnel: <YOUR TUNNEL ID>
+    credentials-file: /root/.cloudflared/<YOUR TUNNEL ID>.json
+    warp-routing:
+    enabled: true
+    ```
 
     {{<Aside>}}
     Tunnel ID can be found by running `cloudflared tunnel list`.
@@ -74,8 +84,10 @@ Next, you will need to configure your private network server to connect to Cloud
     {{</Aside>}}
 
 1.  Now run the tunnel:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel run &ltTUNNEL NAME&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel run <TUNNEL NAME>
+```
 
 ![Run the Tunnel](/cloudflare-one/static/zero-trust-security/ztna/run-tunnel.png)
 
@@ -87,8 +99,10 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
 
     - `10.0.0.0/8` is the IP or CIDR range of your server
     - `8e343b13-a087-48ea-825f-9783931ff2a5` is your tunnel ID
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
+    ```
 
 1.  Open your Zero Trust dashboard to the **Gateway > Policies** tab.
 

@@ -15,7 +15,10 @@ You can also use complex triggers to listen for these site actions, with differe
 For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, [add and configure the tool to your account](/zaraz/get-started/add-tool/) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
 
 A valid trigger has the following structure:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltRULE_TYPE&gt &ltVARIABLE_NAME&gt &ltCOMPARISON_OPERATOR&gt &ltSTRING_TO_MATCH&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+<RULE_TYPE> <VARIABLE_NAME> <COMPARISON_OPERATOR> <STRING_TO_MATCH>
+```
 
 The exact composition of the trigger will change depending on the type of rule you choose. Here is an example for a trigger based on a Match rule:
 

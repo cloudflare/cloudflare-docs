@@ -7,7 +7,10 @@ weight: 3
 # URL format
 
 You can convert and resize images by requesting them via a specially-formatted URL. This way you do not need to write any code, only change HTML markup of your website to use the new URLs. The format is:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://&ltZONE&gt/cdn-cgi/image/&ltOPTIONS&gt/&ltSOURCE-IMAGE&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
+```
 
 Here is a breakdown of each part of the URL:
 
@@ -26,8 +29,10 @@ Here is a breakdown of each part of the URL:
 {{</definitions>}}
 
 Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a `<SOURCE-IMAGE>` of `uploads/avatar1.jpg`:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-html" language="html"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">img</span><span class="CodeBlock--token-tag"> </span><span class="CodeBlock--token-tag CodeBlock--token-attr-name">src</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation CodeBlock--token-attr-equals">=</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation">&quot;</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value">/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation">&quot;</span><span class="CodeBlock--token-tag"> </span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">/&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```html
+<img src="/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg" />
+```
 
 ## Options
 
@@ -126,7 +131,10 @@ If you cannot use the `<img srcset>` markup, and have to hardcode specific maxim
 - Maximum of 640 pixels for mobile phones.
 
 Here is an example of markup to configure a maximum size for your image:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/cdn-cgi/image/fit=scale-down,width=1920/&ltYOUR-IMAGE&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/cdn-cgi/image/fit=scale-down,width=1920/<YOUR-IMAGE>
+```
 
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.
 

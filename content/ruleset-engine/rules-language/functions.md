@@ -20,8 +20,10 @@ The Rules language supports several functions that transform values extracted fr
 For example, the `lower()` function converts all uppercase characters in a string to lowercase.
 
 In the expression below, the`lower()` function transforms `http.host` values to lowercase so that they match the target value `"www.cloudflare.com"`:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">lower</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">host</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;www.cloudflare.com&quot;</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+lower(http.host) == "www.cloudflare.com"
+```
 
 Transformation functions that do not take arrays as an argument type require the `[*]` special index notation. Refer to [Arrays](/ruleset-engine/rules-language/values/#arrays) for more information.
 
@@ -140,7 +142,11 @@ The `starts_with()` function is not available in [Firewall Rules](/firewall/).
   - Returns the string representation of an Integer, Boolean, or IP address value.
 
   - *Examples:*
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">to_string(cf.bot_management.score) == '5'</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">to_string(ssl) == 'true'</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    to_string(cf.bot_management.score) == '5'
+    to_string(ssl) == 'true'
+    ```
 
 {{<Aside type="warning">}}
 You can only use the `to_string()` function in [rewrite expressions of Transform Rules](/rules/transform/).
@@ -165,7 +171,10 @@ You can only use the `to_string()` function in [rewrite expressions of Transform
 
   - <em>Example:</em>
     <br />
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">any(url_decode(http.request.body.form.values[*])[*] contains &quot;an xss attack&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    any(url_decode(http.request.body.form.values[*])[*] contains "an xss attack")
+    ```
 
 {{</definitions>}}
 
@@ -188,9 +197,17 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 ### Overview
 
 You can validate hash-based message authentication code (HMAC) tokens in a rule expression by using the `is_timed_hmac_valid_v0()` function, which has this signature:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">is_timed_hmac_valid_v0</span><span class="CodeBlock--token-punctuation">(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">String</span><span class="CodeBlock--token-generics"> literal as </span><span class="CodeBlock--token-generics CodeBlock--token-class-name">Key</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">String</span><span class="CodeBlock--token-generics"> field as </span><span class="CodeBlock--token-generics CodeBlock--token-class-name">MessageMAC</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">Integer</span><span class="CodeBlock--token-generics"> literal as ttl</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">Integer</span><span class="CodeBlock--token-generics"> as currentTimeStamp</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-class-name">Optional</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-class-name">Integer</span><span class="CodeBlock--token-plain"> literal as lengthOfSeparator</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-keyword">default</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">Optional</span><span class="CodeBlock--token-generics"> </span><span class="CodeBlock--token-generics CodeBlock--token-class-name">String</span><span class="CodeBlock--token-generics"> literal as flags</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">-&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-generics CodeBlock--token-class-name">Bool</span><span class="CodeBlock--token-generics"> as result</span><span class="CodeBlock--token-generics CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```java
+is_timed_hmac_valid_v0(
+  <String literal as Key>,
+  <String field as MessageMAC>,
+  <Integer literal as ttl>,
+  <Integer as currentTimeStamp>,
+  <Optional Integer literal as lengthOfSeparator, default: 0>,
+  <Optional String literal as flags>
+) -> <Bool as result>
+```
 
 The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 
@@ -229,16 +246,21 @@ The `is_timed_hmac_valid_v0()` function has these parameter definitions:
 The `is_timed_hmac_valid_v0()` function uses the supplied _Key_ to generate a message authentication code (MAC) from the _message_ and the _timestamp_ regions of the MessageMAC. When the generated MAC matches the _mac_ region of the MessageMAC and the token has not expired, the HMAC is valid and the function returns `true`.
 
 For example, the following expression matches requests to `download.example.com` that do not include valid HMAC tokens:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">host </span><span class="CodeBlock--token-operator">==</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;download.example.com&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">and not </span><span class="CodeBlock--token-function">is_timed_hmac_valid_v0</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">&quot;mysecretkey&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">100000</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">timestamp</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">sec</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">8</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```java
+http.host == "download.example.com"
+and not is_timed_hmac_valid_v0("mysecretkey", http.request.uri, 100000, http.request.timestamp.sec, 8)
+```
 
 For examples of rules that use HMAC validation, refer to [Firewall Rules: Common use cases](/firewall/recipes/).
 
 ### MessageMAC
 
 A valid MessageMAC satisfies the regular expression
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">+</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">*</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">\d</span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-number">10</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-operator">-</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-number">43</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```java
+(.+)(.*)(\d{10})-(.{43,})
+```
 
 and is composed of these parentheses-delimited expressions:
 
@@ -290,7 +312,10 @@ For more information, refer to [HMAC Validation: Overview](#overview).
 ### Simple case
 
 Consider the case where the MessageMAC is contained entirely within a single field, as in this example URI path:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-http" language="http"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/download/cat.jpg?verify=1484063787-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D</span></div></span></span></span></code></pre>{{</raw>}}
+
+```http
+/download/cat.jpg?verify=1484063787-IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D
+```
 
 Note how the URI maps to the elements of the MessageMAC:
 
@@ -300,17 +325,35 @@ Note how the URI maps to the elements of the MessageMAC:
 - _mac_: `IaLGSmELTvlhfd0ItdN6PhhHTFhzx73EX8uy%2FcSDiIU%3D`
 
 When the MessageMAC is contained entirely within a single field such as `http.request.uri`, using the validation function is straightforward. Pass the name of the field to the _MessageMAC_ argument:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">is_timed_hmac_valid_v0</span><span class="CodeBlock--token-punctuation">(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;mysecretkey&quot;</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-number">100000</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">timestamp</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">sec</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-number">8</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```java
+is_timed_hmac_valid_v0(
+  "mysecretkey",
+  http.request.uri,
+  100000,
+  http.request.timestamp.sec,
+  8
+)
+```
 
 ### Concatenated MessageMAC argument
 
 To compose a MessageMAC from more than one field, use the `concat()` function.
 
 This example constructs the MessageMAC by concatenating the request URI and two header fields:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">is_timed_hmac_valid_v0</span><span class="CodeBlock--token-punctuation">(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;mysecretkey&quot;</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-function">concat</span><span class="CodeBlock--token-punctuation">(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">headers</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-string">&quot;timestamp&quot;</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;-&quot;</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">headers</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-string">&quot;mac&quot;</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-number">100000</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">timestamp</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">sec</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```java
+is_timed_hmac_valid_v0(
+  "mysecretkey",
+  concat(
+    http.request.uri,
+    http.request.headers["timestamp"][0],
+    "-",
+    http.request.headers["mac"][0]),
+  100000,
+  http.request.timestamp.sec,
+  0
+)
+```
 
 For more on `concat()` usage, refer to [Transformation functions](#transformation-functions).

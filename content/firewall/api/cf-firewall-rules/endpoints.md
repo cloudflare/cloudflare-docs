@@ -11,7 +11,10 @@ layout: list
 {{<content-column>}}
 
 To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://api.cloudflare.com/client/v4/</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+https://api.cloudflare.com/client/v4/
+```
 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 

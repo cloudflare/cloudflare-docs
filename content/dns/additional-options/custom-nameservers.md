@@ -95,7 +95,10 @@ To add custom nameservers to a specific zone:
 #### Using the API
 
 To add zone-level custom nameservers via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and specify the custom nameservers in the payload:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;vanity_name_servers&quot;: [&quot;ns1.example.com&quot;,&quot;ns2.example.com&quot;]</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+"vanity_name_servers": ["ns1.example.com","ns2.example.com"]
+```
 
 ### Remove zone-level nameservers
 
@@ -111,7 +114,10 @@ To remove zone-level nameservers (and their associated, read-only DNS records) u
 #### Using the API
 
 To remove zone-level custom nameservers (and their associated, read-only DNS records) via the API, use a [PATCH request](https://api.cloudflare.com/#zone-edit-zone) and include an empty array in the payload:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;vanity_name_servers&quot;: []</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+"vanity_name_servers": []
+```
 
 ## Restrictions
 

@@ -7,12 +7,18 @@ weight: 5
 # Zaraz Set
 
 You may want to make a variable available in all your events without manually setting it every time you are using `zaraz.track()`. For the purpose of this example, assume users in your system have a unique identifier that you want to send to your tools. You might have many `zaraz.track()` calls all sharing this one parameter:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zaraz</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">track</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">&quot;form completed&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-literal-property">userId</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;ABC-123&quot;</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zaraz</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">track</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">&quot;button clicked&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-literal-property">userId</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> “</span><span class="CodeBlock--token-constant">ABC</span><span class="CodeBlock--token-operator">-</span><span class="CodeBlock--token-number">123</span><span class="CodeBlock--token-plain">”</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-literal-property">value</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">200</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zaraz</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">track</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">&quot;cart viewed&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-literal-property">items</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">3</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-literal-property">userId</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> “</span><span class="CodeBlock--token-constant">ABC</span><span class="CodeBlock--token-operator">-</span><span class="CodeBlock--token-number">123</span><span class="CodeBlock--token-plain">”</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```js
+zaraz.track("form completed", {userId: "ABC-123"})
+```
+
+```js
+zaraz.track("button clicked", {userId: “ABC-123”, value: 200})
+```
+
+```js
+zaraz.track("cart viewed", {items: 3, userId: “ABC-123”})
+```
 
 In the provided example, all the events are collecting the `userId` key, and the code for setting that key repeats itself. With `zaraz.set(key, value, [options])` you can avoid repetition by setting the key once when the page loads. Zaraz will then attach this key to all future `zaraz.track()` calls. In the above example, you can remove the `userId` key from all `zaraz.track()` calls, if you call `zaraz.set(“userId”, “ABC-123”)` once, before the `zaraz.track()` calls.
 
@@ -25,7 +31,9 @@ The `[options]` argument is an optional object and can include a `scope` propert
 * `persist`: to save the key across sessions. This is the default mode and uses `localStorage` to save the value.
 
 Example: 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zaraz</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">set</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">'product_name'</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">'t-shirt'</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-literal-property">scope</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">'page'</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```js
+zaraz.set('product_name', 't-shirt', {scope: 'page'})
+```
 
 This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/zaraz/reference/properties-reference#event-properties) for more details.

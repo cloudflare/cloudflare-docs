@@ -71,8 +71,12 @@ By default, `cloudflared` expects the configuration file at a specific location:
 `$ vim ~/.cloudflared/config.yml`
 
 The `url` value is the destination where the new website is available locally. The `tunnel` and `credentials-file` value can be copied from the output of the last command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yml" language="yml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">url</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">//localhost</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">1313</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">tunnel</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> 5157d321</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">5933</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4b30</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">938b</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">d889ca87e11b</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">credentials-file</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /Users/username/.cloudflared/5157d321</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">5933</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4b30</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">938b</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">d889ca87e11b.json</span></div></span></span></span></code></pre>{{</raw>}}
+
+```yml
+url: http://localhost:1313
+tunnel: 5157d321-5933-4b30-938b-d889ca87e11b
+credentials-file: /Users/username/.cloudflared/5157d321-5933-4b30-938b-d889ca87e11b.json
+```
 
 ## Run Cloudflare Tunnel
 

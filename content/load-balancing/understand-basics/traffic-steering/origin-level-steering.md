@@ -32,7 +32,10 @@ If you leave each origin with the default setting and choose a **Random** origin
 ### Customize weights
 
 To customize weights when you [create or edit a pool](/load-balancing/how-to/create-pool/), set the **Weight** to a number between 0 and 1 (expressed in increments of .01). Cloudflare will then send traffic to that pool based on a combination of your origin steering policy and the following formula.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">% of traffic to origin = origin weight ÷ sum of all weights in the pool</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+% of traffic to origin = origin weight ÷ sum of all weights in the pool
+```
 
 <details>
 <summary>Origin weight example</summary>

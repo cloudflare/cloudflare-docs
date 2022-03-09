@@ -64,7 +64,10 @@ In this example, all website visitors from the United Kingdom will be redirected
     - **Preserve query string**: Enabled
 
 2.  Create a Bulk Redirect Rule that enables the previous Bulk Redirect List and set the rule expression to the following:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip.src.country == &quot;GB&quot; and http.request.full_uri in $uk_redirect_list</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    ip.src.country == "GB" and http.request.full_uri in $uk_redirect_list
+    ```
 
 This configuration will perform the following redirects for UK visitors:
 

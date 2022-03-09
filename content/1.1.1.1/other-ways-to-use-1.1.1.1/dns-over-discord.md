@@ -15,7 +15,10 @@ Once the bot is in your server, type `/dig` to start performing DNS lookups. Thi
 If only a domain is given for the command, the bot will default to looking for `A` DNS records, and will return the full format result, not the short form.
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/dig domain: cloudflare.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/dig domain: cloudflare.com
+```
 
 ### Supported record types
 
@@ -63,7 +66,10 @@ DNS over Discord has an optional flag in the `dig` command that allows the user 
 When you request a response in the short form, the name and TTL columns will be excluded. The command only returns the data column without formatting, similar to the equivalent `dig` command response.
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/dig domain: cloudflare.com type: AAAA short: true</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/dig domain: cloudflare.com type: AAAA short: true
+```
 
 
 ### Refreshing existing results
@@ -83,7 +89,10 @@ The refresh button is available on all responses to the `dig` command, including
 If you want to look up multiple DNS record types at once, use the `/multi-dig` command. This allows you to specify any supported DNS record type, and multiple types separated by a space.
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/multi-dig domain: cloudflare.com types: A AAAA</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/multi-dig domain: cloudflare.com types: A AAAA
+```
 
 ### Supported record types
 
@@ -149,7 +158,10 @@ Use a \* (asterisk) in place of a record type to get DNS results for all support
 Like the main `dig` command, the `multi-dig` command also supports the optional short flag after the types have been specified in the slash command.
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/multi-dig domain: cloudflare.com types: CDS CDNSKEY short: true
+```
 
 ### Refreshing existing results
 
@@ -168,7 +180,13 @@ As with the `dig` command, any user can press the refresh button to refresh the 
 The `/whois` command allows you to perform a RDAP/WHOIS lookup right in Discord for a given domain, IP or ASN.
 
 Examples:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/whois query: cloudflare.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/whois query: 104.16.132.229</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/whois query: 2606:4700::6810:84e5</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/whois query: 13335</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/whois query: cloudflare.com
+/whois query: 104.16.132.229
+/whois query: 2606:4700::6810:84e5
+/whois query: 13335
+```
 
 ## Other commands
 
@@ -179,27 +197,39 @@ The bot also has a set of helper commands available to get more information abou
 The `/help` command provides in-Discord documentation about all the commands available in the 1.1.1.1 DNS over Discord bot.
 
 Example: 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/help</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/help
+```
 
 ### privacy command
 
 The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 DNS over Discord bot. This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](https://dns-over-discord.v4.wtf/privacy).
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/privacy</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/privacy
+```
 
 ### github command
 
 The DNS over Discord bot is open-source, and the `/github` command provides a quick link to access the GitHub repository. The GitHub repository can be accessed at [https://github.com/MattIPv4/DNS-over-Discord/](https://github.com/MattIPv4/DNS-over-Discord/).
 
 Example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/github</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/github
+```
 
 ### invite command
 
 The `/invite` command provides the user with a quick link to invite the 1.1.1.1 DNS over Discord bot to another Discord server.
 The bot can be invited at any time with [https://cfl.re/3nM6VfQ](https://cfl.re/3nM6VfQ).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/invite</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/invite
+```
 
 ---
 

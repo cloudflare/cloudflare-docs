@@ -24,10 +24,16 @@ To have a welcome page in two languages, create two URL Rewrite Rules with a sta
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path == &quot;/welcome.html&quot; &amp;&amp; ip.geoip.country == &quot;GB&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path == "/welcome.html" && ip.geoip.country == "GB"
+```
 
 Text after **Path** > **Rewrite to...** > _Static_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/welcome-gb.html</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/welcome-gb.html
+```
 
 {{</example>}}
 
@@ -36,10 +42,16 @@ Text after **Path** > **Rewrite to...** > _Static_:
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path == &quot;/welcome.html&quot; &amp;&amp; ip.geoip.country == &quot;PT&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path == "/welcome.html" && ip.geoip.country == "PT"
+```
 
 Text after **Path** > **Rewrite to...** > _Static_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/welcome-pt.html</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/welcome-pt.html
+```
 
 {{</example>}}
 
@@ -50,10 +62,16 @@ To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a URL R
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path == &quot;/blog&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path == "/blog"
+```
 
 Text after **Query** > **Rewrite to...** > _Static_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sort-by=date</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+sort-by=date
+```
 
 {{</example>}}
 
@@ -68,10 +86,16 @@ To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">starts_with(http.request.uri.path, &quot;/news/2012/&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+starts_with(http.request.uri.path, "/news/2012/")
+```
 
 Text after **Path** > **Rewrite to...** > _Dynamic_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">concat(&quot;/archive&quot;, http.request.uri.path)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+concat("/archive", http.request.uri.path)
+```
 
 {{</example>}}
 
@@ -84,10 +108,16 @@ To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the 
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">starts_with(http.request.uri.path, &quot;/blog/&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+starts_with(http.request.uri.path, "/blog/")
+```
 
 Text after **Path** > **Rewrite to...** > _Dynamic_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">regex_replace(http.request.uri.path, &quot;^/blog/&quot;, &quot;/marketing/&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+regex_replace(http.request.uri.path, "^/blog/", "/marketing/")
+```
 
 {{</example>}}
 
@@ -100,10 +130,16 @@ To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folde
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path ~ &quot;^/images/[^/]+/[^/]+/[^/]+$&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path ~ "^/images/[^/]+/[^/]+/[^/]+$"
+```
 
 Text after **Path** > **Rewrite to...** > _Dynamic_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">regex_replace(http.request.uri.path, &quot;^/images/[^/]+/[^/]+/(.+)$&quot;, &quot;/img/${1}&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+regex_replace(http.request.uri.path, "^/images/[^/]+/[^/]+/(.+)$", "/img/${1}")
+```
 
 {{</example>}}
 
@@ -116,10 +152,16 @@ To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-
 {{<example>}}
 
 Text in **Expression Editor**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path ~ &quot;^/posts/[0-9]+-[0-9]+-[0-9]+-.*&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path ~ "^/posts/[0-9]+-[0-9]+-[0-9]+-.*"
+```
 
 Text after **Path** > **Rewrite to...** > _Dynamic_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">regex_replace(http.request.uri.path, &quot;^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$&quot;, &quot;/posts/${1}/${2}/${3}/${4}&quot;)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")
+```
 
 {{</example>}}
 

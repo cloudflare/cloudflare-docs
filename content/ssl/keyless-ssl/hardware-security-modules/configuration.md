@@ -13,17 +13,27 @@ Carefully review the manufacturer documentation for your HSM and properly restri
 {{</Aside>}}
 
 To get started with your PKCS#11 token you will need to initialize it with a private key, PIN, and token label. The instructions to do this will be specific to each hardware device, and you should follow the instructions provided by your vendor. You will also need to find the path to your `module`, a shared object file (`.so`). Having initialized your device, you can query it to check your token label with:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">pkcs11-tool --module </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">module path</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> --list-token-slots</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+pkcs11-tool --module <module path> --list-token-slots
+```
 
 You will also want to check the label of the private key you imported (or generated). Run the following command and look for a `Private Key Object`:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">pkcs11-tool --module </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">module path</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> --pin </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">pin</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    --list-token-slots --login --list-objects</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+pkcs11-tool --module <module path> --pin <pin> \
+    --list-token-slots --login --list-objects
+```
 
 You now have all the information you need to use your PKCS#11 token with the Keyless server, by adding to the `private_key_stores` section in the configuration file. You can specify the key pairs that you want Keyless to have access to in the [configuration file using the PKCS#11 URI](https://tools.ietf.org/html/rfc7512) format.
 
 ## PKCS#11 URI
 
 A PKCS#11 URI is a sequence of attribute value pairs separated by a semicolon that form a one-level path component, optionally followed by a query. The general form represented is:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">pkcs11:path-component[?query-component]</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+pkcs11:path-component[?query-component]
+```
 
 The URI path component contains attributes that identify a resource. The query component can contain a few attributes that may be needed to retrieve the resource identified by the URI path component. Attributes in the path component are delimited by the `;` character, and attributes in the query component use `&` as a delimiter. All attributes are URL-encoded.
 
@@ -38,7 +48,14 @@ For certain modules, a query attribute `max-sessions` is required in order to pr
 ## Examples
 
 Here are some examples of PKCS#11 URIs for keys stored on various modules:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">private_key_stores:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- uri: pkcs11:token=SoftHSM2%20RSA%20Token;id=%03?module-path=/usr/lib64/libsofthsm2.so&amp;pin-value=1234</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- uri: pkcs11:token=accelerator;object=thaleskey?module-path=/opt/nfast/toolkits/pkcs11/libcknfast.so</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- uri: pkcs11:token=YubiKey%20PIV;id=%00?module-path=/usr/lib64/libykcs11.so&amp;pin-value=123456&amp;max-sessions=1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- uri: pkcs11:token=elab2parN;id=%04?module-path=/usr/lib/libCryptoki2_64.so&amp;pin-value=crypto1</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+private_key_stores:
+- uri: pkcs11:token=SoftHSM2%20RSA%20Token;id=%03?module-path=/usr/lib64/libsofthsm2.so&pin-value=1234
+- uri: pkcs11:token=accelerator;object=thaleskey?module-path=/opt/nfast/toolkits/pkcs11/libcknfast.so
+- uri: pkcs11:token=YubiKey%20PIV;id=%00?module-path=/usr/lib64/libykcs11.so&pin-value=123456&max-sessions=1
+- uri: pkcs11:token=elab2parN;id=%04?module-path=/usr/lib/libCryptoki2_64.so&pin-value=crypto1
+```
 
 ## Limitations
 

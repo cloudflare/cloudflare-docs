@@ -19,12 +19,16 @@ The process for removing the password depends on your operating system. The foll
 2.  Navigate to the directory containing the `example.com.key` file.
 
 3.  Copy the original key.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cp example.com.key temp.key</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ cp example.com.key temp.key
+    ```
 
 4.  Run the following command (if using an ECDSA certificate, replace `rsa` with `ec`).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">openssl rsa -in temp.key -out example.com.key</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ openssl rsa -in temp.key -out example.com.key
+    ```
 
 5.  When prompted in the console window, enter the original key password.
 
@@ -44,8 +48,10 @@ The process for removing the password depends on your operating system. The foll
 3.  Click **openssl.exe**.
 
 4.  In the command window that appears, run:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">rsa -in C:\Path\To\example.com.key -out key.pem</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ rsa -in C:\Path\To\example.com.key -out key.pem
+    ```
 
 5.  Enter the original key password when prompted by the **openssl.exe** command window.
 

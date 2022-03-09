@@ -111,8 +111,10 @@ For help tracking a certificate's status, refer to [Monitor certificates](/ssl/s
 Once domain validation has been completed, the certificates will be issued and distributed to Cloudflare’s edge.
 
 To view these certificates, use `openssl` or your browser. The command below can be used in advance of your customer pointing the `app.example.com` hostname to the edge ([provided validation was completed](/ssl/ssl-for-saas/common-tasks/certificate-validation-methods/)).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 &lt/dev/null 2&gt/dev/null | openssl x509 -noout -text | grep app.example.com</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/null 2>/dev/null | openssl x509 -noout -text | grep app.example.com
+```
 
 ---
 
@@ -121,6 +123,9 @@ To view these certificates, use `openssl` or your browser. The command below can
 Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target).
 
 For example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">app CNAME john.customers.saasprovider.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+app CNAME john.customers.saasprovider.com
+```
 
 This routes traffic from `app.customer.com` to your origin.

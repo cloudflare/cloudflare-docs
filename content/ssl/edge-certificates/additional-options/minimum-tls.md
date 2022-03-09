@@ -21,8 +21,10 @@ You can manage the TLS version your domain uses when proxied through Cloudflare 
 Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported. TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
 
 To properly test supported TLS versions, attempt a request to your Cloudflare domain while specifying a TLS version. For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">curl https://www.example.com -svo /dev/null --tls-max 1.1</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ curl https://www.example.com -svo /dev/null --tls-max 1.1
+```
 
 If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
 

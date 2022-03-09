@@ -68,5 +68,7 @@ You should now see the `Service Auth` rule on a new line in the next page. Click
 You can use the `Client ID` and `Client Secret` to connect to the resource over HTTP by using those values as [HTTP headers](/cloudflare-one/identity/service-auth/service-tokens#connect-your-service-to-access). This example uses `cloudflared` to connect over SSH.
 
 The following `cloudflared` command is structured to use the Service Token generated to connect over SSH to the GitLab instance previously configured. The command relies on the [SSH configuration file being set](/cloudflare-one/tutorials/gitlab/#configuring-ssh) to proxy the connection through `cloudflared`.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared access ssh --hostname gitlab-ssh.widgetcorp.tech --id a61c032ee4510f8b7e2749ea0896cc14.access --secret 85dcb2301975e8b8e40deb6097645995aa4bed35c2badf098028652097c69eeb</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared access ssh --hostname gitlab-ssh.widgetcorp.tech --id a61c032ee4510f8b7e2749ea0896cc14.access --secret 85dcb2301975e8b8e40deb6097645995aa4bed35c2badf098028652097c69eeb
+```

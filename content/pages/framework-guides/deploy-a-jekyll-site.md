@@ -18,24 +18,39 @@ If you have an existing Jekyll site on GitHub Pages, refer to [the Jekyll migrat
 Jekyll is written in Ruby, meaning that you will need a functioning Ruby installation, like `rbenv`, to install Jekyll.
 
 To install Ruby on your computer, follow the [`rbenv` installation instructions](https://github.com/rbenv/rbenv#installation) and select a recent version of Ruby by running the `rbenv` command in your terminal:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">rbenv install 2.7.2</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ rbenv install 2.7.2
+```
 
 With Ruby installed, you can install the `jekyll` Ruby gem:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">gem install jekyll</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ gem install jekyll
+```
 
 ## Creating a new project
 
 With Jekyll installed, you can create a new project running the `jekyll new` in your terminal:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">jekyll new my-jekyll-site</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ jekyll new my-jekyll-site
+```
 
 Create a base `index.html` in your newly created folder to give your site content:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-html" language="html"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-doctype CodeBlock--token-punctuation">&lt!</span><span class="CodeBlock--token-doctype CodeBlock--token-doctype-tag">DOCTYPE</span><span class="CodeBlock--token-doctype"> </span><span class="CodeBlock--token-doctype CodeBlock--token-name">html</span><span class="CodeBlock--token-doctype CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">html</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">head</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">meta</span><span class="CodeBlock--token-tag"> </span><span class="CodeBlock--token-tag CodeBlock--token-attr-name">charset</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation CodeBlock--token-attr-equals">=</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation">&quot;</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value">utf-8</span><span class="CodeBlock--token-tag CodeBlock--token-attr-value CodeBlock--token-punctuation">&quot;</span><span class="CodeBlock--token-tag"> </span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">/&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">title</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">Hello from Cloudflare Pages</span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt/</span><span class="CodeBlock--token-tag CodeBlock--token-tag">title</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt/</span><span class="CodeBlock--token-tag CodeBlock--token-tag">head</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">body</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt</span><span class="CodeBlock--token-tag CodeBlock--token-tag">h1</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">Hello from Cloudflare Pages</span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt/</span><span class="CodeBlock--token-tag CodeBlock--token-tag">h1</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt/</span><span class="CodeBlock--token-tag CodeBlock--token-tag">body</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-tag CodeBlock--token-tag CodeBlock--token-punctuation">&lt/</span><span class="CodeBlock--token-tag CodeBlock--token-tag">html</span><span class="CodeBlock--token-tag CodeBlock--token-punctuation">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello from Cloudflare Pages</title>
+  </head>
+  <body>
+    <h1>Hello from Cloudflare Pages</h1>
+  </body>
+</html>
+```
 
 Optionally, you may use a theme with your new Jekyll site if you would like to start with great styling defaults. For example, the [`minimal-mistakes`](https://github.com/mmistakes/minimal-mistakes) theme has a ["Starting from `jekyll new`"](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new) section to help you add the theme to your new site.
 
@@ -44,10 +59,12 @@ Optionally, you may use a theme with your new Jekyll site if you would like to s
 ## Creating a GitHub repository
 
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git remote add origin https://github.com/yourgithubusername/githubrepo</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git branch -M main</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git push -u origin main</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ git remote add origin https://github.com/yourgithubusername/githubrepo
+$ git branch -M main
+$ git push -u origin main
+```
 
 If you are migrating an existing Jekyll project to Pages, confirm that your `Gemfile` is committed as part of your codebase. Pages will look at your Gemfile and run `bundle install` to install the required dependencies for your project, including the `jekyll` gem.
 

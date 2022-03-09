@@ -21,10 +21,18 @@ A good tradeoff is to use a secure protocol such as DNS over TLS, or DNS over HT
 ## Configure DNS64
 
 DNS64 is specifically for networks that already have NAT64 support. If you are a network operator who has NAT64, you can test our DNS64 support by updating it to the following IP addresses:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">2606:4700:4700::64</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">2606:4700:4700::6400</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+2606:4700:4700::64
+2606:4700:4700::6400
+```
 
 Some devices use separate fields for all eight parts of IPv6 addresses and cannot accept the `::` IPv6 abbreviation syntax. For such fields enter:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">2606:4700:4700:0:0:0:0:64</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">2606:4700:4700:0:0:0:0:6400</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+2606:4700:4700:0:0:0:0:64
+2606:4700:4700:0:0:0:0:6400
+```
 
 ## Test DNS64
 
