@@ -5,7 +5,7 @@ title: Refactor a Worker to a Pages Function.
 
 # Refactor a Worker to a Pages Function
 
-In this guide you will learn how to refactor a Worker to a Pages Functions that can be hosted with your application on Cloudflare Pages. 
+In this guide you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. 
 
 # Building a worker to handle form submissions
 
