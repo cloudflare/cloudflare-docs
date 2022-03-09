@@ -9,7 +9,7 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
 - **Setup**: You initiated but did not finish the signup process.
 
-- **Pending Nameserver Update**: If not activated, will be deleted automatically after 62 days.
+- **Pending Nameserver Update**: If your domain not activated, it will be deleted automatically after 62 days.
 
   - [_Full setups_](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
   - [_Partial setups_](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
