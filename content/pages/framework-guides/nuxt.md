@@ -15,7 +15,15 @@ Create a new project using `npx`, giving it the title `my-nuxt-app` in your term
 
 ```sh
 $ npx create-nuxt-app my-nuxt-app
+```
+
+You'll be prompted with some questions (project name, UI option, linter, or testing framework, etc), when asked which deployment target to use, select **static** as your option for hosting.
+
+Next, navigate to the project and run it using the command:
+
+```sh
 $ cd my-nuxt-app
+$ npm run dev
 ```
 
 {{<render file="_tutorials-before-you-start.md">}}
