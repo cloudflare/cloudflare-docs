@@ -16,7 +16,7 @@ This capability allows extending tools that require DOM access (such as password
 
 Installing extensions requires that the Chrome Web Store is isolated, first create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) that isolates the Chrome Webstore (chrome.google.com).
 
-*Note: This step is not required when browsing via Clientless Web Isolation. All traffic is implicitly isolated and the Chrome Web Store can be accessed by browsing to https://<authdomain>.cloudflareaccess.com/browser/https://chrome.google.com/webstore*
+This step is not required when browsing via Clientless Web Isolation. All traffic is implicitly isolated and the Chrome Web Store can be accessed by browsing to `https://<authdomain>.cloudflareaccess.com/browser/https://chrome.google.com/webstore`.
 
 ### Install an extension
 
