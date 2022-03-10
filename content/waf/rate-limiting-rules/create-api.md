@@ -28,6 +28,10 @@ To create a rate limiting rule, add a rule with a `ratelimit` field to the `http
 
 Add any existing rules in the ruleset to the request by including their rule ID in the `rules` field of the request body. Rate limiting rules must appear at the end of the rules list.
 
+### Example A
+
+This example defines a Rate Limiting Rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
+
 ```json
 ---
 header: Request
@@ -35,6 +39,7 @@ header: Request
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_ratelimit/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
   "rules": [
     {
@@ -96,4 +101,42 @@ header: Response
   "errors": [],
   "messages": []
 }
+```
+
+### Example B
+
+This example request defines a custom response for requests blocked due to rate limiting.
+
+```json
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_ratelimit/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "rules": [
+    {
+      "description": "My rate limiting rule",
+      "expression": "(http.request.uri.path matches \"^/api/\")",
+      "action": "block",
+      "ratelimit": {
+        "characteristics": [
+          "cf.colo.id",
+          "ip.src",
+          "http.request.headers[\"x-api-key\"]"
+        ],
+        "period": 60,
+        "requests_per_period": 100,
+        "mitigation_timeout": 600,
+        "response": {
+          "status_code": 403,
+          "content": "You have been rate limited.",
+          "content_type": "text/plain"
+        }
+      }
+    }
+  ]
+}'
 ```
