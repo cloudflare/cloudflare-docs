@@ -6,7 +6,7 @@ title: Load balancing with DNS records
 
 # Load balancing with DNS records
 
-To distribute traffic across multiple servers, set up multiple DNS records for the same hostname.
+To distribute traffic across multiple servers (also known as [round-robin DNS](https://www.cloudflare.com/learning/dns/glossary/round-robin-dns/)), set up multiple DNS records for the same hostname.
 
 Use this setup for simple load balancing. If you need more fine-grained control over traffic distribution — including automatic failover, intelligent routing, and more — set up our [add-on load balancing service](/load-balancing/).
 
