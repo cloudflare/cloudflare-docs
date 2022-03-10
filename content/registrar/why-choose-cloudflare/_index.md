@@ -8,7 +8,7 @@ meta:
 
 # How domain registration works
 
-![Domain Registration Overview](/registrar/static/domain-registry-process.png)
+![Overview of how domain registration works and all the parts involved](/registrar/static/domain-registry-process.png)
 
 When you register a domain, you become the owner, or registrant, for that domain for a set period of time. Now that you are the registrant, you can create an authoritative record that tells the world the nameservers for your domain. The domain name system, or DNS, uses those nameservers to direct traffic to the IP address of your server.
 
