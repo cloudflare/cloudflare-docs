@@ -24,8 +24,8 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 Open a terminal window and run the following command to install the latest version of `cloudflared`:
 
 ```sh
-$ wget https://github.com/cloudflare/cloudflared/releases/download/latest/cloudflared-linux-amd64
-mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+$ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+sudo mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
 chmod a+x /usr/local/bin/cloudflared
 cloudflared update
 ```
