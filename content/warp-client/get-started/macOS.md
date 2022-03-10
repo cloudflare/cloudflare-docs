@@ -14,8 +14,6 @@ meta:
 4. Open the **Cloudflare_WARP.pkg** file that was extracted.
 5. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 
-![macOS Menu Bar](/warp-client/static/macOSMenuBar.png)
-
 ## What Cloudflare places on your device
 
 ### Cloudflare WARP.app

@@ -8,7 +8,7 @@ weight: 51
 
 The physical internet is a series of cables that connect the different continents so that a packet can route around the Earth. This allows, for example, a person in Dubai to reach a server in Frankfurt. At the time of writing (April 2018), there are 393 cables that connect the planet. You can see them all at [submarinecablemap.com](http://submarinecablemap.com).
 
-![local-network](/fundamentals/internet/static/submarinecables.png)
+![The undersea cables that are the backbone of the Internet span the entire world.](/fundamentals/internet/static/submarinecables.png)
 
 Each undersea cable has 4-6 fibers inside it, and to help communications make their way across the cable, the cables have a repeater every 400 kilometers. Telcos will cover the initial cost of the cable, and other transit providers pay them for sending communications across the cables.
 
