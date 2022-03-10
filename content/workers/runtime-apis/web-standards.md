@@ -114,3 +114,11 @@ The URL API supports URLs conforming to HTTP and HTTPs schemes.
 The Workers’ Runtime’s URL class behavior differs from the URL Spec documented above. If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/cli-wrangler/webpack/#shimming-globals).
 
 {{</Aside>}}
+
+---
+
+## Compression Streams
+
+The `CompressionStream` and `DecompressionStream` classes support gzip and deflate compression methods.
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
