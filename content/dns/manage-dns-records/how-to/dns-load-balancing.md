@@ -1,6 +1,6 @@
 ---
 pcx-content-type: reference
-weight: 6
+weight: 7
 title: Load balancing with DNS records
 ---
 
