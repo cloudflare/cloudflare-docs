@@ -36,7 +36,7 @@ Take note of any DNS addresses you might have set up, and save them in a safe pl
 6. Click the **IPv4** toggle to turn it on.
 7. {{<render file="_all-ipv4.md">}}
 8. Click the **IPv6** toggle.
-9. {{<render file="_all-ipv4.md">}}
+9. {{<render file="_all-ipv6.md">}}
 10. Click **Save**.
 
 {{<render file="_captive-portals.md">}}
