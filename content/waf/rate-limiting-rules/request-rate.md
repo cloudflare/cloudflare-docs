@@ -10,12 +10,6 @@ layout: list
 
 Cloudflare keeps separate request counters for rate limiting rules for each value combination of the rule characteristics.
 
-{{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan.
-
-{{</Aside>}}
-
 For example, consider a rule configured with the following characteristics:
 
 - IP address
