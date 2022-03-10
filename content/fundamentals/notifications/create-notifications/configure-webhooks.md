@@ -38,9 +38,6 @@ After configuring the external service you want to connect to, set up webhooks i
 5. Give your webhook a name so you can identify it later.
 6. In the **URL** field, enter the URL of the third-party service you previously set up and want to connect to your Cloudflare account.
 7. If needed, insert the **Secret**. Secrets are how webhooks are encrypted and vary according to the service you are connecting to Cloudflare.
-
-    ![Webhooks secret](/fundamentals/static/images/notifications/webhooks.png)
-
 8. Click **Save and Test** to finish setting up your webhook.
 
 The new webhook will appear in the **Webhooks** card.
