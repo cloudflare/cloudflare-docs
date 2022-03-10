@@ -60,7 +60,7 @@ You will be presented with the price for each transfer. When you transfer a doma
 
 If you do not have a payment method on file, add one at this step before proceeding.
 
-![Cloudflare checkout screenshot](/registrar/static/checkout-page.png)
+![Cloudflare checkout interface](/registrar/static/checkout-page.png)
 
 Sites can be unavailable for a few reasons, including:
 

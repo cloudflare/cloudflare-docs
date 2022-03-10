@@ -1,11 +1,11 @@
 ---
-title: Partners
 pcx-content-type: navigation
-weight: 6
+title: Partners
+weight: 4
 ---
 
 # Partners
 
-Review our the information below for more information about our partners.
+Learn more about our Partner resources.
 
 {{<directory-listing>}}

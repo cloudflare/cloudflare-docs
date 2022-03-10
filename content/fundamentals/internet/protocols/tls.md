@@ -119,7 +119,7 @@ This doesn't work well with regular numbers because g<sup>ab</sup> can get reall
 
 Now let’s go through a Diffie-Hellman handshake:
 
-![dh-handshake](/fundamentals/internet/static/ssl_handshake_diffie_hellman.jpg)
+![Visualization showing all the processes involved in the Diffie-Hellman handshake.](/fundamentals/internet/static/ssl_handshake_diffie_hellman.jpg)
 
 ### Message 1: “Client Hello”
 

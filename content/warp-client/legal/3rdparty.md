@@ -2,8 +2,6 @@
 title: Third party licenses
 hidden: true
 pcx-content-type: reference
-meta:
-  title: Third party licensesMozilla Public License Version 2.0
 ---
 
 # Third party licenses

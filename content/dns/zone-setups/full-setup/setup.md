@@ -64,6 +64,10 @@ Once you have added a domain (also known as a _zone_) to Cloudflare, that domain
 
     ![get nameserver names from the Overview page of your domain](/dns/static/nameserver-names.png)
 
+{{<Aside type="note">}}
+Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/zone-setups/reference/nameserver-assignment/).
+{{</Aside>}}
+
 ### Update your registrar
 
 1.  Log into the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).

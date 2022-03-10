@@ -12,7 +12,7 @@ weight: 2
 
 Before you start this tutorial, make sure you have:
 
-- Completed the [prerequisites](/waiting-room/about/#prerequisites).
+- Completed the [prerequisites](/waiting-room/#prerequisites).
 - Reviewed your [rate limiting rules](/waf/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
 ---
@@ -41,18 +41,18 @@ When you [activate your waiting room](#step-3--activate-your-waiting-room), choo
 - [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event
 - Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`
 
-### Appearance (optional)
-
-Some customers can [customize the design](/waiting-room/additional-options/customize-waiting-room/) of their waiting room by editing the page HTML and CSS.
-
-If you have this ability, think about how you want the page to appear.
-
 ## Step 2 — Create your waiting room
 
 Create your waiting room by:
 
-- Using the [dashboard](/waiting-room/how-to/create-via-dashboard/).
-- Using the [API](/waiting-room/how-to/create-via-api/).
+- Using the [dashboard](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/).
+- Using the [API](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-via-the-api/).
+
+### Appearance (optional)
+
+Some customers can [customize the design](/waiting-room/how-to/customize-waiting-room/) of their waiting room by editing the page's HTML and CSS.
+
+If you have this ability, think about how you want the page to appear.
 
 ## Step 3 — Activate your waiting room
 
