@@ -46,7 +46,7 @@ Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare)
 
 A verification record for `example.com` might be:
 
-| **Type** | **Name** | **Content**|
+| Type | Name | Content |
 | --- | --- | --- |
 | TXT | `cloudflare-verify.example.com` | 966215192-518620144
 

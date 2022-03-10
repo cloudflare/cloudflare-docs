@@ -9,7 +9,7 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
 - **Setup**: You initiated but did not finish the signup process.
 
-- **Pending Nameserver Update**: If your domain not activated, it will be deleted automatically after 62 days.
+- **Pending Nameserver Update**: If your domain is not activated, it will be deleted automatically after 62 days.
 
   - [_Full setups_](/dns/zone-setups/full-setup/): You have either not changed your authoritative nameservers at your registrar or your change has not yet been authenticated.
   - [_Partial setups_](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS or that record has not yet been authenticated.
@@ -22,7 +22,7 @@ Once you [add a domain](https://support.cloudflare.com/hc/articles/201720164) to
 
 - **Moved**: Your domain has failed multiple DNS checks, indicating that your authoritative DNS no longer points to Cloudflare nameservers. The domain will be deleted automatically after 7 days, unless there is an active plan subscription.
 
-- **Deleted**: This domain has been archived. You can re-add the domain to Cloudflare by following the [regular onboarding flow](https://support.cloudflare.com/hc/articles/201720164)
+- **Deleted**: This domain has been archived. You can re-add the domain to Cloudflare by following the [regular onboarding flow](https://support.cloudflare.com/hc/articles/201720164).
 
 If your domain's status changes, you will receive an email at the address associated with your account.
 
