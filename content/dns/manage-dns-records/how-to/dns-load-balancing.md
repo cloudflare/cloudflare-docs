@@ -14,7 +14,7 @@ Use this setup for simple load balancing. If you need more fine-grained control 
 
 The following example illustrates how you would distribute traffic intended for `www.example.com`.
 
-After [creating an account](https://support.cloudflare.com/hc/articles/201720164) and [updating your nameservers](/dns/zone-setups/full-setup/setup/) for `example.com`, you would create the following DNS records for your `www` subdomain ([how-to instructions](/dns/manage-dns-records/how-to/create-dns-records/)):
+After [creating an account](https://support.cloudflare.com/hc/articles/201720164) and [updating your nameservers](/dns/zone-setups/full-setup/setup/) for `example.com`, you might [create multiple DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your `www` subdomain:
 
 | Type | Name  | IPv4 address |
 | ---- | ----- | ------------ |
