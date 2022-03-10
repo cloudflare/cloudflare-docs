@@ -25,11 +25,11 @@ Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer):
 
 1. Go to the **Traffic Steering** step.
-1. Click **Geo Steering**.
-1. Select a region and click **Add Region**.
-1. Select a pool and click **Add Pool**.
-1. If adding multiple pools, re-order them into your preferred failback order.
-1. (optional) Add more regions if needed.
+2. Click **Geo Steering**.
+3. Select a region and click **Add Region**.
+4. Select a pool and click **Add Pool**.
+5. If adding multiple pools, re-order them into your preferred failback order.
+6. (optional) Add more regions if needed.
 
 #### Via the API
 
