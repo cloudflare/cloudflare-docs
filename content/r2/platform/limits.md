@@ -9,12 +9,6 @@ meta:
 
 ## Account plan limits
 
-Account have a maximum limit of 1,000 buckets.
-
-Each bucket can hold an unlimited number of objects.
-
-Each object in a bucket can be up to 50 GB in size.
-
 {{<table-wrap>}}
 
 | Feature                 | Limit                     |
