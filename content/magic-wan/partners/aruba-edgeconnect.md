@@ -33,8 +33,8 @@ For the purpose of this tutorial, the integration will refer to a scenario with 
 
 There are 2 branch offices each with distinct subnets.
 
-- The east branch office has a 10.3.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel
-- The west branch office has a 10.30.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel
+- The east branch office has a 10.3.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The west branch office has a 10.30.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
 
 ![Table of branch subnet information](/magic-wan/static/branch-subnets.png)
 
