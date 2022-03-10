@@ -10,20 +10,38 @@ The available rate limiting rule parameters are the following:
 
 {{<definitions>}}
 
-- `expression` {{<type>}}String{{</type>}}
+- **If incoming requests match** {{<type>}}String{{</type>}}
 
-  - Field name in the dashboard: **If incoming requests match** (use the Rule Builder or the Expression Editor).
-  - Expression you are matching traffic on.
+  - Field name in the API: `expression` (rule field).
+  - Defines the criteria for the Rate Limiting Rule to match a request.
 
-- `action` {{<type>}}String{{</type>}}
+- **Choose action** {{<type>}}String{{</type>}}
 
-  - Field name in the dashboard: **Choose action**.
+  - Field name in the API: `action` (rule field).
   - Action to perform when the request rate specified in the rule is reached.
   - Use one of the following values: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
 
-- `characteristics` {{<type>}}Array\<String>{{</type>}}
+- **Duration** {{<type>}}Number{{</type>}}
 
-  - Field name in the dashboard: **With the same**.
+  - Field name in the API: `mitigation_timeout`.
+  - Once the request rate is reached, the Rate Limiting Rule applies the rule action to further requests for the period of time defined in this field (in seconds).
+  - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
+  - When using the API, the value must be `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
+
+- **Requests** {{<type>}}Number{{</type>}}
+
+  - Field name in the API: `requests_per_period`.
+  - The number of requests over the period of time that will trigger the rule.
+
+- **Period** {{<type>}}Number{{</type>}}
+
+  - Field name in the dashboard: `period`.
+  - The period of time to consider (in seconds) when evaluating the request rate.
+  - Use one of the following values: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (ten minutes), or `3600` (one hour).
+
+- **With the same** {{<type>}}Array&lt;String&gt;{{</type>}}
+
+  - Field name in the API: `characteristics`.
 
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
 
@@ -39,6 +57,9 @@ The available rate limiting rule parameters are the following:
     | `http.request.headers["<header_name>"]`       | _Headers_                 |
     | `http.request.cookies["<cookie_name>"]`       | _Cookie_                  |
     | `http.request.uri.args["<query_param_name>"]` | _Query_                   |
+    | `cf.bot_management.ja3_hash`                  | _JA3 Fingerprint_         |
+
+  - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
   - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same rate limiting rule.
 
@@ -54,22 +75,38 @@ Use `cf.unique_visitor_id` to handle situations such as requests under NAT shari
 
 {{</Aside>}}
 
-- `period` {{<type>}}Number{{</type>}}
+- **Increment counter when** {{<type>}}String{{</type>}}
 
-  - Field name in the dashboard: **Period**.
-  - The period of time to consider (in seconds) when evaluating the request rate.
-  - Use one of the following values: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (ten minutes), or `3600` (one hour).
+  - Field name in the API: `counting_expression` (optional).
+  - Only available in the UI when you enable **Use custom counting expression**.
+  - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
+  - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
 
-- `requests_per_period` {{<type>}}Number{{</type>}}
+- **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
 
-  - Field name in the dashboard: **Requests**.
-  - The number of requests over the period of time that will trigger the rule.
+  - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the UI option).
+  - If this field is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
-- `mitigation_timeout` {{<type>}}Number{{</type>}}
-  - Field name in the dashboard: **Duration**.
-  - Once the request rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field (in seconds).
-  - Use one of the following values: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
-  - The value must be `0` when action is `challenge`, `js_challenge`, or `managed_challenge`.
+- **With response type** {{<type>}}String{{</type>}}
+
+  - Field name in the API: `response` > `content_type` (optional).
+  - Only available when the rule action is _Block_. 
+  - Allows you to define the content type of a custom response when blocking a request due to rate limiting.
+  - Available API values: `application/json`, `text/html`, `text/xml`, or `text/plain`.
+
+- **With response code** {{<type>}}Integer{{</type>}}
+
+  - Field name in the API: `response` > `status_code` (optional).
+  - Only available when the rule action is _Block_. 
+  - Allows you to define the HTTP status code returned to the visitor when blocking the request due to rate limiting.
+  - You must enter a value between `400` and `499`. The default value is `429` (`Too many requests`).
+
+- **Response body** {{<type>}}String{{</type>}}
+
+  - Field name in the API: `response` > `content` (optional).
+  - Only available when the rule action is _Block_.
+  - Allows you to define the body of the returned HTTP response when the request is blocked due to rate limiting.
+  - The maximum field size is 30 KB.
 
 {{</definitions>}}
 
