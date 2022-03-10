@@ -48,7 +48,7 @@ A verification record for `example.com` might be:
 
 | **Type** | **Name** | **Content**|
 | --- | --- | --- |
-| TXT | cloudflare-verify.example.com | 966215192-518620144
+| TXT | `cloudflare-verify.example.com` | 966215192-518620144
 
 </div>
 </details>
