@@ -2,8 +2,6 @@
 title: Aruba EdgeConnect SD-WAN
 pcx-content-type: tutorial
 weight: 1
-meta:
-  title: Aruba EdgeConnect SD-WAN
 ---
 
 # Aruba EdgeConnect SD-WAN

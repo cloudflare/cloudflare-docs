@@ -2,8 +2,7 @@
 title: Run endpoint health checks
 pcx-content-type: how-to
 weight: 3
-meta:
-  title: Run endpoint health checks
+
 ---
 
 # Run endpoint health checks
