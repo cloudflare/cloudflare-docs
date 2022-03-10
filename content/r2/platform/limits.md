@@ -1,8 +1,6 @@
 ---
 title: Limits
 pcx-content-type: concept
-meta:
-  title: Limits
 ---
 
 # Limits
