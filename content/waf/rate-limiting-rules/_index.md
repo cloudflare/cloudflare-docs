@@ -6,7 +6,7 @@ weight: 5
 
 # Rate limiting rules
 
-Rate limiting rules allow you to define rate limits for requests matching an expression, and which action to take when those rate limits are reached.
+Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
 {{<Aside type="note">}}
 
