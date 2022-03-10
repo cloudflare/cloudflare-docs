@@ -1,12 +1,10 @@
 ---
-title: Verify requirements
+title: Prerequisites
 pcx-content-type: how-to
-weight: 3
-meta:
-  title: Requirements
+weight: 2
 ---
 
-# Requirements
+# Prerequisites
 
 Before you can begin using Magic WAN, verify that you meet Cloudflare's onboarding requirements.
 
@@ -67,7 +65,7 @@ To accommodate the additional header data, **you must set the MSS value to 1436 
 
 Unless you apply these MSS settings at the origin, client machines do not know that they must use an MSS of 1436 bytes when sending packets to your origin.
 
-### Follow router vendor guidelines
+## Follow router vendor guidelines
 
 Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.
 
@@ -78,7 +76,7 @@ The table lists several commonly used router vendors with links to MSS clamping 
 | Cisco         | [TC IP Adjust MSS](https://www.cisco.com/en/US/docs/ios-xml/ios/ipapp/command/ip_tcp_adjust-mss_through_ip_wccp_web-cache_accelerated.html#GUID-68044D35-A53E-42C1-A7AB-9236333DA8C4) |
 | Juniper       | [TCP MSS – Edit System](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/tcp-mss-edit-system.html)                                          |
 
-### Verify MSS settings at your origin
+## Verify MSS settings at your origin
 
 To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic WAN:
 
