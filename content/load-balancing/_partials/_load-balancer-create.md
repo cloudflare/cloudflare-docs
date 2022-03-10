@@ -18,7 +18,7 @@ _build:
 
 5.  On the **Add an Origin Pool** page:
     *   Select one or more existing pools or [create a new pool](/load-balancing/how-to/create-pool/#via-the-dashboard).
-    *   If you are going to set [traffic steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering/) to **Off**, re-order the pools in your load balancer to adjust the fallback order.
+    *   If you are going to set [traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/) to **Off**, re-order the pools in your load balancer to adjust the fallback order.
     *   If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools).
 
 6.  Click **Next**.
@@ -29,7 +29,7 @@ _build:
 
 8.  Click **Next**.
 
-9.  On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering/).
+9.  On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/).
 
 10. Click **Next**.
 
