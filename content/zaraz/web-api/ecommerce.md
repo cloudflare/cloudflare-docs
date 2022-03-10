@@ -93,6 +93,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `coupon`                 | String | Name or serial number of coupon redeemed on the transaction-level.                          |
 | `currency`               | String | Currency code for the transaction.                                                          |
 | `value`                  | Number | Total value of the product after quantity.                                                  |
+| `creative`               | String | Label for creative asset of promotion being tracked.                                                           |
 
 {{</table-wrap>}}
 
