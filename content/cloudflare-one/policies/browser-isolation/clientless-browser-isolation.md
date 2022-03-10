@@ -10,11 +10,11 @@ Clientless Web Isolation enables users to securely navigate high risk or sensiti
 
 ## UI Setup
 
-1. Login to Cloudflare Zero Trust
-1. Navigate to **Settings** > **Browser Isolation**.
-1. Enable **Clientless Web Isolation**.
-1. Configure permissions.
-1. Navigate to `<authdomain>.cloudflareaccess.com/browser`, complete the login and start using Browser Isolation.
+1. Login to [Cloudflare Zero Trust](https://dash.teams.cloudflare.com/)
+2. Navigate to **Settings** > **Browser Isolation**.
+3. Enable **Clientless Web Isolation**.
+4. Configure permissions.
+5. Navigate to `<authdomain>.cloudflareaccess.com/browser`, complete the login and start using Browser Isolation.
 
 ### Optional configurations
 
@@ -24,9 +24,9 @@ Clientless Web Isolation does not require the Cloudflare Root CA to be configure
 
 {{</Aside>}}
 
-* You can configure Zero Trust to [allow / block websites within the remote browser](/cloudflare-one/policies/filtering/http-policies).
+* You can configure Zero Trust to [allow / block websites within the remote browser](/cloudflare-one/policies/filtering/http-policies/).
 
-* You can configure [remote browser controls](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation#settings) such as disabling copy/paste, printing, or keyboard input.
+* You can configure [remote browser controls](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input.
 
 
 ## API setup
