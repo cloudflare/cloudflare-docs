@@ -8,7 +8,7 @@ meta:
 
 # Run endpoint health checks
 
-Magic WAN uses endpoint health checks to determine the overall health of your inter-network connections. Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network. This process occurs beyond the tunnel-terminating border router, and these “long distance” probes are purely diagnostic.
+Magic WAN uses endpoint health checks to determine the overall health of your inter-network connections. Probes originate from Cloudflare infrastructure (outside customer network namespaces) and target IP addresses deep within your network. This process occurs beyond the tunnel-terminating border router, and these “long distance” probes are purely diagnostic.
 
 {{<render file="../../magic-transit/_partials/_endpoint-health-checks.md">}}
 
