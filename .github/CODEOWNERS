@@ -37,9 +37,6 @@ content/docs-engine/ @cloudflare/PCX
 # Email Routing
 content/email-routing/ @cloudflare/PCX
 
-# Events
-content/events/ @ConzorKingKong @cloudflare/PCX
-
 # Firewall Rules
 content/firewall/ @cloudflare/firewall @cloudflare/PCX
 
