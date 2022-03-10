@@ -1,9 +1,9 @@
 ---
-title: Region API
+title: Regions API
 pcx-content-type: reference
 weight: 0
 meta:
-  title: Cloudflare Region API
+  title: Cloudflare Load Balancing Regions API
 ---
 
 # Load Balancing Regions API
