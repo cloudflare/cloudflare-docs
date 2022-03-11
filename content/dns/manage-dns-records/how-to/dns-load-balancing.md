@@ -22,7 +22,7 @@ After [creating an account](https://support.cloudflare.com/hc/articles/201720164
 | A    | `www` | `192.0.1.2`  |
 | A    | `www` | `192.0.1.3`  |
 
-The exact behavior of your DNS routing would depend on the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records) of each record.
+The exact behavior of your DNS routing would depend on the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) of each record.
 
 ### All records unproxied
 
@@ -42,6 +42,6 @@ Beyond reducing requests to your origin server, this setup allows your applicati
 
 If you have a mix of proxied and unproxied records associated with the same hostname, requests happen as if you had [all proxied records](#all-records-proxied-recommended).
 
-This approach is not typically recommended because it can lead to unexpected behavior. For example, if you had two unproxied records and one proxied records, Cloudflare would treat all records as proxied. However, if you deleted the single proxied record, your remaining two unproxied records would immediately be treated as unproxied.
+This approach is not typically recommended because it can lead to unexpected behavior. For example, if you had two unproxied records and one proxied record, Cloudflare would treat all records as proxied. However, if you deleted the single proxied record, your remaining two unproxied records would immediately be treated as unproxied.
 
 We recommend either using all proxied or all unproxied records to avoid surprises when you make changes to your DNS records.
