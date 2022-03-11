@@ -83,11 +83,11 @@ To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in t
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-* [Firewall Rules](/firewall/cf-firewall-rules/), available in **WAF** > **Firewall Rules**
-* [Custom Rules](/waf/custom-rules/), available in **WAF** > **Custom Rules**
-* [Rate Limiting Rules](/waf/rate-limiting-rules/), available in **WAF** > **Rate Limiting Rules**
-* [Managed Rulesets](/waf/managed-rulesets/), available in **WAF** > **Managed Rules**
-* [Rate Limiting Rules](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **WAF** > **Rate Limiting Rules**
+* [Firewall rules](/firewall/cf-firewall-rules/), available in **Security** > **WAF** > **Firewall rules**
+* [Custom rules](/waf/custom-rules/), available in **Security** > **WAF** > **Custom rules**
+* [Rate limiting rules](/waf/rate-limiting-rules/), available in **Security** > **WAF** > **Rate limiting rules**
+* [Managed Rulesets](/waf/managed-rulesets/), available in **Security** > **WAF** > **Managed rules**
+* [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **Security** > **WAF** > **Rate limiting rules**
 
 ---
 

@@ -1,12 +1,12 @@
 ---
 pcx-content-type: concept
-title: Custom Rules
+title: Custom rules
 weight: 4
 ---
 
-# Custom Rules
+# Custom rules
 
-Custom Rules allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
+Custom rules allow you to control incoming traffic by filtering requests. You can perform actions like *Block* or *JS Challenge* on incoming requests according to rules you define.
 
 {{<Aside type="note">}}
 
@@ -14,15 +14,15 @@ This feature is only available for select customers on an Enterprise plan. Conta
 
 {{</Aside>}}
 
-Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), Custom Rules have an **expression** and an **action**:
+Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), custom rules have an **expression** and an **action**:
 
 * The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
 * The **action** specifies what to perform when there is a match for the rule.
 
-***
+---
 
 ## Next steps
 
-To create Custom Rules using the Cloudflare dashboard, refer to [Create Custom Rules in the dashboard](/waf/custom-rules/create-dashboard/).
+To create custom rules using the Cloudflare dashboard, refer to [Create custom rules in the dashboard](/waf/custom-rules/create-dashboard/).
 
-You can also create Custom Rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create Custom Rules via API](/waf/custom-rules/create-api/) for more information.
+You can also create custom rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create custom rules via API](/waf/custom-rules/create-api/) for more information.
