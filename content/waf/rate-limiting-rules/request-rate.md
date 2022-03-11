@@ -19,7 +19,9 @@ In this case, two incoming requests with the **same** value for the HTTP header 
 
 {{<Aside type="warning" header="Important">}}
 
-The Cloudflare **data center ID** is a mandatory characteristic of every rate limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
+* The Cloudflare **data center ID** is a mandatory characteristic of every rate limiting rule. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
+
+* The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
 {{</Aside>}}
 
@@ -29,22 +31,22 @@ Consider the following configuration for a rate limiting rule:
 
 {{<example>}}
 
-Expression:<br/>
+**If incoming requests match**:<br/>
 `http.request.uri.path eq "/form" and any(http.request.headers["content-type"][*] eq "application/x-www-form-urlencoded")`
 
-Action: _Block_
+**Choose action**: _Block_
 
-Characteristics:
+**Duration** (mitigation timeout): _10 minutes_
+
+**Requests**: `1`
+
+**Period**: _10 seconds_
+
+**With the same** (characteristics):
 
 - _Data center ID_ (included by default when creating the rule in the dashboard)
-- _IP Address_
-- _HTTP Header_ > `x-api-key`
-
-Period: _10 seconds_
-
-Requests per period: `1`
-
-Mitigation timeout: _10 minutes_
+- _IP_
+- _Headers_ > `x-api-key`
 
 {{</example>}}
 
@@ -52,10 +54,10 @@ The following diagram shows how Cloudflare handles four incoming requests in the
 
 ![Rate limiting rule example diagram](/waf/static/custom-rules/rate-limiting-example.png)
 
-Since request 1 matches the rule expression, the rate limiting rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the rate limiting rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests per period**, the request is allowed.
+Since request 1 matches the rule expression, the rate limiting rule is evaluated. Cloudflare defines a request counter for the values of the characteristics in the context of the rate limiting rule and sets the counter to `1`. Since the counter value is within the established limits in **Requests**, the request is allowed.
 
-Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The values of the characteristics do not match any existing counter (the value of the `X-API-Key` header is different). Therefore, Cloudflare defines a separate counter in the context of this rule and sets it to `1`. The counter value is within the request limit established in **Requests per period**, and so this request is allowed.
+Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The values of the characteristics do not match any existing counter (the value of the `X-API-Key` header is different). Therefore, Cloudflare defines a separate counter in the context of this rule and sets it to `1`. The counter value is within the request limit established in **Requests**, and so this request is allowed.
 
-Request 3 matches the rule expression and the same values for rule characteristics. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests per period**, and so request 2 gets blocked.
+Request 3 matches the rule expression and the same values for rule characteristics. Therefore, Cloudflare increases the value of the existing counter, setting it to `2`. The counter value is now above the limit defined in **Requests**, and so request 2 gets blocked.
 
-Request 4 does not match the rule expression, since the value for the `Content-Type` header does not match the value in the expression. Therefore, Cloudflare does not create a new rule counter for this request. Request 4 is not evaluated in the context of this rate limiting rule and is passed on to subsequent rules in the request evaluation workflow.
+Request 4 does not match the rule expression, since the value for the `Content-Type` header does not match the value in the expression. Therefore, Cloudflare does not create a new rule counter for this request. Request 4 is not evaluated in the context of this rate limiting rule and is passed on to the following rules in the request evaluation workflow.
