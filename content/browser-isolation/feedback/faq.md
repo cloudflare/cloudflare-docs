@@ -19,7 +19,7 @@ Only traffic routed through WARP will be inspected with L7 policies.
 
 ## How do isolation policies and L7 firewall policies work together?
 
-Both Isolation and L7 Firewall rules are evaluated in stages. When a user makes a request which evaluates an Isolation policy, the request will be rerouted to an isolated browser and re-evaluated for L7 firewall rules.
+Both Isolation and L7 firewall rules are evaluated in stages. When a user makes a request which evaluates an Isolation policy, the request will be rerouted to an isolated browser and re-evaluated for L7 firewall rules.
 
 This makes it possible for an isolated browser to remotely render a block page, or have malicious content within the isolated browser blocked by L7 HTTP policies.
 

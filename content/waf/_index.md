@@ -34,4 +34,4 @@ The new Cloudflare WAF announced in March 2021 is available for select customers
 
 For more information on the previous WAF implementation, also known as Managed Rules, refer to [Understanding the Cloudflare Web Application Firewall (WAF)](https://support.cloudflare.com/hc/articles/200172016) in the Support KB.
 
-For more information on Firewall Rules, refer to [Cloudflare Firewall Rules](/firewall/).
+For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).

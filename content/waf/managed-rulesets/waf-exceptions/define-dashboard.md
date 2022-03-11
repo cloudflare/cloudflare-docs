@@ -8,7 +8,7 @@ weight: 2
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
 
-2. Go to **Security** > **WAF** > **Managed Rules**.
+2. Go to **Security** > **WAF** > **Managed rules**.
 
 3. Click **Add exception**.
 

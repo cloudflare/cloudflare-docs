@@ -10,7 +10,7 @@ meta:
 
 URL normalization modifies separators, encoded elements, and literal bytes in incoming URLs so that they conform to a consistent formatting standard.
 
-For example, consider a Firewall Rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element — `www.example.com/%68ello`. Normalizing incoming URLs at the edge helps simplify Cloudflare Firewall Rules expressions that use URLs.
+For example, consider a firewall rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element — `www.example.com/%68ello`. Normalizing incoming URLs at the edge helps simplify Cloudflare firewall rules expressions that use URLs.
 
 The URL normalization performed according to [RFC-3986](https://www.ietf.org/rfc/rfc3986.txt) is as follows:
 

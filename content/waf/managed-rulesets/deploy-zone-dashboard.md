@@ -8,9 +8,9 @@ meta:
 
 # Deploy Managed Rulesets for a zone in the dashboard
 
-You can enable and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed Rules**.
+You can enable and configure Managed Rulesets for a zone in **Security** > **WAF** > **Managed rules**.
 
-![Managed Rules tab of Security > WAF](/waf/static/waf-managed-rules-tab.png)
+![Managed rules tab of Security > WAF](/waf/static/waf-managed-rules-tab.png)
 
 ## Deploy a Managed Ruleset
 
@@ -20,7 +20,7 @@ When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed und
 
 ## Enable or disable a Managed Ruleset
 
-Under **WAF**, click the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
+Click the **Enabled** toggle on the right of a Managed Ruleset to enable or disable it.
 
 ## Configure a Managed Ruleset
 
@@ -43,9 +43,9 @@ To configure rule field values for all the rules in a Managed Ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Go to **Security** > **WAF** > **Managed Rules**.
+2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
+3. On the right of the _Execute_ rule that deploys the Managed Ruleset you want to configure, click **Edit**.
 
 4. Under **Ruleset configuration**, set one or more rule fields from the available values in the drop-down lists.
 
@@ -65,9 +65,9 @@ To view the rules of a Managed Ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Go to **Security** > **WAF** > **Managed Rules**.
+2. Go to **Security** > **WAF** > **Managed rules**.
 
-3. Under **WAF** and on the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
+3. On the right of the _Execute_ rule that deploys the Managed Ruleset you want to browse, click **Edit**.
 
 4. Click **Browse rules**.
 

@@ -8,7 +8,7 @@ weight: 11
 
 ## Validation checks
 
-Cloudflare performs a validation check for every request. The Validation component executes prior to all other Firewall products like Custom Rules or Managed Rulesets. The validation check blocks malformed requests like Shellshock attacks and requests with certain attack patterns in their HTTP headers before any allowlist logic occurs. Actions performed by the Validation component appear in the **Activity log** associated with the `Validation` service and without a rule ID. Firewall events downloaded from the API show source as `Validation` and action as `drop` when this behavior occurs.
+Cloudflare performs a validation check for every request. The Validation component executes prior to all other WAF features like custom rules or Managed Rulesets. The validation check blocks malformed requests like Shellshock attacks and requests with certain attack patterns in their HTTP headers before any allowlist logic occurs. Actions performed by the Validation component appear in the **Activity log** associated with the `Validation` service and without a rule ID. Firewall events downloaded from the API show source as `Validation` and action as `drop` when this behavior occurs.
 
 The following example shows a request blocked by the Validation component due to a malformed `User-Agent` HTTP request header:
 

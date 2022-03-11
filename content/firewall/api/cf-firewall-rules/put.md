@@ -8,7 +8,7 @@ weight: 431
 
 ## Update multiple rules
 
-This example updates several Firewall Rules using a single API call.
+This example updates several firewall rules using a single API call.
 
 You can include up to 25 rules in the JSON object array (`-d` flag) to update as a batch. The batch is handled as a transaction.
 
@@ -74,7 +74,7 @@ header: Response
 
 ## Update a single rule
 
-This example updates the Firewall Rule with ID `<RULE_ID>`.
+This example updates the firewall rule with ID `<RULE_ID>`.
 
 You must include the following fields in the request body:
 

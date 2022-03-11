@@ -6,11 +6,11 @@ weight: 421
 
 # POST example
 
-This example creates several Firewall Rules using a single API call.
+This example creates several firewall rules using a single API call.
 
 {{<Aside type="note">}}
 
-To create a Firewall Rule you need a [filter](/firewall/api/cf-filters/what-is-a-filter/) identifier (`id`). If you have not created a filter yet, refer to the [Cloudflare Filters API documentation](/firewall/api/cf-filters/).
+To create a firewall rule you need a [filter](/firewall/api/cf-filters/what-is-a-filter/) identifier (`id`). If you have not created a filter yet, refer to the [Cloudflare Filters API documentation](/firewall/api/cf-filters/).
 
 {{</Aside>}}
 

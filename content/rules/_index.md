@@ -22,6 +22,6 @@ Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers o
 
 The following Cloudflare security features also allow you to define rules for different purposes:
 
-* [Firewall Rules](/firewall/)
-* [Custom Rules](/waf/custom-rules/)
-* [Rate Limiting Rules](/waf/rate-limiting-rules/)
+* [Firewall rules](/firewall/)
+* [Custom rules](/waf/custom-rules/)
+* [Rate limiting rules](/waf/rate-limiting-rules/)
