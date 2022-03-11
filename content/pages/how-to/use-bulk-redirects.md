@@ -11,7 +11,7 @@ In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-
 
 The redirects defined in the `_redirects` file of your build folder can work together with your Bulk Redirects. In case of duplicates, Bulk Redirects will run in front of your Pages project, where your other redirects live.
 
-For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` but also have `_redirects` set up to direct `xyz.com` to `foo.com`, the request will resolve to `foo.com`.
+For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` but also have `_redirects` set up to direct `xyz.com` to `foo.com`, a request for `abc.com` will eventually redirect to `foo.com`.
 
 {{</Aside>}}
 
