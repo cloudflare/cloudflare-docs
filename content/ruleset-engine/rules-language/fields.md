@@ -425,7 +425,7 @@ The Cloudflare Rules language supports these dynamic fields:
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
           <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata">custom metadata</a> JSON object set by SSL for SaaS customers.
