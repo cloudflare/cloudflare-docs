@@ -30,7 +30,7 @@ If your zone is already active when you upload a custom certificate, you will no
 
 ## Staging certificates
 
-When you create certificates in your [staging environment](/ssl/edge-certificates/staging-environment), those staging certificates have their own set of statuses:
+When you create certificates in your [staging environment](/ssl/edge-certificates/staging-environment/), those staging certificates have their own set of statuses:
 
 - **Staging deployment**: Similar to **Pending Deployment**, but for staging certificates.
 - **Staging active**: Similar to **Active**, but for staging certificates.
