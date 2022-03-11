@@ -32,7 +32,7 @@ Specify the URL for your page by setting the `hostname` and `path` in your [conf
 You can direct visitors to your high-traffic page:
 
 - Directly (via URL)
-- Indirectly (via a [Page Rule redirect](https://support.cloudflare.com/hc/articles/200172286))
+- Indirectly (via [a redirect](/rules/bulk-redirects/))
 
 ### Queue activation
 
