@@ -18,6 +18,10 @@ rssLimit = 10
 paginate = 12 # default 10
 paginatePath = "page" # default
 
+[params.coveo]
+org = "cloudflareproduction7iy98g48"
+token = "xx2b20a6dc-ce86-41cb-ad18-90bd2568dcdb"
+
 [sitemap]
   changefreq = "daily"
   filename = "sitemap.xml"
