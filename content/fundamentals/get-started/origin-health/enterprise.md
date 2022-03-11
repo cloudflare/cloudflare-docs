@@ -1,8 +1,9 @@
 ---
 pcx-content-type: how-to
-hidden: true
-title: Protect your origin server — Enterprise
-weight: 3
+title: Enterprise
+weight: 4
+meta:
+  title: Enterprise plans — Protect your origin server
 ---
 
 # Protect your origin server — Enterprise
@@ -49,4 +50,5 @@ For passive monitoring, [create notifications](/fundamentals/notifications/creat
 
 {{<render file="_origin-load-balancing.md">}}
 
+\
 {{<render file="_origin-waiting-room.md">}}

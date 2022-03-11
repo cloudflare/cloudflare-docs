@@ -1,8 +1,9 @@
 ---
 pcx-content-type: how-to
-hidden: true
-title: Protect your origin server — Business
+title: Business
 weight: 3
+meta:
+  title: Business plans — Protect your origin server
 ---
 
 # Protect your origin server — Business
@@ -16,7 +17,7 @@ weight: 3
 ## Monitor origin health
 
 {{<render file="_origin-passive-alert.md">}}
-
+\
 {{<render file="_origin-health-check.md">}}
 
 {{<render file="_origin-lb-alert.md">}}
@@ -41,4 +42,5 @@ weight: 3
 
 {{<render file="_origin-load-balancing.md">}}
 
+\
 {{<render file="_origin-waiting-room.md">}}
