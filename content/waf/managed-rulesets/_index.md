@@ -38,6 +38,10 @@ Cloudflare provides the following WAF Managed Rulesets:
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/exposed-credentials-check/'>Cloudflare Exposed Credentials Check</a></td>
       <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
     </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
+      <td>Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+    </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
