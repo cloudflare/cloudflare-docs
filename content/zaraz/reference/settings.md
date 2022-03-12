@@ -1,14 +1,14 @@
 ---
 pcx-content-type: reference
-title: Options
+title: Settings
 weight: 0
 meta:
-  title: Zaraz options
+  title: Zaraz settings
 ---
 
-# Zaraz options
+# Zaraz settings
 
-Configure Zaraz's general options for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+Configure Zaraz's general settings for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
 
 ## Data layer compatibility mode
 

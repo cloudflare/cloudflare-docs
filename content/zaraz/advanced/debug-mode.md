@@ -6,7 +6,7 @@ weight: 0
 
 # Debug mode
 
-Zaraz offers a debug mode to troubleshoot the events and triggers systems. To activate the debug mode you need to create a special debug cookie containing your debug key.
+Zaraz offers a debug mode to troubleshoot the triggers and actions systems. To activate debug mode you need to create a special debug cookie containing your debug key.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Go to **Zaraz**.
@@ -21,7 +21,7 @@ Zaraz offers a debug mode to troubleshoot the events and triggers systems. To ac
 
 7.  Refresh your browser to see the debug logs. They will appear in the Console pane.
 
-Zaraz’s debug mode is now enabled. However, due to the temporary nature of the Console pane in web browsers, you need to activate the **Preserve Log** option for the Console pane. If you do not activate this option, you will lose the previous debug information whenever the Console refreshes.
+Zaraz’s debug mode is now enabled. Due to the temporary nature of the Console pane in web browsers, you might want to activate the **Preserve Log** option for the Console pane. If you do not activate this option, you will lose the previous debug information whenever the page refreshes.
 
 To activate the **Preserve Log** option in Google Chrome:
 

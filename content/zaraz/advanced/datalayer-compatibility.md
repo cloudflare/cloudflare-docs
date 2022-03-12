@@ -8,13 +8,15 @@ weight: 0
 
 Cloudflare Zaraz offers backwards compatibility with the `dataLayer` function found in tag management software, used to track events and other parameters. This way you can keep your current implementation and Cloudflare Zaraz will automatically collect your events.
 
-In this case, you will keep using the `dataLayer.push` function to send data from the client-side to Zaraz:
+## Enabling data layer compatibility mode
 
-```js
-dataLayer.push({ event: 'eventName', property1: 'value' });
-```
+To keep the Zaraz script as small and fast as possible, the data layer compatibility mode is disabled by default. To enable it, click on "Settings" from the main Zaraz dashboard and toggle on "Data layer compatibility mode". See more information on the [Zaraz settings](/zaraz/reference/settings/) page.
 
-When building a trigger, the only required field is `event`, which will be used as the name of the event you are tracking. The following example shows how to track a purchase event — note that the parameters inside the object depend on what you want to track:
+## Using the data layer with Zaraz
+
+After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push` calls to `zaraz.track`, so you can keep using the `dataLayer.push` function to send event from the browser to Zaraz.
+
+An event to Zaraz will only be sent if your pushed object includes an `event` key, and this key would become the name of the Zaraz event. Other keys will become part of the `eventProperties`. The following example shows how an example purchase event will be sent using the data layer to Zaraz — note that the parameters inside the object depend on what you want to track:
 
 ```js
 dataLayer.push({
@@ -27,13 +29,13 @@ dataLayer.push({
 
 Cloudflare Zaraz then translates the `dataLayer.push()` call to a `zaraz.track()` call. So, `dataLayer.push({event: "purchase", price: "24", "currency": "USD"})` is equivalent to `zaraz.track("purchase", {"price": "24", "currency": "USD"})`.
 
-To track a `dataLayer.push` function, create a trigger with `zaraz.track()`. The following example triggers a `dataLayer.push()` function with a `purchase` event:
+Because Zaraz converts the `dataLayer.push` call to `zaraz.track`, creating a trigger based on these calls is the same as when working with `zaraz.track`. The following example trigger would fire for the above `dataLayer.push()` function, because it matches the event name (`{{ client.__zarazTrack }}`) with `purchase`, which would be true whenever the above `dataLayer.push` call occurs:
 
 {{<table-wrap>}}
 
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Contains_      | `purchase`   |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
 

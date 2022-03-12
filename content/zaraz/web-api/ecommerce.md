@@ -1,10 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Zaraz Ecommerce
+title: Ecommerce
 weight: 6
+meta:
+  title: zaraz.ecommerce
 ---
 
-# Zaraz Ecommerce
+# Ecommerce
 
 `zaraz.ecommerce()` allows you to track common events of the ecommerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
 
@@ -93,7 +95,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 | `coupon`                 | String | Name or serial number of coupon redeemed on the transaction-level.                          |
 | `currency`               | String | Currency code for the transaction.                                                          |
 | `value`                  | Number | Total value of the product after quantity.                                                  |
-| `creative`               | String | Label for creative asset of promotion being tracked.                                                           |
+| `creative`               | String | Label for creative asset of promotion being tracked.                                        |
 
 {{</table-wrap>}}
 

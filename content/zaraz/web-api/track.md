@@ -1,10 +1,12 @@
 ---
 pcx-content-type: reference
-title: Zaraz Track
+title: Track
 weight: 4
+meta:
+  title: zaraz.track
 ---
 
-# Zaraz Track
+# Track
 
 `zaraz.track()` allows you to track custom events and actions on your website, that might happen in real time.
 
@@ -27,7 +29,7 @@ Note that name of the event (`purchase` in the above example), the names of the 
 After using `zaraz.track()` in your website to track an action:
 
 1. Create a trigger that matches your [`zaraz.track()` call](/zaraz/get-started/create-trigger), with `{{ client.__zarazTrack }}` in your trigger's variable name, and the `eventName` you are tracking in **Match string**. Following the above example, input `purchase` in **Match string**.
-2. In every tool you want to use this trigger, add an action with this trigger [configured as a “Firing trigger”](/zaraz/get-started/send-events).
+2. In every tool you want to use this trigger, add an action with this trigger [configured as a “Firing trigger”](/zaraz/get-started/create-actions).
 3. Each action that uses this trigger can also access the `eventProperties` you have sent. In the Action fields, you can use `{{ client.<KEY_NAME> }}` to get the value of `<KEY_NAME>`. In the above example, Zaraz will replace `{{ client.currency }}` with `200`.
 
 For more information regarding the properties you can use with `zaraz.track()`, refer to [Event properties](/zaraz/reference/properties-reference/#event-properties).

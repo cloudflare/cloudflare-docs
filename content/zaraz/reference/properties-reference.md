@@ -63,7 +63,7 @@ Cloudflare Zaraz offers event and system properties that you can use when config
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `{{ client.__zarazTrack }}` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track/) for more information. |
-| `{{ client.<KEY_NAME> }}` | String | Returns the value of a `zaraz.track()` `eventProperties` key. The key was either directly used in `zaraz.track()` or set using `zaraz.set()`. Replace `<KEY_NAME>` with the name of your key. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track) for more information. |
+| `{{ client.__zarazTrack }}` | String | Returns the name of the event sent using the Track method of the Web API. Refer to [Zaraz Track](/zaraz/web-api/track/) for more information. |
+| `{{ client.<KEY_NAME> }}` | String | Returns the value of a `zaraz.track()` `eventProperties` key. The key can either be directly used in `zaraz.track()` or set using `zaraz.set()`. Replace `<KEY_NAME>` with the name of your key. Refer to [Zaraz Track](/zaraz/web-api/track) for more information. |
 
 {{</table-wrap>}}
