@@ -47,44 +47,44 @@ The available rate limiting rule parameters are the following:
 
   - Use one or more of the following characteristics:
 
-    | API value                                     | UI value                  |
-    | --------------------------------------------- | ------------------------- |
-    | `cf.colo.id` (mandatory)                      | N/A (implicitly included) |
-    | `cf.unique_visitor_id`                        | _IP with NAT support_     |
-    | `ip.src`                                      | _IP_                      |
-    | `ip.geoip.country`                            | _Country_                 |
-    | `ip.geoip.asnum`                              | _AS Num_                  |
-    | `http.request.headers["<header_name>"]`       | _Headers_                 |
-    | `http.request.cookies["<cookie_name>"]`       | _Cookie_                  |
-    | `http.request.uri.args["<query_param_name>"]` | _Query_                   |
-    | `cf.bot_management.ja3_hash`                  | _JA3 Fingerprint_         |
+    | Dashboard value           | API value                                     |
+    | ------------------------- | --------------------------------------------- |
+    | N/A (implicitly included) | `cf.colo.id` (mandatory)                      |
+    | _IP with NAT support_     | `cf.unique_visitor_id`                        |
+    | _IP_                      | `ip.src`                                      |
+    | _Country_                 | `ip.geoip.country`                            |
+    | _AS Num_                  | `ip.geoip.asnum`                              |
+    | _Headers_                 | `http.request.headers["<header_name>"]`       |
+    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`       |
+    | _Query_                   | `http.request.uri.args["<query_param_name>"]` |
+    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                  |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
-  - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same rate limiting rule.
+  - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
 
-  - If you use `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
+  - If you use `http.request.headers["<header_name>"]` in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
 
-  - If you use `http.request.cookies["<cookie_name>"]`, refer to [Recommendations](#recommendations) for additional validations you should implement.
+  - If you use _Cookie_, refer to [Recommendations](#recommendations) for additional validations you should implement.
 
-  - You should not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
+  - You should not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
 
 {{<Aside type="note">}}
 
-Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
+Use _IP with NAT support_ to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
 
 {{</Aside>}}
 
 - **Increment counter when** {{<type>}}String{{</type>}}
 
   - Field name in the API: `counting_expression` (optional).
-  - Only available in the UI when you enable **Use custom counting expression**.
+  - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
   - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
 
 - **Also apply rate limiting to cached assets** {{<type>}}Boolean{{</type>}}
 
-  - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the UI option).
+  - Field name in the API: `requests_to_origin` (optional, with the opposite meaning of the Cloudflare dashboard option).
   - If this field is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
 - **With response type** {{<type>}}String{{</type>}}
@@ -112,11 +112,11 @@ Use `cf.unique_visitor_id` to handle situations such as requests under NAT shari
 
 ## Recommendations
 
-- If you use `http.request.cookies["<cookie_name>"]` as a rate limiting rule characteristic, follow these recommendations:
+- If you use _Cookie_ as a rate limiting rule characteristic, follow these recommendations:
 
   - Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
   - Validate the cookie value at the origin before performing any demanding server operations.
 
-- Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a rate limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/rate-limiting-rules/request-rate/), which could unexpectedly trigger the rule for many visitors.
+- Do not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/rate-limiting-rules/request-rate/), which could unexpectedly trigger the rule for many visitors.
 
-  To prevent this situation, Cloudflare recommends that you use a second characteristic in your rate limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.
+  To prevent this situation, Cloudflare recommends that you use a second characteristic in your rate limiting rule that always has a defined value, such as _IP_ or _AS Num_.
