@@ -179,7 +179,7 @@ Set up a timer that will fire the trigger after each **Interval**. Set your inte
 
 {{</table-wrap>}}
 
-The above Timer will fire once, after 5 seconds. To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
+The above Timer will fire once, after five seconds. To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
 {{<table-wrap>}}
 
