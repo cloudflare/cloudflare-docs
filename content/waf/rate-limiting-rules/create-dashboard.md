@@ -11,8 +11,6 @@ Create rate limiting rules in **Security** > **WAF** > **Rate limiting rules**.
 
 {{<Aside type="note">}}
 
-This feature is only available for select customers on an Enterprise plan.
-
 For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}
