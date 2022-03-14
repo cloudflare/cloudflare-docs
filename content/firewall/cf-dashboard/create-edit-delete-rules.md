@@ -52,9 +52,7 @@ To create a new firewall rule:
 
 1. Click **Create a firewall rule**.
 
-1. In the **Create firewall rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is "Does not originate in UK."
-
-    ![Create firewall rule](/firewall/static/create-firewall-rule-1.png)
+1. In the **Create firewall rule** page that displays, use the **Rule name** input to supply a descriptive name. The rule name in this example is `Does not originate in UK`.
 
 1. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
@@ -76,11 +74,7 @@ To create a new firewall rule:
 
 1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
 
-After you choose an option, you return to the **Rules List**, which displays your new rule:
-
-![Rules List](/firewall/static/firewall-rules-expression-builder-11.png)
-
-If you choose to deploy your new rule, the toggle switch associated with the rule will be _On_. If you save the rule as a draft, the toggle will be _Off_. Use the toggle to enable or disable your firewall rule.
+After you choose an option, you return to the **Rules List**, which displays your new rule. If you choose to deploy your new rule, the toggle switch associated with the rule will be _On_. If you save the rule as a draft, the toggle will be _Off_. Use the toggle to enable or disable your firewall rule.
 
 ## Manage rules
 

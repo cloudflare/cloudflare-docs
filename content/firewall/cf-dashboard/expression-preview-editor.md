@@ -26,13 +26,9 @@ The Expression Editor is located in the **Create firewall rule** and **Edit fire
 
 To edit an expression in the editor:
 
-1. In **Security** > **WAF** > **Firewall rules**, use the **Create a firewall rule** button to create a new rule, or click the **wrench** icon to edit an existing rule.
+1. In **Security** > **WAF** > **Firewall rules**, click **Create a firewall rule** to create a new rule, or click the **wrench** icon to edit an existing rule.
 
-    ![Firewall rules tab](/firewall/static/firewall-rules-expressions-editor-1.png)
-
-    The **Create firewall rule** page displays.
-
-1. To switch to the Expression Editor in the **Create firewall rule** page, click **Edit expression**.
+1. In the **Create firewall rule** page, switch to the Expression Editor by clicking **Edit expression**.
 
     ![Edit Expression link in Create firewall rule page](/firewall/static/firewall-rules-expressions-editor-2.png)
 

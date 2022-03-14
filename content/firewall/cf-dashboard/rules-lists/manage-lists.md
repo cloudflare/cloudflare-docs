@@ -28,7 +28,9 @@ To create an IP List, follow these steps:
 
 2.  Enter a description (optional). The maximum length for the description is 500 characters. There are no character constraints for the description field.
 
-3.  Click **Create**.
+3. For **Content type**, select _IP Address_.
+
+4.  Click **Create**.
 
 The **Add items to list** page displays.
 
@@ -46,7 +48,7 @@ You can only delete a list when there are no firewall rules (enabled or disabled
 
 To delete an IP List, follow these steps:
 
-1. In the Cloudflare dashboard, navigate to **Configurations** > **Lists**.
+1. In the Cloudflare dashboard, navigate to **Manage Account** > **Configurations** > **Lists**.
 
 1. Hover your pointer over the **Delete** button associated with the list you want to delete.
 
