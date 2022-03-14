@@ -1,12 +1,12 @@
 ---
 pcx-content-type: concept
 type: overview
-title: Sequential Abuse Detection
+title: Sequential Abuse Detection (Beta)
 weight: 4
 layout: list
 ---
 
-# Sequential Abuse Detection
+# Sequential Abuse Detection (Beta)
 
 {{<render file="_availability.md">}}
 

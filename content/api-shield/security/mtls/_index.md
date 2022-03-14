@@ -14,7 +14,7 @@ Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based A
 
 ## Configure
 
-For help setting up mTLS for one or more hosts using the dashboard, refer to [Configure mTLS](/api-shield/products/mtls/configure/).
+For help setting up mTLS for one or more hosts using the dashboard, refer to [Configure mTLS](/api-shield/security/mtls/configure/).
 
 ## Availability
 
