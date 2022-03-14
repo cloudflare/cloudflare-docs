@@ -16,7 +16,7 @@ To keep the Zaraz script as small and fast as possible, the data layer compatibi
 
 ## Using the data layer with Zaraz
 
-After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push` calls to `zaraz.track`, so you can keep using the `dataLayer.push` function to send event from the browser to Zaraz.
+After enabling the compatibility mode, Zaraz will automatically translate your `dataLayer.push` calls to `zaraz.track`, so you can keep using the `dataLayer.push` function to send events from the browser to Zaraz.
 
 An event to Zaraz will only be sent if your pushed object includes an `event` key, and this key would become the name of the Zaraz event. Other keys will become part of the `eventProperties`. The following example shows how an example purchase event will be sent using the data layer to Zaraz — note that the parameters inside the object depend on what you want to track:
 
