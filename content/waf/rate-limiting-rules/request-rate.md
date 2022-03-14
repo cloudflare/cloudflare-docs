@@ -71,7 +71,7 @@ Consider the following configuration for a rate limiting rule. The rule counting
 
 {{<example>}}
 
-_**Rate limiting rule #1**_
+_**Rate limiting rule #2**_
 
 **If incoming requests match**:<br/>
 `http.request.uri.path eq "/form"`
@@ -95,16 +95,14 @@ _**Rate limiting rule #1**_
 
 {{</example>}}
 
-The following diagram shows how Cloudflare handles four incoming requests received during a 10-second period in the context of the above rate limiting rule.
+The following diagram shows how Cloudflare handles these four incoming requests received during a 10-second period in the context of the above rate limiting rule.
 
 ![Example of a rate limiting rule using a response field in the counting expression](/waf/static/custom-rules/rate-limiting-example-response-field.png)
 
-All four requests have the same IP address and they all include the `X-API-Key` header. However, the rule includes a custom counting expression (defined in **Increment counter when**) specifying that the counter should increase when the response HTTP status code is `400`.
+Since request 1 matches the rule expression, the rate limiting rule is evaluated. The request is sent to the origin, skipping any cached content, because the rate limiting rule includes a response field (`http.response.code`) in the counting expression. The origin responds with a `400` status code. Since there is a match for the counting expression, Cloudflare creates a request counter for the values of the characteristics in the context of the rate limiting rule, and sets this counter to `1`.
 
-Since request 1 matches the rule expression, the rate limiting rule is evaluated. The request is sent to the origin, skipping any cached content, because the rate limiting rule includes a response field (`http.response.code`) in the counting expression — when this happens, the counter will only be updated when Cloudflare receives a response from the origin. The origin responds with a `400` status code. Since there is a match for the counting expression, Cloudflare updates the request counter for the values of the characteristics in the context of the rate limiting rule, setting the counter to `1`.
-
-Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is still within the maximum number of requests defined in **Requests**. The origin responds with a `200` status code. Since the counting expression does not match for the current response, the counter remains with the value `1`.
+Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request counter for the characteristics values is still within the maximum number of requests defined in **Requests**. The origin responds with a `200` status code. Since the response does not match the counting expression, the counter is not incremented, keeping its value (`1`).
 
 Request 3 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is still within the maximum number of requests defined in **Requests**. The origin responds with a `400` status code. There is a match for the counting expression, which sets the counter to `2`.
 
-Request 4 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is no longer within the maximum number of requests defined in **Requests** (The counter has the value `2` and the maximum number of requests is `1`). Cloudflare applies the action defined in the rate limiting rule configuration, blocking request 4 and any later requests that match rate limiting rule #1 for ten minutes.
+Request 4 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is no longer within the maximum number of requests defined in **Requests** (the counter has the value `2` and the maximum number of requests is `1`). Cloudflare applies the action defined in the rate limiting rule configuration, blocking request 4 and any later requests that match the rate limiting rule for ten minutes.
