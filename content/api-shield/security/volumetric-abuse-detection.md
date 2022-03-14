@@ -8,9 +8,9 @@ layout: list
 
 # Volumetric Abuse Detection
 
-{{<render file="_availability.md">}}
-
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
+
+{{<render file="_availability.md">}}
 
 ## Process
 

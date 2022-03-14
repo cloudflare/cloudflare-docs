@@ -8,9 +8,9 @@ layout: list
 
 # Sequential Abuse Detection (Beta)
 
-{{<render file="_availability.md">}}
-
 Sequential Abuse Detection uncovers endpoint abuse by looking for irregular traffic across multiple endpoints.
+
+{{<render file="_availability.md">}}
 
 ## Process
 

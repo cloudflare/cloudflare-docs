@@ -8,9 +8,9 @@ layout: list
 
 # API Discovery
 
-{{<render file="_availability.md">}}
-
 Most development teams struggle to keep track of their APIs. Cloudflare API Discovery helps you map out and understand your attack surface area.
+
+{{<render file="_availability.md">}}
 
 ## Process
 
