@@ -10,7 +10,7 @@ meta:
 
 `zaraz.track()` allows you to track custom events on your website, that might happen in real time.
 
-Example user events you might be interested in tracking are successful sign-ups, calls-to-action clicks, or purchases. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
+Example of user events you might be interested in tracking are successful sign-ups, calls-to-action clicks, or purchases. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
 
 To start tracking events, use the `zaraz.track()` function like this:
 
