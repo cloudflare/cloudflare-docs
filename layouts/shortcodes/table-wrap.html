@@ -1,0 +1,9 @@
+{{- with .Get "style" }}
+<div class="DocsMarkdown--table-wrap" style="{{ . }}">
+{{- else -}}
+<div class="DocsMarkdown--table-wrap">
+{{- end -}}
+  <div class="DocsMarkdown--table-wrap-inner">
+    {{ .Page.RenderString .Inner }}
+  </div>
+</div>

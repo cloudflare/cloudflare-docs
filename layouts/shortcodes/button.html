@@ -1,0 +1,30 @@
+{{- $url := .Get "href" -}}
+{{- $type := .Get "type" -}}
+
+{{- $class := slice "Button" -}}
+
+{{- if eq $type "primary" }}
+  {{- $class = $class | append "Button-is-docs-primary" -}}
+{{- else if eq $type "secondary" }}
+  {{- $class = $class | append "Button-is-docs-secondary" -}}
+{{- end -}}
+
+{{- with .Get "class" }}
+  {{- $class = $class | append . -}}
+{{- end -}}
+
+{{- $class := delimit $class " " -}}
+
+{{- if $url -}}
+  {{- if strings.HasPrefix $url "http" -}}
+    {{- partial "external.link" (dict "url" $url "text" .Inner "class" $class) -}}
+  {{- else -}}
+    <a href="{{ $url }}" class="{{ $class }}">
+      <span class="DocsMarkdown--link-content">{{ .Inner }}</span>
+    </a>
+  {{- end -}}
+{{- else -}}
+  <button class="{{ $class }}">
+    <span class="DocsMarkdown--link-content">{{ .Inner }}</span>
+  </button>
+{{- end -}}

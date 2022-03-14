@@ -1,3 +1,0 @@
-# Platform
-
-<DirectoryListing path="/platform"/>

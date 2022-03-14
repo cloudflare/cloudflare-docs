@@ -1,0 +1,19 @@
+{{- $DATA := (index $.Site.Data .Section) -}}
+{{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
+
+<div class="DocsToolbar--search CoveoSearchInterface">
+  <div class="DocsSearch">
+    <div class="DocsSearch--input-wrapper">
+      <input type="text" id="DocsSearch--input" class="DocsSearch--input CoveoCustomSearchBox" spellcheck="false" autoComplete="false" placeholder="Search {{ $title }} docs..."/>
+
+      <div class="DocsSearch--input-icon">
+        <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673" xmlns="http://www.w3.org/2000/svg">
+          <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+          <path d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z"></path>
+        </svg>
+      </div>
+
+      <div class="DocsSearch--input-bottom-border"></div>
+    </div>
+  </div>
+</div>

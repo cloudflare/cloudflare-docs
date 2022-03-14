@@ -1,0 +1,54 @@
+{{- $current := .Context.RelPermalink -}}
+{{- $active := (eq .Active $current) -}}
+{{- $isExpand := (and .Context.IsSection (hasPrefix .Active $current)) -}}
+{{- $hasChildren := (and .Context.IsSection (ne .Context.Params.hidechildren true)) -}}
+
+{{- $isSubVisible := (and $isExpand (ne .Active $current)) -}}
+{{- $isParentExpanded := (hasPrefix .Active .Context.Parent.RelPermalink) -}}
+{{- $isLinkTabbable := (or (eq .Depth 1) $isParentExpanded) -}}
+
+{{- if not .Context.Params.hidden -}}
+  {{- if (and $active $hasChildren) -}}
+  <li class="DocsSidebar--nav-item" is-active-root is-expanded>
+  {{- else if $active -}}
+  <li class="DocsSidebar--nav-item" is-active>
+  {{- else if $isExpand -}}
+  <li class="DocsSidebar--nav-item" is-active-root is-expanded>
+  {{- else -}}
+  <li class="DocsSidebar--nav-item">
+  {{- end -}}
+    {{- if $hasChildren -}}
+    <button class="Button DocsSidebar--nav-expand-collapse-button"{{ if not $isLinkTabbable }} tabindex="-1"{{ end }}>
+      <span class="DocsSidebar--nav-expand-collapse-button-content" aria-hidden="true"></span>
+      <span is-visually-hidden>Expand: {{ .Context.Title }}</span>
+    </button>
+    {{- end -}}
+
+    <a {{ if $active }}aria-current="page" {{ end }}class="DocsSidebar--nav-link" href="{{ $current }}"{{ if $active }} is-active{{ else if not $isLinkTabbable }} tabindex="-1"{{ end }}>
+      <span class="DocsSidebar--nav-link-highlight"></span>
+      <span class="DocsSidebar--nav-link-text">{{ .Context.Title }}</span>
+    </a>
+
+    {{- if $hasChildren -}}
+      {{- $bool := .Active -}}
+      {{- $next := (add .Depth 1) -}}
+      {{- if (or $isSubVisible $active) -}}
+      <div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-expanded" style="min-height:0px;transition-duration:400ms" is-expanded>
+      {{- else -}}
+      <div class="DocsSidebar--nav-item-collapse-container DocsSidebar--nav-item-collapse-hidden" style="min-height:0px;">
+      {{- end -}}
+        <div class="DocsSidebar--nav-item-collapse-wrapper">
+          <div class="DocsSidebar--nav-item-collapse-wrapperInner">
+            <div class="DocsSidebar--nav-item-collapse-content">
+              <ul class="DocsSidebar--nav-subnav" depth="{{ .Depth }}" style="--depth:{{ .Depth }}">
+                {{- range (sort .Context.Pages.ByWeight) -}}
+                  {{- partial "sidebar.navitem" (dict "Context" . "Depth" $next "Active" $bool) }}
+                {{- end -}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{- end -}}
+  </li>
+{{- end -}}
