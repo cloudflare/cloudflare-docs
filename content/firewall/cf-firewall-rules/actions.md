@@ -133,7 +133,7 @@ For reference information on rule actions available for Cloudflare products powe
               Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
             </li>
             <li>
-              Depending on the characteristics of a request, Cloudflare will perform the following actions:
+              Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from one of the following rotating actions:
               <ul>
                 <li>
                   Show a non-interactive challenge page (similar to the current JS Challenge).
