@@ -8,7 +8,7 @@ weight: 6
 
 Almost all tools in the Tools Library require that you enter information in more than one field to be properly configured. Beyond these required default fields, some tools let you add additional fields.
 
-If we take Universal Google Analytics as an example, a default field would be your GA Property ID (the Google Analytics account ID), and an example of additonal field would be a Custom Dimension (like Custom Dimension 1).
+If we take Universal Google Analytics as an example, a default field would be your GA Property ID (the Google Analytics account ID), and an example of an additonal field would be a Custom Dimension (like Custom Dimension 1).
 
 ## Add an additional field to a specific action
 
@@ -16,7 +16,7 @@ Adding an additonal field to an action will attach it to this action only, and w
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Click **Zaraz**.
-3. Locate the third-party tool that includes the action to which you want to add the field to, and click **Edit**.
+3. Locate the third-party tool with the action you want to add the additional field to, and click **Edit**.
 4. Click the action you wish to modify.
 5. Click **Add Field**.
 6. Choose the desired field from the drop-down menu and click **Add**.
@@ -25,13 +25,13 @@ Adding an additonal field to an action will attach it to this action only, and w
 
 The new field will now be used in this event.
 
-## Add an additional field to all actions of a tool
+## Add an additional field to all actions in a tool
 
 Adding a additional field to the tool sets it as a default field for all of the tool actions. It is the same as adding it each and every action of the tool.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Click **Zaraz**.
-3. Locate the third-party tool where you want to add the the field and click **Edit**.
+3. Locate the third-party tool where you want to add the the field, and click **Edit**.
 4. Click **Settings** > **Add Field**.
 5. Choose the desired field from the drop-down menu, and click **Add**.
 6. Enter the variable you wish to pass to all of the actions in the tool.

@@ -6,7 +6,7 @@ weight: 0
 
 # Load Zaraz manually
 
-By default, if your domain is proxied by Cloudflare, Zaraz will automatically injects itself to HTML pages in your site. This makes it easier to get up and running quickly. Howevre, you might wish to load Zaraz manually, for example if you want to try it on a specific pages first.
+By default, if your domain is proxied by Cloudflare, Zaraz will automatically inject itself to HTML pages in your site. This makes it easier to get up and running quickly. However, you might want to load Zaraz manually, for example to test Zaraz on specific pages first.
 
 After you turn off the [Auto-inject script](/zaraz/reference/settings/#auto-inject-script) option, you will have to manually include the Zaraz script in your HTML, immediately before the `</head>` tag closes. The path to your script would be `/cdn-cgi/zaraz/i.js`. Your script tag should look like this:
 

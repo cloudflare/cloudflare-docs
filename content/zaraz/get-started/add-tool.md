@@ -6,7 +6,7 @@ weight: 3
 
 # Add a third-party tool
 
-You can add new third-party tools and load them into your website through the Cloudflare dashboard. If the tool you're adding needs to start actions on other things rather than the default `Pageview` trigger, it is recommeded that you [create the triggers](/zaraz/get-started/create-trigger/) you need first.
+You can add new third-party tools and load them into your website through the Cloudflare dashboard. If the tool you are adding needs to start actions different from the default `Pageview` trigger, it is recommended that you [create the triggers](/zaraz/get-started/create-trigger/) you need first.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Click **Zaraz**.
