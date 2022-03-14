@@ -27,7 +27,7 @@ The new field will now be used in this event.
 
 ## Add an additional field to all actions in a tool
 
-Adding a additional field to the tool sets it as a default field for all of the tool actions. It is the same as adding it each and every action of the tool.
+Adding an additional field to the tool sets it as a default field for all of the tool actions. It is the same as adding it to every action in the tool.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and website.
 2. Click **Zaraz**.
