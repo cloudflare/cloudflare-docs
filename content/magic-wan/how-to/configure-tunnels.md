@@ -21,7 +21,7 @@ For an example Anycast GRE or IPsec tunnel configuration, see [Anycast GRE confi
 
 ### Add GRE tunnels
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **WAN**.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic WAN**.
 2.  Next to **Manage Magic WAN configuration**, click **Configure**.
 
 {{<render file="../../magic-transit/_partials/_tunnel-configuration.md">}}
