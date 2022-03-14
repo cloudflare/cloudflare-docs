@@ -1,0 +1,86 @@
+{{/* @see :: data/<Product>.yml */}}
+{{- $DATA := (index .Context.Site.Data .Product) -}}
+{{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+
+{{- $pt := default .Context.Title .Context.Params.meta.title -}}
+{{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
+
+<meta charset="utf-8">
+<title>{{ $title }}</title>
+<meta http-equiv="cleartype" content="on"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="application-name" content="{{ $title }}"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+<meta name="apple-mobile-web-app-title" content="{{ $title }}"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#f38020"/>
+
+<meta name="description" content="{{ $META.description }}" />
+
+<meta property="og:image" content="{{ $META.image | absURL }}"/>
+<meta property="og:title" content="{{ $title }}"/>
+<meta property="og:description" content="{{ $META.description }}"/>
+<meta property="og:type" content="website"/>
+
+<meta name="twitter:title" content="{{ $title }}"/>
+<meta name="twitter:image" content="{{ $META.image | absURL }}"/>
+<meta name="twitter:description" content="{{ $META.description }}"/>
+<meta name="twitter:creator" content="{{ $META.author }}"/>
+<meta name="twitter:card" content="summary_large_image"/>
+
+<link rel="icon" href="/favicon-32x32.png"/>
+<link rel="canonical" href="{{ .Context.Permalink }}"/>
+<link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+
+<link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png"/>
+<link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png"/>
+<link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png"/>
+<link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png"/>
+<link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png"/>
+<link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
+<link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
+<link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
+
+{{- $coveo := index $.Context.Site.Params "coveo" -}}
+{{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
+  <link rel="stylesheet" href="/search-coveo.css"/>
+  <link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
+  <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
+
+  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
+  {{- $script := (resources.Get "search-coveo.ts") | js.Build $opts -}}
+
+  {{- if hugo.IsProduction -}}
+    {{- $script = $script | minify | fingerprint "md5" -}}
+  {{- end -}}
+
+  <script
+    src="{{ $script.RelPermalink }}" defer
+    data-token="{{ $coveo.token }}"
+    data-org="{{ $coveo.org }}"
+  ></script>
+{{- else if $coveo -}}
+  {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
+{{- else if $DATA.algolia -}}
+  <script defer async src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js"></script>
+
+  {{/* modified "script" partial */}}
+  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
+  {{- $script := (resources.Get "search.ts") | js.Build $opts -}}
+
+  {{- if hugo.IsProduction -}}
+    {{- $script = $script | minify | fingerprint "md5" -}}
+  {{- end -}}
+
+  <script
+    src="{{ $script.RelPermalink }}" defer
+    data-filters="{{ $DATA.algolia.filters }}"
+    data-index="{{ $DATA.algolia.index }}"
+    data-key="{{ $DATA.algolia.apikey }}"
+  ></script>
+{{- end -}}

@@ -1,1 +1,0 @@
-Cloudflare uses the `__cf_bm cookie` to identify bots. For more details, see [Understanding Cloudflare Cookies](https://support.cloudflare.com/hc/articles/200170156#12345681).

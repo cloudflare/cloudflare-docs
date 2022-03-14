@@ -1,0 +1,17 @@
+{{- $css := resources.Get .src -}}
+
+<!-- {{- if or (.output) (strings.HasSuffix .src "scss") (strings.HasSuffix .src "sass") -}}
+	{{- $config := (dict "targetPath" .output "outputStyle" "compressed") -}}
+	{{- $css = $css | toCSS $config -}}
+{{- end -}} -->
+
+{{- if hugo.IsProduction -}}
+	{{- $css = $css | minify | fingerprint "md5" }}
+	<!-- <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous"/> -->
+{{- end -}}
+
+{{- if .inline -}}
+	<style>{{ safeCSS $css.Content }}</style>
+{{- else -}}
+	<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end -}}

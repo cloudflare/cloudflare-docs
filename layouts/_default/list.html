@@ -1,0 +1,25 @@
+{{ define "main" }}
+  {{- $type := default "overview" .Params.type -}}
+
+  <div class="DocsPage">
+    {{- partial "topbar.mobile" . -}}
+    {{- partial "sidebar.nav" . -}}
+
+    <div class="DocsToolbar">
+      {{- partial "topbar.search" . -}}
+      {{- partial "topbar.tools" . -}}
+    </div>
+
+    <main class="DocsBody">
+      <div id="docs-content" data-reach-skip-nav-content></div>
+
+      <div class="DocsContent" page-type="{{ $type }}">
+        <article class="DocsMarkdown">
+          {{- .Content -}}
+        </article>
+      </div>
+    </main>
+
+    {{ partial "footer" . }}
+  </div>
+{{ end }}
