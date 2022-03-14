@@ -18,7 +18,7 @@ To start using actions, first create a trigger to determine when this action wil
 4. Click **Create action**.
 5. Give the action a descriptive name.
 6. In the **Firing Triggers** field, choose the relevant trigger or triggers you [previously created](/zaraz/get-started/create-trigger/). If you choose more than one trigger, the action will start when any of the selected triggers are matched.
-7. Depending on the tool you adding an action for, you might also have the option to choose an **Action type**.
+7. Depending on the tool you are adding an action for, you might also have the option to choose an **Action type**. You might also need to fill in more fields in order to complete setting up the action.
 8. Click **Save**.
 
 The new action will appear under **Tool actions**. To edit an action, refer to [Edit tools and actions](/zaraz/get-started/edit-tools-and-actions/).
