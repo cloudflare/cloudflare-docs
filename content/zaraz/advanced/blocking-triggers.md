@@ -10,7 +10,7 @@ Blocking Triggers are triggers that instead of being used to define when to star
 
 Every tool action has Firing Triggers assigned to it. Blocking Triggers are optional and, if defined, will conditionally prevent the action from starting. When you add Blocking Triggers to an action, the action will not fire if any of its Blocking Triggers are true. If the tool has more than one action, other actions without these Blocking Triggers will still work.
 
-To conditionally block all actions of a tool, you have to configure Blocking Triggers on every action that belongs to that tool. Note that when you use Blocking Triggers, Zaraz will still load on the page.
+To conditionally block all actions in a tool, you have to configure Blocking Triggers on every action that belongs to that tool. Note that when you use Blocking Triggers, Zaraz will still load on the page.
 
 To use Blocking Triggers, start by making sure you have [created the trigger](/zaraz/get-started/create-trigger) with the conditions you want to use to block an event. Then:
 
