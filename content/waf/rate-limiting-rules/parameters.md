@@ -13,7 +13,7 @@ The available rate limiting rule parameters are the following:
 - **If incoming requests match** {{<type>}}String{{</type>}}
 
   - Field name in the API: `expression` (rule field).
-  - Defines the criteria for the Rate Limiting Rule to match a request.
+  - Defines the criteria for the rate limiting rule to match a request.
 
 - **Choose action** {{<type>}}String{{</type>}}
 
@@ -24,7 +24,7 @@ The available rate limiting rule parameters are the following:
 - **Duration** {{<type>}}Number{{</type>}}
 
   - Field name in the API: `mitigation_timeout`.
-  - Once the request rate is reached, the Rate Limiting Rule applies the rule action to further requests for the period of time defined in this field (in seconds).
+  - Once the request rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
   - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
   - When using the API, the value must be `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
 
