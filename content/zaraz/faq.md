@@ -10,7 +10,7 @@ Below you will find answers to our most commonly asked questions on Cloudflare Z
 
 ## Does Cloudflare process my HTML, removing existing scripts and then injecting Zaraz?
 
-Cloudflare Zaraz does not remove other third-party scripts from the page. Zaraz [can be auto-injected or not](/zaraz/reference/options/#auto-inject-script), depending on your configuration.
+Cloudflare Zaraz does not remove other third-party scripts from the page. Zaraz [can be auto-injected or not](/zaraz/reference/settings/#auto-inject-script), depending on your configuration.
 
 ## Does Zaraz work with Cloudflare Page Shield?
 
@@ -23,19 +23,19 @@ The Zaraz engineering team is adding support to new tools all the time. You can 
 
 ## I am trying to set up Facebook Pixel on my Zaraz account, but I do not see any data coming through.
 
-It can take between 15 minutes to an hour for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [Debug Mode](/zaraz/advanced/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
+It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [Debug Mode](/zaraz/advanced/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
 
-## Is there a way to prevent my third-party scripts from firing on specific pages, like `wp-admin`?
+## Is there a way to prevent Zaraz from loading on specific pages, like under `/wp-admin`?
 
 To prevent Zaraz from loading on specific pages, refer to [Block Zaraz on specific pages or domains](/zaraz/advanced/block-zaraz/).
 
-## I cannot create a trigger for my tool to fire when the website is loaded. Do I have to add code to my website?
+## I cannot get a tool to load when the website is loaded. Do I have to add code to my website?
 
-If you proxy your domain through Cloudflare, you do not need to add any code to your website. By default, Zaraz includes an automated `pageview` trigger. Some tools, like Google Analytics, automatically add this `pageview` trigger to an event. With other tools, you will need to add it manually. Refer to [Get started](/zaraz/get-started/) for more information.
+If you proxy your domain through Cloudflare, you do not need to add any code to your website. By default, Zaraz includes an automated `Pageview` trigger. Some tools, like Google Analytics, automatically add a "Pageview" action that uses this trigger. With other tools, you will need to add it manually. Refer to [Get started](/zaraz/get-started/) for more information.
 
 ## Can I set up custom dimensions for Google Analytics with Zaraz?
 
-Yes. From the Zaraz dashboard, click **Edit** next to Google Analytics. Then, click **Settings** > **Add field** and choose the index number of the desired Custom Dimension and its value.
+Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to learn how to send additional data to tools.
 
 ## I am a vendor. How can I integrate my tool with Zaraz?
 
