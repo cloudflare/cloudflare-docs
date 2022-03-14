@@ -34,7 +34,7 @@ Adding an additional field to the tool sets it as a default field for all of the
 3. Locate the third-party tool where you want to add the the field, and click **Edit**.
 4. Click **Settings** > **Add Field**.
 5. Choose the desired field from the drop-down menu, and click **Add**.
-6. Enter the variable you wish to pass to all of the actions in the tool.
+6. Enter the variable you wish to pass to all the actions in the tool.
 7. Click **Save**.
 
 The new field will now be attached to every action that belongs to the tool.
