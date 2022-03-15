@@ -24,11 +24,13 @@ To create an IP List, follow these steps:
 
     - The maximum length for a list name is 50 characters.
 
-    - Use a descriptive name for your list so that the list is informative in the context of a Firewall Rule expression.
+    - Use a descriptive name for your list so that the list is informative in the context of a firewall rule expression.
 
 2.  Enter a description (optional). The maximum length for the description is 500 characters. There are no character constraints for the description field.
 
-3.  Click **Create**.
+3. For **Content type**, select _IP Address_.
+
+4.  Click **Create**.
 
 The **Add items to list** page displays.
 
@@ -40,21 +42,21 @@ To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf
 
 {{<Aside type="note" header="Note">}}
 
-You can only delete a list when there are no Firewall Rules (enabled or disabled) that reference the list.
+You can only delete a list when there are no firewall rules (enabled or disabled) that reference the list.
 
 {{</Aside>}}
 
 To delete an IP List, follow these steps:
 
-1. In the Cloudflare dashboard, navigate to **Configurations** > **Lists**.
+1. In the Cloudflare dashboard, navigate to **Manage Account** > **Configurations** > **Lists**.
 
 1. Hover your pointer over the **Delete** button associated with the list you want to delete.
 
-    - When the list is used in a Firewall Rule, a tooltip displays with notification that you cannot delete the list:
+    - When the list is used in a firewall rule, a tooltip displays with notification that you cannot delete the list:
 
       ![Cannot Delete lists](/firewall/static/lists-cannot-delete.png)
 
-    - When the list is not used in a Firewall Rule, **Delete** link highlights, indicating you can delete the list.
+    - When the list is not used in a firewall rule, **Delete** link highlights, indicating you can delete the list.
 
 1. Click **Delete**.
 

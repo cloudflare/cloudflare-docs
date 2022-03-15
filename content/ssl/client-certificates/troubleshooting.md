@@ -34,7 +34,7 @@ Check whether [mTLS has been enabled](/ssl/client-certificates/enable-mtls/) for
 
 To review mTLS rules:
 
-1.  Click **Firewall** > **Firewall Rules**.
+1.  Click **Security** > **WAF** > **Firewall rules**.
 2.  On a specific rule, click **Edit**.
 3.  On that rule, check whether:
 

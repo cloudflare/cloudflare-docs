@@ -96,6 +96,16 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 
 21. To complete setup, you must scroll below and visit the link generated. If you are not the Google Workspace administrator, share the link with the administrator.
 
+  {{<Aside type="note">}}
+  
+  For the next steps to work correctly, you must enable the **Trust internal, domain-owned apps** option under the **Security** > **Access and data control** > **API controls** section of the Google Admin web app. 
+  
+  ![Enable trust internal apps](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
+  
+  The option is disabled by default and must be enabled for Cloudflare Access to work correctly.
+
+  {{</Aside>}}
+
 22. The generated link will prompt you to login to your Google account and to authorize Cloudflare Access to view group information.
 
     ![Authorize Groups](/cloudflare-one/static/documentation/identity/gsuite/authorize-groups.png)

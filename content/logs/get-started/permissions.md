@@ -1,0 +1,36 @@
+---
+pcx-content-type: concept
+title: Permissions
+weight: 40
+---
+
+# Permissions
+
+Below is a description of the available permissions for tokens and roles as they relate to Logs. For information about how to create an API token, please refer to [Creating API tokens](https://developers.cloudflare.com/api/tokens/create/).
+
+## Tokens
+
+*   **Logs: Read** - Grants read access to logs using Logpull or Instant Logs.
+
+*   **Logs: Write** - Grants read and write access to Logpull and Logpush, and read access to Instant Logs.
+
+{{<Aside type="note" header="Note">}}
+For zone scoped datasets, tokens must be zone scoped. For account scoped datasets, tokens must be account scoped.
+{{</Aside>}}
+
+## Roles
+
+**Super Administrators**, **Administrators** and the **Log Share** roles have full access to Logpull, Logpush and Instant Logs.
+
+The **Administrator Read only** and **Log Share Reader** roles only have access to Instant Logs and Logpull. This role does not have permissions to view the configuration of Logpush jobs.
+
+### Assigning or removing a role 
+
+To check the list of members in your account, or to manage roles and permissions:
+
+1.  Navigate to the Cloudflare Dashboard (https://dash.cloudflare.com/login) and select your account.
+2.  From your Account Home, navigate to **Manage Account** > **Members**.
+3.  Enter a member’s email address to add them to your account, and click **Invite**.
+4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
+
+For more information on managing roles within your Cloudflare account, visit the [help center](https://support.cloudflare.com/hc/en-us/articles/200167946-Setting-up-Multi-User-accounts-on-Cloudflare#2K2NLky0NgEtThpHOwrgx8).

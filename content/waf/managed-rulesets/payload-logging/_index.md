@@ -23,7 +23,7 @@ Once enabled, the WAF saves the payload of any rule matches for the Managed Rule
 
 To view the content of the payload in clear text, do one of the following:
 
-*   In the Firewall Analytics page (**Firewall** > **Overview**), enter your private key to decrypt the payload of a log entry directly in the browser. Refer to [View the payload content in the dashboard](/waf/managed-rulesets/payload-logging/view/) for details.
+*   In the Firewall Analytics page (**Security** > **Overview**), enter your private key to decrypt the payload of a log entry directly in the browser. Refer to [View the payload content in the dashboard](/waf/managed-rulesets/payload-logging/view/) for details.
 
 *   Decrypt the payload in the command line using the `matched-data-cli` tool. Refer to [Decrypt the payload content in the command line](/waf/managed-rulesets/payload-logging/command-line/decrypt-payload/) for details.
 

@@ -25,7 +25,7 @@ To configure Schema Validation in the Cloudflare dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 
-2.  Click **Firewall** > **API Shield**.
+2.  Click **Security** > **API Shield**.
 
 3.  In the **API Shield** card, click **Deploy API Shield**.
 

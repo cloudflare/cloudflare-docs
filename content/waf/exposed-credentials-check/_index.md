@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Automated exposed credentials check
-weight: 6
+weight: 8
 ---
 
 # Automated exposed credentials check
@@ -47,6 +47,6 @@ Currently, exposed credentials checks in custom rules are only available via API
 
 {{</Aside>}}
 
-Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/), you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before Rate Limiting Rules.
+Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/), you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before rate limiting rules.
 
 To check for exposed credentials in a custom rule, include the exposed credentials check in the rule definition and specify how to obtain the username and password values from the HTTP request. For more information, refer to [Create a custom rule checking for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).

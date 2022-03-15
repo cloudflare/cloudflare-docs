@@ -20,13 +20,13 @@ Access the following analytics from the Cloudflare Dashboard:
     - DNS - DNS Queries by Response Code, Record Type, and Cloudflare Data Center
     - Workers - Workers per zone, Workers KV per account
   - In-product - The analytics available within each product on the dash, like the Events summary, Events by service, and Top events by source data in Firewall. Data available in-product includes:
-    - Firewall Events, [Bot Analytics](/bots/bot-analytics) within the **Firewall** application
+    - Firewall Events, [Bot Analytics](/bots/bot-analytics/) within the **Security** application
     - Browser Insights within the **Speed** application
     - Cache Performance within the **Caching** application
     - Load Balancing Analytics and Health Check Analytics within the **Traffic** application
 - Account Analytics - Sum of traffic to all your sites
 - Network Analytics - Analytics that provide visibility into network and transport-layer traffic patterns and DDoS attacks. Only available for customers on an Enterprise plan who use [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), or [Bring Your Own IP (BYOIP)](/byoip/).
-- [Web Analytics](/analytics/web-analytics) - Privacy-first analytics for your website that doesn't require changing your DNS or using Cloudflare’s proxy
+- [Web Analytics](/analytics/web-analytics/) - Privacy-first analytics for your website that does not require changing your DNS or using Cloudflare’s proxy
 
 ## Logs
 
@@ -37,4 +37,4 @@ Access Cloudflare Logs in one of two ways:
 
 ## GraphQL APIs
 
-If you'd like more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api) to build customized views.
+If you'd like more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api/) to build customized views.

@@ -8,7 +8,7 @@ meta:
 
 # Firewall Analytics — Paid plans
 
-Firewall Analytics is available at **Firewall** > **Overview**.
+Firewall Analytics is available at **Security** > **Overview**.
 
 ## Adjusting displayed data
 
@@ -18,7 +18,7 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create Firewall Rule from current filters
+## Create firewall rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 
@@ -32,7 +32,7 @@ You can adjust the displayed data according to one of the values by clicking **F
 
 ## Events by service
 
-The **Events by service** section lists the Firewall activity per Cloudflare security feature (for example, **WAF**, **Firewall Rules**, **API Shield**).
+The **Events by service** section lists the firewall activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
 
 You can adjust the scope of Firewall Analytics to one of the displayed services by clicking **Filter** or **Exclude** when hovering the legend or by clicking the corresponding graph bar.
 
@@ -44,7 +44,7 @@ You can adjust the scope of Firewall Analytics to one of the listed source value
 
 {{<Aside type="note">}}
 
-A deleted Firewall Rule or Rate Limiting rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
+A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
 
 {{</Aside>}}
 

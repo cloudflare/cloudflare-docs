@@ -3,16 +3,16 @@ title: API examples
 pcx-content-type: configuration
 weight: 3
 meta:
-  title: API examples of Custom Rules with the Skip action
+  title: API examples of custom rules with the Skip action
 ---
 
-# API examples of Custom Rules with the Skip action
+# API examples of custom rules with the Skip action
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api) to configure Custom Rules via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api) to configure custom rules via API.
 
-The `skip` action supports different [skip options](/waf/custom-rules/custom-firewall/skip/options/), according to the security features or products that you wish to skip.
+The `skip` action supports different [skip options](/waf/custom-rules/skip/options/), according to the security features or products that you wish to skip.
 
-The following sections provide examples for the different skip rule scenarios available for Custom Firewall rules.
+The following sections provide examples for the different skip rule scenarios available for custom rules.
 
 Take the following into account regarding the provided examples:
 
@@ -35,8 +35,7 @@ highlight: [6,7,8,9]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "skip",
   "action_parameters": {
@@ -58,8 +57,7 @@ highlight: [6,7,8,9,10,11]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "skip",
   "action_parameters": {
@@ -72,7 +70,7 @@ curl -X POST \
 }'
 ```
 
-Refer to [Available skip options](/waf/custom-rules/custom-firewall/skip/options/) for the list of phases you can skip.
+Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of phases you can skip.
 
 ## Skip security products
 
@@ -85,8 +83,7 @@ highlight: [6,7,8,9,10,11,12]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
--H "X-Auth-Email: <EMAIL>" \
--H "X-Auth-Key: <API_KEY>" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "skip",
   "action_parameters": {
@@ -100,4 +97,4 @@ curl -X POST \
 }'
 ```
 
-Refer to [Available skip options](/waf/custom-rules/custom-firewall/skip/options/) for the list of products you can skip.
+Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of products you can skip.
