@@ -1,40 +1,28 @@
 ---
 pcx-content-type: get-started
 title: Get started
-weight: 2
+weight: 4
 ---
 
 # Get started
 
-The onboarding process, from scoping to going live, typically takes about ten business days, and Cloudflare can significantly accelerate this timeline in active-attack scenarios.
-
-Throughout the onboarding process, Cloudflare partners closely with your organization to accomplish the following tasks:
+Before you can begin using Magic Transit, be sure to complete the onboarding steps below. Cloudflare can significantly accelerate this timeline during active-attack scenarios.
 
 ## 1. Scope your configuration
 
-Starting with an initial kickoff call, Cloudflare engages with your organization to confirm the scope and timeline for setting up Magic Transit.
+The onboarding process begins with an initial kickoff call where Cloudflare engages with your organization to confirm the scope and timeline for setting up Magic Transit.
 
-*Duration:* Less than one business day
+After your call with Cloudflare, complete the [prerequisites](/magic-transit/prerequisites/).
 
-After your call with Cloudflare, verify that you meet the [onboarding requirements](/magic-transit/get-started/requirements/).
+## 2. Configure tunnels
 
-## 2. [Configure tunnels](/magic-transit/get-started/configure-tunnels/)
-
-Cloudflare sets up Anycast tunnels for Magic Transit based on configuration details you supply.
-
-*Duration:* ~4 business days
-
-Provide the information specified in [Specify GRE Tunnel Endpoints](/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/) so that Cloudflare can set up your tunnels.
+[Configure your Anycast tunnels](/magic-transit/how-to/configure-tunnels/) to connect Cloudflare to your origin infrastructure.
 
 ## 3. Run pre-flight checks
 
 After Cloudflare stages the tunnels, Cloudflare validates tunnel connectivity, Letter of Authorization (LOA), Internet Routing Registry (IRR), and maximum segment size (MSS) configurations.
 
-To ensure that the integration is ready to go live the following week, complete this step by close of business Thursday.
-
-*Duration:* ~4 business days
-
-## 4. Configure edge network
+## 4. Advertise prefixes
 
 Once Cloudflare’s pre-flight checks have passed and your account team verifies the date to complete the change, the process of onboarding your prefixes to Cloudflare’s edge network begins.
 

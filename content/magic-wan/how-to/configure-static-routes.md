@@ -19,73 +19,18 @@ For an example edge routing configuration, refer to the example below.
 
 <details>
   <summary>Edge routing configuration example</summary>
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>
-            <strong>Anycast GRE or IPsec tunnel</strong>
-          </th>
-          <th>
-            <strong>Subnet</strong>
-          </th>
-          <th>
-            <strong>Priority</strong>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>GRE_1_IAD</td>
-          <td>
-            <strong>103.21.244.0/24</strong>
-          </td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>GRE_2_IAD</td>
-          <td>
-            <strong>103.21.244.0/24</strong>
-          </td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>GRE_3_ATL</td>
-          <td>
-            <strong>103.21.244.0/24</strong>
-          </td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>GRE_4_ATL</td>
-          <td>
-            <strong>103.21.244.0/24</strong>
-          </td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>GRE_1_IAD</td>
-          <td>103.21.245.0/24</td>
-          <td>200</td>
-        </tr>
-        <tr>
-          <td>GRE_2_IAD</td>
-          <td>103.21.245.0/24</td>
-          <td>200</td>
-        </tr>
-        <tr>
-          <td>GRE_3_ATL</td>
-          <td>103.21.245.0/24</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>GRE_4_ATL</td>
-          <td>103.21.245.0/24</td>
-          <td>100</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+ 
+| Anycast GRE or IPsec tunnel | Subnet               |    Priority   |
+| --------------------------- | -------------------- | ------------- |
+| GRE_1_IAD                   | **103.21.244.0/24**  | 100           |
+| GRE_2_IAD                   | **103.21.244.0/24**  | 100           |
+| GRE_3_ATL                   | **103.21.244.0/24**  | 100           |
+| GRE_4_ATL                   | **103.21.244.0/24**  | 100           |
+| GRE_1_IAD                   | 103.21.245.0/24      | 200           |
+| GRE_2_IAD                   | 103.21.245.0/24      | 200           |
+| GRE_3_ATL                   | 103.21.245.0/24      | 100           |
+| GRE_4_ATL                   | 103.21.245.0/24      | 100           |
+
 </details>
 
 ## Create a static route
