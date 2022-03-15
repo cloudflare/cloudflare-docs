@@ -35,7 +35,7 @@ Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) 
 
 ## Availability
 
-Rate Limiting Rules are available to Enterprise customers on the Core or Advanced plan. The available features depend on the exact plan:
+Rate limiting rules are available to Enterprise customers on the Core or Advanced plan. The available features depend on the exact plan:
 
 {{<table-wrap>}}
 

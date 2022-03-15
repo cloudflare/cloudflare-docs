@@ -28,7 +28,7 @@ Add any existing rules in the ruleset to the request by including their rule ID 
 
 ### Example A
 
-This example defines a Rate Limiting Rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
+This example defines a rate limiting rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
 
 ```json
 ---
