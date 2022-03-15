@@ -23,7 +23,7 @@ For a rule with two Prefix CIDRs and a `packet_threshold` of `10000` as shown be
         ]
 ```
 
-For more granular thresholds, customers can just create a more focused rule as such:
+For more granular thresholds, create a more focused rule as shown below.
 
 ```txt
 "rules":[
@@ -47,7 +47,7 @@ You will receive the status of the advertisement for each prefix with the follow
 
 - **Advertised** - The prefix was successfully advertised.
 - **Already Advertised** - The prefix was advertised prior to the auto advertisement attempt.
-- **Delayed** - The Prefix cannot be currently advertised but will attempt advertisement. After the prefix can be advertised, a new notification is sent with the updated status.
+- **Delayed** - The prefix cannot currently be advertised but will attempt advertisement. After the prefix can be advertised, a new notification is sent with the updated status.
 - **Locked** - The prefix is locked and cannot be advertised
 - **Could not Advertise** - Cloudflare was unable to advertise the prefix. This status can occur for multiple reasons, but usually occurs when you are not allowed to advertise a prefix.
 - **Error** - A general error occurred during prefix advertisement.
