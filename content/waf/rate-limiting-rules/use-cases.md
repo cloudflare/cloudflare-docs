@@ -8,7 +8,7 @@ meta:
 
 # Common rate limiting use cases
 
-The examples below include sample Rate Limiting rule configurations that address common rate limiting use cases.
+The examples below include sample rate limiting rule configurations that address common rate limiting use cases.
 
 ## Example 1
 

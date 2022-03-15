@@ -31,7 +31,7 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
 1.  Log into your [Cloudflare account](https://dash.cloudflare.com) and select your application.
 
-2.  Go to **Firewall** > **Firewall Rules**.
+2.  Go to **Security** > **Firewall rules**.
 
 3.  Click **Create a mTLS rule**.
 
@@ -52,7 +52,7 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
 
 ### Expression Builder
 
-To review your mTLS rule in the Firewall Rules Expression Builder, click the **wrench icon** associated with your rule.
+To review your mTLS rule in the firewall rules Expression Builder, click the **wrench icon** associated with your rule.
 
 In the **Expression Preview**, your mTLS rule includes a [compound expression](/ruleset-engine/rules-language/expressions/#compound-expressions) formed from two [simple expressions](/ruleset-engine/rules-language/expressions/#simple-expressions) joined by the `and` operator.
 

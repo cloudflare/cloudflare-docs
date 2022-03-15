@@ -68,7 +68,7 @@ The Rules language supports these transformation functions:
     If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 {{<Aside type="warning">}}
-The `ends_with()` function is not available in [Firewall Rules](/firewall/).
+The `ends_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
 - <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
@@ -167,7 +167,7 @@ You can only use the `regex_replace()` function in [rewrite expressions of Trans
     If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 {{<Aside type="warning">}}
-The `starts_with()` function is not available in [Firewall Rules](/firewall/).
+The `starts_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
 - <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}

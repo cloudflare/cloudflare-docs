@@ -1,7 +1,7 @@
 ---
 title: Alerts
 pcx-content-type: reference
-weight: 8
+weight: 10
 meta:
   title: WAF alerts
 ---

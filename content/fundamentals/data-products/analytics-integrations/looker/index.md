@@ -85,7 +85,7 @@ This is a quick overview of the most important metrics from your Cloudflare logs
 
 #### Security
 
-This dashboard provides insights on threat identification and mitigation through our Web Application Firewall (WAF), Rate Limiting rules, and IP Firewall. Metrics include total threats stopped, threat traffic source, blocked IPs, and user agents, top threat requests, WAF events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
+This dashboard provides insights on threat identification and mitigation through our Web Application Firewall (WAF) and IP Firewall. Metrics include total threats stopped, threat traffic source, blocked IPs, and user agents, top threat requests, WAF events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
 
 ![Looker Cloudflare Security dashboard](/fundamentals/static/images/looker/dashboards/security-cloudflare-dashboard-looker.png)
 

@@ -81,7 +81,7 @@ For example, in the configurations above, a connection to `range.example.com:100
 
 ## IP Access Rules
 
-If IP Access Rules is enabled for a Spectrum application, Cloudflare will respect the IP Access Rules created under **Firewall** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
+If IP Access Rules is enabled for a Spectrum application, Cloudflare will respect the IP Access Rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
 ## Edge TLS Termination
 
