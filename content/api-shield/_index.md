@@ -34,4 +34,6 @@ Cloudflare offers the following features to help secure your APIs:
 
 Cloudflare API Security products are available to Enterprise customers only, though anyone can set up [Mutual TLS](/api-shield/security/mtls/) with a Cloudflare-managed certificate authority.
 
-Additionally, API Discovery, Volumetric Abuse Detection, and Sequential Abuse Detection are currently enabled by request. If you are interested in using these products, contact your account team.
+Additionally, [API Discovery](/api-shield/security/api-discovery/) and [Volumetric Abuse Detection](/api-shield/security/volumetric-abuse-detection/) are generally available. If you are interested in using these products, contact your account team.
+
+[Sequential Abuse Detection](/api-shield/security/sequential-abuse-detection/) is currently enabled by request. If you are interested in using this products, contact your account team.
