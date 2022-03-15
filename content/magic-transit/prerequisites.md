@@ -1,14 +1,14 @@
 ---
-title: Requirements
+title: Prerequisites
 pcx-content-type: tutorial
-weight: 0
+weight: 3
 ---
 
-# Requirements
+# Prerequisites
 
-You must meet the following onboarding requirements before using Magic Transit.
+Before you can begin using Magic Transit, verify that you meet Cloudflare's onboarding requirements.
 
-## Use compatible tunnel endpoint routers
+## Verify router compatibility
 
 Magic Transit relies on Generic Routing Encapsulation (GRE) tunnels to transmit packets from Cloudflare’s edge to your origin network.
 
@@ -28,7 +28,7 @@ The Letter of Authorization must be a PDF. Transit providers may reject the LOA 
 
 {{</Aside>}}
 
-## Verify Internet Routing Registry entries
+## Verify IRR entries
 
 Verify your Internet Routing Registry (IRR) entries match corresponding origin autonomous system numbers (ASNs) to ensure Magic Transit routes traffic to the correct autonomous systems (AS). For guidance, refer to [Verify IRR entries](/byoip/how-to/verify-irr-entries/).
 
@@ -48,57 +48,28 @@ If you are using IPsec inside GRE, set the MSS clamp at the IPsec tunnel interfa
 
 {{</Aside>}}
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Standard Internet routable MTU</th>
-      <th align="right">1500 bytes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>&#45;</td>
-      <td>Original IP header</td>
-      <td align="right">20 bytes</td>
-    </tr>
-    <tr>
-      <td>&#45;</td>
-      <td>Original protocol header (TCP)</td>
-      <td align="right">20 bytes</td>
-    </tr>
-    <tr>
-      <td>&#45;</td>
-      <td>New IP header</td>
-      <td align="right">20 bytes</td>
-    </tr>
-    <tr>
-      <td>&#45;</td>
-      <td>New protocol header (GRE)</td>
-      <td align="right">4 bytes</td>
-    </tr>
-    <tr>
-      <td>&#61;</td>
-      <td>Maximum segment size (MSS)</td>
-      <td align="right">1436 bytes</td>
-    </tr>
-  </tbody>
-</table>
+| Standard Internet Routable MTU                         | 1500 bytes  |
+| ------------------------------------------------------ | ----------- |
+| -	&nbsp;&nbsp;&nbsp; Original IP header                | 20 bytes    |
+| - &nbsp;&nbsp;&nbsp; Original protocol header (TCP)    | 20 bytes    |
+| -	&nbsp;&nbsp;&nbsp; New IP header                     | 20 bytes    |
+| -	&nbsp;&nbsp;&nbsp; New protocol header (GRE)         | 4 bytes     |
+| =	&nbsp;&nbsp;&nbsp; Maximum segment size (MSS)        | 1436 bytes  |
 
 Unless you apply these MSS settings at the origin, client machines do not know that they must use an MSS of 1436 bytes when sending packets to your origin.
 
-### Follow router vendor guidelines
+## Apply MSS clmaps
 
 Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.
 
 The following table lists several commonly used router vendors with links to MSS clamping instructions:
 
-| Router device | URL                                                                                                                                                                                   |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Router device | URL  |
+| ------------- | ---- |
 | Cisco         | [TC IP Adjust MSS](https://www.cisco.com/en/US/docs/ios-xml/ios/ipapp/command/ip_tcp_adjust-mss_through_ip_wccp_web-cache_accelerated.html#GUID-68044D35-A53E-42C1-A7AB-9236333DA8C4) |
 | Juniper       | [TCP MSS – Edit System](https://www.juniper.net/documentation/en_US/junos/topics/reference/configuration-statement/tcp-mss-edit-system.html)                                          |
 
-### Verify MSS settings at your origin
+## Verify MSS settings at your origin
 
 Run the following command on the servers egressing the prefixes you want to add to Magic Transit to verify that your routers have the correct MSS setting (1436 bytes) at your origin.
 

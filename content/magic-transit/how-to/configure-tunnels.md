@@ -1,12 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Specify tunnel endpoints
-weight: 0
+title: Configure tunnel endpoints
+weight: 1
 ---
 
-# Specify tunnel endpoints
-
-## Generic Routing Encapsulation (GRE)
+# Configure tunnel endpoints
 
 Cloudflare recommends two GRE tunnels for each ISP and data center router combination, one per Cloudflare GRE endpoint. Cloudflare will assign two Cloudflare GRE endpoint addresses shortly after your onboarding kickoff call that you can use as the GRE tunnel destinations on your data center routers/endpoints.
 
@@ -23,37 +21,14 @@ To configure the GRE tunnel(s) between Cloudflare and your data centers, you mus
 
 <details>
   <summary>Edge routing configuration example</summary>
-  <table>
-    <thead>
-      <tr>
-        <th style="min-width:140px">GRE tunnel</th>
-        <th style="min-width:125px">Customer GRE endpoint</th>
-        <th style="min-width:150px">Interface address</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>GRE_1_IAD</td>
-        <td>104.18.112.75</td>
-        <td>10.10.10.100/31</td>
-      </tr>
-      <tr>
-        <td>GRE_2_IAD</td>
-        <td>104.18.112.75</td>
-        <td>10.10.10.102/31</td>
-      </tr>
-      <tr>
-        <td>GRE_3_ATL</td>
-        <td>104.40.112.125</td>
-        <td>10.10.10.104/31</td>
-      </tr>
-      <tr>
-        <td>GRE_4_ATL</td>
-        <td>104.40.112.125</td>
-        <td>10.10.10.106/31</td>
-      </tr>
-    </tbody>
-  </table>
+  
+| GRE tunnel      | Customer GRE endpoint   | Interface address      |
+| --------------- | ----------------------- | ---------------------- |
+| GRE_1_IAD       | 104.18.112.75           | 10.10.10.100/31        |
+| GRE_2_IAD       | 104.18.112.75           | 10.10.10.102/31        |
+| GRE_3_ATL       | 104.40.112.125          | 10.10.10.104/31        |
+| GRE_4_ATL       | 104.40.112.125          | 10.10.10.106/31        |
+
 </details>
 
 ### Add GRE tunnels
@@ -92,7 +67,7 @@ After adding your GRE tunnels, you can use Network Address Translation (NAT) to 
 Router(config)# ip nat inside source static <LOCAL_IP> <GLOBAL_IP>
 ```
 
-1.  On the router, specify which interfaces connect inside and outside of the network.
+2.  On the router, specify which interfaces connect inside and outside of the network.
 
 ```txt
 Router(config)# interface Tunnel A
@@ -103,8 +78,10 @@ Router(config)# interface 0/0  /* LAN interface - to the server */
 Router(config)# ip nat inside
 ```
 
-1.  When you are finished, end the configuration.
+3.  When you are finished, end the configuration.
 
 ```txt
 Router(config)# end
 ```
+
+{{<render file="_scoped-routes.md">}}

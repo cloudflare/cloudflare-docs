@@ -6,7 +6,7 @@ weight: 0
 
 # Tunnels & encapsulation
 
-Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up GRE tunnel endpoints on edge servers inside your network namespace, and you [set up tunnel endpoints](/magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/) on routers at your data center.
+Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up GRE tunnel endpoints on edge servers inside your network namespace, and you [set up tunnel endpoints](/magic-transit/how-to/configure-tunnels/) on routers at your data center.
 
 This diagram illustrates the flow of traffic with Magic Transit.
 
@@ -32,7 +32,7 @@ To accommodate additional header data introduced by encapsulation, the maximum s
 
 Because egress packets are routed via your ISP interface, not Cloudflare, you must set this value at your physical egress interfaces (not the GRE tunnel interfaces).
 
-For instructions, refer to [Set Maximum Segment Size](/magic-transit/get-started/requirements/#set-maximum-segment-size).
+For instructions, refer to [Set Maximum Segment Size](/magic-transit/prerequisites#set-maximum-segment-size).
 
 {{</Aside>}}
 

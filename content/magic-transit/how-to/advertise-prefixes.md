@@ -1,10 +1,10 @@
 ---
 pcx-content-type: how-to
-title: Specify prefixes to advertise
-weight: 0
+title: Advertise prefixes
+weight: 3
 ---
 
-# Specify prefixes to advertise
+# Advertise prefixes
 
 Cloudflare measures the Magic Transit prefix count based on the number of prefixes a customer announces through Cloudflare. The size of the prefix does not matter; there is no commercial or technical restriction. However, prefixes can only be announced exactly as they were provisioned. For example, a /20 prefix onboarded to Magic Transit can only be announced as a /20. Smaller subnets that constitute the /20 cannot be announced individually. To announce the 16x /24s within the /20, for example, requires onboarding all 16 prefixes individually. If this disaggregated setup is desired, the total Magic Transit prefix count will increase.
 
