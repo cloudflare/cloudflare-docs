@@ -20,7 +20,11 @@ This feature is only available for customers on an Enterprise plan. Contact your
 
 ## Operation IDs
 
-Cloudflare Schema Validation requires unique Operation IDs for each endpoint and method pair defined in the schema. If there are Operation IDs missing, the schema will be rejected. Operation ID is used to keep track of changes to the same endpoints when updating schemas, and also to label logs in Firewall Events with the right endpoint and method. Cloudflare supports Operation IDs with a maximum size of 32 characters.
+For more control with Schema Validation, include unique Operations IDs for each endpoint and method pair defined in the schema. Cloudflare supports Operation IDs with a maximum size of 32 characters.
+
+These IDs are used to keep track of changes to the same endpoints when updating schemas and also to label logs in Firewall Events with the right endpoint and method
+
+If an Operation ID is missing, Cloudflare will generate one from the method and path.
 
 ## Specifications
 
