@@ -15,7 +15,7 @@ Below is a description of the available permissions for tokens and roles as they
 *   **Logs: Write** - Grants read and write access to Logpull and Logpush, and read access to Instant Logs.
 
 {{<Aside type="note" header="Note">}}
-For zone scoped datasets, tokens must be zone scoped. For account scoped datasets tokens must be account scoped.
+For zone scoped datasets, tokens must be zone scoped. For account scoped datasets, tokens must be account scoped.
 {{</Aside>}}
 
 ## Roles
