@@ -91,7 +91,7 @@ _**Rate limiting rule #2**_
 - _Headers_ > `x-api-key`
 
 **Increment counter when**:
-`http.response.code eq 400`
+`http.request.uri.path eq "/form" and http.response.code eq 400`
 
 {{</example>}}
 
