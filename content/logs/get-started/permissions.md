@@ -10,7 +10,7 @@ Below is a description of the available permissions for tokens and roles as they
 
 ## Tokens
 
-*   **Logs: Read** - Grants read access logs using Logpull or Instant Logs.
+*   **Logs: Read** - Grants read access to logs using Logpull or Instant Logs.
 
 *   **Logs: Write** - Grants read and write access to Logpull, Logpush and read access to Instant Logs.
 
