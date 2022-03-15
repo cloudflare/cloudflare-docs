@@ -26,7 +26,7 @@ Access the following analytics from the Cloudflare Dashboard:
     - Load Balancing Analytics and Health Check Analytics within the **Traffic** application
 - Account Analytics - Sum of traffic to all your sites
 - Network Analytics - Analytics that provide visibility into network and transport-layer traffic patterns and DDoS attacks. Only available for customers on an Enterprise plan who use [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), or [Bring Your Own IP (BYOIP)](/byoip/).
-- [Web Analytics](/analytics/web-analytics/) - Privacy-first analytics for your website that doesn't require changing your DNS or using Cloudflare’s proxy
+- [Web Analytics](/analytics/web-analytics/) - Privacy-first analytics for your website that does not require changing your DNS or using Cloudflare’s proxy
 
 ## Logs
 
