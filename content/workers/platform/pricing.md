@@ -91,6 +91,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
+3. Requests including all incoming HTTP requests and WebSocket messages. There is no charge for outgoing WebSocket messages.
 
 ### Durable Objects billing examples
 

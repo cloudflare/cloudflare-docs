@@ -2,6 +2,8 @@
 weight: 0
 pcx-content-type: reference
 title: DNS Wireformat
+meta:
+    title: Using DNS Wireformat
 ---
 
 # Using DNS Wireformat

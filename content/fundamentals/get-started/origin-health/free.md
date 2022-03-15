@@ -1,8 +1,9 @@
 ---
 pcx-content-type: how-to
-hidden: true
-title: Protect your origin server — Free
-weight: 3
+title: Free
+weight: 1
+meta:
+  title: Free plans — Protect your origin server
 ---
 
 # Protect your origin server — Free

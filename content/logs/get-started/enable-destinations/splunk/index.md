@@ -70,6 +70,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
     - Cloudflare expects the HEC network port to be configured to `:443` or `:8088`.
     - Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
     - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/fundamentals/data-products/analytics-integrations/splunk) for information on how to set up HEC in Splunk.
+    - You may notice an API request failed with a 504 error, when adding an incorrect URL. Splunk Cloud endpoint URL usually contains `http-inputs-` or similar text before the hostname. Refer to [Send data to HTTP Event Collector on Splunk Cloud Platform](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector#Send_data_to_HTTP_Event_Collector) for more details.
   - **\<SPLUNK_CHANNEL_ID>**: A unique channel ID. This is a random GUID that you can generate by:
     - Using an online tool like the [GUID generator](https://www.guidgenerator.com/).
     - Using the command line. For example: `python -c 'import uuid; print(uuid.uuid4())'`.

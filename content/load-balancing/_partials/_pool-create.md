@@ -26,7 +26,7 @@ You can create a pool within the [load balancer workflow](/load-balancing/how-to
 
 6.  Repeat this process for additional origins in the pool.
 
-7.  (Optional) Set up coordinates for [Proximity Steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering/#proximity-steering) on the pool.
+7.  (Optional) Set up coordinates for [Proximity Steering](/load-balancing/understand-basics/traffic-steering/steering-policies/proximity-steering/) on the pool.
 
 8.  On the origin pool, update the following information:
     *   **Health Threshold**: Number of healthy origins for the pool as a whole to be considered *Healthy* and receive traffic based on pool order in a load balancer

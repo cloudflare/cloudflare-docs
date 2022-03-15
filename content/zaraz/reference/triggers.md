@@ -6,51 +6,69 @@ weight: 0
 
 # Triggers and rules
 
-Triggers are a set of conditions that determine if and when Cloudflare Zaraz should [send events to third-party tools](/zaraz/get-started/send-events/). In most cases, your objective will be to capture specific site actions that are relevant to your business. A trigger will usually be based on an action the end user has taken on your website, like clicking a button.
+Triggers define the conditions under which [a tool will start an action](/zaraz/get-started/create-actions/). In most cases, your objective will be to create triggers that match specific website events that are relevant to your business. A trigger can be based on an event that happened on your website, like after clicking a button or loading a specific page.
 
-These site actions can be passed to Cloudflare Zaraz in a number of ways. You can use the Track method of the Web API or the `dataLayer` to send them to specific events and tools. Refer to [Zaraz Track](/zaraz/web-api/zaraz-track/) and [Data layer compatibility mode](/zaraz/advanced/datalayer-compatibility/) for more information on how to implement these options.
-
-You can also use complex triggers to listen for these site actions, with different types of rules like Click Listeners or Form Submissions.
-
-For most tools, the trigger will be a simple pageview event type, for which Cloudflare Zaraz offers a `pageview` preset configuration. If this is the case for the tool you need, [add and configure the tool to your account](/zaraz/get-started/add-tool/) to get started. For example, with the Facebook Pixel tool you only need to enter your account ID and access token, and Zaraz will configure the page view trigger for you.
-
-A valid trigger has the following structure:
-
-```txt
-<RULE_TYPE> <VARIABLE_NAME> <COMPARISON_OPERATOR> <STRING_TO_MATCH>
-```
-
-The exact composition of the trigger will change depending on the type of rule you choose. Here is an example for a trigger based on a Match rule:
-
-{{<table-wrap>}}
-
-| Rule type    | Variable name               | Match operation | Match string |
-| ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Contains_      | `purchase`   |
-
-{{</table-wrap>}}
-
-Refer to Rule types below for more information on the types of rules available, and [Zaraz event and system properties](/zaraz/reference/properties-reference/) for more information on the variables you can use to create triggers.
+These website events can be passed to Cloudflare Zaraz in a number of ways. You can use the [Track](/zaraz/web-api/track/) method of the Web API or the [data layer](/zaraz/advanced/datalayer-compatibility/) call. Alternatively, if you do not want to write code to track events on your website, you can configure triggers to listen to browser-side website events, with different types of rules like Click Listeners or Form Submissions.
 
 ## Rule types
 
-The rule type determines the kind of conditions Zaraz should listen for in your web page. Zaraz supports different rule types which allow you to create complex rules.
+The exact composition of the trigger will change depending on the type of rule you choose. 
 
 <details>
 <summary>Match rule</summary>
 <div>
 
-Zaraz tracks the variable you input in **Variable name**. For a complete list of supported variables, refer to [Zaraz event and system properties](/zaraz/reference/properties-reference/).
+Zaraz matches the variable you input in **Variable name** with the text under **Match string**. For a complete list of supported variables, refer to [Zaraz event and system properties](/zaraz/reference/properties-reference/).
 
-**Trigger example: Click listener**
+**Trigger example: Match `zaraz.track("purchase")`**
 
 {{<table-wrap>}}
 
 | Rule type    | Variable name               | Match operation | Match string |
 | ------------ | --------------------------- | --------------- | ------------ |
-| _Match rule_ | `{{ client.__zarazTrack }}` | _Contains_      | `purchase`   |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_        | `purchase`   |
 
 {{</table-wrap>}}
+
+When matching based on a System property, you will often want to add a second rule that matches `{{ client.__zarazTrack }}` to `Pageview`. Otherwise, your trigger will be valid for every other event happening on this page too. Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
+
+
+**Trigger example: All pages under `/blog`**
+
+{{<table-wrap>}}
+
+| Rule type    | Variable name               | Match operation | Match string |
+| ------------ | --------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Starts with_      | `/blog`   |
+{{</table-wrap>}}
+
+{{<table-wrap>}}
+
+| Rule type    | Variable name               | Match operation | Match string |
+| ---------------- | ----- | ------------ | --------------- |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_      | `Pageview`   |
+
+{{</table-wrap>}}
+
+**Trigger example: All logged in users**
+
+{{<table-wrap>}}
+
+| Rule type    | Variable name               | Match operation | Match string |
+| ------------ | --------------------------- | --------------- | ------------ |
+| _Match rule_ | `{{ system.cookies.isLoggedIn }}` | _Equals_      | `true`   |
+
+{{</table-wrap>}}
+
+{{<table-wrap>}}
+
+| Rule type    | Variable name               | Match operation | Match string |
+| ---------------- | ----- | ------------ | --------------- |
+| _Match rule_ | `{{ client.__zarazTrack }}` | _Equals_      | `Pageview`   |
+
+{{</table-wrap>}}
+
+Refer to the [Zaraz event and system properties](/zaraz/reference/properties-reference/) for more information on the variables you can use when using Match rule.
 
 </div>
 </details>
@@ -59,13 +77,13 @@ Zaraz tracks the variable you input in **Variable name**. For a complete list of
 <summary>Click listener</summary>
 <div>
 
-Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for events** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by the click listener to reach their destination.
+Tracks clicks in a web page. You can set up click listeners using CSS selectors or XPath expressions. **Wait for actions** (in milliseconds) tells Zaraz to prevent the page from changing for the amount of time specified. This allows all requests triggered by the click listener to reach their destination.
 
 **Trigger example for CSS selector:**
 
 {{<table-wrap>}}
 
-| Rule type        | Type  | Selector     | Wait for events |
+| Rule type        | Type  | Selector     | Wait for actions |
 | ---------------- | ----- | ------------ | --------------- |
 | _Click listener_ | _CSS_ | `#my-button` | `500`           |
 
@@ -75,7 +93,7 @@ To improve the performance of the web page, you can limit a Click listener to a 
 
 {{<table-wrap>}}
 
-| Rule type        | Type  | Selector    | Wait for events |
+| Rule type        | Type  | Selector    | Wait for actions |
 | ---------------- | ----- | ----------- | --------------- |
 | _Click listener_ | _CSS_ | `#myButton` | `500`           |
 
@@ -83,13 +101,13 @@ To improve the performance of the web page, you can limit a Click listener to a 
 
 {{<table-wrap>}}
 
-| Rule type    | Variable name                    | Match operation | Match string    |
-| ------------ | -------------------------------- | --------------- | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_      | `/my-page-path` |
+| Rule type    | Variable name               | Match operation | Match string |
+| ---------------- | ----- | ------------ | --------------- |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path`   |
 
 {{</table-wrap>}}
 
-Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one condition to a trigger.
+Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how to add more than one rule to a trigger.
 
 ---
 
@@ -97,7 +115,7 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 
 {{<table-wrap>}}
 
-| Rule type        | Type    | Selector                                         | Wait for events |
+| Rule type        | Type    | Selector                                         | Wait for actions |
 | ---------------- | ------- | ------------------------------------------------ | --------------- |
 | _Click listener_ | _XPath_ | `/html/body//*[contains(text(), 'Add To Cart')]` | `500`           |
 
@@ -136,7 +154,7 @@ To improve the performance of the web page, you can limit a Form submission trig
 
 | Rule type    | Variable name                    | Match operation | Match string    |
 | ------------ | -------------------------------- | --------------- | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | _Contains_      | `/my-page-path` |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path` |
 
 {{</table-wrap>}}
 
@@ -149,7 +167,7 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 <summary>Timer</summary>
 <div>
 
-Set up an interval of time in milliseconds before activating the trigger in **Interval**. In **Limit** specify the number of times the trigger will fire before stopping. If you do not specify a limit, the timer will run every ten seconds.
+Set up a timer that will fire the trigger after each **Interval**. Set your interval time in milliseconds. In **Limit** specify the number of times the interval will run, causing the trigger to fire. If you do not specify a limit, the timer will repeat for as long as the page is on display.
 
 **Trigger example:**
 
@@ -157,17 +175,17 @@ Set up an interval of time in milliseconds before activating the trigger in **In
 
 | Rule type | Interval | Limit |
 | --------- | -------- | ----- |
-| _Timer_   | `50`     | `2`   |
+| _Timer_   | `5000`   | `1`   |
 
 {{</table-wrap>}}
 
-To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
+The above Timer will fire once, after five seconds. To improve the performance of a web page, you can limit a Timer trigger to a specific URL, by combining it with a Match rule. For example, to set up a timer on a specific page you can set up the following rules in a trigger:
 
 {{<table-wrap>}}
 
 | Rule type | Interval | Limit |
 | --------- | -------- | ----- |
-| _Timer_   | `50`     | `2`   |
+| _Timer_   | `5000`   | `1`   |
 
 {{</table-wrap>}}
 
@@ -175,7 +193,7 @@ To improve the performance of a web page, you can limit a Timer trigger to a spe
 
 | Rule type    | Variable name                    | Match operation | Match string    |
 | ------------ | -------------------------------- | --------------- | --------------- |
-| _Match rule_ | `{{ system.page.url.pathname }}` | `Contains`      | `/my-page-path` |
+| _Match rule_ | `{{ system.page.url.pathname }}` | _Equals_      | `/my-page-path` |
 
 {{</table-wrap>}}
 

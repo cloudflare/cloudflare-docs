@@ -18,7 +18,7 @@ You can load balance your traffic at different levels of the networking stack, i
 
 Layer 7 load balancers direct traffic to specific servers based on information present in each HTTP/HTTPS request (HTTP headers, URI, cookies, type of data, etc.).
 
-When a client visits your application, Cloudflare directs their request to a healthy origin server (determined by your [pool-level steering policy](/load-balancing/understand-basics/traffic-steering/pool-level-steering/) and [origin weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights)).
+When a client visits your application, Cloudflare directs their request to a healthy origin server (determined by your [traffic steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [origin weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights)).
 
 Cloudflare performs layer 7 load balancing when traffic to your hostname is **proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with an orange cloud.
 
@@ -39,7 +39,7 @@ In comparison to [DNS-only load balancing](#gray-clouded-dns-only-load-balancing
 
 DNS-only load balancers route traffic by returning specific IP addresses in response to a client's DNS query.
 
-When a client visits your application, Cloudflare provides the address for a healthy origin server (determined by your [pool-level steering policy](/load-balancing/understand-basics/traffic-steering/pool-level-steering/) and [origin-level steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)). However, Cloudflare relies on DNS resolvers respecting the short TTL to re-query Cloudflare's DNS for an updated list of healthy addresses. If a client has a cached DNS response, they will go to their previous destination, potentially ignoring your load balancer.
+When a client visits your application, Cloudflare provides the address for a healthy origin server (determined by your [traffic steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) and [origin-level steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/)). However, Cloudflare relies on DNS resolvers respecting the short TTL to re-query Cloudflare's DNS for an updated list of healthy addresses. If a client has a cached DNS response, they will go to their previous destination, potentially ignoring your load balancer.
 
 Cloudflare performs DNS-only load balancing when traffic to your hostname is **not proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with a gray cloud.
 
@@ -56,7 +56,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 - Cannot integrate with other Cloudflare features such as caching, Workers, WAF, etc.
 - Increases authoritative queries against Cloudflare, which can potentially cost more for customers with usage-based billing.
 - Supports standard [session affinity](/load-balancing/understand-basics/session-affinity/).
-- Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/pool-level-steering/#dynamic-steering).
+- Geo-locates traffic based on the data center associated with a user's recursive resolver, which can sometimes cause issues with [latency-based steering](/load-balancing/understand-basics/traffic-steering/steering-policies/dynamic-steering/).
 
 ---
 

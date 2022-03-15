@@ -40,6 +40,19 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 Once you [add your domain to Cloudflare](#step-1--add-your-domain-to-cloudflare), add the **Verification TXT Record** at your authoritative DNS provider. Cloudflare will verify the TXT record and send a confirmation email. This can take up to a few hours.
 
+<details>
+<summary>Example verification record</summary>
+<div>
+
+A verification record for `example.com` might be:
+
+| Type | Name | Content |
+| --- | --- | --- |
+| TXT | `cloudflare-verify.example.com` | 966215192-518620144
+
+</div>
+</details>
+
 That record must remain in place for as long as your domain is active on the partial setup on Cloudflare.
 
 ---
@@ -59,9 +72,9 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
 
     2.  Add a **CNAME** record for `{your-hostname}.cdn.cloudflare.net`.
 
-         <details>
- <summary>Example</summary>
- <div>
+        <details>
+        <summary>Example CNAME record in Cloudflare</summary>
+        <div>
 
         The CNAME record for `www.example.com` would be:
 
@@ -69,7 +82,7 @@ To provision a Universal SSL certificate through Cloudflare, follow [these instr
         www.example.com CNAME www.example.com.cdn.cloudflare.net
         ```
 
-         </div>
- </details>
+        </div>
+        </details>
 
     3.  Repeat this process for each subdomain proxied to Cloudflare.
