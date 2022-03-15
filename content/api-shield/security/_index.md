@@ -11,9 +11,11 @@ layout: list
 Cloudflare offers the following features to help secure your APIs: 
 {{<directory-listing>}}
 
-## OWASP alignment
+## Example Cloudflare solutions
 
-Cloudflare's API Shield — together with other compatible Cloudflare products — helps protect your API from the issues detailed in the [OWASP&reg; API Security Top 10](https://owasp.org/www-project-api-security/):
+Cloudflare's API Shield — together with other compatible Cloudflare products — helps protect your API from the issues detailed in the [OWASP&reg; API Security Top 10](https://owasp.org/www-project-api-security/).
+
+The following table provides examples of how you might match Cloudflare products to OWASP vulnerabilities:
 
 | OWASP issue | Cloudflare solution |
 | ----------- | ------------------- |
