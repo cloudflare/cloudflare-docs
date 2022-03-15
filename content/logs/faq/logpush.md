@@ -61,7 +61,7 @@ Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501
 Simply updating a Logpush job does not push the job from v1 to v2, to upgrade a job to v2 the API must be used. You will need to use the `logstream` parameter and set it to true to upgrade to v2:
 
 ```bash
-$ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<job id> \
+$ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID> \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <API_KEY>" \
 -d '{"logstream":true}' \
