@@ -12,7 +12,7 @@ A false negative is a lack of identification. In the case of DDoS protection, th
 
 To address a false negative:
 
-- If you are a WAF/CDN customer, follow the steps in the [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196) page, which guides you on enabling the _Under Attack_ mode and creating Rate Limiting and Firewall rules as needed.
+- If you are a WAF/CDN customer, follow the steps in the [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196) page, which guides you on enabling the _Under Attack_ mode and creating rate limiting rules and firewall rules as needed.
 
 - If you are a Magic Transit customer, [use Magic Firewall rules](/magic-firewall/how-to/add-rules/) to help mitigate the attack.
 
@@ -35,7 +35,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Navigate to **Firewall** > **Overview**.
+    2\. Navigate to **Security** > **Overview**.
 
     3\. Click **Add filter** and filter by `Service equals HTTP DDoS`.
 
@@ -55,7 +55,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 1. Copy the rule ID from one of the DDoS log entries.
 
-1. Navigate to **Firewall** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
+1. Navigate to **Security** > **DDoS** and click **Configure** next to the Managed Ruleset containing the rule you will adjust.
 
 1. Click **Browse rules** and paste the Rule ID in the search field.
 

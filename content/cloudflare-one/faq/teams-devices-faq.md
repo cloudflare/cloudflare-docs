@@ -51,7 +51,7 @@ You may need to set up a Do Not Inspect policy to exclude some applications that
 
 Ensure that you do not have policies or firewall rules in place that block communication to the transport mechanisms or IP addresses required for WARP. Check the requirements at [this page](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
 
-In particular, Microsoft Intune’s default security policy creates a Firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
+In particular, Microsoft Intune’s default security policy creates a firewall rule that will block WARP by default. Refer to the page linked above for instructions on which IP addresses you need to add.
 
 Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
 

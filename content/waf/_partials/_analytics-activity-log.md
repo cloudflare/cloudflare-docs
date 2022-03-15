@@ -25,4 +25,4 @@ For a description of the actions that may appear in the **Activity Log**, refer 
 
 When the *Connection Close* action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
 
-The [*Managed Challenge (Recommended)*](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security products: Firewall Rules, IP Access Rules, User Agent Blocking, Rate Limiting, Custom Rules, and Bot Fight Mode.
+The [*Managed Challenge (Recommended)*](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP access rules, User Agent Blocking, rate limiting rules, custom rules, and Bot Fight Mode.

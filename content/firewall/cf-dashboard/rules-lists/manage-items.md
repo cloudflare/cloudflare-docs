@@ -8,7 +8,7 @@ weight: 361
 
 ## View items in an IP List
 
-1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
 1. To view items in a list, click the **Edit** link associated with the list you want to view.
 
@@ -47,15 +47,11 @@ You can use uppercase or lowercase characters for IPv6 addresses in lists. Howev
 
 To add items to an IP List:
 
-1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
 1. Click the **Edit** button associated with the list that you want to edit.
 
-    The list of IP items displays.
-
 1. Click **Add items**.
-
-    The **Add items to list** page displays:
 
     ![Add items to list page](/firewall/static/lists-add-items-to-list-page.png)
 
@@ -130,7 +126,7 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 ## Delete items from a list
 
-1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Configurations** > **Lists**.
+1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
 1. Click the **Edit** link associated with list from which you want to delete.
 

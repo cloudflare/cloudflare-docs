@@ -8,7 +8,7 @@ weight: 6
 
 The Firewall **Activity log** contains entries for requests with exposed credentials identified by rules with the _Log_ action.
 
-Check for exposed credentials events in the Firewall Analytics dashboard (**Overview** tab of the **Firewall** app), filtering by a specific Rule ID. For more information on filtering Firewall events, refer to [Adjusting displayed data](/waf/analytics/paid-plans/#adjusting-displayed-data).
+Check for exposed credentials events in the Firewall Analytics dashboard (**Security** > **Overview** tab), filtering by a specific Rule ID. For more information on filtering Firewall events, refer to [Adjusting displayed data](/waf/analytics/paid-plans/#adjusting-displayed-data).
 
 {{<Aside type="warning" header="Important">}}
 

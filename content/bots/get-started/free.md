@@ -18,10 +18,10 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 To start using Bot Fight Mode:
 
-1.  Go to **Firewall**.
+1.  Go to **Security**.
 2.  Select **Bots**.
 3.  For **Bot Fight Mode**, select **On**.
 
 ## Visibility
 
-You can see bot-related actions by going to **Firewall** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Security** > **Overview**. Any requests challenged by this product will be labeled **Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.

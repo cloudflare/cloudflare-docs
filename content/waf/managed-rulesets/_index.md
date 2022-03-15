@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Managed Rulesets
-weight: 5
+weight: 6
 ---
 
 # Managed Rulesets
@@ -38,6 +38,10 @@ Cloudflare provides the following WAF Managed Rulesets:
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/exposed-credentials-check/'>Cloudflare Exposed Credentials Check</a></td>
       <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
     </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
+      <td>Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+    </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
@@ -63,8 +67,8 @@ The following rulesets run in the response phase:
 
 ## Phases of deployed Managed Rulesets
 
-When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+When you enable a Managed Ruleset in **Security** > **WAF** > **Managed rules**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Refer to the specific Managed Ruleset documentation for details.
 
-For more information on phases, refer to [Phases](/ruleset-engine/about#phases).
+For more information on phases, refer to [Phases](/ruleset-engine/about/#phases).

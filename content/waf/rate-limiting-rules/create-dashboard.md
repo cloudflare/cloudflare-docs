@@ -1,40 +1,40 @@
 ---
 pcx-content-type: how-to
 type: overview
-title: Create Rate Limiting rules in the dashboard
+title: Create rate limiting rules in the dashboard
 weight: 14
 layout: list
 ---
 
-# Create Rate Limiting rules in the dashboard
+# Create rate limiting rules in the dashboard
 
-Create Rate Limiting rules under the **Custom Rules** tab in the **Firewall** app.
+Create rate limiting rules in **Security** > **WAF** > **Rate limiting rules**.
 
 {{<Aside type="note">}}
 
 This feature is only available for select customers on an Enterprise plan.
 
-For guidance on the previous version of Cloudflare Rate Limiting, available at **Firewall** > **Tools**, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
+For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}
 
-## Create a Rate Limiting rule
+## Create a rate limiting rule
 
-To create a new Rate Limiting rule:
+To create a new rate limiting rule:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2.  Navigate to **Firewall** > **Custom Rules**.
+3.  Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
-3.  Click **Create Custom rule** > **Rate limiting rule**.
+3.  Click **Create rate limiting rule**.
 
 4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
-    ![Create Rate Limiting rule page](/waf/static/custom-rules/rate-limiting-create.png)
+    ![Create rate limiting rule page](/waf/static/custom-rules/rate-limiting-create.png)
 
 5.  Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/custom-rules/rate-limiting/request-rate/) for more information.
+6.  Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
 7.  Under **And rate exceeds**, define the rate limit and the time period to consider when determining the request rate.
 

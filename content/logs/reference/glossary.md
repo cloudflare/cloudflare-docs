@@ -97,7 +97,7 @@ This value results from the Cloudflare **Browser Integrity Check (BIC)** feature
 
 #### Blocked hotlink
 
-This value results from the Cloudflare **Hotlink Protection** feature. **Hotlink Protection** ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature feature on and off.
+This value results from the Cloudflare **Hotlink Protection** feature. **Hotlink Protection** ensures that other sites cannot use your bandwidth by building pages that link to images hosted on your server. Cloudflare customers can turn this feature on and off.
 
 #### Bad IP
 
@@ -105,35 +105,35 @@ A request that came from an IP address that is not trusted by Cloudflare based o
 
 #### Country block
 
-Requests from countries that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
+Requests from countries that were blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IP block (user)
 
-Requests from specific IP addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
+Requests from specific IP addresses that were blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IP range block (/16)
 
-A /16 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
+A /16 IP range that was blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IP range block (/24)
 
-A /24 IP range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
+A /24 IP range that was blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IPv6 block (user)
 
-Requests from specific IPv6 addresses that were blocked based on the user configuration set in the Cloudflare **Firewall** app.
+Requests from specific IPv6 addresses that were blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IPv6 range block (/64)
 
-A /64 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
+A /64 IPv6 range that was blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IPv6 range block (/48)
 
-A /48 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
+A /48 IPv6 range that was blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### IPv6 range block (/32)
 
-A /32 IPv6 range that was blocked based on the user configuration set in the Cloudflare **Firewall** app.
+A /32 IPv6 range that was blocked based on the user configuration set in Cloudflare Firewall Rules.
 
 #### Captcha Error
 
@@ -141,7 +141,7 @@ Requests made by a bot that failed to pass the Captcha challenge.
 
 #### New Captcha (user)
 
-Challenge based on user configurations set for visitor’s IP in either the **Web Application Firewall (WAF)** or the **Firewall** app.
+Challenge based on user configurations set for visitor’s IP in either the Web Application Firewall (WAF) or Cloudflare Firewall Rules.
 
 ### Traffic
 

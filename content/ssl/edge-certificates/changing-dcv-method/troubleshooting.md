@@ -11,7 +11,7 @@ When performing Domain Control Validation (DCV) for partial domains using Univer
 
 If these issues occur while using HTTP DCV, review the following settings:
 
-- **Cloudflare Firewall Rules**: Review your [Firewall Rules](/firewall/) to ensure that your rules _do not_:
+- **Cloudflare Firewall Rules**: Review your [firewall rules](/firewall/) to ensure that your rules _do not_:
 
   - Block requests from the United States
   - Block requests from the issuing Certificate Authority's IP addresses

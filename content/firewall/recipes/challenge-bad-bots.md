@@ -150,12 +150,12 @@ If your domain saw mobile, browser, and API traffic, you would want to arrange t
 
 ### Static resource protection
 
-Static resources are protected by default when you create **Firewall Rules** using `cf.bot_management.score`.
+Static resources are protected by default when you create **firewall rules** using `cf.bot_management.score`.
 
-To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your Firewall Rule. For more details, refer to [Static resource protection](/bots/reference/static-resources/).
+To exclude static resources, include <code class="InlineCode">not (cf.botManagement.staticResource)</code> as part of your firewall rule. For more details, refer to [Static resource protection](/bots/reference/static-resources/).
 
 ### Additional considerations
 
-From there, you could customize your Firewall Rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
+From there, you could customize your firewall rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
 Just make sure to set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Firewall Events](/waf/analytics/) to check if your rules need additional tuning.
