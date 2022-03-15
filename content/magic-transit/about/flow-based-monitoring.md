@@ -14,4 +14,4 @@ To activate IP advertisement via the Cloudflare dashboard, refer to [​using th
 
 To activate IP advertisement via the API, refer to the [IP Address Management Dynamic Advertisement API](https://api.cloudflare.com/#ip-address-management-dynamic-advertisement-properties).
 
-To enable Flow-based monitoring alerts, refer to [Enable Flow-based monitoring alerts](/magic-transit/how-to/enable-flowbased-monitoring).
+To enable Flow-based monitoring alerts, refer to [Enable Flow-based monitoring alerts](/magic-transit/how-to/enable-flow-based-monitoring).
