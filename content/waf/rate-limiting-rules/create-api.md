@@ -65,14 +65,14 @@ header: Response
 ---
 {
   "result": {
-    "id": "{ruleset-id}",
+    "id": "<RULESET_ID>",
     "name": "Default",
     "description": "",
     "kind": "zone",
     "version": "5",
     "rules": [
       {
-        "id": "{rate-limiting-rule-id}",
+        "id": "<RULE_ID>",
         "version": "1",
         "action": "block",
         "ratelimit": {
@@ -88,7 +88,7 @@ header: Response
         "expression": "(http.request.uri.path matches \"^/api/\")",
         "description": "My rate limiting rule",
         "last_updated": "2021-03-31T18:33:41.347Z",
-        "ref": "{rule-ref-1}",
+        "ref": "<RULE_REF>",
         "enabled": true
       }
     ],
