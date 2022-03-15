@@ -28,8 +28,8 @@ The **Administrator Read only** and **Log Share Reader** roles only have access 
 
 To check the list of members in your account, or to manage roles and permissions:
 
-1.  Navigate to the Cloudflare Dashboard (https://dash.cloudflare.com/login).
-2.  From your Account Home, navigate to **Members**.
+1.  Navigate to the Cloudflare Dashboard (https://dash.cloudflare.com/login) and select your account.
+2.  From your Account Home, navigate to **Manage Account** > **Members**.
 3.  Enter a member’s email address to add them to your account, and click **Invite**.
 4.  Alternatively, scroll down to the **Members** card to find a list of members with their status and role.
 
