@@ -21,31 +21,31 @@ To create a new rate limiting rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
+1. Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
-3. Click **Create rate limiting rule**.
+1. Click **Create rate limiting rule**.
 
-4. In the page that displays, enter a descriptive name for the rule in **Rule name**.
+1. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
     ![Create rate limiting rule page](/waf/static/custom-rules/rate-limiting-create.png)
 
-5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+1. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-8. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
+1. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
 
-9. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
+1. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests) for requests exceeding the configured rate limit.
 
-9. Under **For**, select the mitigation timeout in **Duration**. This is the time period during which Cloudflare applies the select action once the request rate is reached.
+1. Under **For**, select the mitigation timeout in **Duration**. This is the time period during which Cloudflare applies the select action once the request rate is reached.
 
-7. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the request rate.
+1. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the request rate.
 
-6. Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
+1. Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the request rate. Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
-8. (Optional) Under **Counter**, enable **Use custom counting expression** to define an expression that specifies the conditions for incrementing the request rate counter. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
+1. (Optional) Under **Counter**, enable **Use custom counting expression** to define an expression that specifies the conditions for incrementing the request rate counter. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
 
-9. (Optional) Under **Cache status**, disable **Also apply rate limiting to cached assets** to consider only the requests that reach the origin when determining the request rate.
+1. (Optional) Under **Cache status**, disable **Also apply rate limiting to cached assets** to consider only the requests that reach the origin when determining the request rate.
 
-10. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
+1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
 
 ## Configuring a custom response for blocked requests
 
