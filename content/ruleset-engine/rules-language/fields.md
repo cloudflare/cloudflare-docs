@@ -393,7 +393,7 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
-        <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}string{{</type>}}</p>
+        <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
@@ -423,6 +423,13 @@ The Cloudflare Rules language supports these dynamic fields:
           <p>Represents the port number at which Cloudflare's network received the request.
           </p>
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
+        </td>
+    </tr>
+    <tr id="field-cf-hostname-metadata">
+        <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          </p>
         </td>
     </tr>
     <tr>
