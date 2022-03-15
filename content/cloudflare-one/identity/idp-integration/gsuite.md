@@ -98,7 +98,11 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 
   {{<Aside type="note">}}
   
-  For the next steps to work correctly, you must enable the **Trust internal, domain-owned apps** option under the **Security** > **Access and data control** > **API controls** section of the Google Admin web app. The option is disabled by default and must be enabled for Cloudflare Access to work correctly.
+  For the next steps to work correctly, you must enable the **Trust internal, domain-owned apps** option under the **Security** > **Access and data control** > **API controls** section of the Google Admin web app. 
+  
+  ![Enable trust internal apps](/cloudflare-one/static/documentation/identity/gsuite/trust-internal-apps.png)
+  
+  The option is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
   {{</Aside>}}
 
