@@ -33,27 +33,6 @@ Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) 
 
 ---
 
-## Availability
-
-{{<table-wrap style="font-size:90%">}}
-
-Feature | Free | Pro | Business | Enterprise Core | Enterprise Advanced |
----|---|---|---|---|---
-Available fields<br/>in expression | URL | URL | URL, Method, Request headers, Source IP | URL, Method, Request headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
-Counting characteristics | IP | IP | IP | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3*
-Counting expression | — | — | Yes | Yes | Yes
-Available fields<br/>in counting expression | — | — | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
-Maximum sampling period | 1&nbsp;minute | 1 minute | 5 minutes | 10 minutes | 1 hour
-Available Timeout | 60, 3600 | 60, 3600 | 60, 3600, 86400 | 30–86400 | 30–86400
-Custom response | — | — | Yes | Yes | Yes
-Max. number of rules | 1 | 10 | 15 | 100 | 100
-Available actions | Block | Block, Log, Managed Challenge | Block, Log, Managed Challenge | Block, Log, Managed Challenge | Block, Log, Managed Challenge, JS Challenge, Legacy CAPTCHA
-
-{{</table-wrap>}}
-
-\* Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
-
-
 ## Next steps
 
 To configure rate limiting rules in the Cloudflare dashboard, go to **Security** > **WAF** > **Rate limiting rules**. For more information, refer to [Create rate limiting rules in the dashboard](/waf/rate-limiting-rules/create-dashboard/).
