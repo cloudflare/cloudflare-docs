@@ -14,9 +14,9 @@ You can enable and configure Managed Rulesets for a zone in **Security** > **WAF
 
 ## Deploy a Managed Ruleset
 
-Under **Deploy Managed Rulesets**, click **Add** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
+Under **Managed Rulesets**, click **Add** on the right of a Managed Ruleset to deploy the Managed Ruleset for the current zone.
 
-When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **WAF**, that deploys the Managed Ruleset.
+When you deploy a Managed Ruleset, the WAF adds an _Execute_ rule, displayed under **Managed rules**, that deploys the Managed Ruleset.
 
 ## Enable or disable a Managed Ruleset
 
