@@ -20,6 +20,8 @@ When you create a [new certificate](/ssl/edge-certificates/), it moves through t
 
 Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** within five minutes. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
 
+If you deactivate a certificate, that certificate will go to a **Deactivating** and then an **Inactive** status.
+
 ## Custom certificates
 
 If you are using a [custom certificate](/ssl/edge-certificates/custom-certificates/) and your [zone status](/dns/zone-setups/reference/domain-status/) is **Pending** or **Moved**, your certificate may have a status of **Holding Deployment**.

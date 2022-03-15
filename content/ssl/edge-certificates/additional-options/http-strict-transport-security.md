@@ -19,7 +19,7 @@ Before enabling HSTS, review the [requirements](#requirements).
 
 {{<Aside type="note">}}
 
-For more background information on HSTS, see the <a href="https://blog.cloudflare.com/enforce-web-policy-with-hypertext-strict-transport-security-hsts/">introductory blog post</a>.
+For more background information on HSTS, see the [introductory blog post](https://blog.cloudflare.com/enforce-web-policy-with-hypertext-strict-transport-security-hsts/).
 
 {{</Aside>}}
 

@@ -12,7 +12,7 @@ Enterprise customers with Bot Management can use **Bot Analytics** to dynamicall
 
 ## Access
 
-To use Bot Analytics, open the Cloudflare dashboard and select **Firewall** > **Bots**.
+To use Bot Analytics, open the Cloudflare dashboard and select **Security** > **Bots**.
 
 ![Bot Analytics on Dashboard](/bots/static/bot-analytics-dashboard-ent.png)
 
@@ -34,7 +34,7 @@ Bot Analytics shows up to one week of data at a time and can display data up to 
 Bot Management customers can use Bot Analytics to:
 
 - Understand traffic during [your onboarding phase](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise)
-- Tune Firewall Rules to be effective but not overly aggressive
+- Tune firewall rules to be effective but not overly aggressive
 - Study recent attacks to find trends and detailed information
 - Learn more about Cloudflare’s detection engines with real data
 

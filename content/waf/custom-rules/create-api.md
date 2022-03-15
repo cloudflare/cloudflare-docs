@@ -1,16 +1,16 @@
 ---
 pcx-content-type: how-to
 type: overview
-title: Create Custom Firewall rules via API
+title: Create custom rules via API
 weight: 3
 layout: list
 ---
 
-# Create Custom Firewall rules via API
+# Create custom rules via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api) to create a Custom Firewall rule via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
 
-You must deploy Custom Firewall rules to the `http_request_firewall_custom` phase entry point ruleset.
+You must deploy custom rules to the `http_request_firewall_custom` phase entry point ruleset.
 
 {{<Aside type="note">}}
 
@@ -18,16 +18,16 @@ This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
 
-## Create a Custom Firewall rule
+## Create a custom rule
 
-To create a Custom Firewall rule, add a rule to the `http_request_firewall_custom` phase entry point ruleset.
+To create a custom rule, add a rule to the `http_request_firewall_custom` phase entry point ruleset.
 
-1.  Invoke the [View ruleset](/ruleset-engine/rulesets-api/view#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase entry point ruleset. If the entry point ruleset does not exist, proceed to step 2, since adding a rule to the entry point ruleset will create the ruleset if it does not exist.
+1.  Invoke the [View ruleset](/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase entry point ruleset. If the entry point ruleset does not exist, proceed to step 2, since adding a rule to the entry point ruleset will create the ruleset if it does not exist.
 
-2.  Invoke the [Update ruleset](/ruleset-engine/rulesets-api/update) method to update the list of rules in the phase entry point ruleset with a new rule. You must include the rule ID of all the rules you wish to keep in the ruleset (all other fields are optional).
+2.  Invoke the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to update the list of rules in the phase entry point ruleset with a new rule. You must include the rule ID of all the rules you wish to keep in the ruleset (all other fields are optional).
 
 <details>
-<summary>Example: Add new Custom Firewall rule using the Update ruleset API method</summary>
+<summary>Example: Add new custom rule using the Update ruleset API method</summary>
 <div>
 
 ```json
@@ -35,9 +35,8 @@ To create a Custom Firewall rule, add a rule to the `http_request_firewall_custo
 header: Request
 ---
 curl -X PUT \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zones/{zone-id}/rulesets/phases/http_request_firewall_custom/entrypoint" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "rules": [
     {

@@ -16,9 +16,3 @@ You can add new third-party tools and load them into your website through the Cl
 6. Click **Save**.
 
 While your tool is now configured, it needs to have actions defined before it can work. Depending on the tool you chose, Cloudflare Zaraz might automatically create a `Pageview` action. Refer to [Create actions](/zaraz/get-started/create-actions/) to learn how to create additional actions.
-
-<div class="full-img">
-
-![An example of what adding a tool looks like in Zaraz dahsboard](/zaraz/static/tool-settings.png)
-
-</div>

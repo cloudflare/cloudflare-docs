@@ -18,7 +18,7 @@ To review the scripts considered malicious:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2.  Go to **Firewall** > **Page Shield**.
+2.  Go to **Security** > **Page Shield**.
 
 3.  Under **Script Monitor**, click **Details** for each script considered malicious. The script details will contain:
 

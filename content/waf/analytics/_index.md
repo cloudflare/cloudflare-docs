@@ -2,7 +2,7 @@
 title: Analytics
 pcx-content-type: concept
 type: overview
-weight: 7
+weight: 9
 layout: list
 meta:
   title: Firewall Analytics

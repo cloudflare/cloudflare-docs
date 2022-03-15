@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
-title: Manage Custom Rules in the dashboard
+title: Manage custom rules in the dashboard
 weight: 6
 ---
 
-# Manage Custom Rules in the dashboard
+# Manage custom rules in the dashboard
 
-You can manage Custom Rules under the **Custom Rules** tab in the **Firewall** app.
+Manage custom rules in **Security** > **WAF** > **Custom rules**.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -14,19 +14,18 @@ This feature is only available for select customers on an Enterprise plan.
 
 {{</Aside>}}
 
-The Custom Rules interface allows you to:
+The custom rules interface allows you to:
 
-- [Create Custom Firewall rules](/waf/custom-rules/custom-firewall/create-dashboard/)
-- [Create Rate Limiting rules](/waf/custom-rules/rate-limiting/create-dashboard/)
+- [Create custom rules](/waf/custom-rules/create-dashboard/)
 - Browse and filter rules
 - Edit and delete rules
 - Enable or disable rules
 
-![Custom Rules tab](/waf/static/custom-rules/custom-rules-tab.png)
+![Custom rules tab](/waf/static/custom-rules/custom-rules-tab.png)
 
-## Manage Custom Rules
+## Manage custom rules
 
-Edit, delete, or enable/disable rules in the Custom Rules card.
+Edit, delete, or enable/disable rules in the **Custom rules** card.
 
 ### Enable or disable a rule
 

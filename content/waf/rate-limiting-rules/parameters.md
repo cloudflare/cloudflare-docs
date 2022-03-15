@@ -6,7 +6,7 @@ weight: 18
 
 # Rate limiting parameters
 
-The available Rate Limiting rule parameters are the following:
+The available rate limiting rule parameters are the following:
 
 {{<definitions>}}
 
@@ -40,19 +40,19 @@ The available Rate Limiting rule parameters are the following:
     | `http.request.cookies["<cookie_name>"]`       | _Cookie_                  |
     | `http.request.uri.args["<query_param_name>"]` | _Query_                   |
 
-  - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same Rate Limiting rule.
+  - You cannot use both `cf.unique_visitor_id` and `ip.src` as characteristics of the same rate limiting rule.
 
   - If you use `http.request.headers["<header_name>"]`, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
 
   - If you use `http.request.cookies["<cookie_name>"]`, refer to [Recommendations](#recommendations) for additional validations you should implement.
 
-  - You should not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule. Refer to [Recommendations](#recommendations) for details.
+  - You should not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
 
-  - {{<Aside type="note">}}
+{{<Aside type="note">}}
 
 Use `cf.unique_visitor_id` to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies — refer to [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies) for details.
 
-        {{</Aside>}}
+{{</Aside>}}
 
 - `period` {{<type>}}Number{{</type>}}
 
@@ -67,7 +67,7 @@ Use `cf.unique_visitor_id` to handle situations such as requests under NAT shari
 
 - `mitigation_timeout` {{<type>}}Number{{</type>}}
   - Field name in the dashboard: **Duration**.
-  - Once the request rate is reached, the Rate Limiting rule blocks further requests for the period of time defined in this field (in seconds).
+  - Once the request rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field (in seconds).
   - Use one of the following values: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
   - The value must be `0` when action is `challenge`, `js_challenge`, or `managed_challenge`.
 
@@ -75,11 +75,11 @@ Use `cf.unique_visitor_id` to handle situations such as requests under NAT shari
 
 ## Recommendations
 
-- If you use `http.request.cookies["<cookie_name>"]` as a Rate Limiting rule characteristic, follow these recommendations:
+- If you use `http.request.cookies["<cookie_name>"]` as a rate limiting rule characteristic, follow these recommendations:
 
-  - Create a [Custom Firewall rule](/waf/custom-rules/custom-firewall/) that blocks requests with more than one value for the cookie.
+  - Create a [custom rule](/waf/custom-rules/) that blocks requests with more than one value for the cookie.
   - Validate the cookie value at the origin before performing any demanding server operations.
 
-- Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a Rate Limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/custom-rules/rate-limiting/request-rate/), which could unexpectedly trigger the rule for many visitors.
+- Do not use `http.request.headers["<header_name>"]` or `http.request.cookies["<cookie_name>"]` as the only characteristic of a rate limiting rule, since in some occasions these characteristics have no value. In this case, the requests would fit in the same [rate limiting counter](/waf/rate-limiting-rules/request-rate/), which could unexpectedly trigger the rule for many visitors.
 
-  To prevent this situation, Cloudflare recommends that you use a second characteristic in your Rate Limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.
+  To prevent this situation, Cloudflare recommends that you use a second characteristic in your rate limiting rule that always has a defined value, such as `ip.src` or `ip.geoip.asnum`.
