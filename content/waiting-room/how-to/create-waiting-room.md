@@ -32,6 +32,7 @@ Create a waiting room by appending the following endpoint in the [Waiting Room A
 
 ```txt
 POST zones/{zone_identifier}/waiting_rooms
+```
 
 The Cloudflare API base URL is:
 
@@ -63,25 +64,26 @@ The following example API request configures a waiting room.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: xxxxxxxx" \
-     -H "Content-Type: application/json" \
-     --data '{"name":"shop_waiting_room",
-              "description":"Waiting room for webshop",
-              "host":"shop.example.com",
-              "path":"/shop",
-              "queue_all": true,
-              "new_users_per_minute":200,
-              "total_active_users":300,
-              "session_duration":1,
-              "disable_session_renewal": false,
-              "json_response_enabled": false,
-              "queueing_method": "FIFO",
-              "cookie_attributes": {
-                "samesite": "auto",
-                "secure": "auto"
-              },
-            }'
+-H "X-Auth-Email: user@example.com" \
+-H "X-Auth-Key: xxxxxxxx" \
+-H "Content-Type: application/json" \
+--data '{
+  "name": "shop_waiting_room",
+  "description": "Waiting room for webshop",
+  "host": "shop.example.com",
+  "path": "/shop",
+  "queue_all": true,
+  "new_users_per_minute": 200,
+  "total_active_users": 300,
+  "session_duration": 1,
+  "disable_session_renewal": false,
+  "json_response_enabled": false,
+  "queueing_method": "FIFO",
+  "cookie_attributes": {
+    "samesite": "auto",
+    "secure": "auto"
+  }
+}'
 ```
 
 The response for the request above is:
