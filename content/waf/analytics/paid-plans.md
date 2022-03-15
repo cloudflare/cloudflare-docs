@@ -32,7 +32,7 @@ You can adjust the displayed data according to one of the values by clicking **F
 
 ## Events by service
 
-The **Events by service** section lists the firewall activity per Cloudflare security feature (for example, **WAF**, **Firewall Rules**, **API Shield**).
+The **Events by service** section lists the firewall activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
 
 You can adjust the scope of Firewall Analytics to one of the displayed services by clicking **Filter** or **Exclude** when hovering the legend or by clicking the corresponding graph bar.
 
