@@ -63,8 +63,7 @@ For reference information on rule actions available for Cloudflare products powe
             <li>Available to all plans</li>
             <li>
               <p>Matching requests exempt from evaluation by a user-defined list
-              containing one or more of the following Cloudflare Firewall
-              products/features:</p>
+              containing one or more of the following Cloudflare security features:</p>
               <ul>
                 <li>User-agent Blocking</li>
                 <li>Browser Integrity Check</li>
