@@ -16,7 +16,7 @@ Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, priva
 
 ## 1.1.1.1 with WARP
 
-The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt the traffic from your device and send it directly to Cloudflare’s edge network. This ensures your connection is secure and private and prevents third parties from accessing your traffic. If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses our global network of data centers to devise the shortest path to the site.
+The WARP application uses [BoringTun](https://blog.cloudflare.com/boringtun-userspace-wireguard-rust/) to encrypt the traffic from your device and send it directly to Cloudflare’s edge network. This ensures your connection is secure and private and prevents third parties from accessing your traffic. If the site you are visiting is already a Cloudflare customer, the content is immediately sent to your device. If not, Cloudflare uses its global network of data centers to devise the shortest path to the site.
 
 Read more about WARP in our blog post [Introducing WARP: Fixing Mobile Internet Performance and Security](https://blog.cloudflare.com/1111-warp-better-vpn/).
 
@@ -30,7 +30,7 @@ WARP does not provide anonymity and is not designed to prevent servers you commu
 
 Currently, this mode is available on desktop clients only. When WARP is configured as a local proxy, only the applications that you configure to use the proxy (HTTPS or SOCKS5) will have their traffic sent through WARP. This allows you to pick and choose which traffic is encrypted — for example, your web browser or a specific application. Everything else will not be encrypted and will be sent over a regular Internet connection.
 
-Because this feature restricts WARP to just applications configured to use the local proxy, leaving all other traffic unencrypted over the Internet by default, we have hidden it in the **Advanced** menu. To turn it on:
+Because this feature restricts WARP to just applications configured to use the local proxy, leaving all other traffic over the Internet unencrypted by default, we have hidden it in the **Advanced** menu. To turn it on:
 
 1. Navigate to **Preferences** > **Advanced** and select **Configure Proxy**.
 2. On the window that opens, check the box and configure the port you want to listen on.
