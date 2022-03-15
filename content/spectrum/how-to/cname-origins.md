@@ -43,6 +43,12 @@ curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 
 Next, create the Spectrum application that will point to the domain name. Below is an example curl and the associated data being posted to the API.
 
+{{<Aside type="note" header="Note">}}
+
+The `origin_dns` field takes as input CNAMEs and the field `origin_direct` takes IP addresses. To create a Spectrum application, one or the other can be used, but not both at the same time. In case you use CNAME, Cloudflare needs to be authoritative for that zone.
+
+{{</Aside>}}
+
 **API Example:**
 
 ```bash
