@@ -1,16 +1,16 @@
 ---
 pcx-content-type: concept
 type: overview
-title: Sequential Abuse Detection
+title: Sequential Abuse Detection (Beta)
 weight: 4
 layout: list
 ---
 
-# Sequential Abuse Detection
-
-{{<render file="_availability.md">}}
+# Sequential Abuse Detection (Beta)
 
 Sequential Abuse Detection uncovers endpoint abuse by looking for irregular traffic across multiple endpoints.
+
+{{<render file="_availability.md">}}
 
 ## Process
 

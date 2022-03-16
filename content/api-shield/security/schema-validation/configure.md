@@ -9,9 +9,9 @@ meta:
 
 # Configure Schema Validation
 
-Use the **API Shield** interface to configure [API Schema Validation](/api-shield/products/schema-validation/), which validates requests according to the API Schema you provide.
+Use the **API Shield** interface to configure [API Schema Validation](/api-shield/security/schema-validation/), which validates requests according to the API Schema you provide.
 
-Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/products/schema-validation/#specifications).
+Before you can configure Schema Validation for an API, you must obtain an API Schema file matching our [specifications](/api-shield/security/schema-validation/#specifications).
 
 {{<Aside type="note">}}
 
@@ -47,7 +47,7 @@ To validate the hostname, you must include the _Hostname_ field explicitly in th
 
 8.  Click **Save** to validate the content of the schema file and deploy the Schema Validation rule.
 
-    If you get a validation error, make sure you are using one of the [supported file formats](/api-shield/products/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/products/schema-validation/#operation-ids).
+    If you get a validation error, make sure you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/security/schema-validation/#operation-ids).
 
 9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
