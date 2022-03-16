@@ -76,7 +76,7 @@ Ports 80 and 443 are the only ports compatible with:
 
 - HTTP/HTTPS traffic within China data centers for domains that have the **China Network** enabled, and
 - Proxying of [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started)
-- [Cloudflare Caching](https://support.cloudflare.com/hc/articles/360021806811)
+- [Cloudflare Caching](/cache/get-started/)
 
 {{<Aside type="note">}}
 
@@ -86,4 +86,4 @@ Ports 80 and 443 are the only ports compatible with:
 
 ## Related resources
 
-- [Managing DNS records at Cloudflare](https://support.cloudflare.com/hc/articles/360019093151)
+- [Managing DNS records at Cloudflare](/dns/manage-dns-records/how-to/create-dns-records/)
