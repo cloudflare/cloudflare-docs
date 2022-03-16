@@ -12,7 +12,7 @@ The WARP client has several modes to better suit different connection needs:
 
 1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet. It also offers an encrypted service through DNS over HTTPS (DoH) or DNS over TLS (DoT) for increased security and privacy.
 
-Read more about 1.1.1.1 on our blog post [Announcing 1.1.1.1: the fastest, privacy-first consumer DNS service](https://blog.cloudflare.com/announcing-1111/) and [Introducing 1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/)
+Refer to [1.1.1.1 resolver](/1.1.1.1/) to learn more about this service.
 
 ## 1.1.1.1 with WARP
 
@@ -39,7 +39,7 @@ This will enable the **WARP via Local Proxy** option in the **WARP Settings** me
 
 ## WARP+
 
-While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested Internet routes and improve overall end-to-end performance.
+While WARP is able to take advantage of the many Cloudflare data centers around the world to give you a more private and robust connection, WARP+ improves on that with intelligent routing. Leveraging the same technology that powers [Argo Smart Routing](https://www.cloudflare.com/products/argo-smart-routing/), WARP+ will route your traffic around congested Internet routes and improve overall end-to-end performance. WARP+ is currently only offered in our iOS and Android devices.
 
 ## WARP Unlimited
 
