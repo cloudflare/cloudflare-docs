@@ -8,6 +8,10 @@ weight: 6
 
 Below you will find answers to our most commonly asked questions on Cloudflare Zaraz. If you cannot find the answer you are looking for, head over to our [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.gg/2TRr6nSxdd).
 
+## Is Zaraz compatible with Content Security Policies (CSP)?
+
+Yes. To learn more about how Zaraz works to be compatible with CSP configurations, refer to the [Cloudflare Zaraz supports CSP](https://blog.cloudflare.com/cloudflare-zaraz-supports-csp/) blog post.
+
 ## Does Cloudflare process my HTML, removing existing scripts and then injecting Zaraz?
 
 Cloudflare Zaraz does not remove other third-party scripts from the page. Zaraz [can be auto-injected or not](/zaraz/reference/settings/#auto-inject-script), depending on your configuration.
