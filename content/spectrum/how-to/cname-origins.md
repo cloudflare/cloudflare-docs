@@ -39,7 +39,7 @@ curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 }
 ```
 
-## 2. Create the Spectrum Application
+## 2. Create the Spectrum application
 
 Next, create the Spectrum application that will point to the domain name. Below is an example curl and the associated data being posted to the API.
 
