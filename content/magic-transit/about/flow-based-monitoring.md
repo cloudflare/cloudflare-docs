@@ -14,4 +14,4 @@ To activate IP advertisement via the Cloudflare dashboard, refer to [​using th
 
 To enable Flow-based monitoring alerts, refer to [Enable Flow-based monitoring alerts](/magic-transit/how-to/enable-flow-based-monitoring).
 
-To enable per-prefix thresholds with prefix auto advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](magic-transit/how-to/auto-advertise-prefixes/).
+To enable per-prefix thresholds with prefix auto advertisement, refer to [Enable per-prefix thresholds with prefix auto advertisement](/magic-transit/how-to/auto-advertise-prefixes/).
