@@ -15,7 +15,7 @@ The Cloudflare Rules language supports a range of field types:
 - [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
 - [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
 - [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
-- [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
+- [HTTP response fields](#http-response-fields) represent the names and values of HTTP headers and the status code of the HTTP response.
 
 ## Standard fields
 
@@ -1035,17 +1035,21 @@ The Cloudflare Rules language supports these HTTP body fields:
   </tbody>
 </table>
 
-## HTTP response header fields
+## HTTP response fields
 
-The Rules language includes fields that represent properties of HTTP response headers returned by the origin or by a Worker script.
+The Rules language includes fields that represent properties of HTTP response returned by the origin or by a Worker script.
 
 {{<Aside type="note">}}
 
-You can only use HTTP response header fields in [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/) and in filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset.
+You can only use HTTP response fields in:
+
+* [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Rate limiting rules](/waf/rate-limiting-rules/)
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
 
 {{</Aside>}}
 
-The Cloudflare Rules language supports these HTTP response header fields:
+The Cloudflare Rules language supports these HTTP response fields:
 
 <table>
   <thead>
@@ -1055,6 +1059,16 @@ The Cloudflare Rules language supports these HTTP response header fields:
    </tr>
   </thead>
   <tbody>
+   <tr id="field-http-response-code">
+      <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+         <p>Represents the HTTP status code returned by the origin.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">403</code>
+         </p>
+      </td>
+   </tr>
    <tr id="field-http-response-headers">
       <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
       <td>

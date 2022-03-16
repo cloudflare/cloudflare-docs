@@ -1,12 +1,12 @@
 ---
 pcx-content-type: concept
 title: Rate limiting rules
-weight: 5
+weight: 4
 ---
 
 # Rate limiting rules
 
-Rate limiting rules allow you to define rate limits for requests matching an expression, and which action to take when those rate limits are reached.
+Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
 {{<Aside type="note">}}
 
@@ -27,11 +27,29 @@ Besides these two parameters, rate limiting rules require the following addition
 *   **Requests per period** — The number of requests over the period of time that will trigger the rate limiting rule.
 *   **Mitigation timeout** — Once the request rate is reached, the rate limiting rule blocks further requests for the period of time defined in this field.
 
-Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more details on these parameters.
+Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
 
 Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
 ---
+
+## Availability
+
+Rate limiting rules are available to Enterprise customers on the Core or Advanced plan. The available features depend on the exact plan:
+
+{{<table-wrap>}}
+
+Feature | Enterprise Core | Enterprise Advanced |
+---|---|---
+Available fields<br/>in rule expression | URL, Method, Headers, Source IP | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Bot Management fields*)
+Counting characteristics | IP | IP, IP with NAT support, Query, Headers, Cookie, ASN, Country, JA3 Fingerprint*
+Available fields<br/>in counting expression | URL, Method, Request headers, Source IP, Response code, Response headers | URL, Method, Request headers, Source IP, Response code, Response headers
+Maximum sampling period | 10 minutes | 1 hour
+
+{{</table-wrap>}}
+
+\* Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
+
 
 ## Next steps
 

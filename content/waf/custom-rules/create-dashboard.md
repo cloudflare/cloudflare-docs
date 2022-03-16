@@ -26,7 +26,7 @@ To create a new custom rule:
 
 3.  Navigate to **Security** > **WAF** > **Custom rules**.
 
-4.  Click **Create custom rule**.
+4.  Click **Create Firewall rule**.
 
 5.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
