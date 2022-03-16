@@ -24,7 +24,7 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 ## Events summary
 
-The **Events summary** section provides the number of Firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
+The **Events summary** section provides the number of firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
 ![Filter Firewall Analytics by action](/waf/static/analytics-events-summary.png)
 
@@ -38,13 +38,13 @@ You can adjust the scope of Firewall Analytics to one of the displayed services 
 
 ## Top events by source
 
-In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall Rules**.
+In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall rules**.
 
 You can adjust the scope of Firewall Analytics to one of the listed source values by clicking **Filter** or **Exclude** when hovering the value.
 
 {{<Aside type="note">}}
 
-A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
+A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
 
 {{</Aside>}}
 
@@ -60,7 +60,7 @@ A deleted firewall rule or rate limiting rule will show as `Rule unavailable` un
 
 ## Print or download PDF report
 
-To print or download a snapshot report from your Firewall Events analytics dashboard, click **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
+To print or download a snapshot report from your firewall events analytics dashboard, click **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
 
 The generated report will reflect all applied filters.
 

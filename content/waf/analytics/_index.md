@@ -12,14 +12,14 @@ meta:
 
 Firewall Analytics allows you to manage and visualize threats and helps you tailor your security configurations.
 
-Users on a Free plan can view summarized Firewall events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features and any recent threats against your zone.
+Users on a Free plan can view summarized firewall events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features and any recent threats against your zone.
 
 ## Main features
 
-*   **Events summary**: Provides the number of Firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
+*   **Events summary**: Provides the number of firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, Action, Host, Country).
 *   **Events by service**: Lists the Firewall activity per Cloudflare security feature (for example, WAF, Firewall Rules, API Shield).
 *   **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
-*   **Activity log**: Summarizes Firewall events by date to show the action taken and the applied Cloudflare security product.
+*   **Activity log**: Summarizes firewall events by date to show the action taken and the applied Cloudflare security product.
 *   **Denial-of-service attacks mitigated**: Counts automatically mitigated Layer 4 attacks blocked by Cloudflare over the last seven days.
 
 Firewall Analytics captures all traffic actioned or flagged by a Cloudflare security product, including features such as [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086).
