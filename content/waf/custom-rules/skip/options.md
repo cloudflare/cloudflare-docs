@@ -8,7 +8,7 @@ meta:
 
 # Available skip options
 
-The available skip options in custom are the following:
+The available skip options in custom rules are the following:
 
 {{<definitions>}}
 
