@@ -12,6 +12,8 @@ meta:
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send ecommerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
+Right now, Zaraz is compatible with Google Analytics 4 and Google Analytics 3.
+
 ## Enable ecommerce tracking
 
 You do not need to map ecommerce events to triggers. Zaraz will automatically forward data using the right format to the tools with ecommerce support.

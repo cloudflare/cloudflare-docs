@@ -8,7 +8,7 @@ meta:
 
 # Zaraz settings
 
-Configure Zaraz's general settings for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz).
+Configure Zaraz's general settings for a website from its [main dashboard](https://dash.cloudflare.com/?to=/:account/:zone/zaraz). Click the **Settings** button to start.
 
 ## Data layer compatibility mode
 
@@ -23,3 +23,7 @@ When you toggle Single Page Application support off, the `pageview` trigger will
 This option automatically injects the script needed for Zaraz to work on your website. It is turned on by default.
 
 If you turn this option off, Zaraz will stop automatically injecting its script on your domain. If you still want Zaraz functionality, you will need to add the Zaraz script manually. Refer to [Load Zaraz manually](/zaraz/advanced/load-zaraz-manually/) for more information.
+
+## E-commerce tracking
+
+Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce) for more information.
