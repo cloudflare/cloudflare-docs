@@ -7,7 +7,7 @@ meta:
 
 # Configure mTLS
 
-When you specify API hosts in [mTLS authentication](/api-shield/products/mtls/), Cloudflare will block all requests that do not have a certificate for mTLS authentication.
+When you specify API hosts in [mTLS authentication](/api-shield/security/mtls/), Cloudflare will block all requests that do not have a certificate for mTLS authentication.
 
 ## Prerequisites
 
