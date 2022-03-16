@@ -20,7 +20,7 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 
 ## Main features
 
-*   **Custom rules**: Create your own Custom rules to protect your website and your APIs from malicious incoming traffic.
+*   **Custom rules**: Create your own custom rules to protect your website and your APIs from malicious incoming traffic.
 *   **Rate limiting rules**: Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
 *   **WAF Managed Rulesets**: Enable the pre-configured Managed Rulesets to get immediate protection. These rulesets are regularly updated, offering advanced zero-day vulnerability protections. Adjust the behavior of managed rules, choosing from several possible actions.
 *   **Exposed Credential Checks**: Monitor and block use of stolen/exposed credentials for account takeover.
@@ -32,6 +32,6 @@ The new Cloudflare WAF announced in March 2021 is available for select customers
 
 ## Related resources
 
-For more information on the previous WAF implementation, also known as Managed Rules, refer to [Understanding the Cloudflare Web Application Firewall (WAF)](https://support.cloudflare.com/hc/articles/200172016) in the Support KB.
+For more information on the previous WAF implementation, also known as WAF managed rules, refer to [Understanding WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) in the Support KB.
 
 For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).

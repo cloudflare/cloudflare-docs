@@ -47,7 +47,7 @@ The available skip options in custom rules are the following:
     | [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)                   | `hot`           |
     | [Security Level](https://support.cloudflare.com/hc/articles/200170056)                       | `securityLevel` |
     | [Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)  | `rateLimit`     |
-    | [WAF Managed Rules](https://support.cloudflare.com/hc/articles/200172016) (previous version) | `waf`           |
+    | [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) (previous version) | `waf`           |
 
   - The API values are case sensitive.
 
