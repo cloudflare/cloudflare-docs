@@ -70,16 +70,6 @@ Player options are configured with querystring parameters in the iframe's `src` 
 Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
     {{</Aside>}}
 
-- `letterboxColor`
-
-  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
-
-    {{<Aside type="note">}}
-
-**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
-
-    {{</Aside>}}
-
 - `controls` {{<prop-meta>}}default: `true`{{</prop-meta>}}
 
   - Shows video controls such as buttons for play/pause, volume controls.
@@ -93,6 +83,16 @@ Some browsers now prevent videos with audio from playing automatically. You may 
 This will _only_ work once during initialization. Beyond that point the user has full control over their text track settings.
 
         {{</Aside>}}
+
+- `letterboxColor`
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
+
+    {{<Aside type="note">}}
+
+**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+
+    {{</Aside>}}
 
 - `loop` {{<prop-meta>}}default: `false`{{</prop-meta>}}
 
