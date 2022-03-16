@@ -5,19 +5,20 @@ title: Refactor a Worker to a Pages Function.
 
 # Refactor a Worker to a Pages Function
 
-In this guide you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. 
+In this guide you will learn how to refactor a Worker to a Pages Function that can be hosted with your application on Cloudflare Pages. You may want to do this, if you are handling some logic that your application depends on as a serverless function and want to ship the logic together with your client without having to manage a Worker as a separate service.
 
-# Building a worker to handle form submissions
+# Handle form submissions in an application 
 
-When building an appplication that handles some logic with Workers, you may want to run your Worker separately from your application if the logic in your Worker is used by more than one application. 
+An example of a functionality that can be handled by a Worker but can also be a good usecase for Pages Functions is a simple form. This is because, forms are most times specific to a particular application. 
 
-However, when you handle things like forms submissions or want to ship a small piece of logic that is unique to your project. The logic can live in the same file system as your project while running on Cloudflare's edge network. 
+If you are already using a Worker for this, you would have deployed this Worker and then pointed your form action to the URL of the worker. Which means that when you want make changes to how Worker handles your submissions you do so separately from your Client. If the logic in your Worker is used by more than one application it makes sense to leave it this way. 
 
-You can now use [Pages Functions](/pages/platform/functions/), which are serverless functions that live within the same filesystem as your application and can be deployed with your frontend on Cloudflare Pages. 
+However, it can be beneficial to use [Pages Functions](/pages/platform/functions/), which is a serverless function that live within the same filesystem as your application and can be deployed with your frontend on Cloudflare Pages. This can help you handle your logic from the same place. 
+
 
 # Handling form entries with Airtable with a Worker
 
-An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
+For the sake of example you can use an [Airtable](https://airtable.com/) to handle form submissions. An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
 
 [Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to create a folder and use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
 
