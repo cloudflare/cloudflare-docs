@@ -45,7 +45,7 @@ Next, create the Spectrum application that will point to the domain name. Below 
 
 {{<Aside type="note" header="Note">}}
 
-The `origin_dns` field takes as input CNAMEs and the field `origin_direct` takes IP addresses. To create a Spectrum application, one or the other can be used, but not both at the same time. In case you use CNAME, Cloudflare needs to be authoritative for that zone.
+The `origin_dns` field takes as input CNAMEs and the field `origin_direct` takes IP addresses. To create a Spectrum application, you can use one or the other, but not both at the same time. In case you use CNAME, Cloudflare needs to be authoritative for that zone.
 
 {{</Aside>}}
 
