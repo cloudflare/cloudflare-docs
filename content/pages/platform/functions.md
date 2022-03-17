@@ -92,7 +92,7 @@ export async function onRequest(context) {
 }
 ```
 
-When migrating from a [Module Worker](/workers/runtime-apis/fetch-event#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
+When migrating from a [Module Worker](/workers/runtime-apis/fetch-event/#syntax-module-worker), this signature combines the traditional `fetch` handler's arguments into a single object along with additional, Pages-specific keys.
 
 In the previous example, an `onRequest` function was exported. This is a generic name because it generically handles all HTTP requests. However, to react to specific HTTP request methods, you may use the method name as a suffix to the exported function. For example, a handler that should only receive `GET` requests should be named `onRequestGet`. The following other handlers are supported:
 
@@ -306,7 +306,7 @@ export async function onRequest(context) {
 
 ## Adding bindings
 
-While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](/pages/platform/functions#develop-and-preview-locally).
+While bringing your Workers to Pages, bindings are a big part of what makes your application truly full-stack. You can add KV, Durable Object, and plain-text bindings to your project. You can also use these bindings in development with [Wrangler](/pages/platform/functions/#develop-and-preview-locally).
 
 ### KV namespace
 
@@ -327,7 +327,7 @@ export async function onRequest({ env }) {
 
 ### Durable Object namespace
 
-Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
+Durable Objects are Cloudflare's strongly consistent coordination primitive that power capabilities such as connecting WebSockets, handling state, and building applications. As with Workers KV, you first have to [create the Durable Object](/workers/learning/using-durable-objects/#uploading-a-durable-object-worker). You can then configure it as a binding to your Pages project.
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
@@ -339,7 +339,7 @@ Just as you can access kv with `-k`or `-kv` you can access durable objects in yo
 
 ### Environment variable
 
-An [environment variable](/workers/platform/environment-variables) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
+An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
@@ -381,7 +381,7 @@ export const onRequest = [SentryMiddleware];
 
 In some cases, the built-in routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event#syntax-module-worker).
+When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker).
 
 If you have never used module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
@@ -415,7 +415,7 @@ Then after placing your `_worker.js` file in your output directory, deploy your 
 
 ## Migrating from Workers
 
-When migrating a Worker into the Pages platform, the simplest path is to target the [advanced mode](#advanced-mode) of Functions. To do this, ensure your Worker is in the [Module Worker format](/workers/runtime-apis/fetch-event#syntax-module-worker). Then call `env.ASSETS` when you want to serve static assets. Failure to do so will result in broken and/or unwanted behavior.
+When migrating a Worker into the Pages platform, the simplest path is to target the [advanced mode](#advanced-mode) of Functions. To do this, ensure your Worker is in the [Module Worker format](/workers/runtime-apis/fetch-event/#syntax-module-worker). Then call `env.ASSETS` when you want to serve static assets. Failure to do so will result in broken and/or unwanted behavior.
 
 ## Develop and preview locally
 
