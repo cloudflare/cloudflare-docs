@@ -227,7 +227,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 
