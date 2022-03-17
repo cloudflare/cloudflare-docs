@@ -14,7 +14,7 @@ You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload
 
 To configure:
 
-1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
+1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the Managed Ruleset.
 
 2.  In the configuration of the rule that executes the Managed Ruleset, include a `matched_data` object in `action_parameters` to configure payload logging.
 
@@ -103,7 +103,7 @@ header: Response
 }
 ```
 
-For more information on deploying Managed Rulesets via API, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset) in the Ruleset Engine documentation.
+For more information on deploying Managed Rulesets via API, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
 
 ***
 
@@ -111,7 +111,7 @@ For more information on deploying Managed Rulesets via API, refer to [Deploy a M
 
 To disable payload logging for a Managed Ruleset:
 
-1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule) API method to update the rule that executes the Managed Ruleset.
+1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the Managed Ruleset.
 
 2.  Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 
