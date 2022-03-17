@@ -7,7 +7,7 @@ meta:
 
 # Form an expression
 
-Rules are written as using the Cloudflare Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language) documentation.
+Rules are written as using the Cloudflare Rules language - a DSL intended to mimic Wireshark semantics. For more information, refer to the [Rules language](/ruleset-engine/rules-language/) documentation.
 
 To start with a simple case, here's how you'd match a source IP:
 
