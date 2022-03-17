@@ -18,7 +18,7 @@ Cloudflare's API Shield â€” together with other compatible Cloudflare products â
 
 The following table provides examples of how you might match Cloudflare products to OWASP vulnerabilities:
 
-| OWASP issue | Cloudflare solution |
+| OWASP issue | Example Cloudflare solution |
 | ----------- | ------------------- |
 | Broken Object Level Authorization | [Schema Validation] |
 | Broken User Authentication | [mTLS](/api-shield/security/mtls/), [Anomaly Detection], [Rate Limiting], [Leaked Credential Checks](/waf/exposed-credentials-check/) |
