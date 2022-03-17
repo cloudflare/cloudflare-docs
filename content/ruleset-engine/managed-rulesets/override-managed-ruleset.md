@@ -84,7 +84,7 @@ curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
-  "description": "Managed rule behavior set to log action",
+  "description": "Deploy Managed Ruleset, enabling a specific rule with log action",
   "rules": [
     {
       "action": "execute",
@@ -92,8 +92,13 @@ curl -X PUT \
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "action": "log",
-          "enabled": true
+          "rules": [
+            {
+              "id": "<RULE_ID>",
+              "enabled": true,
+              "action": "log"
+            }
+          ]
         }
       }
     }
@@ -113,7 +118,7 @@ curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
-  "description": "Managed rule behavior set to log action",
+  "description": "Deploy Managed Ruleset for example.com, overriding the rules action to log",
   "rules": [
     {
       "action": "execute",
@@ -121,8 +126,7 @@ curl -X PUT \
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "action": "log",
-          "enabled": true
+          "action": "log"
         }
       }
     }
