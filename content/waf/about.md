@@ -10,9 +10,11 @@ meta:
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax using the [Rules language](/ruleset-engine/rules-language).
 
-## What is a Web Application Firewall?
+{{<Aside type="note" header="What is a Web Application Firewall?">}}
 
 A Web Application Firewall or WAF creates a shield between a web app and the Internet. This shield can help mitigate many common attacks. For a more thorough definition, refer to [Web Application Firewall explained](https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/) in the Learning Center.
+
+{{</Aside>}}
 
 ---
 
@@ -59,7 +61,7 @@ You can **deploy** the Managed Rulesets provided by WAF to the following phases:
 
 {{<Aside type="note" header="Note">}}
 
-When you deploy a Managed Ruleset in the dashboard using the **WAF** tab of the Firewall app, you are deploying that ruleset to the `http_request_firewall_managed` phase of the selected zone.
+When you deploy a Managed Ruleset in the dashboard in **Security** > **WAF** > **Managed rules**, you are deploying that ruleset to the `http_request_firewall_managed` phase of the selected zone.
 
 When you deploy a Managed Ruleset using **Firewall Rulesets** in the dashboard at the account level, you are deploying that ruleset to the `http_request_firewall_managed` phase of the account.
 
@@ -76,6 +78,16 @@ Currently, creating and deploying custom rulesets is only available via API.
 {{</Aside>}}
 
 To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in the Ruleset Engine documentation.
+
+## Rule execution order
+
+Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
+
+* [Firewall rules](/firewall/cf-firewall-rules/), available in **Security** > **WAF** > **Firewall rules**
+* [Custom rules](/waf/custom-rules/), available in **Security** > **WAF** > **Custom rules**
+* [Rate limiting rules](/waf/rate-limiting-rules/), available in **Security** > **WAF** > **Rate limiting rules**
+* [Managed Rulesets](/waf/managed-rulesets/), available in **Security** > **WAF** > **Managed rules**
+* [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **Security** > **WAF** > **Rate limiting rules**
 
 ---
 

@@ -16,7 +16,7 @@ If you enable static resource protection, you may block good bots — like mail 
 
 To enable this feature as a Pro or Business customer or an Enterprise customer without Bot Management:
 
-1.  Go to **Firewall** > **Bots**.
+1.  Go to **Security** > **Bots**.
 2.  Select **Configure Super Bot Fight Mode**.
 3.  For **Static resource protection**, select **On**.
 

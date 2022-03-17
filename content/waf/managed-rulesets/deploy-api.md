@@ -18,7 +18,7 @@ You can define overrides to customize the behavior of the rules included in a Ma
 
 **Note:** There are a few requirements when deploying WAF Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
-- The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
+- The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Ruleset.
 
 - You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 

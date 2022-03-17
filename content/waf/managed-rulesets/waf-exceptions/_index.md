@@ -34,4 +34,4 @@ If you define a WAF exception that skips all remaining rules, the expressions of
 
 If you define a WAF exception that skips a rule of a Managed Ruleset, the expression of the rule that executes the Managed Ruleset is evaluated and the Managed Ruleset rules are executed except for that specific rule, which is bypassed.
 
-Currently, WAF exceptions are not logged in Firewall Events.
+Currently, WAF exceptions are not logged in firewall events.

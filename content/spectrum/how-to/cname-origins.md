@@ -14,9 +14,9 @@ This feature requires an Enterprise plan. If you would like to upgrade, contact 
 
 {{</Aside>}}
 
-## 1. Create a [CNAME Record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/)
+## 1. Create a CNAME record
 
-You will need to create a record on your Cloudflare hosted zone that points to your origin's hostname. This is required to resolve to your hostname origin.
+You will need to create a [CNAME record](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) on your Cloudflare hosted zone that points to your origin's hostname. This is required to resolve to your hostname origin.
 
 **API Example:**
 
@@ -39,9 +39,15 @@ curl 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/dns_records'  \
 }
 ```
 
-## 2. Create the Spectrum Application
+## 2. Create the Spectrum application
 
 Next, create the Spectrum application that will point to the domain name. Below is an example curl and the associated data being posted to the API.
+
+{{<Aside type="note" header="Note">}}
+
+The `origin_dns` field takes as input CNAMEs and the field `origin_direct` takes IP addresses. To create a Spectrum application, you can use one or the other, but not both at the same time. In case you use CNAME, Cloudflare needs to be authoritative for that zone.
+
+{{</Aside>}}
 
 **API Example:**
 

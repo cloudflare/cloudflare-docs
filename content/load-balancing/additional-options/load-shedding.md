@@ -8,7 +8,7 @@ weight: 15
 
 Use load shedding to prevent an at-risk origin from [becoming unhealthy](/load-balancing/understand-basics/health-details/) and starting the failover process.
 
-Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/pool-level-steering/).
+Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/).
 
 ## Step 1 — Identify at-risk origins
 

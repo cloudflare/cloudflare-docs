@@ -26,7 +26,7 @@ Clientless Web Isolation does not require the Cloudflare Root CA to be configure
 
 * You can configure Zero Trust to [allow / block websites within the remote browser](/cloudflare-one/policies/filtering/http-policies/).
 
-* You can configure [remote browser controls](https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input.
+* You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input.
 
 
 ## API setup

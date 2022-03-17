@@ -13,7 +13,7 @@ weight: 2
 Before you start this tutorial, make sure you have:
 
 - Completed the [prerequisites](/waiting-room/#prerequisites).
-- Reviewed your [rate limiting rules](/waf/custom-rules/rate-limiting) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
+- Reviewed your [rate limiting rules](/waf/rate-limiting-rules/) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
 ---
 
@@ -32,7 +32,7 @@ Specify the URL for your page by setting the `hostname` and `path` in your [conf
 You can direct visitors to your high-traffic page:
 
 - Directly (via URL)
-- Indirectly (via a [Page Rule redirect](https://support.cloudflare.com/hc/articles/200172286))
+- Indirectly (via [a redirect](/rules/bulk-redirects/))
 
 ### Queue activation
 

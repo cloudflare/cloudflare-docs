@@ -46,9 +46,8 @@ header: Request
 highlight: [9,10,11]
 ---
 curl -X PATCH \
--H "X-Auth-Email: user@cloudflare.com" \
--H "X-Auth-Key: REDACTED" \
 "https://api.cloudflare.com/client/v4/zone/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "execute",
   "action_parameters": {
