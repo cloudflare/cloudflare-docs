@@ -13,7 +13,7 @@ DNSSEC creates a secure layer to the domain name system by adding cryptographic 
 
 ## Enabling DNSSEC
 
-Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup).
+Cloudflare Registrar offers one-click DNSSEC activation for free to all customers. You will not need to set the DS record details manually. However, your domain must be using Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account and domain you want to configure.
 2. Navigate to **DNS**.
