@@ -63,9 +63,11 @@ You can override the following rule properties:
 * `"action"`
 * `"enabled"`
 
-{{<Aside type="note" header="Note">}}
-
 Some Managed Rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product’s documentation for details.
+
+{{<Aside type="warning" header="Important">}}
+
+It is **not recommended** that you enable all the rules in a Managed Ruleset at the account level using an override, since this change could affect all the zones in your account. Some rules are disabled by default, since they could eventually affect legitimate traffic, and should not be enabled across zones without previous consideration.
 
 {{</Aside>}}
 
