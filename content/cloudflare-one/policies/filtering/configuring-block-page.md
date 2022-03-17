@@ -18,7 +18,7 @@ To configure a custom block page:
 
 ## Download and install the Cloudflare certificate
 
-First, follow [these instructions](/connections/connect-devices/warp/install-cloudflare-cert/) to download and install the Cloudflare certificate on your company devices.
+First, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) to download and install the Cloudflare certificate on your company devices.
 
 ## Enable the block page for HTTP policies
 
