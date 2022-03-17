@@ -22,4 +22,4 @@ A text input and save controls display.
 
 2.  Click **Save**.
 
-Now that you have enabled mTLS for your host, you can enforce mTLS with [API Shield™](/api-shield/security/mtls/configure).
+Now that you have enabled mTLS for your host, you can enforce mTLS with [API Shield™](/api-shield/security/mtls/configure/).
