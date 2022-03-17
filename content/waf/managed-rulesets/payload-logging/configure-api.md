@@ -38,7 +38,7 @@ You can generate a public key [in the command line](/waf/managed-rulesets/payloa
 
 ### Example
 
-The following example updates rule `{rule-id-1}` that executes the Cloudflare Managed Ruleset for zone `{zone-id}`, configuring payload logging with the provided public key.
+The following example updates rule `<RULE_ID_1>` that executes the Cloudflare Managed Ruleset for zone `<ZONE_ID>`, configuring payload logging with the provided public key.
 
 ```json
 ---
@@ -46,14 +46,14 @@ header: Request
 highlight: [9,10,11]
 ---
 curl -X PATCH \
-"https://api.cloudflare.com/client/v4/zone/{zone-id}/rulesets/{ruleset-id}/rules/{rule-id-1}" \
+"https://api.cloudflare.com/client/v4/zone/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID_1>" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
   "action": "execute",
   "action_parameters": {
-    "id": "{cloudflare-managed-ruleset-id}",
+    "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
     "matched_data": {
-      "public_key": "{your-public-key}"
+      "public_key": "<YOUR_PUBLIC_KEY>"
     }
   },
   "expression": "true",
@@ -69,27 +69,27 @@ header: Response
 ---
 {
   "result": {
-    "id": "{zone-level-phase-ruleset-id}",
+    "id": "<ZONE_LEVEL_RULESET_ID>",
     "name": "Zone-level Ruleset 1",
     "description": "",
     "kind": "zone",
     "version": "3",
     "rules": [
       {
-        "id": "{rule-id-1}",
+        "id": "<RULE_ID_1>",
         "version": "1",
         "action": "execute",
         "action_parameters": {
-          "id": "{cloudflare-managed-ruleset-id}",
+          "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
           "version": "latest",
           "matched_data": {
-            "public_key": "{your-public-key}"
+            "public_key": "<YOUR_PUBLIC_KEY>"
           }
         },
         "expression": "true",
         "description": "Executes the Cloudflare Managed Ruleset",
         "last_updated": "2021-06-28T18:08:14.003361Z",
-        "ref": "{ruleset-ref-1}",
+        "ref": "<RULE_REF_1>",
         "enabled": true
       },
       // ...
@@ -121,7 +121,7 @@ The following example rule executes a Managed Ruleset with payload logging disab
 {
   "action": "execute",
   "action_parameters": {
-    "id": "{managed-ruleset-id}"
+    "id": "<MANAGED_RULESET_ID>"
   },
   "expression": "true",
   "description": ""
