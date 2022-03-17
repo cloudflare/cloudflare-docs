@@ -18,13 +18,15 @@ However, it can be beneficial to use [Pages Functions](/pages/platform/functions
 
 # Handling form entries with Airtable with a Worker
 
-For the sake of example you can use an [Airtable](https://airtable.com/) to handle form submissions. An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
+For a form submission use case you can use an [Airtable](https://airtable.com/). An [Airtable](https://airtable.com/) is a low-code platform for building collaborative apps. It helps to Customize your workflow, collaborate, handle form submissions and achieve ambitious outcomes. For this example we will focus on the form submission feature of Airtable.
 
-[Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to create a folder and use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
+[Airtables](https://airtable.com/) can be used to store entires of information in different tables for the same account. When creating a Worker for handling the submission logic the first step is to use [wrangler](/workers/cli-wrangler/install-update/) to initialize a new Worker within that folder. 
 
 This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker you can deploy it to Cloudflare Edge network with your credentials.
 
-An example of a Worker that handles Airtable form submission can be seen in the code below. Every Worker will have the default response to a `fetch` action with a `request` handler. Here you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using the credentials.  
+An example of a Worker that handles Airtable form submission can be seen in the code below. 
+
+Every Worker will have the default response to a `fetch` action with a `request` handler. Here you have a `submitHandler` async function that can be reached if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to the Airtable using your credentials, which you can store using [wrangler secret](/workers/cli-wrangler/commands/#secret).
 
 ```js
 addEventListener("fetch", (event) => {
@@ -89,11 +91,15 @@ const HandleAirtableData = (body) => {
 
 [Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages togther with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Which is a good usecase for our Airtable example.
 
-While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions. First, you will create a `functions` folder in the base of your application and within this folder you can create a `form.js` file to handle form submissions.
+While the above code works perfectly, you can handle the form submission logic for your client in the same app with Pages Functions.
+
+First, you will create a `functions` folder in the base of your application and within this folder you can create a `form.js` file to handle form submissions. In this file you will refactor the worker code to fit the Pages Function syntax.
 
 ## Refactoring the worker 
 
-Every worker has a `addEventListener` to listen for fetch events but you will not be needing this in a Pages Function, You will `export` a single `OnRequest` function and depending on the HTTPS request it handles you will name it accordly. In the case of accepting form submissions and posting to an airtable you will export a single `OnRequestPost` function like so:
+Every worker has a `addEventListener` to listen for fetch events but you will not be needing this in a Pages Function, You will `export` a single `OnRequest` function and depending on the HTTPS request it handles you will name it accordly. 
+
+In the case of accepting form submissions and posting to an airtable you will export a single `OnRequestPost` function like so:
 
 ```js
 export async function onRequestPost({ request, env }) {
