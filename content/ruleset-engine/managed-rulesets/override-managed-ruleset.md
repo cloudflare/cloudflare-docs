@@ -73,7 +73,7 @@ It is **not recommended** that you enable all the rules in a Managed Ruleset at 
 
 ## Examples
 
-The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase and defines a ruleset override to execute the `log` action for all rules in that ruleset.
+The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase, and defines a rule override to enable rule `<RULE_ID>` and set its action to `log`.
 
 <details>
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the zone level</summary>
@@ -108,6 +108,8 @@ curl -X PUT \
 
 </div>
 </details>
+
+The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
 
 <details>
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the account level</summary>
