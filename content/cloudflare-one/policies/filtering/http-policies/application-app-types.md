@@ -58,21 +58,21 @@ A full list of supported applications and their respective app types are availab
 | Security                                       | Applications used for information security.                                                                                                                                                                                                                                                                                   |
 | Social Networking                              | Applications used for social networking.                                                                                                                                                                                                                                                                                      |
 | Streaming                                      | Applications used for streaming video or audio.                                                                                                                                                                                                                                                                               |
-| [Do Not Decrypt](#do-not-decrypt-applications) | Applications that are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
+| [Do Not Inspect](#do-not-inspect-applications) | Applications that are incompatible with the TLS man-in the middle certificate that is required for Cloudflare Gateway's proxy to function. These applications either use certificate pinning or send non-web traffic such as Session Initiation Protocol (SIP) or Extensible Messaging and Presence Protocol (XMPP) over TLS. |
 
 {{</table-wrap>}}
 
-#### Do Not Decrypt applications
+#### Do Not Inspect applications
 
 Some applications are incompatible with TLS decryption for a variety of reasons, one of which is **certificate pinning**. This is a process used by applications to verify that the TLS certificate presented from the origin server matches a known, specified list of certificates hardcoded in the application.
 
 This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
-Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Decrypt_ app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/cloudflare-one/policies/filtering/http-policies/application-app-types/), select _Application_ as a **Selector**, _in_ as an **Operator**, and check the _Do Not Decrypt_ app type in the **Value** field. Then, set the rule action to _Do Not Inspect_.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can create an [HTTP rule](/cloudflare-one/policies/filtering/http-policies/application-app-types/), select _Application_ as a **Selector**, _in_ as an **Operator**, and check the _Do Not Inspect_ app type in the **Value** field. Then, set the rule action to _Do Not Inspect_.
 
-Gateway periodically updates the _Do Not Decrypt_ app type to include new applications. By creating this _Do Not Inspect_ rule and selecting all applications within the _Do Not Decrypt_ app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
+Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ rule and selecting all applications within the _Do Not Inspect_ app type, you'll ensure that your rule will apply to any new applications that will be added to the app type.
 
-![Do not decrypt HTTP rule](/cloudflare-one/static/documentation/faq/do-not-decrypt.png)
+![Do not inspect HTTP rule](/cloudflare-one/static/documentation/faq/do-not-inspect.png)
 
 {{<Aside>}}
 
