@@ -87,7 +87,7 @@ cloudflared tunnel route ip show
 
 ## Configure and run the Tunnel
 
-Next, create a configuration file for the Tunnel. The following template contains the required fields but can be further modified as needed.
+Next, create a configuration file for the Tunnel in the .cloudflared directory. This file should be called config.yml. The following template contains the required fields but can be further modified as needed.
 
 ```yaml
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
