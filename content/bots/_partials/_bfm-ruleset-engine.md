@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about#phases).
+Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about/#phases).
