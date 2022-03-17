@@ -27,7 +27,7 @@ The Zaraz engineering team is adding support to new tools all the time. You can 
 
 ## I am trying to set up Facebook Pixel on my Zaraz account, but I do not see any data coming through.
 
-It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [Debug Mode](/zaraz/advanced/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
+It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [Debug Mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
 
 ## Is there a way to prevent Zaraz from loading on specific pages, like under `/wp-admin`?
 
