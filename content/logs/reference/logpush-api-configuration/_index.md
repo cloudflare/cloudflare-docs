@@ -17,17 +17,17 @@ The `<JOB>` argument is the numeric job id. The `<DATASET>` argument indicates t
 
 | Operation | Description | URL |
 |---|---|---|
-| POST | Create job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-create-logpush-job) |
-| GET | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-logpush-job-details) |
-| GET | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs) |
-| GET | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs-for-a-dataset) |
-| GET | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/datasets/&lt;DATASET&gt;/fields`](https://api.cloudflare.com/#logpush-jobs-fields) |
-| PUT | Update job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-update-logpush-job) |
-| DELETE | Delete job | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/jobs/&lt;JOB&gt;`](https://api.cloudflare.com/#logpush-jobs-delete-logpush-job) |
-| POST | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/destination/exists`](https://api.cloudflare.com/#logpush-jobs-check-destination-exists) |
-| POST | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership`](https://api.cloudflare.com/#logpush-jobs-get-ownership-challenge) |
-| POST | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
-| POST | Validate log options | [`https://api.cloudflare.com/client/v4/zones/&lt;ZONE_ID&gt;/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
+| POST | Create job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-create-logpush-job) |
+| GET | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB>`](https://api.cloudflare.com/#logpush-jobs-logpush-job-details) |
+| GET | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs) |
+| GET | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs-for-a-dataset) |
+| GET | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`](https://api.cloudflare.com/#logpush-jobs-fields) |
+| PUT | Update job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB>`](https://api.cloudflare.com/#logpush-jobs-update-logpush-job) |
+| DELETE | Delete job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB>`](https://api.cloudflare.com/#logpush-jobs-delete-logpush-job) |
+| POST | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists`](https://api.cloudflare.com/#logpush-jobs-check-destination-exists) |
+| POST | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership`](https://api.cloudflare.com/#logpush-jobs-get-ownership-challenge) |
+| POST | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
+| POST | Validate log options | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
 
 {{</table-wrap>}}
 
