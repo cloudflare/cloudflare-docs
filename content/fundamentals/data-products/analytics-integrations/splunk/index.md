@@ -89,9 +89,9 @@ You can also manually configure Data Models by going to **Settings** > **Data mo
 
 ## Task 2 - Make the API call to create the Logpush job
 
-Create the Logpush job by following the instructions on [Enable Logpush to Splunk](/logs/get-started/enable-destinations/splunk). The API call creates a Logpush job but does not enable it.
+Create the Logpush job by following the instructions on [Enable Logpush to Splunk](/logs/get-started/enable-destinations/splunk/). The API call creates a Logpush job but does not enable it.
 
-Enable the Logpush job through the the Cloudflare dashboard or through the API by following the instructions on [Enable Logpush to Splunk](/logs/get-started/enable-destinations/splunk). To enable through the dashboard:
+Enable the Logpush job through the the Cloudflare dashboard or through the API by following the instructions on [Enable Logpush to Splunk](/logs/get-started/enable-destinations/splunk/). To enable through the dashboard:
 
 1.  Navigate to the Cloudflare dashboard and select **Analytics** > **Logs**.
 2.  Click **Edit** and select the fields referenced in the Dashboard section below to fully populate all tables and graphs.

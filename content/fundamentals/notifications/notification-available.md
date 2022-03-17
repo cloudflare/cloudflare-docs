@@ -458,7 +458,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Included with**
 
@@ -466,7 +466,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
@@ -479,7 +479,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to ide
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Included with**
 
@@ -487,7 +487,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>

@@ -12,7 +12,7 @@ A _domain_ or _domain name_ is the location of a website or application, or what
 
 You can get domain names for your website from a variety of places, such as through popular website builders or dedicated [registrars](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
 
-Cloudflare also offers an at-cost registrar service to [purchase new domain names](/registrar/get-started/register-domain) or [manage existing domain names](/registrar/get-started/transfer-domain-to-cloudflare).
+Cloudflare also offers an at-cost registrar service to [purchase new domain names](/registrar/get-started/register-domain/) or [manage existing domain names](/registrar/get-started/transfer-domain-to-cloudflare/).
 
 ## Host your domain
 
@@ -24,7 +24,7 @@ Cloudflare does not offer web hosting for most websites, though you can deploy a
 
 For help adding a domain to Cloudflare, refer to our [setup guide](https://support.cloudflare.com/hc/articles/201720164#2YulMb5YJTVnMxgAgNWdS2).
 
-Once you finish adding your domain, you likely will want to also [update your domain's nameservers](/dns/zone-setups/full-setup) to get Cloudflare's performance and security benefits.
+Once you finish adding your domain, you likely will want to also [update your domain's nameservers](/dns/zone-setups/full-setup/) to get Cloudflare's performance and security benefits.
 
 ## Remove a domain from Cloudflare
 
@@ -36,14 +36,14 @@ If you have an alias domain that simply forwards traffic to another domain, you 
 
 1.  [Add](#add-a-domain-to-Cloudflare) your alias domain (`previous.com`) to Cloudflare.
 
-2.  Make sure that your alias domain has a proxied [DNS A or CNAME record](/dns/manage-dns-records/how-to/create-dns-records) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
+2.  Make sure that your alias domain has a proxied [DNS A or CNAME record](/dns/manage-dns-records/how-to/create-dns-records/) that properly resolves DNS queries. You may also want to include a record for the `www` subdomain.
 
     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `@`      | `192.0.2.1`      | Proxied          |
     | A        | `www`    | `192.0.2.1`      | Proxied          |
 
-3.  Use [Bulk redirects](/rules/bulk-redirects) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
+3.  Use [Bulk redirects](/rules/bulk-redirects/) to forward traffic from your alias domain to your other domain. Select **Include subdomains** and **Subpath matching** to cover your entire alias domain (`www.previous.com` and `www.previous.com/examples`).
 
     | **Source URL** | **Target URL**    | **Status** | **Selected parameters**                     |
     | -------------- | ----------------- | ---------- | ------------------------------------------- |
@@ -51,7 +51,7 @@ If you have an alias domain that simply forwards traffic to another domain, you 
 
 ## Get free SSL certificates
 
-Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/ssl/edge-certificates/universal-ssl) to all Cloudflare domains.
+Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.
 
 ## Manage subdomains
 
