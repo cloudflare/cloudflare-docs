@@ -26,4 +26,4 @@ If you turn this option off, Zaraz will stop automatically injecting its script 
 
 ## E-commerce tracking
 
-Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce) for more information.
+Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
