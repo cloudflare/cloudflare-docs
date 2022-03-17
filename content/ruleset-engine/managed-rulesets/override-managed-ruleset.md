@@ -63,15 +63,17 @@ You can override the following rule properties:
 * `"action"`
 * `"enabled"`
 
-{{<Aside type="note" header="Note">}}
-
 Some Managed Rulesets may have additional override requirements, or they may allow you to override other rule properties. Check each Cloudflare product’s documentation for details.
+
+{{<Aside type="warning" header="Important">}}
+
+It is **not recommended** that you enable all the rules in a Managed Ruleset at the account level using an override, since this change could affect all the zones in your account. Some rules are disabled by default, since they could eventually affect legitimate traffic, and should not be enabled across zones without previous consideration.
 
 {{</Aside>}}
 
 ## Examples
 
-The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase and defines a ruleset override to execute the `log` action for all rules in that ruleset.
+The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase, and defines a rule override to enable rule `<RULE_ID>` and set its action to `log`.
 
 <details>
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the zone level</summary>
@@ -82,7 +84,7 @@ curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
-  "description": "Managed rule behavior set to log action",
+  "description": "Deploy Managed Ruleset, enabling a specific rule with log action",
   "rules": [
     {
       "action": "execute",
@@ -90,8 +92,13 @@ curl -X PUT \
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "action": "log",
-          "enabled": true
+          "rules": [
+            {
+              "id": "<RULE_ID>",
+              "enabled": true,
+              "action": "log"
+            }
+          ]
         }
       }
     }
@@ -102,6 +109,8 @@ curl -X PUT \
 </div>
 </details>
 
+The following request adds a rule that executes a Managed Ruleset in the `http_request_firewall_managed` phase, and defines a ruleset override that sets the action to `log` for all (enabled) rules.
+
 <details>
 <summary>Example: Execute a Managed Ruleset with overrides in a phase at the account level</summary>
 <div>
@@ -111,7 +120,7 @@ curl -X PUT \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/phases/http_request_firewall_managed/entrypoint" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
-  "description": "Managed rule behavior set to log action",
+  "description": "Deploy Managed Ruleset for example.com, overriding the rules action to log",
   "rules": [
     {
       "action": "execute",
@@ -119,8 +128,7 @@ curl -X PUT \
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {
-          "action": "log",
-          "enabled": true
+          "action": "log"
         }
       }
     }
