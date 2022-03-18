@@ -57,6 +57,8 @@ Refer to [How do I create an exception to exclude certain requests from being bl
 
 [Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
 
+If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+
 ## How do I create an exception to exclude certain requests from being blocked or challenged?
 
 There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.
