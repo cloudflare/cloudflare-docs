@@ -64,7 +64,7 @@ In comparison to [layer 7 load balancing](#layer-7-load-balancing-orange-clouded
 
 Layer 4 load balancers route traffic by forwarding traffic to certain ports or IP addresses.
 
-Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare Spectrum](/spectrum/about/load-balancer).
+Cloudflare currently only supports layer 4 load balancing as part of [Cloudflare Spectrum](/spectrum/about/load-balancer/).
 
 {{<Aside type="note">}}
 
