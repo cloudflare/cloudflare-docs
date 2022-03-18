@@ -37,7 +37,7 @@ This is a `.yaml` file that functions as the operating manual for `cloudflared`.
 
 ## Ingress rule
 
-[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
+[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
 
 ## Cert.pem
 

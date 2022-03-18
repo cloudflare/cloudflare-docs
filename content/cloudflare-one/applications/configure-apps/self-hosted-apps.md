@@ -44,7 +44,7 @@ Make sure you create [Access policies](/cloudflare-one/policies/zero-trust/) bef
 1.  From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
 {{<Aside>}}
-When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the [Application paths](/cloudflare-one/policies/zero-trust/app-paths) page.
+When specifying an application domain, you can use wildcards to protect multiple parts of an application that share a root path. For more information on how to use wildcards, see the instructions in the [Application paths](/cloudflare-one/policies/zero-trust/app-paths/) page.
 {{</Aside>}}
 
 1.  Scroll down to the **Application visibility** card.

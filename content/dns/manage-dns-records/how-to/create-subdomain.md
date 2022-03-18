@@ -24,13 +24,13 @@ Then, you would create a corresponding [A, AAAA, or CNAME record](/dns/manage-dn
 
 ## Subdomain redirects
 
-For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](/fundamentals/get-started/basic-tasks/manage-subdomains#set-up-redirects).
+For more guidance on redirecting a subdomain — either to your main domain or another location — refer to [Set up subdomain redirects](/fundamentals/get-started/basic-tasks/manage-subdomains/#set-up-redirects).
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](/ssl/edge-certificates/universal-ssl), that certificate also covers all first-level subdomains (`blog.example.com`).
+If your main domain is using Cloudflare's [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), that certificate also covers all first-level subdomains (`blog.example.com`).
 
-For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](/ssl/edge-certificates/universal-ssl/limitations#full-setup).
+For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](/ssl/edge-certificates/universal-ssl/limitations/#full-setup).
 
 ## Customize subdomain behavior
 
