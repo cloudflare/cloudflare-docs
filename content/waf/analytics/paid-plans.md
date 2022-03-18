@@ -76,4 +76,4 @@ In **Denial-of-service attacks mitigated** you have visibility over mitigated La
 
 ![Denial-of-service attacks mitigated](/waf/static/analytics-dos-attacks-mitigated.png)
 
-You can also use the [`synAvgPps1mGroups` node in GraphQL](/analytics/graphql-api/features/data-sets) to get the total attack volume for a zone over a period of time.
+You can also use the [`synAvgPps1mGroups` node in GraphQL](/analytics/graphql-api/features/data-sets/) to get the total attack volume for a zone over a period of time.

@@ -8,7 +8,7 @@ meta:
 
 # About Cloudflare Web Application Firewall (WAF)
 
-The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax using the [Rules language](/ruleset-engine/rules-language).
+The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web requests and filters undesired traffic based on sets of rules called rulesets. The matching engine that powers the WAF rules supports the wirefilter syntax using the [Rules language](/ruleset-engine/rules-language/).
 
 {{<Aside type="note" header="What is a Web Application Firewall?">}}
 
@@ -36,11 +36,11 @@ Currently, you can only create and deploy custom rulesets via API.
 
 {{</Aside>}}
 
-You can [create custom rulesets](/ruleset-engine/custom-rulesets/create-custom-ruleset) with your own WAF rules that you can later [deploy to a phase entry point](/waf/managed-rulesets/deploy-api/#deploying-custom-rulesets).
+You can [create custom rulesets](/ruleset-engine/custom-rulesets/create-custom-ruleset/) with your own WAF rules that you can later [deploy to a phase entry point](/waf/managed-rulesets/deploy-api/#deploying-custom-rulesets).
 
 ## Available phases
 
-The Web Application Firewall provides the following [phases](/ruleset-engine/about#phases) where you can deploy WAF rules:
+The Web Application Firewall provides the following [phases](/ruleset-engine/about/#phases) where you can deploy WAF rules:
 
 - `http_request_firewall_custom`
 - `http_request_firewall_managed`
@@ -77,7 +77,7 @@ Currently, creating and deploying custom rulesets is only available via API.
 
 {{</Aside>}}
 
-To learn more about phases, refer to [Phases](/ruleset-engine/about#phases) in the Ruleset Engine documentation.
+To learn more about phases, refer to [Phases](/ruleset-engine/about/#phases) in the Ruleset Engine documentation.
 
 ## Rule execution order
 

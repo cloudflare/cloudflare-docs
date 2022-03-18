@@ -16,7 +16,7 @@ weight: 2
 
     ![Create exception page](/waf/static/waf-exception-create.png)
 
-5. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the [Rules language](/ruleset-engine/rules-language).
+5. In **When incoming requests match**, specify a filter expression that defines the conditions for applying the WAF exception. The filter expression uses the [Rules language](/ruleset-engine/rules-language/).
 
 6. In **Then**, select the [exception type](/waf/managed-rulesets/waf-exceptions/#types-of-waf-exceptions) that determines which rules to skip:
 

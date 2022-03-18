@@ -18,7 +18,7 @@ For guidance on the previous version of rate limiting rules, refer to [Configuri
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
 
-The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the request rate reaches the specified limit.
+The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/). The **action** specifies what to perform when there is a match for the rule and any additional conditions are met. In the case of rate limiting rules, the action occurs when the request rate reaches the specified limit.
 
 Besides these two parameters, rate limiting rules require the following additional parameters:
 
