@@ -41,7 +41,8 @@ Depending on your domain's security settings, you might accidentally block searc
 
 If you notice SEO issues, make sure your:
 
-- [Firewall rules](/firewall/known-issues-and-faq/#caution-about-potentially-blocking-bots) are allowing **Known Bots**.
+- [Firewall rules](/firewall/known-issues-and-faq/#caution-about-potentially-blocking-bots) are allowing **Verified Bots**.
+- [Rate limiting rules](/waf/rate-limiting-rules/) (new version only) are allowing **Verified Bots**.
 - [Bot protection](/bots/concepts/bot/#verified-bots) settings are not blocking **Verified Bots**.
 
 If you still notice issues with search engine crawlers, refer to our [Troubleshooting guide](https://support.cloudflare.com/hc/articles/200169806).

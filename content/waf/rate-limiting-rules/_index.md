@@ -31,6 +31,10 @@ Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for mo
 
 Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
 
+## Important remarks
+
+Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
+
 ---
 
 ## Availability
