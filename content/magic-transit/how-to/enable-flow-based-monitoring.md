@@ -12,4 +12,4 @@ title: Enable Flow-based monitoring alerts
 5.  Add an email address for the person who should receive the notification.
 6.  Click **Create** when you are done.
 
-For more information on receiving notifications via PagerDuty or using webhooks, refer to [create a notification](/fundamentals/notifications/create-notifications).
+For more information on receiving notifications via PagerDuty or using webhooks, refer to [create a notification](/fundamentals/notifications/create-notifications/).

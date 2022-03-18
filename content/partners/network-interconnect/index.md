@@ -12,4 +12,4 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 
 Cloudflare partners with multiple network fabric providers to offer as many connectivity options and locations as possible.
 
-[View Cloudflare Network Interconnect Partner documentation](/network-interconnect/partners)
+[View Cloudflare Network Interconnect Partner documentation](/network-interconnect/partners/)

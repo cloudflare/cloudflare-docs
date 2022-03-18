@@ -13,7 +13,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - Once you have selected a GitHub repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
 - Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.80.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.80.0` or the Hugo version of your choice.
-- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration) for configuration options.
+- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/platform/build-configuration/) for configuration options.
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms and Serverless Functions features.
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
 - Cloudflare's Load Balancer does not work with `*.pages.dev` projects; an `Error 1000: DNS points to prohibited IP` will appear.
