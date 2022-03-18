@@ -10,11 +10,7 @@ To customize the behavior of a Managed Ruleset, override the ruleset at deployme
 
 For example, to test a Managed Ruleset before enforcing it, consider executing the ruleset with all rules set to `log` instead of their default actions. To do this, override the configured behavior of the Managed Ruleset at the ruleset level, so that each rule uses the `log` action.
 
-{{<Aside type="note" header="Note">}}
-
 To define overrides in the Cloudflare dashboard, [edit the configuration of a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-a-managed-ruleset).
-
-{{</Aside>}}
 
 ## Working with overrides
 
@@ -23,6 +19,14 @@ You can override a ruleset at three levels:
 * **Ruleset overrides** apply to all rules in the executed ruleset.
 * **Tag overrides** apply to all rules with a specific tag. For example, use a tag override to customize the Cloudflare Managed Ruleset so all rules with the `wordpress` tag are set to *Block*. If multiple tags have overrides and if a given rule has more than one of these tags, the tag overrides order determines the behavior. For rules tagged with multiple overridden tags, the last tag's overrides apply.
 * **Rule overrides** apply to specific rules in a Managed Ruleset, referenced by their Rule ID.
+
+Specific overrides take precedence over more general ones, and rule overrides take precedence over tag overrides, which take precedence over ruleset overrides.
+
+{{<Aside type="warning" header="Important">}}
+
+Ruleset overrides and tag overrides apply to both existing and **future** rules in the Managed Ruleset. If you wish to override existing rules only, you must use rule overrides.
+
+{{</Aside>}}
 
 To apply an override for a Managed Ruleset:
 
@@ -55,8 +59,6 @@ To apply an override for a Managed Ruleset:
   }
 }
 ```
-
-Specific overrides take precedence over more general ones, and rule overrides take precedence over tag overrides, which take precedence over ruleset overrides.
 
 You can override the following rule properties:
 
