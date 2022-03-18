@@ -72,7 +72,7 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 
 Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ policy and selecting all applications within the _Do Not Inspect_ app type, you'll ensure that your policy will apply to any new applications that will be added to the app type.
 
-![Creating an HTTP policy for the Do Not Inspect app type](/cloudflare-one/static/documentation/faq/do-not-inspect.png)
+![Creating an HTTP policy for the Do Not Inspect app type](/cloudflare-one/static/documentation/policies/do-not-inspect.png)
 
 {{<Aside>}}
 
