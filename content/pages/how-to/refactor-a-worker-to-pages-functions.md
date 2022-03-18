@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Refactor a Worker to a Pages Function.
+title: Refactor a Worker to a Pages Function
 ---
 
 # Refactor a Worker to a Pages Function
@@ -87,7 +87,7 @@ const HandleAirtableData = (body) => {
 ```
 
 
-# Using a Pages Functions
+# Using Pages Functions
 
 [Pages Functions](/pages/platform/functions/) are serverless functions that run on Cloudflare Pages togther with your application. They enable you to run server-side code to enable dynamic functionality without running a dedicated server. Which is a good usecase for our Airtable example.
 
