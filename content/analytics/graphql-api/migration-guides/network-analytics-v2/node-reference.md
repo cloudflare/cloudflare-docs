@@ -40,7 +40,7 @@ The sample rate is 1/10,000 packets.
 
 {{<Aside type="note" header="Adjusting attack mitigation">}}
 
-To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network).
+To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
 
 {{</Aside>}}
 
