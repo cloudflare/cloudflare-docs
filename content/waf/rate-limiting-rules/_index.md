@@ -33,7 +33,7 @@ Refer to [Determining the request rate](/waf/rate-limiting-rules/request-rate/) 
 
 ## Important remarks
 
-Applying rate limiting rules to known bots might affect SEO. For more information, refer to [Improve SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
+Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
 
 ---
 
