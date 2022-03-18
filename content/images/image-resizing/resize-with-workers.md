@@ -14,7 +14,7 @@ Here are a few examples of the flexibility Workers give you:
 * **Hide the actual location of the original image**. You can store images in an external S3 bucket or a hidden folder on your server without exposing that information in URLs.
 * **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
-The resizing feature is accessed via the [options](/workers/runtime-apis/request#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch).
+The resizing feature is accessed via the [options](/workers/runtime-apis/request/#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch/).
 
 ## Fetch options
 

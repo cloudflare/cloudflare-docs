@@ -10,9 +10,9 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
-This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and the [AWS S3 source collector](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source) to get logs into Sumo Logic. To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](/logs/get-started/enable-destinations/aws-s3). Alternatively, you can use [Logpull](/logs/logpull) to get logs to your Sumo Logic instance directly and skip Task 1.
+This tutorial describes how to use Cloudflare Logpush to send logs to AWS S3 and the [AWS S3 source collector](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/Amazon-Web-Services/AWS-S3-Source) to get logs into Sumo Logic. To learn how to use Logpush to send logs to AWS S3, refer to the [Logpush documentation](/logs/get-started/enable-destinations/aws-s3/). Alternatively, you can use [Logpull](/logs/logpull/) to get logs to your Sumo Logic instance directly and skip Task 1.
 
 ### Prerequisites
 
@@ -20,7 +20,7 @@ Before sending your Cloudflare log data to Sumo Logic, make sure that you:
 
 - Have an existing Sumo Logic account
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
+- Configure [Logpush](/logs/about/) or [Logpull](/logs/logpull/)
 - Consult the [Sumo Logic documentation](https://help.sumologic.com/07Sumo-Logic-Apps/18SAAS_and_Cloud_Apps/Cloudflare) for the Cloudflare App
 
 {{<Aside type="note" header="Note">}}
@@ -43,7 +43,7 @@ To enable Cloudflare Logpush in Sumo Logic:
 
 3.  Provide the _HTTP Source Address (URL)_ required by the Cloudflare Logpush API or Cloudflare dashboard UI.
 
-4.  Enable [Cloudflare Logpush to Sumo Logic](/logs/get-started/enable-destinations/sumo-logic).
+4.  Enable [Cloudflare Logpush to Sumo Logic](/logs/get-started/enable-destinations/sumo-logic/).
 
 ### 1.2 Send log data via AWS S3
 

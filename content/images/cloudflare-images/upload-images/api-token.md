@@ -8,7 +8,7 @@ weight: 3
 
 Before you can start using Cloudflare Images API, you need to create an API token to authenticate and define what type of permissions different users have. For Images, you will have to create a custom token with account level permissions.
 
-Refer to [Creating API tokens](/api/tokens/create#getting-started) to learn how to create a custom token.
+Refer to [Creating API tokens](/api/tokens/create/#getting-started) to learn how to create a custom token.
 
 ## Try your API token with the Images API
 
