@@ -21,7 +21,7 @@ For example, if you are diagnosing a bot-related issue, you may want to display 
 
 ### Event actions
 
-For a description of the actions that may appear in the **Activity Log**, refer to [Actions](/ruleset-engine/rules-language/actions).
+For a description of the actions that may appear in the **Activity Log**, refer to [Actions](/ruleset-engine/rules-language/actions/).
 
 When the *Connection Close* action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
 
