@@ -228,7 +228,7 @@ A Workers script can be up to 1 MB in size after compression. If needed, you can
 
 ### Number of environments
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 scripts at any given time. Free Workers accounts are limited to a maximum of 30 scripts at any given time.
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 scripts at any given time. Free Workers accounts are limited to a maximum of 30 environments at any given time.
 
 <Aside type="note">
 
