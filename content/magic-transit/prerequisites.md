@@ -58,7 +58,7 @@ If you are using IPsec inside GRE, set the MSS clamp at the IPsec tunnel interfa
 
 Unless you apply these MSS settings at the origin, client machines do not know that they must use an MSS of 1436 bytes when sending packets to your origin.
 
-## Apply MSS clmaps
+## Apply MSS clamps
 
 Instructions to adjust MSS by applying MSS clamps vary depending on the vendor of your router.
 
