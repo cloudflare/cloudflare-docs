@@ -30,13 +30,13 @@ You can also manage firewall rules through Terraform. For more, refer to [Gettin
 
 ### Firewall rules tab
 
-The **Rules List** gives you a snapshot of recent activity and allows you to manage firewall rules in a single convenient location.
+The rules list gives you a snapshot of recent activity and allows you to manage firewall rules in a single convenient location.
 
 ![Firewall rules tab](/firewall/static/cf-firewall-rules-panel.png)
 
 #### Challenge Solve Rate (CSR)
 
-The **Rules List** displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with *Legacy CAPTCHA* or *JS Challenge* actions, and it is calculated as follows:
+The rules list displays each rule's **CSR** (Challenge Solve Rate), which is the percentage of issued challenges that were solved. This metric applies to rules configured with *Legacy CAPTCHA* or *JS Challenge* actions, and it is calculated as follows:
 
 <p><var>CSR</var> = <var>number of challenges solved</var> / <var>number of challenges issued</var></p>
 

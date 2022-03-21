@@ -12,15 +12,13 @@ meta:
 
 {{<content-column>}}
 
-## Overview
-
 Cloudflare firewall rules provides a powerful and flexible platform for filtering HTTP requests and protecting your site amid an evolving threat landscape. However, the same power and flexibility that allows you to tailor firewall rules to your specific application and environment can also introduce complexity. In these cases, it is critical that you have a way to test a firewall rule before deploying it so that you can ensure the rule will behave the way you expect.
 
 To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the firewall rules Expression Editor so that you can test a rule as you edit it.
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="warning">}}
 
-Rule Preview requires access to a Cloudflare Enterprise plan.
+Rule Preview is only available to customers on an Enterprise plan.
 
 {{</Aside>}}
 
@@ -28,7 +26,7 @@ Rule Preview requires access to a Cloudflare Enterprise plan.
 
 To test a firewall rule with Rule Preview:
 
-1. Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit firewall rule** panel will open.
+1. Locate the desired rule in the rules list and click the associated **Edit** button (wrench icon). The **Edit firewall rule** panel will open.
 1. Click **Test rule** to trigger the test.
 
 ![Expression Builder Test Rule button](/firewall/static/firewall-rules-preview-1.png)
