@@ -189,6 +189,12 @@ The location where the root certificate should be installed is different dependi
 
 #### Debian / Ubuntu
 
+##### Ubuntu 20.04
+1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
+2. Follw the _Installing a certificate in PEM form_ instructions from [Ubuntu's documentation](https://ubuntu.com/server/docs/security-trust-store).
+
+##### Non-Ubuntu 20.04 Instructions 
+
 1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
 1. Copy the certificate to the user store.
 
