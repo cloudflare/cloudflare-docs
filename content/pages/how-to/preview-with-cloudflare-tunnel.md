@@ -11,7 +11,7 @@ While Cloudflare Pages provides unique [deploy preview URLs](/pages/platform/pre
 
 ## Installing Cloudflare Tunnel
 
-Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about installing Cloudflare Tunnel, refer to the ["Install cloudflared"](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) page in the Cloudflare for Teams documentation.
+Cloudflare Tunnel can be installed on Windows, Linux, and macOS. To learn about installing Cloudflare Tunnel, refer to the [Install cloudflared](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) page in the Cloudflare for Teams documentation.
 
 Confirm that `cloudflared` is installed correctly by running `cloudflared --version` in your command line:
 
@@ -48,7 +48,7 @@ $ cloudflared tunnel --url http://localhost:3000
 
 In this example, the randomly-generated URL `https://seasonal-deck-organisms-sf.trycloudflare.com` has been created and assigned to your tunnel instance. Visiting this URL in a browser will show the application running, with requests being securely forwarded through Cloudflare's edge network, through the tunnel running on your machine, to `localhost:3000`:
 
-![Cloudflare Tunnel example](../media/tunnel.png)
+![Cloudflare Tunnel example rendering a randomly-generated URL](../media/tunnel.png)
 
 ## Next Steps
 
