@@ -20,7 +20,7 @@ When using Page Rules with Workers, the following workflow is applied.
 4.  Page Rules run as part of normal request processing with some features now disabled.
 5.  Worker executes.
 
-{{<Aside type="note" header="Listing specific page rules">}}
+{{<Aside type="note" header="Listing specific Page Rules">}}
 
 A complete list of features which can be configured "before" versus "after" Workers would be difficult to generate, because they are defined implicitly by the features which we disallow. In general, security-related features run "before" Workers, while most others run "after"
 
