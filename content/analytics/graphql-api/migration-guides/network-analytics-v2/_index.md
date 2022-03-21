@@ -48,7 +48,7 @@ NAv2 uses the same API endpoint but makes use of new nodes. While NAv1 has three
 | Node type      | NAv1 | NAv2 for Magic Transit | NAv2 for Spectrum |
 |----------------|------|------------------------|-------------------|
 | Main node(s)   | `ipFlows1mGroups`<br/>`ipFlows1hGroups`<br/>`ipFlows1dGroups` | `magicTransitNetworkAnalyticsAdaptiveGroups` | `spectrumNetworkAnalyticsAdaptiveGroups` |
-| Attack node(s) | `ipFlows1mAttacksGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsAdaptiveGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsAdaptiveGroups` |
+| Attack node(s) | `ipFlows1mAttacksGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups` |
 
 {{</table-wrap>}}
 
