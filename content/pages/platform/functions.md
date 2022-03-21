@@ -103,7 +103,7 @@ In the previous example, an `onRequest` function was exported. This is a generic
 - `onRequestHead`
 - `onRequestOptions`
 
-These are the requests you export to write your first function. For example, you can write a function to output "Hello World" when it hits a `/functions/hello-world.js` file:
+These are the requests you export to write your first function. For example, you can write a function to output `"Hello World"` when it hits a `/functions/hello-world.js` file:
 
 ```js
 ---
@@ -312,7 +312,7 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a _KV namespace_ from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![KV-Binding](../KV-functions.png)
+![Editing a KV namespace Binding and adding a Variable name](../KV-functions.png)
 
 ## KV namespace locally
 
@@ -331,7 +331,7 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![DO-Binding](../DO-functions.png)
+![Editing a Durable Object namespace Binding and adding a Variable name](../DO-functions.png)
 
 ## Durable Objects locally
 
@@ -339,11 +339,11 @@ Just as you can access kv with `-k`or `-kv` you can access durable objects in yo
 
 ### Environment variable
 
-An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain-text. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
+An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plaintext. You can set your environment variables directly within the Pages interface for both your production and preview environments at run-time and build-time.
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
-![ENV-Binding](../ENV-functions.png)
+![Editing an environment variable by adding a variable name and value](../ENV-functions.png)
 
 ## Adding environment variables locally
 
