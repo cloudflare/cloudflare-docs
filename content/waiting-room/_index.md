@@ -51,5 +51,5 @@ Access to certain features depends on a customer's [plan type](/waiting-room/pla
 - Visitors must enable cookies. Refer to [Waiting room cookie](/waiting-room/reference/waiting-room-cookie/) for information on how cookies are used in Cloudflare Waiting Rooms.
 
 {{<button-group>}}
-  {{<button type="primary" href="/waiting-room/get-started">}}Get started{{</button>}}
+  {{<button type="primary" href="/waiting-room/get-started/">}}Get started{{</button>}}
 {{</button-group>}}

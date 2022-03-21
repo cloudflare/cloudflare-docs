@@ -38,4 +38,4 @@ Example:
 zaraz.set('product_name', 't-shirt', {scope: 'page'})
 ```
 
-This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/zaraz/reference/properties-reference#event-properties) for more details.
+This example makes the `product_name` property available to all `zaraz.track` calls in the current page, but will not affect calls after visitors navigate to other pages. Refer to [Event properties](/zaraz/reference/properties-reference/#event-properties) for more details.
