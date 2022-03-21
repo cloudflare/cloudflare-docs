@@ -178,6 +178,25 @@ Purchase of Magic Transit and/or BYOIP.
 </details>
 
 <details>
+<summary>Health Checks status notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about changes to server health as determined by [health checks](https://support.cloudflare.com/hc/articles/4404867308429).
+
+**Included with**
+
+Pro plans or higher.
+
+**What should you do if you receive one?**
+
+Review your [health check analytics](https://support.cloudflare.com/hc/articles/4404867308429#analytics).
+
+</div>
+</details>
+
+<details>
 <summary>Pool Enablement</summary>
 <div>
 
