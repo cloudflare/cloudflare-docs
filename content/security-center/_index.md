@@ -21,8 +21,8 @@ Cloudflare Security Center (beta) brings together our suite of security products
 *   **Infrastructure**: Review and manage your IT infrastructure.
 
 {{<button-group>}}
-  {{<button type="primary" href="/security-center/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/security-center/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/security-center/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="/security-center/about/">}}Learn more{{</button>}}
 {{</button-group>}}
 
 ***
