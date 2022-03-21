@@ -36,31 +36,31 @@ To set up OneLogin (SAML) as your identity provider:
 
 1.  Select the **Access** tab
 
-1. In Roles, use the mapping to programmatically and automatically assign users that can access the application.
+1.  In Roles, use the mapping to programmatically and automatically assign users that can access the application.
 
     ![OneLogin SAML Application Access](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-6.png)
 
-1. Select the **SSO** tab.
+1.  Select the **SSO** tab.
 
-1. Copy the OneLogin **SAML 2.0 Endpoint (HTTP)** to the Cloudflare Single Sign On URL.
+1.  Copy the OneLogin **SAML 2.0 Endpoint (HTTP)** to the Cloudflare Single Sign On URL.
 
-1. Copy the OneLogin **Issuer URL** to the Cloudflare **IdP Entity ID**.
+1.  Copy the OneLogin **Issuer URL** to the Cloudflare **IdP Entity ID**.
 
-1. Copy the **X.509 Certificate** to the Cloudflare **Signing Certificate**.
+1.  Copy the **X.509 Certificate** to the Cloudflare **Signing Certificate**.
 
     ![OneLogin SAML Application SSO](/cloudflare-one/static/documentation/identity/onelogin/onelogin-saml-7.png)
 
-1. On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-1. Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-1. Select SAML.
+1.  Select SAML.
 
-1. Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
+1.  Input the details from your OneLogin account in the fields. We suggest that you name the attributes the same in both OneLogin and Cloudflare.
 
     If other headers and SAML attribute names were added to OneLogin, be sure to add them to Cloudflare under **SAML attributes** and **SAML header attributes** in the **Optional configurations** menu.
 
-1. Click **Save**.
+1.  Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.
 

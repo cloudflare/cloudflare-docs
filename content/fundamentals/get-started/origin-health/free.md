@@ -1,8 +1,9 @@
 ---
 pcx-content-type: how-to
-hidden: true
-title: Protect your origin server — Free
-weight: 3
+title: Free
+weight: 1
+meta:
+  title: Free plans — Protect your origin server
 ---
 
 # Protect your origin server — Free
@@ -25,12 +26,12 @@ weight: 3
 
 {{<render file="_origin-ddos.md">}}
 
-Additionally, adjust various settings in your **Firewall** to restrict potentially malicious traffic:
+Additionally, adjust various settings in **Security** to restrict potentially malicious traffic:
 
-- Set up customized [firewall rules](/firewall/cf-firewall-rules)
-- Enable [bot protection](/bots/get-started)
+- Set up customized [firewall rules](/firewall/cf-firewall-rules/)
+- Enable [bot protection](/bots/get-started/)
 - Block, challenge, or allow specific addresses with [IP access rules](https://support.cloudflare.com/hc/articles/217074967)
-- Create [rate limiting](https://support.cloudflare.com/hc/articles/115001635128) rules as a final defense against malicious traffic (usage-based billing)
+- Create [rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) as a final defense against malicious traffic (usage-based billing)
 
 ### Increase caching
 

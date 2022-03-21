@@ -35,7 +35,7 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 
 **CI** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
 
-**IR** - Cloudflare charges when there are cache misses.
+**IR** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
 
 </div>
 </details>
@@ -109,13 +109,24 @@ Yes. Maximum image size is 100 megapixels (for example, 10,000×10,000 pixels la
 
 Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information on how to troubleshoot some of the more common issues, including error responses.
 
+### Are Image Resizing errors billed?
+
+Cloudflare considers some Image Resizing request errors for billing. Below is a list of `cf-resized` headers that are billed:
+
+* `9401`: Invalid resize options.
+* `9412`: Origin file type invalid.
+* `9413`: Image too big.
+* `9511`: Unsupported image format.
+
+Refer to [Troubleshoot Image Resizing problems](https://support.cloudflare.com/hc/articles/4412024022029) for more information about these error codes.
+
 ### Why does upscaling a PNG with Workers increase its file size?
 
 This is expected behaviour when upscaling a PNG file with transparency, due to the limitations of this file format. To make sure you do not end up with a file size much bigger than the original one:
 
 - **Avoid adding transparent areas to images**. Image Resizing supports a background option that makes images opaque, which allows Image Resizing to convert images to JPEG. In turn, this creates images with much smaller files.
 - **Do not use upscaling**. Keep the default `fit=scale-down` mode which never resizes images to bigger dimensions. This will prevent increases in file sizes. In most cases, this does not affect the presentation of images on the website, as they can be upscaled using CSS/HTML. As a rule, scaling down should be a server-side operation, and scaling up should a client-side operation.
-- **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](/images/image-resizing/resize-with-workers#an-example-worker) to learn how to check the `Accept` header.
+- **Implement support for format negotiation**. AVIF and WebP formats support transparency, which makes them better suited for images with transparency. To choose the best format automatically, our `/cdn-cgi/` image Worker supports `format=auto`, but custom Workers need to ask for formats themselves. Refer to our [example worker](/images/image-resizing/resize-with-workers/#an-example-worker) to learn how to check the `Accept` header.
 
 ---
 

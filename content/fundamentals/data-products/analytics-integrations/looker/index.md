@@ -10,7 +10,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
 This tutorial uses Cloudflare Logpush to send logs to [Google Cloud Storage Bucket and Cloud Function](/fundamentals/data-products/analytics-integrations/google-cloud/) and then import them into Google Big Query.
 
@@ -20,7 +20,7 @@ Before sending your Cloudflare log data to Looker, make sure that you:
 
 - Have an existing Looker account
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
+- Configure [Logpush](/logs/about/) or [Logpull](/logs/logpull/)
 - Load your data in a [database supported by Looker](https://looker.com/solutions/other-databases)
 
 {{<Aside type="note" header="Note">}}
@@ -85,7 +85,7 @@ This is a quick overview of the most important metrics from your Cloudflare logs
 
 #### Security
 
-This dashboard provides insights on threat identification and mitigation through our Web Application Firewall (WAF), Rate Limiting rules, and IP Firewall. Metrics include total threats stopped, threat traffic source, blocked IPs, and user agents, top threat requests, WAF events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
+This dashboard provides insights on threat identification and mitigation through our Web Application Firewall (WAF) and IP Firewall. Metrics include total threats stopped, threat traffic source, blocked IPs, and user agents, top threat requests, WAF events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
 
 ![Looker Cloudflare Security dashboard](/fundamentals/static/images/looker/dashboards/security-cloudflare-dashboard-looker.png)
 

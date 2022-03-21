@@ -8,7 +8,7 @@ weight: 426
 
 ## Get all rules
 
-This example returns all the Firewall Rules in the zone with ID `<ZONE_ID>`.
+This example returns all the firewall rules in the zone with ID `<ZONE_ID>`.
 
 ```bash
 ---
@@ -94,7 +94,7 @@ header: Response
 
 ## Get rule by ID
 
-This example returns the Firewall Rule with ID `<RULE_ID>`.
+This example returns the firewall rule with ID `<RULE_ID>`.
 
 ```bash
 ---

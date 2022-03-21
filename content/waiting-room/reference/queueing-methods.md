@@ -7,7 +7,7 @@ title: Queueing method
 
 The **queueing method** determines the order that visitors exit an active waiting room and reach your application.
 
-Only certain customers can use queue methods besides First In First Out (FIFO). For more details, refer to <a href="/plans">Plans</a> page.
+Only certain customers can use queue methods besides First In First Out (FIFO). For more details, refer to [Plans](/waiting-room/plans/) page.
 
 {{<Aside type="note" header="Note:">}}
 

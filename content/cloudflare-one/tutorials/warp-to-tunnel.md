@@ -87,7 +87,7 @@ cloudflared tunnel route ip show
 
 ## Configure and run the Tunnel
 
-Next, create a configuration file for the Tunnel. The following template contains the required fields but can be further modified as needed.
+Next, create a configuration file for the tunnel in the `.cloudflared` default directory. The following template contains the required fields but can be further modified as needed.
 
 ```yaml
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -102,7 +102,7 @@ You can now run the Tunnel. The command below will connect this instance of `clo
 cloudflared tunnel run grafana
 ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ![Config File](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
 

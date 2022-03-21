@@ -25,6 +25,7 @@ If you are not using a framework, leave the **Build command** field blank.
 | Framework/tool               | Build command                        | Build directory             |
 | ---------------------------- | ------------------------------------ | --------------------------- |
 | Angular (Angular CLI)        | `ng build`                           | `dist`                      |
+| Astro                        | `npm run build`                      | `dist`                      |
 | Brunch                       | `brunch build --production`          | `public`                    |
 | Docusaurus                   | `npm run build`                      | `build`                     |
 | Eleventy                     | `eleventy`                           | `_site`                     |

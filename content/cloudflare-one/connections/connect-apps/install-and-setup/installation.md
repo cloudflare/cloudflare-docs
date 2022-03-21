@@ -101,7 +101,7 @@ sc.exe start <unique-name>
 
 ## Deprecated versions
 
-Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](/cloudflare-one/connections/connect-apps/install-and-setup/installation#updating-cloudflared).
+Cloudflare currently supports versions of `cloudflared` 2020.5.1 and later. Breaking changes unrelated to feature availability may be introduced that will impact versions released prior to 2020.5.1. You can read more about upgrading `cloudflared` in our [developer documentation](/cloudflare-one/connections/connect-apps/install-and-setup/installation/#updating-cloudflared).
 
 | Version(s)                 | Deprecation status  |
 | -------------------------- | ------------------- |

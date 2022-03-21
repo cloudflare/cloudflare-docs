@@ -2,7 +2,7 @@
 title: Update a rule in a ruleset
 pcx-content-type: reference
 type: overview
-weight: 787
+weight: 8
 layout: list
 ---
 

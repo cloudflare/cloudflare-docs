@@ -176,7 +176,6 @@ Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functiona
 
 ### Node.js Example
 
-
 1. Install tus-js-client
 
 ```bash

@@ -41,17 +41,25 @@ You can integrate Okta with Cloudflare Access to allow users to reach applicatio
 
 1.  On the Zero Trust dashboard, navigate to **Settings** > **Authentication**.
 
-1. Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-1. Select **Okta** as your identity provider.
+1.  Select **Okta** as your identity provider.
 
-1. Input the ID, secret, and the Okta account URL.
+1.  Input the ID, secret, and the Okta account URL.
 
-1. (optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+1.  (optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-1. Click **Save**.
+1.  Click **Save**.
 
 To test that your connection is working, navigate to **Settings** > **Authentication** > **Login methods** and click **Test** next to Okta.
+
+{{<Aside type="Warning">}}
+
+If you encounter the error **Failed to fetch user/group information from the identity**, please double-check your Okta configuration:
+  * If you have more than 100 Okta groups, ensure you include the API token.
+  * The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
+
+{{</Aside>}}
 
 ## Example API Configuration
 

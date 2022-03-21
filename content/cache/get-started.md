@@ -12,8 +12,8 @@ meta:
 
 Discover the benefits of caching with Cloudflare’s CDN and understand the default cache behavior.
 
-- [What is a CDN?](/fundamentals/get-started/cdn)
-- [Understand the default file types Cloudflare caches](/cache/about/default-cache-behavior#default-cached-file-extensions)
+- [What is a CDN?](/fundamentals/get-started/cdn/)
+- [Understand the default file types Cloudflare caches](/cache/about/default-cache-behavior/#default-cached-file-extensions)
 
 ## Make more resources cacheable
 
@@ -50,11 +50,11 @@ Review the list of Cloudflare features that function in this manner.
 
 - [Auto Minify](https://support.cloudflare.com/hc/articles/200168196)
 - [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056)
-- [Polish](/images/polish)
+- [Polish](/images/polish/)
 - [Mirage](https://support.cloudflare.com/hc/articles/219178057)
 - [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)
 - [Email address obfuscation](https://support.cloudflare.com/hc/articles/200170016)
-- [Bot Management Javascript Detections](/bots/reference/javascript-detections)
+- [Bot Management Javascript Detections](/bots/reference/javascript-detections/)
 
 ## Troubleshoot
 

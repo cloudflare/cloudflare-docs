@@ -20,7 +20,9 @@ Email Routing sends its traffic using IPv4 prefixes.
 
 If you are a postmaster and are having trouble receiving Email Routing's emails, allow the following outbound IP addresses in your server configuration:
 
-`104.30.0.0/20`
+```txt
+104.30.0.0/20
+```
 
 _Ranges last updated: December 7, 2021_
 

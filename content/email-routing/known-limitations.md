@@ -27,3 +27,7 @@ Email Routing (beta) does not have advanced routing options. Characters such as 
 ## Restrictive DMARC policies can make forwarded emails fail
 
 Due to the nature of email forwarding, restrictive DMARC policies might make forwarded emails fail to be delivered. Refer to [dmarc.org](https://dmarc.org/wiki/FAQ#My_users_often_forward_their_emails_to_another_mailbox.2C_how_do_I_keep_DMARC_valid.3F) for more information.
+
+## Sending or replying to an email from your Cloudflare domain
+
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).

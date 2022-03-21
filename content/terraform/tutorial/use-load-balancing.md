@@ -139,7 +139,7 @@ Before proceeding, ensure Load Balancing is enabled for your account. If you are
 
 {{</Aside>}}
 
-As described in the [Load Balancing tutorial](/load-balancing/get-started), you will need to complete three tasks:
+As described in the [Load Balancing tutorial](/load-balancing/get-started/), you will need to complete three tasks:
 
 1.  Create a monitor to run health checks against your origin servers.
 2.  Create a pool of one or more origin servers that will receive load balanced traffic.
@@ -197,7 +197,7 @@ EOF
 
 ### iii. Define and create the load balancer
 
-When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/reference/dns-records). For example, if you create the `www.example.com` LB below, it will supersede the two www DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in step #2 above.
+When you create a load balancer (LB), it will [replace any existing DNS records with the same name](/load-balancing/reference/dns-records/). For example, if you create the `www.example.com` LB below, it will supersede the two www DNS records that you previously defined. One benefit of leaving the DNS records in place is that if you temporarily disable load balancing, connections to this hostname are still possible as shown in step #2 above.
 
 ```sh
 $ cat >> cloudflare.tf <<'EOF'

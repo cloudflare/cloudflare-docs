@@ -1,15 +1,24 @@
 ---
 pcx-content-type: concept
 title: Managed Rulesets
-weight: 5
+weight: 6
 ---
 
 # Managed Rulesets
 
-Cloudflare provides the following Managed Rulesets in the WAF:
+The WAF Managed Rulesets are pre-configured rulesets that provide immediate protection against:
 
-{{<table-wrap>}}<table style="table-layout:fixed; width:100%;">
+* Zero-day vulnerabilities
+* Top-10 attack techniques
+* Use of stolen/exposed credentials
+* Extraction of sensitive data
 
+These rulesets are regularly updated. You can adjust the behavior of managed rules, choosing from several possible actions.
+
+Cloudflare provides the following WAF Managed Rulesets:
+
+{{<table-wrap>}}
+<table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
       <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
@@ -29,13 +38,18 @@ Cloudflare provides the following Managed Rulesets in the WAF:
       <td style='width:30%; word-wrap:break-word; white-space:normal'><a href='/waf/managed-rulesets/exposed-credentials-check/'>Cloudflare Exposed Credentials Check</a></td>
       <td>Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials.</td>
     </tr>
+    <tr>
+      <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
+      <td>Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+    </tr>
   </tbody>
-</table>{{</table-wrap>}}
+</table>
+{{</table-wrap>}}
 
 The following rulesets run in the response phase:
 
-{{<table-wrap>}}<table style="table-layout:fixed; width:100%;">
-
+{{<table-wrap>}}
+<table style="table-layout:fixed; width:100%;">
   <thead>
     <tr>
       <th style='width:30%; white-space:normal'><strong>Ruleset</strong></th>
@@ -48,12 +62,13 @@ The following rulesets run in the response phase:
       <td>Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information. Available in <strong>Firewall</strong> > <strong>Data</strong>.</td>
     </tr>
   </tbody>
-</table>{{</table-wrap>}}
+</table>
+{{</table-wrap>}}
 
 ## Phases of deployed Managed Rulesets
 
-When you enable a Managed Ruleset in the **WAF** tab, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
+When you enable a Managed Ruleset in **Security** > **WAF** > **Managed rules**, you are deploying that Managed Ruleset to the zone-level `http_request_firewall_managed` phase.
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Refer to the specific Managed Ruleset documentation for details.
 
-For more information on phases, refer to [Phases](/ruleset-engine/about#phases).
+For more information on phases, refer to [Phases](/ruleset-engine/about/#phases).

@@ -98,11 +98,11 @@ If you are having an issue with one or more tunnels, before contacting the Cloud
 
 - Take note of any options you specified, either on the command line or in your configuration file, when starting your tunnel.
 
-- Set [`log-level`](/cloudflare-one/connections/connect-apps/configuration/arguments#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+- Set [`log-level`](/cloudflare-one/connections/connect-apps/configuration/arguments/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-- Set [`transport-log`](/cloudflare-one/connections/connect-apps/configuration/arguments#transport-loglevel) level to `debug`.
+- Set [`transport-log`](/cloudflare-one/connections/connect-apps/configuration/arguments/#transport-loglevel) level to `debug`.
 
-- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/configuration/arguments#logfile) either on the command line or in your configuration file.
+- Include your Cloudflare Tunnel logs file (`cloudflared.log`). If you did not specify a log file when starting your tunnel, you can do so using the [`logfile` option](/cloudflare-one/connections/connect-apps/configuration/arguments/#logfile) either on the command line or in your configuration file.
 
 - Include your full `config.yml` file for the affected tunnel.
 

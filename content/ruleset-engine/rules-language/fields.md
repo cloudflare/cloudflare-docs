@@ -15,7 +15,7 @@ The Cloudflare Rules language supports a range of field types:
 - [URI argument and value fields](#uri-argument-and-value-fields) are extracted from the request.
 - [HTTP request header fields](#http-request-header-fields) represent the names and values associated with HTTP request headers.
 - [HTTP request body fields](#http-request-body-fields) represent the properties of an HTTP request body, including forms, for example.
-- [HTTP response header fields](#http-response-header-fields) represent the names and values associated with HTTP response headers.
+- [HTTP response fields](#http-response-fields) represent the names and values of HTTP headers and the status code of the HTTP response.
 
 ## Standard fields
 
@@ -108,7 +108,7 @@ The Cloudflare Rules language supports these standard fields:
          <br /><code class="InlineCode">any(http.request.cookies["app"][*] == "test")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"app": ["test"]}'}</code>
+         <br /><code class="InlineCode">{"app": ["test"]}</code>
          </p>
       </td>
    </tr>
@@ -220,7 +220,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">37.78044</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-lon">
@@ -231,7 +231,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">-122.39055</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-city">
@@ -242,7 +242,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">San Francisco</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-asnum">
@@ -276,7 +276,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">GB</code>
          </p>
-         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-subdivision-1-iso-code">
@@ -286,7 +286,7 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br />
          <code class="InlineCode">GB-ENG</code></p>
-         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-subdivision-2-iso-code">
@@ -298,7 +298,7 @@ The Cloudflare Rules language supports these standard fields:
          <br />
          <code class="InlineCode">GB-SWK</code>
          </p>
-         <p>For more information on the ISO 3166-2 standard and the available regions, see <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-2 standard and the available regions, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> on Wikipedia.</p>
       </td>
    </tr>
    <tr id="field-ip-geoip-is-in-european-union">
@@ -360,7 +360,7 @@ Dynamic fields represent computed or derived values, typically related to threat
 
 {{<Aside type="note">}}
 
-Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription) enabled.
+Access to any fields containing `cf.bot_management` requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
 
 {{</Aside>}}
 
@@ -393,12 +393,12 @@ The Cloudflare Rules language supports these dynamic fields:
         </td>
     </tr>
     <tr>
-        <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}string{{</type>}}</p>
+        <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
           <p>Provides an SSL/TLS fingerprint to help you identify potential bot requests.
           </p>
-          <p>For more details, refer to <a href="https://developers.cloudflare.com/bots/concepts/ja3-fingerprint">JA3 Fingerprints</a>.
+          <p>For more details, refer to <a href="/bots/concepts/ja3-fingerprint/">JA3 Fingerprints</a>.
           </p>
         </td>
     </tr>
@@ -413,7 +413,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
           <p>Represents the edge IP address to which the HTTP request has resolved to.
           </p>
-          <p>This field is only meaningful for <a href="https://developers.cloudflare.com/byoip/">BYOIP customers</a>.
+          <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
         </td>
     </tr>
@@ -425,10 +425,17 @@ The Cloudflare Rules language supports these dynamic fields:
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
     </tr>
+    <tr id="field-cf-hostname-metadata">
+        <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>Returns the string representation of the per-hostname <a href="/ssl/ssl-for-saas/hostname-specific-behavior/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          </p>
+        </td>
+    </tr>
     <tr>
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the internet.
+          <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
           </p>
           <p>It is rare to see values above 60. A common recommendation is to challenge requests with a score above 10 and to block those above 50.
           </p>
@@ -484,7 +491,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>cf.colo.region</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-        Region of the data center that is handling this traffic. <br />
+        Region of the data center that is handling this traffic.<br />
         Example value: <code class="InlineCode"> WNAM </code>
         </td>
     </tr>
@@ -499,7 +506,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>icmp.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type">ICMP type</a>. Only applies to ICMP packets.<br />
          Example value:
          <code class="InlineCode">8</code>
         </td>
@@ -508,7 +515,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>icmp.code</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets. <br />
+         The <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code">ICMP code</a>. Only applies to ICMP packets.<br />
          Example value:
          <code class="InlineCode">2</code>
         </td>
@@ -524,7 +531,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.dst</code><br />{{<type>}}IP Address{{</type>}}</p>
         </td>
         <td>
-         The destination address as specified in the IP packet. <br />
+         The destination address as specified in the IP packet.<br />
          Example value:
          <code class="InlineCode">192.0.2.2</code>
         </td>
@@ -536,14 +543,14 @@ The Cloudflare Rules language supports these dynamic fields:
          Represents the 2-letter country code associated with the client IP address in <a href="https://www.iso.org/obp/ui/#search/code/">ISO 3166-1 Alpha 2</a> format.<br />
          Example value:
          <code class="InlineCode">GB</code>
-         <p>For more information on the ISO 3166-1 Alpha 2 format, see <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
+         <p>For more information on the ISO 3166-1 Alpha 2 format, refer to <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha 2</a> on Wikipedia.</p>
         </td>
     </tr>
     <tr>
         <td><p><code>ip.hdr_len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The length of the IPv4 header in bytes. <br />
+         The length of the IPv4 header in bytes.<br />
          Example value:
          <code class="InlineCode">5</code>
         </td>
@@ -552,7 +559,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.len</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The length of the packet including the header. <br />
+         The length of the packet including the header.<br />
          Example value:
          <code class="InlineCode">60</code>
         </td>
@@ -561,7 +568,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.opt.type</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set. <br />
+         The first byte of <a href="https://en.wikipedia.org/wiki/IPv4#Options">IP options field</a>, if the options field is set.<br />
          Example value:
          <code class="InlineCode">25</code>
         </td>
@@ -570,7 +577,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.proto</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
-        The transport layer for the packet, if it can be determined. <br />
+        The transport layer for the packet, if it can be determined.<br />
         Example values: <code class="InlineCode">icmp</code>, <code class="InlineCode">tcp</code>
         </td>
     </tr>
@@ -585,7 +592,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>ip.ttl</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
-        The time-to-live of the IP Packet. <br />
+        The time-to-live of the IP Packet.<br />
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
@@ -726,7 +733,7 @@ The Cloudflare Rules language supports these URI argument and value fields:
         <br /><code class="InlineCode">any(http.request.uri.args["search"][*] == "red+apples")</code>
         </p>
         <p>Example value:
-        <br /><code class="InlineCode">{'{"search": ["red+apples"]}'}</code>
+        <br /><code class="InlineCode">{"search": ["red+apples"]}</code>
         </p>
       </td>
     </tr>
@@ -818,7 +825,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <br /><code class="InlineCode">any(http.request.headers["content-type"][*] == "application/json")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"content-type": ["application/json"]}'}</code>
+         <br /><code class="InlineCode">{"content-type": ["application/json"]}</code>
          </p>
       </td>
    </tr>
@@ -901,7 +908,7 @@ The Cloudflare Rules language supports these HTTP header fields:
          <p>Example 2:<br/>
          Request without an <code class="InlineCode">Accept-Language</code> HTTP header and a URI of <code class="InlineCode">https://www.example.com/my-path</code>. In this case:<br/>
          <code class="InlineCode">concat("/", http.request.accepted_languages[0], http.request.uri.path) == "//my-path"</code>.</p>
-         <p><strong>Note:</strong> This field is only available in <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>.</p>
+         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
   </tbody>
@@ -975,7 +982,7 @@ The Cloudflare Rules language supports these HTTP body fields:
          <br /><code class="InlineCode">any(http.request.body.form["username"][*] == "admin")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{username": ["admin"]}'}</code>
+         <br /><code class="InlineCode">{username": ["admin"]}</code>
          </p>
       </td>
     </tr>
@@ -1028,17 +1035,21 @@ The Cloudflare Rules language supports these HTTP body fields:
   </tbody>
 </table>
 
-## HTTP response header fields
+## HTTP response fields
 
-The Rules language includes fields that represent properties of HTTP response headers returned by the origin or by a Worker script.
+The Rules language includes fields that represent properties of HTTP response returned by the origin or by a Worker script.
 
 {{<Aside type="note">}}
 
-You can only use HTTP response header fields in [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) and in filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets) ruleset.
+You can only use HTTP response fields in:
+
+* [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
+* [Rate limiting rules](/waf/rate-limiting-rules/)
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
 
 {{</Aside>}}
 
-The Cloudflare Rules language supports these HTTP response header fields:
+The Cloudflare Rules language supports these HTTP response fields:
 
 <table>
   <thead>
@@ -1048,6 +1059,16 @@ The Cloudflare Rules language supports these HTTP response header fields:
    </tr>
   </thead>
   <tbody>
+   <tr id="field-http-response-code">
+      <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
+      <td>
+         <p>Represents the HTTP status code returned by the origin.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">403</code>
+         </p>
+      </td>
+   </tr>
    <tr id="field-http-response-headers">
       <td valign="top"><code>http.response.headers</code><br />{{<type>}}Map&lt;String&gt;&lt;Array&gt;{{</type>}}</td>
       <td>
@@ -1062,7 +1083,7 @@ The Cloudflare Rules language supports these HTTP response header fields:
          <br /><code class="InlineCode">any(http.response.headers["server"][*] == "nginx")</code>
          </p>
          <p>Example value:
-         <br /><code class="InlineCode">{'{"server": ["nginx"]}'}</code>
+         <br /><code class="InlineCode">{"server": ["nginx"]}</code>
          </p>
       </td>
    </tr>

@@ -8,7 +8,7 @@ weight: 3
 
 View the content of the matched rule payload in the dashboard by entering your private key.
 
-1.  Open **Firewall** > **Overview**.
+1.  Open **Security** > **Overview**.
 
 2.  Under **Activity log**, expand the details of an event triggered by a rule whose Managed Ruleset has payload logging enabled.
 

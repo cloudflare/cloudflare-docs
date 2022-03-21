@@ -7,7 +7,7 @@ _build:
 
 To start using Super Bot Fight Mode:
 
-1.  Go to **Firewall** > **Bots**.
+1.  Go to **Security** > **Bots**.
 2.  Select **Configure Super Bot Fight Mode**.
 3.  Choose how your domain should respond to various types of traffic:
     *   For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).
@@ -15,7 +15,5 @@ To start using Super Bot Fight Mode:
     *   For more details on invisible code injection, refer to [JavaScript detections](/bots/reference/javascript-detections/).
 
 {{<Aside type="warning" header="Warning">}}
-
-If your organization also uses <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps">Cloudflare Tunnel</a>, keep <strong>Definitely Automated</strong> set to <strong>Allow</strong>. Otherwise, tunnels might fail with a <code>websocket: bad handshake</code> error.
-
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 {{</Aside>}}

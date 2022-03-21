@@ -42,7 +42,7 @@ The resource being protected by Cloudflare Zero Trust. An application can be a s
 
 ## Authenticated Origin Pulls
 
-[Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
+[Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) let origin web servers validate that a web request came from Cloudflare. Cloudflare uses TLS client certificate authentication, a feature supported by most web servers, to present a Cloudflare certificate when establishing a connection between Cloudflare and the origin web server.
 
 ## certificate pinning
 
@@ -124,7 +124,7 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 ## origin certificate
 
-[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
+[Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
 ## [policy](/cloudflare-one/policies/)
 

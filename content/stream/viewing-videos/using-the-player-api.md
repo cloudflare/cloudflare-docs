@@ -96,6 +96,10 @@ This will _only_ work once during initialization. Beyond that point the user has
 
   - Returns whether the video has ended.
 
+- `letterboxColor` {{<type>}}string{{</type>}}
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
+
 - `loop` {{<type>}}boolean{{</type>}}
 
   - Sets or returns whether the video should start over when it reaches the end
@@ -119,7 +123,7 @@ This will _only_ work once during initialization. Beyond that point the user has
     {{<Aside>}}
 
 The `<video>` element does not force the browser to follow the value of this attribute; it is a mere hint. Even though the `preload="none"` option is a valid HTML5 attribute, Stream player will always load some metadata to initialize the player. The amount of data loaded in this case is negligible.
-    
+
     {{</Aside>}}
 
 - `primaryColor` {{<type>}}string{{</type>}}

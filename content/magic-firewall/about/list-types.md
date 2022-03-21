@@ -18,7 +18,7 @@ The threat intelligence feed categories include Malware, Anonymizer, and Botnet 
 
 ## IP Lists
 
-IP Lists can be used to easily group services in networks, like web servers, or for lists of known bad IP addresses to make managing good network endpoints easier. IP lists are helpful for users with very expansive Firewall Rules with many IP lists. You can add up to 100,000 IPs per list that can used in rules.
+IP Lists can be used to easily group services in networks, like web servers, or for lists of known bad IP addresses to make managing good network endpoints easier. IP lists are helpful for users with very expansive firewall rules with many IP lists. You can add up to 100,000 IPs per list that can used in rules.
 
 ## Geo-blocking
 

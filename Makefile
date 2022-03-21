@@ -3,6 +3,5 @@ download:
 	tar -xf minify.tar.gz
 
 build: download
-	npm run format -- --quiet
 	npm run build
 	./minify -r public -o .

@@ -104,5 +104,5 @@ Not yet, but we may add support for this in the future.
 
 Yes. Right now there is a soft limit of ten sites per account, but that can be adjusted by contacting Cloudflare support.
 
-[manual setup]: /web-analytics/getting-started#sites-not-proxied-through-cloudflare
-[automatic setup]: /web-analytics/getting-started#sites-proxied-through-cloudflare
+[manual setup]: /analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare
+[automatic setup]: /analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare

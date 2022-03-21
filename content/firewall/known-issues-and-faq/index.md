@@ -43,198 +43,34 @@ _Threat Score_ as configured by **Security Level** is based on:
 - Low - for scores greater than 24
 - Essentially off - for scores greater than 49
 
-Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with Firewall Rules is advantageous because you can specify a Captcha vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
+Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify a CAPTCHA vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
 
 ## How does Firewall Rules handle traffic from known bots?
 
 ### Caution about potentially blocking bots
 
-When you create a Firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
 ### Bots currently detected
 
-The table below lists a **sample** of known bots that Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
 
-{{<table-wrap>}}
-
-<table style="width: 100%">
-    <thead>
-        <tr>
-            <th>Bot</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <p>ahrefs</p>
-            </td>
-            <td>
-                <p>Ahrefs SEO bot</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>apple</p>
-            </td>
-            <td>
-                <p>Applebot is the web crawler for Apple, for products like Siri and Spotlight Suggestions</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>archive.org</p>
-            </td>
-            <td>
-                <p>Archive.org bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>baidu</p>
-            </td>
-            <td>
-                <p>Baidu search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>better uptime</p>
-            </td>
-            <td>
-                <p>Bot for monitoring website uptime</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>bing</p>
-            </td>
-            <td>
-                <p>Bing search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>feedbin</p>
-            </td>
-            <td>
-                <p>Feedbin.com bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>google</p>
-            </td>
-            <td>
-                <p>Google search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>grapeshot</p>
-            </td>
-            <td>
-                <p>Grapeshot (Oracle) SEO bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>linkedin</p>
-            </td>
-            <td>
-                <p>LinkedIn bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>mail.ru</p>
-            </td>
-            <td>
-                <p>Mail.ru bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>naver</p>
-            </td>
-            <td>
-                <p>Naver (South Korean) search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>pingdom</p>
-            </td>
-            <td>
-                <p>Pingdom.com monitoring bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>pinterest</p>
-            </td>
-            <td>
-                <p>Pinterest bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>seznam</p>
-            </td>
-            <td>
-                <p>Seznam search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>sogou</p>
-            </td>
-            <td>
-                <p>Sogou search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>uptimerobot</p>
-            </td>
-            <td>
-                <p>Uptime Robot monitoring bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>yahoo</p>
-            </td>
-            <td>
-                <p>Yahoo! search engine bots</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p>yandex</p>
-            </td>
-            <td>
-                <p>Yandex search engine bots</p>
-            </td>
-        </tr>
-    </tbody>
-</table>
-{{</table-wrap>}}
+If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ## How do I create an exception to exclude certain requests from being blocked or challenged?
 
 There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.
 
-Cloudflare supports two methods to permit requests through Firewall Rules expressions:
+Cloudflare supports two methods to permit requests through firewall rules expressions:
 
-1.  Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
-2.  Create an independent Firewall rule with an _Allow_ action
+1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
+1. Create an independent firewall rule with an _Allow_ action
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare Firewall Rules does not bypass security measures defined in other **Firewall** app features.
+Cloudflare Firewall Rules does not bypass other security measures configured in **Security**.
 
 {{</Aside>}}
 
@@ -282,8 +118,8 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>Expression</td>
       <td>
         <em>
-          (http.host eq "example.com" and cf.threat_score &gt; 5) and not (ip.src in{' '}
-          {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'})
+          (http.host eq "example.com" and cf.threat_score &gt; 5) and not (ip.src in
+          {192.0.2.1 198.51.100.42 203.0.113.0/24})
         </em>
       </td>
     </tr>
@@ -297,7 +133,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
       <td>
         Action: <em>allow</em>
         <br />
-        Expression: <em>ip.src in {'{192.0.2.1 198.51.100.42 203.0.113.0/24}'}</em>
+        Expression: <em>ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}</em>
       </td>
     </tr>
     <tr>
@@ -332,7 +168,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     </tr>
     <tr>
       <td>Expression</td>
-      <td><em>(ip.geoip.asnum in {'{7224 15169}'})</em></td>
+      <td><em>(ip.geoip.asnum in {7224 15169})</em></td>
     </tr>
     <tr>
       <td colspan="2">
@@ -346,7 +182,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     <tr>
       <td>Expression</td>
       <td>
-        <em>(ip.geoip.asnum in {'{7224 15169}'}) and not cf.client.bot)</em>
+        <em>(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</em>
       </td>
     </tr>
     <tr>
@@ -369,7 +205,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
       <td>Rule 2</td>
       <td>
         Action: <em>block (or challenge)</em><br />
-        Expression: <em>(ip.geoip.asnum in {'{7224 15169}'})</em>
+        Expression: <em>(ip.geoip.asnum in {7224 15169})</em>
       </td>
     </tr>
   </tbody>
@@ -397,9 +233,9 @@ Your application can use these status codes to handle unexpected challenges.
 
 ## Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
-No. The `challengeFailed` and `jschallengeFailed` Firewall actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a Firewall rule. Additionally, the Firewall may not have a record of every request with a failed challenge.
+No. The `challengeFailed` and `jschallengeFailed` firewall rule actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, Cloudflare Firewall Rules may not have a record of every request with a failed challenge.
 
-Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/firewall/cf-firewall-rules/#challenge-solve-rate-csr) displayed in **Firewall Rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
+Therefore, consider these actions with caution. A reliable indicator is the [CSR (Challenge Solve Rate)](/firewall/cf-firewall-rules/#challenge-solve-rate-csr) displayed in **Security** > **WAF** > **Firewall rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
 ## Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 
@@ -413,10 +249,10 @@ There are multiple reasons for this:
 - Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 - Cloudflare receives a malformed challenge answer.
 
-## Why do I have matches for a Firewall Rule that was not supposed to match the request?
+## Why do I have matches for a firewall rule that was not supposed to match the request?
 
 Make sure you are looking at the correct request.
 
 Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Legacy CAPTCHA_ or _JS Challenge_ and now that challenge was answered".
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Legacy CAPTCHA_ or _JS Challenge_ and now that challenge was answered."

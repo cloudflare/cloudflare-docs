@@ -8,10 +8,10 @@ weight: 2
 
 To use Image Resizing you first need to enable it via the **Speed** app on your Cloudflare dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2.  Go to **Speed** > **Optimization**.
-3.  Under **File Size Optimization**, enable **Image Resizing**.
-4.  If you do not want to resize images from any origin, uncheck **Resize images from any origin**. When unchecked, Image Resizing only resizes images in the enabled zone and prevents third-parties from resizing any image at any origin.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Speed** > **Optimization**.
+3. Under **File Size Optimization**, enable **Image Resizing**.
+4. If you do not want to resize images from any origin, uncheck **Resize images from any origin**. When unchecked, Image Resizing only resizes images in the enabled zone and prevents third-parties from resizing any image at any origin.
 
 {{<Aside type="note">}}
 

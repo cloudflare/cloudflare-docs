@@ -22,11 +22,10 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 4.  Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
 
-5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules#expression-builder-and-editor).
+5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules/#expression-builder-and-editor).
 
-         {{<Aside type="note">}}
-
-    Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
+    {{<Aside type="note">}}
+Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
     {{</Aside>}}
 
 6.  For **Modify request header**, select one of the following options:
@@ -39,13 +38,12 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 8.  To modify another HTTP request header in the same rule, click **+ Set new header**.
 
-        The following example includes the modification of three headers using the available actions:
+    The following example includes the modification of three headers using the available actions:
 
-        ![HTTP request header modification examples](/rules/static/transform/request-header-modification-example.png)
+    ![HTTP request header modification examples](/rules/static/transform/request-header-modification-example.png)
 
-         {{<Aside type="note">}}
-
-    You can modify up to 30 HTTP request headers in a single rule.
+    {{<Aside type="note">}}
+You can modify up to 30 HTTP request headers in a single rule.
     {{</Aside>}}
 
 9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.

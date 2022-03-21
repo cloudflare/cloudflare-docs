@@ -1,8 +1,9 @@
 ---
 pcx-content-type: how-to
-hidden: true
-title: Protect your origin server — Pro
+title: Pro
 weight: 2
+meta:
+  title: Pro plans — Protect your origin server
 ---
 
 # Protect your origin server — Pro
@@ -16,7 +17,7 @@ weight: 2
 ## Monitor origin health
 
 {{<render file="_origin-passive-alert.md">}}
-
+\
 {{<render file="_origin-health-check.md">}}
 
 {{<render file="_origin-lb-alert.md">}}

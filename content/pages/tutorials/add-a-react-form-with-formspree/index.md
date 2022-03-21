@@ -145,7 +145,7 @@ function App() {
 export default App;
 ```
 
-Now you have a single-page application containing a Contact Us form with several fields for the user to fill out. However, you have not set up the form to submit to a valid form endpoint yet. You will do that in the [next section](/pages/add-a-react-form-with-formspree/#the-formspree-back-end).
+Now you have a single-page application containing a Contact Us form with several fields for the user to fill out. However, you have not set up the form to submit to a valid form endpoint yet. You will do that in the [next section](#the-formspree-back-end).
 
 {{<Aside type="info" header="GitHub repository">}}
 
@@ -163,7 +163,7 @@ To create a Formspree form, sign up for [an account on Formspree](https://formsp
 
 You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
-![Formspree endpoint](./form-endpoint.png)
+![Newly generated form endpoint that you can copy to use in the ContactForm component](./form-endpoint.png)
 
 Your component should now have a line like this:
 
@@ -173,7 +173,7 @@ const [state, handleSubmit] = useForm('mqldaqwx');
 /* replace the random-like string above with your own form's ID */
 ```
 
-Now when you submit your form, you should be shown a Thank You message. The form data will be submitted to your account on [Formspree.io](/pages/formspree.io/).
+Now when you submit your form, you should be shown a Thank You message. The form data will be submitted to your account on [Formspree.io](https://formspree.io/).
 
 From here you can adjust your form processing logic to update the [notification email address](https://help.formspree.io/hc/en-us/articles/115008379348-Changing-a-form-email-address), or add plugins like [Google Sheets](https://help.formspree.io/hc/en-us/articles/360036563573-Use-Google-Sheets-to-send-your-submissions-to-a-spreadsheet), [Slack](https://help.formspree.io/hc/en-us/articles/360045648933-Send-Slack-notifications), and more.
 
@@ -224,9 +224,9 @@ const [state, handleSubmit] = useForm(process.env.REACT_APP_FORM_ID);
 
 In your Cloudflare Pages project settings, add the `REACT_APP_FORM_ID` environment variable to both the Production and Preview environments. Use your original form's `hashid` for Production, and the new test form's `hashid` for the Preview environment:
 
-![Environment variables](./env-vars.png)
+![Edit option for environment variables in your Production and Preview environments](./env-vars.png)
 
-Now, when you commit and push changes to a branch of your git repo, a new preview app will be created with a form that submits to the test form URL. However, your production website will continue to submit to the original form URL.
+Now, when you commit and push changes to a branch of your git repository, a new preview app will be created with a form that submits to the test form URL. However, your production website will continue to submit to the original form URL.
 
 {{<Aside type="note">}}
 

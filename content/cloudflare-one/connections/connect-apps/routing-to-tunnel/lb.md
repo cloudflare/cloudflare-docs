@@ -6,11 +6,11 @@ weight: 51
 
 # Load balancers
 
-| Before you start                                                                            |
-| ------------------------------------------------------------------------------------------- |
-| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)               |
-| 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/)          |
-| 3. [Create a Load Balancer pool in Cloudflare](/load-balancing/how-to/create-load-balancer) |
+| Before you start                                                                             |
+| -------------------------------------------------------------------------------------------- |
+| 1. [Create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/)                |
+| 2. [Configure the Tunnel](/cloudflare-one/connections/connect-apps/configuration/)           |
+| 3. [Create a Load Balancer pool in Cloudflare](/load-balancing/how-to/create-load-balancer/) |
 
 ## Route traffic from the dashboard
 
@@ -48,11 +48,11 @@ The application will default to the Cloudflare settings of the hostname in your 
 
 If you have a tunnel to a port or ssh port, you **should not** run a TCP health check.
 
-Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) that returns a fixed http status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. This monitor will only verify that your server is reachable, **not** whether it is up and can accept requests.
 
 ### Named Tunnels and replicas
 
-A load balancer maintains [session affinity](/load-balancing/understand-basics/session-affinity) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/).
+A load balancer maintains [session affinity](/load-balancing/understand-basics/session-affinity/) by treating an entire Named Tunnel as an origin server, meaning that it does not distinguish between Named Tunnels [running as replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/).
 
 To maintain session affinity for individual service instances running behind tunnel replicas, use different Named Tunnel IDs.
 

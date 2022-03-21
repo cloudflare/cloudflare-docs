@@ -110,7 +110,7 @@ When you set your encryption mode to **Full (strict)**, Cloudflare does everythi
 
 ### Use when
 
-For the best security, choose **Full (strict)** mode whenever possible (unless your are an [Enterprise customer](#strict-ssl-only-origin-pull)).
+For the best security, choose **Full (strict)** mode whenever possible (unless you are an [Enterprise customer](#strict-ssl-only-origin-pull)).
 
 Your origin needs to be able to support an SSL certificate that is:
 

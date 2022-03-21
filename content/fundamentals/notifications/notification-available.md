@@ -69,9 +69,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1.  Confirm that your primary nameservers are up and running.
-2.  Confirm that the ACLs on your primary nameservers are configured correctly.
-3.  Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1. Confirm that your primary nameservers are up and running.
+2. Confirm that the ACLs on your primary nameservers are configured correctly.
+3. Confirm that your primary nameservers are configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -90,9 +90,9 @@ Purchase of Secondary DNS.
 
 **What should you do if you receive one?**
 
-1.  Confirm that the primary nameserver that is failing is up and running.
-2.  Confirm that the ACL on the primary nameserver that is failing is configured correctly.
-3.  Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
+1. Confirm that the primary nameserver that is failing is up and running.
+2. Confirm that the ACL on the primary nameserver that is failing is configured correctly.
+3. Confirm that the primary nameserver that is failing is configured correctly in your Cloudflare account (correct IP, port, TSIG).
 
 </div>
 </details>
@@ -210,7 +210,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/dynamic-advertisement).
+You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
 
 </div>
 </details>
@@ -229,8 +229,8 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-1.  Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
-2.  {{<render file="_errors.md">}}
+1. Use the link in the Notification you received to see which error codes Cloudflare is seeing from your origin.
+2. {{<render file="_errors.md">}}
 
 </div>
 </details>
@@ -458,7 +458,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Included with**
 
@@ -466,7 +466,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
@@ -479,7 +479,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to ide
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts).
+For more information, refer to [WAF alerts](/waf/alerts/).
 
 **Included with**
 
@@ -487,7 +487,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans) to identify any possible attack or misconfiguration.
+Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>

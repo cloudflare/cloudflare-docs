@@ -19,7 +19,7 @@ You can create a list by:
 
 ## Creating a list from a CSV file
 
-If you'd like to test how this feature works, here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv/). You can upload it to the Zero Trust dashboard following the instructions below:
+If you'd like to test how this feature works, here is a [sample CSV file](/cloudflare-one/static/documentation/list-test.csv). You can upload it to the Zero Trust dashboard following the instructions below:
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway > Lists**.
 1.  Click **Upload CSV**.

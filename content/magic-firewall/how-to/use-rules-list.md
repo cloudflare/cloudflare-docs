@@ -7,7 +7,7 @@ meta:
 
 # Define a Rules List
 
-[Rules Lists](/firewall/cf-dashboard/rules-lists#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[Rules Lists](/firewall/cf-dashboard/rules-lists/#access-the-lists-interface) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
 In order to use this feature first [create a new list](https://api.cloudflare.com/#rules-lists-create-list).
 

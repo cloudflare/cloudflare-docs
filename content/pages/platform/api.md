@@ -26,7 +26,7 @@ Try it with one of your projects by replacing `{account_id}`, `{project_name}`, 
 
 ## Examples
 
-The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions on Cloudflare's global network. The following section includes three code examples on how to use the Pages API. To build and deploy these samples, refer to the [Get started guide](/workers/get-started/guide).
+The API is even more powerful when combined with Cloudflare Workers: the easiest way to deploy serverless functions on Cloudflare's global network. The following section includes three code examples on how to use the Pages API. To build and deploy these samples, refer to the [Get started guide](/workers/get-started/guide/).
 
 ### Triggering a new build every hour
 
@@ -57,7 +57,7 @@ async function handleScheduled(request) {
 }
 ```
 
-After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers) for more details.
+After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers/) for more details.
 
 ### Deleting old deployments after a week
 
@@ -109,7 +109,7 @@ async function handleScheduled(request) {
 }
 ```
 
-After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers) for more details.
+After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers/) for more details.
 
 ### Sharing project information
 
@@ -178,5 +178,5 @@ async function handleRequest(request) {
 ## Related resources
 
 - [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
-- [Workers Getting Started Guide](/workers/get-started/guide)
-- [Workers Cron Triggers](/workers/platform/cron-triggers)
+- [Workers Getting Started Guide](/workers/get-started/guide/)
+- [Workers Cron Triggers](/workers/platform/cron-triggers/)

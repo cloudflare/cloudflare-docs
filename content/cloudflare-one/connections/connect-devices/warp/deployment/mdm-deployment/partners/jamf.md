@@ -103,7 +103,7 @@ Here is an example `.mobileconfig` file with the accepted arguments:
 
 For a description of each argument and what it means, see [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
 
-[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist/) this example `plist`. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
+[Click here to download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) this example `plist`. If you manually plan to download the plist file and place it in `/Library/Managed Preferences`, convert the plist into into binary format first. To do that:
 
 1.  Open a Terminal window.
 1.  Run the following command:
@@ -112,7 +112,7 @@ For a description of each argument and what it means, see [deployment parameters
 % plutil -convert binary1 com.cloudflare.warp.plist
 ```
 
-[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig/) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+[Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
 
 ### Upload the package
 
@@ -148,7 +148,7 @@ For a description of each argument and what it means, see [deployment parameters
 1.  Upload a valid plist file. You can start with our example above and modify it for your organization.
 1.  Click **Save**.
 1.  Navigate to **Scope** to configure which devices in your organization will receive this profile.
-1. Click **Save**.
+1.  Click **Save**.
 
 Jamf is now configured to deploy the Cloudflare WARP client.
 
@@ -184,10 +184,10 @@ For a description of each argument and what it means, see [deployment parameters
 1.  In the search box, enter: `1.1.1.1: Faster Internet`.
 1.  Click **Next**.
 1.  Click **Add** in the row for _1.1.1.1: Faster Internet by Cloudflare Inc._. To verify that it is the correct application, [click on this App Store link](https://apps.apple.com/us/app/id1423538627).
-1. Navigate to **Scope**.
-1. Specify the devices in your organization that will receive the application.
-1. Navigate to **App Configuration** and copy/paste the XML from above.
-1. Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
-1. Click **Save**.
+1.  Navigate to **Scope**.
+1.  Specify the devices in your organization that will receive the application.
+1.  Navigate to **App Configuration** and copy/paste the XML from above.
+1.  Make sure you modify the default XML values to match your Cloudflare for Teams deployment.
+1.  Click **Save**.
 
 Jamf is now configured to deploy the WARP client.

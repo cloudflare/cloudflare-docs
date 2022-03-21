@@ -9,10 +9,10 @@ It is important that you keep your contact details accurate and up-to-date. [ICA
 
 To update your registrant contacts:
 
-1.  Go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2.  Click **Registrar**.
-3.  Find the domain where you want to update your contact information, and click **Manage**.
-4.  Click the **Contacts** tab, and edit the contact information.
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Click **Registrar**.
+3. Find the domain where you want to update your contact information, and click **Manage**.
+4. Click the **Contacts** tab, and edit the contact information.
 
 If you change any of the following fields, Cloudflare Registrar will require a Change of Registrant approval before the changes are finalized:
 

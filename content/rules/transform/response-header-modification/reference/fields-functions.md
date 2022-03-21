@@ -12,4 +12,4 @@ The available fields when setting an HTTP response header value using an express
 
 {{<render file="transform/_header-modification-fields.md">}}
 
-For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions).
+For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).

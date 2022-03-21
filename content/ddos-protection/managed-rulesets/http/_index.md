@@ -12,14 +12,14 @@ The Cloudflare HTTP DDoS Attack Protection Managed Ruleset is a set of pre-confi
 
 The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
 
-The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Firewall Analytics dashboard](/waf/analytics), available at **Firewall** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
+The HTTP DDoS Attack Protection Managed Ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Firewall Analytics dashboard](/waf/analytics/), available at **Security** > **Overview**, will display additional information on the types of L7 DDoS attacks detected for a specific zone.
 
 ## Ruleset configuration
 
 You can adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
 
-*   The performed **action** when an attack is detected
-*   The **sensitivity level** of attack detection mechanisms
+* The performed **action** when an attack is detected
+* The **sensitivity level** of attack detection mechanisms
 
 {{<Aside type="note" header="Note">}}
 
@@ -29,8 +29,8 @@ Certain actions or sensitivity levels may not be available to all Cloudflare pla
 
 To adjust rule behavior, do one of the following:
 
-*   [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
-*   [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/ddos-protection/managed-rulesets/http/configure-api/).
+* [Configure HTTP DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/http/configure-dashboard/).
+* [Configure HTTP DDoS Attack Protection Managed Ruleset overrides via API](/ddos-protection/managed-rulesets/http/configure-api/).
 
 For more information on the available configuration parameters, see [Managed Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 

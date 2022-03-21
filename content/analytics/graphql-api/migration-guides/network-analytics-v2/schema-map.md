@@ -18,7 +18,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <th>ipFlows1mGroups</th>
       <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdNetworkAnalytics-AdaptiveGroups</th>
-      <th>dosdAttackAnalytics-AdaptiveGroups</th>
+      <th>dosdAttackAnalytics-Groups</th>
       <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>
       <th>magicFirewallNetworkAnalytics-AdaptiveGroups</th>
     </tr>
@@ -42,6 +42,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
         <br />
         <code>datetimeTenSeconds</code>
       </td>
+      <td></td>
       <td>
         <em>Related fields:</em>
         <br />
@@ -56,13 +57,6 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
         <br />
         <code>datetimeTenSeconds</code>
       </td>
-      <td>
-        <em>Related fields:</em>
-        <br />
-        <code>datetime</code>
-        <br />
-        <code>datetimeTenSeconds</code>
-      </td>
     </tr>
     <tr>
       <td>
@@ -74,9 +68,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>datetimeMinute</code>
       </td>
-      <td>
-        <code>datetimeMinute</code>
-      </td>
+      <td></td>
       <td>
         <code>datetimeMinute</code>
       </td>
@@ -94,9 +86,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>datetimeFiveMinutes</code>
       </td>
-      <td>
-        <code>datetimeFiveMinutes</code>
-      </td>
+      <td></td>
       <td>
         <code>datetimeFiveMinutes</code>
       </td>
@@ -114,9 +104,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>datetimeFifteenMinutes</code>
       </td>
-      <td>
-        <code>datetimeFifteenMinutes</code>
-      </td>
+      <td></td>
       <td>
         <code>datetimeFifteenMinutes</code>
       </td>
@@ -134,9 +122,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>datetimeHour</code>
       </td>
-      <td>
-        <code>datetimeHour</code>
-      </td>
+      <td></td>
       <td>
         <code>datetimeHour</code>
       </td>
@@ -177,67 +163,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td></td>
       <td></td>
       <td>
-        <code>attackMitigationType</code>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>attackProtocol</code>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <code>attackIpProtocol</code>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>attackDestinationIP</code>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <code>attackDestinationIp</code>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>attackSourcePort</code>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <code>attackSourcePort</code>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>attackDestinationPort</code>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <code>attackDestinationPort</code>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <code>attackTcpFlags</code>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <code>attackTcpFlags</code>
+        <code>mitigationType</code>
       </td>
       <td></td>
       <td></td>
@@ -252,9 +178,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>sourceCountry</code>
       </td>
-      <td>
-        <code>sourceCountry</code>
-      </td>
+      <td></td>
       <td>
         <code>sourceCountry</code>
       </td>
@@ -272,9 +196,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>sourceAsn</code>
       </td>
-      <td>
-        <code>sourceAsn</code>
-      </td>
+      <td></td>
       <td>
         <code>sourceAsn</code>
       </td>
@@ -296,11 +218,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
         <br />
         <code>sourceGeohash</code>
       </td>
-      <td>
-        <em>Related field:</em>
-        <br />
-        <code>sourceGeohash</code>
-      </td>
+      <td></td>
       <td>
         <em>Related field:</em>
         <br />
@@ -322,9 +240,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>coloCode</code>
       </td>
-      <td>
-        <code>coloCode</code>
-      </td>
+      <td></td>
       <td>
         <code>coloCode</code>
       </td>
@@ -342,9 +258,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>coloCity</code>
       </td>
-      <td>
-        <code>coloCity</code>
-      </td>
+      <td></td>
       <td>
         <code>coloCity</code>
       </td>
@@ -362,9 +276,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>coloCountry</code>
       </td>
-      <td>
-        <code>coloCountry</code>
-      </td>
+      <td></td>
       <td>
         <code>coloCountry</code>
       </td>
@@ -386,11 +298,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
         <br />
         <code>coloGeohash</code>
       </td>
-      <td>
-        <em>Related field:</em>
-        <br />
-        <code>coloGeohash</code>
-      </td>
+      <td></td>
       <td>
         <em>Related field:</em>
         <br />
@@ -408,7 +316,7 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <th>ipFlows1mGroups</th>
       <th>magicTransitNetworkAnalytics-AdaptiveGroups</th>
       <th>dosdNetworkAnalytics-AdaptiveGroups</th>
-      <th>dosdAttackAnalytics-AdaptiveGroups</th>
+      <th>dosdAttackAnalytics-Groups</th>
       <th>flowtrackdNetworkAnalytics-AdaptiveGroups</th>
       <th>magicFirewallNetworkAnalytics-AdaptiveGroups</th>
     </tr>
@@ -433,21 +341,25 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
     <tr>
       <td>
         <code>bits</code>
-        <br />
-        (divided by 8)
       </td>
       <td>
-        <code>ipTotalLength</code>
+        <code>ipTotalLength</code><br/>
+        (<code>bits</code> divided by 8)
       </td>
       <td>
-        <code>ipTotalLength</code>
-      </td>
-      <td></td>
-      <td>
-        <code>ipTotalLength</code>
+        <code>ipTotalLength</code><br/>
+        (<code>bits</code> divided by 8)
       </td>
       <td>
-        <code>ipTotalLength</code>
+        <code>bits</code>
+      </td>
+      <td>
+        <code>ipTotalLength</code><br/>
+        (<code>bits</code> divided by 8)
+      </td>
+      <td>
+        <code>ipTotalLength</code><br/>
+        (<code>bits</code> divided by 8)
       </td>
     </tr>
     <tr>
@@ -460,7 +372,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <em>n/a</em>
       </td>
-      <td></td>
+      <td>
+        <code>packets</code>
+      </td>
       <td>
         <em>n/a</em>
       </td>
@@ -478,7 +392,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>ipProtocol</code>
       </td>
-      <td></td>
+      <td>
+        <code>ipProtocol</code>
+      </td>
       <td>
         <code>ipProtocol</code>
       </td>
@@ -496,7 +412,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>ipSourceAddress</code>
       </td>
-      <td></td>
+      <td>
+        <code>sourceIp</code>
+      </td>
       <td>
         <code>ipSourceAddress</code>
       </td>
@@ -514,7 +432,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>ipDestinationAddress</code>
       </td>
-      <td></td>
+      <td>
+        <code>destinationIp</code>
+      </td>
       <td>
         <code>ipDestinationAddress</code>
       </td>
@@ -568,7 +488,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>sourcePort</code>
       </td>
-      <td></td>
+      <td>
+        <code>sourcePort</code>
+      </td>
       <td>
         <code>sourcePort</code>
       </td>
@@ -586,7 +508,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>destinationPort</code>
       </td>
-      <td></td>
+      <td>
+        <code>destinationPort</code>
+      </td>
       <td>
         <code>destinationPort</code>
       </td>
@@ -604,7 +528,9 @@ The following table lists direct mappings between NAv1 and NAv2 fields, when ava
       <td>
         <code>tcpFlags</code>
       </td>
-      <td></td>
+      <td>
+        <code>tcpFlags</code>
+      </td>
       <td>
         <code>tcpFlags</code>
       </td>

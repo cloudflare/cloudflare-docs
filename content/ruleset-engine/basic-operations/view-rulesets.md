@@ -265,6 +265,6 @@ Each rule in a Managed Ruleset can have associated tags or categories, listed in
 </div>
 </details>
 
----
+## Related resources
 
 For more information on the available API methods for viewing rulesets, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/).

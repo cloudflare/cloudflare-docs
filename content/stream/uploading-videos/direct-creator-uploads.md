@@ -117,11 +117,9 @@ An unsuccessful response might look like:
 }
 ```
 
-The `uploadURL` provided in the `result` body of a successful request should be
-passed along to the end-user to make their upload request.
+The `uploadURL` provided in the `result` body of a successful request should be passed along to the end-user to make their upload request.
 
-The `uid` references the reserved media object's unique identifier and can be
-kept as a reference to query our [API](/stream/getting-started/searching/).
+The `uid` references the reserved media object's unique identifier and can be kept as a reference to query our [API](/stream/uploading-videos/searching/).
 
 ## Direct creator upload request from end users
 
@@ -229,7 +227,7 @@ async function handleRequest(request) {
 }
 ```
 
-Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file#resumable-uploads-with-tus-for-large-files) article.
+Once you have an endpoint that returns the tokenized upload URL from the `location` header, you can use it by setting the tus client to make a request to _your_ endpoint. For details on using a tus client, refer to the [Resumable uploads with tus ](/stream/uploading-videos/upload-video-file/#resumable-uploads-with-tus-for-large-files) article.
 
 ### Testing your Direct Creator Upload Endpoint
 
