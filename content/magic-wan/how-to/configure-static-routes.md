@@ -39,3 +39,5 @@ For an example edge routing configuration, refer to the example below.
 2. Next to **Manage Magic WAN configuration**, click **Configure**.
 
 {{<render file="../../magic-transit/_partials/_static-routes.md">}}
+
+{{<render file="../../magic-transit/_partials/_scoped-routes.md">}}
