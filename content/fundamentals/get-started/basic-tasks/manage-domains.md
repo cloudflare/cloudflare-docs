@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Manage domains
-weight: 1
+weight: 2
 ---
 
 # Manage domains

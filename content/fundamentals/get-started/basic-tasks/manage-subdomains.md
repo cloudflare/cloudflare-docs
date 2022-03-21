@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Manage subdomains
-weight: 2
+weight: 3
 ---
 
 # Manage subdomains

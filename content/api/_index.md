@@ -18,12 +18,18 @@ Legacy Note: Existing customers may be familiar with API Keys. These allow for l
 Once you have your API Token created, all API requests are authorized in the same way. Cloudflare uses the [RFC standard](https://tools.ietf.org/html/rfc6750#section-2.1) `Authorization: Bearer <Token>` interface. When used in an example Cloudflare API request it looks like this:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/zones/cd7d0123e3012345da9420df9514dad0" \
+curl -X GET "https://api.cloudflare.com/client/v4/zones/<ACCOUNT_ID>" \
 -H "Content-Type:application/json" \
 -H "Authorization: Bearer YQSn-xWAQiiEh9qM58wZNnyQS7FUdoqGIUAbrh7T"
 ```
 
 The above example is just that, an example. Never send anyone or store you API Token secret in plaintext. Also be sure not to check it into code repositories especially public ones like on github.
+
+## Finding your zone and account IDs
+
+When using the Cloudflare API, you will need to know your **Account ID** and **Zone ID**.
+
+For help finding those values, refer to [Finding your zone and account IDs](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 ## Using Cloudflare’s APIs
 
