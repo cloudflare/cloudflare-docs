@@ -191,7 +191,7 @@ Pro plans or higher.
 
 **What should you do if you receive one?**
 
-No direct call to action.
+Review your [health check analytics](https://support.cloudflare.com/hc/articles/4404867308429#analytics).
 
 </div>
 </details>
