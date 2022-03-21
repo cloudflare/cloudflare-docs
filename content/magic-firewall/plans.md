@@ -20,6 +20,8 @@ If you are a [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/) user, 
 
 ## Advanced features
 
+All standard features are included with the purchase of the advanced features below.
+
 - Customizable IP lists
 - Managed threat intelligence IP lists (Malware, Botnet, Anonymizer)
 - Geoblocking based on user location by country
