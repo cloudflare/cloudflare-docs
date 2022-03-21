@@ -163,7 +163,7 @@ To create a Formspree form, sign up for [an account on Formspree](https://formsp
 
 You will be presented with instructions on how to integrate your new form. Copy the form’s `hashid` (the last 8 alphanumeric characters from the URL) and paste it into the `useForm` function in the `ContactForm` component you created above.
 
-![Newly generated form endpoint that can be copied to use in the ContactForm component](./form-endpoint.png)
+![Newly generated form endpoint that you can copy to use in the ContactForm component](./form-endpoint.png)
 
 Your component should now have a line like this:
 

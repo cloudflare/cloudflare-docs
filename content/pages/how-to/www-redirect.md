@@ -27,6 +27,6 @@ To do this:
 4.  Select _Forwarding URL_ from the dropdown and select the **301 - Permanent Redirect** option from the status code dropdown.
 5.  Finally, for the Forwarding URL location, set it to `example.com/$1`, the `$1` will be replaced by the wildcard match in target (the `*`).
 
-![Editting a Page Rule to set up a redirect](../media/www_redirect_pagerule.png)
+![Editing a Page Rule to set up a redirect](../media/www_redirect_pagerule.png)
 
 Finally, select **Save** and wait a few seconds for your rule to propagate.
