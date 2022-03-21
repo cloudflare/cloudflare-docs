@@ -12,7 +12,7 @@ Once you enable Universal SSL, you can review the [certificate's status](/ssl/ss
 
 ### Authoritative (Full) domains
 
-For an authoritative or full domain — domains that changed their [domain nameservers](/dns/zone-setups/full-setup) – your domain should receive its Universal SSL certificate within **24 hours**. This certificate covers your root domain and all first-level subdomains (`subdomain.example.com`).
+For an authoritative or full domain — domains that changed their [domain nameservers](/dns/zone-setups/full-setup/) – your domain should receive its Universal SSL certificate within **24 hours**. This certificate covers your root domain and all first-level subdomains (`subdomain.example.com`).
 
 Based on your imported DNS records, Cloudflare sets your default **SSL/TLS encryption mode**. For help changing your encryption mode, refer to [SSL modes](/ssl/origin-configuration/ssl-modes/).
 

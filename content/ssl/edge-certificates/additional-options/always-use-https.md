@@ -20,7 +20,7 @@ To redirect traffic for all subdomains and hosts in your application:
 
 ### Encrypt some visitor traffic
 
-If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Bulk Redirects](/rules/bulk-redirects).
+If you only want specific subdomains redirected to HTTPS, redirect on a URL basis using Cloudflare [Bulk Redirects](/rules/bulk-redirects/).
 
 For example, you could forward traffic from a specific subdomain to HTTPS. You would likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `http://example.com/examples` go to `https://example.com/examples`.
 

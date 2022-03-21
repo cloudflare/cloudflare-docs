@@ -40,7 +40,7 @@ or install with cargo:
 $ cargo install wrangler
 ```
 
-Refer to the Wrangler [Install/Update](/workers/cli-wrangler/install-update) page for more information.
+Refer to the Wrangler [Install/Update](/workers/cli-wrangler/install-update/) page for more information.
 
 ## 2. Authenticate Wrangler
 
@@ -87,13 +87,13 @@ You will need to bind your bucket to a Worker.
 
 {{<Aside type="note" header="Bindings">}}
 
-A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv), [Durable Objects](/workers/runtime-apis/durable-objects), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
+A binding is a how your Worker interacts with external resources such as [KV Namespaces](/workers/runtime-apis/kv/), [Durable Objects](/workers/runtime-apis/durable-objects/), or [R2 Buckets](#api). A binding is a runtime variable that the Workers runtime provides to your code. You can declare a variable name in your `wrangler.toml` file that will be bound to these resources at runtime, and interact with them through this variable. Every binding's variable name and behavior is determined by you when deploying the Worker. Refer to the [Environment Variables](https://github.com/workers/platform/environment-variables) documentation for more information.
 
 A binding is defined in the `wrangler.toml` file of your Worker project's directory.
 
 {{</Aside>}}
 
-Run the [`wrangler generate`](/workers/cli-wrangler/commands#generate) command to create a Worker using a [template](/workers/get-started/quickstarts#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
+Run the [`wrangler generate`](/workers/cli-wrangler/commands/#generate) command to create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate your new Worker project:
 
 ```sh
 wrangler generate <YOUR_WORKER_NAME>
@@ -101,7 +101,7 @@ wrangler generate <YOUR_WORKER_NAME>
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
 
-Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide#6-preview-your-project).
+Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide/#6-preview-your-project).
 
 ```toml
 name = "<YOUR_WORKER_NAME>"
@@ -120,7 +120,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/cli-wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -165,9 +165,9 @@ With the above code added to your Worker, every incoming request has the ability
 
 You must now define authorization logic to determine who can perform what actions to your bucket. This logic lives within your Worker's code, as it is your application's job to determine user privileges. The following is a short list of resources related to access and authorization practices:
 
-1. [Basic Authentication](/workers/examples/basic-auth): Shows how to restrict access using the HTTP Basic schema.
-2. [Using Custom Headers](/workers/examples/auth-with-headers): Allow or deny a request based on a known pre-shared key in a header.
-3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
+1. [Basic Authentication](/workers/examples/basic-auth/): Shows how to restrict access using the HTTP Basic schema.
+2. [Using Custom Headers](/workers/examples/auth-with-headers/): Allow or deny a request based on a known pre-shared key in a header.
+3. [Authorizing users with Auth0](/workers/tutorials/authorize-users-with-auth0/#overview): Integrate Auth0, an identity management platform, into a Cloudflare Workers application.
 
 Continuing with your newly created bucket and Worker, you will need to protect all bucket operations.
 
@@ -224,7 +224,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/cli-wrangler/commands#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 wrangler publish

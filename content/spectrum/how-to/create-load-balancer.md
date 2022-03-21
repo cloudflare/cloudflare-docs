@@ -11,7 +11,7 @@ meta:
 
 ## Create a Load Balancer
 
-For help creating a Load Balancer from the dashboard or using the API, follow the [Create a load balancer](/load-balancing/how-to/create-load-balancer) workflow.
+For help creating a Load Balancer from the dashboard or using the API, follow the [Create a load balancer](/load-balancing/how-to/create-load-balancer/) workflow.
 
 ## Create a Spectrum application
 

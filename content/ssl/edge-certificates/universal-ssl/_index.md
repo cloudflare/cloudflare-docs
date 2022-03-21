@@ -13,13 +13,13 @@ When you change your authoritative nameservers to point to Cloudflare, this proc
 If you **do not** use Cloudflare for your authoritative nameservers (a CNAME setup), you will need to perform the additional steps described in [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#non-authoritative-partial-domains).
 
 {{<button-group>}}
-    {{<button type="primary" href="/ssl/edge-certificates/universal-ssl/enable-universal-ssl">}}Get started{{</button>}}
+    {{<button type="primary" href="/ssl/edge-certificates/universal-ssl/enable-universal-ssl/">}}Get started{{</button>}}
     {{<button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/" target="_blank">}}Learn more{{</button>}}
 {{</button-group>}}
 
 {{<Aside type="note">}}
 
-For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) or upload a [custom certificate](/ssl/edge-certificates/custom-certificates) before proxying traffic to Cloudflare.
+For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) before proxying traffic to Cloudflare.
 
 {{</Aside>}}
 
