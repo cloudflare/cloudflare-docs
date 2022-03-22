@@ -10,7 +10,7 @@ meta:
 
 When setting up your first tunnel you have the option to create it locally using your CLI or remotely on the Zero Trust dashboard.
 
-## Remote setup
+## Remote setup (Dashboard setup)
 
 Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard. Before you start, make sure you:
 
@@ -58,7 +58,7 @@ Once you click **Save `<tunnel-name>`**, you will be redirected to the **Tunnels
 
 ![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
 
-## Local setup
+## Local setup (CLI setup)
 
 Follow this step-by-step guide to get your first tunnel up and running using the CLI. Before you start, make sure you:
 
