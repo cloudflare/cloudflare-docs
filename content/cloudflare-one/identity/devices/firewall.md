@@ -33,20 +33,19 @@ To enable the Firewall check:
 
 Your device posture attribute is now visible on the **Device posture** page.
 
-## How Firewall running is determined
+## How the Zero Trust client determines that Firewall is running
 
-Operating systems determine Firewall configuration in various ways. The following information will allow you to understand how the client determines if the firewall is enabled.
+Operating systems determine Firewall configuration in various ways. Follow the steps below to understand how the client determines if the firewall is enabled.
 
 ### On macOS
 
-1.  Open System Preferences and navigate to **Security & Privacy**
+1.  Open **System Preferences** and navigate to **Security & Privacy**.
 1.  Verify that **Firewall** is **On**.
-
 
 ### On Windows
 
 1.  Open a Powershell window.
-1.  Use the `Get-NetFirewallProfile -Name Public` to check the Firewall status of your public interface
+1.  Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
 1.  Look for the value of **Enabled** which must be set to **True**.
 
 ```txt
