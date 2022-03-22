@@ -11,7 +11,7 @@ WARP is the recommended mode of operation. However, if you only want to use the 
 
 ## WARP options
 
-Beyond these two modes of operations, the WARP app lets you configure additional options to better suit your needs. You can change the protocol used to connect to Cloudflare or enable [1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families), for example. To access these options:
+Beyond the two modes of operation, the WARP app lets you configure additional options to better suit your needs. You can change the protocol used to connect to Cloudflare or enable [1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families), for example. To access these options:
 
 1. Click the WARP app icon.
 2. Click the **cog icon** > **Preferences**.
@@ -19,7 +19,7 @@ Beyond these two modes of operations, the WARP app lets you configure additional
 The following is a list of options you can configure in the **Connection** tab:
 
 * **Disable for all Wi-Fi / wired networks**: Check the box corresponding to the network where you want to prevent WARP from working on.
-* **DNS Protocol**: The options here depend on the WARP mode you have enabled:
+* **DNS Protocol**: The available options depend on the WARP mode you have enabled:
   * **WARP**: Only available when you have the WARP mode enabled. All DNS traffic encrypted and [sent to Cloudflare's edge](/warp-client/warp-modes/#_1.1.1.1_with_warp).
   * **HTTPS**: All DNS traffic is sent outside the tunnel via [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/).
   * **TLS**: All DNS traffic is sent outside the tunnel via [encrypted TLS](/1.1.1.1/encryption/dns-over-tls/).
