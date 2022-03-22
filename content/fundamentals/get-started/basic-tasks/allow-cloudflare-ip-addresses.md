@@ -53,7 +53,17 @@ For more specific guidance, contact your hosting provider or website administrat
 
 ### Additional recommendations
 
+#### Further protection
+
 For further recommendations on securing your origin server, refer to our guide on [protecting your origin server](/fundamentals/get-started/origin-health/).
+
+#### Visitor IP information
+
+Because your origin server will receive Cloudflare IP addresses instead of visitor IP addresses, your server will return Cloudflare IP addresses when logging or responding to requests.
+
+If you need accurate logs of visitor IP addresses, we recommend that you use [Cloudflare site analytics](https://support.cloudflare.com/hc/articles/360037684251).
+
+If Cloudflare site analytics are not sufficient or your application's response depends on the incoming IP address of an individual visitor, you can also [restore visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786). 
 
 ## Use your own IP addresses
 
