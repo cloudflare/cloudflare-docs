@@ -42,6 +42,6 @@ By default, Cloudflare Pages automatically builds and deploys a project whenever
 
 To pause automatic deployments, go to the Pages project's **Settings** > **Builds & deployments** > select **Pause deployments** at the end of the page.
 
-![pause button](../git.pause.png)
+![Pausing a deployment in the Settings of your Pages project](../git.pause.png)
 
 Selecting **Pause deployments** will present a confirmation and, once confirmed, the **Pause deployments** button will be replaced with a **Resume deployments** button. While paused, your **Deployments** list will present a banner message, reminding you that automatic deployments are not enabled.

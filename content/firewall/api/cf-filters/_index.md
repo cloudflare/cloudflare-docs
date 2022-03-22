@@ -6,7 +6,7 @@ weight: 441
 
 # Cloudflare Filters API
 
-**Cloudflare Filters** is an API-only component of Firewall Rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
+**Cloudflare Filters** is an API-only component of firewall rules for designing complex criteria that rely on boolean operators and other logic to examine incoming HTTP traffic and look for a match.
 
 For example, a filter matching:
 
@@ -14,7 +14,7 @@ For example, a filter matching:
 *   The HTTP path, and
 *   The source IP address
 
-May be associated with a Firewall Rule declaring that the request should be blocked.
+May be associated with a firewall rule declaring that the request should be blocked.
 
 Use IP Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/firewall/api/cf-lists/) for more information.
 

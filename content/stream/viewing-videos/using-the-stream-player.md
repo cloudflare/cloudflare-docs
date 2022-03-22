@@ -84,6 +84,16 @@ This will _only_ work once during initialization. Beyond that point the user has
 
         {{</Aside>}}
 
+- `letterboxColor`
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
+
+    {{<Aside type="note">}}
+
+**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+
+    {{</Aside>}}
+
 - `loop` {{<prop-meta>}}default: `false`{{</prop-meta>}}
 
   - If enabled the player will automatically seek back to the start upon reaching the end of the video.

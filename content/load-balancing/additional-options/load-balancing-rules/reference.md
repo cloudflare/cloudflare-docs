@@ -68,7 +68,7 @@ If your traffic is proxied, you have access to all the fields listed under **Pro
 
 For the most up to date list of these fields, [create a load balancing rule](/load-balancing/additional-options/load-balancing-rules/create-rules/) in the UI.
 
-For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields).
+For more details about the field type or properties, refer to the [Rules language documentation](/ruleset-engine/rules-language/fields/).
 
 ## Unproxied traffic
 
@@ -133,4 +133,4 @@ Cloudflare Load Balancers support the following unproxied fields:
 
 - **Grouping symbols** allow you to organize expressions, enforce operator precedence, and nest expressions.
 
-For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators) in the Rules language documentation.
+For examples and usage, refer to [Operators and grouping symbols](/ruleset-engine/rules-language/operators/) in the Rules language documentation.

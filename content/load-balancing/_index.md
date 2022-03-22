@@ -32,6 +32,6 @@ Cloudflare Load Balancing is available as an add-on feature for any type of acco
 ## Next steps
 
 {{<button-group>}}
-  {{<button type="primary" href="/load-balancing/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/load-balancing/understand-basics">}}Learn more{{</button>}}
+  {{<button type="primary" href="/load-balancing/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="/load-balancing/understand-basics/">}}Learn more{{</button>}}
 {{</button-group>}}

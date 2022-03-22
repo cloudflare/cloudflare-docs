@@ -132,4 +132,4 @@ Now that we have created an account, visualized existing accounts and learned ho
 
 Learn how to manage external customers access to Cloudflare.
 
-<p>{{<button type="primary" href="/tenant/get-started/user-access">}}Step 2: User access{{</button>}}</p>
+<p>{{<button type="primary" href="/tenant/get-started/user-access/">}}Step 2: User access{{</button>}}</p>

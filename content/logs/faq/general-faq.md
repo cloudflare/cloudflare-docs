@@ -4,7 +4,7 @@ tittle: General FAQ
 weight: 1
 ---
 
-[❮ Back to FAQ](/logs/faq)
+[❮ Back to FAQ](/logs/faq/)
 
 # General FAQ
 

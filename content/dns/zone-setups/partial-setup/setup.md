@@ -59,7 +59,7 @@ That record must remain in place for as long as your domain is active on the par
 
 ## Optional — Provision an SSL certificate
 
-To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains).
+To provision a Universal SSL certificate through Cloudflare, follow [these instructions](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#non-authoritative-partial-domains).
 
 ---
 

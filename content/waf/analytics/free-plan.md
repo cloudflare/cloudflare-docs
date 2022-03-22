@@ -8,7 +8,7 @@ meta:
 
 # Firewall Analytics — Free plan
 
-Firewall Analytics is available at **Firewall** > **Overview**.
+Firewall Analytics is available at **Security** > **Overview**.
 
 ## Adjusting displayed data
 
@@ -18,7 +18,7 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create Firewall Rule from current filters
+## Create firewall rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 

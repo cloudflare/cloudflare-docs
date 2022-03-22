@@ -13,7 +13,7 @@ In this tutorial, you will learn how to migrate your Netlify application to Clou
 
 To move your application to Cloudflare Pages, find your build command and build directory. Cloudflare Pages will use this information to build and deploy your application.
 
-In your Netlify Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub Repo.
+In your Netlify Dashboard, find the project that you want to deploy. It should be configured to deploy from a GitHub repository.
 
 ![Selecting a site in the Netlify Dashboard](./netlify-deploy-1.png)
 
@@ -25,7 +25,7 @@ Inside of your site dashboard, select **Site Settings**, and then **Build & Depl
 
 In the **Build & Deploy** tab, find the **Build settings** panel, which will have the **Build command** and **Publish directory** fields. Save these for deploying to Cloudflare Pages. In the below image, **Build command** is `yarn build`, and **Publish directory** is `build/`.
 
-![Finding the "Build command" and "Publish directory" fields](./netlify-deploy-4.png)
+![Finding the Build command and Publish directory fields](./netlify-deploy-4.png)
 
 ## Migrating redirects and headers
 

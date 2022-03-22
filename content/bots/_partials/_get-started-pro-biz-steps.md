@@ -7,7 +7,7 @@ _build:
 
 To start using Super Bot Fight Mode:
 
-1.  Go to **Firewall** > **Bots**.
+1.  Go to **Security** > **Bots**.
 2.  Select **Configure Super Bot Fight Mode**.
 3.  Choose how your domain should respond to various types of traffic:
     *   For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).

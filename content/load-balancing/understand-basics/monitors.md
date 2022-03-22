@@ -14,7 +14,7 @@ Health checks that result in a status change for an origin server are recorded a
 
 {{<Aside type="note">}}
 
-Health checks associated with load balancers are different from <strong>Standalone health checks</strong>. For more details about Standalone health checks, see the <a href="https://support.cloudflare.com/hc/articles/4404867308429">Support documentation</a>.
+Health checks associated with load balancers are different from **Standalone health checks**. For more details about Standalone health checks, refer to our [Support documentation](https://support.cloudflare.com/hc/articles/4404867308429).
 
 {{</Aside>}}
 

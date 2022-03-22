@@ -119,6 +119,14 @@ If you would like to use another URL implementation, you can [shim the URL class
 
 {{</Aside>}}
 
+---
+
+## Compression Streams
+
+The `CompressionStream` and `DecompressionStream` classes support gzip and deflate compression methods.
+
+[Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
+
 ## URLPattern API
 
 The URLPattern API provides a mechanism for matching URLs based on a convenient pattern syntax.

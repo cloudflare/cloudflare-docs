@@ -52,7 +52,7 @@ Configure ruleset actions to _Log_ for each of the [DDoS Attack Protection Manag
 Do the following in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
-1. Go to **Firewall** > **DDoS**.
+1. Go to **Security** > **DDoS**.
 1. Next to the Managed Ruleset you are configuring, click **Configure**.
 1. In **Ruleset configuration** > **Ruleset action**, select _Log_.
 1. Click **Save**.
@@ -90,7 +90,7 @@ Revert the change you did in [Step 1](#1-configure-ruleset-actions-to-log), chan
 
 Do the following in the Cloudflare dashboard:
 
-1. Go to **Firewall** > **DDoS**.
+1. Go to **Security** > **DDoS**.
 1. Next to the Managed Ruleset you would like to configure, click **Configure**.
 1. In **Ruleset configuration** > **Ruleset action**, select _Default_.
 1. Click **Save**.

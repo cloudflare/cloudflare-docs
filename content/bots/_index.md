@@ -23,6 +23,6 @@ To see the differences in features and functionality, visit [Plans](/bots/plans/
 ## Next steps
 
 {{<button-group>}}
-  {{<button type="primary" href="/bots/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/bots/concepts">}}Learn more{{</button>}}
+  {{<button type="primary" href="/bots/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="/bots/concepts/">}}Learn more{{</button>}}
 {{</button-group>}}

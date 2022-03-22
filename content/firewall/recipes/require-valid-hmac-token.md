@@ -13,7 +13,7 @@ Access to the HMAC validation function requires a Cloudflare Pro, Business, or E
 
 ## HMAC token validation
 
-Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a Firewall Rules expression.
+Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a firewall rule expression.
 
 This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
@@ -33,7 +33,7 @@ where
 
 - `9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D` is a base64-encoded **MAC**
 
-The Firewall Rule below blocks requests to `example.com` that do not include a valid HMAC.
+The firewall rule below blocks requests to `example.com` that do not include a valid HMAC.
 
 The rule supplies the value of the secret key shared between the website and Cloudflare as the first argument to the [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation), and it uses the value of `http.request.uri` for the [MessageMAC](/ruleset-engine/rules-language/functions/#messagemac):
 

@@ -393,7 +393,7 @@ Refer to the [Durable Objects section of the Limits page](/workers/platform/limi
 
 ## Limitations
 
-Durable Objects is generally available, however, there are some known limitations.
+Durable Objects is generally available. However, there are some known limitations.
 
 ### Global Uniqueness
 
@@ -404,8 +404,6 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 ### Development tools
 
 [Wrangler tail](/workers/cli-wrangler/commands/#tail) logs from requests that are upgraded to WebSockets are delayed until the WebSocket is closed.  Wrangler tail should not be connected to a script that you expect will receive heavy volumes of traffic.
-
-[Wrangler dev](/workers/cli-wrangler/commands/#dev) establishes a tunnel from your local development environment to Cloudflare's edge, allowing you to test your Worker and Durable Objects as they are developed.
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 

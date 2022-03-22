@@ -25,7 +25,7 @@ The ML engine produces scores 2 through 99.
 
 {{<render file="_bots-jsd.md">}}
 
-JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Firewall** > **Bots**.
+JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Security** > **Bots**.
 
 ### Notes on detection
 

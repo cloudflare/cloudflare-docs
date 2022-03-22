@@ -22,7 +22,7 @@ Cloudflare has [13 geographic regions](/load-balancing/reference/region-mapping-
 
 #### Via the dashboard
 
-When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer):
+When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
 
 1. Go to the **Traffic Steering** step.
 2. Click **Geo Steering**.

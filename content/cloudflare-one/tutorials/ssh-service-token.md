@@ -65,7 +65,7 @@ You should now see the `Service Auth` rule on a new line in the next page. Click
 
 ## Connect from `cloudflared`
 
-You can use the `Client ID` and `Client Secret` to connect to the resource over HTTP by using those values as [HTTP headers](/cloudflare-one/identity/service-auth/service-tokens#connect-your-service-to-access). This example uses `cloudflared` to connect over SSH.
+You can use the `Client ID` and `Client Secret` to connect to the resource over HTTP by using those values as [HTTP headers](/cloudflare-one/identity/service-auth/service-tokens/#connect-your-service-to-access). This example uses `cloudflared` to connect over SSH.
 
 The following `cloudflared` command is structured to use the Service Token generated to connect over SSH to the GitLab instance previously configured. The command relies on the [SSH configuration file being set](/cloudflare-one/tutorials/gitlab/#configuring-ssh) to proxy the connection through `cloudflared`.
 

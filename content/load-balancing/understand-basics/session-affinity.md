@@ -26,7 +26,7 @@ Session Affinity automatically directs requests from the same client to the same
 
 All sessions default to 23 hours unless you set a custom session _Time to live_ (TTL).
 
-The session cookie is secure when [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+The session cookie is secure when [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
 
 ---
 
