@@ -4,7 +4,7 @@ The WARP app has two main modes of operation: WARP and 1.1.1.1.
 
 In WARP mode, all traffic leaving your computer is encrypted and sent over WARP, including DNS traffic. In 1.1.1.1 mode, the WARP app only encrypts DNS traffic to the 1.1.1.1 resolver.
 
-WARP is the recommended mode of operation. However, if you only want to use the 1.1.1.1 resolver mode:
+WARP mode is the default and the recommended mode of operation. However, if you only want to use the 1.1.1.1 resolver mode:
 
 1. Click the WARP app icon.
 2. Click the cog icon, and choose your preferred mode of operation for WARP.
@@ -25,4 +25,4 @@ The following is a list of options you can configure in the **Connection** tab:
   * **TLS**: All DNS traffic is sent outside the tunnel via [encrypted TLS](/1.1.1.1/encryption/dns-over-tls/).
 * **1.1.1.1 for Families**: Allows you to [enable 1.1.1.1 for Families](/1.1.1.1/setup/#1.1.1.1_for_families) and choose between blocking malware, or blocking malware and adult content.
 
-For the Advanced options, refer to [Exclude or include network traffic with WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) for more information.
+For the **Advanced** options, refer to [Exclude or include network traffic with WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) for more information.
