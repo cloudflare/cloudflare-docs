@@ -92,6 +92,6 @@ Some Hexo themes or plugins have additional requirements for Node.js version, yo
 
 For example, `NODE_VERSION`: `14.17.5`
 
-## Learn more
+## Related resources
 
 By completing this guide, you have successfully deployed your Hexo site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
