@@ -42,7 +42,7 @@ The rules list displays each rule's **CSR** (Challenge Solve Rate), which is the
 
 Hover over the CSR to reveal the number of issued and solved CAPTCHA challenges:
 
-![Revealing the number of issued vs. solved CAPTCHA challenges by hovering the CSR value of a firewall rule in the rules list](/firewall/static/firewall-rules-csr-hover.png)
+![Revealing the number of issued and solved CAPTCHA challenges by hovering the CSR value of a firewall rule in the rules list](/firewall/static/firewall-rules-csr-hover.png)
 
 A low CSR means that Cloudflare is issuing a low number of CAPTCHA challenges to actual humans, since these are the solved challenges.
 
