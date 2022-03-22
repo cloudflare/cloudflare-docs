@@ -1,5 +1,5 @@
 ---
-pcx-content-type: get-started
+pcx-content-type: reference
 title: Get started
 weight: 3
 ---
@@ -20,7 +20,3 @@ Before installing and setting up the WARP Client, ensure that your device meets 
 | Download link | [Windows stable](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release) | [Mac stable](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release) | [Package download](https://pkg.cloudflareclient.com/packages/cloudflare-warp) / [APT/YUM Repository Setup](https://pkg.cloudflareclient.com/install) | [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/id1423538627) | [1.1.1.1: Faster & Safer Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone) |
 
 {{</table-wrap>}}
-
-If your device meets the system requirements, follow the setup instructions for each system.
-
-{{<directory-listing>}}
