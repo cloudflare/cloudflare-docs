@@ -6,7 +6,7 @@ weight: 41
 
 # Explore the Analytics schema with GraphiQL
 
-The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available data sets, fields, and operations you can perform.
+The GraphQL API offers [introspection](https://graphql.org/learn/introspection/), which allows you to explore the graph (by making API calls) to see the available datasets, fields, and operations you can perform.
 
 [GraphiQL](https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme) is a GraphQL client that uses introspection to provide the **Documentation Explorer**, a tool with which you can visually browse a GraphQL schema.
 
@@ -54,42 +54,42 @@ Click the type definition of the `viewer` field (gold text) to list its sub-fiel
 
 ![Displaying viewer fields](/analytics/static/images/graphiql-doc-explorer-viewer-fields.png)
 
-The `accounts` and `zones` fields take arguments to specify which data set to query.
+The `accounts` and `zones` fields take arguments to specify which dataset to query.
 
 For example, `zones` can take a filter of `ZoneFilter_InputObject` type as an argument. To view the fields available to filter, click **ZoneFilter_InputObject**.
 
-## Find the data sets available for a zone
+## Find the datasets available for a zone
 
-To view a list of the data sets available to query, click the **zone** type definition (gold text):
+To view a list of the datasets available to query, click the **zone** type definition (gold text):
 
 ![Clicking zone type definition](/analytics/static/images/graphiql-doc-explorer-zones.png)
 
-A list of data sets displays in the **Fields** section, each with list of valid arguments and a brief description. Arguments that end with an exclamation mark (`!`) are required.
+A list of datasets displays in the **Fields** section, each with list of valid arguments and a brief description. Arguments that end with an exclamation mark (`!`) are required.
 
 ![Fields section displaying datasets available](/analytics/static/images/graphiql-doc-explorer-zone-fields.png)
 
-Use the search input (magnifying glass icon) to find specific data sets:
+Use the search input (magnifying glass icon) to find specific datasets:
 
 ![Searching a dataset in the Documentation Explorer](/analytics/static/images/graphiql-doc-explorer-find-firewall.png)
 
-To select a data set, click its name.
+To select a dataset, click its name.
 
-The definition for the data set displays. This example shows the `firewallEventsAdaptive` data set:
+The definition for the dataset displays. This example shows the `firewallEventsAdaptive` dataset:
 
-![Example of firewallEventsAdaptive dataset definition](/analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png)
+![Example of a dataset definition](/analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png)
 
-Refer to [Data Sets (tables)](/analytics/graphql-api/features/data-sets/) for details on the nomenclature and behavior of these nodes.
+Refer to [Datasets (tables)](/analytics/graphql-api/features/data-sets/) for details on the nomenclature and behavior of these nodes.
 
-## Find the fields available for a data set
+## Find the fields available for a dataset
 
-To view the fields available for a particular data set, click on its type definition (gold text).
+To view the fields available for a particular dataset, click on its type definition (gold text).
 
-For example, click the **ZoneFirewallEventsAdaptive** type definition to view the fields available for the `firewallEventsAdaptive` data set:
+For example, click the **ZoneFirewallEventsAdaptive** type definition to view the fields available for the `firewallEventsAdaptive` dataset:
 
-![Clicking ZonefirewallEventsAdaptive type definition](/analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png)
+![Clicking type definition to visualize fields available for a dataset](/analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png)
 
 The list of fields displays:
 
-![Displaying available fields for ZoneFirewallEventsAdaptive](/analytics/static/images/graphiql-doc-explorer-firewall-fields.png)
+![Displaying available fields for a dataset](/analytics/static/images/graphiql-doc-explorer-firewall-fields.png)
 
 For more on working with the Analytics API in GraphiQL, refer to [Create a query in GraphiQL](/analytics/graphql-api/getting-started/compose-graphql-query/).

@@ -16,13 +16,13 @@ Before you begin, [configure the API endpoint and HTTP headers](/analytics/graph
 
 {{<Aside type="note" header="Note">}}
 
-To explore the documentation for the data sets and fields in the Cloudflare GraphQL schema, click **Docs** to open the **Documentation Explorer** pane.
+To explore the documentation for the datasets and fields in the Cloudflare GraphQL schema, click **Docs** to open the **Documentation Explorer** pane.
 
 For an introduction, see [Explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/).
 
 {{</Aside>}}
 
-## Set up a query and choose a data set
+## Set up a query and choose a dataset
 
 Click on the editing pane of GraphiQL and add this base query, replacing `zone-id` with your Cloudflare zone ID:
 
@@ -34,21 +34,21 @@ To find the ID for a zone, log in to your Cloudflare account and click the site 
 
 {{</Aside>}}
 
-To assist query building, the GraphiQL client has word completion. Insert your cursor in the query, in this case on the line below `zones`, and start entering a value to engage the feature. For example, when you type `firewall`, a popup menu displays the data sets that return firewall information:
+To assist query building, the GraphiQL client has word completion. Insert your cursor in the query, in this case on the line below `zones`, and start entering a value to engage the feature. For example, when you type `firewall`, a popup menu displays the datasets that return firewall information:
 
 ![GraphiQL word completion assistant to query building](/analytics/static/images/graphiql-word-completion.png)
 
 The text at the bottom of the list displays a short description of the data that the node returns.
 
-Select the data set you want to query and insert it. Either click the item in the list, or scroll using arrow keys and press <kbd>Return</kbd>. This example uses the `firewallEventsAdaptive` data set.
+Select the dataset you want to query and insert it. Either click the item in the list, or scroll using arrow keys and press <kbd>Return</kbd>. This example uses the `firewallEventsAdaptive` dataset.
 
 ## Supply required parameters
 
-Hover your mouse over a field to display a tooltip that describes the data set. In this example, hovering over the `firewallEventsAdaptive` node displays this description:
+Hover your mouse over a field to display a tooltip that describes the dataset. In this example, hovering over the `firewallEventsAdaptive` node displays this description:
 
 ![Hovering the mouse over a field to display its description](/analytics/static/images/graphiql-set-up-base-query.png)
 
-To display information about the data set, including required parameters, click the data set name (blue text). The **Documentation Explorer** opens and displays details about the data set:
+To display information about the dataset, including required parameters, click the dataset name (blue text). The **Documentation Explorer** opens and displays details about the dataset:
 
 ![Documentation Explorer window displaying dataset details](/analytics/static/images/graphiql-parameters.png)
 
