@@ -32,7 +32,7 @@ You can also manage firewall rules through Terraform. For more, refer to [Gettin
 
 The rules list gives you a snapshot of recent activity and allows you to manage firewall rules in a single convenient location.
 
-![Firewall rules tab](/firewall/static/cf-firewall-rules-panel.png)
+![The Firewall rules tab in the Cloudflare dashboard, where you can manage firewall rules](/firewall/static/cf-firewall-rules-panel.png)
 
 #### Challenge Solve Rate (CSR)
 
@@ -42,7 +42,7 @@ The rules list displays each rule's **CSR** (Challenge Solve Rate), which is the
 
 Hover over the CSR to reveal the number of issued and solved CAPTCHA challenges:
 
-![Revealing the number of issued vs. solved CAPTCHA challenges](/firewall/static/firewall-rules-csr-hover.png)
+![Revealing the number of issued vs. solved CAPTCHA challenges by hovering the CSR value of a firewall rule in the rules list](/firewall/static/firewall-rules-csr-hover.png)
 
 A low CSR means that Cloudflare is issuing a low number of CAPTCHA challenges to actual humans, since these are the solved challenges.
 
