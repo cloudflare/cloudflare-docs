@@ -10,7 +10,7 @@ weight: 231
 
 Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below (click the image to view a larger version). For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
-![Firewall rules order and priority](/firewall/static/firewall-rules-order-and-priority-1.png)
+![Flow chart of request evaluation at Cloudflare for security products that are not powered by the Ruleset Engine](/firewall/static/firewall-rules-order-and-priority-1.png)
 
 {{<Aside type="warning" header="Important">}}
 
@@ -28,7 +28,7 @@ When **priority ordering** is enabled, Cloudflare evaluates firewall rules in or
 
 Users with relatively small numbers of firewall rules (no more than 200) will find that list ordering is enabled by default. When list ordering is enabled, the rules list allows you to drag and drop firewall rules into position, as shown below:
 
-![Animation showing a user dragging and dropping a firewall rule in the rules list to reorder it](/firewall/static/firewall-rules-order-and-priority-2.gif)
+![Animation of a firewall rule being moved into a new position in the rules list to reorder it](/firewall/static/firewall-rules-order-and-priority-2.gif)
 
 Once there are more than 200 total rules, including inactive rules, you must manage evaluation using priority ordering. When you cross this threshold, the firewall rules interface automatically switches to priority ordering.
 
@@ -55,13 +55,13 @@ To set the priority number for a firewall rule:
 
 2. In the **Edit firewall rule** panel, enter a positive integer value in **Priority**.
 
-    ![Edit firewall rule page](/firewall/static/firewall-rules-order-and-priority-4.png)
+    ![Editing a firewall rule in the dashboard to define its Priority value](/firewall/static/firewall-rules-order-and-priority-4.png)
 
 3. Click **Save** to commit your changes and return to the rules list.
 
 The **Priority** column displays the priority value for each rule.
 
-![Firewall rules tab](/firewall/static/firewall-rules-order-and-priority-5.png)
+![When using priority order, the Firewall rules tab displays the priority of each rule (if any) in the first column of the rules list](/firewall/static/firewall-rules-order-and-priority-5.png)
 
 ## Working with priority ordering
 
