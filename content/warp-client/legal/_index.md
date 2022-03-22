@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Legal
-weight: 11
+weight: 6
 ---
 
 # Legal

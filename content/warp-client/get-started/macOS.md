@@ -8,11 +8,15 @@ meta:
 
 # macOS desktop client
 
-1. [Download **Cloudflare_WARP.zip**](https://www.cloudflarewarp.com/Cloudflare_WARP.zip).
-2. Navigate to the downloads folder.
-3. Open **Cloudflare_WARP.zip**.
-4. Open the **Cloudflare_WARP.pkg** file that was extracted.
-5. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+1. [Download Cloudflare Warp for macOS](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release).
+2. Navigate to your predefined download folder and open the `.pkg` file.
+3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+4. Click **Next** and **Accept** Cloudflare's privacy policy.
+5. Turn on the toggle to enable WARP.
+
+WARP is now running and protecting your Internet connection.
+
+{{<render file="_modes-options.md">}}
 
 ## What Cloudflare places on your device
 

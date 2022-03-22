@@ -8,10 +8,15 @@ meta:
 
 # Windows desktop client
 
-1. [Download **Cloudflare_WARP_Release-x64.msi**](https://www.cloudflarewarp.com/Cloudflare_WARP_Release-x64.msi).
-2. Navigate to the **Downloads** folder.
-3. Open `Cloudflare_WARP_Release-x64.msi`.
-4. Follow the instructions in the installer to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+1. [Download Cloudflare WARP for Windows](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release).
+2. Navigate to your predefined download folder and open the executable file to install WARP.
+3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+4. Click **Next** and **Accept** Cloudflare's privacy policy.
+5. Turn on the toggle to enable WARP.
+
+WARP is now running and protecting your Internet connection.
+
+{{<render file="_modes-options.md">}}
 
 ## What Cloudflare places on your device
 
