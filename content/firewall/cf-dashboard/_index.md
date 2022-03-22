@@ -18,4 +18,4 @@ As depicted in the image below, the **Firewall rules** dashboard interface lets 
 * Search and filter the list of existing rules.
 * Reorder firewall rules when using [list ordering](/firewall/cf-firewall-rules/order-priority/#managing-rule-evaluation-by-list-order).
 
-![The Firewall rules panel, displaying a list of three example firewall rules. This interface allows you to create new firewall rules, manage existing rules, and search and filter the list of rules.](/firewall/static/cf-firewall-rules-panel.png)
+![The Firewall rules interface, displaying a list of three example firewall rules. This interface allows you to create new firewall rules, manage existing rules, and search and filter the list of rules.](/firewall/static/cf-firewall-rules-panel.png)
