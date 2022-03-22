@@ -29,7 +29,7 @@ $ brew install hexo
 
 ## Creating a new project
 
-With Hexo CLI installed, create a new project by running the `hexo new` command in your terminal:
+With Hexo CLI installed, create a new project by running the `hexo init` command in your terminal:
 
 ```sh
 $ hexo init my-hexo-site
