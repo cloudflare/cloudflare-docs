@@ -22,7 +22,7 @@ When using Page Rules with Workers, the following workflow is applied.
 
 {{<Aside type="note" header="Listing specific Page Rules">}}
 
-A complete list of features which can be configured "before" versus "after" Workers would be difficult to generate, because they are defined implicitly by the features which we disallow. In general, security-related features run "before" Workers, while most others run "after"
+A complete list of features which can be configured before and after Workers would be difficult to generate, because they are defined implicitly by the features which we disallow. In general, security-related features run before Workers, while most others run after.
 
 {{</Aside>}}
 
