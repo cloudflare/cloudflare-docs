@@ -23,7 +23,7 @@ To access the **Create Custom Token** page, follow these steps:
 
 1.  Log in to your Cloudflare account and select _My Profile_ from the user account drop-down list.
 
-![User account drop-down list](/analytics/static/images/account-profile.png)
+![User account drop-down menu](/analytics/static/images/account-profile.png)
 
 1.  In your user profile page, select the **API Tokens** tab.
 
@@ -33,7 +33,7 @@ To access the **Create Custom Token** page, follow these steps:
 
 The **Create API Token** page displays.
 
-![Create API Token page](/analytics/static/images/create-api-token-page-display.png)
+![Clicking Get started in the Create API Token page](/analytics/static/images/create-api-token-page-display.png)
 
 The next section of this walkthrough shows you how to configure a custom token for access to the GraphQL Analytics API.
 
@@ -43,7 +43,7 @@ To configure a custom token, follow these steps:
 
 1.  Click **Get started** in the **Custom token** section of the **Create API Token** page:
 
-![Create API Token page](/analytics/static/images/create-api-token-get-started.png)
+![Clicking Get started in the Create API Token page](/analytics/static/images/create-api-token-get-started.png)
 
 The **Create Custom Token** page displays:
 
@@ -55,19 +55,19 @@ The **Create Custom Token** page displays:
 
 This example scopes zone-level permissions for read access to the Analytics API:
 
-![Configure permissions](/analytics/static/images/create-custom-token-permissions.png)
+![Permissions configuration page](/analytics/static/images/create-custom-token-permissions.png)
 
 1.  To configure the specific zones to which the token grants access, use the **Zone Resources** drop-down lists. In this example, the token is set to grant access to all zones:
 
-![Configure resources](/analytics/static/images/create-custom-token-zone-resources.png)
+![Resources configuration page](/analytics/static/images/create-custom-token-zone-resources.png)
 
 1.  \[Optional] To restrict the API token to specific IP addresses, use the **IP Address Filtering** controls.
 
-![Configure IP](/analytics/static/images/create-custom-token-ip-address-filtering.png)
+![IP Address Filtering configuration page](/analytics/static/images/create-custom-token-ip-address-filtering.png)
 
 1.  To define how long the token is valid, click the **TTL** (time-to-live) start/end date picker.
 
-![Configure TTL](/analytics/static/images/create-custom-token-ttl.png)
+![TTL configuration page](/analytics/static/images/create-custom-token-ttl.png)
 
 1.  Click **Continue to summary**.
 
@@ -79,7 +79,7 @@ Once you click **Continue to summary**, the **API Token Summary** page displays.
 
 Use the **API Token Summary** to confirm that you have scoped the API Token to the desired permissions and resources before creating it.
 
-![ ](/analytics/static/images/api-token-summary.png)
+![API Token Summary page](/analytics/static/images/api-token-summary.png)
 
 Once you have validated your API token configuration, click **Create Token**.
 
@@ -87,7 +87,7 @@ Once you have validated your API token configuration, click **Create Token**.
 
 When you create a new token, a confirmation page displays that includes your token and a custom `curl` command.
 
-![ ](/analytics/static/images/api-token-confirmation-page.png)
+![Page displaying your API token and the `curl`command to test your token](/analytics/static/images/api-token-confirmation-page.png)
 
 To copy the token to your device's clipboard, click the **Copy** button.
 
