@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: URL format
-weight: 3
+weight: 4
 ---
 
 # URL format
@@ -107,18 +107,6 @@ At least one option must be specified. Options are comma-separated (spaces are n
 {{</definitions>}}
 
 <!-- rotate is not a generally useful option, so it’s only documented in the advanced section -->
-
-## Supported formats and limitations
-
-Cloudflare Image resizing can:
-
-- Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported, since this format is inherently scalable and does not need resizing.
-- Generate JPEG and PNG images, and optionally AVIF or WebP.
-- Save animations as GIF or animated WebP.
-- Support ICC color profiles in JPEG and PNG images.
-- Preserve JPEG metadata. Metadata of other formats is discarded.
-
-AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
 
 ## Recommended image sizes
 
