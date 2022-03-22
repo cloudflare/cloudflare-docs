@@ -47,7 +47,7 @@ Create a new post to give your Hexo site some initial content. Run the `hexo new
 $ hexo new "hello hexo"
 ```
 
-Inside of `hello-hexo.md`, use Markdown to write the content of the article, you can customize the tags, categories or other variables in the article, refer to the [Front Matter section](https://hexo.io/docs/front-matter) of the [Hexo documentation](https://hexo.io/docs/)
+Inside of `hello-hexo.md`, use Markdown to write the content of the article. You can customize the tags, categories or other variables in the article. Refer to the [Front Matter section](https://hexo.io/docs/front-matter) of the [Hexo documentation](https://hexo.io/docs/) for more information.
 
 ## Creating a GitHub repository
 
