@@ -57,11 +57,15 @@ However, having a single set of signed records also prevents Cloudflare from iss
 
 When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-If you [added your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page. This scan is not guaranteed to find all existing DNS records, so you may want to review the following record types:
+If you [added your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page. This scan is not guaranteed to find all existing DNS records, so you may want to pay special attention to the following record types:
 
 - [Root domain (`example.com`)](/dns/manage-dns-records/how-to/create-root-domain/)
 - [Subdomaindomain (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
 - [Email records](/dns/manage-dns-records/how-to/email-records/)
+
+{{<Aside type="note">}}
+If you activate your domain on Cloudflare *without* setting up the correct DNS records, your visitors may experience [DNS_PROBE_FINISHED_NXDOMAIN](/dns/zone-setups/troubleshooting/dns-probe-finished-nxdomain/) errors.
+{{</Aside>}}
 
 ## Step 3 — Update your nameservers
 
