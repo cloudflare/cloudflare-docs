@@ -86,7 +86,7 @@ In the confirmation dialog that appears, click **Delete** to confirm and complet
 
 By default, Cloudflare evaluates firewall rules in **list order**, where rules are evaluated in the order they appear in the rules list. When list ordering is enabled, the rules list allows you to drag and drop firewall rules into position, as shown below.
 
-![A user dragging and dropping a rule in the rules list to reorder it](/firewall/static/firewall-rules-expression-builder-10.gif)
+![Animation of a user dragging and dropping a rule in the rules list to reorder it](/firewall/static/firewall-rules-expression-builder-10.gif)
 
 Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the firewall rules interface automatically switches to priority ordering. For more on working with priority ordering, refer to [Order and priority](/firewall/cf-firewall-rules/order-priority/).
 
