@@ -40,7 +40,7 @@ Cloudflare provides the following WAF Managed Rulesets:
     </tr>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
-      <td>Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+      <td>Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
     </tr>
   </tbody>
 </table>
