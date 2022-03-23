@@ -17,18 +17,40 @@ Debugging is a critical part of developing a new application — whether running
 When you are developing your Workers application, the [`wrangler dev`](/workers/cli-wrangler/commands/#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
 
 To get started, run `wrangler dev` in your Workers project directory. The `wrangler dev` command will deploy your application to the preview service, and make it available for access on `localhost`:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">wrangler dev</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Built successfully, built project size is 27 KiB.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Using namespace for Workers Site &quot;__app-workers_sites_assets_preview&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Uploading site files</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  Listening on http://localhost:8787</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[2020-05-28 10:42:35] GET example.com/static/nav-7cb303.png HTTP/1.1 200 OK</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[2020-05-28 10:42:36] GET example.com/sw.js HTTP/1.1 200 OK</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ wrangler dev
+
+  Built successfully, built project size is 27 KiB.
+  Using namespace for Workers Site "__app-workers_sites_assets_preview"
+  Uploading site files
+  Listening on http://localhost:8787
+
+[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK
+[2020-05-28 10:42:35] GET example.com/static/nav-7cb303.png HTTP/1.1 200 OK
+[2020-05-28 10:42:36] GET example.com/sw.js HTTP/1.1 200 OK
+```
 
 In the output above, you can begin to see log lines for the URLs being requested locally.
 
 To help you further debug your code, `wrangler dev` also supports `console.log` statements, so you can see output from your application in your local terminal:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><span class="CodeBlock--filename">index.js</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">addEventListener</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">'fetch'</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-parameter">event</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">=&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  console</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">log</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-template-string CodeBlock--token-template-punctuation">`</span><span class="CodeBlock--token-template-string CodeBlock--token-string">Received new request: </span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation CodeBlock--token-interpolation-punctuation">${</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation">event</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation">request</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation">url</span><span class="CodeBlock--token-template-string CodeBlock--token-interpolation CodeBlock--token-interpolation-punctuation">}</span><span class="CodeBlock--token-template-string CodeBlock--token-template-punctuation">`</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  event</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">respondWith</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-function">handleEvent</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">event</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">wrangler dev</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Received new request to url: https://example.com/</span></div></span></span></span></code></pre>{{</raw>}}
+
+```js
+---
+filename: index.js
+---
+addEventListener('fetch', event => {
+  console.log(`Received new request: ${event.request.url}`);
+  event.respondWith(handleEvent(event));
+});
+```
+
+```sh
+$ wrangler dev
+
+[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK
+Received new request to url: https://example.com/
+```
 
 Inserting `console.log` lines throughout your code can help you understand the state of your application in various stages until you reach the desired output.
 

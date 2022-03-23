@@ -18,7 +18,10 @@ Use the Rules language [HMAC validation function](/ruleset-engine/rules-language
 This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
 The `http.request.uri` for this example is
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
+```
 
 where
 
@@ -59,7 +62,10 @@ The rule supplies the value of the secret key shared between the website and Clo
 The `is_timed_hmac_valid()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.
 
 If the MAC values match and
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.timestamp.sec &lt (timestamp-issued + 10800)</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.timestamp.sec < (timestamp-issued + 10800)
+```
 
 then the token is valid and the function returns `true`.
 

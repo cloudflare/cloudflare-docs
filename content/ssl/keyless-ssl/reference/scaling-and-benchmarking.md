@@ -27,7 +27,14 @@ Additional details can be found in the [gokeyless server readme file](https://gi
 ## Benchmarks
 
 We conducted benchmarks using [Cloudflare’s gokeyless bench tool](https://github.com/cloudflare/gokeyless/tree/master/cmd/bench) on a then current-generation, compute-optimized EC2 instance ([c5.xlarge](https://aws.amazon.com/ec2/instance-types/c5/)). This particular instance has 4 vCPUs powered by 3.0 GHz Intel Xeon processors:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">c5$ cat /proc/cpuinfo|grep &quot;model name&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+c5$ cat /proc/cpuinfo|grep "model name"
+model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+model name	: Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+```
 
 By default, bench runs with one worker goroutine per core (4) and a maximum number of operating system threads equal to the total number of cores (in this case, `GOMAXPROCS=4`). As expected and explained above, ECDSA signature performance far exceeds that of RSA. The [results show](#results) that each core of this c5.xl machine can perform over 10,000 ECDSA signing operations/second and approximately 200 RSA signing operations/second.
 
@@ -36,7 +43,17 @@ When planning your deployment, determine the maximum number of new TLS connectio
 ### Results
 
 #### ECDSA
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">c5$ bench -ski $ECDSA_SKI -op ECDSA-SHA256 -bandwidth -duration 60s</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Total operations completed: 2661570</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Average operation duration: 22.543µs</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+c5$ bench -ski $ECDSA_SKI -op ECDSA-SHA256 -bandwidth -duration 60s
+Total operations completed: 2661570
+Average operation duration: 22.543µs
+```
 
 #### RSA
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">c5$ bench -ski $RSA_SKI -op RSA-SHA256 -bandwidth -duration 60s</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Total operations completed: 46560</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Average operation duration: 1.288659ms.</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+c5$ bench -ski $RSA_SKI -op RSA-SHA256 -bandwidth -duration 60s
+Total operations completed: 46560
+Average operation duration: 1.288659ms.
+```

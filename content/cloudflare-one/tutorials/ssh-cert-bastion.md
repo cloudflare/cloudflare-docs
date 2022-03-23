@@ -60,8 +60,10 @@ You can now connect the host to Cloudflare with Cloudflare Tunnel. Cloudflare Tu
 First, [install and authenticate](/cloudflare-one/connections/connect-apps/install-and-setup/) an instance of `cloudflared` in a location that can address the resources you are connecting to Cloudflare.
 
 Next, create a new Tunnel with the following command. You can replace `ssh-pool` with any name.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create ssh-pool</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel create ssh-pool
+```
 
 `cloudflared` will create the Tunnel and generate a UUID and corresponding credentials file.
 
@@ -78,13 +80,23 @@ Bastion mode introduces a risk of horizontal movement. Only use in cases where y
 Alternatively, you can point the service directly to a specific URL, IP, or port.
 
 {{</Aside>}}
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yaml" language="yaml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">tunnel</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> 79a60ee2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">9a98</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4f5f</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">96c7</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">76c88b2075be</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">credentials-file</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /root/.cloudflared/79a60ee2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">9a98</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4f5f</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">96c7</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">76c88b2075be.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">logDirectory</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /var/log/cloudflared</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">http2</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-boolean CodeBlock--token-important">true</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">ingress</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">hostname</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> ssh</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">bastion.widgetcorp.tech</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> bastion</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http_status</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">404</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```yaml
+tunnel: 79a60ee2-9a98-4f5f-96c7-76c88b2075be
+credentials-file: /root/.cloudflared/79a60ee2-9a98-4f5f-96c7-76c88b2075be.json
+logDirectory: /var/log/cloudflared
+http2: true
+ingress:
+  - hostname: ssh-bastion.widgetcorp.tech
+    service: bastion
+  - service: http_status:404
+```
 
 You can now run the Tunnel with the following command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel run ssh-pool</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel run ssh-pool
+```
 
 ## Configure a DNS record and route to the server
 
@@ -122,8 +134,10 @@ Save the public key value as a `ca.pub` file in the path specified in the `Trust
 Users can now modify their SSH configuration files to connect over SSH. This is a one-time step.
 
 Instruct users to download `cloudflared` and run the following command, replacing the hostname in this example with the one that you created.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-lived-cert</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-lived-cert
+```
 
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 

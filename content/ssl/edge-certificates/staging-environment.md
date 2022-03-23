@@ -34,7 +34,10 @@ To upload custom (modern) certificates to your staging environment:
 ### Step 2 — Test certificate
 
 Test your custom (modern) certificate by sending `curl` requests to the IP addresses listed in the dashboard card at **SSL/TLS** > **Staging Certificates**:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl --resolve &ltHOSTNAME&gt:&ltSTAGING_IP&gt https://&ltHOSTNAME&gt -iv</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+curl --resolve <HOSTNAME>:<STAGING_IP> https://<HOSTNAME> -iv
+```
 
 You should confirm whether:
 

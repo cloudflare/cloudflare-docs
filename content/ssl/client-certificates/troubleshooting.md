@@ -15,7 +15,10 @@ If your query returns an error even after configuring and embedding a client SSL
 ## Check SSL/TLS handshake
 
 On your terminal, use the following command to check whether an SSL/TLS connection can be established successfully between the client and the API endpoint.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -v --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+curl -v --cert /path/to/certificate.pem --key /path/to/key.pem  https://your-api-endpoint.com
+```
 
 If the SSL/TLS handshake cannot be completed, check whether the certificate and the private key are correct.
 
@@ -37,6 +40,9 @@ To review mTLS rules:
 
     - The Expression Preview is correct.
     - The hostname matches your API endpoint. For example, for the API endpoint `api.trackers.ninja/time`, the rule should look like:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">(http.host in {&quot;api.trackers.ninja&quot;} and not cf.tls_client_auth.cert_verified)</span></div></span></span></span></code></pre>{{</raw>}}
+
+      ```txt
+      (http.host in {"api.trackers.ninja"} and not cf.tls_client_auth.cert_verified)
+      ```
 
 4.  To edit the rule, either use the user interface or click **Edit expression**.

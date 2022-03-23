@@ -9,11 +9,16 @@ weight: 3
 Command-line options let you configure properties across origins in the same `cloudflared` instance. They are also a quick way to handle configurations if you are connecting a single service through `cloudflared`. If you are connecting multiple services and you need to configure properties or exceptions for specific origins, you can do so by adding arguments to [ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) in your configuration file.
 
 For example, the following command will run the `mytunnel` tunnel by proxying traffic to port 8000 and disabling chunked transfer encoding.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ cloudflared tunnel --url localhost:8000 --no-chunked-encoding run mytunnel
+```
 
 The following is a list of common command-line options you can use to configure your tunnels. For a complete list of options, run:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">help</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ cloudflared tunnel help
+```
 
 - [`config`](#config)
 - [`autoupdate-freq`](#autoupdate-freq)

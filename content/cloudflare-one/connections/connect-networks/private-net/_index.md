@@ -25,19 +25,37 @@ To connect a private network to Cloudflare's edge, follow the guide below. You c
 ## Create a tunnel to connect your network
 
 1.  Authenticate `cloudflared` with the command below. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared login</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared login
+    ```
 
 1.  Create a tunnel with a user-friendly name to identify your network or environment.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel create acme-network</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel create acme-network
+    ```
 
 1.  Finally, configure your tunnel with the IP/CIDR range of your private network. By doing this, you are creating a private network and making the WARP client aware that any requests to this IP range need to be routed to your new tunnel.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel route </span><span class="CodeBlock--token-function">ip</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">add</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">10.0</span><span class="CodeBlock--token-plain">.0.0/8</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel route ip add 10.0.0.0/8
+    ```
 
 1.  Confirm the routes enrolled with the following command:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel route </span><span class="CodeBlock--token-function">ip</span><span class="CodeBlock--token-plain"> show</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel route ip show
+    ```
 
 1.  Next, create a [configuration file](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) for the tunnel. The configuration file will be structured as follows:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">tunnel: &ltTunnel-UUID&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">credentials-file: /root/.cloudflared/credentials-file.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">warp-routing:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    enabled: true</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    tunnel: <Tunnel-UUID>
+    credentials-file: /root/.cloudflared/credentials-file.json
+    warp-routing:
+        enabled: true
+    ```
 
 1.  Run the tunnel. Traffic inside of your organization coming from enrolled WARP clients will be sent to this instance when the destination is your private IP range.
 

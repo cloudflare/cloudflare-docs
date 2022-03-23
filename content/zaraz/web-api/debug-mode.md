@@ -15,8 +15,10 @@ You can set this cookie manually or via the `zaraz.debug` helper function availa
 4. Copy your **Debug Key**.
 5. Open a web browser and access its Developer Tools. For example, to access Developer Tools in Google Chrome, click **View** > **Developer** > **Developer Tools**.
 6. Click the **Console** pane and enter the following command to create a debug cookie:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zaraz</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">debug</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-string">&quot;YOUR_DEBUG_KEY&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```js
+    zaraz.debug("YOUR_DEBUG_KEY")
+    ```
 
 7.  Refresh your browser to see the debug logs. They will appear in the Console pane.
 

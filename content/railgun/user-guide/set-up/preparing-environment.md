@@ -17,8 +17,10 @@ If Railgun and Apache are on two separate machines, configure mod_cloudflare to 
     CloudFlareRemoteIPTrustedProxy 192.168.1.100
 
 Railgun runs on port 2408 via TCP by default and this port will need to be open to connections from Cloudflare [IPs](https://www.cloudflare.com/ips). If you are unfamiliar with networking, please reach out to your hosting provider to determine the proper way to open the port for your environment. You can script out adding rules for software firewalls as follows (use with caution):
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">for i in `curl https://www.cloudflare.com/ips-v4`; do ufw allow proto tcp from $i to any port 2408; done</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I INPUT -p tcp -s $i --dport 2408 -j ACCEPT; done</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ for i in `curl https://www.cloudflare.com/ips-v4`; do ufw allow proto tcp from $i to any port 2408; done
+$ for i in `curl https://www.cloudflare.com/ips-v4`; do iptables -I INPUT -p tcp -s $i --dport 2408 -j ACCEPT; done
+```
 
 For users with very restrictive firewall egress (outbound) policies, outbound TCP port 443 will also need to be allowed for Railgun activation to function properly. In addition, you will need to allow Railgun to make outbound connections to your web server on any ports that it listens on.

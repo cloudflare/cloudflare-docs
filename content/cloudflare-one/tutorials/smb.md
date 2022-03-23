@@ -29,7 +29,10 @@ You can set up this connection by downloading and installing the Cloudflare daem
 1.  Make sure `cloudflared` is installed on the machine hosting the file share.
 
 1.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">cloudflared.exe tunnel login</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    \cloudflared.exe tunnel login
+    ```
 
     `cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
 
@@ -53,7 +56,10 @@ For example, if you share the drive at `smb.site.com`, build a policy to only al
 
 By default, SMB drives listen on ports `445` or `139`. Confirm which port your drive uses. You can use nonstandard ports, as well.
 Run the following command to connect the drive to Cloudflare, replacing the `smb.site.com` and `445` values with your site and port.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">cloudflared.exe tunnel --hostname smb.site.com --url tcp://localhost:445</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+\cloudflared.exe tunnel --hostname smb.site.com --url tcp://localhost:445
+```
 
 `cloudflared` will confirm that the connection has been established. The process needs to be configured to stay alive and autostart. If the process is killed, end users will not be able to connect.
 
@@ -62,7 +68,10 @@ Run the following command to connect the drive to Cloudflare, replacing the `smb
 1.  Make sure `cloudflared` is installed on the client desktop that will connect to the drive. `cloudflared` will need to be installed on each user device that will connect.
 
 1.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    \cloudflared.exe access tcp --hostname smb.site.com --url localhost:8445
+    ```
 
     This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 

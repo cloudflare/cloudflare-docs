@@ -9,13 +9,22 @@ weight: 3
 For some operations, you can use specific endpoints provided by the Rulesets API for managing phase entry point rulesets. These endpoints include the phase name in the endpoint instead of the ruleset ID.
 
 For example, instead of using the following endpoint:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">PUT /zones/&ltZONE_ID&gt/rulesets/&ltRULESET_ID&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>
+```
 
 You can use the following endpoint:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">PUT /zones/&ltZONE_ID&gt/rulesets/phases/&ltPHASE_NAME&gt/entrypoint</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint
+```
 
 To invoke a Cloudflare Rulesets API operation, append the endpoint to the Cloudflare API base URL:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://api.cloudflare.com/client/v4</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+https://api.cloudflare.com/client/v4
+```
 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 

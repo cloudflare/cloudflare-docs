@@ -13,10 +13,16 @@ The Rules language supports two kinds of expressions: simple and compound.
 ## Simple expressions
 
 **Simple expressions** compare a value from an HTTP request to a value defined in the expression. For example, this simple expression matches Microsoft Exchange Autodiscover requests:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path matches &quot;/autodiscover\.(xml|src)$&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+http.request.uri.path matches "/autodiscover\.(xml|src)$"
+```
 
 Simple expressions have the following syntax:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltfield&gt &ltcomparison_operator&gt &ltvalue&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+<field> <comparison_operator> <value>
+```
 
 Where:
 
@@ -31,10 +37,16 @@ Where:
 **Compound expressions** use [logical operators](/ruleset-engine/rules-language/operators/#logical-operators) such as `and` to combine two or more expressions into a single expression.
 
 For example, this expression uses the `and` operator to target requests to `www.example.com` that are not on ports 80 or 443:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">host eq www.example.com and not cf.edge.server_port in {80 443}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+host eq www.example.com and not cf.edge.server_port in {80 443}
+```
 
 Compound expressions have the following general syntax:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltexpression&gt &ltlogical_operator&gt &ltexpression&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+<expression> <logical_operator> <expression>
+```
 
 Compound expressions allow you to generate sophisticated, highly targeted rules.
 

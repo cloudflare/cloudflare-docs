@@ -32,14 +32,23 @@ You can manage your waiting rooms using the [Waiting Rooms dashboard](/waiting-r
 ### Edit a waiting room
 
 [Replace](https://api.cloudflare.com#waiting-room-update-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">PUT zones/{zone_identifier}/waiting_rooms/{identifier}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```shell
+PUT zones/{zone_identifier}/waiting_rooms/{identifier}
+```
 
 [Update](https://api.cloudflare.com#waiting-room-patch-waiting-room) a configured waiting room by appending the following endpoint to the Cloudflare API base URL.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">PATCH zones/{zone_identifier}/waiting_rooms/{identifier}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```shell
+PATCH zones/{zone_identifier}/waiting_rooms/{identifier}
+```
 
 You only need to include the parameters that you want to update in the `data` field of the PATCH request.
 
 ### Delete a waiting room
 
 Delete a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com#waiting-room-delete-waiting-room) to the Cloudflare API base URL.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">DELETE zones/{zone_identifier}/waiting_rooms/{identifier}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```shell
+DELETE zones/{zone_identifier}/waiting_rooms/{identifier}
+```

@@ -80,7 +80,11 @@ If you need to replace the entire contents of a list, format the data as an arra
 #### Use valid CSV file format
 
 When uploading a CSV file containing a list of IP addresses and optional descriptions, be sure that each item is on its own line, as in this example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltIP_ADDRESS_1&gt,&ltDESCRIPTION_1&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltIP_ADDRESS_2&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+<IP_ADDRESS_1>,<DESCRIPTION_1>
+<IP_ADDRESS_2>
+```
 
 #### Upload a CSV file
 

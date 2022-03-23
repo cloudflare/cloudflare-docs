@@ -59,16 +59,24 @@ Cloudflare Tunnel creates a secure, outbound-only connection between this machin
 1.  Download the version of `cloudflared` that matches your architecture from the [available releases](https://github.com/cloudflare/cloudflared/releases).
 
 2.  Place the `cloudflared` executable in a location accessible to the OS, for example:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    C:\Cloudflared\bin\cloudflared.exe
+    ```
 
 3.  Next, run `CMD` as an administrator to install the service.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">Cloudflared</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">bin</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">cloudflared.exe </span><span class="CodeBlock--token-function">service</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    C:\Cloudflared\bin\cloudflared.exe service install
+    ```
 
     By default, the agent will run as a Local Account service and will look for the configuration and certificate file in the systemprofile.
 
 4.  Run the following command to create a new directory within systemprofile, replacing the `System32` value if needed to match your architecture.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">mkdir</span><span class="CodeBlock--token-plain"> C:</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">Windows</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">System32</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">config</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">systemprofile</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">.cloudflared</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    mkdir C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
 
     {{<Aside>}}
 Ensure that the machine's firewall permits egress on ports `80`, `443`, and `3389`, otherwise cloudflared will return an error.
@@ -77,7 +85,10 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 ## Authenticate `cloudflared`
 
 1.  Run the following command to authenticate `cloudflared` into your Cloudflare account.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe login</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    C:\Cloudflared\bin\cloudflared.exe login
+    ```
 
 2.  `cloudflared` will open a browser window and prompt you to login to your Cloudflare account.
 
@@ -86,18 +97,26 @@ Ensure that the machine's firewall permits egress on ports `80`, `443`, and `338
 3.  Choose any hostname presented in the list. Cloudflare will issue a certificate scoped to your account. You do not need to pick the specific hostname where you will serve the Tunnel.
 
 4.  Copy the file to the `systemprofile` directory created previously.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    copy C:\Users\%USERNAME%\.cloudflared\cert.pem C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
 
 ## Create a Tunnel
 
 Next, [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) with the command below.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create &ltNAME&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel create <NAME>
+```
 
 Replace `<NAME>` with a name for the Tunnel. This name can be any value. A single Tunnel can also serve traffic for multiple hostnames to multiple services in your environment, including a mix of connection types like SSH and HTTP.
 
 The command will output an ID for the Tunnel and generate an associated credentials file. At any time you can list the Tunnels in your account with the following command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe tunnel list</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+C:\Cloudflared\bin\cloudflared.exe tunnel list
+```
 
 ## Configure the Tunnel
 
@@ -106,12 +125,24 @@ You can now [configure the Tunnel](/cloudflare-one/connections/connect-apps/conf
 1.  Create a `YAML` file that `cloudflared` can reach. By default `cloudflared` will look for the file in the `C:\Users\%USERNAME%\.cloudflared\` folder of your Windows machine.
 
 2.  Run `Notepad.exe` as an administrator. Next, configure the Tunnel, replacing the example ID below in the first two lines with the ID of the Tunnel created above. Additionally, replace the hostname in this example with the hostname of the application configured with Cloudflare Access.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yaml" language="yaml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">tunnel</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> 6ff42ae2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">765d</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4adf</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">8112</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">31c55c1551ef</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">credentials-file</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> C</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">\Users\%USERNAME%\.cloudflared\6ff42ae2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">765d</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4adf</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">8112</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">31c55c1551ef.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">ingress</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">hostname</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> azure.widgetcorp.tech</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> rdp</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">//localhost</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">3389</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http_status</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">404</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-comment"># Catch-all rule, which responds with 404 if traffic doesn't match any of</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-comment"># the earlier rules</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```yaml
+    tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
+    credentials-file: C:\Users\%USERNAME%\.cloudflared\6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+
+    ingress:
+      - hostname: azure.widgetcorp.tech
+        service: rdp://localhost:3389
+      - service: http_status:404
+      # Catch-all rule, which responds with 404 if traffic doesn't match any of
+      # the earlier rules
+    ```
 
 3.  Make sure the file is saved to the following location:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Users\%USERNAME%\.cloudflared\config.yml</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    C:\Users\%USERNAME%\.cloudflared\config.yml
+    ```
 
     with `%USERNAME%` being your Windows username (this is your user folder).
 
@@ -133,7 +164,10 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
     ![DNS List](/cloudflare-one/static/zero-trust-security/ssh/dns-list.png)
 
 2.  Select `CNAME` as the record type. For the target, input the ID of your Tunnel followed by `cfargotunnel.com`. In this example, the target would be:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
+    ```
 
 3.  Click **Save**.
 
@@ -142,7 +176,10 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 ## Run the Tunnel
 
 You can now run the Tunnel to connect the target service to Cloudflare. Use the following command to run the Tunnel, replacing `<NAME>` with the name created for your Tunnel.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe tunnel run &ltNAME&gt</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+C:\Cloudflared\bin\cloudflared.exe tunnel run <NAME>
+```
 
 We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
 
@@ -155,7 +192,10 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 ### Connect to the remote desktop
 
 1.  Run the following command to create a connection from the device to Cloudflare. Any available port can be specified, but in this example we will use `3389` as it is the default port for RDP connections.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:3389</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    C:\Cloudflared\bin\cloudflared.exe access rdp --hostname rdp.site.com --url localhost:3389
+    ```
 
     This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
@@ -174,7 +214,10 @@ You can help end users connect without requiring the command line by providing t
 2.  Right-click on the Windows desktop and select **New > Shortcut**.
 
 3.  In the wizard that appears, paste in the path to your `cloudflared.exe` file, followed by this command with the hostname your team uses:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:3389</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    C:\Cloudflared\bin\cloudflared.exe access rdp --hostname monday.example.com --url localhost:3389
+    ```
 
 4.  Click **Next** and complete the wizard.
 
@@ -197,15 +240,24 @@ Before you start, make sure you download an RDP client for macOS.
 MacOS users can save a command shortcut that will launch the RDP flow.
 
 1.  The command below can be saved as a `.command` file that can be launched on login:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">var=/Applications/CF-RDP-Tunnel.command &amp;&amp;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">echo &quot;`which cloudflared` access rdp --hostname monday.example.com --url localhost:3389 &amp;&quot; &gt $var &amp;&amp;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">chmod +x $var</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    var=/Applications/CF-RDP-Tunnel.command &&
+    echo "`which cloudflared` access rdp --hostname monday.example.com --url localhost:3389 &" > $var &&
+    chmod +x $var
+    ```
 
 2.  Check that everything is successful by running the following command:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">lsof -nP -iTCP:3389 | grep LISTEN</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ lsof -nP -iTCP:3389 | grep LISTEN
+    ```
 
     If needed, you can kill the process by running the following command:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo kill -9 [process id]</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```sh
+    $ sudo kill -9 [process id]
+    ```
 
     The command from Step 1 can then be configured to run at device login by navigating to **System Preferences > Users & Groups**.
 

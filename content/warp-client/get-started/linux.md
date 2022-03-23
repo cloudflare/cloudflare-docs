@@ -40,8 +40,10 @@ To connect for the very first time you must call `register` first:
 If you want to always stay connected to WARP you must call `enable-always-on`. This is the `cli` equivalent to switching the toggle switch to the `on` position in our GUI apps.
 
 To enable this feature, run:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">warp-cli enable-always-on</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ warp-cli enable-always-on
+```
 
 ### Switching modes
 
@@ -61,8 +63,10 @@ The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-
 ### Additional commands
 
 A complete list of all supported commands can be found by running:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">warp-cli --help</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ warp-cli --help
+```
 
 ## Feedback
 

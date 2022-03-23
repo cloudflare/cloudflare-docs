@@ -15,41 +15,186 @@ To revert your configuration, check out the desired branch and ask Terraform to 
 ## 1. Review your configuration history
 
 Before determining how far back to revert, review the versioned history.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git log</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit d4fec164581bec44684a4d59bb80aec1f1da5a6e</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 18 22:04:52 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 6 - Add two Page Rules.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Sun Apr 15 23:58:35 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 11 11:20:25 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 5 - Add additional 'www' DNS record for Asia data center.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit e1c38cf6f4230a48114ce7b747b77d6435d4646c</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Mon Apr 9 12:34:44 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 4 - Update /login rate limit rule from 'simulate' to 'ban'.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit 0f7e499c70bf5994b5d89120e0449b8545ffdd24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Mon Apr 9 12:22:43 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 4 - Add rate limiting rule to protect /login.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit d540600b942cbd89d03db52211698d331f7bd6d7</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Sun Apr 8 22:21:27 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 3 - Enable TLS 1.3, Always Use HTTPS, and SSL Strict mode.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit 494c6d61b918fce337ca4c0725c9bbc01e00f0b7</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Sun Apr 8 19:58:56 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 2 - Ignore terraform plugin directory and state file.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit 5acea176050463418f6ac1029674c152e3056bc6</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Sun Apr 8 19:52:13 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 2 - Initial commit with webserver definition.</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ git log
+commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
+Author: Me
+Date:   Wed Apr 18 22:04:52 2018 -0700
+
+    Step 6 - Add two Page Rules.
+
+commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a
+Author: Me
+Date:   Sun Apr 15 23:58:35 2018 -0700
+
+    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
+
+commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6
+Author: Me
+Date:   Wed Apr 11 11:20:25 2018 -0700
+
+    Step 5 - Add additional 'www' DNS record for Asia data center.
+
+commit e1c38cf6f4230a48114ce7b747b77d6435d4646c
+Author: Me
+Date:   Mon Apr 9 12:34:44 2018 -0700
+
+    Step 4 - Update /login rate limit rule from 'simulate' to 'ban'.
+
+commit 0f7e499c70bf5994b5d89120e0449b8545ffdd24
+Author: Me
+Date:   Mon Apr 9 12:22:43 2018 -0700
+
+    Step 4 - Add rate limiting rule to protect /login.
+
+commit d540600b942cbd89d03db52211698d331f7bd6d7
+Author: Me
+Date:   Sun Apr 8 22:21:27 2018 -0700
+
+    Step 3 - Enable TLS 1.3, Always Use HTTPS, and SSL Strict mode.
+
+commit 494c6d61b918fce337ca4c0725c9bbc01e00f0b7
+Author: Me
+Date:   Sun Apr 8 19:58:56 2018 -0700
+
+    Step 2 - Ignore terraform plugin directory and state file.
+
+commit 5acea176050463418f6ac1029674c152e3056bc6
+Author: Me
+Date:   Sun Apr 8 19:52:13 2018 -0700
+
+    Step 2 - Initial commit with webserver definition.
+```
 
 Another benefit of storing your Cloudflare configuration in Git is that you can see who made the change. You can also see who reviewed and approved the change if you peer review pull requests).
 
 ## 2. Examining specific historical changes
 
 Check when last change was made.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git show</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit d4fec164581bec44684a4d59bb80aec1f1da5a6e</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 18 22:04:52 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 6 - Add two Page Rules.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">diff --git a/cloudflare.tf b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">index 0b39450..ef11d8a 100644</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">--- a/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+++ b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">@@ -94,3 +94,26 @@ resource &quot;cloudflare_load_balancer&quot; &quot;www-lb&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   description = &quot;example load balancer&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   proxied = true</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_page_rule&quot; &quot;increase-security-on-expensive-page&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  zone_id = var.zone_id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-directory CodeBlock--token-unselectable">+  target = &quot;www.</span><span class="CodeBlock--token-command">${var.domain}/expensive-db-call&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  priority = 1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  actions = {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    security_level = &quot;under_attack&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_page_rule&quot; &quot;redirect-to-new-db-page&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  zone_id = var.zone_id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-directory CodeBlock--token-unselectable">+  target = &quot;www.</span><span class="CodeBlock--token-command">${var.domain}/old-location.php&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  priority = 2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  actions = {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    forwarding_url {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-directory CodeBlock--token-unselectable">+      url = &quot;https://</span><span class="CodeBlock--token-command">${var.domain}/expensive-db-call&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+      status_code = 301</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ git show
+commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
+Author: Me
+Date:   Wed Apr 18 22:04:52 2018 -0700
+
+    Step 6 - Add two Page Rules.
+
+diff --git a/cloudflare.tf b/cloudflare.tf
+index 0b39450..ef11d8a 100644
+--- a/cloudflare.tf
++++ b/cloudflare.tf
+@@ -94,3 +94,26 @@ resource "cloudflare_load_balancer" "www-lb" {
+   description = "example load balancer"
+   proxied = true
+ }
++
++resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
++  zone_id = var.zone_id
++  target = "www.${var.domain}/expensive-db-call"
++  priority = 1
++
++  actions = {
++    security_level = "under_attack",
++  }
++}
++
++resource "cloudflare_page_rule" "redirect-to-new-db-page" {
++  zone_id = var.zone_id
++  target = "www.${var.domain}/old-location.php"
++  priority = 2
++
++  actions = {
++    forwarding_url {
++      url = "https://${var.domain}/expensive-db-call"
++      status_code = 301
++    }
++  }
++}
+```
 
 Review the past few changes.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git log -p -3</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">...</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">// page rule config from above</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">...</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Sun Apr 15 23:58:35 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">diff --git a/cloudflare.tf b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">index b92cb6f..195b646 100644</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">--- a/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+++ b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">@@ -59,3 +59,38 @@ resource &quot;cloudflare_record&quot; &quot;www-asia&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   type    = &quot;A&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   proxied = true</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_load_balancer_monitor&quot; &quot;get-root-https&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  expected_body = &quot;alive&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  expected_codes = &quot;200&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  method = &quot;GET&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  timeout = 5</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  path = &quot;/&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  interval = 60</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  retries = 2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  description = &quot;GET / over HTTPS - expect 200&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_load_balancer_pool&quot; &quot;www-servers&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  name = &quot;www-servers&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  monitor = cloudflare_load_balancer_monitor.get-root-https.id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  check_regions = [&quot;WNAM&quot;, &quot;ENAM&quot;, &quot;WEU&quot;, &quot;EEU&quot;, &quot;SEAS&quot;, &quot;NEAS&quot;]</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  origins {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    name = &quot;www-us&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    address = &quot;203.0.113.10&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  origins {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    name = &quot;www-asia&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+    address = &quot;198.51.100.15&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  description = &quot;www origins&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  enabled = true</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  minimum_origins = 1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  notification_email = &quot;you@example.com&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_load_balancer&quot; &quot;www-lb&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  zone_id = var.zone_id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  name = &quot;www-lb&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  description = &quot;example load balancer&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  proxied = true</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 11 11:20:25 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 5 - Add additional 'www' DNS record for Asia data center.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">diff --git a/cloudflare.tf b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">index 9f25a0c..b92cb6f 100644</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">--- a/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+++ b/cloudflare.tf</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">@@ -52,3 +52,10 @@ resource &quot;cloudflare_rate_limit&quot; &quot;login-limit&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   disabled = false</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   description = &quot;Block failed login attempts (5 in 1 min) for 5 minutes.&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+resource &quot;cloudflare_record&quot; &quot;www-asia&quot; {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  zone_id = var.zone_id</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  name    = &quot;www&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  value   = &quot;198.51.100.15&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  type    = &quot;A&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+  proxied = true</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">+}</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ git log -p -3
+
+...
+// page rule config from above
+...
+
+commit bc9aa9a465a4c8d6deeaa0491814c9f364e9aa8a
+Author: Me
+Date:   Sun Apr 15 23:58:35 2018 -0700
+
+    Step 5 - Create load balancer (LB) monitor, LB pool, and LB.
+
+diff --git a/cloudflare.tf b/cloudflare.tf
+index b92cb6f..195b646 100644
+--- a/cloudflare.tf
++++ b/cloudflare.tf
+@@ -59,3 +59,38 @@ resource "cloudflare_record" "www-asia" {
+   type    = "A"
+   proxied = true
+ }
++resource "cloudflare_load_balancer_monitor" "get-root-https" {
++  expected_body = "alive"
++  expected_codes = "200"
++  method = "GET"
++  timeout = 5
++  path = "/"
++  interval = 60
++  retries = 2
++  description = "GET / over HTTPS - expect 200"
++}
++resource "cloudflare_load_balancer_pool" "www-servers" {
++  name = "www-servers"
++  monitor = cloudflare_load_balancer_monitor.get-root-https.id
++  check_regions = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
++  origins {
++    name = "www-us"
++    address = "203.0.113.10"
++  }
++  origins {
++    name = "www-asia"
++    address = "198.51.100.15"
++  }
++  description = "www origins"
++  enabled = true
++  minimum_origins = 1
++  notification_email = "you@example.com"
++}
++resource "cloudflare_load_balancer" "www-lb" {
++  zone_id = var.zone_id
++  name = "www-lb"
++  default_pool_ids = [cloudflare_load_balancer_pool.www-servers.id]
++  fallback_pool_id = cloudflare_load_balancer_pool.www-servers.id
++  description = "example load balancer"
++  proxied = true
++}
+
+commit 6761a4f754e77322629ba4e90a90a3defa1fd4b6
+Author: Me
+Date:   Wed Apr 11 11:20:25 2018 -0700
+
+    Step 5 - Add additional 'www' DNS record for Asia data center.
+
+diff --git a/cloudflare.tf b/cloudflare.tf
+index 9f25a0c..b92cb6f 100644
+--- a/cloudflare.tf
++++ b/cloudflare.tf
+@@ -52,3 +52,10 @@ resource "cloudflare_rate_limit" "login-limit" {
+   disabled = false
+   description = "Block failed login attempts (5 in 1 min) for 5 minutes."
+ }
++resource "cloudflare_record" "www-asia" {
++  zone_id = var.zone_id
++  name    = "www"
++  value   = "198.51.100.15"
++  type    = "A"
++  proxied = true
++}
+```
 
 ## 3. Redeploy the previous configuration
 
@@ -58,32 +203,91 @@ Assume that shortly after you deployed the Page Rules from [step 6](/terraform/t
 While you can always edit the config file directly and delete those entries, you can use `git` to do that for you. First, tell git to revert the last commit without rewriting history.
 
 ### i. Revert the branch to the previous commit
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git revert HEAD~1..HEAD</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[master f9a6f7d] Revert &quot;Step 6 - Bug fix.&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> 1 file changed, 1 insertion(+), 1 deletion(-)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">git log -2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit f9a6f7db72ea1437e146050a5e7556052ecc9a1a</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 18 23:28:09 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Revert &quot;Step 6 - Add two Page Rules.&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    This reverts commit d4fec164581bec44684a4d59bb80aec1f1da5a6e.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">commit d4fec164581bec44684a4d59bb80aec1f1da5a6e</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Author: Me</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Date:   Wed Apr 18 22:04:52 2018 -0700</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    Step 6 - Add two Page Rules.</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ git revert HEAD~1..HEAD
+[master f9a6f7d] Revert "Step 6 - Bug fix."
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+$ git log -2
+commit f9a6f7db72ea1437e146050a5e7556052ecc9a1a
+Author: Me
+Date:   Wed Apr 18 23:28:09 2018 -0700
+
+    Revert "Step 6 - Add two Page Rules."
+
+    This reverts commit d4fec164581bec44684a4d59bb80aec1f1da5a6e.
+
+commit d4fec164581bec44684a4d59bb80aec1f1da5a6e
+Author: Me
+Date:   Wed Apr 18 22:04:52 2018 -0700
+
+    Step 6 - Add two Page Rules.
+```
 
 ### ii. Preview the changes
 
 As expected, Terraform is indicating it will remove the two Page Rules created in the previous step.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">terraform plan</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Refreshing Terraform state in-memory prior to plan...</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">The refreshed state will be used to calculate this plan, but will not be</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">persisted to local or remote state storage.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">------------------------------------------------------------------------</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">An execution plan has been generated and is shown below.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Resource actions are indicated with the following symbols:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  - destroy</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Terraform will perform the following actions:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  - cloudflare_page_rule.increase-security-on-expensive-page</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  - cloudflare_page_rule.redirect-to-new-db-page</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Plan: 0 to add, 0 to change, 2 to destroy.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">------------------------------------------------------------------------</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">can't guarantee that exactly these actions will be performed if</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;terraform apply&quot; is subsequently run.</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
+cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
+cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
+cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
+cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
+cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
+cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
+cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - cloudflare_page_rule.increase-security-on-expensive-page
+
+  - cloudflare_page_rule.redirect-to-new-db-page
+
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an "-out" parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+"terraform apply" is subsequently run.
+```
 
 ### iii. Apply the changes
 
 The changes look good, and Terraform can revert the Cloudflare configuration.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">terraform apply --auto-approve</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.redirect-to-new-db-page: Destroying... (ID: c5c40ff2dc12416b5fe4d0541980c591)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.increase-security-on-expensive-page: Destroying... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.increase-security-on-expensive-page: Destruction complete after 0s</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Apply complete! Resources: 0 added, 0 changed, 2 destroyed.</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ terraform apply --auto-approve
+cloudflare_page_rule.redirect-to-new-db-page: Refreshing state... (ID: c5c40ff2dc12416b5fe4d0541980c591)
+cloudflare_page_rule.increase-security-on-expensive-page: Refreshing state... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
+cloudflare_rate_limit.login-limit: Refreshing state... (ID: 8d518c5d6e63406a9466d83cb8675bb6)
+cloudflare_zone_settings_override.example-com-settings: Refreshing state... (ID: e2e6491340be87a3726f91fc4148b126)
+cloudflare_load_balancer_monitor.get-root-https: Refreshing state... (ID: 4238142473fcd48e89ef1964be72e3e0)
+cloudflare_record.www: Refreshing state... (ID: c38d3103767284e7cd14d5dad3ab8669)
+cloudflare_record.www-asia: Refreshing state... (ID: fda39d8c9bf909132e82a36bab992864)
+cloudflare_load_balancer_pool.www-servers: Refreshing state... (ID: 906d2a7521634783f4a96c062eeecc6d)
+cloudflare_load_balancer.www-lb: Refreshing state... (ID: cb94f53f150e5c1a65a07e43c5d4cac4)
+cloudflare_page_rule.redirect-to-new-db-page: Destroying... (ID: c5c40ff2dc12416b5fe4d0541980c591)
+cloudflare_page_rule.increase-security-on-expensive-page: Destroying... (ID: 1c13fdb84710c4cc8b11daf7ffcca449)
+cloudflare_page_rule.increase-security-on-expensive-page: Destruction complete after 0s
+cloudflare_page_rule.redirect-to-new-db-page: Destruction complete after 1s
+
+Apply complete! Resources: 0 added, 0 changed, 2 destroyed.
+```
 
 Two resources destroyed were (as expected) and you have rolled back to the previous version.

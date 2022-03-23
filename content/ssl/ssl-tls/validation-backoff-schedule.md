@@ -14,7 +14,10 @@ Domain validation happens with our CA partners according to the following schedu
 Afterward, DCV tokens expire as dictated by the CA/B Baseline Requirements, which govern issuance of publicly trusted SSL certificates.
 
 Here is the function that is used to determine the next check:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERVAL '4 hours')</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+now() + min((floor(60 * pow(1.05, retry_attempt)) * INTERVAL '1 second'), INTERVAL '4 hours')
+```
 
 As the table below shows, most of the checks take place on the first day. Most validations complete within the first 5 minutes, unless the customer has misconfigured the CNAME to your domain. We cap the check back off to a maximum of 4 hours to avoid the function growing exponentially, which would result in large gaps between checks towards the end of the month.
 

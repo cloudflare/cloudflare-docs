@@ -13,8 +13,10 @@ In order to increase logging, the `log.level` within `railgun.conf` should be se
 {{<Aside>}}
 
 **Note**: The Railgun service running on the server will also need to be restarted. For changes to take effect, input the following:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">service railgun restart</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ service railgun restart
+```
 
 {{</Aside>}}
 

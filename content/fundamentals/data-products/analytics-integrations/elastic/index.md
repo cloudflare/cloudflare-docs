@@ -95,7 +95,10 @@ Next, to configure your deployment:
     - _dashboards.json_
 
 2.  Using the Elasticsearch endpoint for your new deployment (found on the main page), run the following command from a terminal, using the random password from above.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">./install-artifacts.sh -u elastic -p &ltRANDOM PASSWORD&gt -e https://_&ltYOUR DEPLOYMENT ENDPOINT&gt_:9243</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```txt
+    ./install-artifacts.sh -u elastic -p <RANDOM PASSWORD> -e https://_<YOUR DEPLOYMENT ENDPOINT>_:9243
+    ```
 
 3.  To install the Cloudflare dashboards, log in to the Kibana user interface using the **elastic** username and the randomly generated password.
 

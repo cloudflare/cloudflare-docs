@@ -31,8 +31,10 @@ If you want to add a Monitor to your Cloudflare Load Balancer pool, you need to 
 You can add Cloudflare Tunnel to an existing load Balancer pool directly from `cloudflared`. The result is the same as creation from the dashboard above.
 
 To do so, run the following command:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel route lb &lttunnel ID or NAME&gt &ltload balancer name&gt &ltload balancer pool&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel route lb <tunnel ID or NAME> <load balancer name> <load balancer pool>
+```
 
 **Note**: this command requires the `cert.pem` file.
 

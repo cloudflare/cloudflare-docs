@@ -38,31 +38,48 @@ This example uses a macOS machine to configure the Droplet. Copy the IP address 
 ![Machine IP](/cloudflare-one/static/zero-trust-security/gitlab/show-ip.png)
 
 Open Terminal and run the following command, replacing the IP address with the IP assigned by Digital Ocean.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">ssh</span><span class="CodeBlock--token-plain"> root@134.209.124.123</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ ssh root@134.209.124.123
+```
 
 Next, install GitLab. This example uses the [Ubuntu package](https://about.gitlab.com/install/#ubuntu) and the steps in the GitLab documentation, with a few exceptions called out below.
 
 Run the following commands to begin.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">apt-get</span><span class="CodeBlock--token-plain"> update</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">apt-get</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain"> -y </span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> openssh-server ca-certificates</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">bash</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+sudo apt-get update
+
+sudo apt-get install -y curl openssh-server ca-certificates
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+```
 
 The commands above download the GitLab software to this machine. You must now install it. This is the first place this tutorial will diverge from the operations in the GitLab documentation. The next step in the GitLab-provided tutorial sets an external hostname. Instead, you can just install the software.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">apt-get</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain"> gitlab-ee</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+sudo apt-get install gitlab-ee
+```
 
 After a minute or so, GitLab will be installed.
 
 ![Install GitLab](/cloudflare-one/static/zero-trust-security/gitlab/install-gitlab.png)
 
 However, the application is not running yet. You can check to see what ports are listening to confirm by installing and using `netstat`.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">apt-get</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain"> net-tools</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">netstat</span><span class="CodeBlock--token-plain"> -tulpn </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">grep</span><span class="CodeBlock--token-plain"> LISTEN</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+sudo apt-get install net-tools
+sudo netstat -tulpn | grep LISTEN
+```
 
 The result should be only the services currently active on the machine:
 
 ![Just Services](/cloudflare-one/static/zero-trust-security/gitlab/just-services.png)
 
 To start GitLab, run the software's reconfigure command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> gitlab-ctl reconfigure</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+sudo gitlab-ctl reconfigure
+```
 
 GitLab will launch its component services. Once complete, confirm that GitLab is running and listening on both ports 22 and 80.
 
@@ -113,7 +130,11 @@ Click `Next` and `Next` again on the `Setup` page - this example does not requir
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
 Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">wget</span><span class="CodeBlock--token-plain"> https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> dpkg -i ./cloudflared-linux-amd64.deb</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i ./cloudflared-linux-amd64.deb
+```
 
 Once installed, authenticate the instance of `cloudflared` with the following command.
 
@@ -136,7 +157,10 @@ Once you click one of the sites in your account, Cloudflare will download a cert
 You can now connect GitLab to Cloudflare using Cloudflare Tunnel.
 
 First, create a new Tunnel by running the following command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel create gitlab</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+cloudflared tunnel create gitlab
+```
 
 `cloudflared` will generate a unique ID for this Tunnel. You can use this Tunnel both for SSH and HTTP traffic.
 
@@ -145,20 +169,40 @@ First, create a new Tunnel by running the following command.
 Next, you will need to configure Cloudflare Tunnel to proxy traffic to both destinations. The configuration below will take traffic bound for the DNS record that will be created for the web app and the DNS record to represent SSH traffic to the right port.
 
 You use the text editor of your choice to edit the configuration file. The example relies on `Vi`.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">vim</span><span class="CodeBlock--token-plain"> ~/.cloudflared/config.yml</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+vim ~/.cloudflared/config.yml
+```
 
 Next, configure the Tunnel to serve traffic.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yml" language="yml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">tunnel</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> 6ff42ae2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">765d</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4adf</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">8112</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">31c55c1551ef</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">credentials-file</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> /root/.cloudflared/6ff42ae2</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">765d</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">4adf</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">8112</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">31c55c1551ef.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-key CodeBlock--token-atrule">ingress</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">hostname</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> gitlab.widgetcorp.tech</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">//localhost</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">80</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">hostname</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> gitlab</span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain">ssh.widgetcorp.tech</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> ssh</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">//localhost</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">22</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-comment"># Catch-all rule, which just responds with 404 if traffic doesn't match any of</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-comment"># the earlier rules</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http_status</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">404</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```yml
+tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
+credentials-file: /root/.cloudflared/6ff42ae2-765d-4adf-8112-31c55c1551ef.json
+
+ingress:
+  - hostname: gitlab.widgetcorp.tech
+    service: http://localhost:80
+  - hostname: gitlab-ssh.widgetcorp.tech
+    service: ssh://localhost:22
+  # Catch-all rule, which just responds with 404 if traffic doesn't match any of
+  # the earlier rules
+  - service: http_status:404
+```
 
 ![Self Hosted](/cloudflare-one/static/zero-trust-security/gitlab/config-file.png)
 
 You can test that the configuration file is set correctly with the following command.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel ingress validate</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+cloudflared tunnel ingress validate
+```
 
 `cloudflared` should indicate the Tunnel is okay. You can now begin running the Tunnel.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflared tunnel run</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+cloudflared tunnel run
+```
 
 ![Tunnel Run](/cloudflare-one/static/zero-trust-security/gitlab/tunnel-run.png)
 
@@ -213,13 +257,23 @@ To push and pull code over SSH, you will need to install `cloudflared` on the cl
     $ brew install cloudflare/cloudflare/cloudflared
 
 While you need to install `cloudflared`, you do not need to wrap your SSH commands in any unique way. Instead, you will need to make a one-time change to your SSH configuration file.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">vim</span><span class="CodeBlock--token-plain"> /Users/samrhea/.ssh/config</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+vim /Users/samrhea/.ssh/config
+```
 
 Input the following values; replacing `gitlab-ssh.widgetcorp.tech` with the hostname you created.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Host gitlab-ssh.widgetcorp.tech</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  ProxyCommand /usr/local/bin/cloudflared access </span><span class="CodeBlock--token-function">ssh</span><span class="CodeBlock--token-plain"> --hostname %h</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+Host gitlab-ssh.widgetcorp.tech
+  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+```
 
 You can now test the SSH flow by attempting to clone the project created earlier.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">git</span><span class="CodeBlock--token-plain"> clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ git clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo
+```
 
 `cloudflared` will prompt you to login with my identity provider and, once successful, issue a token to your device to allow you to authenticate.
 

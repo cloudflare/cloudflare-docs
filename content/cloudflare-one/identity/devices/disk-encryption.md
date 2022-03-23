@@ -42,7 +42,11 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Open a terminal window.
 1. Run the `/usr/sbin/system_profiler SPStorageDataType` command to return a list of drivers on the system and note the value of **Mount Point**.
 1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show *Yes* for the disk to be considered encrypted.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">% diskutil info /System/Volumes/Data | grep FileVault</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   FileVault:                 Yes</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+% diskutil info /System/Volumes/Data | grep FileVault
+   FileVault:                 Yes
+```
 
 All disks on the system must be encrypted for the posture check to pass.
 
@@ -51,5 +55,8 @@ All disks on the system must be encrypted for the posture check to pass.
 1.  Open a Powershell window.
 1.  Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
 1.  **Protection Status** must be set to *On*.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Get-BitLockerVolume</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+Get-BitLockerVolume
+```
 All disks on the system must be encrypted for the posture check to pass.

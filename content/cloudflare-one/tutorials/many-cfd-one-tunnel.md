@@ -30,19 +30,30 @@ Start by [downloading and installing](/cloudflare-one/connections/connect-apps/i
 ## Login to Cloudflare
 
 Once installed, you can use the `tunnel login` command in `cloudflared` to obtain a certificate.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel login</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel login
+```
 
 ## Create your Tunnel
 
 In the example below, simply change `<example-tunnel>` to the name you wish to assign to your Tunnel.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create example-tunnel</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Tunnel credentials written to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found. Keep this file secret. To revoke these credentials, delete the tunnel.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ cloudflared tunnel create example-tunnel
+Tunnel credentials written to /Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json. cloudflared chose this file based on where your origin certificate was found. Keep this file secret. To revoke these credentials, delete the tunnel.
+
+Created tunnel example-tunnel with id ef824aef-7557-4b41-a398-4684585177ad
+```
 
 ## Upload the Tunnel credentials file to Kubernetes
 
 Next, you will upload the generated Tunnel credential file as a secret to your Kubernetes cluster. You will also need to provide the filepath that the Tunnel credentials file was created under. You can find that path in the output of `cloudflared tunnel create <example-tunnel>` above.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">kubectl create secret generic tunnel-credentials \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">--from-file=credentials.json=/Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ kubectl create secret generic tunnel-credentials \
+--from-file=credentials.json=/Users/cf000197/.cloudflared/ef824aef-7557-4b41-a398-4684585177ad.json
+```
 
 ## Associate your Tunnel with a DNS record
 
@@ -59,7 +70,12 @@ Alternatively, you can perform this step from the command line by running `cloud
 ## Deploy `cloudflared`
 
 Now, we'll deploy `cloudflared` by applying its [manifest](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml). This will start a [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) for running `cloudflared` and a [ConfigMap](https://kubernetes.io/docs/concepts/configuration/configmap/) with `cloudflared`'s config. When Cloudflare receives traffic for the DNS or Load Balancing hostname you configured in the previous step, it will send that traffic to the `cloudflared` instances running in this deployment. Then, those `cloudflared` instances will proxy the request to your [application's Service](https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/app.yaml).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">kubectl apply -f cloudflared.yaml</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">deployment.apps/cloudflared created</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">configmap/cloudflared configured</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sh
+$ kubectl apply -f cloudflared.yaml
+deployment.apps/cloudflared created
+configmap/cloudflared configured
+```
 
 ## Examine status of your pod
 

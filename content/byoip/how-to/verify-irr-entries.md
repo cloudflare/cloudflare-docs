@@ -68,8 +68,30 @@ To verify your prefix and ASN route, use the tools and methods outlined in this 
 ### WHOIS output example
 
 The `<IRR entry section>` in the WHOIS output shows the correct IRR entry information for the specified network. In this example, the network prefix is 1.1.1.0/24, and the output includes the route, origin ASN, and route registry, which in this example is APNIC:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">user@xxt32z conduit-qs-config % whois -h rr.ntt.net 1.1.1.0/24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">route:          1.1.1.0/24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltRPKI section&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">descr:          RPKI ROA for 1.1.1.0/24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">remarks:        This route object represents routing data retrieved from the RPKI</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">remarks:        The original data can be found here: https://rpki.gin.ntt.net/r/AS13335/1.1.1.0/24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">remarks:        This route object is the result of an automated RPKI-to-IRR conversion process.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">remarks:        maxLength 24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">origin:         AS13335</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">mnt-by:         MAINT-NTTCOM-RPKI</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">changed:        job@ntt.net 20200913</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">source:         RPKI  # Trust Anchor: apnic</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltIRR entry section&gt</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">route:          1.1.1.0/24</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">origin:         AS13335</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">descr:          APNIC Research and Development</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">                6 Cordelia St</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">mnt-by:         MAINT-AU-APNIC-GM85-AP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">last-modified:  2018-03-16T16:58:06Z</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">source:         APNIC</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+user@xxt32z conduit-qs-config % whois -h rr.ntt.net 1.1.1.0/24
+route:          1.1.1.0/24
+<RPKI section>
+descr:          RPKI ROA for 1.1.1.0/24
+remarks:        This route object represents routing data retrieved from the RPKI
+remarks:        The original data can be found here: https://rpki.gin.ntt.net/r/AS13335/1.1.1.0/24
+remarks:        This route object is the result of an automated RPKI-to-IRR conversion process.
+remarks:        maxLength 24
+origin:         AS13335
+mnt-by:         MAINT-NTTCOM-RPKI
+changed:        job@ntt.net 20200913
+source:         RPKI  # Trust Anchor: apnic
+
+<IRR entry section>
+route:          1.1.1.0/24
+origin:         AS13335
+descr:          APNIC Research and Development
+                6 Cordelia St
+mnt-by:         MAINT-AU-APNIC-GM85-AP
+last-modified:  2018-03-16T16:58:06Z
+source:         APNIC
+```
 
 {{<Aside type="note" header="Note:">}}
 

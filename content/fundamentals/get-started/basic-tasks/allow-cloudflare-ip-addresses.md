@@ -26,7 +26,13 @@ To avoid blocking Cloudflare IP addresses unintentionally, you also want to allo
 You can explicitly allow these IP addresses with a [.htaccess file](https://httpd.apache.org/docs/trunk/mod/mod_authz_core.html#require) or by using [iptables](https://www.linode.com/docs/security/firewalls/control-network-traffic-with-iptables/#block-or-allow-traffic-by-port-number-to-create-an-iptables-firewall). 
 
 The following example demonstrates how your could use an iptables rule to allow a Cloudflare IP address range. Replace `$ip` below with one of the [Cloudflare IP address ranges](https://www.cloudflare.com/ips).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment"># For IPv4 addresses</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">iptables -I INPUT -p tcp -m multiport --dports http,https -s </span><span class="CodeBlock--token-variable">$ip</span><span class="CodeBlock--token-plain"> -j ACCEPT</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-comment"># For IPv6 addresses</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip6tables -I INPUT -p tcp -m multiport --dports http,https -s </span><span class="CodeBlock--token-variable">$ip</span><span class="CodeBlock--token-plain"> -j ACCEPT</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+# For IPv4 addresses
+iptables -I INPUT -p tcp -m multiport --dports http,https -s $ip -j ACCEPT
+# For IPv6 addresses
+ip6tables -I INPUT -p tcp -m multiport --dports http,https -s $ip -j ACCEPT
+```
 
 For more specific guidance, contact your hosting provider or website administrator.
 
@@ -35,7 +41,13 @@ For more specific guidance, contact your hosting provider or website administrat
 As a best practice, we also recommend that you explicitly block all traffic that does not come from Cloudflare IP addresses or the IP addresses of your trusted partners, vendors, or applications.
 
 For example, you might [update your iptables](https://www.linode.com/docs/guides/control-network-traffic-with-iptables/#block-or-allow-traffic-by-port-number-to-create-an-iptables-firewall) with the following commands:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment"># For IPv4 addresses</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">iptables -A INPUT -p tcp --dport http,https -j DROP</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-comment"># For IPv6 addresses</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip6tables -A INPUT -p tcp --dport http,https -j DROP</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+# For IPv4 addresses
+iptables -A INPUT -p tcp --dport http,https -j DROP
+# For IPv6 addresses
+ip6tables -A INPUT -p tcp --dport http,https -j DROP
+```
 
 For more specific guidance, contact your hosting provider or website administrator.
 

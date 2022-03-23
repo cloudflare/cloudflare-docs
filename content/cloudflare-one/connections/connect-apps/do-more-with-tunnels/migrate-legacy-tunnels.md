@@ -22,25 +22,40 @@ Today, Cloudflare Tunnel’s architecture distinguishes between the persistent o
 To migrate your legacy tunnels to the named tunnels architecture:
 
 1.  [Create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#3-create-a-tunnel-and-give-it-a-name).
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel create </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">TUNNEL-NAME</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel create <TUNNEL-NAME>
+    ```
 
 1.  [Route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel to create routes that your tunnel will serve.
 
     - If your legacy tunnel was serving `tunnel.example.com`, run this command to configure your named tunnel to also serve `tunnel.example.com`. For more information, refer to the [DNS Record routing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) section.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel route dns </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">TUNNEL-NAME</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> tunnel.example.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
+    ```
 
     - If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) section.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel route lb </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">TUNNEL-NAME</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">LOAD-BALANCER-NAME</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">LOAD-BALANCER-POOL</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
+    ```
 
 1.  After configuring DNS/LB records for each zone you want to serve, follow the [Configure a Tunnel](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) instructions to create a config file with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if you used to run:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```bash
+    $ cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000
+    ```
 
     You can have an equivalent ingress rule:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-yml" language="yml"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-atrule">ingress</span><span class="CodeBlock--token-punctuation">:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">hostname</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> tunnel.example.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> https</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain">//localhost</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">3000</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">-</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-key CodeBlock--token-atrule">service</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-plain"> http_status</span><span class="CodeBlock--token-punctuation">:</span><span class="CodeBlock--token-number">404</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment"># Note that the last rule is the catch-all rule and is required.</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+    ```yml
+    ingress:
+      - hostname: tunnel.example.com
+        service: https://localhost:3000
+      - service: http_status:404
+    # Note that the last rule is the catch-all rule and is required.
+    ```
 
 1.  Next, [run your tunnel](/cloudflare-one/connections/connect-apps/run-tunnel/).
 

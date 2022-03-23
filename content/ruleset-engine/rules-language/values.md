@@ -21,8 +21,10 @@ When working with values in rule expressions, keep in mind the notes outlined be
 You must manually escape the backslash (`\`) and double quote (`"`) characters with a backslash when using them as part of a literal value in an expression.
 
 Note in this example that the first and last `"` characters in `"token-type=\"JWT\""` are not part of the literal value, so they do not need escaping:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">query </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;token-type=\&quot;JWT\&quot;&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+(http.request.uri.query contains "token-type=\"JWT\"")
+```
 
 ## Case sensitivity and regular expressions in values
 
@@ -33,12 +35,18 @@ Cloudflare Business and Enterprise customer plans have access to the `matches` [
 ## Boolean values
 
 Simple expressions using boolean fields do not require operator notations or values. You only need to insert the field on its own, as shown in the `ssl` example below.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ssl</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+ssl
+```
 
 This simple expression matches requests where the value of the `ssl` field is `true`.
 
 To match requests where `ssl` is `false`, use the boolean `not` operator :
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">not</span><span class="CodeBlock--token-plain"> ssl</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+not ssl
+```
 
 ## Arrays
 
@@ -87,7 +95,9 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 [Lists](/firewall/cf-firewall-rules/rules-lists/) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of Lists that support different kinds of list items.
 
 To refer to a List in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an IP List named `office_network`:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">ip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">src </span><span class="CodeBlock--token-operator">in</span><span class="CodeBlock--token-plain"> $office_network</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+(ip.src in $office_network)
+```
 
 Note that list names can only include lowercase letters, numbers, and the underscore (`_`) character. For guidance on creating and managing Lists, refer to [Use Lists: Manage Lists](/firewall/cf-dashboard/rules-lists/manage-lists/).

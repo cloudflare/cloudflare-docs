@@ -67,8 +67,10 @@ Because the [action](/firewall/cf-firewall-rules/actions/) for your rule is _Blo
 To check for [revoked client certificates](/ssl/client-certificates/revoke-client-certificate/), you can either add a new mTLS rule or add a new expression to the [default rule](#expression-builder).
 
 When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revoked` field is set to `true`. If you combined this with the [default mTLS rule](#expression-builder), it would look similar to the following:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">host </span><span class="CodeBlock--token-operator">in</span><span class="CodeBlock--token-plain"> {</span><span class="CodeBlock--token-string">&quot;api.theburritobot.com&quot;</span><span class="CodeBlock--token-plain">}</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-operator">not</span><span class="CodeBlock--token-plain"> cf</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">tls_client_auth</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">cert_verified </span><span class="CodeBlock--token-operator">or</span><span class="CodeBlock--token-plain"> cf</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">tls_client_auth</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">cert_revoked</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```sql
+(http.host in {"api.theburritobot.com"}) and (not cf.tls_client_auth.cert_verified or cf.tls_client_auth.cert_revoked)
+```
 
 {{<Aside type="note">}}
 

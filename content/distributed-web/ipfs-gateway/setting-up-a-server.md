@@ -34,11 +34,20 @@ Releases](https://github.com/ipfs/go-ipfs/releases) page and copy the link for
 the correct asset for your server from the latest release. For most people, this
 is the link that ends in `_linux-amd64.tar.gz`. Now we download that file to our
 server, extract the contents, install IPFS, and clean up:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">wget</span><span class="CodeBlock--token-plain"> -q https://github.com/ipfs/go-ipfs/releases/download/v0.4.21/go-ipfs_v0.4.21_linux-amd64.tar.gz</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">tar</span><span class="CodeBlock--token-plain"> xf go-ipfs_v0.4.21_linux-amd64.tar.gz</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">mv</span><span class="CodeBlock--token-plain"> go-ipfs/ipfs /usr/local/bin</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">rm</span><span class="CodeBlock--token-plain"> -rf go-ipfs go-ipfs_v0.4.21_linux-amd64.tar.gz</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ wget -q https://github.com/ipfs/go-ipfs/releases/download/v0.4.21/go-ipfs_v0.4.21_linux-amd64.tar.gz
+$ tar xf go-ipfs_v0.4.21_linux-amd64.tar.gz
+$ sudo mv go-ipfs/ipfs /usr/local/bin
+$ rm -rf go-ipfs go-ipfs_v0.4.21_linux-amd64.tar.gz
+```
 
 IPFS also has to do its own setup, so we run this command _logged in as the user
 that we'll want to run the IPFS daemon_:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ ipfs init</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ ipfs init
+```
 
 (If you want the daemon to run as root, actually switch to the root user with
 `sudo su` first instead of running `sudo ipfs init`.)
@@ -68,7 +77,12 @@ the contents:
 
 Change the line "User=root" if you're not running the daemon as root, and then
 tell systemd about the new service:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> systemctl daemon-reload</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> systemctl </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">enable</span><span class="CodeBlock--token-plain"> ipfs</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ </span><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> systemctl start ipfs</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable ipfs
+$ sudo systemctl start ipfs
+```
 
 ### Notes on systemd
 

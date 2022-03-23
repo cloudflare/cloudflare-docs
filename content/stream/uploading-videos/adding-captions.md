@@ -18,7 +18,16 @@ If the language you are adding isn't included in the table, you can find the val
 through the [The IANA registry](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry), which maintains a list of language codes. To find the
 value to send, search for the language. Below is an example value from IANA when
 we look for the value to send for a Turkish subtitle:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">%%</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Type: language</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Subtag: </span><span class="CodeBlock--token-function">tr</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Description: Turkish</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Added: </span><span class="CodeBlock--token-number">2005</span><span class="CodeBlock--token-plain">-10-16</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Suppress-Script: Latn</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">%%</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+%%
+Type: language
+Subtag: tr
+Description: Turkish
+Added: 2005-10-16
+Suppress-Script: Latn
+%%
+```
 
 The `Subtag` code indicates a value of `tr`. This is the value you should send
 as the `language` at the end of the PUT request shown above.
@@ -26,23 +35,56 @@ as the `language` at the end of the PUT request shown above.
 A label is generated from the provided language. The label will be visible for
 user selection in the player. For example, if sent `tr`, the label `Türkçe` will
 be created; if sent `de`, the label `Deutsch` will be created.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X PUT </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">'Authorization: Bearer $TOKEN'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> -F </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">file</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-plain">@/Users/mickie/Desktop/example_caption.vtt </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://api.cloudflare.com/client/v4/accounts/</span><span class="CodeBlock--token-variable">$ACCOUNT</span><span class="CodeBlock--token-plain">/stream/</span><span class="CodeBlock--token-variable">$VIDEOID</span><span class="CodeBlock--token-plain">/captions/</span><span class="CodeBlock--token-environment CodeBlock--token-constant">$LANGUAGE</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+curl -X PUT \
+ -H 'Authorization: Bearer $TOKEN' \
+ -F file=@/Users/mickie/Desktop/example_caption.vtt \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/captions/$LANGUAGE
+```
 
 ### Example Response to Add or Modify a Caption
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;language&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;en&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string">&quot;label&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;English&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+{
+  "result": {
+    "language": "en",
+    "label": "English"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ## List the captions associated with a video
 
 To view captions associated with a video:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">'Authorization: Bearer $TOKEN'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://api.cloudflare.com/client/v4/accounts/</span><span class="CodeBlock--token-variable">$ACCOUNT</span><span class="CodeBlock--token-plain">/stream/</span><span class="CodeBlock--token-variable">$VIDEO</span><span class="CodeBlock--token-plain">/captions</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+curl -H 'Authorization: Bearer $TOKEN' \
+https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions
+```
 
 ### Example response to get the captions associated with a video
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      </span><span class="CodeBlock--token-string">&quot;language&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;en&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      </span><span class="CodeBlock--token-string">&quot;label&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;English&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      </span><span class="CodeBlock--token-string">&quot;language&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;de&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      </span><span class="CodeBlock--token-string">&quot;label&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;Deutsch&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-punctuation">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+{
+  "result": [
+    {
+      "language": "en",
+      "label": "English"
+    },
+    {
+      "language": "de",
+      "label": "Deutsch"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ## Directly access captions
 
@@ -53,16 +95,26 @@ To directly access the captions for your video, use the following URI and add in
 ## Delete the captions
 
 To remove a caption associated with your video:
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X DELETE </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">'Authorization: Bearer $TOKEN'</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">\</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> https://api.cloudflare.com/client/v4/accounts/</span><span class="CodeBlock--token-variable">$ACCOUNT</span><span class="CodeBlock--token-plain">/stream/</span><span class="CodeBlock--token-variable">$VIDEO</span><span class="CodeBlock--token-plain">/captions/</span><span class="CodeBlock--token-environment CodeBlock--token-constant">$LANGUAGE</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+curl -X DELETE \
+ -H 'Authorization: Bearer $TOKEN' \
+ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEO/captions/$LANGUAGE
+```
 
 If there is an entry in `errors` response field, the caption has not been
 deleted.
 
 ### Example response to delete the caption
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;result&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;&quot;</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;success&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;errors&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string">&quot;messages&quot;</span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+
+```bash
+{
+  "result": "",
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ## Limitations
 

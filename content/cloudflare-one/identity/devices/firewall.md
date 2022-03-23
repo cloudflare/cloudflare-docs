@@ -47,5 +47,8 @@ Operating systems determine Firewall configuration in various ways. Follow the s
 1.  Open a Powershell window.
 1.  Run the `Get-NetFirewallProfile -Name Public` command to check the Firewall status of your public interface.
 1.  Look for the value of **Enabled** which must be set to **True**.
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Get-NetFirewallProfile -Name Public</span></div></span></span></span></code></pre>{{</raw>}}
+
+```txt
+Get-NetFirewallProfile -Name Public
+```
 
