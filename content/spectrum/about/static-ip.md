@@ -14,7 +14,7 @@ With static IPs, Cloudflare commits to never changing the IP address of a client
 
 Static IPs are an Enterprise feature that does not come standard with Spectrum. If you would like to start using static IPs, please contact your account team.
 
-Once you get your static IP from Cloudflare, you can use it via API, just like BYOIP. For the moment, there is still no UI available for this feature.
+Once you get your static IP from Cloudflare, you can use it via API, just like [BYOIP](/byoip/). For the moment, there is still no UI available for this feature.
 
 When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example bellow that creates an application routing traffic through Cloudflare’s HTTP pipeline.
 
