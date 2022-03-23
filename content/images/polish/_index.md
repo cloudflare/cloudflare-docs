@@ -39,3 +39,7 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 ```txt
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
+
+## Polish interaction with Image optimization
+
+Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use `format=auto` option to allow use of WebP and AVIF formats.

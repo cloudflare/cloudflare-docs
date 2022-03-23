@@ -128,10 +128,6 @@ The `fit=scale-down` option ensures that the image will not be enlarged unnecess
 
 You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](https://support.cloudflare.com/hc/articles/229373388).
 
-## Image optimization and interaction with Polish
-
-Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use `format=auto` option to allow use of WebP and AVIF formats.
-
 ## Caching
 
 Resizing causes the original image to be fetched from the origin server and cached — following the usual rules of HTTP caching, `Cache-Control` header, etc.. Requests for multiple different image sizes are likely to reuse the cached original image, without causing extra transfers from the origin server.

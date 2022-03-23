@@ -19,5 +19,3 @@ Cloudflare Image resizing can:
 - Convert the first frame of GIF animations to a still image
 
 AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
-
-Image Resizing does not apply apply Cloudflare’s Polish feature to resized images, as resized images already have lossy compression applied.
