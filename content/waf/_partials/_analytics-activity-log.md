@@ -21,8 +21,13 @@ For example, if you are diagnosing a bot-related issue, you may want to display 
 
 ### Event actions
 
-For a description of the actions that may appear in the **Activity Log**, refer to [Actions](/ruleset-engine/rules-language/actions/).
+For details on most actions that appear in the **Activity Log**, refer to [Actions](/ruleset-engine/rules-language/actions/).
 
-When the *Connection Close* action appears in the **Activity Log**, it means the existing request is unaffected, but the client is instructed to establish a new connection instead of reusing the existing connection.
+Besides the actions you can select when configuring rules in Cloudflare security products, you may also find events with the following associated actions:
+
+* _Connection Close_
+* _Force Connection Close_
+
+For details on these actions, refer to [HTTP DDoS Attack Protection parameters](/ddos-protection/managed-rulesets/http/override-parameters/#action).
 
 The [*Managed Challenge (Recommended)*](https://support.cloudflare.com/hc/articles/200170136#managed-challenge) action that may appear in the **Activity Log** is available in the following security features and products: firewall rules, IP access rules, User Agent Blocking, rate limiting rules, custom rules, and Bot Fight Mode.
