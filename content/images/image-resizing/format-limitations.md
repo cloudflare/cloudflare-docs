@@ -8,7 +8,6 @@ weight: 3
 
 ## Supported formats and limitations
 
-
 Cloudflare Image resizing can:
 
 - Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported, since this format is inherently scalable and does not need resizing.
