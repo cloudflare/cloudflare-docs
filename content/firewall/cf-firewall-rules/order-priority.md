@@ -34,7 +34,7 @@ Once there are more than 200 total rules, including inactive rules, you must man
 
 ## Managing rule evaluation by priority order
 
-Although priority ordering is enabled automatically when the number of active and inactive firewall rules exceeds 200, you can manually enable priority ordering at any time from the rules list. 
+Although priority ordering is enabled automatically when the number of active and inactive firewall rules exceeds 200, you can manually enable priority ordering at any time from the rules list.
 
 Cloudflare Firewall Rules does not impose default priorities, and you are not required to set a priority for every rule.
 
