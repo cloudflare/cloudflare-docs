@@ -80,7 +80,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker; it has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](/todo/webpack-migration.md) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker; it has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [TODO: webpack migration guide](#todo/webpack-migration.md) to modify your project and use a custom build instead.
 
 ## Deprecated commands
 
