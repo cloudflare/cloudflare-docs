@@ -59,8 +59,8 @@ When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare 
 
 If you [added your domain](https://support.cloudflare.com/hc/articles/201720164) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page. This scan is not guaranteed to find all existing DNS records, so you may want to pay special attention to the following record types:
 
-- [Root domain (`example.com`)](/dns/manage-dns-records/how-to/create-root-domain/)
-- [Subdomaindomain (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
+- [Root domain records (`example.com`)](/dns/manage-dns-records/how-to/create-root-domain/)
+- [Subdomain records (`www.example.com` or `blog.example.com`)](/dns/manage-dns-records/how-to/create-subdomain/)
 - [Email records](/dns/manage-dns-records/how-to/email-records/)
 
 {{<Aside type="note">}}
