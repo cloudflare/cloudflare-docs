@@ -8,13 +8,7 @@ meta:
 # Cache Keys
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request. For example, consider the following HTTP request on a TLS connection:
-
-```bash
-GET /logo.jpg HTTP/1.1
-Host: www.cloudflare.com
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36
-Accept: image/jpg
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">GET /logo.jpg HTTP/1.1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Host: www.cloudflare.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">User-Agent: Mozilla/5.0 </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">Macintosh</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain"> Intel Mac OS X 10_14_6</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> AppleWebKit/537.36 </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">KHTML, like Gecko</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> Chrome/77.0.3865.90 Safari/537.36</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Accept: image/jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 The default Cache Key constructed from this request combines aspects such as Cloudflare Zone ID, scheme, hostname, and path into a Cache Key similar to `1234:https://www.example.com/foo.jpg`. Zone ID and Path are always included in the Cache Key and cannot be modified.
 

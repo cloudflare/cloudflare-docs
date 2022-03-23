@@ -11,10 +11,7 @@ The Cloudflare Load Balancing API adds global health to each pool and origin ser
 When troubleshooting failures, use the Cloudflare API for programmatic access to Cloudflare Load Balancing. The Health Check Events and Load Balancer Monitors routes are excellent tools for accessing load balancing event logs and reconfiguring Cloudflare monitors.
 
 You can get a per-data center breakdown of the health of your origins from the Cloudflare API from the List Health Check Events command:
-
-```txt
-GET user/load_balancing_analytics/events
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">GET user/load_balancing_analytics/events</span></div></span></span></span></code></pre>{{</raw>}}
 
 If a health check fails, the breakdown will include the reason.
 

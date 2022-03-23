@@ -25,23 +25,14 @@ The raw DNS request is a UDP packet as shown in Listing 1. This request contains
 The response for our raw DNS request is shown in Listing 2. This response comes with the matching ID (0x27e1), a copy of the original request echoed back, some flags (1/0/0), and an answer to the question: 93.184.216.119. It also contains a validity period, called time to live (TTL), to indicate how long the record is valid.
 
 Raw DNS request:
-
-```txt
-0x0000: 5ad4 0100 0001 0000 0000 0000 0765 7861 ‘............exa
-0x0010: 6d70 6c65 0363 6f6d 0000 0100 01        mple.com.....
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">0x0000: 5ad4 0100 0001 0000 0000 0000 0765 7861 ‘............exa</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">0x0010: 6d70 6c65 0363 6f6d 0000 0100 01        mple.com.....</span></div></span></span></span></code></pre>{{</raw>}}
 
 Wireshark’s interpretation:
 
 ![dns-wireshark](/fundamentals/internet/static/dns-wireshark.jpg)
 
 Raw DNS Response:
-
-```txt
-0x0000: 51d4 8180 0001 0001 0000 0000 0765 7861 ‘............exa
-0x0010: 6d70 6c65 0363 6f6d 0000 0100 01c0 0c00 mple.com........
-0x0020: 0100 0100 0031 f500 045d b8d8 77 .....1...]..w
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">0x0000: 51d4 8180 0001 0001 0000 0000 0765 7861 ‘............exa</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">0x0010: 6d70 6c65 0363 6f6d 0000 0100 01c0 0c00 mple.com........</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">0x0020: 0100 0100 0031 f500 045d b8d8 77 .....1...]..w</span></div></span></span></span></code></pre>{{</raw>}}
 
 Wireshark’s interpretation:
 
@@ -91,11 +82,7 @@ A DNSKEY record is a cryptographic public key, DNSKEYs can be classified into tw
 - ZSK (zone signing key): used to sign all other records in the domain is authoritative for.
 
 For a given domain name and question, there are a set of answers. For example, if you ask for the A record for cloudflare.com, you get a set of A records as the answer:
-
-```txt
-cloudflare.com.            285    IN    A    198.41.212.157
-cloudflare.com.            285    IN    A    198.41.213.157
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare.com.            285    IN    A    198.41.212.157</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">cloudflare.com.            285    IN    A    198.41.213.157</span></div></span></span></span></code></pre>{{</raw>}}
 
 The set of all records of a given type for a domain is called an RRset. An RRSIG (Resource Record SIGnature) is essentially a digital signature for an RRset. Each RRSIG is associated with a DNSKEY. The RRset of DNSKEYs are signed with the key signing key (KSK). All others are signed with the zone signing key (ZSK). Trust is conferred from the DNSKEY to the record though the RRSIG: if you trust a DNSKEY, then you can trust the records that are correctly signed by that key.
 
@@ -119,16 +106,10 @@ The zone ietf.org. uses NSEC records. Asking for ‘trustee.ietf.org’ would gi
 For example:
 
 Question:
-
-```txt
-tustee.ietf.org/A
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">tustee.ietf.org/A</span></div></span></span></span></code></pre>{{</raw>}}
 
 Answer:
-
-```txt
-trustee.ietf.org.        1683        IN        NSEC        www.ietf.org. A MX AAAA RRSIG NSEC
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">trustee.ietf.org.        1683        IN        NSEC        www.ietf.org. A MX AAAA RRSIG NSEC</span></div></span></span></span></code></pre>{{</raw>}}
 
 This means that there are no names the zone in between trustee.ietf.org and www.ietf.org, when sorted alphabetically, effectively proving that tustee.ietf.org does not exist.
 

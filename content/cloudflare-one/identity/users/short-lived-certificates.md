@@ -40,33 +40,24 @@ For example, if the user's identity in your Okta or GSuite provider is `jdoe@exa
 You can create a user entry with duplicate `uid`, `gid`, and home directory to link an identity to an existing user with a different username. You will need to create a password for it separately and add it to the same groups to replicate permissions.
 
 For testing purposes, you can run the following command to generate a Unix user on the machine:
-
-```sh
-$ sudo adduser jdoe
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo adduser jdoe</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## 4. **Save your public key**
 
 1.  Save the public key generated from the dashboard in Step 2 as a new `.pub` file to your local system.
 
 1.  Use the following command to change directories to the SSH configuration directory on the remote target machine:
-
-```sh
-$ cd /etc/ssh
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cd /etc/ssh</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
-
-```sh
-$ vim ca.pub
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">vim ca.pub</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  In the `ca.pub` file, paste the public key generated in Access without any modifications. Save the file. In some systems, you may need to use the following command to force the file to save depending on your permissions.
-
-```bash
-:w !sudo tee %
-:q!
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">:w </span><span class="CodeBlock--token-operator">!</span><span class="CodeBlock--token-plain">sudo </span><span class="CodeBlock--token-function">tee</span><span class="CodeBlock--token-plain"> %</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">:q</span><span class="CodeBlock--token-operator">!</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## 5. Modify your SSHD config
 
@@ -75,49 +66,35 @@ Cloudflare Access requires two changes to the `sshd_config` file used on the rem
 The first change requires that you uncomment a field already set in most default configurations; the second change adds a new field.
 
 1.  While staying within the `/etc/ssh` directory on the remote machine, open the `sshd_config` file.
-
-```sh
-$ vim /etc/ssh/sshd_config
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">vim /etc/ssh/sshd_config</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Navigate to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
-
-```bash
-# PubkeyAuthentication yes
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment"># PubkeyAuthentication yes</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Remove the # symbol to uncomment the line; keep the setting `yes` enabled.
 
 1.  Next, add a new line below `PubkeyAuthentication` as follows:
-
-```bash
-TrustedUserCAKeys /etc/ssh/ca.pub
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">TrustedUserCAKeys /etc/ssh/ca.pub</span></div></span></span></span></code></pre>{{</raw>}}
 
 The change above will tell your SSH configuration to use the public key saved in Step 5 for authorizing users. Save the file and quit the editor. You might need to use the following command again to save and exit.
-
-```bash
-:w !sudo tee %
-:q!
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">:w </span><span class="CodeBlock--token-operator">!</span><span class="CodeBlock--token-plain">sudo </span><span class="CodeBlock--token-function">tee</span><span class="CodeBlock--token-plain"> %</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">:q</span><span class="CodeBlock--token-operator">!</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## 6. Restart your SSH server
 
 Once you have modified your SSHD configuration, you still need to restart the SSH service on the remote machine. Commands are provided below that cover servers running systemd, as well. You can execute both.
 
 ### Debian/Ubuntu
-
-```sh
-$ sudo service ssh restart
-$ sudo systemctl restart ssh
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo service ssh restart</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo systemctl restart ssh</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### CentOS/RHEL
-
-```sh
-$ sudo service sshd restart
-$ sudo systemctl restart sshd
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo service sshd restart</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">sudo systemctl restart sshd</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## 7. Connect as a user
 
@@ -126,25 +103,13 @@ $ sudo systemctl restart sshd
 On the client side, follow [this tutorial](/cloudflare-one/tutorials/ssh/) to configure your device to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file.
 
 To save time, you can use the following cloudflared command to print the required configuration command:
-
-```sh
-$ cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared access ssh-config --hostname vm.example.com --short-lived-cert</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 If you prefer to configure manually, these are the required commands:
-
-```bash
-Host vm.example.com
-    ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com >&2 <&1'
-```
-
-```bash
-Host cfpipe-vm.example.com
-    HostName vm.example.com
-    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-    IdentityFile ~/.cloudflared/vm.example.com-cf_key
-    CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Host vm.example.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    ProxyCommand </span><span class="CodeBlock--token-function">bash</span><span class="CodeBlock--token-plain"> -c </span><span class="CodeBlock--token-string">'/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-vm.example.com &gt&amp;2 &lt&amp;1'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Host cfpipe-vm.example.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    HostName vm.example.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    ProxyCommand /usr/local/bin/cloudflared access </span><span class="CodeBlock--token-function">ssh</span><span class="CodeBlock--token-plain"> --hostname %h</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    IdentityFile ~/.cloudflared/vm.example.com-cf_key</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Connect through a browser-based terminal
 

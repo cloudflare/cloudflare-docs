@@ -20,16 +20,14 @@ Be sure to trigger a new deployment after changing any settings.
 Every package registry should have a means of issuing new access tokens. Ideally, you should create a new token specifically for Pages, as you would with any other CI/CD platform.
 
 With npm, you can [create and view tokens through its website](https://docs.npmjs.com/creating-and-viewing-access-tokens) or you can use the `npm` CLI. If you have the CLI set up locally and are authenticated, run the following commands in your terminal:
-
-```sh
-# Verify the current npm user is correct
-$ npm whoami
-
-# Create a readonly token
-$ npm token create --read-only
-#-> Enter password, if prompted
-#-> Enter 2FA code, if configured
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment CodeBlock--token-unselectable"># Verify the current npm user is correct</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">npm whoami</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment CodeBlock--token-unselectable"># Create a readonly token</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">npm token create --read-only</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment CodeBlock--token-unselectable">#-&gt Enter password, if prompted</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment CodeBlock--token-unselectable">#-&gt Enter 2FA code, if configured</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This will produce a read-only token that looks like a UUID string. Save this value for a later step.
 
@@ -50,12 +48,10 @@ By default, `npm` looks for an environment variable named `NPM_TOKEN` and becaus
 ## Custom registry endpoints
 
 When multiple registries are in use, a project will need to define its own root-level [`.npmrc`](https://docs.npmjs.com/cli/v7/configuring-npm/npmrc) configuration file. An example `.npmrc` file may look like this:
-
-```ini
-@foobar:registry=https://npm.pkg.github.com
-//registry.npmjs.org/:_authToken=${TOKEN_FOR_NPM}
-//npm.pkg.github.com/:_authToken=${TOKEN_FOR_GITHUB}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-ini" language="ini"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-attr-name">@foobar:registry</span><span class="CodeBlock--token-punctuation">=</span><span class="CodeBlock--token-value CodeBlock--token-attr-value">https://npm.pkg.github.com</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-attr-name">//registry.npmjs.org/:_authToken</span><span class="CodeBlock--token-punctuation">=</span><span class="CodeBlock--token-value CodeBlock--token-attr-value">${TOKEN_FOR_NPM}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-key CodeBlock--token-attr-name">//npm.pkg.github.com/:_authToken</span><span class="CodeBlock--token-punctuation">=</span><span class="CodeBlock--token-value CodeBlock--token-attr-value">${TOKEN_FOR_GITHUB}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Here, all packages under the `@foobar` scope are directed towards the GitHub Packages registry. Then the registries are assigned their own access tokens via their respective environment variable names.
 
@@ -76,20 +72,12 @@ In the event that your local development no longer works with your new `.npmrc` 
 2.  Restore your previous `.npmrc` file – the version that was previously working for you and your teammates.
 
 3.  Create a new `is-pages.js` file in your project's root directory:
-
-    ```js
-    // Pages always has `CF_PAGES` defined
-    if (!process.env.CF_PAGES) process.exit(1);
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">// Pages always has `CF_PAGES` defined</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-keyword">if</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-operator">!</span><span class="CodeBlock--token-plain">process</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">env</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-constant">CF_PAGES</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> process</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-function">exit</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-punctuation">;</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 4.  In your `package.json` file, create a new `"preinstall"` script, which will rename the `.npmrc.pages` file to `.npmrc` only during the Pages build process:
-
-    ```js
-    // package.json
-    {
-      "scripts": {
-        "preinstall": "node is-pages && mv .npmrc.pages .npmrc || echo \"Not Pages\"",
-        // your existing scripts
-      }
-    }
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-js" language="js"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-comment">// package.json</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-string-property">&quot;scripts&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-string-property">&quot;preinstall&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;node is-pages &amp;&amp; mv .npmrc.pages .npmrc || echo \&quot;Not Pages\&quot;&quot;</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    </span><span class="CodeBlock--token-comment">// your existing scripts</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}

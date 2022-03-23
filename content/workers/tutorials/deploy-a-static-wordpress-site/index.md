@@ -52,13 +52,8 @@ To do your first export, select **Start static site export** (this operation may
 With an export ready of your site, it is time to deploy. To do this, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare Workers. If you have not yet installed and configured Wrangler, refer to the [Get started](/workers/get-started/guide/) guide.
 
 Once Wrangler is installed and configured, create a new project for deploying your static WordPress site to Workers. To generate a new project, run:
-
-```sh
----
-header: Generate a new project
----
-$ wrangler generate --site wp-static
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><span class="CodeBlock--header">Generate a new project</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">wrangler generate --site wp-static</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 The [`--site`](/workers/platform/sites/configuration/) flag indicates that you want to deploy a static site: your static WordPress site.
 
@@ -73,32 +68,11 @@ The newly generated `wp-static` directory will contain three components:
 When deploying a website using Workers Sites, your static code – your HTML, CSS, and JavaScript – will be uploaded to Workers KV. The location of these files is by default the `public` folder mentioned above.
 
 Open the ZIP file downloaded from your WordPress static export, and extract the contents of the ZIP into the `public` folder:
-
-```sh
----
-header: Copy files into the public directory
----
-$ cp -R ~/Downloads/wp-static-html-output-<some-tag>/ ./public
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><span class="CodeBlock--header">Copy files into the public directory</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cp -R ~/Downloads/wp-static-html-output-&ltsome-tag&gt/ ./public</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Your directory structure should look something like this:
-
-```sh
----
-header: Listing the files in wp-static
----
-$ tree wp-static
-├── public
-│   ├── 2018
-│   ├── 2019
-│   ├── 404.html
-│   └── # More exported WordPress files
-├── workers-site
-│   ├── index.js
-│   ├── node_modules
-│   └── # More Workers script files
-└── wrangler.toml
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><span class="CodeBlock--header">Listing the files in wp-static</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">tree wp-static</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">├── public</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   ├── 2018</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   ├── 2019</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   ├── 404.html</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   └── </span><span class="CodeBlock--token-comment CodeBlock--token-unselectable"># More exported WordPress files</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">├── workers-site</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   ├── index.js</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   ├── node_modules</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">│   └── </span><span class="CodeBlock--token-comment CodeBlock--token-unselectable"># More Workers script files</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">└── wrangler.toml</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Deploying
 

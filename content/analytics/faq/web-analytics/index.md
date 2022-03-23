@@ -52,16 +52,12 @@ Using a domain proxied through Cloudflare with [automatic setup] will report sta
 ### Can I add Web Analytics to my site using a tag manager like Google Tag Manager (GTM)?
 
 Yes. Instead of embedding the script using a tag manager as shown here:
-
-```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$SITE_TOKEN"}'></script>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">script defer </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">src</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'https://static.cloudflareinsights.com/beacon.min.js'</span><span class="CodeBlock--token-plain"> data-cf-beacon</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'{&quot;token&quot;: &quot;$SITE_TOKEN&quot;}'</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">/script</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Add the following script:
-
-```bash
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'></script>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">script defer </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">src</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">/script</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Can I use the same JS Snippet for a different domain?
 

@@ -62,24 +62,10 @@ After adding your GRE tunnels, you can use Network Address Translation (NAT) to 
 ### Configure Network Address Translation
 
 1.  On the router, configure NAT from your private IP address to your server’s current IP address.
-
-```txt
-Router(config)# ip nat inside source static <LOCAL_IP> <GLOBAL_IP>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# ip nat inside source static &ltLOCAL_IP&gt &ltGLOBAL_IP&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 2.  On the router, specify which interfaces connect inside and outside of the network.
-
-```txt
-Router(config)# interface Tunnel A
-Router(config)# ip nat outside
-Router(config)# interface 0/0  /* WAN interface */
-Router(config)# ip nat outside
-Router(config)# interface 0/0  /* LAN interface - to the server */
-Router(config)# ip nat inside
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# interface Tunnel A</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# ip nat outside</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# interface 0/0  /* WAN interface */</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# ip nat outside</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# interface 0/0  /* LAN interface - to the server */</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# ip nat inside</span></div></span></span></span></code></pre>{{</raw>}}
 
 3.  When you are finished, end the configuration.
-
-```txt
-Router(config)# end
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Router(config)# end</span></div></span></span></span></code></pre>{{</raw>}}

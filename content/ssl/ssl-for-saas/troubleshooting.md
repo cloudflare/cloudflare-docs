@@ -21,11 +21,7 @@ If a domain is flagged by the CA, you need to contact Support before validation 
 ### Certificate Authority Authorization (CAA) records
 
 CAA is a new DNS resource record type defined in [RFC 6844](https://datatracker.ietf.org/doc/html/rfc6844) that allows a domain owner to indicate which CAs are allowed to issue certificates for them. If your customer has CAA records set on their domain, they will either need to add the following (or remove CAA entirely):
-
-```txt
-example.com. IN CAA 0 issue "digicert.com"
-example.com. IN CAA 0 issue "letsencrypt.org"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com. IN CAA 0 issue &quot;digicert.com&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com. IN CAA 0 issue &quot;letsencrypt.org&quot;</span></div></span></span></span></code></pre>{{</raw>}}
 
 While it’s possible for CAA records to be set on the subdomain they wish to use with your service, it is unlikely. You would also have to remove this CAA record.
 

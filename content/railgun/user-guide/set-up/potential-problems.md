@@ -17,11 +17,7 @@ Railgun does not perform DNS queries when it receives a request for maximum effi
 **Requests to** `example.com:2083` **go to port 443**
 
 To run Railgun on non-standard ports you need to add the correct mapping to the `railgun-nat.conf` file. Otherwise, the connection goes to standard ports `80` or `443`. Example:
-
-```txt
-default = 127.0.0.1
-example.com:2083 = 127.0.0.1:2083
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">default = 127.0.0.1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com:2083 = 127.0.0.1:2083</span></div></span></span></span></code></pre>{{</raw>}}
 
 ---
 

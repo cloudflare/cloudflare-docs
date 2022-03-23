@@ -81,25 +81,16 @@ You must ensure the version is entered is a valid `x.x.x` SemVer. If the command
 
 1.  Open a terminal window.
 1.  Use the `system_profiler` command to check for the value of `SPHardwareDataTypeng` and retrieve the serial number.
-
-```txt
-system_profiler SPHardwareDataTypeng
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">system_profiler SPHardwareDataTypeng</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Windows
 
 1.  Open a Powershell window.
 1.  Use the `Get-CimInstance` command to get the SerialNumber property of the `Win32_BIOS` class.
-
-```txt
-Get-CimInstance Win32_BIOS
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Get-CimInstance Win32_BIOS</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### On Linux
 
 1.  Open a Terminal Window
 1.  Use the `dmidecode` command to get the version property `system-serial-number`.
-
-```txt
-sudo dmidecode -s system-serial-number
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo dmidecode -s system-serial-number</span></div></span></span></span></code></pre>{{</raw>}}

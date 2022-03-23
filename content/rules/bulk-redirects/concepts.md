@@ -77,18 +77,12 @@ A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an actio
 The rule expression, or filter expression, specifies the conditions that must be met for the rule to run. By default, all URL Redirects of the specified list will apply.
 
 The default expression of a Bulk Redirect Rule is the following:
-
-```txt
-http.request.full_uri in $<LIST_NAME>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.full_uri in $&ltLIST_NAME&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 This expression means that the request URL, after some basic normalization (if [URL normalization](/rules/normalization/) is enabled), should match the source URL of a URL Redirect in the list `<LIST_NAME>` for the redirect to be applied.
 
 You can use an expression different from the default one to increase the specificity of URL Redirect matches. For example, if you set the expression of a Bulk Redirect Rule to the following expression, there will only be a match for requests coming from the United Kingdom:
-
-```txt
-ip.src.country == "GB" and http.request.full_uri in $<LIST_NAME>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip.src.country == &quot;GB&quot; and http.request.full_uri in $&ltLIST_NAME&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 For more information on the available fields, refer to [Available fields and functions](/rules/bulk-redirects/reference/fields-functions/).
 

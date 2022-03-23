@@ -27,13 +27,8 @@ Cloudflare issues the following **Edge Pathing Statuses**:
 - `user` (user firewall rule)
 
 For example:
-
-```bash
-$ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
-1 err
-5 user
-93 macro
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ jq -r .EdgePathingSrc logs.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">uniq</span><span class="CodeBlock--token-plain"> -c </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">tail</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> err</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">5</span><span class="CodeBlock--token-plain"> user</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">93</span><span class="CodeBlock--token-plain"> macro</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### EdgePathingOp
 
@@ -45,27 +40,17 @@ $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 - `chl` (challenge issued)
 
 For example:
-
-```bash
-$ jq -r .EdgePathingOp logs.json | sort -n | uniq -c | sort -n | tail
-1 chl
-1 errHost
-97 wl
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ jq -r .EdgePathingOp logs.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">uniq</span><span class="CodeBlock--token-plain"> -c </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">tail</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> chl</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> errHost</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">97</span><span class="CodeBlock--token-plain"> wl</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### EdgePathingStatus
 
 **EdgePathingStatus** is the value **EdgePathingSrc** returns. With a pathing source of `macro`, `user`, or `err`, the pathing status indicates the list where the IP address was found. `nr` is the most common value and it means that the request was not flagged by a security check. Some values indicate the class of user; for example, `se` means search engine. Others indicate whether the visitor saw an error or a captcha, such as, `captchaNew` or `jschlOK`.
 
 For example:
-
-```bash
-$ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
-1 captchaNew
-1 dnsErr
-5 ip
-92 nr
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ jq -r .EdgePathingStatus logs.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">uniq</span><span class="CodeBlock--token-plain"> -c </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">tail</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> captchaNew</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> dnsErr</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">5</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">ip</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-number">92</span><span class="CodeBlock--token-plain"> nr</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## How does pathing map to Threat Analytics?
 
@@ -106,13 +91,7 @@ In your logs, the edge is what first accepts a visitor's request. The cache then
 This is how you can see where a request terminates. Requests with only an **edgeResponse** likely hit a security check or processing error. Requests with an **edgeResponse** and a **cacheResponse** either were served from the cache or saw an error contacting your origin server. Requests that have an **originResponse** went all the way to your origin server and errors seen would have been served directly from there.
 
 For example, the following query shows the status code and pathing information for all requests that terminated at the Cloudflare edge:
-
-```bash
-$ jq -r 'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == null) |"\(.EdgeResponseStatus) / \(.EdgePathingSrc) / \(.EdgePathingStatus) / \(.EdgePathingOp)"' logs.json | sort -n | uniq -c | sort -n
-1 403 / macro / captchaNew / chl
-1 403 / macro / nr / wl
-1 409 / err / dnsErr / errHost
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ jq -r </span><span class="CodeBlock--token-string">'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == null) |&quot;\(.EdgeResponseStatus) / \(.EdgePathingSrc) / \(.EdgePathingStatus) / \(.EdgePathingOp)&quot;'</span><span class="CodeBlock--token-plain"> logs.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">uniq</span><span class="CodeBlock--token-plain"> -c </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">sort</span><span class="CodeBlock--token-plain"> -n</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">403</span><span class="CodeBlock--token-plain"> / macro / captchaNew / chl</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">403</span><span class="CodeBlock--token-plain"> / macro / nr / wl</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-number">1</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">409</span><span class="CodeBlock--token-plain"> / err / dnsErr / errHost</span></div></span></span></span></code></pre>{{</raw>}}
 
 The information stored is broken down based on the following categories:
 

@@ -45,26 +45,11 @@ In general, you can switch back and forth between the Expression Builder and the
 A key advantage of the Expression Editor is support for parentheses as [grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols), which allow you to explicitly group and nest expressions and, in turn, create highly targeted expressions.
 
 The following rule expression example challenges any visitor who is not from Malaysia and tries to access WordPress URI paths.
-
-```txt
-((http.request.uri.path contains "/xmlrpc.php") or (http.request.uri.path 
-contains "/wp-login.php") or (http.request.uri.path contains "/wp-admin/" 
-and not http.request.uri.path contains "/wp-admin/admin-ajax.php" and not 
-http.request.uri.path contains "/wp-admin/theme-editor.php")) and 
-ip.geoip.country ne "MY"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">((http.request.uri.path contains &quot;/xmlrpc.php&quot;) or (http.request.uri.path </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">contains &quot;/wp-login.php&quot;) or (http.request.uri.path contains &quot;/wp-admin/&quot; </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">and not http.request.uri.path contains &quot;/wp-admin/admin-ajax.php&quot; and not </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path contains &quot;/wp-admin/theme-editor.php&quot;)) and </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip.geoip.country ne &quot;MY&quot;</span></div></span></span></span></code></pre>{{</raw>}}
 
 Only the Expression Editor supports nested expressions such as the one above. If you create a rule with nested expressions in the Expression Editor and try to switch to the Expression Builder, a dialog will warn you that the expression is not supported in the builder. You will be prompted to **Discard changes** and switch to the Expression Builder or **Cancel** and continue working in the editor.
 
 ## Expression validation
 
 Cloudflare validates all expressions before saving them, so if your expression has errors, you will receive an error message in the Cloudflare dashboard, similar to the following:
-
-```txt
-Filter parsing error (1:313): ((http.request.uri.path contains
-"/xmlrpc.php") or (http.request.uri.path contains "/wp-login.php") or 
-(http.request.uri.path contains "/wp-admin/" and not 
-http.request.uri.path contains "/wp-admin/admin-ajax.php" and not 
-http.request.uri.path contains "/wp-admin/theme-editor.php")) and 
-ip.geoip.country ne "MY") ^ unrecognised input
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Filter parsing error (1:313): ((http.request.uri.path contains</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;/xmlrpc.php&quot;) or (http.request.uri.path contains &quot;/wp-login.php&quot;) or </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">(http.request.uri.path contains &quot;/wp-admin/&quot; and not </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path contains &quot;/wp-admin/admin-ajax.php&quot; and not </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http.request.uri.path contains &quot;/wp-admin/theme-editor.php&quot;)) and </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ip.geoip.country ne &quot;MY&quot;) ^ unrecognised input</span></div></span></span></span></code></pre>{{</raw>}}

@@ -27,16 +27,12 @@ Simple expressions are composed of three elements:
 When the comparison operator returns `true`, the request matches the expression.
 
 This example expression returns true when a request URI path contains `/content`:
-
-```sql
-(http.request.uri.path contains "/content")
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">path </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;/content&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 In general, simple expressions use this pattern:
-
-```sql
-<field> <operator> <value>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">field</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">operator</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-keyword">value</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 For more details, refer to [Supported fields and operators](/load-balancing/additional-options/load-balancing-rules/reference/).
 
@@ -47,17 +43,13 @@ For more details, refer to [Supported fields and operators](/load-balancing/addi
 A compound expression uses a **logical operator** (_and_, _or_, for example) to combine two or more expressions. Compound expressions allow you to build complex statements within a single expression.
 
 The example expression below returns true when both the HTTP request URI path contains `/content` and the query string contains `webserver`:
-
-```sql
-(http.request.uri.path contains "/content")
-and (http.request.uri.query contains "webserver")
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">path </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;/content&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">query </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;webserver&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 In general, compound expressions use this pattern:
-
-```sql
-<expression> <logical operator> <expression>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">expression</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">logical operator</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">expression</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 A compound expression can be an operand of a logical operator. This allows multiple operators to construct a compound expression from many individual expressions.
 
@@ -80,11 +72,9 @@ This Expression Builder screenshot shows the example compound expression describ
 ![Expression Builder in Load Balancing tab of Traffic app](/load-balancing/static/images/rules-builder-1.png)
 
 The **Expression Preview** displays the expression in text:
-
-```sql
-(http.request.uri.path contains "/content")
-and (http.request.uri.query contains "webserver")
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">path </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;/content&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">query </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;webserver&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 For a walkthrough, refer to [Creating Load Balancing rules](/load-balancing/additional-options/load-balancing-rules/create-rules/).
 

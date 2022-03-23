@@ -31,10 +31,7 @@ The `__cfwaitingroom` cookie is used to:
 When a visitor first enters the host and path combination for your waiting room, they receive the `__cfwaitingroom` cookie. That cookie contains a unique group ID, which corresponds to the minute your visitor entered the waiting room. Using this value, we can see how many visitors are in front of a specific group.
 
 Each cookie also contains a value for `acceptedAt`, which corresponds to the minute your visitor entered your application. This value lets us know how many visitors per minute are leaving the waiting room to enter your application.
-
-```txt
-visitorsAhead ÷ activeUsersToWebApplication = estimatedWaitTime
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">visitorsAhead ÷ activeUsersToWebApplication = estimatedWaitTime</span></div></span></span></span></code></pre>{{</raw>}}
 
 We combine these pieces of information to calculate estimated wait time for each group of visitors.
 

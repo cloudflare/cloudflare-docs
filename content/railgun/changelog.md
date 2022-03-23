@@ -5,67 +5,17 @@ weight: 22
 ---
 
 # Changelog
-
-```txt
-* Apr 23 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.3
-- Uses go 1.10.1
-
-* Mar 12 2018 Cloudflare Inc <help@cloudflare.com> - 5.3.2
-- Passthrough URIs with invalid percent encoding
-
-* Nov 28 2017 Cloudflare Inc <help@cloudflare.com> - 5.3.1
-- Fix IPv6 connections sometimes going to the wrong port
-
-* Nov 8 2016 CloudFlare Inc <help@cloudflare.com> - 5.3.0
-- Improve rg-listener.conf format and help text
-- Standardise error codes for origin failures
-- Return HTTP 527 for communication errors between sender and listener
-- Set railgun user agent if none is specified by client
-- Add memcached as package dependency
-
-* Dec 16 2015 CloudFlare Inc <help@cloudflare.com> - 5.2.0
-- Refactor listener's response/error event flow code
-- Retry transient HTTP errors once
-
-* Sep 21 2015 CloudFlare Inc <help@cloudflare.com> - 5.1.0
-- Better handling of origin request failures
-
-* Jul 13 2015 CloudFlare Inc <help@cloudflare.com> - 5.0.2
-- Switch to new GPG key for CloudFlare packages
-
-* Jan 10 2015 CloudFlare Inc <help@cloudflare.com> - 5.0.0
-- Performance and stability improvements
-- Better handling of HTTP keepalives
-- Reduced needed size for memcache
-- Misc bugfixes
-
-* Jul 15 2013 CloudFlare Inc <help@cloudflare.com> - 4.0.0
-- Optimize compression method
-- Remove libz and libcrypto dependencies
-- Add clearer error messages
-- Misc bugfixes
-
-* Feb 25 2013 CloudFlare Inc <help@cloudflare.com> - 3.3.0
-- Depend on libssl for speedier crypto routines than current Go
-- Add more options for debugging and memcache control
-- Improved diagnostic tools
-- Misc bugfixes
-
-* Nov 20 2012 CloudFlare Inc <help@cloudflare.com> - 2.7.0
-- memcached fixes and timeout adjustments
-- Direct HTTP request failover improvements
-- Misc bugfixes
-
-* Sep 14 2012 CloudFlare Inc <help@cloudflare.com> - 2.6.0
-- Implement memcached backend
-- Add activation and SSL systems
-- Misc bugfixes
-
-* Fri Sep 14 2012 CloudFlare Inc <help@cloudflare.com> - 2.0.0
-- Cache backend revamp
-- Performance improvements
-- Misc bufixes
-
-* Wed Jun 28 2012 CloudFlare Inc <help@cloudflare.com> - 1.0.0
-- Initial release.
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Apr 23 2018 Cloudflare Inc &lthelp@cloudflare.com&gt - 5.3.3</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Uses go 1.10.1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Mar 12 2018 Cloudflare Inc &lthelp@cloudflare.com&gt - 5.3.2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Passthrough URIs with invalid percent encoding</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Nov 28 2017 Cloudflare Inc &lthelp@cloudflare.com&gt - 5.3.1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Fix IPv6 connections sometimes going to the wrong port</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Nov 8 2016 CloudFlare Inc &lthelp@cloudflare.com&gt - 5.3.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Improve rg-listener.conf format and help text</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Standardise error codes for origin failures</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Return HTTP 527 for communication errors between sender and listener</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Set railgun user agent if none is specified by client</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Add memcached as package dependency</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Dec 16 2015 CloudFlare Inc &lthelp@cloudflare.com&gt - 5.2.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Refactor listener's response/error event flow code</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Retry transient HTTP errors once</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Sep 21 2015 CloudFlare Inc &lthelp@cloudflare.com&gt - 5.1.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Better handling of origin request failures</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Jul 13 2015 CloudFlare Inc &lthelp@cloudflare.com&gt - 5.0.2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Switch to new GPG key for CloudFlare packages</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Jan 10 2015 CloudFlare Inc &lthelp@cloudflare.com&gt - 5.0.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Performance and stability improvements</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Better handling of HTTP keepalives</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Reduced needed size for memcache</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bugfixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Jul 15 2013 CloudFlare Inc &lthelp@cloudflare.com&gt - 4.0.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Optimize compression method</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Remove libz and libcrypto dependencies</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Add clearer error messages</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bugfixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Feb 25 2013 CloudFlare Inc &lthelp@cloudflare.com&gt - 3.3.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Depend on libssl for speedier crypto routines than current Go</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Add more options for debugging and memcache control</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Improved diagnostic tools</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bugfixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Nov 20 2012 CloudFlare Inc &lthelp@cloudflare.com&gt - 2.7.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- memcached fixes and timeout adjustments</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Direct HTTP request failover improvements</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bugfixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Sep 14 2012 CloudFlare Inc &lthelp@cloudflare.com&gt - 2.6.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Implement memcached backend</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Add activation and SSL systems</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bugfixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Fri Sep 14 2012 CloudFlare Inc &lthelp@cloudflare.com&gt - 2.0.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Cache backend revamp</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Performance improvements</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Misc bufixes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">* Wed Jun 28 2012 CloudFlare Inc &lthelp@cloudflare.com&gt - 1.0.0</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">- Initial release.</span></div></span></span></span></code></pre>{{</raw>}}

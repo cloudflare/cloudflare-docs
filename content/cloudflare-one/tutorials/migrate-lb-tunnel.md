@@ -39,10 +39,8 @@ Next, create an origin pool for the load balancer. This will be a group of origi
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/add-pool.png)
 
 In Legacy mode, adding a new instance of `cloudflared` into a Load Balancer pool must be done from the command line tool itself. The `cloudflared` agent will start and create 4 separate connections, enrolling each of these into a load balancer pool.
-
-```sh
-$ cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel --hostname app.widgetcorp.tech --url http://localhost:8000 --lb-pool lisbon-data-center</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/classic-tunnel-lb-ui.png)
 
@@ -58,10 +56,8 @@ The Named Tunnel, documented below, model provides easier management and greater
 To migrate to the Named Tunnel model, first [download and authenticate](/cloudflare-one/connections/connect-apps/) `cloudflared`. Install the agent within your environment in a location that can reach the service you plan to connect to Cloudflare.
 
 To begin, create a Named Tunnel with the following command.
-
-```sh
-$ cloudflared tunnel create lisbon-app
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel create lisbon-app</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/tunnel-create.png)
 
@@ -82,10 +78,8 @@ You can save the configuration file.
 You can now run the Tunnel. Running the Tunnel will connect `cloudflared` to Cloudflare's edge in a connection only available to your account. You can use the Tunnel ID value to treat that connection like the IP address of an origin, without the risk of someone reaching it directly and bypassing Cloudflare.
 
 Run the following command, replacing `lisbon-app` with the name of your Tunnel.
-
-```sh
-$ cloudflared tunnel run lisbon-app
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel run lisbon-app</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ![Create LB](/cloudflare-one/static/secure-origin-connections/migrate-lb-tunnel/tunnel-run.png)
 

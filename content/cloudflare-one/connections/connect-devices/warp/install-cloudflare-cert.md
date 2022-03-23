@@ -26,10 +26,7 @@ First, download the Cloudflare certificate. The certificate is available both as
 To verify your download, check that the certificate's thumbprint matches:
 
 #### SHA1
-
-```txt
-BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C</span></div></span></span></span></code></pre>{{</raw>}}
 
     ➜  ~ openssl x509 -noout -fingerprint -sha1 -inform der -in <Cloudflare_CA.crt>
     SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
@@ -37,10 +34,7 @@ BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
     SHA1 Fingerprint=BB:2D:B6:3D:6B:DE:DA:06:4E:CA:CB:40:F6:F2:61:40:B7:10:F0:6C
 
 #### SHA256
-
-```txt
-F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF</span></div></span></span></span></code></pre>{{</raw>}}
 
     ➜  ~ openssl x509 -noout -fingerprint -sha256 -inform der -in <Cloudflare_CA.crt>
     sha256 Fingerprint=F5:E1:56:C4:89:78:77:AD:79:3A:1E:83:FA:77:83:F1:9C:B0:C6:1B:58:2C:2F:50:11:B3:37:72:7C:62:3D:EF
@@ -96,16 +90,11 @@ You can install the Cloudflare certificate on your terminal, too.
 1.  Download the Cloudflare certificate.
 1.  Open Terminal.
 1.  Launch the following command:
-
-```bash
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain </span><span class="CodeBlock--token-operator">&lt</span><span class="CodeBlock--token-plain">Cloudflare_CA.crt</span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Update the OpenSSL CA Store to include the Cloudflare certificate:
-
-```bash
-sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> Cloudflare_CA.pem </span><span class="CodeBlock--token-operator">&gt&gt</span><span class="CodeBlock--token-plain"> /usr/local/etc/openssl/cert.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### iOS
 
@@ -191,31 +180,19 @@ The location where the root certificate should be installed is different dependi
 
 1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy both certificates to the user store.
-
-  ```bash
-  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /usr/share/ca-certificates
-  ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">cp</span><span class="CodeBlock--token-plain"> Cloudflare_CA.crt Cloudflare_CA.pem /usr/share/ca-certificates</span></div></span></span></span></code></pre>{{</raw>}}
   
 3. Import the certificate
-
-```bash
-sudo dpkg-reconfigure ca-certificates
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> dpkg-reconfigure ca-certificates</span></div></span></span></span></code></pre>{{</raw>}}
 
 #### CentOS / RedHat
 
 1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy both certificates to the trust store.
-
-  ```bash
-  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
-  ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-function">cp</span><span class="CodeBlock--token-plain"> Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors</span></div></span></span></span></code></pre>{{</raw>}}
 
 3. Import the certificate.
-
-```bash
-sudo update-ca-trust
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">sudo</span><span class="CodeBlock--token-plain"> update-ca-trust</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Android
 
@@ -310,24 +287,15 @@ If your organization is using Firefox, the browser may need additional configura
 The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation).
 
 1.  Run the following command to update the bundle to include the Cloudflare certificate:
-
-```bash
-gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">gc .</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">Cloudflare_CA.crt </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> ac C:</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">Python37</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">Lib</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">site-packages</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">pip</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">_vendor</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">certifi</span><span class="CodeBlock--token-punctuation">\</span><span class="CodeBlock--token-plain">cacert.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 #### Python on Mac and Linux
 
 1.  Install the `certifi` package.
-
-```bash
-pip install certifi
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">pip </span><span class="CodeBlock--token-function">install</span><span class="CodeBlock--token-plain"> certifi</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Identify the CA store by running:
-
-```bash
-python -m certifi
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">python -m certifi</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  This will output:
 
@@ -336,10 +304,8 @@ python -m certifi
     ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
 
 1.  Append the Cloudflare certificate to this CA Store by running:
-
-```bash
-cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> /Library/Keychains/System.keychain Cloudflare_CA.crt </span><span class="CodeBlock--token-operator">&gt&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-variable CodeBlock--token-variable">$(</span><span class="CodeBlock--token-variable">python -m certifi</span><span class="CodeBlock--token-variable CodeBlock--token-variable">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  If needed, configure system variables to point to this CA Store by running:
 
@@ -356,10 +322,7 @@ cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
 1.  Open Powershell.
 
 1.  Run the following command:
-
-```git
-git config -l
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-git" language="git"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">git config -l</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  This will output:
 
@@ -384,10 +347,7 @@ git config -l
     credential.helper=manager
 
 1.  The `http.sslcainfo` defines the CA Certificate store. Update this to append the Cloudflare certificate to the CA bundle by running this command:
-
-```git
-gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-git" language="git"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)</span></div></span></span></span></code></pre>{{</raw>}}
 
 #### Git on Mac and Linux
 
@@ -400,47 +360,28 @@ gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
 ### npm
 
 The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
-
-```bash
-npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">npm</span><span class="CodeBlock--token-plain"> config </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">set</span><span class="CodeBlock--token-plain"> cafile </span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-plain">PATH_TO_CLOUDFLARE_CERT.pem</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 On some systems you may need to set the following in your path/export list
-
-```bash
-export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-builtin CodeBlock--token-class-name">export</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-assign-left CodeBlock--token-variable">NODE_EXTRA_CA_CERTS</span><span class="CodeBlock--token-operator">=</span><span class="CodeBlock--token-string">'[PATH_TO_CLOUDFLARE_CERT.pem]'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Google Cloud SDK
 
 The commands below will set the Google Cloud SDK to use the Cloudflare certificate. More information on configuring the Google Cloud SDK is available [here](https://cloud.google.com/sdk/docs/proxy-settings).
 
 1.  Get curl's `cacert` bundle.
-
-    ```bash
-    curl -O https://curl.se/ca/cacert.pem
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -O https://curl.se/ca/cacert.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Get the Cloudflare CA.
-
-    ```bash
-    curl -O https://developers.cloudflare.com/cloudflare-one/5147a72af7d01d4f3a34276f1452bf1e/Cloudflare_CA.pem
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -O https://developers.cloudflare.com/cloudflare-one/5147a72af7d01d4f3a34276f1452bf1e/Cloudflare_CA.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Combine the certs into a single `.pem` file.
-
-    ```bash
-    cat cacert.pem > ~/ca.pem
-    ```
-
-    ```bash
-    cat Cloudflare_CA.pem >> ~/ca.pem
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> cacert.pem </span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> ~/ca.pem</span></div></span></span></span></code></pre>{{</raw>}}
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> Cloudflare_CA.pem </span><span class="CodeBlock--token-operator">&gt&gt</span><span class="CodeBlock--token-plain"> ~/ca.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 1.  Configure Google Cloud to use the combined `.pem`.
-
-    ```bash
-    gcloud config set core/custom_ca_certs_file ~/ca.pem
-    ```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">gcloud config </span><span class="CodeBlock--token-builtin CodeBlock--token-class-name">set</span><span class="CodeBlock--token-plain"> core/custom_ca_certs_file ~/ca.pem</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### AWS CLI
 

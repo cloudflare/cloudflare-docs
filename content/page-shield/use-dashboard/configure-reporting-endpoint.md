@@ -11,16 +11,10 @@ meta:
 When enabled, Page Shield uses a Content Security Policy (CSP) [report-only HTTP header](/page-shield/reference/csp-header/) to gather information about all the scripts running on your application.
 
 By default, reports are sent to a Cloudflare-owned endpoint:
-
-```txt
-https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?<QUERY_STRING>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?&ltQUERY_STRING&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 You can change the reporting endpoint so that the CSP reports are sent to the same hostname:
-
-```txt
-<YOUR-HOSTNAME>/cdn-cgi/script-monitor/report?<QUERY_STRING>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltYOUR-HOSTNAME&gt/cdn-cgi/script-monitor/report?&ltQUERY_STRING&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 {{<Aside type="note">}}
 

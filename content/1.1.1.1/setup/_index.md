@@ -68,10 +68,7 @@ To configure an encrypted DoH connection to 1.1.1.1 for Families, type one of th
 <details>
 <summary>Block malware</summary>
 <div>
-
-```txt
-https://security.cloudflare-dns.com/dns-query
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://security.cloudflare-dns.com/dns-query</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>
@@ -79,10 +76,7 @@ https://security.cloudflare-dns.com/dns-query
 <details>
 <summary>Block malware and adult content</summary>
 <div>
-
-```txt
-https://family.cloudflare-dns.com/dns-query
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://family.cloudflare-dns.com/dns-query</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>
@@ -97,10 +91,7 @@ To configure an encrypted DoT connection to 1.1.1.1 for Families, type one of th
 <details>
 <summary>Block malware</summary>
 <div>
-
-```txt
-security.cloudflare-dns.com
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">security.cloudflare-dns.com</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>
@@ -108,10 +99,7 @@ security.cloudflare-dns.com
 <details>
 <summary>Block malware and adult content</summary>
 <div>
-
-```txt
-family.cloudflare-dns.com
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">family.cloudflare-dns.com</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>

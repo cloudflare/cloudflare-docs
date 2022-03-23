@@ -9,10 +9,7 @@ weight: 13
 This guide shows how you might migrate from the deprecated (and soon to be sunset) zone analytics API to the GraphQL API. It provides an example for a plausible use-case of the colos endpoint, then shows how that use-case is translated to the GraphQL API. It also explores features of the GraphQL API that make it more powerful than the API it replaces.
 
 In this example, we want to calculate the number of requests for a particular colo, broken down by the hour in which the requests occurred. Referring to the zone analytics colos endpoint, we can construct a curl which retrieves the data from the API.
-
-```bash
-curl -H "Authorization: Bearer $API_TOKEN" "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/analytics/colos?since=2020-12-10T00:00:00Z"  > colos_endpoint_output.json
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -H </span><span class="CodeBlock--token-string">&quot;Authorization: Bearer </span><span class="CodeBlock--token-string CodeBlock--token-variable">$API_TOKEN</span><span class="CodeBlock--token-string">&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/zones/</span><span class="CodeBlock--token-string CodeBlock--token-variable">$ZONE_ID</span><span class="CodeBlock--token-string">/analytics/colos?since=2020-12-10T00:00:00Z&quot;</span><span class="CodeBlock--token-plain">  </span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> colos_endpoint_output.json</span></div></span></span></span></code></pre>{{</raw>}}
 
 This query says:
 
@@ -21,35 +18,25 @@ This query says:
     `2020-12-10T00:00:00Z` (`since` paramenter) to now.
 
 The question that we want to answer is: "What is the number of requests for ZHR per hour?" Using the colos endpoint response data and some wrangling by jq we can answer that question with this command:
-
-```bash
-cat colos_endpoint_output.json | jq  -c '.result[] | {colo_id: .colo_id, timeseries: .timeseries[]} | {colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all} | select(.requests > 0) | select(.colo_id == "ZRH") '
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> colos_endpoint_output.json </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq  -c </span><span class="CodeBlock--token-string">'.result[] | {colo_id: .colo_id, timeseries: .timeseries[]} | {colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all} | select(.requests &gt 0) | select(.colo_id == &quot;ZRH&quot;) '</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This jq command is complex, so we can break it down:
-
-```bash
-.result[]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">.result</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This means that the result array is split into individual json lines.
-
-```bash
-{colo_id: .colo_id, timeseries: .timeseries[]}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-plain">colo_id: .colo_id, timeseries: .timeseries</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This breaks each json line into multiple json lines. Each resulting line contains a `colo_id` and one element of the `timeseries` array.
-
-```bash
-{colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-plain">colo_id: .colo_id, timeslot: .timeseries.since, requests: .timeseries.requests.all, bandwidth: .timeseries.bandwidth.all</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This flattens out the data we are interested in that is inside the timeseries
 object of each line.
-
-```bash
-select(.requests > 0) | select(.colo_id == "ZRH")
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">select</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">.requests </span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> select</span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">.colo_id </span><span class="CodeBlock--token-operator">==</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This selects only lines that contain more than 0 requests and the `colo_id` is ZRH.
 
@@ -58,21 +45,17 @@ The final data we get looks like the following response:
 <details>
 <summary>Response</summary>
 <div>
-
-```json
-{"colo_id":"ZRH","timeslot":"2020-12-10T00:00:00Z","requests":601,"bandwidth":683581}
-{"colo_id":"ZRH","timeslot":"2020-12-10T01:00:00Z","requests":484,"bandwidth":550936}
-{"colo_id":"ZRH","timeslot":"2020-12-10T02:00:00Z","requests":326,"bandwidth":370627}
-{"colo_id":"ZRH","timeslot":"2020-12-10T03:00:00Z","requests":354,"bandwidth":402527}
-{"colo_id":"ZRH","timeslot":"2020-12-10T04:00:00Z","requests":446,"bandwidth":507234}
-{"colo_id":"ZRH","timeslot":"2020-12-10T05:00:00Z","requests":692,"bandwidth":787688}
-{"colo_id":"ZRH","timeslot":"2020-12-10T06:00:00Z","requests":1474,"bandwidth":1676166}
-{"colo_id":"ZRH","timeslot":"2020-12-10T07:00:00Z","requests":2839,"bandwidth":3226871}
-{"colo_id":"ZRH","timeslot":"2020-12-10T08:00:00Z","requests":2953,"bandwidth":3358487}
-{"colo_id":"ZRH","timeslot":"2020-12-10T09:00:00Z","requests":2550,"bandwidth":2901823}
-{"colo_id":"ZRH","timeslot":"2020-12-10T10:00:00Z","requests":2203,"bandwidth":2504615}
-...
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-json" language="json"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T00:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">601</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">683581</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T01:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">484</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">550936</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T02:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">326</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">370627</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T03:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">354</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">402527</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T04:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">446</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">507234</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T05:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">692</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">787688</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T06:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">1474</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">1676166</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T07:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2839</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">3226871</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T08:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2953</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">3358487</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T09:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2550</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2901823</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-property">&quot;colo_id&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;ZRH&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;timeslot&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-string">&quot;2020-12-10T10:00:00Z&quot;</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;requests&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2203</span><span class="CodeBlock--token-punctuation">,</span><span class="CodeBlock--token-property">&quot;bandwidth&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-number">2504615</span><span class="CodeBlock--token-punctuation">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">...</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>
@@ -84,61 +67,28 @@ The GraphQL API allows us to be much more specific about the data that we want t
 The data we want is about HTTP requests. Hence, we use the canonical source for HTTP request data, also known as `httpRequestsAdaptiveGroups`. This node in GraphQL API allows you to filter and group by almost any dimension of an HTTP request imaginable. It is [Adaptive](/analytics/graphql-api/migration-guides/network-analytics-v2/about/#adaptive-bitrate-sampling) so responses will be fast since it is driven by our [ABR technology](https://blog.cloudflare.com/explaining-cloudflares-abr-analytics/).
 
 The following is a GraphQL API query to retrieve the data we need to answer the question: "What is the number of requests for ZHR per hour?"
-
-```text
-{
-  viewer {
-    zones(filter: {zoneTag:"$ZONE_TAG"}) {
-      httpRequestsAdaptiveGroups(filter: {datetime_gt: "2020-12-10T00:00:00Z", coloCode:"ZRH"}, limit:10000, orderBy: [datetimeHour_ASC]) {
-        count
-        sum {
-          edgeResponseBytes
-        }
-        avg {
-          sampleInterval
-        }
-        count
-        dimensions {
-          datetimeHour
-          coloCode
-        }
-      }
-    }
-  }
-}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  viewer {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    zones(filter: {zoneTag:&quot;$ZONE_TAG&quot;}) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      httpRequestsAdaptiveGroups(filter: {datetime_gt: &quot;2020-12-10T00:00:00Z&quot;, coloCode:&quot;ZRH&quot;}, limit:10000, orderBy: [datetimeHour_ASC]) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        count</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        sum {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">          edgeResponseBytes</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        avg {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">          sampleInterval</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        count</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        dimensions {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">          datetimeHour</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">          coloCode</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">      }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  }</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
 
 Then we can run it with curl:
-
-```bash
-curl -X POST -H 'Authorization: Bearer $API_TOKEN'  https://api.cloudflare.com/client/v4/graphql -d "@./coloGroups.json" > graphqlColoGroupsResponse.json
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">curl</span><span class="CodeBlock--token-plain"> -X POST -H </span><span class="CodeBlock--token-string">'Authorization: Bearer $API_TOKEN'</span><span class="CodeBlock--token-plain">  https://api.cloudflare.com/client/v4/graphql -d </span><span class="CodeBlock--token-string">&quot;@./coloGroups.json&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">&gt</span><span class="CodeBlock--token-plain"> graphqlColoGroupsResponse.json</span></div></span></span></span></code></pre>{{</raw>}}
 
 We can answer our question in the same way as before using jq:
-
-```bash
-cat graphqlColoGroupsResponse.json| jq -c '.data.viewer.zones[] | .httpRequestsAdaptiveGroups[] | {colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes}'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-function">cat</span><span class="CodeBlock--token-plain"> graphqlColoGroupsResponse.json</span><span class="CodeBlock--token-operator">|</span><span class="CodeBlock--token-plain"> jq -c </span><span class="CodeBlock--token-string">'.data.viewer.zones[] | .httpRequestsAdaptiveGroups[] | {colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes}'</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This command is much simpler than what we had before, because the data returned by the GraphQL API is more specific than what is returned by the colos endpoint.
 
 Still, it is worth explaining the command since it will help to understand some of the concepts underlying the GraphQL API.
-
-```bash
-.data.viewer.zones[]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">.data.viewer.zones</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 The format of a GraphQL response is very similar to the query. A successful response always contains a `data` object which wraps the data in the response. A query will always have a `viewer` object which represents your user. Then, we unwrap the zones objects, one per line. Our query only has one zone (since this is how we chose to do it). But a query could have multiple zones as well.
-
-```bash
-.httpRequestsAdaptiveGroups[]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">.httpRequestsAdaptiveGroups</span><span class="CodeBlock--token-punctuation">[</span><span class="CodeBlock--token-punctuation">]</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 The `httpRequestsAdaptiveGroups` field is a list, where each datapoint in the list represents a combination of the dimensions that were selected, along with the aggregation that was selected for that combination of the dimensions. Here, we unwrap each of the datapoints, one per row.
-
-```bash
-{colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-bash" language="bash"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">{</span><span class="CodeBlock--token-plain">colo_id: .dimensions.coloCode, timeslot: .dimensions.datetimeHour, requests: .count, bandwidth: .sum.edgeResponseBytes</span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 This is straightforward: it just selects the attributes of each datapoint that we are interested in, in the format which we used previously in the colos endpoint.
 

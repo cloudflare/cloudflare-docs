@@ -22,10 +22,7 @@ The Cloudflare Rules language supports comparison and logical operators:
 Comparison operators return `true` when a value from an HTTP request matches a value defined in an expression.
 
 This is the general pattern for using comparison operators:
-
-```txt
-<field> <comparison_operator> <value>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltfield&gt &ltcomparison_operator&gt &ltvalue&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 The Rules language supports these comparison operators:
 
@@ -162,10 +159,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
 ## Logical operators
 
 Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
-
-```txt
-<expression> <logical_operator> <expression>
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&ltexpression&gt &ltlogical_operator&gt &ltexpression&gt</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Supported logical operators
 
@@ -236,10 +230,8 @@ To avoid ambiguity when working with logical operators, use grouping symbols so 
 When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
 
 For example, consider the following generic expression, which uses `and` and `or` operators:
-
-```java
-Expression1 and Expression2 or Expression3
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-class-name">Expression1</span><span class="CodeBlock--token-plain"> and </span><span class="CodeBlock--token-class-name">Expression2</span><span class="CodeBlock--token-plain"> or </span><span class="CodeBlock--token-class-name">Expression3</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 If these operators had no order of precedence, it would not be clear which of two interpretations is correct:
 
@@ -261,37 +253,23 @@ The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping 
 ### Group expressions
 
 Use parentheses to explicitly group expressions that should be evaluated together. In this example, the parentheses do not alter the evaluation of the expression, but they unambiguously call out which logical operators to evaluate first.
-
-```java
-(Expression1 and Expression2) or Expression3
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-class-name">Expression1</span><span class="CodeBlock--token-plain"> and </span><span class="CodeBlock--token-class-name">Expression2</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> or </span><span class="CodeBlock--token-class-name">Expression3</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Because grouping symbols are so explicit, you are less likely to make errors when you use them to write compound expressions.
 
 ### Enforce precedence
 
 Grouping symbols are a powerful tool to enforce precedence for grouped elements of a compound expression. In this example, parentheses force the logical `or` operator to be evaluated before the logical `and`:
-
-```java
-Expression1 and (Expression2 or Expression3)
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-java" language="java"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-class-name">Expression1</span><span class="CodeBlock--token-plain"> and </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-class-name">Expression2</span><span class="CodeBlock--token-plain"> or </span><span class="CodeBlock--token-class-name">Expression3</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 Without parentheses, the logical `and` operator would take precedence.
 
 ### Nest expressions
 
 You can nest expressions grouped by parentheses inside other groups to create very precise, sophisticated expressions, such as this example for a rule designed to block access to a domain:
-
-```sql
-(
- (http.host eq "api.example.com" and http.request.uri.path eq "/api/v2/auth") or
- (http.host matches "^(www|store|blog)\.example.com" and http.request.uri.path contains "wp-login.php") or
- ip.geoip.country in {"CN" "TH" "US" "ID" "KR" "MY" "IT" "SG" "GB"} or ip.geoip.asnum in {12345 54321 11111}
-) and not ip.src in {11.22.33.0/24}
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sql" language="sql"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-punctuation">(</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">host eq </span><span class="CodeBlock--token-string">&quot;api.example.com&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">path eq </span><span class="CodeBlock--token-string">&quot;/api/v2/auth&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">or</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">(</span><span class="CodeBlock--token-plain">http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">host matches </span><span class="CodeBlock--token-string">&quot;^(www|store|blog)\.example.com&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> http</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">request</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">uri</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">path </span><span class="CodeBlock--token-keyword">contains</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;wp-login.php&quot;</span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">or</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> ip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">geoip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">country </span><span class="CodeBlock--token-operator">in</span><span class="CodeBlock--token-plain"> {</span><span class="CodeBlock--token-string">&quot;CN&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;TH&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;US&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;ID&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;KR&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;MY&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;IT&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;SG&quot;</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;GB&quot;</span><span class="CodeBlock--token-plain">} </span><span class="CodeBlock--token-operator">or</span><span class="CodeBlock--token-plain"> ip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">geoip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">asnum </span><span class="CodeBlock--token-operator">in</span><span class="CodeBlock--token-plain"> {</span><span class="CodeBlock--token-number">12345</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">54321</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">11111</span><span class="CodeBlock--token-plain">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"></span><span class="CodeBlock--token-punctuation">)</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">and</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-operator">not</span><span class="CodeBlock--token-plain"> ip</span><span class="CodeBlock--token-punctuation">.</span><span class="CodeBlock--token-plain">src </span><span class="CodeBlock--token-operator">in</span><span class="CodeBlock--token-plain"> {</span><span class="CodeBlock--token-number">11.22</span><span class="CodeBlock--token-number">.33</span><span class="CodeBlock--token-number">.0</span><span class="CodeBlock--token-operator">/</span><span class="CodeBlock--token-number">24</span><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
 
 Note that when evaluating the precedence of logical operators, parentheses inside strings delimited by quotes are ignored, such as those in the following regular expression, drawn from the example above:
-
-```txt
-"^(www|store|blog)\.example\.com"
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;^(www|store|blog)\.example\.com&quot;</span></div></span></span></span></code></pre>{{</raw>}}

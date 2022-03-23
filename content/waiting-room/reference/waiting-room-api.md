@@ -12,10 +12,7 @@ The [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting_rooms) pro
 ## Request URL format
 
 To invoke a [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting-room-properties) operation, append the endpoint to the Cloudflare API base URL:
-
-```shell
-https://api.cloudflare.com/client/v4
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://api.cloudflare.com/client/v4</span></div></span></span></span></code></pre>{{</raw>}}
 
 For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
 

@@ -20,10 +20,7 @@ You will also need to add the 1.1.1.1 bot to your friends list in Telegram befor
 ## Perform DNS lookups
 
 You can send a single domain name, which will default to returning the AAAA record. For example:
-
-```txt
-dig @1.1.1.1 AAAA example.com
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig @1.1.1.1 AAAA example.com</span></div></span></span></span></code></pre>{{</raw>}}
 
 You can also send a record type followed by a domain name.
 
@@ -49,7 +46,4 @@ You can also send a record type followed by a domain name.
 </details>
 
 Example:
-
-```txt
-dig @1.1.1.1 AAAA example.com
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig @1.1.1.1 AAAA example.com</span></div></span></span></span></code></pre>{{</raw>}}

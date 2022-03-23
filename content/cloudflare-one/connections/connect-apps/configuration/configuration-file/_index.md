@@ -23,20 +23,10 @@ The structure of a configuration file will be different depending on the type of
 ### Top-level configurations
 
 When creating a configuration file, it is best practice to list `tunnel` and `credentials-file` as your first key/value pairs. Whether you are exposing an application or a network on the Internet, it is common to list these keys as the first ones in your configuration file:
-
-```txt
-tunnel: The tunnel UUID
-credentials-file: /path/your-tunnels-credentials-file.json
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">tunnel: The tunnel UUID</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">credentials-file: /path/your-tunnels-credentials-file.json</span></div></span></span></span></code></pre>{{</raw>}}
 
 If you’re [exposing a private network](/cloudflare-one/connections/connect-networks/private-net/), you need to add the `warp-routing` key and set it to `true`:
-
-```txt
-tunnel: The tunnel UUID
-credentials-file: /path/your-tunnels-credentials-file.json
-warp-routing:
-    enabled: true
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">tunnel: The tunnel UUID</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">credentials-file: /path/your-tunnels-credentials-file.json</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">warp-routing:</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    enabled: true</span></div></span></span></span></code></pre>{{</raw>}}
 
 ### Ingress rules
 
@@ -52,10 +42,8 @@ You can create your configuration file using any text editor. For example, to cr
 1.  Name and save your file by typing `:wq file-name.yaml` and exit vim.
 
 Confirm that the configuration file has been successfully created by running:
-
-```sh
-$ cat config.yaml 
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cat config.yaml </span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Storing a configuration file
 
@@ -64,10 +52,8 @@ $ cat config.yaml
 ## Referencing a configuration file
 
 Before you run a tunnel, ensure you have created a configuration file for `cloudflared` to know what configuration to follow when routing traffic through the tunnel. When running a tunnel, make sure you specify the path to your configuration file:
-
-```sh
-$ cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-sh" language="sh"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-command CodeBlock--token-prompt CodeBlock--token-unselectable">$ </span><span class="CodeBlock--token-command">cloudflared tunnel --config /path/your-config-file.yaml run tunnel-name</span><span class="CodeBlock--token-plain">
+</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Editing a configuration file
 

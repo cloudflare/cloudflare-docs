@@ -60,24 +60,7 @@ To enable load shedding for a specific pool via the API, [update the values](htt
 <details>
 <summary>Example request</summary>
 <div>
-
-```json
----
-header: Request
----
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/{account-id}/load_balancers/pools/{pool-id}" \
-     -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: REDACTED" \
-     -H "Content-Type: application/json" \
-     --data-binary '{
-         "load_shedding": {
-             "default_percent": 20,
-             "default_policy": "random",
-             "session_percent": 0,
-             "session_policy": "hash"
-         }
-     }'
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-json" language="json"><span class="CodeBlock--header">Request</span><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -X PATCH </span><span class="CodeBlock--token-string">&quot;https://api.cloudflare.com/client/v4/accounts/{account-id}/load_balancers/pools/{pool-id}&quot;</span><span class="CodeBlock--token-plain"> \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Email: user@example.com&quot;</span><span class="CodeBlock--token-plain"> \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H </span><span class="CodeBlock--token-string">&quot;X-Auth-Key: REDACTED&quot;</span><span class="CodeBlock--token-plain"> \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H </span><span class="CodeBlock--token-string">&quot;Content-Type: application/json&quot;</span><span class="CodeBlock--token-plain"> \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     --data-binary '</span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         </span><span class="CodeBlock--token-property">&quot;load_shedding&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-punctuation">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">             </span><span class="CodeBlock--token-property">&quot;default_percent&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">20</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">             </span><span class="CodeBlock--token-property">&quot;default_policy&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;random&quot;</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">             </span><span class="CodeBlock--token-property">&quot;session_percent&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-number">0</span><span class="CodeBlock--token-punctuation">,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">             </span><span class="CodeBlock--token-property">&quot;session_policy&quot;</span><span class="CodeBlock--token-operator">:</span><span class="CodeBlock--token-plain"> </span><span class="CodeBlock--token-string">&quot;hash&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         </span><span class="CodeBlock--token-punctuation">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     </span><span class="CodeBlock--token-punctuation">}</span><span class="CodeBlock--token-plain">'</span></div></span></span></span></code></pre>{{</raw>}}
 
 </div>
 </details>

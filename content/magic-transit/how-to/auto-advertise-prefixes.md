@@ -12,28 +12,10 @@ The system uses the concept of rules, and each rule consists of a group of prefi
 ## Example 
 
 For a rule with two Prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs in case the flag is turned on.
-
-```txt
-"rules":[
-         "name": "Too many packets",
-         "prefixes": ["192.168.0.0/24", "172.118.0.0/24"],
-         "packet_threshold": 10000,
-         "automatic_advertisement": true,
-         "duration": "1m0s",
-        ]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;rules&quot;:[</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;name&quot;: &quot;Too many packets&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;prefixes&quot;: [&quot;192.168.0.0/24&quot;, &quot;172.118.0.0/24&quot;],</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;packet_threshold&quot;: 10000,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;automatic_advertisement&quot;: true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;duration&quot;: &quot;1m0s&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        ]</span></div></span></span></span></code></pre>{{</raw>}}
 
 For more granular thresholds, create a more focused rule as shown below.
-
-```txt
-"rules":[
-         "name": "Too many packets",
-         "prefixes": ["172.118.0.0/24"],
-         "packet_threshold": 1000,
-         "automatic_advertisement": true,
-         "duration": "1m0s",
-        ]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&quot;rules&quot;:[</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;name&quot;: &quot;Too many packets&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;prefixes&quot;: [&quot;172.118.0.0/24&quot;],</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;packet_threshold&quot;: 1000,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;automatic_advertisement&quot;: true,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">         &quot;duration&quot;: &quot;1m0s&quot;,</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">        ]</span></div></span></span></span></code></pre>{{</raw>}}
 
 ## Auto advertisement for prefixes inside a flagged rule
 
