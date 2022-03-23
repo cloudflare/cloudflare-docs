@@ -108,7 +108,7 @@ This example request defines a custom response for requests blocked due to rate 
 ```json
 ---
 header: Request
-highlight: [20,21,22,23,24]
+highlight: [12,13,14,15,16]
 ---
 curl -X PUT \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_ratelimit/entrypoint" \
@@ -120,6 +120,13 @@ curl -X PUT \
       "description": "My rate limiting rule",
       "expression": "(http.request.uri.path matches \"^/api/\")",
       "action": "block",
+      "action_parameters": {
+        "response": {
+          "status_code": 403,
+          "content": "You have been rate limited.",
+          "content_type": "text/plain"
+        }
+      },
       "ratelimit": {
         "characteristics": [
           "cf.colo.id",
@@ -128,12 +135,7 @@ curl -X PUT \
         ],
         "period": 60,
         "requests_per_period": 100,
-        "mitigation_timeout": 600,
-        "response": {
-          "status_code": 403,
-          "content": "You have been rate limited.",
-          "content_type": "text/plain"
-        }
+        "mitigation_timeout": 600
       }
     }
   ]
