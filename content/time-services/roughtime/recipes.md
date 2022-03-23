@@ -36,18 +36,14 @@ formatted as a JSON object. For example:
 ```
 
 It includes each server's _root public key_. When the server starts, it
-generates an _online_ public/secret key pair. The root secret key is used to
-create a _delegation_ for the online public key and the online secret key is
-used to sign the response. 
+generates an _online_ public/secret key pair. The root secret key is used to create a _delegation_ for the online public key and the online secret key is used to sign the response. 
 
 The delegation serves the same function as a traditional [X.509 certificate](https://en.wikipedia.org/wiki/X.509) on the web. The client first uses the root public key to verify the delegation, then uses the online public key to verify the response.
 
 Because the response is _auditable_, the protocol makes each client accountable to provide accurate time.
 
 The configuration also encodes the type of signature algorithm used by the
-server (currently only [Ed25519](https://en.wikipedia.org/wiki/EdDSA) is
-supported). Lastly, the configuration contains a list of addresses where the
-service can be reached and which transport protocol to use to reach them (currently only UDP is supported).
+server (currently only [Ed25519](https://en.wikipedia.org/wiki/EdDSA) is supported). Lastly, the configuration contains a list of addresses where the service can be reached and which transport protocol to use to reach them (currently only UDP is supported).
 
 ## TLS
 

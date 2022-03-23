@@ -14,7 +14,7 @@ Endpoints on the Internet often synchronize their clocks using the [Network Time
 
 As a result, a man-in-the-middle attacker can easily influence a victim’s clock. By moving them back in time, the attacker can, for example, force a victim to accept an expired (and possibly compromised) TLS certificate or session ticket.
 
-For many applications, *precise* network time is not essential. It's sufficient to have *accurate* time to mitigate these kinds of attacks, such as within 10 seconds of real time. This observation is the primary motivation behind Roughtime.
+For many applications, *precise* network time is not essential. It is sufficient to have *accurate* time to mitigate these kinds of attacks, such as within 10 seconds of real time. This observation is the primary motivation behind Roughtime.
 
 ## Next steps
 
