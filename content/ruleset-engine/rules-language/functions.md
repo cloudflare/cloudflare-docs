@@ -68,7 +68,7 @@ The Rules language supports these transformation functions:
     If `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
 {{<Aside type="warning">}}
-The `ends_with()` function is not available in [Firewall Rules](/firewall/).
+The `ends_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
 - <code>len({{<type>}}String | bytes{{</type>}})</code> {{<type>}}Integer{{</type>}}
@@ -79,6 +79,39 @@ The `ends_with()` function is not available in [Firewall Rules](/firewall/).
     <br />
 
     `len(http.host)`
+
+- <code>lookup_json_string(field{{<param-type>}}String{{</param-type>}}, key{{<param-type>}}String{{</param-type>}})</code> {{<type>}}String{{</type>}}
+
+  - Returns the string value associated with the supplied `key` in `field`.<br/>
+  The `field` must be a string representation of a valid JSON object.<br/>
+  The `key` can be an attribute name, a zero-based position number in a JSON array, or a combination of these two options (as extra function parameters), while following the hierarchy of the JSON object to obtain a specific value.
+
+  - _Examples:_
+
+    A) Given the following JSON object contained in the `http.request.body.raw` field:<br/>
+    `{ "company": "cloudflare", "product": "rulesets" }`<br/>
+    The following expression will return `true`:<br/>
+    `lookup_json_string(http.request.body.raw, "company") == "cloudflare"`
+
+    B) Given the following nested object:<br/>
+    `{ "network": { "name": "cloudflare" } }`<br/>
+    The following expression will return `true`:<br/>
+    `lookup_json_string(http.request.body.raw, "network", "name") == "cloudflare"`
+
+    C) Given the following JSON array at the root level:<br/>
+    `["other_company", "cloudflare"]`<br/>
+    The following expression will return `true`:<br/>
+    `lookup_json_string(http.request.body.raw, 1) == "cloudflare"`
+
+    D) Given the following array in a JSON object attribute:<br/>
+    `{ "networks": ["other_company", "cloudflare"] }`<br/>
+    The following expression will return `true`:<br/>
+    `lookup_json_string(http.request.body.raw, "networks", 1) == "cloudflare"`
+
+    E) Given the following root-level array of JSON objects:<br/>
+    `[{ "network": "other_company" }, { "network": "cloudflare" }]`<br/>
+    The following expression will return `true`:<br/>
+    `lookup_json_string(http.request.body.raw, 1, "network") == "cloudflare"`
 
 - <code>lower({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}
 
@@ -134,7 +167,7 @@ You can only use the `regex_replace()` function in [rewrite expressions of Trans
     If `http.request.uri.path` is `"/blog/first-post"`, then `starts_with(http.request.uri.path, "/blog")` will return `true`.
 
 {{<Aside type="warning">}}
-The `starts_with()` function is not available in [Firewall Rules](/firewall/).
+The `starts_with()` function is not available in [firewall rules](/firewall/).
 {{</Aside>}}
 
 - <code>to\_string({{<type>}}Integer | Boolean | IP address{{</type>}})</code> {{<type>}}String{{</type>}}

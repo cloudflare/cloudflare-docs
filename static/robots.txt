@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /browser-isolation
 Disallow: /client-ip-geolocation
 
 Sitemap: https://developers.cloudflare.com/sitemap.xml

@@ -12,9 +12,9 @@ This tutorial demonstrates how to configure your Internet-of-things (IoT) device
 
 This walkthrough uses the example of a device that captures temperature readings and transmits them by sending a POST request to a Cloudflare-protected API. A mobile application built in Swift for iOS retrieves those readings and displays them.
 
-To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app)).
+To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app/)).
 
-Temperatures are stored in [Workers KV](/workers/learning/how-kv-works) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/mutual-tls-authentication), such as the fingerprint.
+Temperatures are stored in [Workers KV](/workers/learning/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/mutual-tls-authentication/), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
@@ -411,4 +411,4 @@ After creating Cloudflare-issued certificates, the next step is to [enable mTLS]
 
 ## Step 6 — Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create a mTLS rule](/firewall/cf-dashboard/create-mtls-rule).
+To configure API Shield to require client certificates, [create a mTLS rule](/firewall/cf-dashboard/create-mtls-rule/).

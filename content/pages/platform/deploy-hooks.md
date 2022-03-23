@@ -14,7 +14,7 @@ With Deploy Hooks, you can trigger deployments using event sources beyond commit
 
 To create a Deploy Hook, navigate from **Account Home** to **Pages** and select your desired Pages project. Navigate to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
 
-![deploy hooks](../deploy-hooks-add.png)
+![Adding a deploy hook on the Cloudflare dashboard](../deploy-hooks-add.png)
 
 ## Parameters needed
 
@@ -23,17 +23,17 @@ To configure your Deploy Hook, you must enter two key parameters:
 1.  **Deploy hook name:** a unique identifier for your Deploy Hook (for example, `contentful-site`)
 2.  **Branch to build:** the repository branch your Deploy Hook should build
 
-![deploy hooks](../deploy-hooks-configure.png)
+![Choosing Deploy Hook name and branch to build on Cloudflare dashboard](../deploy-hooks-configure.png)
 
 ## Using your Deploy Hook
 
 Once your configuration is complete, the Deploy Hook’s unique URL is ready to be used. You will see both the URL as well as the POST request snippet available to copy.
 
-![deploy hooks](../deploy-hooks-details.png)
+![Reviewing the Deploy Hook's newly generated unique URL](../deploy-hooks-details.png)
 
 Every time a request is sent to your Deploy Hook, a new build will be triggered. Review the **Source** column of your deployment log to see which deployment were triggered by a Deploy Hook.
 
-![deploy hooks](../deploy-hooks-deployment-logs.png)
+![Reviewing which deployment was triggered by a Deploy Hook](../deploy-hooks-deployment-logs.png)
 
 ## Security Considerations
 

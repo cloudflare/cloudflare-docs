@@ -19,8 +19,8 @@ Page Shield includes the following features:
 *   **Alerts**: Receive notifications about newly detected scripts, scripts loaded from unknown domains, new scripts considered malicious, or code changes in your existing scripts.
 
 {{<button-group>}}
-  {{<button type="primary" href="/page-shield/get-started">}}Get started{{</button>}}
-  {{<button type="secondary" href="/page-shield/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/page-shield/get-started/">}}Get started{{</button>}}
+  {{<button type="secondary" href="/page-shield/about/">}}Learn more{{</button>}}
 {{</button-group>}}
 
 ## Availability

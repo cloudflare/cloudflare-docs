@@ -40,6 +40,8 @@ Other means to control Cloudflare’s cache that are not mentioned in this docum
 
 For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no back end (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
 
+The asset will be cached under the hostname specified within the Worker's subrequest — not the Worker's own hostname. Therefore, in order to purge the cached asset, the purge will have to be performed for the hostname included in the Worker subrequest.
+
 {{</Aside>}}
 
 ### `fetch`

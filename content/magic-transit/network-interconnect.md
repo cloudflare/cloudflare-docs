@@ -1,7 +1,7 @@
 ---
 title: Network Interconnect
 pcx-content-type: tutorial
-weight: 4
+weight: 8
 meta:
   title: Network Interconnect and Magic Transit
 ---

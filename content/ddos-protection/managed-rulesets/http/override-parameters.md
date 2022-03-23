@@ -46,10 +46,15 @@ However, you can use the _Log_ action in the global ruleset configuration. In th
   - API value: `"challenge"`.
   - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
 
+- **Connection Close**
+
+  - API value: _N/A_ (internal rule action that you cannot use in overrides).
+  - The client is instructed to establish a new connection (by disabling `keep-alive`) instead of reusing the existing connection. Existing requests are not affected.
+
 - **Force Connection Close**
 
   - API value: _N/A_ (internal rule action that you cannot use in overrides).
-  - Closes ongoing HTTP connections. This action does not block a request, but it forces the client to reconnect.
+  - Closes ongoing HTTP connections. This action does not block a request, but it forces the client to reconnect. For HTTP/2 and HTTP/3 connections, the connection will be closed even if it breaks other requests running on the same connection.
   - The performed action depends on the HTTP version:
 
     - – HTTP/1: set the [`Connection` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Connection#directives) to `close`.

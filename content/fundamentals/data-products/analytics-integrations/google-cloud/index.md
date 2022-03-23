@@ -10,7 +10,7 @@ weight: 101
 
 This tutorial covers how to configure certain Google Cloud Platform (GCP) components so that you can analyze your Cloudflare Logs data.
 
-Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage) to ensure your log data is available for analyzing.
+Before proceeding, you need to enable [Cloudflare Logpush in Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/) to ensure your log data is available for analyzing.
 
 The components we'll use in this tutorial include:
 

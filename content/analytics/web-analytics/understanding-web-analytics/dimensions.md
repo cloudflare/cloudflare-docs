@@ -15,4 +15,4 @@ Break down and filter Web Analytics by various dimensions.
 - **Operating systems** - The operating system visitors use to access a page.
 - **Device types** - The device visitors use to access a page (for example, desktop, mobile, or tablet).
 
-![Web Analytics dimensions](/analytics/static/images/dash-web_analytics-dimensions.png)
+![Web Analytics dimensions page](/analytics/static/images/dash-web_analytics-dimensions.png)

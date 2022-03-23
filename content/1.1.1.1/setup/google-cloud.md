@@ -1,7 +1,9 @@
 ---
 weight: 6
-title: Google Cloud
 pcx-content-type: how-to
+title: Google Cloud
+meta:
+    title: Set up 1.1.1.1 on Google Cloud
 ---
 
 # Set up 1.1.1.1 - Google Cloud

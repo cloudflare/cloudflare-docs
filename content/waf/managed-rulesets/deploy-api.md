@@ -1,12 +1,12 @@
 ---
-pcx-content-type: how-to
+pcx-content-type: configuration
 title: Deploy rulesets via API
 weight: 6
 ---
 
 # Deploy rulesets via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api) to deploy and configure rulesets at the account level or at the zone level.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy and configure rulesets at the account level or at the zone level.
 
 ## Deploying Managed Rulesets
 
@@ -18,11 +18,11 @@ You can define overrides to customize the behavior of the rules included in a Ma
 
 **Note:** There are a few requirements when deploying WAF Managed Rulesets to the `http_request_firewall_managed` phase at the **zone** level:
 
-- The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Rules.
+- The zone-level phase can only have two `execute` rules deploying Managed Rulesets: one rule for deploying the OWASP Managed Ruleset and another rule for deploying the Cloudflare Managed Ruleset.
 
 - You must set the `expression` field to `true` in these two rules, which means that they apply to all zone requests.
 
-To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets).
+To learn more about deploying Managed Rulesets and configuring overrides using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
 
 {{<Aside type="warning" header="Important">}}
 
@@ -46,4 +46,4 @@ Currently, you can only deploy custom rulesets to a phase at the account level.
 
 {{</Aside>}}
 
-To learn more about creating and deploying custom rulesets using the Rulesets API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets).
+To learn more about creating and deploying custom rulesets using the Rulesets API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).

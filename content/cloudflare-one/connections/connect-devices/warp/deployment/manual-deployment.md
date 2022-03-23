@@ -8,7 +8,7 @@ weight: 2
 
 If you plan to direct your users to manually download and configure the WARP client, users will need to connect the client to your organization's Cloudflare Zero Trust instance.
 
-Before you start, you will need to [download and install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+Before you start, you will need to [download and install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) and provide it to your users. Users will also need to have the WARP client installed on their OS. Instructions on how to do this can be found [here](/warp-client/get-started/).
 
 ## On Windows and Mac
 

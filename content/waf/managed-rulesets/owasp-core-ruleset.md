@@ -29,15 +29,15 @@ For details on configuring a Managed Ruleset in the dashboard, refer to [Configu
 
 ## Configure via API
 
-To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset).
+To enable the Cloudflare OWASP Core Ruleset for a given zone via API, create a rule with `execute` action in the entry point ruleset for the `http_request_firewall_managed` phase. For more information on deploying a Managed Ruleset, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/).
 
-To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset) using the Rulesets API. You can perform the following configurations:
+To configure the Cloudflare OWASP Core Ruleset via API, create [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) using the Rulesets API. You can perform the following configurations:
 
 *   Enable all the rules up to a specific paranoia level.
 *   Configure the score threshold.
 *   Specify the action to perform when the threat score is greater than the threshold.
 
-You can also disable specific rules in the Managed Ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset).
+You can also disable specific rules in the Managed Ruleset using [rule overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
 ### Setting the paranoia level
 
@@ -151,7 +151,7 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-3.  Update the rule you just identified using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule) method, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you just identified using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule/) method, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
      <details>
       <summary>Request</summary>
@@ -190,7 +190,7 @@ curl -X PATCH \
       </div>
     </details>
 
-For more information on creating overrides, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on creating overrides, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
 ### Configuring the score threshold and the action
 
@@ -362,7 +362,7 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule) method, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4.  Update the rule you just identified in the entry point ruleset using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule/) method, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
     *   `"score_threshold": 60`
     *   `"action": "managed_challenge"`
@@ -403,4 +403,4 @@ curl -X PATCH \
 
 ### Additional resources
 
-For more API examples, refer to [Workflow examples](/ruleset-engine/common-use-cases) in the Ruleset Engine documentation.
+For more API examples, refer to [Workflow examples](/ruleset-engine/common-use-cases/) in the Ruleset Engine documentation.

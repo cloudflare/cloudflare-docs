@@ -60,7 +60,7 @@ You will be presented with the price for each transfer. When you transfer a doma
 
 If you do not have a payment method on file, add one at this step before proceeding.
 
-![Cloudflare checkout screenshot](/registrar/static/checkout-page.png)
+![Cloudflare checkout interface](/registrar/static/checkout-page.png)
 
 Sites can be unavailable for a few reasons, including:
 
@@ -68,7 +68,7 @@ Sites can be unavailable for a few reasons, including:
 - Cloudflare does not yet support the TLD.
 - The domain is designated as a premium domain by the registry.
 - The domain has a status that does not allow for a transfer.
-- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup).
+- You failed to follow the steps highlighted above in [creating an account with your domain](https://support.cloudflare.com/hc/articles/201720164) and [changing your DNS nameservers to Cloudflare](/dns/zone-setups/full-setup/).
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 

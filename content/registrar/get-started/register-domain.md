@@ -6,7 +6,7 @@ weight: 4
 
 # Register a new domain
 
-Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups)).
+Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
 
 {{<render file="_email-verification.md">}}
 

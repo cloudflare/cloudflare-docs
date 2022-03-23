@@ -22,7 +22,7 @@ Additionally, if you have multiple waiting rooms, the waiting room with the most
 
 ### Waiting room template
 
-If you want to provide your users with updated information or expectations when they are queueing, Cloudflare recommends that you update your [waiting room template](/waiting-room/additional-options/customize-waiting-room/). All changes will be visible to your users in close to real time.
+If you want to provide your users with updated information or expectations when they are queueing, Cloudflare recommends that you update your [waiting room template](/waiting-room/how-to/customize-waiting-room/). All changes will be visible to your users in close to real time.
 
 ### Configuration settings
 

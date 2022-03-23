@@ -38,10 +38,7 @@ This section covers how to create, renew, and revoke a service token.
 
     ![Access Service Token card](/cloudflare-one/static/documentation/identity/users/detail-service-token.png)
 
-    {{<Aside type="warning" header="Important">}}
-
-    This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
-
+    {{<Aside type="warning" header="Important">}}This is the **only time** Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
     {{</Aside>}}
 
 1.  Click **Close**.

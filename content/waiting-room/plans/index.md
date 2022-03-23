@@ -30,7 +30,7 @@ The features available for a waiting room depend on your plan type. You can only
     </tr>
     <tr>
       <td>
-        <a href="/waiting-room/additional-options/customize-waiting-room/">Customized templates</a>
+        <a href="/waiting-room/how-to/customize-waiting-room/">Customized templates</a>
       </td>
       <td>No</td>
       <td>No</td>

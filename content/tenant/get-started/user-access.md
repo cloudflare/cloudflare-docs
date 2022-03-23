@@ -90,4 +90,4 @@ An example response for a successful creation:
 
 Now that the customer has access to the account, in the next step we will look at how to enable paid services for customers.
 
-<p>{{<button type="primary" href="/tenant/get-started/enabling-services">}}Step 3: Enabling services{{</button>}}</p>
+<p>{{<button type="primary" href="/tenant/get-started/enabling-services/">}}Step 3: Enabling services{{</button>}}</p>

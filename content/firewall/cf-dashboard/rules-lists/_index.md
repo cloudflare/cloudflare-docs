@@ -6,14 +6,14 @@ weight: 341
 
 # Use IP Lists
 
-IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your Firewall Rule expressions. For an introduction, refer to [IP Lists](/firewall/cf-firewall-rules/rules-lists/).
+IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, refer to [IP Lists](/firewall/cf-firewall-rules/rules-lists/).
 
 ## Access the Lists interface
 
-IP Lists are stored at the account level. To access the **Lists** interface, follow these steps:
+IP Lists are stored at the account level. To access the **Lists** interface:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-1. Go to **Configurations** > **Lists**.
+1. Navigate to **Manage Account** > **Configurations** > **Lists**.
 
 The **Lists** user interface displays.
 

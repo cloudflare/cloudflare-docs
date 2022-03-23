@@ -5,11 +5,13 @@ title: Handle redirects with Bulk Redirects
 
 # Handle redirects with Bulk Redirects
 
-In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-redirects) to handle redirects that surpasses the 100 redirect rules limit set by Pages. A [`_redirects`](/pages/platform/limits#redirects) file has a maximum of 100 redirect rules.
+In this tutorial, you will learn how to use [Bulk Redirects (beta)](/rules/bulk-redirects/) to handle redirects that surpasses the 100 redirect rules limit set by Pages. A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 100 redirect rules.
 
 {{<Aside type="Note">}}
 
 The redirects defined in the `_redirects` file of your build folder can work together with your Bulk Redirects. In case of duplicates, Bulk Redirects will run in front of your Pages project, where your other redirects live.
+
+For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` but also have `_redirects` set up to direct `xyz.com` to `foo.com`, a request for `abc.com` will eventually redirect to `foo.com`.
 
 {{</Aside>}}
 

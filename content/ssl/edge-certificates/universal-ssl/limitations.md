@@ -29,4 +29,4 @@ For more on browser support, see [Browser compatibility](/ssl/ssl-tls/browser-co
 
 ## Spectrum
 
-Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum). If you are trying to use Spectrum, use either [an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [a custom certificate](/ssl/edge-certificates/custom-certificates/).
+Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you are trying to use Spectrum, use either [an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [a custom certificate](/ssl/edge-certificates/custom-certificates/).
