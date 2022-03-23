@@ -1,14 +1,16 @@
 ---
 title: Tunnel guide
 pcx-content-type: how-to
-weight: 4
+weight: 1
 meta:
   title: Set up your first tunnel
 ---
 
 # Set up your first tunnel
 
-When setting up your first tunnel you have the option to create it locally using your CLI or remotely on the Zero Trust dashboard.
+When setting up your first Cloudflare Tunnel, you have the option to create it:
+* Remotely on the Zero Trust dashboard
+* Locally, using your CLI
 
 ## Remote setup (Dashboard setup)
 
