@@ -10,7 +10,7 @@ weight: 3
 
 ### `wrangler init [name]`
 
-Creates a `wrangler.toml` configuration file. For more details on the configuration keys and values, refer to the [documentation](https://developers.cloudflare.com/workers/cli-wrangler/configuration).
+Creates a `wrangler.toml` configuration file. For more details on the configuration keys and values, refer to the [documentation](/workers/cli-wrangler/configuration).
 
 ### `wrangler dev [script]`
 
@@ -20,7 +20,7 @@ Start a local development server, with live reloading and devtools.
 
 Publish the given script to the worldwide Cloudflare network.
 
-For more commands and options, refer to the [documentation](https://developers.cloudflare.com/workers/cli-wrangler/commands).
+For more commands and options, refer to the [documentation](/workers/cli-wrangler/commands).
 
 ### `wrangler pages dev [directory] [-- command]`
 
@@ -28,4 +28,4 @@ Either serves a static build asset directory, or proxies itself in front of a co
 
 Builds and runs functions from a `./functions` directory or uses a `_worker.js` file inside the static build asset directory.
 
-For more commands and options, refer to the [documentation](https://developers.cloudflare.com/pages/platform/functions#develop-and-preview-locally) or run `wrangler pages dev --help`.
+For more commands and options, refer to the [documentation](/pages/platform/functions#develop-and-preview-locally) or run `wrangler pages dev --help`.
