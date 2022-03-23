@@ -135,7 +135,7 @@ curl -X PUT \
         ],
         "period": 60,
         "requests_per_period": 100,
-        "mitigation_timeout": 600,
+        "mitigation_timeout": 600
       }
     }
   ]
