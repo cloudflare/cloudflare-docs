@@ -24,7 +24,7 @@ An expression built using the **Visual Expression Editor** does not require you 
 
 The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
 
-![Escaped characters](/firewall/static/cf-firewall-rules-character-escaping-ann.png)
+![The Expression Editor displays rule values with special characters escaped using a backslash character](/firewall/static/cf-firewall-rules-escaping.png)
 
 ## Why isn't my regular expression pattern matching working?
 

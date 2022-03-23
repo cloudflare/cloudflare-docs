@@ -14,7 +14,7 @@ To create an IP List, follow these steps:
 
     The **Create new list** page displays.
 
-    ![Create new list](/firewall/static/lists-create-new.png)
+    ![Entering a name and description for a new IP List in the Create new list page of the Cloudflare dashboard](/firewall/static/lists-create-new.png)
 
 1. Enter a name for your list, observing the following guidelines:
 
@@ -32,11 +32,7 @@ To create an IP List, follow these steps:
 
 4.  Click **Create**.
 
-The **Add items to list** page displays.
-
-![Add items to list](/firewall/static/lists-add-items-page.png)
-
-To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
+The **Add items to list** page displays. To populate your list, refer to [Use IP Lists: Add items to a list](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-to-a-list).
 
 ## Delete a list
 
@@ -54,7 +50,7 @@ To delete an IP List, follow these steps:
 
     - When the list is used in a firewall rule, a tooltip displays with notification that you cannot delete the list:
 
-      ![Cannot Delete lists](/firewall/static/lists-cannot-delete.png)
+      ![The Lists interface displaying an unavailable Delete operation because the corresponding list is still being used in two rule expressions](/firewall/static/lists-cannot-delete.png)
 
     - When the list is not used in a firewall rule, **Delete** link highlights, indicating you can delete the list.
 
