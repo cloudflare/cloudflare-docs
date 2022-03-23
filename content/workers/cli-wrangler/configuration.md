@@ -6,6 +6,12 @@ weight: 4
 
 # Configuration
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. These are the docs for Wrangler version 1.0. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 ## Background
 
 Your project will need some configuration before you can publish your Worker. Configuration is done through changes to keys and values stored in a `wrangler.toml` file located in the root of your project directory. You must manually edit this file to edit your keys and values before you can publish.
@@ -223,7 +229,7 @@ Much like environment variables and secrets, the `binding` names are available t
 ```js
 // Worker script:
 
-let value = await FOO.get('keyname');
+let value = await FOO.get("keyname");
 //=> gets the value for "keyname" from
 //=> the FOO variable, which points to
 //=> the "0f2ac...e279" KV namespace
@@ -399,7 +405,7 @@ A custom build command for your project. There are two configurations based on t
 This section is for customizing Workers with the `service-worker` format. These Workers use `addEventListener` and look like the following:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(new Response("I'm a service Worker!"));
 });
 ```
@@ -465,7 +471,7 @@ Refer to the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event) to 
 An uploaded module may `import` other uploaded ES Modules. If using the CommonJS format, you may `require` other uploaded CommonJS modules.
 
 ```js
-import html from './index.html';
+import html from "./index.html";
 
 export default {
   // * request is the same as `event.request` from the service worker format
@@ -473,7 +479,7 @@ export default {
   // * env is where bindings like KV namespaces, Durable Object namespaces, Config variables, and Secrets
   // are exposed, instead of them being placed in global scope.
   async fetch(request, env, ctx) {
-    const headers = { 'Content-Type': 'text/html;charset=UTF-8' };
+    const headers = { "Content-Type": "text/html;charset=UTF-8" };
     return new Response(html, { headers });
   },
 };
