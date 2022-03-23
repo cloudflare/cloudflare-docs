@@ -6,6 +6,12 @@ weight: 1
 
 # Install / Update
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. These are the docs for Wrangler version 1.0. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 ## Install
 
 ### Install with `npm`

@@ -6,6 +6,12 @@ weight: 3
 
 # Commands
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. These are the docs for Wrangler version 1.0. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI.
 
 ---
@@ -519,7 +525,7 @@ kv_namespaces = [
 Successful operations will print a new configuration block that should be copied into your `wrangler.toml` file. Add the output to the existing `kv_namespaces` configuration if already present. You can now access the binding from within a Worker:
 
 ```js
-let value = await MY_KV.get('my-key');
+let value = await MY_KV.get("my-key");
 ```
 
 To write a value to your KV namespace using Wrangler, run the `wrangler kv:key put` subcommand.

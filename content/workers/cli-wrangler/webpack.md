@@ -6,6 +6,12 @@ weight: 5
 
 # Webpack
 
+{{<Aside type="note">}}
+
+Wrangler has launched a new version. These are the docs for Wrangler version 1.0. To view the new Wrangler docs, [click here](/workers/wrangler)</a>.
+
+{{</Aside>}}
+
 Wrangler allows you to develop modern ES6 applications with support for modules. This support is possible because of Wrangler's [webpack](https://webpack.js.org/) integration. This document describes how Wrangler uses webpack to build your Workers and how you can bring your own configuration.
 
 {{<Aside type="note" header="Configuration and webpack version">}}
@@ -22,8 +28,8 @@ This is the default webpack configuration that Wrangler uses to build your Worke
 
 ```js
 module.exports = {
-  target: 'webworker',
-  entry: './index.js', // inferred from "main" in package.json
+  target: "webworker",
+  entry: "./index.js", // inferred from "main" in package.json
 };
 ```
 
