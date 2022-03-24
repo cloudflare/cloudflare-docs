@@ -4,7 +4,7 @@ pcx-content-type: concept
 weight: 2
 ---
 
-## Phases
+# Phases
 
 A phase defines a stage in the life of a request where you can execute rulesets. Phases are defined by Cloudflare and cannot be modified.
 
