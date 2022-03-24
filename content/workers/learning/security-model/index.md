@@ -23,7 +23,7 @@ For more details, refer to [this talk](https://www.infoq.com/presentations/cloud
 Beginning with a quick overview of the Workers runtime architecture:
 
 <div class="security-page-workers-architecture-diagram">
-  <img alt="Workers architecture diagram" src="./media/Workers-architecture.svg">
+  <img alt="Workers runtime architecture demonstrating design of Cloudflare's HTTP proxy and V8 isolates. Read below for more information." src="./media/Workers-architecture.svg">
 </div>
 
 <style>
@@ -93,15 +93,13 @@ As a result, the Workers patch gap is now under 24 hours. A patch published by V
 
 ## Spectre: Introduction
 
-![Spectre-vulnerability-@2x](./media/Spectre-vulnerability-@2x.png)
-
 The V8 team at Google has stated that [V8 itself cannot defend against Spectre](https://arxiv.org/abs/1902.05178). Workers does not need to depend on V8 for this. The Workers environment presents many alternative approaches to mitigating Spectre.
 
 ### What is it?
 
 Spectre is a class of attacks in which a malicious program can trick the CPU into speculatively performing computation using data that the program is not supposed to have access to. The CPU eventually realizes the problem and does not allow the program to see the results of the speculative computation. However, the program may be able to derive bits of the secret data by looking at subtle side effects of the computation, such as the effects on the cache.
 
-For more information about Spectre, [refer to the Learning Center page on the topic.](https://www.cloudflare.com/learning/security/threats/meltdown-spectre/)
+For more information about Spectre, refer to the [Learning Center page on the topic](https://www.cloudflare.com/learning/security/threats/meltdown-spectre/).
 
 ### Why does it matter for Workers?
 
@@ -160,8 +158,6 @@ Much of cryptography, after all, is technically vulnerable to brute force attack
 What can be done to slow down Spectre attacks to the point of meaninglessness?
 
 ## Freezing a Spectre attack
-
-![freeze-Spectre@2x](./media/freeze-Spectre@2x.png)
 
 ### Step 0: Do not allow native code
 
