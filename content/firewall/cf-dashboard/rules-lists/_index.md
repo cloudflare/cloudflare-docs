@@ -17,7 +17,7 @@ IP Lists are stored at the account level. To access the **Lists** interface:
 
 The **Lists** user interface displays.
 
-![Lists UI](/firewall/static/lists-ui.png)
+![The Lists user interface in the Cloudflare dashboard where you can create and manage IP Lists](/firewall/static/lists-ui.png)
 
 ## Create your first IP List
 

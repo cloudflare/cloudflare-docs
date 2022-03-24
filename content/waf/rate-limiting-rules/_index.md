@@ -10,6 +10,8 @@ Rate limiting rules allow you to define rate limits for requests matching an exp
 
 {{<Aside type="note">}}
 
+This feature is only available for customers on an Enterprise plan. Refer to [Availability](#availability) for details.
+
 For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
 {{</Aside>}}

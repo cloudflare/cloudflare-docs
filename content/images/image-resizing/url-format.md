@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: URL format
-weight: 3
+weight: 4
 ---
 
 # URL format
@@ -108,18 +108,6 @@ At least one option must be specified. Options are comma-separated (spaces are n
 
 <!-- rotate is not a generally useful option, so it’s only documented in the advanced section -->
 
-## Supported formats and limitations
-
-Cloudflare Image resizing can:
-
-- Read JPEG, PNG, GIF (including animations), and WebP images. SVG is not supported, since this format is inherently scalable and does not need resizing.
-- Generate JPEG and PNG images, and optionally AVIF or WebP.
-- Save animations as GIF or animated WebP.
-- Support ICC color profiles in JPEG and PNG images.
-- Preserve JPEG metadata. Metadata of other formats is discarded.
-
-AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
-
 ## Recommended image sizes
 
 Ideally, image sizes should match exactly the size they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`. If the exact size is not known ahead of time, use the [responsive images technique](/images/image-resizing/responsive-images/).
@@ -139,10 +127,6 @@ Here is an example of markup to configure a maximum size for your image:
 The `fit=scale-down` option ensures that the image will not be enlarged unnecessarily.
 
 You can detect device type by enabling the `CF-Device-Type` header [via Page Rule](https://support.cloudflare.com/hc/articles/229373388).
-
-## Image optimization and interaction with Polish
-
-Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use `format=auto` option to allow use of WebP and AVIF formats.
 
 ## Caching
 

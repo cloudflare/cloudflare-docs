@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Responsive images
-weight: 4
+weight: 5
 ---
 
 # Responsive images
