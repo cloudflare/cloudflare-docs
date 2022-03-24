@@ -45,7 +45,7 @@ As a last resort, add the application to a **Do Not Inspect** policy in Gateway.
 
 ### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
 
-You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Inspect applications](/cloudflare-one/policies/filtering/http-policies/application-app-types/#do-not-inspect-applications).
+You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Inspect applications](/cloudflare-one/policies/filtering/application-app-types/#do-not-inspect-applications).
 
 ### Do you, your ISP, or your country have policies in place that would block the WARP client?
 

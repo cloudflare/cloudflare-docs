@@ -21,7 +21,7 @@ To see an in-depth breakdown of SaaS applications your users have visited, click
 ![Shadow IT view](/cloudflare-one/static/documentation/shadow-it-review.png)
 
 - **Application**. This field shows each SaaS application's name and logo.
-- **Application type**. This field shows the [application type](/cloudflare-one/policies/filtering/http-policies/application-app-types/#app-types) Cloudflare Zero Trust has assigned to each application.
+- **Application type**. This field shows the [application type](/cloudflare-one/policies/filtering/application-app-types/#app-types) Cloudflare Zero Trust has assigned to each application.
 - **Application status**. This field shows an [application's status](#application-status).
 - **Secured**. This field shows whether the application is currently secured behind Access.
 - **Users**. This field shows how many users have connected to the application over the period of time you have specified in the Shadow IT Discovery overview page.
