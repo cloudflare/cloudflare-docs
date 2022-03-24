@@ -30,7 +30,7 @@ You can create and switch between environments in the dashboard:
 2.  Choose your **Worker**.
 3.  Select **production** > **Create environment**.
 
-![Selecting the Create environment button to begin configuring a new environment](./media/create-environment.png)
+![Select Create environment to begin configuring a new environment](./media/create-environment.png)
 
 ## Service environments
 
@@ -57,7 +57,7 @@ Unlike Wrangler environments, Workers Service environments do not create extra W
 3.  Choose your **Worker**.
 4.  Select **Quick edit**.
 
-![Selecting the Quick edit button to make edits to the Worker script](./media/quick-edit.png)
+![Select Quick edit to make edits to the Worker script](./media/quick-edit.png)
 
 A common workflow is to create an environment for a test feature, edit the code via the quick editor until you are satisfied with it, and then promote it to production when the code is ready.
 

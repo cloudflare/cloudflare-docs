@@ -82,7 +82,7 @@ A recommended way for testing your Cron Trigger is to first deploy it to a test 
 
 Users can review the execution history of their Cron Triggers in **Past Events** under [**Triggers**](https://dash.cloudflare.com/?to=/:account/workers) or through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
-![In Past Events, you can review the activity log of past cron triggers that you set up](./media/workers-past-events.png)
+![Review the activity log of past cron triggers in Past Events](./media/workers-past-events.png)
 
 It can take up to 30 minutes before events are displayed in **Past Events** when creating a new Worker or changing a Worker's name.
 
