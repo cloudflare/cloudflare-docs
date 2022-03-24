@@ -2,7 +2,6 @@
 /1.1.1.1/setup-1.1.1.1/ios https://developers.cloudflare.com/1.1.1.1/setup/ios/ 301
 /access/about https://developers.cloudflare.com/cloudflare-one/identity/ 301
 /access/about/ https://developers.cloudflare.com/cloudflare-one/identity/ 301
-/access/configuring-identity-providers/ https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/ 301
 /access/other-protocols/tcp-guide https://developers.cloudflare.com/cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /access/other-protocols/tcp-guide/ https://developers.cloudflare.com/cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /api-security https://developers.cloudflare.com/api-shield/ 301
@@ -30,7 +29,6 @@
 /ssl/ssl-for-saas/certificate-signing-requests https://developers.cloudflare.com/ssl/ssl-for-saas/custom-certificates/certificate-signing-requests/ 301
 /workers/about/ https://developers.cloudflare.com/workers/learning/ 301
 /workers/tooling/ https://developers.cloudflare.com/workers/cli-wrangler/ 301
-https://www./ https://developers.cloudflare.com 301
 
 # tenant_redirects
 /tenant/tutorial https://developers.cloudflare.com/tenant/get-started 301
@@ -737,7 +735,6 @@ https://www./ https://developers.cloudflare.com 301
 /zaraz/get-started/block-zaraz/ https://developers.cloudflare.com/zaraz/advanced/block-zaraz/ 301
 /zaraz/user-properties https://developers.cloudflare.com/zaraz/properties-reference 302
 /zaraz/web-api/zaraz-track/ https://developers.cloudflare.com/zaraz/web-api/track/ 301
-/waiting-room/how-to/create-via-dashboard/ https://developers.cloudflare.com/waiting-room/how-to/create-waiting-room/ 301
 
 # 1dot1_redirect
 /1.1.1.1 https://developers.cloudflare.com/1.1.1.1/ 301
