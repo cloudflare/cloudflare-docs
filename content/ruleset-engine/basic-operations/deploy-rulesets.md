@@ -91,4 +91,4 @@ Refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) and [Wo
 
 For more information on the available API endpoints for editing and deploying rulesets, refer to [Update and deploy rulesets](/ruleset-engine/rulesets-api/update/).
 
-For examples of deploying rulesets, refer to [Workflow examples](/ruleset-engine/common-use-cases/).
+For examples of deploying rulesets, refer to [Managed Ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).
