@@ -8,24 +8,32 @@ meta:
 
 # DNS_PROBE_FINISHED_NXDOMAIN
 
-When you experience a `DNS_PROBE_FINISHED_NXDOMAIN` error, you should review your Cloudflare DNS records. 
+If you or your visitors experience `DNS_PROBE_FINISHED_NXDOMAIN` errors after you [activate your domain on Cloudflare](/dns/zone-setups/full-setup/setup/), review your DNS records in Cloudflare.
+
+{{<Aside type="note">}}
+
+If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
+
+{{</Aside>}}
 
 ## Background
 
 `DNS_PROBE_FINISHED` means that the DNS request for a resource timed out and `NXDOMAIN` stands for non-existent domain. Together, these messages mean that the DNS query for a specific resource could not locate an associated domain.
 
-When a domain cannot be resolved, 
+Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
 
-  it is an issue with the DNS servers or the domain name is newly registered or not yet registered at all. NXDOMAIN can also take place due to network or DNS server problems. A response other than a valid IP address (e.g., timeout, SERVFAIL, NXDOMAIN or NOERROR) most likely points to the origin as the source of your issue. When this happens, you’ll see “DNS PROBE FINISHED NXDOMAIN” or “ERR_NAME_RESOLUTION_FAILED”
+## Potential solutions
 
-The domain is not pointed to Cloudflare name servers. Contact your domain registrar and ask that they point the domain to your Cloudflare nameservers.
+If you experience `DNS_PROBE_FINISHED_NXDOMAIN` errors with a newly activated domain, review your DNS settings in the Cloudflare dashboard.
 
-DNS propagation needs some time, wait for recent changes to take effect.
+Check your expected root domain (`example.com`) and any active subdomains (`www.example.com` or `blog.example.com`). If they do not resolve correctly, you may need to add a [root domain record](/dns/manage-dns-records/how-to/create-root-domain/) or a [subdomain record](/dns/manage-dns-records/how-to/create-subdomain/) in Cloudflare DNS.
 
-There is no subdomain configured in your DNS settings or the orgin IP address that was specfied in your DNS tab is incorrect.
+If you have the correct records set up, make sure those records are also  pointing to the correct origin IP address.
 
-If example.com does not resolve, that may indicate there is no A record for the naked domain. Go to your DNS tab and create an A record with “@” as name and your origin IP address as the value.
+After making changes to your DNS records, you may need to wait a few minutes for those changes to take effect.
 
-If you are seeing the error and experiencing slow load times, note that Cloudflare does not cache HTML by default. When a request is made to the HTML, Cloudflare will need to forward the request to your origin and respond it back to your visitors. To improve the loading time, you may consider caching the HTML only at Cloudflare. How do I cache static HTML 95? Cloudflare will serve the content to your visitors instead.
+{{<Aside type="note">}}
 
-Whois is showing Cloudflare nameservers but I am under attack mode is active and/or Cloudflare is paused on your site. Change those settings and re-check.
+For additional troubleshooting help, refer to our [Community troubleshooting guide](https://community.cloudflare.com/t/community-tip-fixing-the-dns-probe-finished-nxdomain-error/42818).
+
+{{</Aside>}}
