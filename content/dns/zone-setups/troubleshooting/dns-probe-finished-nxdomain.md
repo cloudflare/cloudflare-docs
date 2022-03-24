@@ -1,14 +1,22 @@
 ---
 title: DNS_PROBE_FINISHED_NXDOMAIN
-pcx-content-type: faq
+pcx-content-type: reference
 weight: 2
 meta:
-  title: Troubleshooting zone setups - DNS_PROBE_FINISHED_NXDOMAIN
+  title: DNS_PROBE_FINISHED_NXDOMAIN - Troubleshooting zone setups
 ---
 
 # DNS_PROBE_FINISHED_NXDOMAIN
 
-NXDOMAIN stands for non-existent domain. When a domain cannot be resolved it is an issue with the DNS servers or the domain name is newly registered or not yet registered at all. NXDOMAIN can also take place due to network or DNS server problems. A response other than a valid IP address (e.g., timeout, SERVFAIL, NXDOMAIN or NOERROR) most likely points to the origin as the source of your issue. When this happens, you’ll see “DNS PROBE FINISHED NXDOMAIN” or “ERR_NAME_RESOLUTION_FAILED”
+When you experience a `DNS_PROBE_FINISHED_NXDOMAIN` error, you should review your Cloudflare DNS records. 
+
+## Background
+
+`DNS_PROBE_FINISHED` means that the DNS request for a resource timed out and `NXDOMAIN` stands for non-existent domain. Together, these messages mean that the DNS query for a specific resource could not locate an associated domain.
+
+When a domain cannot be resolved, 
+
+  it is an issue with the DNS servers or the domain name is newly registered or not yet registered at all. NXDOMAIN can also take place due to network or DNS server problems. A response other than a valid IP address (e.g., timeout, SERVFAIL, NXDOMAIN or NOERROR) most likely points to the origin as the source of your issue. When this happens, you’ll see “DNS PROBE FINISHED NXDOMAIN” or “ERR_NAME_RESOLUTION_FAILED”
 
 The domain is not pointed to Cloudflare name servers. Contact your domain registrar and ask that they point the domain to your Cloudflare nameservers.
 
