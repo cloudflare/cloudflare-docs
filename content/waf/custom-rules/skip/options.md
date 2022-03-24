@@ -31,7 +31,7 @@ The available skip options in custom rules are the following:
     - `http_request_firewall_managed`
     - `http_ratelimit`
 
-  - Refer to [Phases](/ruleset-engine/about/#phases) for more information.
+  - Refer to [Phases](/ruleset-engine/about/phases/) for more information.
 
 - **Skip products**
 
