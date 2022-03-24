@@ -931,7 +931,9 @@
 
 # time services redirects
 /time-services/nts/usage/ /time-services/nts/ 301
+/time-services/nts/usage /time-services/nts/ 301
 /time-services/roughtime/about/ /time-services/roughtime/ 301
+/time-services/roughtime/about /time-services/roughtime/ 301
 
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
