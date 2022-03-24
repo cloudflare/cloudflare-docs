@@ -67,7 +67,7 @@ If you are unable to create a Tunnel using the installation script ("cloudflared
 
 ### Check your DNS records
 
-If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records) for your domain from the [Cloudflare dashboard](dash.cloudflare.com).
+If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 ## How can I troubleshoot a Tunnel that was configured through the CLI?
 
