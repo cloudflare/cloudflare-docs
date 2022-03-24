@@ -31,3 +31,7 @@ This example blocks requests to `www.example.com` that are not on ports 80 or 44
     </tr>
   </tbody>
 </table>
+
+{{<Aside type="note" header="Note on cf.edge.server_port field">}}
+Useful for specifying traffic on a specific port. The value is a port number in the range 1-65535. Due to the nature Cloudflare anycast network, ports should be opened in order for Cloudflare to serve traffic for other customers. Cloudflare will still listen for traffic on those ports, but as long as the rule is in place we will block traffic from reaching to the origin over layer 7 when we receive these requests.
+{{</Aside>}}
