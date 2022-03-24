@@ -930,7 +930,7 @@
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
 
 # time services redirects
-/time-services/ntp/usage/ /time-services/ntp/ 301
+/time-services/nts/usage/ /time-services/nts/ 301
 /time-services/roughtime/about/ /time-services/roughtime/ 301
 
 ### DYNAMIC REDIRECTS ###
