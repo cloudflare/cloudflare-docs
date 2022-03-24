@@ -1,19 +1,73 @@
 ---
 title: Tunnel guide
 pcx-content-type: how-to
-weight: 4
+weight: 1
 meta:
   title: Set up your first tunnel
 ---
 
 # Set up your first tunnel
 
-Follow this step-by-step guide to get your first tunnel up and running. Before you start, make sure you:
+When setting up your first Cloudflare Tunnel, you have the option to create it:
+* Remotely on the Zero Trust dashboard
+* Locally, using your CLI
 
-1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-2.  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+## Remote setup (Dashboard setup)
 
-## 1. Download and install `cloudflared`
+Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard. Before you start, make sure you:
+
+*  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+*  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+
+1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Tunnels**. Click **Create a tunnel**.
+
+1. Enter a name for your tunnel. We suggest choosing a name that reflects the type of resources you want to connect through this tunnel (for example, `enterprise-VPC-01`).
+
+1. Click **Save tunnel**.
+
+1. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
+
+1. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
+
+    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
+
+1. Click **Next**.
+
+The next steps depend on whether you want to [connect an application](#connect-an-application) or [connect a network](#connect-a-network).
+
+### Connect an application
+
+Follow these steps to connect an application through your tunnel. If you're looking to connect a network, skip to the [Connect a network section](#connect-a-network).
+
+1. In the **Public Hostnames** tab, select an application from the drop-down menu and specify any subdomain or path information.
+
+1. Specify a service, for example `https://localhost:8000`.
+
+1. Under **Additional application settings**, specify any parameters you would like to add to your tunnel configuration.
+
+1. Click **Save `<tunnel-name>`**.
+
+### Connect a network
+
+Follow these steps to connect a private network through your tunnel.
+
+1. In the **Private Networks** tab, add an IP or CIDR.
+1. 1. Click **Save `<tunnel-name>`**.
+
+### View your tunnel
+
+Once you click **Save `<tunnel-name>`**, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
+
+![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
+
+## Local setup (CLI setup)
+
+Follow this step-by-step guide to get your first tunnel up and running using the CLI. Before you start, make sure you:
+
+*  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
+*  [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708)
+
+### 1. Download and install `cloudflared`
 
 <details>
 <summary>Windows</summary>
@@ -55,7 +109,7 @@ First, download `cloudflared` on your machine. Visit the [downloads](/cloudflare
 
 Next, install `cloudflared`.
 
-### .deb install
+#### .deb install
 
 Use the deb package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` is used in this example.
 
@@ -63,7 +117,7 @@ Use the deb package manager to install `cloudflared` on compatible machines. `am
 $ wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb dpkg -i cloudflared-linux-amd64.deb
 ```
 
-### ​.rpm install
+#### ​.rpm install
 
 Use the rpm package manager to install `cloudflared` on compatible machines. `amd64 / x86-64` is used in this example.
 
@@ -96,7 +150,7 @@ mv /root/cloudflared/cloudflared /usr/bin/cloudflared
 </div>
 </details>
 
-## 2. Authenticate `cloudflared`
+### 2. Authenticate `cloudflared`
 
 ```bash
 $ cloudflared tunnel login
@@ -107,7 +161,7 @@ Running this command will:
 - Open a browser window and prompt you to log into your Cloudflare account. After logging into your account, select your hostname.
 - Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
-## 3. Create a tunnel and give it a name
+### 3. Create a tunnel and give it a name
 
 ```bash
 $ cloudflared tunnel create <NAME>
@@ -127,7 +181,7 @@ Confirm that the tunnel has been successfully created by running:
 $ cloudflared tunnel list
 ```
 
-## 4. Create a configuration file
+### 4. Create a configuration file
 
 Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
@@ -156,7 +210,7 @@ Confirm that the configuration file has been successfully created by running:
 $ cat config.yml
 ```
 
-## 5. Start routing traffic
+### 5. Start routing traffic
 
 Now assign a CNAME record that points traffic to your tunnel subdomain.
 
@@ -180,7 +234,7 @@ You can confirm that the route has been successfully established by running:
 $ cloudflared tunnel route ip show
 ```
 
-## 6. Run the tunnel
+### 6. Run the tunnel
 
 Run the tunnel to proxy incoming traffic from the tunnel to any number of services running locally on your origin.
 
@@ -200,7 +254,7 @@ Cloudflare Tunnel can install itself as a system service on Linux and Windows an
 
 {{</Aside>}}
 
-## 7. Check the tunnel
+### 7. Check the tunnel
 
 Your tunnel configuration is complete! If you want to get information on the tunnel you just created, you can run:
 

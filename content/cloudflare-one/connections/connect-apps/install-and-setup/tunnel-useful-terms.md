@@ -6,6 +6,8 @@ weight: 6
 
 # Useful terms
 
+{{<render file="_cloudflared-new-ui.md">}}
+
 ## Tunnel
 
 A tunnel is a secure, outbound-only pathway you can establish between your origin and the Cloudflare edge. Each tunnel you create will be assigned a [name](#tunnel-name) and a [UUID](#tunnel-uuid).

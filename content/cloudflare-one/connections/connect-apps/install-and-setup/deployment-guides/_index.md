@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Deploy cloudflared
-weight: 1
+weight: 8
 ---
 
 # Deploying `cloudflared`

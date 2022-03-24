@@ -6,6 +6,8 @@ weight: 5
 
 # Tunnel permissions
 
+{{<render file="_cloudflared-new-ui.md">}}
+
 Cloudflare Tunnel requires two files:
 
 - An [account certificate](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem) (the `cert.pem`)
