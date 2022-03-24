@@ -1,10 +1,10 @@
 ---
 pcx-content-type: reference
-title: Create a subdomain
-weight: 3
+title: Create subdomain
+weight: 4
 ---
 
-# Create a subdomain
+# Create a subdomain record
 
 Most subdomains serve a specific purpose within the overall context of your website. For example, `blog.example.com` might be your blog, `support.example.com` could be your customer help portal, and `store.example.com` would be your e-commerce site.
 
@@ -28,16 +28,8 @@ For more guidance on redirecting a subdomain — either to your main domain or a
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), that certificate also covers all first-level subdomains (`blog.example.com`).
-
-For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](/ssl/edge-certificates/universal-ssl/limitations/#full-setup).
+{{<render file="_ssltls-subdomains.md">}}
 
 ## Customize subdomain behavior
 
-If you want to customize Cloudflare settings for individual subdomains, your approach will vary depending on your plan.
-
-Enterprise customers can set up custom settings and access for a specific subdomain within Cloudflare with [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
-
-All other customers can set up subdomain-specific [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to alter Cloudflare settings.
-
-If you want a subdomain's DNS settings managed totally outside of Cloudflare — meaning this subdomain can be managed by individuals without access to your Cloudflare account — refer to [Delegating subdomains outside of Cloudflare](https://support.cloudflare.com/hc/articles/360021357131).
+{{<render file="_subdomain-customization.md">}}
