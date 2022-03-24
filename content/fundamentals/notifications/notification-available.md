@@ -345,7 +345,7 @@ When a dedicated certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
-Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f) for more information.
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f) for more information.
 
 </div>
 </details>
@@ -364,7 +364,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/). 
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates). 
 
 </div>
 </details>
@@ -412,13 +412,13 @@ All Cloudflare plans.
 <div>
 
 **Who is it for?**
-Customers that upload their own certificate to use with zone-level AOP to secure connections from Cloudflare to their Origin server.
+Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
 **Included with**
 Authenticated Origin Pull
 
 **What should you do if you receive one?**
-Upload a renewed certificate to use for zone-level AOP. 
+Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/). 
 
 </div>
 </details>
