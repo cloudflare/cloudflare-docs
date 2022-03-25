@@ -15,16 +15,16 @@ Cloudflare Access generates two types of audit logs:
 
 Cloudflare logs an Access authentication event whenever a user or service attempts to log in to an application, whether the attempt succeeds or not.
 
-Authentication events do not capture actions the user takes once they've authenticated.
+Authentication events do not capture actions the user takes once they have authenticated.
 
-Access retains authentication logs for 6 months.
+Access retains authentication logs for six months.
 
 ### Where to find Access Audit Logs
 
 Access audit logs are available in the Logs section of the Zero Trust dashboard.
 Access provides the following view types of the logs:
 
-*   **User**: all unique users with at least one successful login during the current calendar month.
+*   **User**: All unique users with at least one successful login during the current calendar month.
 *   **Access Audit Log**: Changes made to Access policies across the account.
 *   **Access Requests**: All authentication attempts. Details include the identity provider or login method and the IP address of the user.
 
@@ -36,17 +36,17 @@ Access authentication logs contain the following fields:
 
 | Field | Description |
 |-------|-------------|
-| **user\_email** |  The email address of the authenticating user |
-| **ip\_address** |  The IP address of the authenticating user |
-| **app\_uid** | The unique identifier for the protected application |
-| **add\_domain** |  The URL of the protected application |
-| **action** | The event that occurred, such as a login attempt |
+| **user\_email** |  The email address of the authenticating user. |
+| **ip\_address** |  The IP address of the authenticating user. |
+| **app\_uid** | The unique identifier for the protected application. |
+| **add\_domain** |  The URL of the protected application. |
+| **action** | The event that occurred, such as a login attempt. |
 | **allowed** | The result of the authentication event. |
 | **created\_at** | The event timestamp. |
 | **connection**  | The IdP used to authenticate. |
-| **country** | The country associated with the user’s IP address |
-| **ray\_id** | A unique identifier for every request through Cloudflare |
-| **app\_type** | Specifies if the app is self-hosted or SaaS |
+| **country** | The country associated with the user’s IP address. |
+| **ray\_id** | A unique identifier for every request through Cloudflare. |
+| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
 
 ### Access Requests Audit API endpoint
 
@@ -58,10 +58,10 @@ The [Access Requests Audit](https://api.cloudflare.com/#access-requests-access-r
 
 | Name /type | Description/example | Constraints |
 | ---------- | ------------------- | ----------- |
-| limit (number) | Limit the number of results `25` | - |
-| direction (string) | Change the direction of the chronological sorting. `"desc"` | default value: `desc`, valid values: `desc`, `asc` |
-| since (date-time string) | 	The time on which to begin query `"2020-07-01T05:20:00Z"` | read only |
-| until (date-time string)	| The time on which to end qeury `"2020-10-01T05:20:00Z"` | read only |
+| limit (number) | Limit the number of results `25`. | - |
+| direction (string) | Change the direction of the chronological sorting `"desc"`. | default value: `desc`, valid values: `desc`, `asc` |
+| since (date-time string) | 	The time the query begins `"2020-07-01T05:20:00Z"`. | read only |
+| until (date-time string)	| The time the query ends `"2020-10-01T05:20:00Z"`. | read only |
 
 #### cURL (example)
 
@@ -105,7 +105,7 @@ A video guide is also available:
 
 ### Cloudflare logging
 
-Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (for more information about Cloudflare HTTP logging, see the [Cloudflare Logs](/logs/) section).
+Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare Dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
 
 Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/cloudflare-one/glossary/#json-web-token). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
 
@@ -124,9 +124,9 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "EdgeResponseBytes": 4600,
    "EdgeResponseStatus": 200,
    "EdgeStartTimestamp": "2019-11-10T09:51:07Z",
-   "RayID": "5y1250bcjd621y99"
-   "RequestHeaders":{"cf-access-user":"srhea"},
-}
+   "RayID": "5y1250bcjd621y99",
+   "RequestHeaders":{"cf-access-user":"srhea"}
+},
 {
    "ClientIP": "198.51.100.206",
    "ClientRequestHost": "jira.widgetcorp.tech",
@@ -137,21 +137,23 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
    "EdgeResponseBytes": 4570,
    "EdgeResponseStatus": 200,
    "EdgeStartTimestamp": "2019-11-10T09:51:27Z",
-   "RayID": "yzrCqUhRd6DVz72a"
-   "RequestHeaders":{"cf-access-user":"srhea"},
+   "RayID": "yzrCqUhRd6DVz72a",
+   "RequestHeaders":{"cf-access-user":"srhea"}
 }
 ```
 
-Using the `cf-access-user` field
-In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior.
-Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/` panel, but the logs can only identify user interactions that result in a new HTTP request.
+### Using the `cf-access-user` field
+
+In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Configure custom fields](/logs/reference/logpush-api-configuration/custom-fields/) for instructions.
+
+Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/panel`, but the logs can only identify user interactions that result in a new HTTP request.
 
 ### Cloudflare logpush integration
 
 Access integrates with the Cloudflare Logpush API, so you can export per-request audit logs to third-party Security Information and Event Management (SIEM) tools.
 
-Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every 5 minutes.
+Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every five minutes.
 
-For instructions on setting up Logpush, see [Manage the Logpush API](/logs/get-started/enable-destinations/).
+For instructions on setting up Logpush, refer to [Manage the Logpush API](/logs/get-started/enable-destinations/).
 
-For more on exporting per-request Access logs, see [Understanding the Logpush API](/logs/reference/logpush-api-configuration/).
+For more on exporting per-request Access logs, refer to [Understanding the Logpush API](/logs/reference/logpush-api-configuration/).
