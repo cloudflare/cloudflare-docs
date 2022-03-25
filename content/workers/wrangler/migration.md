@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Migrating from Wrangler 1
-weight: 5
+weight: 2
 ---
 
 ## [WIP] Migration Guide

@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Comparing Wrangler 1 & 2
-weight: 2
+weight: 3
 ---
 
 ## What's new
