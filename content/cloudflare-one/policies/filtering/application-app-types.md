@@ -16,11 +16,11 @@ Gateway allows you to build DNS, Network, and HTTP policies based on application
 
 3.  [Create a new policy](/cloudflare-one/policies/filtering/http-policies/), or edit an existing one.
 
-4.  In the **Selector** drop-down menu, select the _Application_ option.
+4.  In the _Selector_ drop-down menu, select the _Application_ option.
 
-5.  In the **Operator** drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your policy.
+5.  In the _Operator_ drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your policy.
 
-6.  In the **Value** drop-down menu, check the applications or app types you would like to control with your policy.
+6.  In the _Value_ drop-down menu, check the applications or app types you would like to control with your policy.
 
     ![Creating a policy for applications](/cloudflare-one/static/documentation/policies/applications-policy.png)
 
