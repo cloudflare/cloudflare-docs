@@ -45,7 +45,7 @@ From the **Where will you host...** dropdown on the page, select _ZIP archive (.
 
 To do your first export, select **Start static site export** (this operation may take a while), and when it completes, save the ZIP file somewhere you can easily find later.
 
-![Exporting your WordPress site by  selecting Start static site export in the WordPress dashboard](./media/wordpress--export.png)
+![Exporting your WordPress site by selecting Start static site export in the WordPress dashboard](./media/wordpress--export.png)
 
 ## Creating the Workers project
 

@@ -987,7 +987,7 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 3.  Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4.  If you see your site, you have successfully authorized users to your Workers application, using Auth0.
 
-![After successfuly setup, you will be able to log into your application with Auth0's login page](./media/example-vid.gif)
+![After successful setup, you will be able to log into your application with Auth0's login page](./media/example-vid.gif)
 
 ## Conclusion
 

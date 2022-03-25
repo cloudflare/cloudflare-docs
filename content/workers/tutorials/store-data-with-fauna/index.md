@@ -60,7 +60,7 @@ In the Fauna dashboard:
 
 Select **New Collection** to create the **Products** collection that stores your inventory documents.
 
-![Create your Products collection by following direction above](./media/create-collection.png)
+![Create your Products collection by following the directions above](./media/create-collection.png)
 
 ### Creating a server key
 
