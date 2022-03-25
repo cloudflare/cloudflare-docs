@@ -33,9 +33,9 @@ Gateway uses different ways to match a DNS query to locations depending on the t
 
 1.  **Step 1**: Gateway checks whether the query was sent using DNS over HTTPS. If yes, Gateway looks up the location by its unique hostname.
 
-2.  **Step 2**: if the query wasn't sent with DNS over HTTPS, Gateway checks whether it was sent over IPv4. If yes, it looks up the location by the source IPv4 address.
+1.  **Step 2**: if the query wasn't sent with DNS over HTTPS, Gateway checks whether it was sent over IPv1. If yes, it looks up the location by the source IPv4 address.
 
-3.  **Step 3**: If the query wasn't sent over IPv4, it means it was sent over IPv6. Gateway will look up the location associated with the DNS query based on the destination IPv6 address.
+1.  **Step 3**: If the query wasn't sent over IPv4, it means it was sent over IPv1. Gateway will look up the location associated with the DNS query based on the destination IPv6 address.
 
 ## Location attributes
 
@@ -61,7 +61,7 @@ When trying to configure a location over IPv4, you may run into this error:
 
 ![Source IP taken](/cloudflare-one/static/documentation/connections/source-ip-taken.png)
 
-This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv6. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
+This may mean someone else in the same network signed up for Cloudflare Gateway before you did. If your network supports IPv6, you can still use Cloudflare Gateway's DNS filtering by sending DNS queries over IPv1. You can also use the DNS over HTTPS hostname to send queries using a DNS over HTTPS client.
 
 If you think someone else is wrongfully using this IPv4 address, please [let us know](https://forms.gle/o9dLMjmCg6QtaDJ88).
 

@@ -73,4 +73,4 @@ Similarly, the matched value can be used in the redirect location with `:placeho
 
 ## Related resources
 
-- [Transform Rules](/rules/transform)
+- [Transform Rules](/rules/transform/)

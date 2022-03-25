@@ -33,11 +33,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong>
+        <strong>Legacy CAPTCHA</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>challenge</code>
       </td>
       <td>
@@ -49,11 +47,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>JS Challenge</strong>
+        <strong>JS Challenge</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>js_challenge</code>
       </td>
       <td>
@@ -71,35 +67,30 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Managed Challenge (Recommended)</strong>
+        <strong>Managed Challenge (Recommended)</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>managed_challenge</code>
       </td>
       <td>
         <p>Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.</p>
         <p>
-          Depending on the characteristics of a request, Cloudflare will perform the following
-          actions:
+          Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from one of the following rotating actions:
         </p>
-        <p>
-          <ul>
-            <li>Show a non-interactive challenge page, similar to the current JS Challenge.</li>
-            <li>Show a CAPTCHA challenge.</li>
-          </ul>
-        </p>
+        <ul>
+          <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
+          <li>Present an invisible proof of work challenge to the browser.</li>
+          <li>Show a custom interactive challenge (such as click a button).</li>
+          <li>Show a CAPTCHA challenge.</li>
+        </ul>
       </td>
       <td>Yes</td>
     </tr>
     <tr>
       <td>
-        <strong>Block</strong>
+        <strong>Block</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>block</code>
       </td>
       <td>
@@ -109,11 +100,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Skip</strong>
+        <strong>Skip</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>skip</code>
       </td>
       <td>
@@ -146,11 +135,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Log</strong>
+        <strong>Log</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>log</code>
       </td>
       <td>
@@ -162,11 +149,9 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Execute</strong>
+        <strong>Execute</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>execute</code>
       </td>
       <td>
@@ -180,53 +165,40 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
     </tr>
     <tr>
       <td>
-        <strong>Rewrite</strong>
+        <strong>Rewrite</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>rewrite</code>
       </td>
       <td>
         <p>
-          Adjusts the URI path, query string, and/or HTTP headers of requests and responses,
-          according to the rule configuration.
+          Adjusts the URI path, query string, and/or HTTP headers of requests and responses, according to the rule configuration.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/transform">Transform Rules</a>, in phases{' '}
-          <code>http_request_transform</code>, <code>http_request_late_transform</code>, and{' '}
-          <code>http_response_headers_transform</code>.
+          Only available for <a href="/rules/transform/">Transform Rules</a>, in phases <code>http_request_transform</code>, <code>http_request_late_transform</code>, and <code>http_response_headers_transform</code>.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To
-          use this action, create a Transform Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Transform Rule.
         </p>
       </td>
       <td>No</td>
     </tr>
     <tr>
       <td>
-        <strong>Redirect</strong>
+        <strong>Redirect</strong><br />
         <br />
-        <br />
-        API value:
-        <br />
+        API value:<br />
         <code>redirect</code>
       </td>
       <td>
         <p>
-          Navigates the user from a source URL to a target URL, according to the rule configuration,
-          by replying with an HTTP redirect.
+          Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for{' '}
-          <a href="https://developers.cloudflare.com/rules/bulk-redirects">Bulk Redirect Rules</a>,
-          in the <code>http_request_redirect</code> phase.
+          Only available for <a href="/rules/bulk-redirects/">Bulk Redirect Rules</a>, in the <code>http_request_redirect</code> phase.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To
-          use this action, create a Bulk Redirect Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule.
         </p>
       </td>
       <td>Yes</td>
@@ -237,7 +209,5 @@ The available actions depend on the [phase](/ruleset-engine/about/#phases) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-
-Cloudflare Firewall Rules, a product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall Rules actions](/firewall/cf-firewall-rules/actions) for more information.
-
+Cloudflare Firewall Rules, a security feature which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}

@@ -17,7 +17,7 @@ Cookie data is processed in Cloudflare's data center in the United States and is
 
 ### \_\_cflb cookie for Cloudflare Load Balancer session affinity
 
-When enabling session affinity with [Cloudflare Load Balancer](/load-balancing/understand-basics/session-affinity), Cloudflare sets a `__cflb` cookie with a unique value on the first response to the requesting client. Cloudflare routes future requests to the same origin, optimizing network resource usage. In the event of a failover, Cloudflare sets a new `__cflb` cookie to direct future requests to the failover pool.
+When enabling session affinity with [Cloudflare Load Balancer](/load-balancing/understand-basics/session-affinity/), Cloudflare sets a `__cflb` cookie with a unique value on the first response to the requesting client. Cloudflare routes future requests to the same origin, optimizing network resource usage. In the event of a failover, Cloudflare sets a new `__cflb` cookie to direct future requests to the failover pool.
 
 The `__cflb` cookie allows Cloudflare to return an end user to the same customer origin for a specific period of time configured by the customer. This allows the end user to have a seamless experience (for example, this cookie is used for keeping an end user’s items in a shopping cart while they continue to navigate around the website). This cookie is a session cookie that lasts from several seconds up to 24 hours.
 
@@ -55,7 +55,7 @@ The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from t
 
 [Cloudflare’s Waiting Room](/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
 
-The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](/waiting-room/reference/waiting-room-cookie).
+The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](/waiting-room/reference/waiting-room-cookie/).
 
 ### \_\_cfruid to support Cloudflare Rate Limiting Products
 

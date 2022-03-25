@@ -26,7 +26,7 @@ You can configure domains to use the device's local resolver. Cloudflare Zero Tr
 
 1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-2.  Scroll down to **Local Domain Fallback** and click **Manage**.
+1.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
     ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
@@ -40,7 +40,7 @@ You can deploy Cloudflare Zero Trust in split tunnel mode and exclude IP address
 
 1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-2.  Scroll down to **Local Domain Fallback** and click **Manage**.
+1.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
     ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 

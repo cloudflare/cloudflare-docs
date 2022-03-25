@@ -87,7 +87,7 @@ cloudflared tunnel route ip show
 
 ## Configure and run the Tunnel
 
-Next, create a configuration file for the Tunnel. The following template contains the required fields but can be further modified as needed.
+Next, create a configuration file for the tunnel in the `.cloudflared` default directory. The following template contains the required fields but can be further modified as needed.
 
 ```yaml
 tunnel: 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -102,7 +102,7 @@ You can now run the Tunnel. The command below will connect this instance of `clo
 cloudflared tunnel run grafana
 ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ![Config File](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel/config-file.png)
 
@@ -120,7 +120,7 @@ By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certai
 
 1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
-2.  Click **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
+1.  Click **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
 
 ![Split Tunnel](/cloudflare-one/static/secure-web-gateway/split-tunnel/split-tunnel-entries.png)
 
@@ -138,9 +138,9 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Navigate to **Settings > Devices > Device enrollment**.
 
-2.  Click **Manage**.
+1.  Click **Manage**.
 
-3.  Click **Add a rule**.
+1.  Click **Add a rule**.
 
     ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
 
@@ -148,7 +148,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
     ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
-4.  Click **Save**.
+1.  Click **Save**.
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
@@ -173,15 +173,15 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
-2.  Once the client is installed, click the gear icon.
+1.  Once the client is installed, click the gear icon.
 
     ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
-3.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
+1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
     ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
-4.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
     ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 

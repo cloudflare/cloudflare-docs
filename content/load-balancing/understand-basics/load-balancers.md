@@ -10,7 +10,7 @@ weight: 3
 
 {{<Aside type="note">}}
 
-For more background information on what load balancers are and how they work, check out our <a href="https://www.cloudflare.com/learning/performance/what-is-load-balancing/">Learning Center</a>.
+For more background information on what load balancers are and how they work, check out our [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).
 
 {{</Aside>}}
 
@@ -32,7 +32,7 @@ Ensure HTTP Keep-Alive connections are enabled on your origin. Cloudflare reuses
 
 ### Session cookies
 
-**When using HTTP cookies to track and bind user sessions to a specific server**, configure [Session Affinity](/load-balancing/session-affinity/) to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
+**When using HTTP cookies to track and bind user sessions to a specific server**, configure [Session Affinity](/load-balancing/understand-basics/session-affinity/) to parse HTTP requests by cookie header. Doing so directs each request to the correct application server even when HTTP requests share the same TCP connection due to keep-alive.
 
 **For example, F5 BIG-IP load balancers set a session cookie at the beginning of a TCP connection** (if none exists) and then ignore all cookies from subsequent HTTP requests on the same TCP connection. This tends to break session affinity because Cloudflare sends multiple HTTP sessions on the same TCP connection. Configuring the load balancer to parse HTTP requests by cookie headers avoids this issue.
 

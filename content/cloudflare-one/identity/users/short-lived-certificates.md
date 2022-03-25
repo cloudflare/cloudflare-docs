@@ -20,13 +20,13 @@ To protect a resource behind Cloudflare Access, first follow [these instructions
 
 1.  On the Zero Trust dashboard, navigate to **Access > Service Auth**.
 
-2.  In the dropdown, choose the application that represents the resource you secured in Step 1.
+1.  In the dropdown, choose the application that represents the resource you secured in Step 1.
 
     ![New Cert](/cloudflare-one/static/documentation/applications/non-http/slc-dropdown.png)
 
-3.  Click **Generate certificate**. A row will appear with a public key scoped to your application.
+1.  Click **Generate certificate**. A row will appear with a public key scoped to your application.
 
-4.  Save the key or keep it somewhere convenient for configuring your server.
+1.  Save the key or keep it somewhere convenient for configuring your server.
     You can return to copy this public key any time in the Service Auth dashboard.
 
     ![Pub Key Cert](/cloudflare-one/static/documentation/applications/non-http/slc-key.png)
@@ -49,19 +49,19 @@ $ sudo adduser jdoe
 
 1.  Save the public key generated from the dashboard in Step 2 as a new `.pub` file to your local system.
 
-2.  Use the following command to change directories to the SSH configuration directory on the remote target machine:
+1.  Use the following command to change directories to the SSH configuration directory on the remote target machine:
 
 ```sh
 $ cd /etc/ssh
 ```
 
-3.  Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
+1.  Once there, you can use the following command to both generate the file and open a text editor to input/paste the public key.
 
 ```sh
 $ vim ca.pub
 ```
 
-4.  In the `ca.pub` file, paste the public key generated in Access without any modifications. Save the file. In some systems, you may need to use the following command to force the file to save depending on your permissions.
+1.  In the `ca.pub` file, paste the public key generated in Access without any modifications. Save the file. In some systems, you may need to use the following command to force the file to save depending on your permissions.
 
 ```bash
 :w !sudo tee %
@@ -80,15 +80,15 @@ The first change requires that you uncomment a field already set in most default
 $ vim /etc/ssh/sshd_config
 ```
 
-2.  Navigate to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
+1.  Navigate to the row named `PubkeyAuthentication`. In most default configurations, the row will appear commented out as follows:
 
 ```bash
 # PubkeyAuthentication yes
 ```
 
-3.  Remove the # symbol to uncomment the line; keep the setting `yes` enabled.
+1.  Remove the # symbol to uncomment the line; keep the setting `yes` enabled.
 
-4.  Next, add a new line below `PubkeyAuthentication` as follows:
+1.  Next, add a new line below `PubkeyAuthentication` as follows:
 
 ```bash
 TrustedUserCAKeys /etc/ssh/ca.pub

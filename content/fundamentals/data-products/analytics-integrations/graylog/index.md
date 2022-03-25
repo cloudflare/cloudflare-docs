@@ -10,7 +10,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you haven't used Cloudflare Logs before, visit our [Logs documentation](/logs) for
+If you haven't used Cloudflare Logs before, visit our [Logs documentation](/logs/) for
 more details. Contact your Cloudflare Customer Account Team to enable logs for
 your account.
 
@@ -20,7 +20,7 @@ Before sending your Cloudflare log data to Graylog, make sure that you:
 
 - Have an existing Graylog installation. Both single-node and cluster configurations are supported
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](/logs/about)
+- Configure [Logpush](/logs/about/)
 
 {{<Aside type="note" header="Note">}}
 
@@ -191,7 +191,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 {{<Aside type="note" header="Note">}}
 
-To get bot requests identified correctly, use only one Cloudflare Firewall Rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one firewall rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
 
 {{</Aside>}}
 

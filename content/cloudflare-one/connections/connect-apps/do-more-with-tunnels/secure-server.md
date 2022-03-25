@@ -26,39 +26,39 @@ Alternatively, you may also use operating system (OS)-level firewall rules to di
 
 1.  Check your current firewall rules.
 
-```sh
-$ sudo iptables -L
-```
+    ```sh
+    $ sudo iptables -L
+    ```
 
-2.  Allow `localhost` to communicate with itself.
+1.  Allow `localhost` to communicate with itself.
 
-```sh
-$ sudo iptables -A INPUT -i lo -j ACCEPT
-```
+    ```sh
+    $ sudo iptables -A INPUT -i lo -j ACCEPT
+    ```
 
-3.  Allow already established connection and related traffic.
+1.  Allow already established connection and related traffic.
 
-```sh
-$ sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-```
+    ```sh
+    $ sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    ```
 
-4.  Allow new SSH connections.
+1.  Allow new SSH connections.
 
-```sh
-$ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
-```
+    ```sh
+    $ sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+    ```
 
-5.  Drop all other ingress traffic.
+1.  Drop all other ingress traffic.
 
-{{<Aside header="Warning:">}}
-Be very careful with the following command because if you didn't preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
-{{</Aside>}}
+    {{<Aside header="Warning:">}}
+    Be very careful with the following command because if you didn't preserve the current SSH connection or allow new SSH connections, you would be logged out and unable to SSH back into the system again.
+    {{</Aside>}}
 
-```sh
-$ sudo iptables -A INPUT -j DROP
-```
+    ```sh
+    $ sudo iptables -A INPUT -j DROP
+    ```
 
-6.  After setting the firewall rules, use this command to check the current `iptables` settings:
+1.  After setting the firewall rules, use this command to check the current `iptables` settings:
 
 ```sh
 $ sudo iptables -L

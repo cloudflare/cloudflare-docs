@@ -30,7 +30,7 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 The process involves two steps:
 
 1.  Setting up **Require WARP** as a device posture check.
-2.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
+1.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
 
 ## Set up a device posture check
 
@@ -38,9 +38,9 @@ The process involves two steps:
 
     ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 
-2.  Select **WARP**.
+1.  Select **WARP**.
 
-3.  Click **Save**.
+1.  Click **Save**.
 
 You are now ready to start requiring WARP for your Access applications.
 
@@ -48,12 +48,12 @@ You are now ready to start requiring WARP for your Access applications.
 
 1.  On the Zero Trust dashboard, navigate to **Access > Applications**.
 
-2.  Locate the application for which you want to require WARP.
+1.  Locate the application for which you want to require WARP.
 
-3.  Click **Edit**.
+1.  Click **Edit**.
 
-4.  To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _WARP_ selected.
+1.  To have an existing policy require WARP, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _WARP_ selected.
 
-5.  Click **Save rule**.
+1.  Click **Save rule**.
 
 Before granting access to the application, your policy will now check that the user is running the WARP client on their machine.

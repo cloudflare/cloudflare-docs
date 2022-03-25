@@ -31,7 +31,7 @@ This tutorial assumes:
 1.  You have an existing GitHub Pages site using [Jekyll](https://jekyllrb.com/)
 2.  You have some familiarity with running Ruby's command-line tools, and have both `gem` and `bundle` installed.
 3.  You know how to use a few basic Git operations, including `add`, `commit`, `push`, and `pull`.
-4.  You have read the [Get Started](/pages/getting-started/) guide for Cloudflare Pages.
+4.  You have read the [Get Started](/pages/get-started/) guide for Cloudflare Pages.
 
 If you do not have Rubygems (`gem`) or Bundler (`bundle`) installed on your machine, refer to the installation guides for [Rubygems](https://rubygems.org/pages/download) and [Bundler](https://bundler.io/).
 
@@ -129,7 +129,7 @@ After you have configured your site, you can begin your first deploy. You should
 
 {{<Aside type="note">}}
 
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/getting-started/).
+For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 {{</Aside>}}
 
@@ -141,7 +141,7 @@ If you are using a [custom domain with GitHub Pages](https://docs.github.com/en/
 
 Note that it may take some time for DNS caches to expire and for this change to be reflected, depending on the DNS TTL (time-to-live) value you set when you originally created the record.
 
-Refer to the [adding a custom domain](/pages/getting-started/#adding-a-custom-domain) section of the Get started guide for a list of detailed steps.
+Refer to the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) section of the Get started guide for a list of detailed steps.
 
 ## What's next?
 

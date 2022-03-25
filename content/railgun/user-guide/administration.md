@@ -6,25 +6,22 @@ weight: 10
 
 # Administration
 
-## Overview
-
 Multiple Railguns may be added to a Cloudflare account. Only one registered and activated Railgun may be used per domain.
 
 Railgun can be load-balanced and multiple Railgun daemons can be used per activated public IP and token. There is no need to register each Railgun daemon.
 
 ## Adding a Railgun
 
-1.  Navigate to the [Railgun listing page](https://www.cloudflare.com/a/account/my-account/).
-2.  Enter the descriptive title of your choosing.
-3.  Press the `Add` button.
-4.  Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
-5.  Start the Railgun daemon so that it can proceed with activation.
-6.  If everything went smoothly, the red icon will change to a green check-mark after refreshing the page and the Railgun can then be toggled on.
-7.  If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
+1. Navigate to the [Railgun page](https://dash.cloudflare.com/?to=/:account/configurations/railgun).
+2. In **Enter new Railgun name text box**, enter a descriptive title for your Railgun, and click the `Create` button.
+3. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
+4. Start the Railgun daemon so that it can proceed with activation.
+5. If everything went smoothly, the red icon will change to a green checkmark after refreshing the page and the Railgun can then be toggled on.
+6. If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
 
 ## Enabling Railgun
 
-1.  Navigate to the Railgun Settings section of the Speed page for your domain for your domain and select the desired Railgun from the drop-down menu.
+1.  Navigate to the [Railgun page](https://dash.cloudflare.com/?to=/:account/configurations/railgun), and select the desired Railgun from the drop-down menu.
 2.  Switch the toggle to `On`.
 
 ## Collecting and Reporting Statistics

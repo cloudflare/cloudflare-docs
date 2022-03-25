@@ -43,7 +43,7 @@ The following table summarizes the object properties:
       </tr>
         <tr>
           <td><code>expression</code><br />{{<type>}}String{{</type>}}</td>
-          <td>A Rules language expression used to evaluate requests. For more information, refer to <a href="https://developers.cloudflare.com/ruleset-engine/rules-language/expressions">Expressions</a>.
+          <td>A Rules language expression used to evaluate requests. For more information, refer to <a href="/ruleset-engine/rules-language/expressions/">Rule expressions</a>.
           </td>
           <td></td>
         </tr>

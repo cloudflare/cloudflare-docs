@@ -103,4 +103,4 @@ Once you have added the necessary features, you or your customer can move on to 
 
 Learn how to modify zone settings and other services.
 
-<p>{{<button type="primary" href="/tenant/get-started/service-configuration">}}Step 4: Service configuration{{</button>}}</p>
+<p>{{<button type="primary" href="/tenant/get-started/service-configuration/">}}Step 4: Service configuration{{</button>}}</p>

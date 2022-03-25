@@ -8,11 +8,7 @@ weight: 5
 
 You can manage your waiting rooms using the [Waiting Rooms dashboard](/waiting-room/how-to/waiting-room-dashboard/) or the [API](/waiting-room/reference/waiting-room-api/).
 
-{{<Aside type="note">}}
-
-For details about updating an active waiting room, see <a href="/reference/best-practices">Best practices</a>.
-
-{{</Aside>}}
+{{<Aside type="note">}}For details about updating an active waiting room, refer to [Best practices](/waiting-room/reference/best-practices/).{{</Aside>}}
 
 ## Using the dashboard
 
@@ -22,7 +18,7 @@ For details about updating an active waiting room, see <a href="/reference/best-
 2.  On a record, click **Edit**.
 3.  Click **Settings**.
 4.  Edit the settings. For a description of settings, refer to [Configuration settings](/waiting-room/reference/configuration-settings/).
-5.  Click **Next**. If you have access to [customized templates](/waiting-room/additional-options/customize-waiting-room/), you could also adjust the template.
+5.  Click **Next**. If you have access to [customized templates](/waiting-room/how-to/customize-waiting-room/), you could also adjust the template.
 6.  Once you get to **Review**, click **Save**.
 
 ### Delete a waiting room

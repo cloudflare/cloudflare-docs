@@ -42,15 +42,15 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
     curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=banned" -H "Authorization: Token <API token>" > mcas.txt
     ```
 
-2.  Remove the leading `.`, for example by running `sed` from the CLI:
+1.  Remove the leading `.`, for example by running `sed` from the CLI:
 
     ```txt
     sed -i 's/^.//' mcas.txt
     ```
 
-3.  This will give you the list of hostnames without leading `.`.
+1.  This will give you the list of hostnames without leading `.`.
 
-4.  Replace the file's `.txt` extension with `.csv`. The file can now be imported into Cloudflare Zero Trust as a Hostname list.
+1.  Replace the file's `.txt` extension with `.csv`. The file can now be imported into Cloudflare Zero Trust as a Hostname list.
 
 ## Using the API to query allowed applications
 
@@ -63,11 +63,11 @@ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=all
 ## Adding a hostname list in the Zero Trust Dashboard
 
 1.  In the Zero Trust Dashboard, navigate to **My Team** > **Lists**
-2.  Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
-3.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
-4.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
-5.  Click **Create**. You will see the list of hostnames that have been added to the list.
-6.  Save the list.
+1.  Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
+1.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
+1.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.
+1.  Click **Create**. You will see the list of hostnames that have been added to the list.
+1.  Save the list.
 
 Your list is now ready to be referenced by Gateway HTTP policies.
 
@@ -77,17 +77,17 @@ Your list is now ready to be referenced by Gateway HTTP policies.
 
 1.  Navigate to **Gateway** > **Policies** > **HTTP policies**.
 
-2.  Click **Create a policy**.
+1.  Click **Create a policy**.
 
     ![List of hostnames](/cloudflare-one/static/secure-web-gateway/microsoft-mcas/mcas-policy.png)
 
-3.  Set the expression to:
+1.  Set the expression to:
 
     - Selector: `Host`
     - Operator: `In List`
     - Value: your newly created list name.
 
-4.  Set the Action to `Block`.
+1.  Set the Action to `Block`.
 
 Now when trying to visit one of the MCAS defined sites, the user will be blocked.
 

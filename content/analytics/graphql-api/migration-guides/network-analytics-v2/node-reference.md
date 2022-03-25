@@ -25,14 +25,14 @@ If you are using both Magic Transit and Spectrum for IP addresses that overlap, 
 
 ## Attack nodes
 
-### `dosdAttackAnalyticsAdaptiveGroups`
+### `dosdAttackAnalyticsGroups`
 
 This node provides information about DDoS attacks detected and mitigated by Cloudflare's main DDoS protection system, the denial of service daemon (dosd). This node includes attack metadata such as:
 
-- `attackStartDateTime`
-- `attackEndDatetime`
+- `startDatetime`
+- `endDatetime`
 - `attackType`
-- `attackSourceIp`
+- `sourceIp`
 
 Each row represents an attack event. Each attack has a unique ID.
 
@@ -40,13 +40,13 @@ The sample rate is 1/10,000 packets.
 
 {{<Aside type="note" header="Adjusting attack mitigation">}}
 
-To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network).
+To adjust mitigation sensitivities and actions, or to define expression filters that exclude or include traffic from mitigation actions, customize the [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
 
 {{</Aside>}}
 
 ### `dosdNetworkAnalyticsAdaptiveGroups`
 
-This node complements the information in the `dosdAttackAnalyticsAdaptiveGroups` node. Provides deep packet-level information about DDoS attack packets mitigated by dosd, including fields such as:
+This node complements the information in the `dosdAttackAnalyticsGroups` node. Provides deep packet-level information about DDoS attack packets mitigated by dosd, including fields such as:
 
 - `ipProtocol`
 - `ipv4Checksum`

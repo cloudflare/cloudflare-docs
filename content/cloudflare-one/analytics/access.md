@@ -49,7 +49,7 @@ You may need to update an application's status based on your organization's pref
 
     ![Shadow IT application status](/cloudflare-one/static/documentation/shadow-it-profile.png)
 
-2.  Select the status you want to assign to your application.
+1.  Select the status you want to assign to your application.
 
 The application's status will now be updated across charts and visualizations within Shadow IT Discovery.
 
@@ -59,8 +59,8 @@ To change the status of multiple applications to Approved, Unapproved, In review
 
 1.  From the **Shadow IT view**, select the checkboxes of all applications for which you would like to change the status.
 
-2.  Click **Update Status**.
+1.  Click **Update Status**.
 
-3.  Select the status you want to assign to your applications.
+1.  Select the status you want to assign to your applications.
 
 Each application's status will now be updated across charts and visualizations within Shadow IT Discovery.

@@ -10,7 +10,7 @@ This tutorial explains how to analyze [Cloudflare Logs](https://www.cloudflare.c
 
 ## Overview
 
-If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
+If you have not used Cloudflare Logs before, refer to the [Logs documentation](/logs/) for more details. Contact your Cloudflare Customer Account Team to enable logs for your account.
 
 ### Prerequisites
 
@@ -18,7 +18,7 @@ Before sending your Cloudflare log data to Elastic, make sure that you:
 
 - Have an existing Elastic instance (versions 6.x and 7.x supported)
 - Have a Cloudflare Enterprise account with Cloudflare Logs enabled
-- Configure [Logpush](/logs/about) or [Logpull](/logs/logpull)
+- Configure [Logpush](/logs/about/) or [Logpull](/logs/logpull/)
 
 {{<Aside type="note" header="Note">}}
 

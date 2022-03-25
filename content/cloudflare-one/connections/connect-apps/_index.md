@@ -1,6 +1,6 @@
 ---
 pcx-content-type: concept
-title: Connect resources
+title: Cloudflare Tunnel
 weight: 1
 ---
 

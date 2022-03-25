@@ -80,14 +80,16 @@
           {{- $len := len (split $current "/") -}}
             {{- range .FirstSection.Pages.ByWeight -}}
             {{- $x := .RelPermalink -}}
-            {{- $self := eq $x $current -}}
-            {{- $delta := sub (len (split $x "/")) $len -}}
+
             {{- if not (in $x "/examples/") -}}
+              {{- $delta := sub (len (split $x "/")) $len -}}
               {{- if and (hasPrefix $x $current) (lt $delta 2) -}}
                 {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
               {{- else if not (hasPrefix $x $current) -}}
                 {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
               {{- end -}}
+            {{- else if strings.HasSuffix $x "/examples/" -}}
+              {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
             {{- end -}}
           {{- end -}}
         </ul>

@@ -5,47 +5,45 @@ type: table
 weight: 331
 layout: list
 meta:
-  title: Preview Firewall Rules
+  title: Preview firewall rules
 ---
 
-# Preview Firewall Rules
+# Preview firewall rules
 
 {{<content-column>}}
 
-## Overview
+Cloudflare firewall rules provides a powerful and flexible platform for filtering HTTP requests and protecting your site amid an evolving threat landscape. However, the same power and flexibility that allows you to tailor firewall rules to your specific application and environment can also introduce complexity. In these cases, it is critical that you have a way to test a firewall rule before deploying it so that you can ensure the rule will behave the way you expect.
 
-Cloudflare Firewall Rules provides a powerful and flexible platform for filtering HTTP requests and protecting your site amid an evolving threat landscape. However, the same power and flexibility that allows you to tailor Firewall Rules to your specific application and environment can also introduce complexity. In these cases, it is critical that you have a way to test a Firewall Rule before deploying it so that you can ensure the rule will behave the way you expect.
+To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a firewall rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the firewall rules Expression Editor so that you can test a rule as you edit it.
 
-To help customers understand the potential impact of a rule, Cloudflare has built **Rule Preview**. With the click of a button, Rule Preview allows you to test a Firewall Rule against a sample drawn from the last 72 hours of traffic. Rule Preview is built into the **Firewall Rules Expression Editor** so that you can test a rule as you edit it.
+{{<Aside type="warning">}}
 
-{{<Aside type="warning" header="Important">}}
-
-Rule Preview requires access to a Cloudflare Enterprise plan.
+Rule Preview is only available to customers on an Enterprise plan.
 
 {{</Aside>}}
 
 ## Use Rule Preview
 
-To test a Firewall Rule with Rule Preview:
+To test a firewall rule with Rule Preview:
 
-1.  Locate the desired rule in the **Rules List** and click the associated **Edit** button (wrench icon). The **Edit Firewall Rule** panel will open.
-2.  Click **Test rule** to trigger the test.
+1. Locate the desired rule in the rules list and click the associated **Edit** button (wrench icon). The **Edit firewall rule** panel will open.
+1. Click **Test rule** to trigger the test.
 
-![Expression Builder Test Rule button](/firewall/static/firewall-rules-preview-1.png)
+![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
 
 The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression.
 
 In this screenshot, a rule that matches all User-Agents that contain the string `Mozilla` would block about 8% of requests to the zone:
 
-![Example rule preview results chart](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
+![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
 
 ## Important Notes
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
-**Rule Preview does not take into account other Cloudflare Firewall Rules** that you have already configured. In effect, Rule Preview tests a single Firewall Rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
+**Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
-**You cannot test Firewall Rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
+**You cannot test firewall rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
 
 **Cloudflare does not store the entirety of requests, so only a limited number of fields are available to Rule Preview**. The table below lists the fields that Rule Preview supports (green cells), broken down by operator. Fields and operators that are not supported are not included in this table.
 
@@ -70,8 +68,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
     <tbody>
       <tr>
         <td>
-          <strong>AS Number</strong>
-          <p />
+          <strong>AS Number</strong><br/>
           <strong><code class="InlineCode">ip.geoip.asnum</code></strong>
         </td>
         <td>&#x2705;</td>
@@ -85,11 +82,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Country
-            <p />
-            <code class="InlineCode">ip.geoip.country</code></strong
-          >
+          <strong>Country</strong><br/>
+          <strong><code class="InlineCode">ip.geoip.country</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -102,11 +96,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Hostname
-            <p />
-            <code class="InlineCode">http.host</code></strong
-          >
+          <strong>Hostname</strong><br/>
+          <strong><code class="InlineCode">http.host</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -119,11 +110,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >IP Address
-            <p />
-            <code class="InlineCode">ip.src</code></strong
-          >
+          <strong>IP Address</strong><br/>
+          <strong><code class="InlineCode">ip.src</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -136,11 +124,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Referer
-            <p />
-            <code class="InlineCode">http.referer</code></strong
-          >
+          <strong>Referer</strong><br/>
+          <strong><code class="InlineCode">http.referer</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -153,11 +138,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >Request method
-            <p />
-            <code class="InlineCode">http.request.method</code></strong
-          >
+          <strong>Request method</strong><br/>
+          <strong><code class="InlineCode">http.request.method</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -170,11 +152,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >SSL
-            <p />
-            <code class="InlineCode">ssl</code></strong
-          >
+          <strong>SSL</strong><br/>
+          <strong><code class="InlineCode">ssl</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>❌</td>
@@ -187,11 +166,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI
-            <p />
-            <code class="InlineCode">http.request.uri</code></strong
-          >
+          <strong>URI</strong><br/>
+          <strong><code class="InlineCode">http.request.uri</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -204,11 +180,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI path
-            <p />
-            <code class="InlineCode">http.request.uri.path</code></strong
-          >
+          <strong>URI path</strong><br/>
+          <strong><code class="InlineCode">http.request.uri.path</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -221,11 +194,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >URI query string
-            <p />
-            <code class="InlineCode">http.request.uri.query</code></strong
-          >
+          <strong>URI query string</strong><br/>
+          <strong><code class="InlineCode">http.request.uri.query</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>
@@ -238,11 +208,8 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
       </tr>
       <tr>
         <td>
-          <strong
-            >User agent
-            <p />
-            <code class="InlineCode">http.user_agent</code></strong
-          >
+          <strong>User agent</strong><br/>
+          <strong><code class="InlineCode">http.user_agent</code></strong>
         </td>
         <td>&#x2705;</td>
         <td>&#x2705;</td>

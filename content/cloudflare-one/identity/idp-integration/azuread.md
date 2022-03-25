@@ -10,13 +10,13 @@ You can integrate Microsoft Azure AD® (Active Directory) with Cloudflare Zero T
 
 1.  Sign in to [the Azure dashboard](https://portal.azure.com/).
 
-2.  Click **Azure Active Directory** in the Azure Services section.
+1.  Click **Azure Active Directory** in the Azure Services section.
 
 ![Azure AD Select AD](/cloudflare-one/static/documentation/identity/azure/pick-azure-ad.png)
 
 1.  In the left side menu, navigate to **Manage** > **App registrations**.
 
-2.  Click **+ New registration**.
+1.  Click **+ New registration**.
 
 ![Azure AD New Registration](/cloudflare-one/static/documentation/identity/azure/click-new-reg.png)
 
@@ -72,11 +72,11 @@ Copy the `Value` field of the client secret. Treat this value like a password. T
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-2.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-3.  Choose **Azure AD** on the next page.
+1.  Choose **Azure AD** on the next page.
 
-4.  Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
+1.  Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
 
 If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
 

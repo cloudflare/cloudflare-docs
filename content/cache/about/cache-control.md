@@ -61,8 +61,8 @@ Revalidation determines how the cache should behave when a resource expires, and
 
 - `must-revalidate` — Indicates that once the resource is stale, a cache (client or proxy) must not use the response to satisfy subsequent requests without successful validation on the origin server.
 - `proxy-revalidate` — Has the same meaning as the `must-revalidate` response directive except that it does not apply to private client caches.
-- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/about/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
-- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits#cache-api).
+- `stale-while-revalidate=seconds` — When present in an HTTP response, indicates caches may serve the response in which it appears after it becomes stale, up to the indicated number of seconds since the resource expired. If [Always Online](/cache/about/always-online/) is enabled, then the `stale-while-revalidate` and `stale-if-error` directives are ignored. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api).
+- `stale-if-error=seconds` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/platform/limits/#cache-api).
 
 The `stale-if-error` directive is ignored if [Always Online](/cache/about/always-online/) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
 
@@ -359,17 +359,17 @@ This configuration indicates the asset is fresh for 600 seconds. The asset can b
 
 ## Interaction with other Cloudflare features
 
-### [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl)
+### Edge Cache TTL
 
-Edge Cache TTL Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
+[Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl) Page Rules override `s-maxage` and disable revalidation directives if present. When Origin Cache-Control is enabled at Cloudflare, the original Cache-Control header passes downstream from our edge even if Edge Cache TTL overrides are present. Otherwise, when Origin Cache-Control is disabled at Cloudflare (the default), Cloudflare overrides the origin cache control.
 
-### [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/#browser-cache-ttl)
+### Browser Cache TTL
 
-Browser Cache TTL Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
+[Browser Cache TTL](/cache/about/edge-browser-cache-ttl/#browser-cache-ttl) Page Rules override `max-age` settings passed downstream from our edge, typically to your visitor's browsers.
 
-### [Polish](/images/polish)
+### Polish
 
-Polish is disabled when the `no-transform` directive is present.
+[Polish](/images/polish/) is disabled when the `no-transform` directive is present.
 
 ### Gzip and Other Compression
 

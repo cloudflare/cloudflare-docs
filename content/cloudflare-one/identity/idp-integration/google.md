@@ -16,15 +16,15 @@ Please note that you don't need to be a Google Cloud Platform user to integrate 
 
 1.  Name the project and click **Create**.
 
-2.  On the project home page that loads, select **APIs & Services** from the sidebar and click **Dashboard**.
+1.  On the project home page that loads, select **APIs & Services** from the sidebar and click **Dashboard**.
 
-3.  Go to **Credentials** and click **Configure Consent Screen** at the top of the page.
+1.  Go to **Credentials** and click **Configure Consent Screen** at the top of the page.
 
 ![Click Consent](/cloudflare-one/static/documentation/identity/google/click-configure-consent.png)
 
 1.  Choose `External` as the User Type. Since this application is not being created in a Google Workspace account, the only types of users are external.
 
-2.  Name the application and add a support email (GCP will require you to add an email in your account).
+1.  Name the application and add a support email (GCP will require you to add an email in your account).
 
 ![Name App](/cloudflare-one/static/documentation/identity/google/name-app.png)
 
@@ -50,9 +50,9 @@ You can review the summary information and return to the dashboard at the bottom
 
 1.  Name the application.
 
-2.  Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
+1.  Under **Authorized JavaScript origins**, in the **URIs** field, enter your [team domain](/cloudflare-one/glossary/#team-domain).
 
-3.  Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+1.  Under **Authorized redirect URIs**, in the **URIs** field, enter your team domain followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -66,13 +66,13 @@ You can review the summary information and return to the dashboard at the bottom
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-2.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-3.  Choose **Google** on the next page.
+1.  Choose **Google** on the next page.
 
-4.  Input the Client ID and Client Secret fields generated previously.
+1.  Input the Client ID and Client Secret fields generated previously.
 
-5.  Click **Save**.
+1.  Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to Google.
 

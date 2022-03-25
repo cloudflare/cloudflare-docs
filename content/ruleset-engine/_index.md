@@ -6,7 +6,7 @@ meta:
   title: Ruleset Engine
 ---
 
-# Ruleset Engine
+# Cloudflare Ruleset Engine
 
 The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets in different Cloudflare products using the same basic syntax.
 
@@ -23,6 +23,6 @@ The Ruleset Engine supports different Cloudflare products. Check each product's 
 ***
 
 {{<button-group>}}
-  {{<button type="primary" href="/ruleset-engine/basic-operations">}}Basic operations{{</button>}}
-  {{<button type="secondary" href="/ruleset-engine/about">}}Learn more{{</button>}}
+  {{<button type="primary" href="/ruleset-engine/basic-operations/">}}Basic operations{{</button>}}
+  {{<button type="secondary" href="/ruleset-engine/about/">}}Learn more{{</button>}}
 {{</button-group>}}

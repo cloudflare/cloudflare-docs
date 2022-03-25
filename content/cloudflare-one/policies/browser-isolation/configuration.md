@@ -10,11 +10,11 @@ Browser Isolation is enabled through Secure Web Gateway HTTP policies. By defaul
 
 1.  Create a [Cloudflare Zero Trust account](https://dash.teams.cloudflare.com/) and select Browser Isolation as an add-on to either your Zero Trust Standard or your Zero Trust Enterprise plan.
 
-2.  Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/).
+1.  Download the latest version of the [WARP client](/cloudflare-one/connections/connect-devices/warp/download-warp/).
 
-3.  Create a [Device enrollment rule](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
+1.  Create a [Device enrollment rule](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions).
 
-4.  Set up an [Isolation policy](/cloudflare-one/policies/filtering/http-policies/#isolate).
+1.  Set up an [Isolation policy](/cloudflare-one/policies/filtering/http-policies/#isolate).
 
 Cloudflare Browser Isolation integrates with your existing web browser. Once connected to Cloudflare WARP, open your browser and navigate to any websites you normally use.
 
@@ -53,11 +53,11 @@ If you would like to temporarily disconnect Browser Isolation, you can do this b
 ### macOS
 
 1.  Click on the Cloudflare Logo in the Menu Bar.
-2.  Toggle the blue Connected switch into the Disconnected state.
-3.  Refresh your webpage to return to the non-isolated page.
+1.  Toggle the blue Connected switch into the Disconnected state.
+1.  Refresh your webpage to return to the non-isolated page.
 
 ### Windows
 
 1.  Click on the Cloudflare Logo in the System Tray.
-2.  Toggle the blue Connected switch into the Disconnected state.
-3.  Refresh your webpage to return to the non-isolated page.
+1.  Toggle the blue Connected switch into the Disconnected state.
+1.  Refresh your webpage to return to the non-isolated page.

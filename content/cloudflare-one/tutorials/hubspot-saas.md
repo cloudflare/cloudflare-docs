@@ -14,34 +14,34 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 ## Configure Hubspot
 
 1.  Go to **Settings** > **Account**, and from there, navigate to **Defaults** > **Security**.
-2.  Select _Single Sign-on_.
-3.  Copy the values for _Audience URI_ and _Sign on URL_.
+1.  Select _Single Sign-on_.
+1.  Copy the values for _Audience URI_ and _Sign on URL_.
 
 ## Configure Cloudflare Access
 
 1.  On the Zero Trust Dashboard, navigate to **Access** > **Applications** and create a SaaS application.
 
-2.  Set the **Application type** to _Hubspot_.
+1.  Set the **Application type** to _Hubspot_.
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-saas-ui.png)
 
-3.  Use the following Hubspot field mappings:
+1.  Use the following Hubspot field mappings:
 
     | Hubspot values | Cloudflare values              |
     | -------------- | ------------------------------ |
     | Audience URI   | EntityID                       |
     | Sign On URL    | Assertion Consumer Service URL |
 
-4.  Next, set **NameID** to _Email_.
+1.  Next, set **NameID** to _Email_.
 
-5.  Add any desired [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to your application.
+1.  Add any desired [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to your application.
 
-6.  Copy SSO endpoint and Access Entity ID.
+1.  Copy SSO endpoint and Access Entity ID.
 
 ## Create the certificate
 
 1.  Wrap the certificate in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
-2.  Paste the certificate contents into the Certificate field.
+1.  Paste the certificate contents into the Certificate field.
 
 ## Finalize Hubspot configuration
 
@@ -55,6 +55,6 @@ This tutorial covers how to set up Cloudflare as the SSO provider for Hubspot. B
 
     ![Add fields to the Zero Trust application](/cloudflare-one/static/zero-trust-security/hubspot-saas/hubspot-certificate.png)
 
-2.  Select **Verify** to validate the integration.
+1.  Select **Verify** to validate the integration.
 
 Your configuration is now complete. Hubspot SSO can be switched on for specific users or the entire account.

@@ -78,7 +78,7 @@ ingress:
   # Example of a request over TCP:
   - hostname: example.com
     service: tcp://localhost:8000
-  # Example of a request over a Unix socket:
+  # Example of an HTTP request over a Unix socket:
   - hostname: staging.example.com
     service: unix:/home/production/echo.sock
   # Example of a request mapping to the Hello World test server:
@@ -93,7 +93,8 @@ With the catch-all rule, you can set `cloudflared` to respond to traffic with an
 | Service                 | Description                                                                                      | Example `service` value           |
 | ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------- |
 | HTTP/S                  | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`          |
-| HTTP/S over Unix socket | Just like HTTP/S, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
+| HTTP over Unix socket | Just like HTTP, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
+| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
 | TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
 | SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/ssh/). | `ssh://localhost:22`              |
 | RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/tutorials/rdp/). | `rdp://localhost:3389`            |

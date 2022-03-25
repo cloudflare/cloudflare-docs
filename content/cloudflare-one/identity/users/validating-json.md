@@ -43,15 +43,15 @@ Install [`lokey`](https://github.com/jpf/lokey) and [`jq`](https://stedolan.gith
     $ pip install six==1.10.0
     ```
 
-2.  Go to [jwt.io](https://jwt.io/).
+1.  Go to [jwt.io](https://jwt.io/).
 
-3.  Select the RS256 algorithm.
+1.  Select the RS256 algorithm.
 
-4.  Paste the JWT into the field on the left.
+1.  Paste the JWT into the field on the left.
 
-5.  Enter the public key in the **Public Key** field.
+1.  Enter the public key in the **Public Key** field.
 
-6.  Ensure that the signature says **verified**.
+1.  Ensure that the signature says **verified**.
 
 ## Programmatic verification
 

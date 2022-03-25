@@ -8,6 +8,8 @@ meta:
 
 # Firewall Analytics — Paid plans
 
+Firewall Analytics is available at **Security** > **Overview**.
+
 ## Adjusting displayed data
 
 You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs, except for the **Denial-of-service attacks mitigated** graph.
@@ -16,13 +18,13 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create Firewall Rule from current filters
+## Create firewall rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 
 ## Events summary
 
-The **Events summary** section provides the number of Firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
+The **Events summary** section provides the number of firewall events on traffic during the selected time period, grouped according to the selected dimension (for example, **Action**, **Host**, **Country**, or **ASN**).
 
 ![Filter Firewall Analytics by action](/waf/static/analytics-events-summary.png)
 
@@ -30,19 +32,19 @@ You can adjust the displayed data according to one of the values by clicking **F
 
 ## Events by service
 
-The **Events by service** section lists the Firewall activity per Cloudflare security feature (for example, **WAF**, **Firewall Rules**, **API Shield**).
+The **Events by service** section lists the firewall activity per Cloudflare security feature (for example, **Managed rules**, **Firewall rules**, **API Shield**).
 
 You can adjust the scope of Firewall Analytics to one of the displayed services by clicking **Filter** or **Exclude** when hovering the legend or by clicking the corresponding graph bar.
 
 ## Top events by source
 
-In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall Rules**.
+In **Top events by source** you can find details of the traffic flagged or actioned by a Cloudflare security feature — for example, **IP Addresses**, **User Agents**, **Paths**, **Countries**, and **Firewall rules**.
 
 You can adjust the scope of Firewall Analytics to one of the listed source values by clicking **Filter** or **Exclude** when hovering the value.
 
 {{<Aside type="note">}}
 
-A deleted Firewall Rule or Rate Limiting rule will show as `Rule unavailable` under **Firewall Rules** or **Rate Limit Rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
+A deleted firewall rule or rate limiting rule will show as `Rule unavailable` under **Firewall rules** or **Rate limit rules**. To check the changes made within your Cloudflare account, review your [Audit logs](https://support.cloudflare.com/hc/en-us/articles/115002833612-Understanding-Cloudflare-Audit-Logs).
 
 {{</Aside>}}
 
@@ -58,7 +60,7 @@ A deleted Firewall Rule or Rate Limiting rule will show as `Rule unavailable` un
 
 ## Print or download PDF report
 
-To print or download a snapshot report from your Firewall Events analytics dashboard, click **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
+To print or download a snapshot report from your firewall events analytics dashboard, click **Print report** in **Firewall Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
 
 The generated report will reflect all applied filters.
 
@@ -74,4 +76,4 @@ In **Denial-of-service attacks mitigated** you have visibility over mitigated La
 
 ![Denial-of-service attacks mitigated](/waf/static/analytics-dos-attacks-mitigated.png)
 
-You can also use the [`synAvgPps1mGroups` node in GraphQL](/analytics/graphql-api/features/data-sets) to get the total attack volume for a zone over a period of time.
+You can also use the [`synAvgPps1mGroups` node in GraphQL](/analytics/graphql-api/features/data-sets/) to get the total attack volume for a zone over a period of time.

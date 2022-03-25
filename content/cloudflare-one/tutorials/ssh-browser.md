@@ -22,7 +22,7 @@ Administrators can deploy Cloudflare Tunnel to connect one or more machines avai
 ## Before you start
 
 1.  [Add a website to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/201720164-Creating-a-Cloudflare-account-and-adding-a-website)
-2.  [Connect your machine to Cloudflare](/cloudflare-one/tutorials/ssh/) and apply Zero Trust rules
+1.  [Connect your machine to Cloudflare](/cloudflare-one/tutorials/ssh/) and apply Zero Trust rules
 
 ---
 
@@ -135,7 +135,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 cloudflared tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/run-as-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/) that is configured to launch on start.
 
 ## Connect from a browser-rendered terminal
 

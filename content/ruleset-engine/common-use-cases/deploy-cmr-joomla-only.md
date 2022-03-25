@@ -1,8 +1,7 @@
 ---
 title: Enable only Joomla rules
 pcx-content-type: configuration
-alwaysopen: true
-weight: 773
+weight: 3
 meta:
   title: Use category overrides to enable Joomla rules
 ---
@@ -19,7 +18,9 @@ Follow the steps below to configure the execution of a Managed Ruleset with two 
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-The example below uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) endpoint to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+# Example 1
+
+This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Enable only Joomla rules using category overrides at the zone level</summary>
@@ -99,7 +100,9 @@ curl -X PUT \
 
 You can add more than one category override to a rule.
 
-The example below uses a `PUT` request to add two overrides to the rule that executes a Managed Ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
+# Example 2
+
+This example uses a `PUT` request to add two overrides to the rule that executes a Managed Ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
 <details>
 <summary>Example: Add more than one category override at the zone level</summary>

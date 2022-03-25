@@ -2,7 +2,7 @@
 title: Create ruleset
 pcx-content-type: reference
 type: overview
-weight: 785
+weight: 5
 layout: list
 ---
 
@@ -18,7 +18,6 @@ Use one of the following API endpoints:
 | [Create zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
 
 [cr-account]: https://api.cloudflare.com/#account-rulesets-create-account-ruleset
-
 [cr-zone]: https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset
 
 The following parameters are required:

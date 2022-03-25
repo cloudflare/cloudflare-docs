@@ -10,7 +10,7 @@ Cloudflare Polish is a one-click image optimization product that automatically o
 
 When an image is fetched from your origin, our systems automatically optimize it in Cloudflare's cache. Subsequent requests for the same image will get the smaller, faster, optimized version of the image, improving the speed of your website.
 
-![Polish](/images/static/polish.png)
+![Example of Polish compression's quality.](/images/static/polish.png)
 
 ## Polish compression options
 
@@ -39,3 +39,7 @@ Polish creates and caches a WebP version of the image and delivers it to the bro
 ```txt
 Accept: image/avif,image/webp,image/*,*/*;q=0.8
 ```
+
+## Polish interaction with Image optimization
+
+Polish will not be applied to URLs using Image Resizing. Resized images already have lossy compression applied where possible, so they do not need the optimizations provided by Polish. Use `format=auto` option to allow use of WebP and AVIF formats.

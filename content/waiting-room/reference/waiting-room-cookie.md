@@ -38,4 +38,4 @@ visitorsAhead ÷ activeUsersToWebApplication = estimatedWaitTime
 
 We combine these pieces of information to calculate estimated wait time for each group of visitors.
 
-For more details about the technical implementation of Cloudflare Waiting Room, see the [blog post](https://blog.cloudflare.com/building-waiting-room-on-workers-and-durable-objects/).
+For more details about the technical implementation of Cloudflare Waiting Room, refer to the [blog post](https://blog.cloudflare.com/building-waiting-room-on-workers-and-durable-objects/).

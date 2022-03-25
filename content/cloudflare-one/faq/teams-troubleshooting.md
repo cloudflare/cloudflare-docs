@@ -24,19 +24,19 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 ## I see a Cloudflare Gateway error page when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Questions" src="../static/documentation/faq/http-error-page.png" />
+  <img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
 We present an HTTP error page in the following cases:
 
 1.  **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
 
-- The server certificate issuer is unknown or is not trusted by the service.
-- The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
-- There is at least one expired certificate in the certificate chain for the server certificate
+    - The server certificate issuer is unknown or is not trusted by the service.
+    - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
+    - There is at least one expired certificate in the certificate chain for the server certificate
 
-1.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch.
-2.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch.
+3.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
 
 If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
 
@@ -68,7 +68,7 @@ A browser isolation session is a connection from your local browser to a remote 
 ## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
 
 <div class="small-img">
-  <img alt="Google Error 400" src="../static/documentation/faq/google-error-400.png" />
+  <img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
 </div>
 
 This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
@@ -129,8 +129,13 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
-- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 
 ## Connections are timing out after 270 seconds
 
 Cloudflare enforces a 270-second idle timeout on TCP connections that go through the gateway. If there is no new data to send in either direction for 270 seconds, the proxy process drops the connection. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever.
+
+## Tunnel connections fail with SSL error
+
+If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
+

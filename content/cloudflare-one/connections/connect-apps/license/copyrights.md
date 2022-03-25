@@ -673,7 +673,7 @@ THE SOFTWARE.
 
 https://github.com/pkg/errors
 
-Copyright (c) 2015, Dave Cheney [dave@cheney.net](/cloudflare-one/ave@cheney.net/)
+Copyright (c) 2015, Dave Cheney [dave@cheney.net](mailto:dave@cheney.net)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

@@ -13,17 +13,17 @@ Configuring a **block page** on the Zero Trust dashboard helps avoid this confus
 To configure a block page:
 
 1.  [Download the Cloudflare certificate](#download-the-cloudflare-certificate).
-2.  [Add the certificate to your system](#add-the-certificate-to-your-system).
-3.  Enable the block page for [HTTP](#enable-the-block-page-for-http-policies) or [DNS](#enable-the-block-page-for-dns-policies) policies.
-4.  [Customize the block page](#customize-the-block-page).
+1.  [Add the certificate to your system](#add-the-certificate-to-your-system).
+1.  Enable the block page for [HTTP](#enable-the-block-page-for-http-policies) or [DNS](#enable-the-block-page-for-dns-policies) policies.
+1.  [Customize the block page](#customize-the-block-page).
 
 ## Download the Cloudflare certificate
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Devices**.
 
-2.  Scroll down to the **Certificates** card.
+1.  Scroll down to the **Certificates** card.
 
-3.  Click on **Download certificate**.
+1.  Click on **Download certificate**.
 
 Now you will need to add the certificate to your system. This ensures your web browser can use it to establish HTTPS connections.
 
@@ -37,13 +37,13 @@ The certificate is now listed in the **Keychain Access** application.
 
 1.  Double-click on the certificate.
 
-2.  Click **Trust**.
+1.  Click **Trust**.
 
 ![Keychain](/cloudflare-one/static/documentation/policies/cert-click-on-trust.png)
 
 1.  Select **Always Trust** from the drop-down menu for **When using this certificate**.
 
-2.  Close the menu.
+1.  Close the menu.
 
 If your system asks for admin permission, enter your password or use your fingerprint ID to confirm the changes.
 
@@ -54,8 +54,8 @@ If you are not using Firefox, you can skip this section.
 Follow the instructions below to finish configuring the block page:
 
 1.  Enter **about:config** in the address bar.
-2.  If you see a prompt from Firefox, click **Accept the risk!**.
-3.  Set `security.enterprise_roots.enabled` to `true`.
+1.  If you see a prompt from Firefox, click **Accept the risk!**.
+1.  Set `security.enterprise_roots.enabled` to `true`.
 
 ## Enable the block page for HTTP policies
 
@@ -68,10 +68,10 @@ The block page is automatically enabled for all HTTP policies. When a user is bl
 For DNS policies:
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies > DNS**.
-2.  Find the policy for which you would like to set up a block page.
-3.  Click **Edit**.
-4.  Scroll down to find the **Configure policy settings** step.
-5.  Toggle the **Display block page** switch.
+1.  Find the policy for which you would like to set up a block page.
+1.  Click **Edit**.
+1.  Scroll down to find the **Configure policy settings** step.
+1.  Toggle the **Display block page** switch.
 
 ![Enable block page](/cloudflare-one/static/documentation/policies/block-page-toggle.png)
 

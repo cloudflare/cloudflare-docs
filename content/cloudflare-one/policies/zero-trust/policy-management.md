@@ -18,19 +18,19 @@ To create a Zero Trust policy for an existing application:
 
 1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-2.  Locate the application for which you want to create the policy.
+1.  Locate the application for which you want to create the policy.
 
-3.  Click **Add a Rule**.
+1.  Click **Add a Rule**.
 
-![Add rule](/cloudflare-one/static/documentation/policies/add-rule.png)
+    ![Add rule](/cloudflare-one/static/documentation/policies/add-rule.png)
 
 1.  Select a **Rule name**. This name will identify your policy in the list of application policies.
 
-2.  Select a **[Rule action](/cloudflare-one/policies/zero-trust/#actions)**.
+1.  Select a **[Rule action](/cloudflare-one/policies/zero-trust/#actions)**.
 
-3.  Configure as many **[Rules](/cloudflare-one/policies/zero-trust/#rules)** as needed.
+1.  Configure as many **[Rules](/cloudflare-one/policies/zero-trust/#rules)** as needed.
 
-4.  Click **Save rule**.
+1.  Click **Save rule**.
 
 Your policy has now been added to the application.
 
@@ -40,15 +40,15 @@ To make any changes to an application’s policies:
 
 1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-2.  Locate the application for which you want to change the policies.
+1.  Locate the application for which you want to change the policies.
 
-3.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
+1.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-![Policies section](/cloudflare-one/static/documentation/policies/policies-section.png)
+    ![Policies section](/cloudflare-one/static/documentation/policies/policies-section.png)
 
 1.  Once in the **Policies** section, you can edit the **Rule name**, the **Rule action**, and any rules you had configured.
 
-2.  Once you’ve made all the necessary changes, click **Save application**.
+1.  Once you’ve made all the necessary changes, click **Save application**.
 
 ## Delete a policy
 
@@ -56,14 +56,14 @@ To delete a Zero Trust policy:
 
 1.  On the Zero Trust Dashboard, navigate to the **Access > Applications** page.
 
-2.  Locate the application for which you want to delete the policy.
+1.  Locate the application for which you want to delete the policy.
 
-3.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
+1.  Click **Edit**. This will automatically redirect you to the app’s **Rules** section.
 
-4.  Locate the policy you want to delete and click **Delete**.
+1.  Locate the policy you want to delete and click **Delete**.
 
-5.  A pop-up message will ask you to confirm your decision to delete the policy. Click **Delete**.
+1.  A pop-up message will ask you to confirm your decision to delete the policy. Click **Delete**.
 
-6.  Click **Save application**.
+1.  Click **Save application**.
 
 Your policy has now been deleted.

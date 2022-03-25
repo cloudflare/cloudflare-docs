@@ -12,27 +12,19 @@ There are two reasons to set up email records for your domain: to make sure emai
 
 ## Add MX records
 
-To route emails to your mail server, you need to [create two DNS records](/dns/create-dns-records/) within Cloudflare:
+To route emails to your mail server, you need to [create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/) within Cloudflare:
 
 1.  An **A** or **AAAA** record for your mail subdomain that points to the IP address of your mail server.
 
-         {{<example>}}
-
-    | **Type** | **Name** | **IPv4 address** | **Proxy status** |
-    | -------- | -------- | ---------------- | ---------------- |
-    | A        | `mail`   | `192.0.2.1`      | Proxied          |
-
-         {{</example>}}
+     | **Type** | **Name** | **IPv4 address** | **Proxy status** |
+     | -------- | -------- | ---------------- | ---------------- |
+     | A        | `mail`   | `192.0.2.1`      | Proxied          |
 
 2.  An **MX** record that points to that subdomain.
 
-         {{<example>}}
-
-    | **Type** | **Name** | **Mail server**    | **TTL** |
-    | -------- | -------- | ------------------ | ------- |
-    | MX       | `@`      | `mail.example.com` | Auto    |
-
-         {{</example>}}
+      | **Type** | **Name** | **Mail server**    | **TTL** |
+      | -------- | -------- | ------------------ | ------- |
+      | MX       | `@`      | `mail.example.com` | Auto    |
 
 ---
 

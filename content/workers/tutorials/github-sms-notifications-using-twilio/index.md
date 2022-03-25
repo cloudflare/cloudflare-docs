@@ -20,7 +20,7 @@ You will learn how to:
 - Integrate Workers with GitHub and Twilio.
 - Use Worker secrets with Wrangler.
 
-![Video of receiving a text after pushing to a repo](../media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 ---
 
@@ -62,7 +62,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![GitHub config screenshot](../media/github-config-screenshot.png)
+![GitHub config screenshot](./media/github-config-screenshot.png)
 
 ---
 
@@ -264,7 +264,7 @@ Run the `wrangler publish` command to deploy your Workers script:
 $ wrangler publish
 ```
 
-![Video of receiving a text after pushing to a repo](../media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 Now when you make an update (that you configured in the GitHub **Webhook** settings) to your repository, you will get a text soon after. If you have never used git before, refer to this [quick guide](https://www.datacamp.com/community/tutorials/git-push-pull) to pushing to your repository.
 

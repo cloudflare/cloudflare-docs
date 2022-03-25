@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Use dynamic IP addresses
-weight: 0
+weight: 6
 ---
 
 # Use dynamic IP addresses
@@ -23,6 +23,6 @@ Create a script to monitor IP address changes and then have that script push cha
 Configuration of DNS-O-Matic requires the following information:
 
 - **Email**: `<CLOUDFLARE ACCOUNT EMAIL ADDRESS>` (associated account must have sufficient privileges to manage DNS)
-- **API Token**: `<CLOUDFLARE GLOBAL API KEY>` (for details refer to [API Keys](/api/keys))
+- **API Token**: `<CLOUDFLARE GLOBAL API KEY>` (for details refer to [API Keys](/api/keys/))
 - **Domain**: `<example.com>`
 - **Hostname**: _dynamic_

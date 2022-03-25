@@ -8,7 +8,7 @@ meta:
 
 # Configure HTTP DDoS Attack Protection via API
 
-Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides using the [Rulesets API](/ruleset-engine/rulesets-api).
+Configure the HTTP DDoS Attack Protection Managed Ruleset by defining overrides using the [Rulesets API](/ruleset-engine/rulesets-api/).
 
 Each zone has the HTTP DDoS Attack Protection Managed Ruleset enabled by default. This means that you do not need to deploy the Managed Ruleset to the `ddos_l7` phase ruleset explicitly. You only have to create a rule in the phase ruleset to deploy the Managed Ruleset if you need to configure overrides.
 
@@ -28,9 +28,9 @@ The HTTP DDoS Attack Protection Managed Ruleset is always enabled — you cannot
 
 The following `PUT` example creates a new phase ruleset (or updates the existing one) for the `ddos_l7` phase at the zone level. The request includes several overrides to adjust the default behavior of the HTTP DDoS Attack Protection Managed Ruleset. These overrides are the following:
 
-*   All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
-*   All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
-*   The rule with ID `{managed-ruleset-rule-id}` will use the `block` action.
+* All rules of the Managed Ruleset will use the `challenge` action and have a sensitivity level of `medium`.
+* All rules tagged with `{tag-name}` will have a sensitivity level of `low`.
+* The rule with ID `{managed-ruleset-rule-id}` will use the `block` action.
 
 ```json
 curl -X PUT \
@@ -114,4 +114,4 @@ The response returns the created (or updated) phase entry point ruleset.
 }
 ```
 
-For more information on defining overrides for Managed Rulesets using the Rulesets API, check [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset).
+For more information on defining overrides for Managed Rulesets using the Rulesets API, refer to [Override a Managed Ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Ruleset Engine documentation.

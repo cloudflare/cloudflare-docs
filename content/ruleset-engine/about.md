@@ -91,16 +91,16 @@ While evaluating rules for a given request/response, the values of all request a
 
 For example:
 
-- If a [URL Rewrite Rule](/rules/transform/url-rewrite) #1 updates the URI path or the query string of a request, URL Rewrite Rule #2 will not take these earlier changes into consideration.
-- If a [HTTP Request Header Modification Rule](/rules/transform/request-header-modification) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
+- If a [URL Rewrite Rule](/rules/transform/url-rewrite/) #1 updates the URI path or the query string of a request, URL Rewrite Rule #2 will not take these earlier changes into consideration.
+- If a [HTTP Request Header Modification Rule](/rules/transform/request-header-modification/) #1 sets the value of a request header, HTTP Request Header Modification Rule #2 will not be able to read or evaluate this new value.
 - If a URL Rewrite Rule updates the URI path or query string of a request, the `http.request.uri`, `http.request.uri.*`, and `http.request.full_uri` fields will have a different value in phases after the `http_request_transform` phase (where URL Rewrite Rules are executed).
 
 ---
 
 ## Get started
 
-To view existing rulesets and their properties, see [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
+To view existing rulesets and their properties, refer to [View rulesets](/ruleset-engine/basic-operations/view-rulesets/).
 
-For more information on deploying Managed Rulesets and defining overrides, check [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
+For more information on deploying Managed Rulesets and defining overrides, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/).
 
-For more information on creating and deploying custom rulesets, check [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
+For more information on creating and deploying custom rulesets, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/).

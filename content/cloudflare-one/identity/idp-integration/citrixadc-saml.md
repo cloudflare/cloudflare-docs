@@ -20,15 +20,15 @@ To set up Citrix ADC (SAML) as your identity provider:
     If you do not already have a certificate for signing SAML assertions, you can use a self-signed certificate generated on Citrix ADC by following these steps:
 
     1. Navigate to **Traffic Management > SSL**.
-    2. Select **Create and Install a Server Test Certificate**.
+    1. Select **Create and Install a Server Test Certificate**.
 
     ![Citrix AD Configuration](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-1.png)
 
-2.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
+1.  Select **Configuration** and enter a **Certificate File Name**, **Fully Qualified Domain Name**, and a select a **Country**.
 
     ![Citrix AD Create and Install Test Certificate](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-2.png)
 
-3.  Create a publicly accessible authentication vServer and configure the user identity source (like, local users, LDAP) by following this [Citrix documentation](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/authentication-virtual-server/ns-aaa-setup-auth-vserver-tsk.html).
+1.  Create a publicly accessible authentication vServer and configure the user identity source (like, local users, LDAP) by following this [Citrix documentation](https://docs.citrix.com/en-us/citrix-adc/12-1/aaa-tm/authentication-virtual-server/ns-aaa-setup-auth-vserver-tsk.html).
 
     For the rest of this example, the user refers to the IdP address `idp.yourdomain.com`.
 
@@ -52,7 +52,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
     ![Citrix AD Configure Authentication SAML IDP Profile](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-3.png)
 
-2.  Create an Authentication Policy that refers to the Profile just created, and bind it to the authentication vServer mentioned above.
+1.  Create an Authentication Policy that refers to the Profile just created, and bind it to the authentication vServer mentioned above.
 
     ![Citrix AD Configure Authentication SAML IDP Policy](/cloudflare-one/static/documentation/identity/citrixadc/citrixadc-saml-4.png)
 
@@ -74,11 +74,11 @@ To set up Citrix ADC (SAML) as your identity provider:
     bind authentication vserver nsidp -policy samlPol_CloudflareAccess
     ```
 
-3.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
-4.  Under **Login methods**, click **Add new**.
+1.  Under **Login methods**, click **Add new**.
 
-5.  Configure the fields as follows:
+1.  Configure the fields as follows:
 
     | Field | Description |
     | ----- | ----------- |
@@ -88,6 +88,6 @@ To set up Citrix ADC (SAML) as your identity provider:
     | **Signing Certificate** | The public certificate from the NetScaler |
     | **Email attribute name** | This is listed under **Optional configurations** |
 
-6.  Click **Save**.
+1.  Click **Save**.
 
 To test that your connection is working, navigate to **Authentication > Login methods** and click **Test** next to the login method you want to test.

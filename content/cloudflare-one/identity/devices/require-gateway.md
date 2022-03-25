@@ -24,7 +24,7 @@ With Require Gateway you can allow access to your applications only to devices e
 The process involves two steps:
 
 1.  Setting up **Require Gateway** as a device posture check.
-2.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
+1.  Adding the check to new or existing [Zero Trust policies](/cloudflare-one/policies/zero-trust/) to enforce the check for one or more of your applications.
 
 ## Set up a device posture check
 
@@ -32,9 +32,9 @@ The process involves two steps:
 
     ![Device Posture](/cloudflare-one/static/documentation/identity/devices/device-posture.png)
 
-2.  Select **Gateway**.
+1.  Select **Gateway**.
 
-3.  Click **Save**.
+1.  Click **Save**.
 
 You are now ready to start requiring Gateway for your Access applications.
 
@@ -42,12 +42,12 @@ You are now ready to start requiring Gateway for your Access applications.
 
 1.  On the Zero Trust dashboard, navigate to **Access > Applications**.
 
-2.  Locate the application for which you want to require Gateway.
+1.  Locate the application for which you want to require Gateway.
 
-3.  Click **Edit**.
+1.  Click **Edit**.
 
-4.  To have an existing policy require Gateway, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _Gateway_ selected.
+1.  To have an existing policy require Gateway, click **Edit** for that specific policy. Then, add an **Include** or **Require** rule with the option _Gateway_ selected.
 
-5.  Click **Save rule**.
+1.  Click **Save rule**.
 
 Before granting access to the application, your policy will now check that the user is running your organization's Gateway configuration, or the WARP client, on their machine.

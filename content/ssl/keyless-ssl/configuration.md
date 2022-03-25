@@ -70,7 +70,7 @@ Finally, you need to install the key server on your infrastructure, populate it 
 
 {{<Aside type="note">}}
 
-If you plan to run Keyless SSL in a [high availability setup](/ssl/reference/high-availability/), you may need to set up additional infrastructure (load balancing and health checks).
+If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/reference/high-availability/), you may need to set up additional infrastructure (load balancing and health checks).
 
 {{</Aside>}}
 

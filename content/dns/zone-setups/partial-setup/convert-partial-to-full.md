@@ -12,9 +12,9 @@ If you initially set up a partial domain on Cloudflare, you can later migrate it
 
 ## Step 1 — Prepare Cloudflare SSL/TLS
 
-In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading) for your application.
+In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your application.
 
-You also should verify that the [status](/ssl/ssl-tls/certificate-statuses) of your SSL certificate is **Active**.
+You also should verify that the [status](/ssl/ssl-tls/certificate-statuses/) of your SSL certificate is **Active**.
 
 ## Step 2 — Update settings in authoritative DNS
 

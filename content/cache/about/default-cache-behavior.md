@@ -40,7 +40,7 @@ To cache additional content, see [Page Rules](/cache/how-to/create-page-rules/) 
 Cloudflare’s CDN provides several cache customization options:
 
 - Caching behavior for individual URLs via [Cloudflare Page Rules](/cache/how-to/create-page-rules/)
-- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works)
+- Customize caching with [Cloudflare Workers](/workers/learning/how-the-cache-works/)
 - Adjust caching level, cache TTL, and more via the Cloudflare Caching app
 
 Cloudflare limits the upload size (HTTP POST request size) per plan type:
@@ -49,7 +49,7 @@ Cloudflare limits the upload size (HTTP POST request size) per plan type:
 - 200MB Business
 - 500MB Enterprise by default. Contact [Customer Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit increase.
 
-If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records).
+If you require a larger upload, group requests smaller than the upload thresholds or upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 ## Cloudflare cache responses
 
@@ -110,10 +110,8 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
         BYPASS
       </td>
       <td colspan="5" rowspan="1">
-        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to{' '}
-        <code>no-cache</code>, <code>private</code>, or <code>max-age=0</code> even though
-        Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling{' '}
-        <a href="/about/cache-control">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
+        The origin server instructed Cloudflare to bypass cache via a Cache-Control header set to <code>no-cache</code>,<code>private</code>, or <code>max-age=0</code> even though
+        Cloudflare originally preferred to cache the asset. BYPASS is returned when enabling <a href="/cache/about/cache-control/">Origin Cache-Control</a>. Cloudflare also sets BYPASS when
         your origin web server sends cookies in the response header.
       </td>
     </tr>
@@ -142,7 +140,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
         explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/how-to/create-page-rules">Page Rules</a> to implement
+        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> to implement
         custom caching options.
       </td>
     </tr>

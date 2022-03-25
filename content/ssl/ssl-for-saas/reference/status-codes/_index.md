@@ -8,6 +8,6 @@ weight: 2
 
 We have many different status codes. They can be related to:
 
-*   [Custom hostnames](/ssl/custom-hostnames/)
-*   [Specific certificate authorities](/ssl/certificate-authority-specific/)
-*   [Custom Certificate Signing Requests](/ssl/custom-csrs/)
+*   [Custom hostnames](/ssl/ssl-for-saas/reference/status-codes/custom-hostnames/)
+*   [Specific certificate authorities](/ssl/ssl-for-saas/reference/status-codes/certificate-authority-specific/)
+*   [Custom Certificate Signing Requests](/ssl/ssl-for-saas/reference/status-codes/custom-csrs/)

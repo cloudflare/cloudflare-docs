@@ -114,19 +114,19 @@ This feature is only available on the Zero Trust Enterprise plan.
 
 You can configure the automatic export of logs from Cloudflare Gateway to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
 
-This feature builds on Cloudflare's Logpush Service — check out the Logpush documentation to find a list of fields logged for both [HTTP](/logs/reference/log-fields/account/gateway_http) and [DNS](/logs/reference/log-fields/account/gateway_dns) activity.
+This feature builds on Cloudflare's Logpush Service — check out the Logpush documentation to find a list of fields logged for both [HTTP](/logs/reference/log-fields/account/gateway_http/) and [DNS](/logs/reference/log-fields/account/gateway_dns/) activity.
 
 To enable this feature on the Zero Trust dashboard:
 
 1.  Navigate to **Logs > Logpush**.
-2.  Click **Connect a service**.
-3.  Enter a **Job name**.
-4.  From the drop-down menu, choose whether to export the _Gateway DNS_ or the _Gateway HTTP_ dataset.
-5.  Next, select the data fields you want to export.
-6.  In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
-7.  Click **Next**.
-8.  Select the service you want to export your Gateway logs to.
-9.  Next, follow the service-specific instructions on the Zero Trust UI to validate your destination.
+1.  Click **Connect a service**.
+1.  Enter a **Job name**.
+1.  From the drop-down menu, choose whether to export the _Gateway DNS_ or the _Gateway HTTP_ dataset.
+1.  Next, select the data fields you want to export.
+1.  In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
+1.  Click **Next**.
+1.  Select the service you want to export your Gateway logs to.
+1.  Next, follow the service-specific instructions on the Zero Trust UI to validate your destination.
 
 The setup of your logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
 

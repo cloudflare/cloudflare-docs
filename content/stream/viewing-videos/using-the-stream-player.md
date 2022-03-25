@@ -67,10 +67,8 @@ Player options are configured with querystring parameters in the iframe's `src` 
   - If the autoplay flag is included as a querystring parameter, the player will attempt to autoplay the video. If you don't want the video to autoplay, don't include the autoplay flag at all (instead of setting it to `autoplay=false`.) Note that mobile browsers generally do not support this attribute, the user must tap the screen to begin video playback. Please consider mobile users or users with Internet usage limits as some users don't have unlimited Internet access before using this attribute.
 
     {{<Aside>}}
-
 Some browsers now prevent videos with audio from playing automatically. You may set `muted` to `true` to allow your videos to autoplay. For more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
-
-        {{</Aside>}}
+    {{</Aside>}}
 
 - `controls` {{<prop-meta>}}default: `true`{{</prop-meta>}}
 
@@ -85,6 +83,16 @@ Some browsers now prevent videos with audio from playing automatically. You may 
 This will _only_ work once during initialization. Beyond that point the user has full control over their text track settings.
 
         {{</Aside>}}
+
+- `letterboxColor`
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
+
+    {{<Aside type="note">}}
+
+**Note:** Like all query string parameters, this value _must_ be URI encoded. For example, the color value `hsl(120 80% 95%)` can be encoded using JavaScript's `encodeURIComponent()` function to `hsl(120%2080%25%2095%25)`.
+
+    {{</Aside>}}
 
 - `loop` {{<prop-meta>}}default: `false`{{</prop-meta>}}
 

@@ -42,8 +42,8 @@ You can also set a timeout to define how long the WARP client is allowed to be p
 When you want to allow a user to disable the WARP client:
 
 1.  Log in to the Zero Trust Dashboard and ensure the **Admin override** toggle is enabled.
-2.  Retrieve the 7-digit override code for their device by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired device, and scrolling down to **User details**.
-3.  Copy the code and share it with the end user for them to enter on their device.
+1.  Retrieve the 7-digit override code for their device by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired device, and scrolling down to **User details**.
+1.  Copy the code and share it with the end user for them to enter on their device.
 
 Users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and enter the override code in the pop-up window. The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
 
@@ -63,9 +63,9 @@ Users will then need to open the WARP client on their devices, navigate to **Pre
 Cloudflare Zero Trust allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Zero Trust dashboard:
 
 1.  Navigate to **Settings** > **Devices**.
-2.  In the **Device enrollment permissions** card, click **Manage**.
-3.  In the rule builder, configure one or more rules to define who can enroll or revoke devices.
-4.  Click **Save**.
+1.  In the **Device enrollment permissions** card, click **Manage**.
+1.  In the rule builder, configure one or more rules to define who can enroll or revoke devices.
+1.  Click **Save**.
 
 ## Captive portal detection
 

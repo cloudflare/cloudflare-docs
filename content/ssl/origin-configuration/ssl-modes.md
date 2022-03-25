@@ -14,7 +14,7 @@ For more details about how your encryption mode fits into the bigger picture of 
 
 {{<Aside type="note" header="Tip:">}}
 
-If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/ssl-tls-recommender/).
+If you are not sure which encryption mode to use, enable the [SSL/TLS Recommender](/ssl/origin-configuration/ssl-tls-recommender/).
 
 {{</Aside>}}
 
@@ -110,7 +110,7 @@ When you set your encryption mode to **Full (strict)**, Cloudflare does everythi
 
 ### Use when
 
-For the best security, choose **Full (strict)** mode whenever possible (unless your are an [Enterprise customer](#strict-ssl-only-origin-pull)).
+For the best security, choose **Full (strict)** mode whenever possible (unless you are an [Enterprise customer](#strict-ssl-only-origin-pull)).
 
 Your origin needs to be able to support an SSL certificate that is:
 

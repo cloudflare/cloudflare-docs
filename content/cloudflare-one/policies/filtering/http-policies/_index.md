@@ -8,7 +8,7 @@ weight: 4
 
 {{<Aside>}}
 
-Install the <a href="/connections/connect-devices/warp/install-cloudflare-cert">Cloudflare Root Certificate</a> before creating HTTP policies.
+Install the <a href="/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
 {{</Aside>}}
 

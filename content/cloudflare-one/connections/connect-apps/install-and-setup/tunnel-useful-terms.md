@@ -6,6 +6,8 @@ weight: 6
 
 # Useful terms
 
+{{<render file="_cloudflared-new-ui.md">}}
+
 ## Tunnel
 
 A tunnel is a secure, outbound-only pathway you can establish between your origin and the Cloudflare edge. Each tunnel you create will be assigned a [name](#tunnel-name) and a [UUID](#tunnel-uuid).
@@ -37,7 +39,7 @@ This is a `.yaml` file that functions as the operating manual for `cloudflared`.
 
 ## Ingress rule
 
-[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
+[Ingress rules](/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/) let users specify which local services traffic should be proxied to. If a rule does not specify a path, all paths will be matched. Ingress rules can be listed in your [configuration file](#configuration-file) or when running `cloudflared tunnel ingress`.
 
 ## Cert.pem
 

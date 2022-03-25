@@ -27,7 +27,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
     $ cloudflared tunnel create <TUNNEL-NAME>
     ```
 
-2.  [Route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel to create routes that your tunnel will serve.
+1.  [Route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel to create routes that your tunnel will serve.
 
     - If your legacy tunnel was serving `tunnel.example.com`, run this command to configure your named tunnel to also serve `tunnel.example.com`. For more information, refer to the [DNS Record routing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/dns/) section.
 
@@ -41,7 +41,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
     $ cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
     ```
 
-3.  After configuring DNS/LB records for each zone you want to serve, follow the [Configure a Tunnel](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) instructions to create a config file with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if you used to run:
+1.  After configuring DNS/LB records for each zone you want to serve, follow the [Configure a Tunnel](/cloudflare-one/connections/connect-apps/configuration/configuration-file/) instructions to create a config file with ingress rules. The ingress rules describe how to dispatch requests to your origins based on hostname and path. For example, if you used to run:
 
     ```bash
     $ cloudflared tunnel --hostname tunnel.example.com --url https://localhost:3000
@@ -57,11 +57,11 @@ To migrate your legacy tunnels to the named tunnels architecture:
     # Note that the last rule is the catch-all rule and is required.
     ```
 
-4.  Next, [run your tunnel](/cloudflare-one/connections/connect-apps/run-tunnel/).
+1.  Next, [run your tunnel](/cloudflare-one/connections/connect-apps/run-tunnel/).
 
 ## Make sure everything works
 
 Once your migration is done, validate your new named tunnel by:
 
 1.  Making sure the resource behind the tunnel is accessible
-2.  Running `cloudflared tunnel info <NAME-or-UUID>` to confirm that the named tunnel exists
+1.  Running `cloudflared tunnel info <NAME-or-UUID>` to confirm that the named tunnel exists

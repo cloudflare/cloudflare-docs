@@ -1,7 +1,7 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 782
+weight: 2
 ---
 
 # JSON object
@@ -126,8 +126,7 @@ The table lists the properties of a ruleset object.
       </td>
       <td>A list of rules to include in the ruleset.</td>
       <td>
-        Array of JSON objects (see{' '}
-        <a href="#rule-object-structure-and-properties">rule JSON object</a>)
+        Array of JSON objects (refer to <a href="#rule-object-structure-and-properties">rule JSON object</a>)
       </td>
       <td></td>
     </tr>
