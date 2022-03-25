@@ -929,6 +929,20 @@
 /magic-transit/get-started/requirements /magic-transit/prerequisites/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
 
+# ruleset-engine redirects
+/ruleset-engine/common-use-cases /ruleset-engine/managed-rulesets/override-examples/ 301
+/ruleset-engine/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
+/ruleset-engine/common-use-cases/deploy-cmr-joomla-only /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-joomla-only/ 301
+/ruleset-engine/common-use-cases/deploy-cmr-joomla-only/ /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-joomla-only/ 301
+/ruleset-engine/common-use-cases/deploy-cmr-wordpress-block /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-wordpress-block/ 301
+/ruleset-engine/common-use-cases/deploy-cmr-wordpress-block/ /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-wordpress-block/ 301
+/ruleset-engine/common-use-cases/enable-selected-rules /ruleset-engine/managed-rulesets/override-examples/enable-selected-rules/ 301
+/ruleset-engine/common-use-cases/enable-selected-rules/ /ruleset-engine/managed-rulesets/override-examples/enable-selected-rules/ 301
+/ruleset-engine/common-use-cases/override-ddos-rule-sensitivity /ruleset-engine/managed-rulesets/override-examples/override-ddos-rule-sensitivity/ 301
+/ruleset-engine/common-use-cases/override-ddos-rule-sensitivity/ /ruleset-engine/managed-rulesets/override-examples/override-ddos-rule-sensitivity/ 301
+/ruleset-engine/common-use-cases/override-ruleset-tag-rule /ruleset-engine/managed-rulesets/override-examples/override-ruleset-tag-rule/ 301
+/ruleset-engine/common-use-cases/override-ruleset-tag-rule/ /ruleset-engine/managed-rulesets/override-examples/override-ruleset-tag-rule/ 301
+
 # time services redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 /time-services/nts/usage /time-services/nts/ 301

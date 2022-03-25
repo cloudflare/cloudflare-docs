@@ -141,4 +141,4 @@ curl -X PUT \
 </div>
 </details>
 
-For additional examples of configuring overrides, refer to [Workflow examples](/ruleset-engine/common-use-cases/).
+For additional examples of configuring overrides, refer to [Managed Ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/).
