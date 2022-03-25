@@ -53,8 +53,7 @@ Perform the following steps to create the rule:
 1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) operation to check if there is already a ruleset for the `http_log_custom_fields` phase at the zone level (you can only have one zone ruleset per phase):
 
     ```bash
-    curl -X GET \
-    "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
+    curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
     -H "X-Auth-Email: <EMAIL>" \
     -H "X-Auth-Key: <API_KEY>"
     ```
