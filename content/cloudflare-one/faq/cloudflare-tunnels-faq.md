@@ -59,7 +59,17 @@ To log external visitor IPs, you will need to [configure an alternative method](
 
 Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was added to the Argo product family, we changed the name to match.
 
-## How can I troubleshoot a Tunnel?
+## How can I troubleshoot a Tunnel that was configured from the Zero Trust dashboard?
+
+### Ensure that only one Tunnel is installed
+
+If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other Tunnels are running as a service on this machine. Only a single Tunnel may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel.  Alternatively, you can run `sudo cloudflared service uninstall` to uninstall the Tunnel.
+
+### Check your DNS records
+
+If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+## How can I troubleshoot a Tunnel that was configured through the CLI?
 
 ### Run Tunnel with debug logging
 
@@ -89,6 +99,8 @@ $ cloudflared tunnel run
 2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
 Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
 ```
+
+
 
 ## I need help. How do I contact support?
 

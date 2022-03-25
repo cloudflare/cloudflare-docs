@@ -52,16 +52,8 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
 
 ## SSL/TLS for subdomains
 
-If your main domain is using Cloudflare's [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), that certificate also covers all first-level subdomains (`blog.example.com`).
-
-For deeper subdomains (`dev.blog.example.com`), use a [different type of certificate](/ssl/edge-certificates/universal-ssl/limitations/#full-setup).
+{{<render file="../../dns/_partials/_ssltls-subdomains.md">}}
 
 ## Customize subdomain behavior
 
-If you want to customize Cloudflare settings for individual subdomains, your approach will vary depending on your plan.
-
-Enterprise customers can set up custom settings and access for a specific subdomain within Cloudflare with [Subdomain support](https://support.cloudflare.com/hc/articles/360026440252).
-
-All other customers can set up subdomain-specific [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to alter Cloudflare settings.
-
-If you want a subdomain's DNS settings managed totally outside of Cloudflare — meaning this subdomain can be managed by individuals without access to your Cloudflare account — refer to [Delegating subdomains outside of Cloudflare](https://support.cloudflare.com/hc/articles/360021357131).
+{{<render file="../../dns/_partials/_subdomain-customization.md">}}
