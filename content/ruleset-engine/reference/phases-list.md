@@ -54,6 +54,7 @@ The phases execute in the order they appear in the table.
 | Phase name | Used in product/feature |
 |---|---|
 | `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-api/) |
-| `http_response_firewall_managed`  | [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) (Data Loss Prevention) |
+| `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) (Data Loss Prevention) |
+| `http_log_custom_fields` | [Logpush custom fields](/logs/reference/logpush-api-configuration/custom-fields/) |
 
 {{</table-wrap>}}
