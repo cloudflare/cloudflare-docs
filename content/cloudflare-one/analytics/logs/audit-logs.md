@@ -46,7 +46,7 @@ Access authentication logs contain the following fields:
 | **connection**  | The IdP used to authenticate. |
 | **country** | The country associated with the user’s IP address. |
 | **ray\_id** | A unique identifier for every request through Cloudflare. |
-| **app\_type** | Specifies if the app is self-hosted or SaaS. |
+| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
 
 ### Access Requests Audit API endpoint
 
@@ -152,7 +152,7 @@ Keep in mind that Access does not log all interactions. For example, per-request
 
 Access integrates with the Cloudflare Logpush API, so you can export per-request audit logs to third-party Security Information and Event Management (SIEM) tools.
 
-Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every 5 minutes.
+Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every five minutes.
 
 For instructions on setting up Logpush, refer to [Manage the Logpush API](/logs/get-started/enable-destinations/).
 
