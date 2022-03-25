@@ -68,7 +68,7 @@ This is a countermeasure to man-in-the-middle attacks where an attacker presents
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can [create an HTTP policy](#creating-policies-with-applications-and-app-types), select _Application_ as a **Selector**, _in_ as an **Operator**, and check the _Do Not Inspect_ app type in the **Value** field. Then, set the HTTP policy **Action** to _Do Not Inspect_.
 
-Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you'll ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
+Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
 ![Creating an HTTP policy for the Do Not Inspect app type](/cloudflare-one/static/documentation/policies/do-not-inspect.png)
 
