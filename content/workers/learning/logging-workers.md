@@ -84,9 +84,9 @@ You can customize how `wrangler tail` works to fit your needs: refer to [the `wr
 
 ## View logs from the dashboard
 
-You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker script** > and select **Logs**. Logging is available for all customers, including those on the free plan.
+You can review the production logs associated with any Worker by [logging into the Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/workers/overview). From your **Account Home** > go to **Workers** > select your **Worker** > and select **Logs**. Logging is available for all customers, including those on the free plan.
 
-![Cloudflare dashboard showing Workers logs](../media/workers-logging-dashboard.png)
+![Cloudflare dashboard showing logs for a Worker named logging-example](../media/workers-logging-dashboard.png)
 
 Note that:
 
@@ -119,9 +119,7 @@ Other `11xx` errors generally indicate a problem with the Workers runtime itself
 
 ### Identifying errors: Workers Metrics
 
-You can find out whether your application is experiencing any downtime, or returning any errors by navigating from **Account Home** > to **Workers** > your **Worker script** > **Overview** > **View all Metrics** in the dashboard.
-
-![metrics](../media/metrics.png)
+You can find out whether your application is experiencing any downtime or returning any errors by navigating to **Account Home** > **Workers** > your **Worker** and reviewing your Worker's summary in **Resources**.
 
 ### Debugging exceptions
 

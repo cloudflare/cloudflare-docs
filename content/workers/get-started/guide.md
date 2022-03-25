@@ -383,7 +383,7 @@ Cloudflare provides two kinds of usage notifications: Workers Weekly Summary and
 
 Workers Weekly Summary provides a breakdown of your overall Workers usage for your most popular Workers.
 
-![workers-weekly-summary](../media/workers-weekly-summary.png)
+![Workers Weekly Summary showing a summary of Worker activity metrics for the week](../media/workers-weekly-summary.png)
 
 Workers Usage Report is an on-demand usage notification that is triggered when a Worker's CPU usage is 25% above its average CPU usage over the previous seven days.
 
@@ -393,19 +393,9 @@ If you are on Workers Unbound, you will also see duration and [egress data usage
 
 {{</Aside>}}
 
-![workers-usage-report](../media/workers-usage-report.png)
+![Workers Usage Report showing a summary of activity metrics for Workers with above average CPU time](../media/workers-usage-report.png)
 
-You can turn usage notifications on or off by going to **Account Home** > **Notifications**.
-
-![notifications-tab](../media/notifications-tab.png)
-
-Select **Add** and scroll down to Workers.
-
-![notifications-tab](../media/add-workers-notifications.png)
-
-After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
-
-![notifications-tab](../media/workers-overview-notifications.png)
+You can turn usage notifications on or off by going to **Account Home** > **Notifications**. Select **Add** and scroll down to Workers to find **Workers Usage Report** and **Workers Weekly Summary**. After you enable notifications and add recipients, edit or turn off notifications by returning to **Notifications**.
 
 ---
 
