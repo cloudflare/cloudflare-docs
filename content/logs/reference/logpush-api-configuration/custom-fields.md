@@ -13,7 +13,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rule that conf
 To configure custom fields:
 
 1. Create a rule to configure the list of custom fields.
-1. Include the `Cookies`, `RequestHeaders`, and/or `ResponseHeaders` fields in your Logpush job.
+2. Include the `Cookies`, `RequestHeaders`, and/or `ResponseHeaders` fields in your Logpush job.
 
 ## 1. Create a rule to configure the list of custom fields
 
@@ -61,7 +61,7 @@ Perform the following steps to create the rule:
 
     If there is a ruleset for the `http_log_custom_fields` phase at the zone level, take note of the ruleset ID.
 
-1. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
+2. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
 
     ```json
     curl -X POST \
@@ -78,7 +78,7 @@ Perform the following steps to create the rule:
 
     Take note of the ruleset ID included in the response.
 
-1. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to define the rules of the entry point ruleset you found (or created in the previous step), adding a rule with the custom fields configuration. The rules you include in the request will replace all the rules in the ruleset.
+3. Use the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to define the rules of the entry point ruleset you found (or created in the previous step), adding a rule with the custom fields configuration. The rules you include in the request will replace all the rules in the ruleset.
 
     The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
 
