@@ -1,6 +1,6 @@
 ---
 title: Phases list
-pcx-content-type: navigation
+pcx-content-type: reference
 weight: 1
 ---
 
