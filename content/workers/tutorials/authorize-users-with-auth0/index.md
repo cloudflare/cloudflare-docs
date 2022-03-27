@@ -3,6 +3,7 @@ updated: 2020-07-25
 difficulty: Beginner
 content_type: 📝 Tutorial
 pcx-content-type: tutorial
+hidden: true # Temporarily hidden. JWT signature is not validated.
 title: Authorize users with Auth0
 ---
 
