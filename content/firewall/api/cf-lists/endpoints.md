@@ -18,7 +18,7 @@ For authentication instructions, refer to [Getting Started: Requests](https://ap
 
 For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="note">}}
 
 The Rules Lists API endpoints require a value for `<ACCOUNT_ID>`.
 
