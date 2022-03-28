@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Accessing the data Cloudflare collects
-weight: 13
+weight: 5
 ---
 
 # Accessing the data Cloudflare collects
