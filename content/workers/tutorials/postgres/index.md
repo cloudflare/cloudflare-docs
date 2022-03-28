@@ -24,13 +24,13 @@ In order to continue with the tutorial, ensure that you have a publicly accessib
 
 ## Create a Workers function
 
-Begin by creating a new Workers function, running `wrangler generate`:
+Begin by creating a new Workers function, running `wrangler init`:
 
 ```sh
 ---
 header: Create a Workers function
 ---
-$ wrangler generate postgrest-example
+$ wrangler init postgrest-example
 $ cd postgrest-example
 ```
 

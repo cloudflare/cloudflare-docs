@@ -25,15 +25,14 @@ $ mkdir workers-monorepo && cd workers-monorepo
 $ lerna init
 ```
 
-Inside of `packages`, where `lerna` will look for your projects, you can generate multiple new Wrangler codebases, or even `git clone` your existing Workers codebase to migrate it into a `lerna` monorepo:
+Inside of `packages`, where `lerna` will look for your projects, you can create multiple new Wrangler codebases, or even `git clone` your existing Workers codebase to migrate it into a `lerna` monorepo:
 
 ```sh
 ---
-header: Generate projects using Wrangler
+header: Create projects using Wrangler
 ---
 $ cd packages
-$ wrangler generate my-api
-$ wrangler generate my-site --site
+$ wrangler init my-api
 
 # If you have existing projects, you can clone them into the directory:
 $ git clone https://github.com/cloudflare/worker-template.git
@@ -43,11 +42,11 @@ This approach to managing your Workers projects can become incredibly powerful w
 
 ```sh
 ---
-header: Generate projects using Wrangler
+header: Create projects using Wrangler
 ---
 $ cd packages
-$ wrangler generate public-api
-$ wrangler generate private-api
+$ wrangler init public-api
+$ wrangler init private-api
 ```
 
 Next to your API projects, create a new package `handlers`, which can be imported into each project:

@@ -12,19 +12,19 @@ In this tutorial, you will learn how to generate, build, preview, configure, and
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Generate
+## Init
 
 Cloudflare's command-line tool for managing Workers projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will use the [rustwasm-worker template](https://github.com/cloudflare/rustwasm-worker-template/) to start building your project.
 
-In the command line, generate your Workers project by passing in a project name and the template URL to base your project on:
+In the command line, create your Workers project, cloning the [rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template) URL and passing in a project name (for example, `rustwasm-markdown-parser`):
 
 ```sh
-~ $ wrangler generate rustwasm-markdown-parser https://github.com/cloudflare/rustwasm-worker-template/
+~ $ git clone https://github.com/cloudflare/rustwasm-worker-template/ rustwasm-markdown-parser
 ```
 
 This command creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
 
-Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
+Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
 
 ## Workers Playground
 
