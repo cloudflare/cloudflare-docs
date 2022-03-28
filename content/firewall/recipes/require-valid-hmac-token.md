@@ -59,7 +59,7 @@ The rule supplies the value of the secret key shared between the website and Clo
   </tbody>
 </table>
 
-The `is_timed_hmac_valid()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.
+The `is_timed_hmac_valid_v0()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.
 
 If the MAC values match and
 
@@ -73,7 +73,7 @@ Since the expression in this example uses the `not` operator, it only matches wh
 
 {{<Aside type="warning" header="Important">}}
 
-When you do not use the optional _flags_ argument for `is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rules-language/functions/#hmac-validation).
 
