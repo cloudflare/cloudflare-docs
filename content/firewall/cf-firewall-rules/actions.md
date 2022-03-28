@@ -39,7 +39,12 @@ For reference information on rule actions available for Cloudflare products powe
   </thead>
     <tbody>
       <tr>
-        <td><em>Log</em></td>
+        <td>
+          <strong>Log</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">log</code>
+        </td>
         <td>
           <ul>
             <li>Records matching requests in the Cloudflare Logs</li>
@@ -53,7 +58,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>1</td>
       </tr>
       <tr>
-        <td><em>Bypass</em></td>
+        <td><strong>Bypass</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">bypass</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -85,7 +94,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>2</td>
       </tr>
       <tr>
-        <td><em>Allow</em></td>
+        <td><strong>Allow</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">allow</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -107,7 +120,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>3</td>
       </tr>
       <tr>
-        <td><em>Legacy CAPTCHA</em></td>
+        <td><strong>Legacy CAPTCHA</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -125,7 +142,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>4</td>
       </tr>
       <tr>
-        <td><em>Managed Challenge<br/>(Recommended)</em></td>
+        <td><strong>Managed Challenge<br/>(Recommended)</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">managed_challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -153,7 +174,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>5</td>
       </tr>
       <tr>
-        <td><em>JS Challenge</em></td>
+        <td><strong>JS Challenge</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">js_challenge</code>
+        </td>
         <td>
           <ul>
             <li>
@@ -174,7 +199,11 @@ For reference information on rule actions available for Cloudflare products powe
         <td>6</td>
       </tr>
       <tr>
-        <td><em>Block</em></td>
+        <td><strong>Block</strong><br/>
+          <br/>
+          API value:<br/>
+          <code class="InlineCode">block</code>
+        </td>
         <td>Matching requests are denied access to the site.</td>
         <td>7</td>
       </tr>
