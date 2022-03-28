@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Analytics Integrations
-weight: 6
+weight: 5
 ---
 
 # Analytics Integrations
