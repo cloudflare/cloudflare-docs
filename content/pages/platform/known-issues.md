@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Known issues
-weight: 10
+weight: 
 ---
 
 # Known issues

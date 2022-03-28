@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Serving Pages
-weight: 5
+weight: 
 ---
 
 # Serving Pages

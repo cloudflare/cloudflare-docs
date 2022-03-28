@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Build configuration
-weight: 3
+weight: 
 ---
 
 # Build configuration
