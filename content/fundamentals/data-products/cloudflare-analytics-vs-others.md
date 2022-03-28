@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Cloudflare Analytics vs. other analytics services
-weight: 6
+weight: 4
 meta:
     title: Understand apparent data discrepancies between Cloudflare Analytics and Google Analytics
 ---
