@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Cloudflare's data products
-weight: 3
+weight: 4
 ---
 
 # Cloudflare's data products
