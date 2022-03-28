@@ -10,7 +10,7 @@ Use the Firewall Rules API to programmatically manage your rules.
 
 When working with the Firewall Rules API, refer to these topics for additional context:
 
-* [Firewall Rules actions](/firewall/cf-firewall-rules/actions/)
+* [Firewall rules actions](/firewall/cf-firewall-rules/actions/)
 * [Cloudflare Filters API](/firewall/api/cf-filters/)
 
 To get started with the API, review the Firewall Rules API [JSON object](/firewall/api/cf-firewall-rules/json-object/) and [Endpoints](/firewall/api/cf-firewall-rules/endpoints/).

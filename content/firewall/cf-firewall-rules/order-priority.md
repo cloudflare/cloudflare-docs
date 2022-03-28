@@ -1,14 +1,14 @@
 ---
 pcx-content-type: concept
 title: Order and priority
-weight: 231
+weight: 3
 ---
 
 # Order and priority
 
 ## Overview
 
-Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below (click the image to view a larger version). For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
+Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below. For example, Firewall Rules only evaluates requests that first clear IP Access Rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
 ![Flow chart of request evaluation at Cloudflare for security products that are not powered by the Ruleset Engine](/firewall/static/firewall-rules-order-and-priority-1.png)
 
