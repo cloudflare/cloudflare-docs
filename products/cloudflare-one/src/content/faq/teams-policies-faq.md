@@ -53,4 +53,4 @@ Here is a list of possible causes:
 * **Your DoH endpoint is not a Gateway location**. Browsers can be configured to use any DoH endpoint. If you chose to configure DoH directly in your browser, make sure that the DoH  endpoint is a Gateway location. 
 
 ## What is policy 5ca54fe7-c825-44b6-a464-873b685fe735?
-We disable inspection on requests to the cloudflareclient.com API in order to prevent a user from being able to put their settings into inoperable state.
+This policy disables inspection on requests to the cloudflareclient.com API, ensuring that users cannot accidentally block themselves from making account changes. Refer to the [Global rules](/cloudflare-one/policies/filtering/http-policies/global-rules/) page for a list of all default policies.
