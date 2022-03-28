@@ -10,11 +10,11 @@ meta:
 
 In an effort to make analytics an ubiquitous component of all Cloudflare's products, Cloudflare has implemented, and continues to evolve, several ways in which customers can access and gain insights from Internet properties on Cloudflare. 
 
-You can access root-level analytics that give you an overview of several aspects of your Cloudflare account, analytics related to specific properties and products, and GraphQL APIs that give you more control over how you visualize the analytic and log information available on the Cloudflare dashboard.
+You can access root-level analytics that give you an overview of several aspects of your Cloudflare account, analytics related to specific properties and products, and the GraphQL API that give you more control over how you visualize the analytic and log information available on the Cloudflare dashboard.
 
-Refer to [Types of Analytics](/fundamentals/data-products/types-of-analytics).
+Refer to [Types of Analytics](/fundamentals/data-products/types-of-analytics) for more information regarding this subject.
 
-## Understand how Cloudflare captures and processes analytics data
+## How Cloudflare captures and processes analytics data
 
 The underlying datasets that Cloudflare Analytics captures and processes share the following characteristics:
 
@@ -23,7 +23,7 @@ The underlying datasets that Cloudflare Analytics captures and processes share t
 * Cloudflare can only proxy information for traffic traveling over [specific ports](/fundamentals/get-started/network-ports/).
 * In determining the originating country, Cloudflare uses the IP address associated with each request. Learn about [Configuring Cloudflare IP Geolocation](https://support.cloudflare.com/hc/articles/200168236).
 
-## Understand apparent data discrepancies
+## Apparent data discrepancies
 
 In addition to the characteristics described above, it is possible that your Cloudflare metrics do not fully align with data for the same site as reported by other sources such as Google Analytics and web server logs.
 
