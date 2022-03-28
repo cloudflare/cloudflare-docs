@@ -9,9 +9,9 @@ Many organizations qualify traffic based on the presence of specific HTTP reques
 
 Use the Rules language [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields) to target requests with specific headers.
 
-This example uses the `http.headers.names` field to look for the presence of an X-CSRF-Token header. The `lower()` [transformation function](/ruleset-engine/rules-language/functions/#transformation-functions) converts the value to lowercase so that the expression is case insensitive.
+This example uses the `http.headers.names` field to look for the presence of an `X-CSRF-Token` header. The [`lower()`](/ruleset-engine/rules-language/functions/#transformation-functions) transformation function converts the value to lowercase so that the expression is case insensitive.
 
-When the X-CSRF-Token header is missing, Cloudflare blocks the request:
+When the `X-CSRF-Token` header is missing, Cloudflare blocks the request:
 
 <table>
   <thead>

@@ -12,7 +12,7 @@ Potential examples include:
 - Removing rate limiting for an API
 - Sharing brand assets and marketing materials
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="warning">}}
 
 These rules can bypass Cloudflare's security features and are generally not recommended. Use with caution.
 
@@ -26,8 +26,8 @@ If a customer or partner is large enough, you could set up a firewall rule based
 
 This example uses:
 
-- `ip.geoip.asnum` to specify the general region
-- The `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure partner traffic does not come from bots
+- The [`ip.geoip.asnum`](/ruleset-engine/rules-language/fields/#field-ip-geoip-asnum) field to specify the general region
+- The [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-score) dynamic field to ensure partner traffic does not come from bots
 
 <table style="table-layout:fixed; width:100%">
   <thead>
@@ -58,8 +58,8 @@ Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudf
 
 This example uses:
 
-- The `ip.geoip.asnum` field to specify the general region.
-- The `cf.threat_score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+- The [`ip.geoip.asnum`](/ruleset-engine/rules-language/fields/#field-ip-geoip-asnum) field to specify the general region.
+- The [`cf.threat_score`](/ruleset-engine/rules-language/fields/#field-cf-threat_score) dynamic field to ensure requests are not high-risk traffic.
 
 If a request meets these criteria, your firewall bypasses normal `User Agent Block` rules.
 
@@ -91,7 +91,7 @@ For smaller organizations, you could set up firewall rules based on IP addresses
 This example:
 
 - Specifies the network and host.
-- Uses the `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to ensure requests are not high-risk traffic.
+- Uses the [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-score) dynamic field to ensure requests are not high-risk traffic.
 
 <table style="table-layout:fixed; width:100%">
   <thead>
