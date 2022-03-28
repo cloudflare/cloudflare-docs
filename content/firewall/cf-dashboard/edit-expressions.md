@@ -6,41 +6,42 @@ weight: 321
 
 # Edit rule expressions
 
-## Overview
+In the Cloudflare dashboard, there are two options for editing [expressions](/ruleset-engine/rules-language/expressions/):
 
-The **Expression Editor** is a text-only interface for creating firewall rule expressions. Although it lacks the visual simplicity of the Expression Builder, the Expression Editor supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/).
+* **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
+* **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
 
-For example, only the Expression Editor supports grouping symbols. Cloudflare designed the Rules language with [Wireshark Display Filters®](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html) in mind, so although there are some subtle differences, Wireshark users should feel right at home with Cloudflare rules and be able to easily port their existing rules to Cloudflare.
+In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions).
 
-{{<Aside type="warning" header="Important">}}
+Both interfaces are available in the **Create firewall rule** page.
 
-Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters). This limit applies whether you use the visual **Expression Builder** or edit your expression manually in the **Expression Editor**.
+## Expression Builder
 
-{{</Aside>}}
+The Expression Builder allows you to visually create rule expressions by using drop-down lists and entering field values to define one or multiple sub-expressions.
 
-## Use the Expression Editor
+![The Expression Builder interface used to visually define expressions](/firewall/static/firewall-rules-expression-builder-0.png)
 
-The Expression Editor is located in the **Create firewall rule** and **Edit firewall rule** panels. The editor supports all available [Rules language](/ruleset-engine/rules-language/) fields, operators, and transformation functions. It also supports parentheses as grouping symbols.
+The **Expression Preview** displays the expression in text:
 
-To edit an expression in the editor:
+```sql
+(ip.geoip.country ne "GB")
+```
 
-1. In **Security** > **WAF** > **Firewall rules**, click **Create a firewall rule** to create a new rule, or click the **wrench** icon to edit an existing rule.
+## Expression Editor
 
-1. In the **Create firewall rule** page, switch to the Expression Editor by clicking **Edit expression**.
+The **Expression Editor** is a text-only interface for defining rule expressions that supports the entire specification of Cloudflare's [Rules language](/ruleset-engine/rules-language/), including parentheses as grouping symbols.
 
-    ![Clicking Edit expression in the Create firewall rule page to switch to the Expression Editor](/firewall/static/firewall-rules-expression-builder-0.png)
+![The Expression Editor used to enter advanced expressions](/firewall/static/firewall-rules-expression-editor-0.png)
 
-1. Use the text input to edit your expression. To commit your changes, click **Deploy** or **Save as draft**.
+To access the Expression Editor, click **Edit expression** in the **Create firewall rule** page:
 
-To switch from the editor to the Expression Builder, click **Use expression builder**.
+![Clicking Edit expression in the Create firewall rule page to switch to the Expression Editor](/firewall/static/firewall-rules-expression-builder-0.png)
 
-![Clicking Use expression builder in the Create firewall rule page to switch to the Expression Builder](/firewall/static/firewall-rules-expression-editor-0.png)
+To switch back from the Expression Editor to the Expression Builder, click **Use expression builder**.
 
-In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, if you use parentheses to nest expressions in the editor, you will not be able to switch to the Expression Builder, because the builder does not support nested expressions.
+### Create nested expressions
 
-## Create nested expressions
-
-A key advantage of the Expression Editor is support for parentheses as [grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols), which allow you to explicitly group and nest expressions and, in turn, create highly targeted expressions.
+The Expression Editor supports parentheses as [grouping symbols](/ruleset-engine/rules-language/operators/#grouping-symbols). Use parentheses to explicitly group and nest expressions and, in turn, create highly targeted expressions.
 
 The following rule expression example challenges any visitor who is not from Malaysia and tries to access WordPress URI paths.
 

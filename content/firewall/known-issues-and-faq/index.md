@@ -20,9 +20,9 @@ No. The number of active rules is fixed based on customer plan. Refer to [Availa
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
-An expression built using the **Visual Expression Editor** does not require you to manually escape those special characters. Conveniently, the **Expression Builder** takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
+An expression built using the visual [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) does not require you to manually escape those special characters. Conveniently, the [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) takes care of any necessary escaping in the final expression by automatically prepending a backslash such that `\` and `"` become `\\` and `\"`, respectively.
 
-The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the **Expression Editor**:
+The following image illustrates how double quotes are automatically escaped to `\"` once they appear in the plain text expression generated in the Expression Editor:
 
 ![The Expression Editor displays rule values with special characters escaped using a backslash character](/firewall/static/cf-firewall-rules-escaping.png)
 
