@@ -28,7 +28,7 @@ The **Expression Editor** is a text-only interface that supports advanced featur
 
 ![The Expression Editor used to enter advanced expressions](/firewall/static/firewall-rules-expression-editor-0.png)
 
-Both interfaces are available in the **Create firewall rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/expression-preview-editor/).
+Both interfaces are available in the **Create firewall rule** page. This article focuses on using the Expression Builder. For more on using the advanced Expression Editor, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/).
 
 ## Create a firewall rule
 

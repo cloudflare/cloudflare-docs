@@ -20,7 +20,7 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit
 
 ## Expression Editor
 
-To use an IP List in the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) specify the `in` operator and use `$<list_name>` to specify the name of the list.
+To use an IP List in the [Expression Editor](/firewall/cf-dashboard/edit-expressions/) specify the `in` operator and use `$<list_name>` to specify the name of the list.
 
 This expression filters requests from IP addresses that are in an IP List named `office_network`:
 
