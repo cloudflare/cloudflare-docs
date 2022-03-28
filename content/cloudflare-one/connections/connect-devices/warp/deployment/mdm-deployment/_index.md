@@ -6,7 +6,7 @@ weight: 1
 
 # Managed deployment
 
-Bigger organizations can deploy WARP automatically to their fleet of devices in a single operation. This can be done using [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) like Intune or JAMF, or by executing `.msi` file on desktop machines.
+Organizations can deploy WARP automatically to their fleet of devices in a single operation. This can be done using [mobility management solutions](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) like Intune or JAMF, or by executing an `.msi` file on desktop machines.
 
 Here is a list of generic instructions to deploy WARP on your organization's devices.
 
@@ -61,7 +61,7 @@ Before you deploy the WARP client to macOS devices, visit the [requirements sect
 
 If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/). The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
-Here is an example plist file with the accepted arguments:
+Here is an example `/Library/Managed Preferences/com.cloudflare.warp.plist` file with the accepted arguments:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -165,6 +165,21 @@ For a description of each argument and what it means, see [deployment parameters
     % plutil -convert binary1 com.cloudflare.warp.plist
 
 [Click here to download](/cloudflare-one/static/documentation/connections/CloudflareWARP.mobileconfig) this example `.mobileconfig`. Before doing so, you may need to run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID` in the example above.
+
+### Linux
+
+Before you deploy the WARP client to Linux devices, visit the [Download WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux) page to review system requirements and to download the Linux package. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
+
+The WARP Client for Linux allows for an automated install via the presence of an `mdm.xml` file in `/var/lib/cloudflare-warp`.
+
+The format of `/var/lib/cloudflare-warp/mdm.xml` is as follows:
+
+```xml
+<dict>
+  <key>organization</key>
+  <string>yourorganization</string>
+</dict>
+```
 
 ## Generic instructions for mobile deployment
 
