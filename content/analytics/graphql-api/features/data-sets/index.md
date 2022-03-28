@@ -70,6 +70,7 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | September 30, 2021     |
 | `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021     |
 | `ipFlows1mGroups`<br/> `ipFlows1hGroups`<br/> `ipFlows1dGroups`<br/> `ipFlows1mAttacksGroups` | `spectrumNetworkAnalyticsAdaptiveGroups`<br/> `magicTransitNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | March 31, 2022 |
+| `browserPerf1mGroups`| `firewallEventsAdaptive`|      |
 
 {{</table-wrap>}}
 
