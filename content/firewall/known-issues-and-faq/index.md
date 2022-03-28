@@ -28,9 +28,9 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ## Why isn't my regular expression pattern matching working?
 
-If you are using a regular expression, we recommend you test it against a testing tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
+If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
-Also, note that `http.request.method` fields requires all-caps for method names.
+Also, note that the `http.request.method` field requires all-caps for method names (for example, `POST`).
 
 ## How can I use the Threat Score effectively?
 
@@ -38,10 +38,10 @@ The _Cloudflare Threat Score_ is a key item behind the **Security Level** functi
 
 _Threat Score_ as configured by **Security Level** is based on:
 
-- High - for scores greater than 0
-- Medium - for scores greater than 14
-- Low - for scores greater than 24
-- Essentially off - for scores greater than 49
+- _High_ - for scores greater than 0
+- _Medium_ - for scores greater than 14
+- _Low_ - for scores greater than 24
+- _Essentially off_ - for scores greater than 49
 
 Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify a CAPTCHA vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
 
@@ -55,7 +55,7 @@ Refer to [How do I create an exception to exclude certain requests from being bl
 
 ### Bots currently detected
 
-[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the _cf.client.bot_ field is set to true.
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to true.
 
 If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
@@ -63,14 +63,14 @@ If you need to submit a friendly bot to be verified, use [our online form](https
 
 There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.
 
-Cloudflare supports two methods to permit requests through firewall rules expressions:
+Cloudflare supports two methods to allow requests through firewall rules expressions:
 
-1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country.
-1. Create an independent firewall rule with an _Allow_ action.
+* Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country.
+* Create an independent firewall rule with an _Allow_ action.
 
 {{<Aside type="note" header="Note">}}
 
-Cloudflare Firewall Rules does not bypass other security measures configured in **Security**.
+Cloudflare Firewall Rules does not bypass other security measures configured under **Security**.
 
 {{</Aside>}}
 
@@ -78,7 +78,7 @@ If you wish to permit certain exclusions, the examples below illustrate a few po
 
 ### Example 1
 
-Exclude multiple IP addresses from a blocking/challenging rule that assesses Threat Score
+Exclude multiple IP addresses from a blocking/challenging rule that assesses Threat Score.
 
 {{<table-wrap>}}
 
@@ -94,13 +94,13 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
     <tr>
       <td>Action</td>
       <td>
-        <em>block (or challenge)</em>
+        <em>Block</em> (or a challenge action)
       </td>
     </tr>
     <tr>
       <td>Expression</td>
       <td>
-        <em>(http.host eq "example.com" and cf.threat_score &gt; 5)</em>
+        <code class="InlineCode">(http.host eq "example.com" and cf.threat_score > 5)</code>
       </td>
     </tr>
     <tr>
@@ -111,16 +111,15 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
     <tr>
       <td>Action</td>
       <td>
-        <em>block (or challenge)</em>
+        <em>Block</em> (or a challenge action)
       </td>
     </tr>
     <tr>
       <td>Expression</td>
       <td>
-        <em>
-          (http.host eq "example.com" and cf.threat_score &gt; 5) and not (ip.src in
-          {192.0.2.1 198.51.100.42 203.0.113.0/24})
-        </em>
+        <code class="InlineCode">
+          (http.host eq "example.com" and cf.threat_score > 5) and not (ip.src in
+          {192.0.2.1 198.51.100.42 203.0.113.0/24})</code>
       </td>
     </tr>
     <tr>
@@ -131,17 +130,17 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
     <tr>
       <td>Rule 1</td>
       <td>
-        Action: <em>allow</em>
+        Action: <em>Allow</em>
         <br />
-        Expression: <em>ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}</em>
+        Expression: <code class="InlineCode">ip.src in {192.0.2.1 198.51.100.42 203.0.113.0/24}</code>
       </td>
     </tr>
     <tr>
       <td>Rule 2</td>
       <td>
-        Action: <em>block (or challenge)</em>
+        Action: <em>Block</em> (or a challenge action)
         <br />
-        <em>(http.host eq "example.com" and cf.threat_score &gt; 5)</em>
+        <code class="InlineCode">(http.host eq "example.com" and cf.threat_score > 5)</code>
       </td>
     </tr>
   </tbody>
@@ -151,7 +150,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
 
 ### Example 2
 
-Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large volumes of undesired traffic, but allow Googlebot and other known bots that Cloudflare validates
+Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large volumes of undesired traffic, but allow Googlebot and other known bots that Cloudflare validates.
 
 {{<table-wrap>}}
 
@@ -164,11 +163,11 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     </tr>
     <tr>
       <td>Action</td>
-      <td><em>block (or challenge)</em></td>
+      <td><em>Block</em> (or a challenge action)</td>
     </tr>
     <tr>
       <td>Expression</td>
-      <td><em>(ip.geoip.asnum in {7224 15169})</em></td>
+      <td><code class="InlineCode">(ip.geoip.asnum in {7224 15169})</code></td>
     </tr>
     <tr>
       <td colspan="2">
@@ -177,12 +176,12 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     </tr>
     <tr>
       <td>Action</td>
-      <td><em>block (or challenge)</em></td>
+      <td><em>Block</em> (or a challenge action)</td>
     </tr>
     <tr>
       <td>Expression</td>
       <td>
-        <em>(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</em>
+        <code class="InlineCode">(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</code>
       </td>
     </tr>
     <tr>
@@ -197,15 +196,15 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     <tr>
       <td>Rule 1</td>
       <td>
-        Action: <em>allow</em><br />
-        Expression: <em>cf.client.bot</em>
+        Action: <em>Allow</em><br />
+        Expression: <code class="InlineCode">cf.client.bot</code>
       </td>
     </tr>
     <tr>
       <td>Rule 2</td>
       <td>
-        Action: <em>block (or challenge)</em><br />
-        Expression: <em>(ip.geoip.asnum in {7224 15169})</em>
+        Action: <em>Block</em> (or a challenge action)<br />
+        Expression: <code class="InlineCode">(ip.geoip.asnum in {7224 15169})</code>
       </td>
     </tr>
   </tbody>
