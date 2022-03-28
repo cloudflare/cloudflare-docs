@@ -982,3 +982,18 @@
 /browser-isolation/* /cloudflare-one/policies/browser-isolation/ 301
 
 /ssl/custom-certificates/* /ssl/edge-certificates/custom-certificates/:splat 301
+
+# partial redirects (will expand later)
+
+/ssl/_partials/* /ssl/ 301
+/waiting-room/_partials/* /waiting-room/ 301
+/warp-client/_partials/* /warp-client/ 301
+/bots/_partials/* /bots/ 301
+/api-security/_partials/* /api-shield/ 301
+/logs/_partials/* /logs/ 301
+/fundamentals/_partials/* /fundamentals/ 301
+/load-balancing/_partials/* /load-balancing/ 301
+/api-shield/_partials/* /api-shield/ 301
+/registrar/_partials/* /registrar/ 301
+/waf/_partials/* /waf/ 301
+/1.1.1.1/_partials/* /1.1.1.1/ 301
