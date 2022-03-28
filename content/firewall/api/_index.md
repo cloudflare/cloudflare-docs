@@ -1,14 +1,14 @@
 ---
 title: Manage rules via the APIs
 pcx-content-type: navigation
-weight: 401
+weight: 4
 meta:
   title: Manage firewall rules via the APIs
 ---
 
 # Manage firewall rules via the APIs
 
-When it comes to programmatic firewall rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI-based **Firewall rules** feature in **Security**.
+When it comes to programmatic firewall rule management, Cloudflare offers APIs that work together to achieve the same effect as the UI-based **Firewall rules** feature under **Security** > **WAF**.
 
 These APIs are the following:
 
