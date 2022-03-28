@@ -111,7 +111,7 @@ sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 1.  [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-The device will show a message: _This website is trying to open Settings to how you a configuration profile. Do you want to allow this?_
+The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
 ![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
 
