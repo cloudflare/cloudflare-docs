@@ -168,7 +168,7 @@ For a description of each argument and what it means, see [deployment parameters
 
 ### Linux
 
-Before you deploy the WARP client to Linux devices, visit the [requirements section](/cloudflare-one/connections/connect-devices/warp/download-warp/) to review the system requirements for Linux and to download the Linux package. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
+Before you deploy the WARP client to Linux devices, visit the [Download WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/#linux) page to review system requirements and to download the Linux package. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 The WARP Client for Linux allows for an automated install via the presence of an `mdm.xml` file in `/var/lib/cloudflare-warp`.
 
