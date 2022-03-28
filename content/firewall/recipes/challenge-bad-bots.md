@@ -28,7 +28,7 @@ For best results:
 - Use [Bot Analytics](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
-Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#5-create-additional-firewall-rules) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#step-4--create-additional-firewall-rules) and your tolerance for false positives.
 
 ### Protect browser endpoints
 
