@@ -121,7 +121,7 @@ The device will show a message: _This website is trying to download a configurat
 
 {{<Aside type="note">}}
 
-Alternatively you can navigate to **Settings** and a new **Profile Downloaded** section should be shown directly beneath your iCloud user account info.
+Alternatively you can navigate to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
 
 {{</Aside>}}
 
