@@ -1,7 +1,7 @@
 ---
 title: FAQ
 pcx-content-type: faq
-weight: 700
+weight: 6
 meta:
   title: Firewall Rules FAQ
 ---
@@ -10,11 +10,11 @@ meta:
 
 ## How many rules can I have on my site?
 
-You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Entitlements](/firewall/cf-firewall-rules/#entitlements) for details on what is allowed per customer plan.
+You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
 
 ## Can I purchase additional active rules?
 
-No. The number of active rules is fixed based on customer plan. Refer to [Entitlements](/firewall/cf-firewall-rules/#entitlements).
+No. The number of active rules is fixed based on customer plan. Refer to [Availability](/firewall/#availability).
 
 ## How are certain special and escaped characters handled?
 
@@ -65,8 +65,8 @@ There may be situations in which you want to enforce a blocking or challenging a
 
 Cloudflare supports two methods to permit requests through firewall rules expressions:
 
-1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country
-1. Create an independent firewall rule with an _Allow_ action
+1. Exclude a type of request from being blocked or challenged, for example based on IP address, ASN, or country.
+1. Create an independent firewall rule with an _Allow_ action.
 
 {{<Aside type="note" header="Note">}}
 
@@ -212,7 +212,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 </table>
 {{</table-wrap>}}
 
-## Why does a Firewall Event display a Cloudflare IP address even though other fields match the client details?
+## Why does a firewall event display a Cloudflare IP address even though other fields match the client details?
 
 This happens when a request goes through a Cloudflare Worker.
 
