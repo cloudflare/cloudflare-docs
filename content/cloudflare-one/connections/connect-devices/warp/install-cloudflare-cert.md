@@ -117,7 +117,7 @@ The device will show a message: _This website is trying to download a configurat
 
 2.  Tap **Allow**.
 
-3.  Navigate to **Settings** > **General** > **VPN & Device Management** and the new downloaded profile should be listed.
+3.  Navigate to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
 {{<Aside type="note">}}
 
