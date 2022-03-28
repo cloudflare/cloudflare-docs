@@ -16,7 +16,7 @@ A filter contains an expression that would return `true` or `false` when evaluat
 
 Filter expressions are human and machine readable, and you can compose complex logic to precisely match the traffic that you are interested in detecting and acting upon.
 
-A filter typically looks like the following:
+A filter object typically looks like the following:
 
 ```json
 {

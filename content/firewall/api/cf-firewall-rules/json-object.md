@@ -59,7 +59,7 @@ This table summarizes the object properties:
       <tr>
         <td><code>action</code><br />{{<type>}}String{{</type>}}</td>
         <td>The action to take when a request satisfies the filter expression for this rule.</td>
-        <td>Refer to <a href="/firewall/cf-firewall-rules/actions/">Firewall rules actions</a>.</td>
+        <td>Refer to <a href="/firewall/cf-firewall-rules/actions/">Firewall rules actions</a> for supported values.</td>
       </tr>
       <tr>
         <td><code>priority</code><br />{{<type>}}Number{{</type>}}</td>
