@@ -2,11 +2,9 @@
 title: Edit rule expressions
 pcx-content-type: how-to
 weight: 321
-meta:
-  title: Edit firewall rule expressions
 ---
 
-# Edit firewall rule expressions
+# Edit rule expressions
 
 ## Overview
 
