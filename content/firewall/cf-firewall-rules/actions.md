@@ -1,7 +1,7 @@
 ---
 title: Actions
 pcx-content-type: reference
-weight: 221
+weight: 1
 meta:
   title: Firewall rules actions
 layout: list
