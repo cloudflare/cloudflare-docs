@@ -14,7 +14,7 @@ meta:
 
 ### Full setups
 
-If your domain is on a full setup (Cloudflare runs your [authoritative nameservers](/fundamentals/glossary/#nameserver)), we handle DCV automatically on your behalf using a TXT record.
+If your domain is on a [full setup](/dns/zone-setups/full-setup/), Cloudflare handles DCV automatically on your behalf using a TXT record.
 
 ### Custom certificates
 
@@ -22,7 +22,7 @@ If your domain is using a [custom certificate](/ssl/edge-certificates/custom-cer
 
 ## Perform DCV
 
-If your application is on a partial/CNAME setup (someone else runs your authoritative nameservers), you may need to perform DCV.
+If your application is on a [partial/CNAME setup](/dns/zone-setups/partial-setup/), you may need to perform DCV.
 
 ### Apex validation
 
