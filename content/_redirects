@@ -994,3 +994,6 @@
 /fundamentals/_partials/* /fundamentals/ 301
 /load-balancing/_partials/* /load-balancing/ 301
 /api-shield/_partials/* /api-shield/ 301
+/registrar/_partials/* /registrar/ 301
+/waf/_partials/* /waf/ 301
+/1.1.1.1/_partials/* /1.1.1.1/ 301
