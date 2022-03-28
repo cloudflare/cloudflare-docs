@@ -5,13 +5,13 @@ title: Challenge bad bots
 
 # Challenge bad bots
 
-{{<Aside type="warning" header="Important">}}
+Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
+
+{{<Aside type="warning">}}
 
 Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
 
 {{</Aside>}}
-
-Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
 
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
