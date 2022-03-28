@@ -64,7 +64,13 @@ For additional help, refer to [Troubleshooting DCV](/ssl/edge-certificates/chang
 
 {{<render file="_txt-validation-definition.md">}}
 
-<GenericProcess/>
+{{<Aside type="warning">}}
+
+If your domain is already live with a partial DNS setup — with Cloudflare or another DNS provider — you cannot use a TXT record for DCV. That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
+
+{{</Aside>}}
+
+{{<render file="_generic-validation-process.md">}}
 
 *   API: `txt_name` and `txt_value`
 *   Dashboard: When viewing an individual certificate at **SSL/TLS** > **Edge Certificates**, refer to the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
