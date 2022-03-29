@@ -25,7 +25,7 @@ Rule Preview is only available to customers on an Enterprise plan.
 ## Test a firewall rule with Rule Preview
 
 1. Locate the desired rule in the rules list and click **Edit** (wrench icon).
-1. Click **Test rule** to trigger the test.
+2. Click **Test rule** to trigger the test.
 
 ![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
 

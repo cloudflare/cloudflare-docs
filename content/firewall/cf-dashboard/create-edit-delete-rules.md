@@ -20,27 +20,27 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Navigate to **Security** > **WAF** > **Firewall rules**.
+2. Navigate to **Security** > **WAF** > **Firewall rules**.
 
-1. Click **Create a firewall rule**.
+3. Click **Create a firewall rule**.
 
-1. In the **Create firewall rule** page that displays, use the **Rule name** input to supply a descriptive name.
+4. In the **Create firewall rule** page that displays, use the **Rule name** input to supply a descriptive name.
 
-1. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property (refer to [Fields reference](/ruleset-engine/rules-language/fields/) for details). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
+5. Under **When incoming requests match**, use the **Field** drop-down list to choose an HTTP property (refer to [Fields reference](/ruleset-engine/rules-language/fields/) for details). For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value**.
 
     Alternatively, use the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) to define the rule expression.
 
     ![Example firewall rule expression with a selected field, operator, and value](/firewall/static/firewall-rules-expression-builder-value.png)
 
-1. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
+6. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
-1. Next, specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input.
+7. Next, specify the value to match. If the value is an enumeration, then the **Value** control will be a drop-down list. Otherwise, it will be a text input.
 
-1. To add a new sub-expression to the rule expression, click **And** or **Or** next to the **Value** control.
+8. To add a new sub-expression to the rule expression, click **And** or **Or** next to the **Value** control.
 
-1. Select an action for your rule in the **Action** drop-down list.
+9. Select an action for your rule in the **Action** drop-down list.
 
-1. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
+10. To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
 
 After you choose an option, you return to the rules list, which displays your new rule.
 
