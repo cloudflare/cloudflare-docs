@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Firewall Rules
 
-Firewall rules allow users to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
+Cloudflare Firewall Rules allows you to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
 
 ## Main features
 
