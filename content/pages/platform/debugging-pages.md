@@ -6,11 +6,11 @@ weight:
 
 # Debugging Pages
 
-When setting up your Pages project, you may encounter different errors that prevent you from successfully deploying your site. This guide gives an overview of some common errors and what you can do to solve them.
+When setting up your Pages project, you may encounter various errors that prevent you from successfully deploying your site. This guide gives an overview of some common errors and solutions.
 
 ## Check your build log
 
-You can see build errors in your Pages build log. To access your build log:
+You can review build errors in your Pages build log. To access your build log:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, go to **Pages**.
@@ -18,7 +18,7 @@ You can see build errors in your Pages build log. To access your build log:
 
 ![After logging into the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
 
-Review the sections below to understand possible error causes.
+Possible errors in your build log are included in the following sections.
 
 ### Initializing build environment
 
@@ -41,9 +41,27 @@ Be aware that you need a role of **Maintainer** or above to successfully link yo
 
 Possible errors in this step could be caused by lack of Git Large File Storage (LFS). Check your LFS usage by referring to the [GitHub](https://docs.github.com/en/billing/managing-billing-for-git-large-file-storage/viewing-your-git-large-file-storage-usage) and [GitLab](https://docs.gitlab.com/ee/topics/git/lfs/) documentation.
 
-<!-->
-Section on submodules goes here
-<!-->
+Make sure to also review your submodule configuration by going to the `.gitmodules` file in your root directory. This file needs to contain both a `path` and a `url` property.
+
+Example of a valid configuration:
+
+```sh
+[submodule "example"]
+	path = example/path
+	url = git://github.com/example/repo.git
+```
+
+Example of an invalid configuration:
+
+```sh
+[submodule "example"]
+	path = example/path
+```
+or
+```sh
+[submodule "example"]
+        url = git://github.com/example/repo.git
+```
 
 ### Building application
 
@@ -51,7 +69,7 @@ Possible errors in this step could be caused by faulty setup in your Pages proje
 
 ### Deploying to Cloudflare's global network
 
-Possible errors in this step could be caused by incorrect Pages Functions configuration. Refer to the [Functions](/functions/) documentation for more information on Functions setup. 
+Possible errors in this step could be caused by incorrect Pages Functions configuration. Refer to the [Functions](/pages/platform/functions/) documentation for more information on Functions setup. 
 
 If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
 
