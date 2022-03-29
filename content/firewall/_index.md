@@ -42,7 +42,7 @@ This table outlines the Firewall Rules features and entitlements available with 
   <td>5</td>
   <td>20</td>
   <td>100</td>
-  <td>1000</td>
+  <td>1,000</td>
 </tr>
 <tr>
   <td>Supported actions</td>
