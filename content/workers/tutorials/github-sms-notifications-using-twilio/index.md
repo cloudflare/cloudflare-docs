@@ -20,7 +20,7 @@ You will learn how to:
 - Integrate Workers with GitHub and Twilio.
 - Use Worker secrets with Wrangler.
 
-![Video of receiving a text after pushing to a repo](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
+![Animated gif of receiving a text message on your phone after pushing changes to a repository](./media/video-of-receiving-a-text-after-pushing-to-a-repo.gif)
 
 ---
 
@@ -62,7 +62,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 6.  Select **Add webhook** to finish configuration.
 
-![GitHub config screenshot](./media/github-config-screenshot.png)
+![Following instructions to set up your webhook in the GitHub webhooks settings dahsboard](./media/github-config-screenshot.png)
 
 ---
 

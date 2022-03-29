@@ -28,7 +28,7 @@ If you do not already have an Auth0 account, sign up for a free account at [auth
 
 Every Auth0 account contains applications, which allow developers to create login/signup flows that are verified by Auth0. To integrate Auth0 with Workers, create an application in your Auth0 dashboard. If you have created an account for this tutorial, the **Default (Generic)** application provided by Auth0 will work; otherwise, create a new application with the type **Regular Web Application**.
 
-![Creating an Auth0 application](./media/creating-an-application.png)
+![Create an Auth0 application by selecting your application type](./media/creating-an-application.png)
 
 Inside of your application’s settings, the client ID and client secret are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the [**Publish** section](/workers/tutorials/authorize-users-with-auth0/#publish) of this tutorial, you will later fill in these values with the final deployed URL of your application.
 
@@ -54,7 +54,7 @@ Before implementing an authorizer in your application, which will verify that a 
 
 In a traditional application that is attached to a database, the authorization tokens Auth0 returns are often persisted in a database. This will allow users to return to the application and continue to use it without the need for re-authorization. With a Workers application, you have access to a quick and easy-to-use data storage solution that lives right next to your serverless application: Workers KV. Using Workers KV, you will store authorization tokens and tie them to a user using an authorization cookie.
 
-[![Auth0 Flow](./media/auth0-flow.png)](https://auth0.com/docs/flows/concepts/auth-code)
+[![Auth0 Flow showing how the API responds to user activity. Read above for more information.](./media/auth0-flow.png)](https://auth0.com/docs/flows/concepts/auth-code)
 
 <small>Auth0 Flow Diagram courtesy of <a href="https://auth0.com/docs/flows/concepts/auth-code">Auth0</a></small>
 
@@ -185,7 +185,7 @@ async function handleEvent(event) {
 
 When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by your application. [In the next section](/workers/tutorials/authorize-users-with-auth0/#handling-a-login-redirect), you will handle that redirect and get a user access token as part of the login code flow.
 
-![Auth0 Login Form](./media/auth0-login.png)
+![A user logging in via Auth0's login form](./media/auth0-login.png)
 
 ### Handling a login redirect
 
@@ -671,7 +671,7 @@ async function handleEvent(event) {
 
 For a more detailed example of this functionality, refer to the [source code](https://github.com/signalnerve/workers-auth0-example/) for this tutorial, which shows how to integrate this information using the JavaScript framework Alpine.js. In this example, the `userInfo` object is embedded into the `script#edge_state` tag, and when the site is rendered in the client’s browser, the user’s name (or email address, if the user’s name is not provided) is displayed:
 
-![User info](./media/userInfo.png)
+![When a site is successfully rendered, the user will be able to see their user information](./media/userInfo.png)
 
 ### Logging out users
 
@@ -929,7 +929,7 @@ $ wrangler secret put AUTH0_CALLBACK_URL
 $ wrangler secret put SALT
 ```
 
-![Auth0 Settings](./media/auth0-settings.png)
+![Customize basic application configuration in Auth0 settings](./media/auth0-settings.png)
 
 #### Setting the callback url
 
@@ -960,14 +960,14 @@ $ wrangler secret put SALT
 
 #### Allowed origin/callback URLs
 
-Note that Auth0 has security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application configuration. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for \[wrangler dev]\[/cli-wrangler/commands#dev] usage):
+Auth0 has security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application configuration. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787` for \[wrangler dev]\[/cli-wrangler/commands#dev] usage):
 
 | URL                                                  | Description          |
 | ---------------------------------------------------- | -------------------- |
 | https://$applicationName.$subdomain.workers.dev/auth | Allowed Callback URL |
 | https://$applicationName.$subdomain.workers.dev      | Allowed Origin       |
 
-![Auth0 allowed URLs](./media/auth0-allowed-urls.png)
+![Customize Auth0 allowed URLs in the Auth0 dashboard](./media/auth0-allowed-urls.png)
 
 ### Publishing your application
 
@@ -987,7 +987,7 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 3.  Let Auth0 redirect you to `/auth`, and then to `/`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4.  If you see your site, you have successfully authorized users to your Workers application, using Auth0.
 
-![Example GIF](./media/example-vid.gif)
+![After successful setup, you will be able to log into your application with Auth0's login page](./media/example-vid.gif)
 
 ## Conclusion
 

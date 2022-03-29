@@ -94,7 +94,7 @@ $ wrangler publish
 
 After deploying your project, open your browser to review your static site.
 
-![Result](./media/demo.png)
+![After deploying your browser, you will be able to review your successfully published static site](./media/demo.png)
 
 ## How it works
 

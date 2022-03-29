@@ -2,7 +2,7 @@
 type: overview
 pcx-content-type: overview
 title: Cloudflare Notifications
-weight: 5
+weight: 6
 layout: list
 ---
 

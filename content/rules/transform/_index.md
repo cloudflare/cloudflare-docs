@@ -22,7 +22,7 @@ To configure Transform Rules in the dashboard, use the **Transform Rules** tab i
 
 Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
 
-Request and response fields are immutable within each [phase](/ruleset-engine/about/#phases) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about/#rule-evaluation-and-field-values).
+Request and response fields are immutable within each [phase](/ruleset-engine/about/phases/) while evaluating Transform Rules for a request/response. For more information, refer to [Rule evaluation and field values](/ruleset-engine/about/rules/#rule-evaluation-and-field-values).
 
 ## Availability
 

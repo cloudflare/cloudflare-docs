@@ -43,6 +43,7 @@ The descriptions below detail the fields available for `http_requests`.
 | ClientSrcPort | Client source port | int |
 | ClientTCPRTTMs | The smoothed average of TCP round-trip time (SRTT). For the initial request on a connection, this is measured only during connection setup. For a subsequent request on the same connection, it is measured over the entire connection lifetime up until the time that request is received. Available in Logpush v2 only. | int |
 | ClientXRequestedWith | X-Requested-With HTTP header | string |
+| Cookies | String key-value pairs for Cookies | object |
 | EdgeCFConnectingO2O | True if the request looped through multiple zones on the Cloudflare edge. This is considered an orange to orange (o2o) request. Available in Logpush v2 only. | bool |
 | EdgeColoCode | IATA airport code of data center that received the request | string |
 | EdgeColoID | Cloudflare edge colo id | int |
@@ -80,6 +81,8 @@ The descriptions below detail the fields available for `http_requests`.
 | OriginTLSHandshakeDurationMs | Time taken to complete TLS handshake with origin. This will be 0 if an origin connection is reused. Available in Logpush v2 only. | int |
 | ParentRayID | Ray ID of the parent request if this request was made using a Worker script | string |
 | RayID | ID of the request | string |
+| RequestHeaders | String key-value pairs for RequestHeaders | object |
+| ResponseHeaders | String key-value pairs for ResponseHeaders | object |
 | SecurityLevel | The security level configured at the time of this request. This is used to determine the sensitivity of the IP Reputation system. | string |
 | SmartRouteColoID | The Cloudflare datacenter used to connect to the origin server if Argo Smart Routing is used. Available in Logpush v2 only. | int |
 | UpperTierColoID | The "upper tier" datacenter that was checked for a cached copy if Tiered Cache is used. Available in Logpush v2 only. | int |

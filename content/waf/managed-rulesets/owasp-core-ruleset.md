@@ -403,4 +403,4 @@ curl -X PATCH \
 
 ### Additional resources
 
-For more API examples, refer to [Workflow examples](/ruleset-engine/common-use-cases/) in the Ruleset Engine documentation.
+For more API examples, refer to [Managed Ruleset override examples](/ruleset-engine/managed-rulesets/override-examples/) in the Ruleset Engine documentation.

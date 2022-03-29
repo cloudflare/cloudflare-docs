@@ -8,7 +8,7 @@ layout: list
 
 # Add rules to phase entry point rulesets
 
-A phase entry point ruleset contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
+A [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
 To add one or more rules to a phase entry point ruleset, use the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation of the [Rulesets API](/ruleset-engine/rulesets-api/). When you add a rule to an entry point ruleset, the entry point ruleset is created automatically if it does not exist. This API method requires that you include in the request all rules you want to keep in the ruleset, or else they will be removed.
 

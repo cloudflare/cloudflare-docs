@@ -1,9 +1,9 @@
 ---
 pcx-content-type: navigation
-title: Basic operations
+title: Basic API operations
 weight: 5
 ---
 
-# Basic operations
+# Basic API operations
 
 {{<directory-listing>}}

@@ -1,10 +1,12 @@
 ---
-title: Workflow examples
+title: Override examples
 pcx-content-type: navigation
-weight: 8
+weight: 4
+meta:
+    title: Managed Ruleset override examples
 ---
 
-# Workflow examples
+# Managed Ruleset override examples
 
 The examples in the topics below use overrides to customize the behavior of Managed Rulesets:
 

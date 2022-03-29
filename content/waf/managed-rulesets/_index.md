@@ -46,7 +46,7 @@ Cloudflare provides the following WAF Managed Rulesets:
 </table>
 {{</table-wrap>}}
 
-The following rulesets run in the response phase:
+The following rulesets run in a response phase:
 
 {{<table-wrap>}}
 <table style="table-layout:fixed; width:100%;">
@@ -71,4 +71,4 @@ When you enable a Managed Ruleset in **Security** > **WAF** > **Managed rules**,
 
 Other Managed Rulesets, like DDoS Managed Rulesets, are deployed to a different phase. Refer to the specific Managed Ruleset documentation for details.
 
-For more information on phases, refer to [Phases](/ruleset-engine/about/#phases).
+For more information on phases, refer to [Phases](/ruleset-engine/about/phases/).

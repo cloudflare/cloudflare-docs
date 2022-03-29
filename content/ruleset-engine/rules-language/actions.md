@@ -18,7 +18,7 @@ The table below lists the actions available in the Rules language.
 
 Some actions, like _Block_, will stop the evaluation of the remaining rules. The _Skip_ action will skip the evaluation of _some_ rules when there is a match, but the exact behavior will depend on the rule configuration.
 
-The available actions depend on the [phase](/ruleset-engine/about/#phases) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
+The available actions depend on the [phase](/ruleset-engine/about/phases/) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
 {{<table-wrap>}}
 

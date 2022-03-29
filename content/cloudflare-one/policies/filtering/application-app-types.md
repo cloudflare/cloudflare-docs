@@ -6,23 +6,21 @@ weight: 5
 
 # Applications and app types
 
-Cloudflare Gateway’s HTTP policies allow you to filter HTTP traffic on the L7 firewall. To make it easier to manage firewall policies for cloud applications, Gateway allows you to build policies based on applications and app types.
-
-Using these two selectors in the HTTP policy builder, you can have more granular control over how web applications are used on your network.
+Gateway allows you to build DNS, Network, and HTTP policies based on applications and app types. This feature gives you more granular control over how web applications are used on your network.
 
 ## Creating policies with applications and app types
 
 1.  On the [Zero Trust dashboard](http://dash.teams.cloudflare.com), navigate to **Gateway > Policies**.
 
-2.  Navigate to the **HTTP tab**.
+2.  Navigate to the **DNS**, **Network**, or **HTTP** tab, depending on what kind of policy you want to create.
 
 3.  [Create a new policy](/cloudflare-one/policies/filtering/http-policies/), or edit an existing one.
 
-4.  In the **Selector** drop-down menu, select the _Application_ option.
+4.  In the _Selector_ drop-down menu, select the _Application_ option.
 
-5.  In the **Operator** drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your policy.
+5.  In the _Operator_ drop-down menu, select _in_ or _not in_, depending on whether you want to include or exclude applications or app types from your policy.
 
-6.  In the **Value** drop-down menu, check the applications or app types you would like to control with your policy.
+6.  In the _Value_ drop-down menu, check the applications or app types you would like to control with your policy.
 
     ![Creating a policy for applications](/cloudflare-one/static/documentation/policies/applications-policy.png)
 
@@ -34,7 +32,7 @@ Using these two selectors in the HTTP policy builder, you can have more granular
 
 ### Applications
 
-A full list of supported applications and their respective app types are available to download [here](/cloudflare-one/static/documentation/applications.csv).
+When you [create a policy for applications](#creating-policies-with-applications-and-app-types) from the Zero Trust dashboard, the _Value_ drop-down menu lists all supported applications and their respective app types. To view an up-to-date list outside of the UI, please refer to the [Gateway API guide](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
 
 ### App types
 
@@ -68,9 +66,9 @@ Some applications are incompatible with TLS decryption for a variety of reasons,
 
 This is a countermeasure to man-in-the-middle attacks where an attacker presents a trusted, but false, certificate on behalf of the origin in order to decrypt the traffic. This is exactly what TLS interception in a Secure Web Gateway does, although for the purposes of securing a user's web traffic.
 
-Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can create an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/application-app-types/), select _Application_ as a **Selector**, _in_ as an **Operator**, and check the _Do Not Inspect_ app type in the **Value** field. Then, set the policy **Action** to _Do Not Inspect_.
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. To ensure that traffic gets through to these applications, you can [create an HTTP policy](#creating-policies-with-applications-and-app-types), select _Application_ as a **Selector**, _in_ as an **Operator**, and check the _Do Not Inspect_ app type in the **Value** field. Then, set the HTTP policy **Action** to _Do Not Inspect_.
 
-Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ policy and selecting all applications within the _Do Not Inspect_ app type, you'll ensure that your policy will apply to any new applications that will be added to the app type.
+Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
 ![Creating an HTTP policy for the Do Not Inspect app type](/cloudflare-one/static/documentation/policies/do-not-inspect.png)
 
@@ -87,10 +85,4 @@ Root Certificate in Google Drive, check out these <a href="https://support.googl
 
 {{</Aside>}}
 
-## Supported actions for applications
 
-The Applications selector allows you to create policies with the following actions:
-
-- **Allow** allows HTTP traffic to reach selected applications.
-- **Block** blocks any HTTP traffic from reaching selected applications.
-- **Do Not Inspect** bypasses SSL inspection for selected applications.

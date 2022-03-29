@@ -1,3 +1,10 @@
+---
+_build:
+  publishResources: false
+  render: never
+  list: never
+---
+
 ## WARP modes
 
 The WARP app has two main modes of operation: WARP and 1.1.1.1.
