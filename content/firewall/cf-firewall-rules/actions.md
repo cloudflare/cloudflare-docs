@@ -9,7 +9,7 @@ layout: list
 
 # Firewall rules actions
 
-## Overview
+{{<content-column>}}
 
 The action of a firewall rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
@@ -26,6 +26,8 @@ There are two exceptions to this behavior: the _Log_ and _Bypass_ actions. Unlik
 For reference information on rule actions available for Cloudflare products powered by the Ruleset Engine, refer to [Rules language: Actions reference](/ruleset-engine/rules-language/actions/).
 
 {{</Aside>}}
+
+{{</content-column>}}
 
 {{<table-wrap>}}
 
