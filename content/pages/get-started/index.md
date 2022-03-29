@@ -42,12 +42,6 @@ You can select a GitHub project from your personal account or an organization yo
 
 If using GitLab, you can select a project from your personal account or from a GitLab group you belong to. This allows you to choose a GitLab repository to deploy using Pages. Both private and public repositories are supported.
 
-{{<Aside type="note">}}
-
-If you do not have a project repository to choose from yet, refer to the [How to section](/pages/how-to/) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
-
-{{</Aside>}}
-
 ### Configuring your deployment
 
 Once you have selected a repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in the **Set up builds and deployments** page.
