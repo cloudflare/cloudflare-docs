@@ -190,6 +190,8 @@
 /fundamentals/notifications/edit-notification /fundamentals/notifications/edit-notifications/edit-notification 302
 /fundamentals/notifications/edit-pagerduty /fundamentals/notifications/edit-notifications/edit-pagerduty 302
 /fundamentals/notifications/edit-webhook /fundamentals/notifications/edit-notifications/edit-webhook 302
+/fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
+/fundamentals/data-products/accessing-cf-data /fundamentals/data-products/types-of-analytics/ 301
 /gateway/about /cloudflare-one/policies/filtering/ 301
 /gateway/connecting-to-gateway/install-cloudflare-cert /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ 302
 /gateway/connecting-to-gateway/with-client /cloudflare-one/connections/connect-devices/warp/ 302
