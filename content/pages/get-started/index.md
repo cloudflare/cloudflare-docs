@@ -64,7 +64,7 @@ Depending on the framework, tool, or project you are deploying to Cloudflare Pag
 
 {{<Aside type="warning" header="No framework required">}}
 
-You do not need a framework to deploy with Cloudflare Pages. You can continue with this guide without choosing a framework, or refer to the [Deploy your site](/pages/framework-guides/deploy-anything/) page for more information.
+You do not need a framework to deploy with Cloudflare Pages. You can continue with the Get started guide without choosing a framework, and refer to the [Deploy your site](/pages/framework-guides/deploy-anything/) page for more information on deploying your site without a framework.
 
 {{</Aside>}}
 
