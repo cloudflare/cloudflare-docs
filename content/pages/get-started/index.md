@@ -179,6 +179,8 @@ In the **Settings** section, you can configure advanced settings, such as changi
 
 ![Configuring your Pages project settings in the Cloudflare dashboard](./images/settings.png)
 
+Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#using-a-specific-nodejs-version) for more information on how to set up a Node.js version environment variable.
+
 ### Access policies
 
 You can use [Cloudflare Access](https://www.cloudflare.com/teams-access/) to manage access to your deployment previews. By default, these deployment URLs are public. Enabling the access policy will restrict viewing project deployments to your Cloudflare account.
