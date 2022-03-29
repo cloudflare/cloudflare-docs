@@ -32,15 +32,15 @@ Every Auth0 account contains applications, which allow developers to create logi
 
 Inside of your application’s settings, the client ID and client secret are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the [**Publish** section](/workers/tutorials/authorize-users-with-auth0/#publish) of this tutorial, you will later fill in these values with the final deployed URL of your application.
 
-## Generate a new project
+## Create a new project
 
-Using wrangler’s `generate` command, begin building a new application using a Workers template. For this tutorial, you will modify the default template for [Workers Sites](/workers/platform/sites/), which deploys a static HTML application:
+Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/worker-sites-template) template on GitHub and pass `my-auth-example` as the project name.
 
 ```sh
 ---
-header: Generate a new project
+header: Create a new project
 ---
-$ wrangler generate --site my-auth-example
+$ git clone https://github.com/cloudflare/worker-sites-template my-auth-example
 ```
 
 ## Building an authorizer
@@ -935,7 +935,7 @@ $ wrangler secret put SALT
 
 To correctly set the callback URL for your application, you will need to determine where your application will be deployed. Regardless of whether you are setting up an originless or origin-based deploy, the callback handler for this project is defined at `/auth`. This means that if you are testing or deploying a staging version of this project, your callback URL will likely be something like `https://my-auth-example.signalnerve.workers.dev/auth`, or for production, you should set it to something like `https://my-production-app.com/auth`.
 
-This tutorial assumes the usage of a `*.workers.dev` subdomain, which is provided for free to all developers using Workers. You can determine your callback URL by combining the name of your application (chosen during the `wrangler generate` phase -- in this tutorial, `my-auth-example` was used) and your `*.workers.dev` subdomain, as seen below:
+This tutorial assumes the usage of a `*.workers.dev` subdomain, which is provided for free to all developers using Workers. You can determine your callback URL by combining the name of your application (chosen during the `git clone` phase -- in this tutorial, `my-auth-example` was used) and your `*.workers.dev` subdomain, as seen below:
 
 ```txt
 https://$applicationName.$subdomain.workers.dev/auth

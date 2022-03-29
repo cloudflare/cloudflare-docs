@@ -80,13 +80,13 @@ Server keys can read and write all documents in all collections and can call all
 
 ## Managing your inventory with Workers
 
-Generate a new project using the Wrangler [generate][wrangler-generate] command:
+Create a new project by cloning the [fauna-workers][fauna-github] template repo on GitHub.
 
 ```sh
 ---
 header: Create a Workers function
 ---
-$ wrangler generate fauna-workers
+$ git clone https://github.com/fauna-labs/fauna-workers
 $ cd fauna-workers
 $ wrangler publish
 ```
@@ -913,12 +913,14 @@ If you would like to speak directly with a Fauna expert about building your appl
 
 [fauna-js-docs]: https://github.com/fauna/faunadb-js#using-with-cloudflare-workers
 
+[fauna-github]: https://github.com/fauna-labs/fauna-workers
+
 [http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 [worktop]: https://github.com/lukeed/worktop
 
 [wrangler-dev]: /workers/cli-wrangler/commands/#dev
 
-[wrangler-generate]: /workers/cli-wrangler/commands/#generate
+[wrangler-init]: /workers/wrangler/commands/#init
 
 [wrangler-publish]: /workers/cli-wrangler/commands/#publish

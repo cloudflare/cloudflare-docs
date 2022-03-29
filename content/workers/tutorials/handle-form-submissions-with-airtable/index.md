@@ -120,13 +120,13 @@ If you would like to follow along with this example, you can directly copy the `
 
 In order to handle the form submission, you will create and deploy a Workers serverless function that parses the incoming form data and prepares it for submission to Airtable.
 
-To begin, use `wrangler` to generate a new function, called `airtable-form-handler`, and navigate to it in your terminal:
+To begin, use `wrangler` to create a new function, called `airtable-form-handler`, and navigate to it in your terminal:
 
 ```sh
 ---
-header: Generating a new Workers function
+header: Creating a new Workers function
 ---
-$ wrangler generate airtable-form-handler
+$ wrangler init airtable-form-handler
 $ cd airtable-form-handler
 ```
 

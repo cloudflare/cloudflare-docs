@@ -24,15 +24,15 @@ You will learn how to:
 
 ---
 
-## Generate a project
+## Create a project
 
-Start by using `wrangler generate` to create a Worker project in the command line:
+Start by using `wrangler init` to create a Worker project in the command line:
 
 ```sh
 ---
-header: Generate a project
+header: Create a project
 ---
-$ wrangler generate github-twilio-notifications
+$ wrangler init github-twilio-notifications
 $ cd github-twilio-notifications
 ```
 
