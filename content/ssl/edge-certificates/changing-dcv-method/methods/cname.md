@@ -10,13 +10,19 @@ meta:
 
 {{<render file="_dcv-cname-definition.md">}}
 
+## Limitations
+
+Based on your chosen Certificate Authority, you may not be able to use CNAME verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+{{<render file="_lets-encrypt-advanced-limitations.md">}}
+
 ## Setup
 
 ### Specify DCV method
 
 {{<render file="_http-cname-validation-process.md">}}
 
-In this case, you would need to set a `"validation_method":"cname"` parameter.
+In either case, you would need to set a `"validation_method":"cname"` parameter.
 
 ### View DCV values
 

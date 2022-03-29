@@ -20,13 +20,17 @@ HTTP DCV validation also does not work for wildcard certificates or certificates
 
 If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) or [Email](/ssl/edge-certificates/changing-dcv-method/methods/email/) validation.
 
+Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+{{<render file="_lets-encrypt-advanced-limitations.md">}}
+
 ## Setup
 
 ### Specify DCV method
 
 {{<render file="_http-cname-validation-process.md">}}
 
-In this case, you would need to set a `"validation_method":"http"` parameter.
+In either case, you would need to set a `"validation_method":"http"` parameter.
 
 ### Review other Cloudflare settings
 
@@ -36,7 +40,7 @@ To make sure your domain does not accidentally block HTTP DCV, review your Cloud
 
 Your HTTP token will be available for the Certificate Authority as soon as you finish your [partial domain setup](/dns/zone-setups/partial-setup/setup/#step-3--add-dns-records).
 
-This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create proxied DNS records for your hostname within Cloudflare.
+This means that you need to add a CNAME record to Cloudflare in your authoritative DNS and create [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/) for your hostname within Cloudflare.
 
 This process may involve a few minutes of downtime.
 
