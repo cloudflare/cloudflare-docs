@@ -25,7 +25,7 @@ meta:
   <tbody>
     <tr>
       <td>Specials</td>
-      <td>N/A</td>
+      <td>...fbe6c869</td>
       <td>100522</td>
       <td>Spring - CVE:CVE-2022-22947</td>
       <td>N/A</td>
