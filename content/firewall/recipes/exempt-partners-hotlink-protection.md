@@ -5,15 +5,15 @@ title: Exempt partners from Hotlink Protection
 
 # Exempt partners from Hotlink Protection
 
-{{<Aside type="note" header="Note">}}
+When enabled, [Cloudflare Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026) blocks all HTTP referrers that are not part of your domain or zone. That presents a problem if you allow partners to use inline links to your assets.
+
+However, with firewall rules you can maintain hotlink protection while allowing inline links from your partners.
+
+{{<Aside type="note">}}
 
 If you use this technique, disable Hotlink Protection within the **Scrape Shield** app so that partner referrals are not blocked by that feature.
 
 {{</Aside>}}
-
-When enabled, Cloudflare Hotlink Protection blocks all HTTP referrers that are not part of your domain or zone. That presents a problem if you allow partners to use inline links to your assets.
-
-However, with firewall rules you can maintain hotlink protection while allowing inline links from your partners.
 
 This example uses the [`http.referer`](/ruleset-engine/rules-language/fields/#field-http-referer) field to target HTTP referrals from partner sites.
 

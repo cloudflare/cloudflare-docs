@@ -5,15 +5,13 @@ title: Require a valid HMAC token
 
 # Require a valid HMAC token
 
-{{<Aside type="warning" header="Important">}}
+Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a firewall rule expression.
+
+{{<Aside type="warning">}}
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
 {{</Aside>}}
-
-## HMAC token validation
-
-Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a firewall rule expression.
 
 This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
@@ -79,7 +77,7 @@ For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rule
 
 {{</Aside>}}
 
-## Use the same secret key to protect multiple paths
+## Protecting multiple paths using the same secret
 
 You can use the same secret key to protect multiple URI paths.
 
