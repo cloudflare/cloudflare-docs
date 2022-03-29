@@ -1,7 +1,6 @@
 ---
 pcx-content-type: concept
 title: Headers
-weight: 
 ---
 
 # Headers

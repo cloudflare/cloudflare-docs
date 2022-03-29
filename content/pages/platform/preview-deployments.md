@@ -1,7 +1,6 @@
 ---
 pcx-content-type: concept
 title: Preview deployments
-weight: 
 ---
 
 # Preview deployments
