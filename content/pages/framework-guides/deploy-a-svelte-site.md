@@ -94,7 +94,6 @@ const config = {
   kit: {
 ++  adapter: adapter(),
     // ... truncated ...
-    target: '#svelte'
   }
 };
 
