@@ -9,7 +9,7 @@ If an attack compromises the administrative area of your website, the consequenc
 
 The example below limits access to the WordPress administrative area, `/wp-admin/`, by _blocking_ requests that do not originate from a specified set of IP addresses.
 
-To prevent attackers from successfully using a permutation of `/wp-admin/` such as `/wP-AdMiN/`, use the `lower()` [transformation function](/ruleset-engine/rules-language/functions/#transformation-functions) to convert the URI path segment to lowercase:
+To prevent attackers from successfully using a permutation of `/wp-admin/` such as `/wP-AdMiN/`, use the [`lower()`](/ruleset-engine/rules-language/functions/#transformation-functions) transformation function to convert the URI path to lowercase:
 
 <table>
   <thead>

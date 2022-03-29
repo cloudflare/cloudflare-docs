@@ -5,15 +5,13 @@ title: Require a valid HMAC token
 
 # Require a valid HMAC token
 
-{{<Aside type="warning" header="Important">}}
+Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a firewall rule expression.
+
+{{<Aside type="warning">}}
 
 Access to the HMAC validation function requires a Cloudflare Pro, Business, or Enterprise plan.
 
 {{</Aside>}}
-
-## HMAC token validation
-
-Use the Rules language [HMAC validation function](/ruleset-engine/rules-language/functions/#hmac-validation) to validate hash-based message authentication code (HMAC) tokens in a firewall rule expression.
 
 This example uses HMAC token authentication to protect a static private asset hosted by `example.com`.
 
@@ -59,7 +57,7 @@ The rule supplies the value of the secret key shared between the website and Clo
   </tbody>
 </table>
 
-The `is_timed_hmac_valid()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.
+The `is_timed_hmac_valid_v0()` function compares the value of a MAC generated using `secretKey` to the value encoded in `http.request.uri`.
 
 If the MAC values match and
 
@@ -73,13 +71,13 @@ Since the expression in this example uses the `not` operator, it only matches wh
 
 {{<Aside type="warning" header="Important">}}
 
-When you do not use the optional _flags_ argument for `is_timed_hmac_valid()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
+When you do not use the optional _flags_ argument for `is_timed_hmac_valid_v0()`, you must URL encode the base64 value for _mac_ in the _MessageMAC_ argument.
 
 For more information, refer to [Functions: HMAC Validation](/ruleset-engine/rules-language/functions/#hmac-validation).
 
 {{</Aside>}}
 
-## Use the same secret key to protect multiple paths
+## Protecting multiple paths using the same secret
 
 You can use the same secret key to protect multiple URI paths.
 

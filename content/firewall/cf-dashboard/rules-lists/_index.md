@@ -1,10 +1,13 @@
 ---
 pcx-content-type: how-to
 title: Use IP Lists
-weight: 341
+weight: 4
+layout: list
 ---
 
 # Use IP Lists
+
+{{<content-column>}}
 
 IP Lists allow you to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions. For an introduction, refer to [IP Lists](/firewall/cf-firewall-rules/rules-lists/).
 
@@ -16,6 +19,8 @@ IP Lists are stored at the account level. To access the **Lists** interface:
 1. Navigate to **Manage Account** > **Configurations** > **Lists**.
 
 The **Lists** user interface displays.
+
+{{</content-column>}}
 
 ![The Lists user interface in the Cloudflare dashboard where you can create and manage IP Lists](/firewall/static/lists-ui.png)
 

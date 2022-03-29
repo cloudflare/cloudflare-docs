@@ -1,12 +1,12 @@
 ---
 pcx-content-type: how-to
 title: Manage lists
-weight: 351
+weight: 1
 ---
 
 # Manage lists
 
-## Create an IP list
+## Create an IP List
 
 To create an IP List, follow these steps:
 

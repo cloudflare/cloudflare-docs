@@ -1,18 +1,18 @@
 ---
 title: Call sequence
 pcx-content-type: reference
-weight: 498
+weight: 4
 ---
 
 # Call sequence
 
-The API call examples in this site illustrate the **recommended sequence** of calling the two APIs (`/filters` and `/firewall/rules`).
+The API call examples in this site illustrate the **recommended sequence** of calling the two APIs (the [Cloudflare Filters API](/firewall/api/cf-filters/) and the [Firewall Rules API](/firewall/api/cf-firewall-rules/)).
 
 The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
-![Recommended flow for calling the Filters API and Firewall Rules API when creating or editing rules](/firewall/static/recommended-flow.png)
+![Recommended flow for calling the Cloudflare Filters API and Firewall Rules API when creating or editing rules](/firewall/static/recommended-flow.png)
 
-Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently. Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple firewall rules as well as in other future Cloudflare products and features.
+Cloudflare recommends this sequence because it facilitates filter reusability and allows working with either API independently. Thanks to the standalone nature of Cloudflare Filters, the same filter can be shared in multiple firewall rules and in other future Cloudflare products and features.
 
 For example, a filter that matches all traffic for your API (that is, `http.request.uri.path matches "^/api/.*$"`) may disable caching, disable human CAPTCHAs, configure JSON custom errors, and appear in a firewall rule. With the recommended sequence above, you would just repeat steps 3-6 for every Cloudflare feature to configure against the same filter created in steps 1-2.
 
@@ -74,8 +74,8 @@ However, this approach has some disadvantages:
 
 By default, if either the filter or rule is invalid, neither will be created.
 
-However, one exception applies. If you have exceeded your rule quota, the filter could be created while creating the rule may fail. This is because the rule is created after the filter in the sequence diagram and so, we learn of the quota being exceeded after the filter was created.
+However, one exception applies. If you are about to exceed your rule quota, Cloudflare may create the filter but not the firewall rule. This happens because the rule is only created after the filter in the sequence diagram.
 
 After you resolve the issue of exceeding your quota or requesting a feature that is unavailable to your zone, return to the recommended flow to create a rule that references the filter.
 
-In summary, we strongly recommend the sequence with the two API calls. Limit your rule and filter creation using the simplified sequence for emergency situations, and only via `curl` requests.
+In summary, Cloudflare strongly recommends the sequence with the two API calls. Limit your rule and filter creation using the simplified sequence for emergency situations, and only via `curl` requests.

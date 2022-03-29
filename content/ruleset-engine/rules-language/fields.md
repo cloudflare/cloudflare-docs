@@ -66,7 +66,7 @@ The Cloudflare Rules language supports these standard fields:
          </p>
       </td>
    </tr>
-   <tr>
+   <tr id="field-http-referer">
       <td valign="top"><code>http.referer</code><br />{{<type>}}String{{</type>}}</td>
       <td>
          <p>Represents the HTTP Referer request header, which contains the address of the web page that linked to the currently requested page.
@@ -374,7 +374,7 @@ The Cloudflare Rules language supports these dynamic fields:
    </tr>
   </thead>
   <tbody style='vertical-align:top'>
-    <tr>
+    <tr id="field-cf-bot_management-verified_bot">
         <td><p><code>cf.bot_management.verified_bot</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
@@ -382,7 +382,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-bot_management-score">
         <td><p><code>cf.bot_management.score</code><br />{{<type>}}Number{{</type>}}</p>
         </td>
         <td>
@@ -392,7 +392,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-bot_management-ja3_hash">
         <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}String{{</type>}}</p>
         </td>
         <td>
@@ -417,7 +417,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-edge-server_port">
         <td><code>cf.edge.server_port</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>Represents the port number at which Cloudflare's network received the request.
@@ -432,7 +432,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-    <tr>
+    <tr id="field-cf-threat_score">
         <td><code>cf.threat_score</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>Represents a Cloudflare threat score from 0&#8211;100, where 0 indicates low risk. Values above 10 may represent spammers or bots, and values above 40 identify bad actors on the Internet.
