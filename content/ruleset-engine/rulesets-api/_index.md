@@ -1,7 +1,7 @@
 ---
 title: Rulesets API
 pcx-content-type: navigation
-weight: 781
+weight: 10
 ---
 
 # Rulesets API

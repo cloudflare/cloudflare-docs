@@ -82,13 +82,12 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 1.  Copy the credentials file and the configuration file to the folder created in step 6:
 
-        ```bash
-        C:\Windows\System32\config\systemprofile\.cloudflared
-        ```
+    ```bash
+    C:\Windows\System32\config\systemprofile\.cloudflared
+    ```
 
-         {{<Aside type="Note">}}
-
-    If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
+    {{<Aside type="Note">}}
+If you haven't created a config.yml file, follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#4-create-a-configuration-file).
     {{</Aside>}}
 
 1.  Validate the ingress rule entries in your configuration file using the command:
@@ -103,7 +102,9 @@ By default, Cloudflare Tunnel expects all of the configuration to exist in the `
 
 1.  Locate `imagepath` and modify it as shown below. Make sure that there are no extra spaces or characters while you modify the registry entry, as this could cause problems with starting the service.
 
-        C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml  tunnel run
+    ```bash
+    C:\Cloudflared\bin\cloudflared.exe --config=C:\Windows\System32\config\systemprofile\.cloudflared\config.yml tunnel run
+    ```
 
 1.  If the service does not start, run the following command from `C:\Cloudflared\bin`:
 

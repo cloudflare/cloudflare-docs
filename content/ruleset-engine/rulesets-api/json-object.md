@@ -1,7 +1,7 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 782
+weight: 2
 ---
 
 # JSON object

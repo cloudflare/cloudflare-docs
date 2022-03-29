@@ -25,6 +25,7 @@ If you are not using a framework, leave the **Build command** field blank.
 | Framework/tool               | Build command                        | Build directory             |
 | ---------------------------- | ------------------------------------ | --------------------------- |
 | Angular (Angular CLI)        | `ng build`                           | `dist`                      |
+| Astro                        | `npm run build`                      | `dist`                      |
 | Brunch                       | `brunch build --production`          | `public`                    |
 | Docusaurus                   | `npm run build`                      | `build`                     |
 | Eleventy                     | `eleventy`                           | `_site`                     |
@@ -63,6 +64,7 @@ The following system environment variables are injected by default (but can be o
 | `CF_PAGES`            | `1`                                   | Changing build behaviour when run on Pages versus locally                               |
 | `CF_PAGES_COMMIT_SHA` | `<sha1-hash-of-current-commit>`       | Passing current commit ID to error reporting, for example, Sentry                       |
 | `CF_PAGES_BRANCH`     | `<branch-name-of-current-deployment>` | Customizing build based on branch, for example, disabling debug logging on `production` |
+| `CF_PAGES_URL`        | `<url-of-current-deployment>`         | Allowing build tools to know the URL the page will be deployed at                       |
 
 ## Language support and tools
 

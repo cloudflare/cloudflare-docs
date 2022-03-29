@@ -66,7 +66,7 @@ $ wrangler dev --inspect
 
 Open a new tab in Chrome and enter `chrome://inspect` in the Chrome address bar to open Chrome's DevTools. Select **Configure...** and add `localhost:9230`. The Wrangler inspect process will then show up under **Remote Target**.
 
-![Chrome Inspect](../media/chrome-inspect.png)
+![Chrome DevTools' configuration options for remote targets and devices](../media/chrome-inspect.png)
 
 Select **inspect** to open DevTools.
 
@@ -88,7 +88,7 @@ There are three ways to view the CPU profiling data:
 
 To find slow functions, enter the **Chart** view and search for the last long function in a stack.
 
-![CPU Flame chart](../media/devtools-chart.png)
+![Chrome DevTools' CPU Flame chart showing function calls and function execution times](../media/devtools-chart.png)
 
 A function's total runtime is determined by the runtime of all the functions it calls. You will want to find the function with the longest **Self Time**, or the last big runtime before it finishes or splits into smaller calls. For more information on using the DevTools, refer to the [official Chrome documentation](https://developer.chrome.com/docs/devtools/).
 

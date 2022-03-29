@@ -111,37 +111,45 @@ sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 1.  [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate).
 
-The device will show a message: _This website is trying to open Settings to how you a configuration profile. Do you want to allow this?_
+The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
-![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.jpg)
+![iOS download](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
 
-1.  Tap **Allow**.
+2.  Tap **Allow**.
 
-1.  Navigate to **Settings** > **General** > **Profile** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
+3.  Navigate to **Settings** > **General** > **VPN & Device Management** and find the **Cloudflare for Teams ECC Certificate Authority** profile.
 
-![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile1.jpg)
+{{<Aside type="note">}}
 
-1.  Tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+Alternatively you can navigate to **Settings**, where a new **Profile Downloaded** section will appear directly beneath your iCloud user account info.
 
-1.  Next, a certificate warning will appear. Tap **Install**.
+{{</Aside>}}
+
+![iOS profile](/cloudflare-one/static/documentation/connections/ios_cert_profile.PNG)
+
+4.  Select the profile and tap **Install**. If the iOS device is passcode-protected, you will be prompted to enter the passcode.
+
+5.  Next, a certificate warning will appear. Tap **Install**.
 
 If a second prompt is displayed, tap **Install** again.
 
-1.  Next, the **Profile Installed** screen will appear. Tap **Done**.
+6.  Next, the **Profile Installed** screen will appear. Tap **Done**.
+
+![iOS profile installed](/cloudflare-one/static/documentation/connections/ios_profile_installed.PNG)
 
 The certificate is now installed. However, before it can be used, it must be trusted by the device.
 
-1.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
+7.  On the device, go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
 The installed root certificates will be displayed in the _Enable full trust for root certificates_ section.
 
-![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.jpg)
+![iOS cert trust](/cloudflare-one/static/documentation/connections/ios_cert_trust1.PNG)
 
-1.  Tap the slide button next to the Cloudflare certificate you just installed.
+8.  Tap the slide button next to the Cloudflare certificate you just installed.
 
-1.  A confirmation dialogue will appear. Tap **Continue**.
+9.  A confirmation dialogue will appear. Tap **Continue**.
 
-![iOS cert confirm](/cloudflare-one/static/documentation/connections/ios_cert_trust2.jpg)
+![iOS cert confirm](/cloudflare-one/static/documentation/connections/ios_cert_trust2.PNG)
 
 The root certificate is now installed and ready to be used.
 
@@ -189,14 +197,14 @@ The location where the root certificate should be installed is different dependi
 
 #### Debian / Ubuntu
 
-1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
-1. Copy the certificate to the user store.
+1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
+2. Copy both certificates to the user store.
 
   ```bash
-  cp Cloudflare_CA.pem /usr/share/ca-certificates
+  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /usr/share/ca-certificates
   ```
   
-1. Import the certificate
+3. Import the certificate
 
 ```bash
 sudo dpkg-reconfigure ca-certificates
@@ -204,11 +212,11 @@ sudo dpkg-reconfigure ca-certificates
 
 #### CentOS / RedHat
 
-1. [Download the .pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem)
-1. Copy the certificate to the trust store.
+1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
+2. Copy both certificates to the trust store.
 
   ```bash
-  sudo cp Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
   ```
 
 3. Import the certificate.

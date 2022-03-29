@@ -23,7 +23,7 @@ Depending on your Cloudflare plan, you may also be able to:
 To review the scripts tracked by Page Shield:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2.  Go to **Firewall** > **Page Shield**.
+2.  Go to **Security** > **Page Shield**.
 3.  Under **Script Monitor**, review your scripts.
 4.  To filter scripts, use the following options:
 

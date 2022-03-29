@@ -12,7 +12,7 @@ To get started creating an API Token, log into the [Cloudflare Dashboard](https:
 
 If you are new to API Tokens or the Cloudflare API, Templates are the quickest way to get started. If you think a specific template matches your needs, go ahead and select it. You will be able to further customize the template after selecting it. If no template matches your use case or you want to build the token from scratch, select `Create Custom Token`
 
-![Template selection](./media/template-select.png)
+![API token template selection options](./media/template-select.png)
 
 ## Customizing the Token
 
@@ -24,7 +24,7 @@ For this example, the `Edit Zone DNS` template has been selected. After selectin
 
 There are two additional inputs that can be used to restrict how a token is used. These are *IP restrictions* and *Time to Live (TTL) restrictions*. Both of these are covered in Advance Usage under [Restricting Token Use](/api/tokens/advanced/restrictions/)
 
-![Template Customization](./media/template-customize.png)
+![API token template customization](./media/template-customize.png)
 
 Because a template was selected, both the name and the permissions have been pre-selected. In the case of a custom token, both of inputs one and two would need to be filled in. the only required selection is which zones the token should belong to. Let's cover each of these sections.
 
@@ -62,7 +62,7 @@ Note: When selections of option 2 or 3 are included, then excluding zones can be
 
 For this example, we go with option 1 and select the zone `theburritobot.com`.
 
-![Zone Selection](./media/zone-selection.png)
+![Selecting a specific zone](./media/zone-selection.png)
 
 #### Account Resources
 
@@ -77,7 +77,7 @@ Once you have selected the appropriate permissions and resources, select `Contin
 
 The token summary screen allows you to see all the resources and permissions the token will have before creating the token and seeing the token's secret.
 
-![Token Summary Screen](./media/token-summary.png)
+![Token summary screen displaying the resources and permissions selected](./media/token-summary.png)
 
 If there are any issues you can go back and make adjustments. Even if after creating and using the token modifications need to be made, a token can be edited after creation.
 
@@ -89,7 +89,7 @@ Once successfully generated, the token secret is only shown once. Make sure to c
 
 *Warning:* Do not store the secret in plaintext where others may be able to access it. Anyone with this token can perform the authorized actions against the resources the token has been granted access to.
 
-![Token Create Completion Screen](./media/token-complete.png)
+![Token creation completion screen displaying your API token and the `curl`command to test your token](./media/token-complete.png)
 
 This screen also includes an example command to test the token (reproduced below). The `/user/tokens/verify` endpoint allows fetching the current status of the given token.
 

@@ -2,7 +2,7 @@
 pcx-content-type: reference
 type: overview
 title: Update and deploy rulesets
-weight: 786
+weight: 6
 layout: list
 ---
 
@@ -20,11 +20,8 @@ Use one of the following API endpoints:
 | [Update zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
 [ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
-
 [ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
-
 [uep-account]: https://api.cloudflare.com/#account-rulesets-update-entrypoint-ruleset
-
 [uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
 
 {{<Aside type="warning" header="Important">}}

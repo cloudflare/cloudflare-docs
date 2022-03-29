@@ -6,6 +6,8 @@ weight: 7
 
 # Useful commands
 
+{{<render file="_cloudflared-new-ui.md">}}
+
 ## Manage tunnels
 
 | Command                                                                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                           |

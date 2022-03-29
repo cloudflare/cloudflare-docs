@@ -21,7 +21,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Go to **Firewall** > **DDoS**.
+1. Go to **Security** > **DDoS**.
 
 1. Next to **HTTP DDoS attack protection**, click **Configure**.
 
@@ -35,7 +35,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-1. Go to **Firewall** > **DDoS**.
+1. Go to **Security** > **DDoS**.
 
 1. Next to **HTTP DDoS attack protection**, click **Configure**.
 

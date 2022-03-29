@@ -3,7 +3,7 @@ title: About
 pcx-content-type: concept
 weight: 1
 meta:
-  title: About Cloudflare Stream
+  title: Cloudflare Stream
 ---
 
 # Cloudflare Stream

@@ -31,3 +31,12 @@ To enable the Domain Joined check:
 1.  Click **Save**.
 
 Your device posture attribute is now visible on the **Device posture** page.
+
+### Validate the domain value on your Windows device
+
+1.  Open a Powershell window.
+1.  Run the `(Get-WmiObject Win32_ComputerSystem).Domain` command to determine the value of your domain.
+
+```txt
+(Get-WmiObject Win32_ComputerSystem).Domain
+```

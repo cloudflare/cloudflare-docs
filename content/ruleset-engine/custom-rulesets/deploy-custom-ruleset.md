@@ -1,19 +1,22 @@
 ---
 pcx-content-type: how-to
-alwaysopen: true
 title: Deploy a custom ruleset
-weight: 764
+weight: 4
 ---
 
 # Deploy a custom ruleset
 
 Before you begin:
 
-1.  Obtain the name of the phase where you want to deploy the custom ruleset.
-2.  [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
-3.  [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
+1. Obtain the name of the phase where you want to deploy the custom ruleset.
+2. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
+3. [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
 
-Issue a `PUT` request that adds a rule to execute the custom ruleset when the zone name matches `example.com`.
+To deploy a custom ruleset, add a rule that executes the custom ruleset. Define the rule scope in the rule expression.
+
+## Example
+
+The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`.
 
 ```json
 ---

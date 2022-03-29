@@ -7,11 +7,11 @@ pcx-content-type: concept
 
 Cloudflare’s Always Online feature is now integrated with the [Internet Archive](https://archive.org/) so that visitors can access a portion of your website even when your origin server is unreachable and a Cloudflare-cached version is unavailable. When your origin is unreachable, Always Online checks Cloudflare’s cache for a stale or expired version of your website. If a version does not exist, Cloudflare goes to the Internet Archive to fetch and serve static portions of your website.
 
-When you enable Always Online with Internet Archive integration, Cloudflare shares your hostname and popular URL paths with the archive so that the Internet Archive’s crawler stores the pages you want archived. When submitting targets to the crawler, Cloudflare identifies the most popular URLs found among GET requests that returned a 200 HTTP status code in the previous 5 hours.
+When you enable Always Online with Internet Archive integration, Cloudflare shares your hostname and popular URL paths with the archive so that the Internet Archive’s crawler stores the pages you want archived. When submitting targets to the crawler, Cloudflare identifies the most popular URLs found among GET requests that returned a 200 HTTP status code in the previous five hours.
 
 Note that Cloudflare does not save a copy of every page of your website, and it cannot serve dynamic content while your origin is offline. If the requested page is not in Cloudflare’s Always Online cache or the Internet Archive's Wayback Machine, the visitor sees the actual error page caused by the offline origin web server.
 
-A Cloudflare crawler identifies resources to place in the Always Online cache. When Internet Archive integration is enabled, Cloudflare tells the Internet Archive what pages to crawl and how often. To ensure stability of service, Cloudflare limits the crawling interval. Limits vary by Cloudflare plan, and the Always Online crawler ignores robots.txt.
+A Cloudflare crawler identifies resources to place in the Always Online cache. When Internet Archive integration is enabled, Cloudflare tells the Internet Archive what pages to crawl and how often. The pages to crawl, as previously mentioned, are the most popular URLs that were successfully visited in the last five hours. The crawling intervals, to ensure stability of service, are limited by Cloudflare. Limits vary according to your Cloudflare plan, and the Always Online crawler ignores `robots.txt`.
 
 - Free customers once every 30 days.
 - Pro customers once every 15 days.

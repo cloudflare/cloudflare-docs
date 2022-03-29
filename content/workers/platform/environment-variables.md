@@ -121,7 +121,7 @@ To add environment variables, such as `vars` and `secret`:
 4.  (Optional) To add multiple environment variables, select **Add variable**.
 5.  Select **Save** to implement your changes.
 
-![env variables dash](../media/env_variables_dash.png)
+![After selecting Add variable, you will be directed to an environment variables configuration page to set up your environment variable name and value](../media/env_variables_dash.png)
 
 {{<Aside type="warning" header="Plaintext strings and secrets">}}
 
@@ -139,11 +139,11 @@ To add KV namespace bindings:
 4.  Select **Add binding** to add multiple bindings.
 5.  When you are finished, select **Save** to implement your changes.
 
-![kv namespace bindings](../media/kv_namespace_bindings.png)
+![After selecting add binding, you will be directed to a configuration page to specify your Variable name and KV namespace to create your binding](../media/kv_namespace_bindings.png)
 
 Your completed Workers dashboard, with environment variables and KV namespace bindings added, will look like the following example reference.
 
-![env vars secret](../media/envvarssecret-detail-page.jpeg)
+![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](../media/envvarssecret-detail-page.jpeg)
 
 ## Comparing secrets and environment variables
 

@@ -154,7 +154,7 @@ To understand the behavior of challenge pages, refer to [JavaScript and Captcha 
 
 ## Firewall Rules
 
-The Cloudflare **Firewall Rules** app triggers actions based on matching customer-defined rules.
+Cloudflare Firewall Rules triggers actions based on matching customer-defined rules.
 
 {{<table-wrap>}}
 

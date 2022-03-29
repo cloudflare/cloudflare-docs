@@ -26,7 +26,7 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 | :-------------------------------------------- | -------: | -------: | -------: | ---------: |
 | `browserPerf1mGroups`                         | 24 hours |   7 days |  30 days |    30 days |
 | `dosdNetworkAnalyticsAdaptiveGroups`          |      n/a |      n/a |      n/a |    90 days |
-| `dosdAttackAnalyticsAdaptiveGroups`           |      n/a |      n/a |      n/a |    90 days |
+| `dosdAttackAnalyticsGroups`                   |      n/a |      n/a |      n/a |    90 days |
 | `firewallEventsAdaptiveByTimeGroups`          |  14 days |  14 days |  30 days |    30 days |
 | `firewallEventsAdaptiveGroups`                |      n/a |   3 days |  30 days |    30 days |
 | `firewallEventsAdaptive`                      |  14 days |  14 days |  30 days |    30 days |

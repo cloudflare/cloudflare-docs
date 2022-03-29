@@ -129,8 +129,13 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
-- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
 
 ## Connections are timing out after 270 seconds
 
 Cloudflare enforces a 270-second idle timeout on TCP connections that go through the gateway. If there is no new data to send in either direction for 270 seconds, the proxy process drops the connection. This cannot be mitigated by Keep-Alive packets, as TCP is terminated in the gateway and a new connection is made to the upstream sever.
+
+## Tunnel connections fail with SSL error
+
+If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
+

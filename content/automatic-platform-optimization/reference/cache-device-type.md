@@ -31,5 +31,5 @@ The Cloudflare for WordPress plugin automatically purges all cache variations fo
 - [WP-Mobilizer](https://wordpress.org/plugins/wp-mobilizer/)
 - [WP Mobile Edition](https://wordpress.org/plugins/wp-mobile-edition/)
 - [Device Theme Switcher](https://wordpress.org/plugins/device-theme-switcher/)
-- [Easy Social Sahre Buttons for WordPress](https://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476)
+- [Easy Social Share Buttons for WordPress](https://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476)
 - [Jetpack (when mobile theme is activated)](https://jetpack.com/support/mobile-theme/)

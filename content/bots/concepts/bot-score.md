@@ -18,7 +18,7 @@ Granular bot scores are only available to Enterprise customers who have purchase
 
 ## Bot groupings
 
-Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Firewall** > **Bots**.
+Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Security** > **Bots**.
 
 - **Automated**: Bot scores of 1.
 - **Likely automated**: Bots scores of 2 through 29.

@@ -14,7 +14,7 @@ meta:
 
 ### Full setups
 
-If your domain is on a full setup (Cloudflare runs your [authoritative nameservers](/fundamentals/glossary#nameserver)), we handle DCV automatically on your behalf using a TXT record.
+If your domain is on a full setup (Cloudflare runs your [authoritative nameservers](/fundamentals/glossary/#nameserver)), we handle DCV automatically on your behalf using a TXT record.
 
 ### Custom certificates
 

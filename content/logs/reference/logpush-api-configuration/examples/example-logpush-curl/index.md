@@ -15,7 +15,7 @@ Before getting started, review:
 
 {{<Aside type="note">}}
 
-The examples below are for zone-scoped data sets. Account-scoped data sets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`.
+The examples below are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`.
 
 {{</Aside>}}
 
@@ -273,7 +273,7 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 }
 ```
 
-Retrieve all jobs for all data sets:
+Retrieve all jobs for all datasets:
 
 ```bash
 curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .

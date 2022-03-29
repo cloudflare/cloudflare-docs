@@ -18,7 +18,7 @@ JavaScript is injected only in response to requests for HTML pages or page views
 
 For Free customers (Bot Fight Mode), JavaScript detections are automatically enabled and cannot be disabled.
 
-For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional. To adjust your settings, go to **Firewall** > **Bots**.
+For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional. To adjust your settings, go to **Security** > **Bots**.
 
 For more details on how to set up bot protection, see [Get started](/bots/get-started/).
 

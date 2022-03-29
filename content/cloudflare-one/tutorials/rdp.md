@@ -187,7 +187,7 @@ We recommend that you run `cloudflared` [as a service](/cloudflare-one/connectio
 
 ### Install `cloudflared` on the client machine
 
-[Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
+[Download and install](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) `cloudflared` on the client desktop that will connect to the remote desktop. Note that `cloudflared` will need to be installed on each user device that will connect.
 
 ### Connect to the remote desktop
 

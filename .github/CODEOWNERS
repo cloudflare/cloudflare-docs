@@ -13,9 +13,6 @@ content/automatic-platform-optimization/ @cloudflare/PCX
 # Bot management
 content/bots/ @cloudflare/PCX
 
-# Browser Isolation
-content/browser-isolation/ @cloudflare/PCX
-
 # BYOIP
 content/byoip/ @ConzorKingKong @dinasaur404 @cloudflare/PCX
 
@@ -39,9 +36,6 @@ content/docs-engine/ @cloudflare/PCX
 
 # Email Routing
 content/email-routing/ @cloudflare/PCX
-
-# Events
-content/events/ @ConzorKingKong @cloudflare/PCX
 
 # Firewall Rules
 content/firewall/ @cloudflare/firewall @cloudflare/PCX

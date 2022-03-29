@@ -16,7 +16,7 @@ Universal SSL certificates are limited by the hostnames they cover and the brows
 
 Universal SSL certificates only support SSL for the root or first-level subdomains such as `example.com` and `www.example.com`. To enable SSL support on second, third, and fourth-level subdomains such as `dev.www.example.com` or `app3.dev.www.example.com`, you can:
 
-- Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)
+- Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/), to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 - Upgrade to a Business or Enterprise plan to [upload a Custom SSL certificate](/ssl/edge-certificates/custom-certificates/)
 
 ### CNAME setup
@@ -29,4 +29,4 @@ For more on browser support, see [Browser compatibility](/ssl/ssl-tls/browser-co
 
 ## Spectrum
 
-Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum). If you are trying to use Spectrum, use either [an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [a custom certificate](/ssl/edge-certificates/custom-certificates/).
+Universal SSL is not compatible with [Cloudflare Spectrum](/spectrum/). If you are trying to use Spectrum, use either [an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [a custom certificate](/ssl/edge-certificates/custom-certificates/).

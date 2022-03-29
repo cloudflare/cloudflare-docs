@@ -2,7 +2,7 @@
 title: List and view rulesets
 pcx-content-type: reference
 type: overview
-weight: 784
+weight: 4
 layout: list
 ---
 

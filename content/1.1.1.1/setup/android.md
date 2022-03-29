@@ -1,7 +1,9 @@
 ---
 weight: 3
-title: Android
 pcx-content-type: how-to
+title: Android
+meta:
+    title: Set up 1.1.1.1 on Android
 ---
 
 # Set up 1.1.1.1 - Android

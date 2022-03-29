@@ -199,7 +199,7 @@ The HTML page is also completely unstyled at this point, relying on the browsers
 
 The HTML form is complete and ready for deployment. When the user submits this form, all data will be sent in a `POST` request to the `/api/submit` URL. This is due to the form's `method` and `action` attributes. However, there is currently no request handler at the `/api/submit` address. You will now create it.
 
-Cloudflare Pages offers a [Functions](/pages/platform/functions) feature, which allows you to define and deploy Workers for dynamic behaviors.
+Cloudflare Pages offers a [Functions](/pages/platform/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
 Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/#functions-routing) documentation for more information.
 
@@ -227,7 +227,7 @@ export async function onRequestPost(context) {
 }
 ```
 
-The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`Request`](/workers/runtime-apis/request) object, which can be accessed through the `context.request` key.
+The `context` parameter is an object filled with several values of potential interest. For this example, you only need the [`Request`](/workers/runtime-apis/request/) object, which can be accessed through the `context.request` key.
 
 As mentioned, a `<form>` defaults to the `application/x-www-form-urlencoded` MIME type when submitting. And, for more advanced scenarios, the `enctype="multipart/form-data"` attribute is needed. Luckily, both MIME types can be parsed and treated as [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData). This means that with Workers – which includes Pages Functions – you are able to use the native [`Request.formData`](https://developer.mozilla.org/en-US/docs/Web/API/Request/formData) parser.
 
@@ -330,4 +330,4 @@ If you would like to review the full source code for this application, you can f
 ## Related resources
 
 - [Build an API for your front end using Cloudflare Workers](/pages/tutorials/build-an-api-with-workers/)
-- [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable)
+- [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)

@@ -16,7 +16,7 @@ The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the 
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
-![Demo Image](./media/i18n.jpg)
+![An example site that has been successfully localized in Japanese, German and English](./media/i18n.jpg)
 
 ## Setup
 
@@ -54,7 +54,7 @@ The `HTMLRewriter` class provided in the Workers runtime allows developers to pa
 
 The example website in this tutorial is a basic single-page HTML project that lives in the `public` directory. It includes an `h1` element with the text `Example Site` and a number of `p` elements with different text:
 
-![Demo Code](./media/code-example.png)
+![Demo code shown in Chrome DevTools with the elements described above](./media/code-example.png)
 
 What is unique about this page is the addition of [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) in the HTML – custom attributes defined on a number of elements on this page. The `data-i18n-key` on the `h1` tag on this page, as well as many of the `p` tags, indicates that there is a corresponding internationalization key, which should be used to look up a translation for this text:
 
@@ -294,7 +294,7 @@ theme: dark
 ~/i18n-example $ wrangler publish
 ```
 
-![Demo Image](./media/i18n.jpg)
+![An example site that has been successfully localized in Japanese, German and English](./media/i18n.jpg)
 
 ## Related resources
 

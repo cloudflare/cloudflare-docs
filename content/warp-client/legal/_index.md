@@ -1,11 +1,11 @@
 ---
 pcx-content-type: navigation
 title: Legal
-weight: 11
+weight: 6
 ---
 
 # Legal
 
-*   [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/)
-*   [Application Terms of Service](https://www.cloudflare.com/application/terms/)
-*   [Third party licenses](/warp-client/legal/3rdparty/)
+* [Privacy Policy](https://www.cloudflare.com/application/privacypolicy/)
+* [Application Terms of Service](https://www.cloudflare.com/application/terms/)
+* [Third party licenses](/warp-client/legal/3rdparty/)

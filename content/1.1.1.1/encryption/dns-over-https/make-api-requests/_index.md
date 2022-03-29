@@ -1,7 +1,9 @@
 ---
-title: Make API requests to 1.1.1.1
 weight:  1
 pcx-content-type: reference
+title: Make API requests to 1.1.1.1
+meta:
+    title: Make API requests to 1.1.1.1 over DoH
 ---
 
 # Make API requests to 1.1.1.1 over DoH

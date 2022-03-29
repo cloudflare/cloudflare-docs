@@ -2,6 +2,8 @@
 weight: 2
 pcx-content-type: reference
 title: Set up
+meta:
+    title: Set up Cloudflare 1.1.1.1 resolver
 ---
 
 # Set up Cloudflare 1.1.1.1 resolver
