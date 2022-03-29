@@ -1,7 +1,6 @@
 ---
-pcx-content-type: concept
+pcx-content-type: how-to
 title: Debugging Pages
-weight:
 ---
 
 # Debugging Pages
