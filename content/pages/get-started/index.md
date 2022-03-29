@@ -175,7 +175,7 @@ To delete your Pages project:
 
 ## Advanced project settings
 
-In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your git configuration, or updating your build command or build directory.
+In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your git configuration, or updating your build command, build directory or environment variables.
 
 ![Configuring your Pages project settings in the Cloudflare dashboard](./images/settings.png)
 
