@@ -431,17 +431,13 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 1.  Get the Cloudflare CA.
 
     ```bash
-    curl -O https://developers.cloudflare.com/cloudflare-one/5147a72af7d01d4f3a34276f1452bf1e/Cloudflare_CA.pem
+    curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
     ```
 
 1.  Combine the certs into a single `.pem` file.
 
     ```bash
-    cat cacert.pem > ~/ca.pem
-    ```
-
-    ```bash
-    cat Cloudflare_CA.pem >> ~/ca.pem
+    cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
     ```
 
 1.  Configure Google Cloud to use the combined `.pem`.
