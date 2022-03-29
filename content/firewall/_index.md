@@ -73,9 +73,10 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 * Unless you are already an advanced user, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/) to learn more about the basic elements of firewall rules.
 
-* To get started building your own firewall rules, refer to [Manage firewall rules in the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/).
+* To get started building your own firewall rules, refer to one of the following pages:
 
-* To configure firewall rules with the Cloudflare API, refer to [Manage firewall rules via the APIs](/firewall/api/).
+    * [Manage firewall rules in the dashboard](/firewall/cf-dashboard/create-edit-delete-rules/)
+    * [Manage firewall rules via the APIs](/firewall/api/)
 
 * You can also manage firewall rules through Terraform. For more information, refer to [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
