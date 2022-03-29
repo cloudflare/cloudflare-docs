@@ -2,11 +2,13 @@
 pcx-content-type: reference
 title: JSON object
 weight: 2
+meta:
+  title: Filter JSON object
 ---
 
-# JSON object
+# Filter JSON object
 
-## Filters object structure and properties
+## Filter object structure and properties
 
 A JSON response for the [Filters API](https://api.cloudflare.com/#filters-properties) has this structure:
 
