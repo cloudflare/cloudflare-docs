@@ -1,0 +1,1 @@
+Selecting **Let’s Encrypt** as a CA limits a certificate to txt validation_method, 90 validity_days, omission of cloudflare_branding, and 2 host entries (one for the zone name and one for the subdomain wildcard of the zone name, such as `example.com`, `*.example.com`).
