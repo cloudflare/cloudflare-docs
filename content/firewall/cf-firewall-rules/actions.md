@@ -34,7 +34,7 @@ For reference information on rule actions available for Cloudflare products powe
     <tr>
       <th>Action</th>
       <th>Description</th>
-      <th>Order of Precedence</th>
+      <th>Order of precedence</th>
     </tr>
   </thead>
     <tbody>

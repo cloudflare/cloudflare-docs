@@ -6,7 +6,7 @@ weight: 351
 
 # Manage lists
 
-## Create an IP list
+## Create an IP List
 
 To create an IP List, follow these steps:
 
