@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Manage IP List items
-weight: 361
+weight: 2
 ---
 
 # Manage IP List items

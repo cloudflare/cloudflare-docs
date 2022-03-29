@@ -1,7 +1,7 @@
 ---
 title: Call sequence
 pcx-content-type: reference
-weight: 498
+weight: 4
 ---
 
 # Call sequence

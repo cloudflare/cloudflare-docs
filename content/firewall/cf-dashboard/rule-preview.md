@@ -2,7 +2,7 @@
 title: Preview rules
 pcx-content-type: concept
 type: table
-weight: 331
+weight: 3
 layout: list
 meta:
   title: Preview firewall rules
@@ -35,7 +35,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 ![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
 
-## Important Notes
+## Important notes
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 

@@ -1,7 +1,7 @@
 ---
 title: Edit rule expressions
 pcx-content-type: how-to
-weight: 321
+weight: 2
 ---
 
 # Edit rule expressions

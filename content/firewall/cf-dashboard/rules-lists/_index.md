@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Use IP Lists
-weight: 341
+weight: 4
 layout: list
 ---
 

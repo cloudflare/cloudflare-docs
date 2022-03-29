@@ -2,7 +2,7 @@
 pcx-content-type: reference
 type: overview
 title: Endpoints
-weight: 416
+weight: 2
 layout: list
 ---
 

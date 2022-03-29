@@ -1,7 +1,7 @@
 ---
 pcx-content-type: reference
 title: Firewall Rules API
-weight: 406
+weight: 1
 ---
 
 # Firewall Rules API

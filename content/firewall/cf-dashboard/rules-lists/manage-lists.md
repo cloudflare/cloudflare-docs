@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Manage lists
-weight: 351
+weight: 1
 ---
 
 # Manage lists

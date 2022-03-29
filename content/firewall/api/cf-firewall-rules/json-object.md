@@ -1,7 +1,7 @@
 ---
 title: JSON object
 pcx-content-type: reference
-weight: 411
+weight: 1
 meta:
   title: Firewall rules JSON object
 ---

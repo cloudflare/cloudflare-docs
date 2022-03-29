@@ -1,7 +1,7 @@
 ---
 title: Create, edit, and delete rules
 pcx-content-type: how-to
-weight: 311
+weight: 1
 ---
 
 # Create, edit, and delete rules
