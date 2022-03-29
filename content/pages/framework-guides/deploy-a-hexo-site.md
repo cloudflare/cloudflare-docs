@@ -37,7 +37,7 @@ $ cd my-hexo-site
 $ npm install
 ```
 
-Hexo sites use themes to customize the appearance of statically built HTML sites, Hexo has a default theme automatically installed, which you can find on [Hexo's Themes page](https://hexo.io/themes/).
+Hexo sites use themes to customize the appearance of statically built HTML sites. Hexo has a default theme automatically installed, which you can find on [Hexo's Themes page](https://hexo.io/themes/).
 
 ## Creating a post
 
@@ -88,7 +88,7 @@ Every time you commit new code to your Hexo site, Cloudflare Pages will automati
 
 ## Using a specific Node.js version
 
-Some Hexo themes or plugins have additional requirements for different Node.js version. To use a specific Node.js version for Hexo:
+Some Hexo themes or plugins have additional requirements for different Node.js versions. To use a specific Node.js version for Hexo:
 
 1. Go to **your Pages project**.
 2. Go to **Settings** > **Environment variables**. 
