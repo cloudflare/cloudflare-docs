@@ -8,7 +8,7 @@ weight:
 
 {{<Aside type="note" header="Functions is currently in beta">}}
 
-You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Let us know any unreported issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
 
 {{</Aside>}}
 

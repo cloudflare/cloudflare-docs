@@ -18,30 +18,46 @@ You can see build errors in your Pages build log. To access your build log:
 
 ![After logging into the Cloudflare dashboard, access the build log by following the instructions above](../media/pages-build-log.png)
 
+Review the sections below to understand possible error causes.
+
 ### Initializing build environment
 
 Possible errors in this step could be caused by improper installation during git integration. 
 
-In GitHub, fix this by:
-1. Logging into your Github account.
-2. Going to **Settings** > find **Applications** under Integrations.
-3. Finding **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Readding the repository on the Cloudflare dashboard. 
+To fix this in GitHub:
+1. Log into your Github account.
+2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
+3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
+4. Readd the repository on the Cloudflare dashboard. 
 
-In GitLab, fix this by:
-1. Logging into your GitLab account.
-2. Going to **Preferences** > **Applications**.
+To fix this in GitLab:
+1. Log into your GitLab account.
+2. Go to **Preferences** from your user icon > **Applications**.
 3. Find **Cloudflare Pages** > scroll down and select **Revoke**.
 
 Be aware that you need a role of **Maintainer** or above to successfully link your repository, otherwise the build will fail.
 
 ### Cloning git repository
 
+Possible errors in this step could be caused by lack of Git Large File Storage (LFS). Check your LFS usage by referring to the [GitHub](https://docs.github.com/en/billing/managing-billing-for-git-large-file-storage/viewing-your-git-large-file-storage-usage) and [GitLab](https://docs.gitlab.com/ee/topics/git/lfs/) documentation.
+
+<!-->
+Section on submodules goes here
+<!-->
+
 ### Building application
+
+Possible errors in this step could be caused by faulty setup in your Pages project. Review your build command, output folder and environment variables for any incorrect configuration.
 
 ### Deploying to Cloudflare's global network
 
+Possible errors in this step could be caused by incorrect Pages Functions configuration. Refer to the [Functions](/functions/) documentation for more information on Functions setup. 
+
+If you are not using Functions or have reviewed that your Functions configuration does not contain any errors, review the [Cloudflare Status site](https://www.cloudflarestatus.com/) for Cloudflare network issues that could be causing the build failure. 
+
 ## Resources
 
-If your 
+If you need additional guidance on build errors, contact your Cloudflare account team (Enterprise) or refer to the [Support Center](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support) for guidance on contacting Cloudflare Support.
+
+You can also ask questions in the Pages section of the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
 
