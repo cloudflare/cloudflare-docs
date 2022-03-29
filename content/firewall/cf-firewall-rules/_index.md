@@ -4,6 +4,7 @@ pcx-content-type: concept
 weight: 2
 meta:
   title: About Cloudflare Firewall Rules
+layout: single
 ---
 
 # About Cloudflare Firewall Rules

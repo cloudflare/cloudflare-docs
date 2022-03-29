@@ -4,6 +4,7 @@ title: Common use cases
 weight: 5
 meta:
   title: Common use cases for firewall rules
+layout: single
 ---
 
 # Common use cases for firewall rules

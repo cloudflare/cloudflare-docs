@@ -2,6 +2,7 @@
 pcx-content-type: navigation
 title: Rules Lists API
 weight: 3
+layout: single
 ---
 
 # Rules Lists API

@@ -1,6 +1,5 @@
 ---
 pcx-content-type: reference
-type: table
 title: Expression validation
 weight: 8
 layout: list
