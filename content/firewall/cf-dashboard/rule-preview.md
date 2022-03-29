@@ -22,9 +22,7 @@ Rule Preview is only available to customers on an Enterprise plan.
 
 {{</Aside>}}
 
-## Use Rule Preview
-
-To test a firewall rule with Rule Preview:
+## Test a firewall rule with Rule Preview
 
 1. Locate the desired rule in the rules list and click **Edit** (wrench icon).
 1. Click **Test rule** to trigger the test.
