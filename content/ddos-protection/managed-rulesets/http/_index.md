@@ -23,7 +23,9 @@ You can adjust the behavior of the rules in the Managed Ruleset by modifying the
 
 {{<Aside type="note" header="Note">}}
 
-Certain actions or sensitivity levels may not be available to all Cloudflare plans.
+* Certain actions or sensitivity levels may not be available to all Cloudflare plans.
+
+* Configuration changes to rules with the `gatebot` tag can take up to five minutes.
 
 {{</Aside>}}
 
