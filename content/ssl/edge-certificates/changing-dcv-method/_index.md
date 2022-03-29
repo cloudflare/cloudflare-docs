@@ -24,4 +24,4 @@ If your domain is using a [**custom certificate**](/ssl/edge-certificates/custom
 
 ## Perform DCV
 
-For more details about perfomring DCV and each DCV method, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/methods/).
+For more details about performing DCV and each DCV method, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/methods/).
