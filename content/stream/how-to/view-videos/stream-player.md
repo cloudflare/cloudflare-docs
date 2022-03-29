@@ -86,6 +86,10 @@ Player options are configured with querystring parameters in the iframe's `src` 
 
     {{</Aside>}}
 
+  - `letterboxColor` {{<type>}}string{{</type>}}
+
+    - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
+
 - `loop` {{<prop-meta>}}default: `false`{{</prop-meta>}}
 
   - Automatically seeks back to the start upon reaching the end of the video when enabled.

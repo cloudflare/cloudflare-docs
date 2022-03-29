@@ -29,9 +29,11 @@ The SDK provides an API for programmatically controlling the player and listenin
 - `autoplay` {{<type>}}boolean{{</type>}}
   - Sets or returns whether the autoplay attribute was set, allowing video playback to start upon load.
   
-    {{<Aside>}}
-  Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For  more information, go [here](https://webkit.org/blog/6784/new-video-policies-for-ios/).
-    {{</Aside>}}
+{{<Aside>}}
+
+Some browsers prevent videos with audio from playing automatically. You may add the `mute` attribute to allow your videos to autoplay. For more information, refer to [WebKit's iOS policies](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+    
+{{</Aside>}}
 
 - `buffered` {{<type-link href="https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges">}}TimeRanges{{</type-link>}} {{<prop-meta>}}readonly{{</prop-meta>}}
 
@@ -55,6 +57,10 @@ The SDK provides an API for programmatically controlling the player and listenin
 
 - `ended` {{<type>}}boolean{{</type>}} {{<prop-meta>}}readonly{{</prop-meta>}}
   - Returns whether the video has ended.
+
+- `letterboxColor` {{<type>}}string{{</type>}}
+
+  - Any valid [CSS color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) provided will be applied to the letterboxing/pillarboxing of the player's UI. This can be set to `transparent` to avoid letterboxing/pillarboxing when not in fullscreen mode.
 
 - `loop` {{<type>}}boolean{{</type>}}
   - Sets or returns whether the video should start over when it reaches the end

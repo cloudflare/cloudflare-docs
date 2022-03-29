@@ -104,3 +104,9 @@ highlight: [6]
     ]
   }
 ```
+
+## Billing for MP4 Downloads
+
+MP4 downloads are billed in the same way as video streams. You will be billed for the duration of the video each time the MP4 for the video is downloaded. For example, if you have a 10 minute video that is downloaded 100 times during the month, the downloads will count as 1000 minutes of minutes served.
+
+You will not incur any additional cost for storage when you enable MP4s.
