@@ -28,7 +28,7 @@ meta:
       <td>N/A</td>
       <td>100522</td>
       <td>Spring - CVE:CVE-2022-22947</td>
-      <td>Block</td>
+      <td>N/A</td>
       <td>Block</td>
     </tr>
   </tbody>
