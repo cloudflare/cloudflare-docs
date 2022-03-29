@@ -76,12 +76,15 @@ Open the browser, log into your account, and select **Allow**. This will send an
 
 ---
 
-## 4. Generate a new project
+## 4. Create a new project
 
-Wrangler’s `generate` [command](/workers/cli-wrangler/commands/#generate) will create a new project. By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate a new project. To provide a custom template, you may provide the [template argument](/workers/cli-wrangler/commands/#generate) with a URL to your desired repository. For example, to create a Worker from the default template called `my-worker`, run:
+Wrangler’s `init` [command](/workers/wrangler/commands/#init) will create a new project. 
+
+
+By default, the [default starter](https://github.com/cloudflare/worker-template) template will be used to generate a new project. To provide a custom template, you may provide the [template argument](/workers/cli-wrangler/commands/#generate) with a URL to your desired repository. For example, to create a Worker from the default template called `my-worker`, run:
 
 ```sh
-~/ $ wrangler generate my-worker
+~/ $ wrangler init my-worker
 ```
 
 Wrangler will create a directory called `my-worker` and populate it with the contents of the starter template, in this case the default template. Wrangler will automatically configure the `wrangler.toml` file in the project’s root with the `name = "my-worker"`.
@@ -196,7 +199,7 @@ In addition to standard request properties, the Workers platform populates the r
 For more complex routing, it is recommended to use a library. The [Workers router starter](https://github.com/cloudflare/worker-template-router) template provides an API similar to ExpressJS for handling requests based on HTTP methods and paths:
 
 ```sh
-~/ $ wrangler generate my-worker-with-router https://github.com/cloudflare/worker-template-router
+~/ $ git clone https://github.com/cloudflare/worker-template-router my-worker-with-router
 ```
 
 This starter is used in the tutorial for [building a Slack Bot](/workers/tutorials/build-a-slackbot/).

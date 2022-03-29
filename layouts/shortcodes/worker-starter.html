@@ -3,7 +3,7 @@
 {{- $descr := .Get "description" -}}
 
 {{- $remote := printf "https://github.com/%s" $repo -}}
-{{- $command := printf "wrangler generate my-app %s" $remote -}}
+{{- $command := printf "git clone %s my-app" $remote  -}}
 
 <div class="WorkerStarter">
   <div class="WorkerStarter--title">

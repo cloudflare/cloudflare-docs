@@ -16,10 +16,10 @@ As part of the Workers platform's integration with Chrome Developer Tools, you c
 
 ## Profiling an example project
 
-Create a new Workers project with the `wrangler generate` command:
+Create a new Workers project with the `wrangler init` command:
 
 ```sh
-$ wrangler generate my-worker
+$ wrangler init my-worker
 ```
 
 Open the `index.js` file in your project's directory and replace the content with:

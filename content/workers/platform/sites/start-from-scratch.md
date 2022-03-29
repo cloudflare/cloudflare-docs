@@ -10,10 +10,10 @@ To start from scratch to create a Workers Site, follow these steps:
 
 1.  Ensure you have the latest version of [Wrangler](/workers/cli-wrangler/install-update/#update) and Node.js installed.
 
-2.  In your terminal, run `wrangler generate --site <project-name>`, replacing `<project-name>` with the name of your project. The following example creates a project called `my-site`:
+2.  In your terminal, run `git clone https://github.com/cloudflare/worker-sites-template <project-name>`, replacing `<project-name>` with the name of your project. The following example creates a project called `my-site`:
 
 ```sh
-$ wrangler generate --site my-site
+$ git clone https://github.com/cloudflare/worker-sites-template my-site
 ```
 
 This command creates the following:

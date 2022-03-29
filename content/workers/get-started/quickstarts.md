@@ -13,17 +13,16 @@ layout: list
 Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
 
 ```sh
-$ wrangler generate <new-project-name> <github-repo-url>
+$ git clone <github-repo-url> <new-project-name>
 ```
 
 {{<definitions>}}
 
+- `github-repo-url`
+  - This is the URL of the GitHub repo starter, as below.
 - `new-project-name`
 
   - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/cli-wrangler/configuration/).
-
-- `github-repo-url`
-  - This is the URL of the GitHub repo starter, as below.
 
 {{</definitions>}}
 
