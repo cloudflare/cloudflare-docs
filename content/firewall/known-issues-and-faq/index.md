@@ -8,15 +8,25 @@ meta:
 
 # Firewall Rules FAQ
 
-## How many rules can I have on my site?
+## General
+
+### How many rules can I have on my site?
 
 You can create a large number of rules. However, the number of active rules at any given time is limited. Refer to [Availability](/firewall/#availability) for details on what is allowed per customer plan.
 
-## Can I purchase additional active rules?
+### Can I purchase additional active rules?
 
 No. The number of active rules is fixed based on customer plan. Refer to [Availability](/firewall/#availability).
 
-## How are certain special and escaped characters handled?
+### Why does a firewall event display a Cloudflare IP address even though other fields match the client details?
+
+This happens when a request goes through a Cloudflare Worker.
+
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
+
+## Rule configuration
+
+### How are certain special and escaped characters handled?
 
 When used as literals in an expression, the backslash `\` and double quote `"` characters require proper escaping.
 
@@ -26,13 +36,13 @@ The following image illustrates how double quotes are automatically escaped to `
 
 ![The Expression Editor displays rule values with special characters escaped using a backslash character](/firewall/static/cf-firewall-rules-escaping.png)
 
-## Why isn't my regular expression pattern matching working?
+### Why isn't my regular expression pattern matching working?
 
 If you are using a regular expression, it is recommended that you test it with a tool like [Regular Expressions 101](https://regex101.com/?flavor=golang) or [Rustexp](https://rustexp.lpil.uk).
 
 Also, note that the `http.request.method` field requires all-caps for method names (for example, `POST`).
 
-## How can I use the Threat Score effectively?
+### How can I use the Threat Score effectively?
 
 The _Cloudflare Threat Score_ is a key item behind the **Security Level** functionality in the Cloudflare dashboard.
 
@@ -45,21 +55,7 @@ _Threat Score_ as configured by **Security Level** is based on:
 
 Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify a CAPTCHA vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
 
-## How does Firewall Rules handle traffic from known bots?
-
-### Caution about potentially blocking bots
-
-When you create a firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
-
-Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
-
-### Bots currently detected
-
-[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to true.
-
-If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
-
-## How do I create an exception to exclude certain requests from being blocked or challenged?
+### How do I create an exception to exclude certain requests from being blocked or challenged?
 
 There may be situations in which you want to enforce a blocking or challenging action but make exceptions for specific types of requests.
 
@@ -76,7 +72,7 @@ Cloudflare Firewall Rules does not bypass other security measures configured und
 
 If you wish to permit certain exclusions, the examples below illustrate a few possible approaches.
 
-### Example 1
+**Example 1**
 
 Exclude multiple IP addresses from a blocking/challenging rule that assesses Threat Score.
 
@@ -148,7 +144,7 @@ Exclude multiple IP addresses from a blocking/challenging rule that assesses Thr
 
 {{</table-wrap>}}
 
-### Example 2
+**Example 2**
 
 Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large volumes of undesired traffic, but allow Googlebot and other known bots that Cloudflare validates.
 
@@ -211,13 +207,25 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 </table>
 {{</table-wrap>}}
 
-## Why does a firewall event display a Cloudflare IP address even though other fields match the client details?
+## Bots
 
-This happens when a request goes through a Cloudflare Worker.
+### How does Firewall Rules handle traffic from known bots?
 
-In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
+#### Caution about potentially blocking bots
 
-## Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
+When you create a firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+
+Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
+
+#### Bots currently detected
+
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to true.
+
+If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+
+## Challenges
+
+### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
 No. The _Legacy CAPTCHA_ and _JS Challenge_ actions only support HTML requests.
 
@@ -230,13 +238,13 @@ When an XHR or AJAX request triggers one of the _Legacy CAPTCHA_ actions, the re
 
 Your application can use these status codes to handle unexpected challenges.
 
-## Does the 'challengeFailed' action accurately represent challenges that users did not pass?
+### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
 No. The `challengeFailed` and `jschallengeFailed` firewall rule actions account for observed requests that, under special circumstances, did not pass a challenge. However, some failed challenges cannot be traced back to a firewall rule. Additionally, Cloudflare Firewall Rules may not have a record of every request with a failed challenge.
 
 Therefore, consider these actions with caution. A reliable indicator is the [Challenge Solve Rate (CSR)](/bots/concepts/challenge-solve-rate/) displayed in **Security** > **WAF** > **Firewall rules**, which is calculated as follows: `number of challenges solved / number of challenges issued`.
 
-## Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
+### Why would I not find any failed challenges? Why is 'ChallengeIssued' not equal to 'ChallengeSolved' plus 'ChallengeFailed'?
 
 Users do not complete all challenges. Cloudflare issues challenges that are never answered — only 2-3% of all served challenges are usually answered.
 
@@ -248,7 +256,7 @@ There are multiple reasons for this:
 - Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 - Cloudflare receives a malformed challenge answer.
 
-## Why do I have matches for a firewall rule that was not supposed to match the request?
+### Why do I have matches for a firewall rule that was not supposed to match the request?
 
 Make sure you are looking at the correct request.
 
