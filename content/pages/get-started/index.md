@@ -42,12 +42,6 @@ You can select a GitHub project from your personal account or an organization yo
 
 If using GitLab, you can select a project from your personal account or from a GitLab group you belong to. This allows you to choose a GitLab repository to deploy using Pages. Both private and public repositories are supported.
 
-{{<Aside type="note">}}
-
-If you do not have a project repository to choose from yet, refer to our extensive [How to section](/pages/how-to/) to learn how to create and deploy common frameworks and tools to Cloudflare Pages.
-
-{{</Aside>}}
-
 ### Configuring your deployment
 
 Once you have selected a repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in the **Set up builds and deployments** page.
@@ -67,6 +61,12 @@ You must have pushed at least one branch to your GitHub or GitLab project in ord
 #### Build settings
 
 Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **build output directory** to tell Cloudflare Pages how to deploy your site. The contents of this directory are uploaded to Cloudflare Pages as your website's contents.
+
+{{<Aside type="warning" header="No framework required">}}
+
+You do not need a framework to deploy with Cloudflare Pages. You can continue with the Get started guide without choosing a framework, and refer to the [Deploy your site](/pages/framework-guides/deploy-anything/) page for more information on deploying your site without a framework.
+
+{{</Aside>}}
 
 Our deployment dashboard provides a number of framework-specific presets, which provide the default values for the selected framework. If you are unsure what the correct values are for this section, refer to our documentation on [build configuration](/pages/platform/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
 
@@ -95,7 +95,7 @@ Refer to [Build configuration](/pages/platform/build-configuration/) for more in
 
 Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
 
-After you have chosen your _Framework preset_, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
+After you have chosen your _Framework preset_ or left this field blank if you are working without a framework, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
 
 ## Your first deploy
 
