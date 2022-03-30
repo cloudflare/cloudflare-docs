@@ -1,7 +1,6 @@
 ---
 pcx-content-type: reference
 title: Settings
-weight: 0
 meta:
   title: Zaraz settings
 ---

@@ -1,7 +1,6 @@
 ---
 pcx-content-type: reference
 title: Triggers and rules
-weight: 0
 ---
 
 # Triggers and rules

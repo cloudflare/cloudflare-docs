@@ -1,10 +1,11 @@
 ---
 pcx-content-type: reference
 title: Third-party tools
-wight: 2
+meta:
+    title: Third-party tools supported by Cloudflare Zaraz
 ---
 
-# Third-party tools
+# Third-party tools supported
 
 Cloudflare Zaraz supports the following third-party tools:
 

@@ -2,7 +2,6 @@
 pcx-content-type: reference
 type: overview
 title: Properties reference
-weight: 0
 layout: list
 meta:
   title: Zaraz event and system properties
