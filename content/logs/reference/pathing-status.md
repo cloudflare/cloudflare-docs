@@ -77,7 +77,7 @@ Certain combinations of pathing have been labeled in the Cloudflare **Threat Ana
 | ----------------------- | -------------------- |
 | `bic.ban.unknown`       | Bad browser          |
 | `hot.ban.unknown`       | Blocked hotlink      |
-| `hot.ban.ip`            | n/a                  |
+| `hot.ban.ip`            |                      |
 | `macro.ban.ip`          | Bad IP               |
 | `user.ban.ctry`         | Country block        |
 | `user.ban.ip`           | IP block (user)      |
