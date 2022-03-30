@@ -32,7 +32,7 @@ If you disable Universal SSL, you may experience errors with the following scena
 To disable Universal SSL:
 
 1.  Make sure you have [uploaded a custom certificate](/ssl/edge-certificates/custom-certificates/) or purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to protect your domain.
-2.  Log in to the Cloudflare dashboard and select your account.
+2.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 3.  Select your domain.
 4.  Go to **SSL/TLS** > **Edge Certificates**.
 5.  For **Disable Universal SSL**, select **Disable Universal SSL**.
