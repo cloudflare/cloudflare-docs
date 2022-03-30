@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: DNS policies
+layout: single
 weight: 1
 ---
 

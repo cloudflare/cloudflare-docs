@@ -24,10 +24,10 @@ We recommend the following workflow when configuring WARP alongside a 3rd party 
 
 1. Disable DNS configuration in your 3rd party VPN.
 2. In the Zero Trust dashboard, navigate to **Settings** > **Network** and ensure that **Split Tunnels** is set to **Exclude IPs and domains**.
-3. Under **Split Tunnels**, click **Manage** and [add the following IP addresses](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#add-an-ip-address) to your Exclude list:
+3. Under **Split Tunnels**, click **Manage** and [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#add-an-ip-address) to your Exclude list:
 
-* The IP address of the server your 3rd party VPN connects to.
-* The private IP address space your 3rd party VPN exposes.
+    * The IP address of the server your 3rd party VPN connects to.
+    * The private IP address space your 3rd party VPN exposes.
 
 4. (Optional) If your company uses fully qualified domain names such as `example.local`, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/)to exclude your local domains from Gateway processing.
 

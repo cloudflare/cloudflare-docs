@@ -1,6 +1,7 @@
 ---
 pcx-content-type: concept
 title: HTTP policies
+layout: single
 weight: 4
 ---
 
