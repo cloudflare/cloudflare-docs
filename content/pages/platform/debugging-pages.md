@@ -44,7 +44,7 @@ Make sure to also review your submodule configuration by going to the `.gitmodul
 
 Example of a valid configuration:
 
-```sh
+```js
 [submodule "example"]
 	path = example/path
 	url = git://github.com/example/repo.git
@@ -52,12 +52,12 @@ Example of a valid configuration:
 
 Example of an invalid configuration:
 
-```sh
+```js
 [submodule "example"]
 	path = example/path
 ```
 or
-```sh
+```js
 [submodule "example"]
         url = git://github.com/example/repo.git
 ```
