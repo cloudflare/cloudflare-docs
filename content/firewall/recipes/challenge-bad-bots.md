@@ -5,19 +5,19 @@ title: Challenge bad bots
 
 # Challenge bad bots
 
-{{<Aside type="warning" header="Important">}}
+Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
+
+{{<Aside type="warning">}}
 
 Access to [Bot Management](/bots/get-started/bm-subscription/) requires a Cloudflare Enterprise plan with Bot Management enabled.
 
 {{</Aside>}}
 
-Cloudflare’s Bot Management feature scores the likelihood that a request originates from a bot.
-
 Scores range from 1 through 99. Low scores indicate the request comes from a script, API service, or an automated agent. High scores indicate that a human issued the request from a standard desktop or mobile web browser.
 
 These examples use:
 
-- `cf.bot_management.score` [dynamic field](/ruleset-engine/rules-language/fields/#dynamic-fields) to target requests from bots
+- [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/#field-cf-bot_management-score) dynamic field to target requests from bots
 - `cf.bot_management.verified_bot` to identify requests from [known good bots](https://radar.cloudflare.com/verified-bots)
 - `cf.bot_management.ja3_hash` to target specific [JA3 Fingerprints](/bots/concepts/ja3-fingerprint/)
 
@@ -28,7 +28,7 @@ For best results:
 - Use [Bot Analytics](/bots/get-started/bm-subscription/#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
-Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#5-create-additional-firewall-rules) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/bots/get-started/bm-subscription/#step-4--create-additional-firewall-rules) and your tolerance for false positives.
 
 ### Protect browser endpoints
 

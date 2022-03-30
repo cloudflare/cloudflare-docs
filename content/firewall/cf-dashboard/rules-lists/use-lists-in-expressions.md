@@ -1,14 +1,14 @@
 ---
 pcx-content-type: how-to
 title: Use lists in expressions
-weight: 371
+weight: 3
 ---
 
 # Use lists in expressions
 
 ## Expression Builder
 
-To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit-delete-rules/):
+To use an IP List in the [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder):
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
@@ -20,7 +20,7 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/create-edit
 
 ## Expression Editor
 
-To use an IP List in the [Expression Editor](/firewall/cf-dashboard/expression-preview-editor/) specify the `in` operator and use `$<list_name>` to specify the name of the list.
+To use an IP List in the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) specify the `in` operator and use `$<list_name>` to specify the name of the list.
 
 This expression filters requests from IP addresses that are in an IP List named `office_network`:
 

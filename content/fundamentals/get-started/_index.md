@@ -1,7 +1,7 @@
 ---
 pcx-content-type: navigation
 title: Get started
-weight: 2
+weight: 3
 ---
 
 # Get started

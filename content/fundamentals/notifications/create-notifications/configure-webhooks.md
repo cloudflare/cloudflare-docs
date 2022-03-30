@@ -46,7 +46,7 @@ The new webhook will appear in the **Webhooks** card.
 
 If you use a service that is not covered by Cloudflare's currently available webhooks, you can configure your own. Follow steps 1-6 above, and enter a valid webhook URL. It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
 
-After clicking save and test, your webhook should now be configured as a destination you can use to attach to policies. 
+After clicking **Save and Test**, your webhook should now be configured as a destination you can use to attach to policies.
 
 When Cloudflare sends you a webhook, it will have the following schema:
 

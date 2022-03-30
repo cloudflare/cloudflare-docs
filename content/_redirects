@@ -136,6 +136,8 @@
 /docs-engine https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 /docs-engine/ https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 /firewall/cf-dashboard/create-api-shield-rule /firewall/cf-dashboard/create-mtls-rule 302
+/firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
+/firewall/cf-dashboard/expression-preview-editor /firewall/cf-dashboard/edit-expressions/ 301
 /firewall/cf-firewall-language /ruleset-engine/rules-language 302
 /firewall/cf-firewall-language/fields /ruleset-engine/rules-language/fields 302
 /firewall/cf-firewall-language/functions /ruleset-engine/rules-language/functions 302
@@ -190,6 +192,8 @@
 /fundamentals/notifications/edit-notification /fundamentals/notifications/edit-notifications/edit-notification 302
 /fundamentals/notifications/edit-pagerduty /fundamentals/notifications/edit-notifications/edit-pagerduty 302
 /fundamentals/notifications/edit-webhook /fundamentals/notifications/edit-notifications/edit-webhook 302
+/fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
+/fundamentals/data-products/accessing-cf-data /fundamentals/data-products/types-of-analytics/ 301
 /gateway/about /cloudflare-one/policies/filtering/ 301
 /gateway/connecting-to-gateway/install-cloudflare-cert /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ 302
 /gateway/connecting-to-gateway/with-client /cloudflare-one/connections/connect-devices/warp/ 302

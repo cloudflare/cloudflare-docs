@@ -21,10 +21,9 @@ You can adjust the behavior of the rules in the Managed Ruleset by modifying the
 * The performed **action** when an attack is detected
 * The **sensitivity level** of attack detection mechanisms
 
-{{<Aside type="note" header="Note">}}
-
-Certain actions or sensitivity levels may not be available to all Cloudflare plans.
-
+{{<Aside type="note" header="Notes">}}
+* Certain actions or sensitivity levels may not be available to all Cloudflare plans.
+* Configuration changes to rules with the `gatebot` tag can take up to five minutes.
 {{</Aside>}}
 
 To adjust rule behavior, do one of the following:

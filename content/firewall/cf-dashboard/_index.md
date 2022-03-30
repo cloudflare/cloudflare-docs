@@ -1,9 +1,10 @@
 ---
 title: Manage rules in the dashboard
 pcx-content-type: navigation
-weight: 301
+weight: 3
 meta:
   title: Manage firewall rules in the Cloudflare dashboard
+layout: single
 ---
 
 # Manage firewall rules in the Cloudflare dashboard
