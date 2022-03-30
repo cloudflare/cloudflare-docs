@@ -31,7 +31,7 @@ This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rul
 ```json
 ---
 header: Request
-highlight: [6,7,8,9]
+highlight: [5,6,7,8]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
@@ -53,7 +53,7 @@ This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rul
 ```json
 ---
 header: Request
-highlight: [6,7,8,9,10,11]
+highlight: [5,6,7,8,9,10]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
@@ -72,6 +72,39 @@ curl -X POST \
 
 Refer to [Available skip options](/waf/custom-rules/skip/options/) for the list of phases you can skip.
 
+
+## Skip a phase and do not log matching requests
+
+This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rule/) API operation to add a rule that:
+
+* Skips the `http_ratelimit` phase
+* Disables logging for requests matching this rule
+
+```json
+---
+header: Request
+highlight: [5,6,7,8,9,10,11,12,13]
+---
+curl -X POST \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+  "action": "skip",
+  "action_parameters": {
+    "phases": [
+      "http_ratelimit"
+    ]
+  },
+  "logging": {
+    "enabled": false
+  },
+  "expression": "http.request.uri.path contains \"/disable-logging/\"",
+  "description": ""
+}'
+```
+
+Refer to [Available skip options: Logging](/waf/custom-rules/skip/options/#logging) for more information on disabling logging for requests that match a skip rule.
+
 ## Skip security products
 
 This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rule/) API operation to add a rule that skips the Zone Lockdown and User Agent Blocking products:
@@ -79,7 +112,7 @@ This example uses the [Add individual rule](/ruleset-engine/rulesets-api/add-rul
 ```json
 ---
 header: Request
-highlight: [6,7,8,9,10,11,12]
+highlight: [5,6,7,8,9,10,11]
 ---
 curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules" \
