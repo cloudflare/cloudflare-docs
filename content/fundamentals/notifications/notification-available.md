@@ -230,6 +230,25 @@ No direct call to action.
 ## Magic Transit
 
 <details>
+<summary>Flow-based Monitoring: Auto Advertisement</summary>
+<div>
+
+**Who is it for?**
+
+Magic Transit on-demand customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
+
+**Included with**
+
+Purchase of Magic Transit.
+
+**What should you do if you receive one?**
+
+No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
+
+</div>
+</details>
+
+<details>
 <summary>Flow-based Monitoring: Volumetric Attack</summary>
 <div>
 
@@ -243,7 +262,7 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
+If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
 
 </div>
 </details>
