@@ -1,13 +1,14 @@
 ---
 title: Troubleshooting
 pcx-content-type: reference
+weight: 2
 meta:
   title: Troubleshooting Domain Control Validation
 ---
 
 # Troubleshooting Domain Control Validation
 
-When performing Domain Control Validation (DCV) for partial domains using Universal SSL certificates, you might experience issues with certificate issuance and renewal using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/#http).
+When performing Domain Control Validation (DCV) for partial domains using Universal SSL certificates, you might experience issues with certificate issuance and renewal using [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/).
 
 If these issues occur while using HTTP DCV, review the following settings:
 

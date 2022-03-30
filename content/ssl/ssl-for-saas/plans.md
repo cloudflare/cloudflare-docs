@@ -82,6 +82,22 @@ meta:
     </tr>
     <tr>
       <td>
+        <strong>
+          <a href="/ssl/ssl-for-saas/common-tasks/enforce-mtls/">mTLS support</a>
+        </strong>
+      </td>
+      <td style="text-align:center">No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>WAF for SaaS</strong>
+      </td>
+      <td style="text-align:center">Apply WAF rules with current zone's plan.</td>
+      <td>Create and apply custom firewall rulesets.</td>
+    </tr>
+    <tr>
+      <td>
         <strong>Apex proxing/BYOIP</strong>
       </td>
       <td style="text-align:center">No</td>
