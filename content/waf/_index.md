@@ -1,7 +1,7 @@
 ---
 title: Overview
 pcx-content-type: overview
-weight: 2
+weight: 1
 meta:
   title: Cloudflare Web Application Firewall
 ---

@@ -8,7 +8,7 @@ weight: 6
 
 Manage custom rules in **Security** > **WAF** > **Custom rules**.
 
-{{<Aside type="warning" header="Important">}}
+{{<Aside type="note">}}
 
 This feature is only available for select customers on an Enterprise plan.
 
