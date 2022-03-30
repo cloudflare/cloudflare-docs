@@ -1,7 +1,6 @@
 ---
 pcx-content-type: concept
 title: REST API
-weight: 8
 ---
 
 # REST API

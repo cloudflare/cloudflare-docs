@@ -1,7 +1,6 @@
 ---
 pcx-content-type: concept
 title: Redirects
-weight: 7
 ---
 
 # Redirects

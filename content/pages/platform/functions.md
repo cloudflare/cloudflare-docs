@@ -1,14 +1,13 @@
 ---
 pcx-content-type: concept
 title: Functions (beta)
-weight: 7
 ---
 
 # Functions (beta)
 
 {{<Aside type="note" header="Functions is currently in beta">}}
 
-You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Please let us know any unreported issues by posting in our [Discord](https://discord.com/invite/cloudflaredev).
+You can track current issues that the Pages team is fixing in [Known Issues](/pages/platform/known-issues/). Let us know any unreported issues by posting in the [Cloudflare Developers Discord](https://discord.com/invite/cloudflaredev).
 
 {{</Aside>}}
 
@@ -312,7 +311,7 @@ While bringing your Workers to Pages, bindings are a big part of what makes your
 
 Workers KV is Cloudflare's globally replicated key-value storage solution. Within Pages, you can choose from the list of KV namespaces that you created from the dashboard by going to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespace bindings**. Select **Add binding** and input a **Variable name** and select a _KV namespace_ from the list of your existing Workers KV namespaces. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![Editing a KV namespace Binding and adding a Variable name](../KV-functions.png)
+![Editing a KV namespace Binding and adding a Variable name](../media/KV-functions.png)
 
 ## KV namespace locally
 
@@ -331,7 +330,7 @@ Durable Objects are Cloudflare's strongly consistent coordination primitive that
 
 Go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Object bindings**. Select **Add binding** and input a **Variable name** and select a _Durable Object namespace_ from the list of your existing Durable Objects. You will need to repeat this for both the **Production** and **Preview** environments.
 
-![Editing a Durable Object namespace Binding and adding a Variable name](../DO-functions.png)
+![Editing a Durable Object namespace Binding and adding a Variable name](../media/DO-functions.png)
 
 ## Durable Objects locally
 
@@ -343,7 +342,7 @@ An [environment variable](/workers/platform/environment-variables/) is an inject
 
 To add environment variables, go to **Account Home** > **Pages** > **your Pages project** > **Settings** > **Environment variables**.
 
-![Editing an environment variable by adding a variable name and value](../ENV-functions.png)
+![Editing an environment variable by adding a variable name and value](../media/ENV-functions.png)
 
 ## Adding environment variables locally
 

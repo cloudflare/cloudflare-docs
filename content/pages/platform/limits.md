@@ -1,7 +1,6 @@
 ---
 pcx-content-type: concept
 title: Limits
-weight: 9
 ---
 
 # Limits

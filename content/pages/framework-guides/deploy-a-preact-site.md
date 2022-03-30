@@ -59,7 +59,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 
-After completing configuration, click the **Save and Deploy** button.
+After completing configuration, select **Save and Deploy**.
 
 You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
 
