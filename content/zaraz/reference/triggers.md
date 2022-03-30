@@ -12,7 +12,7 @@ These website events can be passed to Cloudflare Zaraz in a number of ways. You 
 
 ## Rule types
 
-The exact composition of the trigger will change depending on the type of rule you choose. 
+The exact composition of the trigger will change depending on the type of rule you choose.
 
 <details>
 <summary>Match rule</summary>
