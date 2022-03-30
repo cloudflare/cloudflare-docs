@@ -1,7 +1,7 @@
 ---
 pcx-content-type: concept
 title: Rate limiting rules
-weight: 4
+weight: 5
 ---
 
 # Rate limiting rules
