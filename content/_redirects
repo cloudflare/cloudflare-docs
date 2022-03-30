@@ -13,6 +13,7 @@
 /image-resizing /images/image-resizing/ 301
 /image-resizing/ /images/image-resizing/ 301
 /load-balancing/about /load-balancing/ 301
+/load-balancing/about/ /load-balancing/ 301
 /load-balancing/best-practices /load-balancing/additional-options 301
 /load-balancing/create-load-balancer-api /load-balancing/how-to/create-load-balancer 301
 /load-balancing/create-load-balancer-ui /load-balancing/how-to/create-load-balancer 301
