@@ -11,7 +11,7 @@ Specify a time for a visitor’s Browser Cache TTL to accelerate the page load f
 
 By default, Cloudflare honors the cache expiration set in your `Expires` and `Cache-Control` headers. Cloudflare overrides any `Cache-Control` or `Expires` headers with values set via the **Browser Cache TTL** option under **Caching** on your dashboard if:
 
-- The value of the `Cache-Control` header from the origin web server is less than the **Browser Cache TTL =setting**. This means that **Browser cache TTL** value needs to be higher than origin `max-age`.
+- The value of the `Cache-Control` header from the origin web server is less than the **Browser Cache TTL** setting. This means that **Browser cache TTL** value needs to be higher than origin `max-age`.
 - The origin web server does not send a `Cache-Control` or an `Expires` header.
 
 Unless specifically set in a [Page Rule](/cache/how-to/create-page-rules/), Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**. 
