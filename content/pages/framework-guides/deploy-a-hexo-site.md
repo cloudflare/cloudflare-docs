@@ -5,7 +5,7 @@ title: Deploy a Hexo site
 
 # Deploy a Hexo site
 
-[Hexo](https://hexo.io/) is a tool for generating static websites, powered by Node.js. It is fast, simple, powerful and flexible, rendering Markdown files into static web pages via Node.js
+[Hexo](https://hexo.io/) is a tool for generating static websites, powered by Node.js. Hexo's benefits include speed, simplicity, and flexibility, allowing it to render Markdown files into static web pages via Node.js.
 
 In this guide, you will create a new Hexo application and deploy it using Cloudflare Pages. You will use the `hexo` CLI to create a new Hexo site.
 
@@ -37,7 +37,7 @@ $ cd my-hexo-site
 $ npm install
 ```
 
-Hexo sites use themes to customize the appearance of statically built HTML sites, Hexo has an out-of-the-box theme installed by default, which you can find at [hexo.io/themes/](https://hexo.io/themes/)
+Hexo sites use themes to customize the appearance of statically built HTML sites. Hexo has a default theme automatically installed, which you can find on [Hexo's Themes page](https://hexo.io/themes/).
 
 ## Creating a post
 
@@ -88,9 +88,13 @@ Every time you commit new code to your Hexo site, Cloudflare Pages will automati
 
 ## Using a specific Node.js version
 
-Some Hexo themes or plugins have additional requirements for Node.js version, you can set the environment variable `NODE_VERSION` under Settings to use a specific Node.js version for Hexo.
+Some Hexo themes or plugins have additional requirements for different Node.js versions. To use a specific Node.js version for Hexo:
 
-For example, `NODE_VERSION`: `14.17.5`
+1. Go to **your Pages project**.
+2. Go to **Settings** > **Environment variables**. 
+3. Set the environment variable `NODE_VERSION` and a value of your required Node.js version (for example, `14.3`).
+
+![Follow the instructions above to set up an environment variable in the Pages dashboard](../media/node-version-pages.png)
 
 ## Related resources
 
