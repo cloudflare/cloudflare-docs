@@ -2,10 +2,10 @@
 pcx-content-type: reference
 title: Third-party tools
 meta:
-    title: Third-party tools supported by Cloudflare Zaraz
+    title: Supported third-party tools
 ---
 
-# Third-party tools supported
+# Supported third-party tools
 
 Cloudflare Zaraz supports the following third-party tools:
 
@@ -21,16 +21,16 @@ Google Ads                        | Advertising
 Google Analytics                  | Analytics
 Google Analytics 4                | Analytics
 Google Conversion Linker          | Miscellaneous
-Google Maps - Reserve with Google | Advertising  / Miscellaneous
+Google Maps - Reserve with Google | Advertising / Miscellaneous
 HubSpot                           | Marketing automation
-iHire                             | Marketing automation  / Recruiting
+iHire                             | Marketing automation / Recruiting
 Impact Radius                     | Marketing automation
 Indeed                            | Recruiting
 LinkedIn Insight                  | Advertising
 Mixpanel                          | Analytics
 Outbrain                          | Advertising
 Pinterest                         | Advertising
-Pod Sights                        | Advertising  / Analytics
+Pod Sights                        | Advertising / Analytics
 Quora                             | Advertising
 Reddit                            | Advertising
 Segment                           | Customer Data Platform
