@@ -22,7 +22,7 @@ Google Analytics                  | Analytics
 Google Analytics 4                | Analytics
 Google Conversion Linker          | Miscellaneous
 Google Maps - Reserve with Google | Advertising  / Miscellaneous
-HubSpot                           | Marketing Automation
+HubSpot                           | Marketing automation
 iHire                             | Marketing automation  / Recruiting
 Impact Radius                     | Marketing automation
 Indeed                            | Recruiting
@@ -43,7 +43,7 @@ ZipRecruiter                      | Recruiting
 
 {{</table-wrap>}}
 
-For all tools not in the above list, use the custom integrations below:
+For any other tool, use the custom integrations below:
 
 {{<table-wrap>}}
 
