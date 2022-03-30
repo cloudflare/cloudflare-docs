@@ -48,8 +48,8 @@ For all tools not in the above list, use the custom integrations below:
 
 Name | Category 
  --- | ---
-Custom HTML | Custom 
-Custom Image | Custom 
+Custom HTML | Custom
+Custom Image | Custom
 HTTP Request | Custom
 
 {{</table-wrap>}}
