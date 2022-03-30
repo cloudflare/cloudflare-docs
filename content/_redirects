@@ -258,7 +258,7 @@
 /logs/logpush/logpush-dashboard /logs/get-started/logpush-dashboard 302
 /logs/logpush/logpush-dashboard/ /logs/get-started/enable-destinations/ 302
 /logs/logpush/s3-compatible-endpoints /logs/get-started/enable-destinations/s3-compatible-endpoints 302
-/logs/logpush/splunk logs/get-started/enable-destinations/splunk 302
+/logs/logpush/splunk /logs/get-started/enable-destinations/splunk 302
 /logs/logpush/sumo-logic /logs/get-started/enable-destinations/sumo-logic 302
 /logs/tutorials/bot-management-dashboard /bots/bot-analytics 302
 /logs/tutorials/example-logpush-python /logs/get-started/logpush-configuration-api/examples/example-logpush-python 302
@@ -745,7 +745,7 @@
 /1.1.1.1/1.1.1.1-for-families /1.1.1.1/setup/ 301
 /1.1.1.1/1.1.1.1-for-families/ /1.1.1.1/setup/ 301
 /1.1.1.1/1.1.1.1-for-families/android/ /1.1.1.1/setup/android/ 301
-/1.1.1.1/1.1.1.1-for-families/ios/ 1.1.1.1/setup/ios/ 301
+/1.1.1.1/1.1.1.1-for-families/ios/ /1.1.1.1/setup/ios/ 301
 /1.1.1.1/1.1.1.1-for-families/linux/ /1.1.1.1/setup/linux/ 301
 /1.1.1.1/1.1.1.1-for-families/mac /1.1.1.1/setup/macos/ 301
 /1.1.1.1/1.1.1.1-for-families/mac/ /1.1.1.1/setup/macos/ 301
