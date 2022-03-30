@@ -48,7 +48,6 @@ Beta datasets are available to Enterprise customers for testing and exploration.
 
 | Dataset (product) | Node                                                                                                        |
 | :----------------- | :---------------------------------------------------------------------------------------------------------- |
-| Browser Insights   | `browserInsightsAdaptiveGroups` `webVitalsAdaptiveGroups`                                                   |
 | Web Analytics      | `rumPageloadEventsAdaptiveGroups` `rumPerformanceEventsAdaptiveGroups` `rumWebVitalsEventsAdaptiveGroups`   |
 
 {{</table-wrap>}}
@@ -70,7 +69,7 @@ The following data nodes are deprecated. To avoid disruption, migrate to replace
 | `loadBalancingRequests`      | `loadBalancingRequestsAdaptive`      | September 30, 2021     |
 | `loadBalancingRequestsGroups`| `loadBalancingRequestsAdaptiveGroups`| September 30, 2021     |
 | `ipFlows1mGroups`<br/> `ipFlows1hGroups`<br/> `ipFlows1dGroups`<br/> `ipFlows1mAttacksGroups` | `spectrumNetworkAnalyticsAdaptiveGroups`<br/> `magicTransitNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` | March 31, 2022 |
-| `browserPerf1mGroups`| ``|      |
+| `browserPerf1mGroups`<br/>`browserInsightsAdaptiveGroups`<br/>`webVitalsAdaptiveGroups` | `rumPerformanceEventsAdaptiveGroups`<br/>`rumPageloadEventsAdaptiveGroups`<br/>`rumWebVitalsEventsAdaptiveGroups`|  July, 2021   |
 
 {{</table-wrap>}}
 

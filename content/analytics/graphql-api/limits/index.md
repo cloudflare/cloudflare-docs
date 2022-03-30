@@ -49,6 +49,9 @@ Access to Network Analytics `*NetworkAnalyticsAdaptiveGroups` nodes is only avai
 | `magicTransitNetworkAnalyticsAdaptiveGroups`  |      n/a |      n/a |      n/a |    90 days |
 | `spectrumNetworkAnalyticsAdaptiveGroups`      |      n/a |      n/a |      n/a |    90 days |
 | `synAvgPps1mGroups`                           |      n/a |      n/a |      n/a |     7 days |
+| `rumPerformanceEventsAdaptiveGroups`          | 6 months | 6 months | 6 months |   6 months |
+| `rumPageloadEventsAdaptiveGroups`             | 6 months | 6 months | 6 months |   6 months |
+| `rumWebVitalsEventsAdaptiveGroups`            | 6 months | 6 months | 6 months |   6 months |
 
 {{</table-wrap>}}
 
