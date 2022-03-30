@@ -25,11 +25,11 @@ Deploy your site to Pages by logging into the [Cloudflare dashboard](https://das
 
 <div>
 
-| Configuration option     | Value               |
-| ------------------------ | ------------------- |
-| Production branch        | `main`              |
-| Build command (optional) | `<YOURBUILDCOMMAND>`|
-| Build output directory   | `<YOURBUILDDIR>`    |
+| Configuration option     | Value                 |
+| ------------------------ | --------------------- |
+| Production branch        | `main`                |
+| Build command (optional) | `<YOUR_BUILD_COMMAND>`|
+| Build output directory   | `<YOUR_BUILD_DIR>`    |
 
 </div>
 
