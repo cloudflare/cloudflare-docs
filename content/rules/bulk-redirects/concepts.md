@@ -54,7 +54,7 @@ URL Redirects are the list items of Bulk Redirect Lists.
 
 ## Bulk Redirect Lists
 
-URL Redirect Lists allow you to create distinct groups of URL Redirects for different purposes. You can use a URL Redirect List in one or more Bulk Redirect Rules.
+Bulk Redirect Lists allow you to create distinct groups of URL Redirects for different purposes. You can use a URL Redirect List in one or more Bulk Redirect Rules.
 
 A Bulk Redirect List does not perform any redirects on its own — you must reference the list in a Bulk Redirect Rule to enable the redirects in the list.
 
@@ -105,6 +105,10 @@ Refer to [Fields](/ruleset-engine/rules-language/fields/) for more information.
 
 ### Key
 
-The rule key is used in combination with the rule list to select the URL Redirect to apply. The field used for the key should always be the same as the field used in the expression.
+The rule key is used in combination with the Bulk Redirect List associated with the rule to select the URL Redirect to apply.
 
-For example, if the request field used in the rule expression is `http.request.full_uri`, you should set the key to `http.request.full_uri`. Conversely, if the field used in the expression is `raw.http.request.full_uri`, you should set the key to `raw.http.request.full_uri`.
+When there is a match for the rule expression, Cloudflare compares the value of the rule key with the source URL of each URL Redirect in the associated Bulk Redirect List, searching for a match.
+
+The key should be either `http.request.full_uri` or `raw.http.request.full_uri`. Use `raw.http.request.full_uri` to compare the URI received by the web server, before normalization, with the source URLs in the Bulk Redirect List.
+
+The URI field used in the key must be the same as the URI field used in the expression. Otherwise, you may have a match for the rule expression, but no match for any of the source URLs in the list. For example, if you set the key to `http.request.full_uri`, the field used in the rule expression must also be `http.request.full_uri`. Conversely, if you set the key to `raw.http.request.full_uri`, the field used in the expression must be `raw.http.request.full_uri`.
