@@ -1,6 +1,5 @@
 ---
 pcx-content-type: reference
-type: overview
 title: Properties reference
 layout: list
 meta:
