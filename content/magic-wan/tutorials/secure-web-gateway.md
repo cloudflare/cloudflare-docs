@@ -21,6 +21,8 @@ Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, t
 - Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
 - Use site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR) so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Secure Web Gateway, to enforce a user's specific web access policies.
 
+Proper routing techniques, such as policy-based routing, should also be utilized on the site routers to match relevant Internet-bound traffic from the site’s appropriate local private subnets, and route them over the GRE tunnel to Cloudflare Magic WAN and Secure Web Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by the Cloudflare Secure Web Gateway
+
 ## Example scenario
 
 For the purpose of this tutorial, setup will reference a scenario where an enterprise has three sites: headquarters, a branch office, and a data center. Each site has a local private network with RFC1918 address assignments:
