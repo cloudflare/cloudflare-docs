@@ -29,7 +29,7 @@ meta:
       <td>100522</td>
       <td>Spring - CVE:CVE-2022-22947</td>
       <td>N/A</td>
-      <td>Block</td>
+      <td>Simulate</td>
     </tr>
   </tbody>
 </table>
