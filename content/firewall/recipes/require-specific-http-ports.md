@@ -29,3 +29,11 @@ This example blocks requests to `www.example.com` that are not on ports 80 or 44
     </tr>
   </tbody>
 </table>
+
+{{<Aside type="note" header="Open server ports and blocked traffic">}}
+
+Due to the nature of Cloudflare's Anycast network, ports other than `80` and `443` will be open so that Cloudflare can serve traffic for other customers on these ports.
+
+The above firewall rule will block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
+
+{{</Aside>}}
