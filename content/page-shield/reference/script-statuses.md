@@ -27,7 +27,3 @@ Malicious script detection is available to Enterprise customers with a paid add-
 * **Infrequent**: There are less than three reports for the script. If there are no reports for a script with _Infrequent_ status for five days, then Page Shield will delete all the information it holds about the script. Scripts with _Infrequent_ status appear only in the **All Reported Scripts** dashboard.
 * **Inactive**: A previously active script was not reported in the last seven days. If the script is reported again later, its status will change back to _Active_. If the script is not reported for 30 days, Page Shield will delete all the information it holds about the script. Scripts with _Inactive_ status appear only in the **All Reported Scripts** dashboard.
 * **CDN-CGI**: The script is hosted behind a `/cdn-cgi/` endpoint. Scripts with this status appear only in the **All Reported Scripts** dashboard.
-* **Malicious - Active**: There are more than three reports for the script, which is considered malicious.
-* **Malicious - Infrequent**: There are less than three reports for the script, which is considered malicious.
-* **Malicious - Inactive**: A previously active script, considered malicious, was not reported in the last seven days.
-* **Malicious - CDN-CGI**: The script is hosted behind a `/cdn-cgi/` endpoint, and the script is considered malicious.
