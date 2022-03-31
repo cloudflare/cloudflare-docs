@@ -16,6 +16,7 @@ In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunne
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, the following items should already be completed:
 
 - Purchased Magic WAN and Secure Web Gateway
+- Added a root certificate
 - Cloudflare created and provisioned Magic WAN and Secure Web Gateway
 - Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
 - Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
