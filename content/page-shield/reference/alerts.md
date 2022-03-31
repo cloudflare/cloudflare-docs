@@ -8,7 +8,7 @@ meta:
 
 # Page Shield alerts
 
-Refer to [Configure Page Shield alerts](/page-shield/use-dashboard/configure-alerts/) for instructions on configuring alerts.
+You can configure alerts for scripts detected in your domain. Refer to [Configure Page Shield alerts](/page-shield/use-dashboard/configure-alerts/) for instructions.
 
 ## New script alerts
 
@@ -39,6 +39,8 @@ Available as a paid add-on for Cloudflare customers on an Enterprise plan.
 
 {{</Aside>}}
 
-- **Script Monitor New Malicious Domain Alert**: Triggered immediately by JavaScript dependencies loaded from domains known to be malicious according to threat intelligence feeds.
-- **Script Monitor New Malicious URL Alert**: Triggered immediately by JavaScript dependencies loaded from URLs known to be malicious according to threat intelligence feeds.
-- **Script Monitor New Malicious Script Alert**: Triggered immediately by JavaScript code that Cloudflare's internal systems considered malicious.
+- **Script Monitor New Malicious Domain Alert**: Triggered by JavaScript dependencies loaded from domains known to be malicious according to threat intelligence feeds.
+- **Script Monitor New Malicious URL Alert**: Triggered by JavaScript dependencies loaded from URLs known to be malicious according to threat intelligence feeds.
+- **Script Monitor New Malicious Script Alert**: Triggered by JavaScript code that Cloudflare's internal systems considered malicious.
+
+Malicious code alerts will only include scripts with an _Active_ or _CDN-CGI_ status. Refer to [Script statuses](/page-shield/reference/script-statuses/) for more information.
