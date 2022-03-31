@@ -103,7 +103,7 @@ header: Response
 
 ### Fetch list of monitored scripts
 
-This example fetches a list of scripts monitored by Script Monitor on hostname `example.net`, requesting the first page with 15 items per page.
+This example fetches a list of scripts monitored by Page Shield on hostname `example.net`, requesting the first page with 15 items per page.
 
 ```bash
 ---
