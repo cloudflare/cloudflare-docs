@@ -33,7 +33,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
   - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/waiting-room/reference/configuration-settings/#session-duration/).
   - Because waiting rooms support dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration/), new spots appear more quickly and estimated wait times are lower and more accurate.
 
-![Waiting room process flow](/waiting-room/static/waiting-room-process-flow.png)
+![Waiting room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/waiting-room/static/waiting-room-process-flow.png)
 
 ## Availability
 
