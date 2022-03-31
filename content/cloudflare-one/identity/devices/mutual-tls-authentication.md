@@ -173,7 +173,7 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 
 ## Generating a client certificate
 
-Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded. This example creates a new directory to keep client certificates separate from the Root CA working location for ease of management.
+Returning to the terminal, generate a client certificate that will authenticate against the Root CA uploaded.
 
 1.  Create a file named `client-csr.json` and add the following JSON blob:
 
@@ -200,7 +200,7 @@ Returning to the terminal, generate a client certificate that will authenticate 
 2.  Now, use the following command to generate a client certificate with the Cloudflare PKI toolkit:
 
     ```sh
-    $ cfssl gencert -ca=../mtls-test/ca.pem -ca-key=../mtls-test/ca-key.pem  -config=../mtls-test/ca-config.json -profile=client client-csr.json | cfssljson -bare client
+    $ cfssl gencert -ca=ca.pem -ca-key=ca-key.pem  -config=ca-config.json -profile=client client-csr.json | cfssljson -bare client
     ```
 
 3.  You can now test the client certificate with the following `cURL` command.
