@@ -17,6 +17,8 @@ Each Notification carries different types of information about the status of you
 
 Click below to understand what each Notification does and what to do when receiving one.
 
+## Access
+
 <details>
 <summary>Expiring Access Service Token Alert</summary>
 <div>
@@ -36,6 +38,8 @@ Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflar
 </div>
 </details>
 
+## Billing
+
 <details>
 <summary>Usage Based Billing</summary>
 <div>
@@ -54,6 +58,8 @@ Review your usage of the product and adjust the configuration and/or increase th
 
 </div>
 </details>
+
+## DNS
 
 <details>
 <summary>Secondary DNS all Primaries Failing</summary>
@@ -139,6 +145,8 @@ Success alerts require no further action. Actions for failure notifications will
 </div>
 </details>
 
+## DoS Protection
+
 <details>
 <summary>HTTP DDoS Attack Alerter</summary>
 <div>
@@ -177,6 +185,8 @@ Purchase of Magic Transit and/or BYOIP.
 </div>
 </details>
 
+## Health checks
+
 <details>
 <summary>Health Checks status notification</summary>
 <div>
@@ -195,6 +205,8 @@ Review your [health check analytics](https://support.cloudflare.com/hc/articles/
 
 </div>
 </details>
+
+## Load Balancing
 
 <details>
 <summary>Pool Enablement</summary>
@@ -215,6 +227,27 @@ No direct call to action.
 </div>
 </details>
 
+## Magic Transit
+
+<details>
+<summary>Flow-based Monitoring: Auto Advertisement</summary>
+<div>
+
+**Who is it for?**
+
+Magic Transit on-demand customers who use Flow Based Monitoring and want alerts when Magic Transit is automatically enabled.
+
+**Included with**
+
+Purchase of Magic Transit.
+
+**What should you do if you receive one?**
+
+No action is needed. You can [go to the dashboard](https://dash.cloudflare.com/?to=/:account/magic-transit) to review the health and status of your tunnels.
+
+</div>
+</details>
+
 <details>
 <summary>Flow-based Monitoring: Volumetric Attack</summary>
 <div>
@@ -229,10 +262,12 @@ Purchase of Magic Transit.
 
 **What should you do if you receive one?**
 
-You need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
+If you do not have auto advertisement enabled, you need to advertise your IP prefixes to enable Magic Transit. For more information, see [Dynamic advertisement](/byoip/about/dynamic-advertisement/).
 
 </div>
 </details>
+
+## Origin Monitoring
 
 <details>
 <summary>Origin Error Rate Alert</summary>
@@ -273,6 +308,8 @@ All Cloudflare plans.
 </div>
 </details>
 
+## Route Leak Detection
+
 <details>
 <summary>Route Leak Detection Alert</summary>
 <div>
@@ -288,6 +325,65 @@ Purchase of BYOIP.
 **What should you do if you receive one?**
 
 Confirm your traffic is healthy: reach out to your transit providers to ensure you are behaving as expected and ask them to follow up with any providers accepting the unauthorized routes.
+
+</div>
+</details>
+
+## SSL/TLS
+
+<details>
+<summary>Access mTLS Certificate Expiration Alert</summary>
+<div>
+
+**Who is it for?**
+
+Access customers that use client certificates for mutual TLS authentication. 
+
+**Included with**
+
+Access and Cloudflare for SaaS.
+
+**What should you do if you receive one?**
+
+Upload a [renewed certificate](/cloudflare-one/identity/devices/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).
+
+</div>
+</details>
+
+<details>
+<summary>Dedicated SSL Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+
+**Included with**
+
+When a dedicated certificate is validated, issued, renewed, or expired.
+
+**What should you do if you receive one?**
+
+Action only needed if notification is about a certificate that failed to be issued. Refer to [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f) for more information.
+
+</div>
+</details>
+
+<details>
+<summary>Hostname-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server. 
+
+**Included with**
+
+Authenticated Origin Pull.
+
+**What should you do if you receive one?**
+
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates). 
 
 </div>
 </details>
@@ -329,6 +425,24 @@ All Cloudflare plans.
 
 </div>
 </details>
+
+<details>
+<summary>Zone-level Authenticated Origin Pulls Certificate Expiration Alert</summary>
+<div>
+
+**Who is it for?**
+Customers that upload their own certificate to use with zone-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
+
+**Included with**
+Authenticated Origin Pull
+
+**What should you do if you receive one?**
+Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/). 
+
+</div>
+</details>
+
+## Script Monitor
 
 <details>
 <summary>Script Monitor New Code Change Detection Alert</summary>
@@ -450,6 +564,8 @@ Investigate to confirm it is an expected change.
 </div>
 </details>
 
+## Stream
+
 <details>
 <summary>Stream Live Notifications</summary>
 <div>
@@ -468,6 +584,8 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 </div>
 </details>
+
+## WAF
 
 <details>
 <summary>Advanced Security Events Alert</summary>
@@ -510,6 +628,8 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 </div>
 </details>
+
+## Workers
 
 <details>
 <summary>Workers Usage Report</summary>
