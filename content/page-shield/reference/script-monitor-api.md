@@ -187,7 +187,7 @@ header: Response
       "seen_on_first": "http://malicious.example.com/page_one.html",
       "count": 2,
       "status": "infrequent",
-      "appears_in_cdn_cgi_path": false
+      "appears_in_cdn_cgi_path": false,
       "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
       "js_integrity_score": 50,
       "fetched_at": "2021-11-18T03:58:07Z"
@@ -240,7 +240,7 @@ header: Response
     "seen_on_first": "http://malicious.example.com/page_one.html",
     "count": 10,
     "status": "active",
-    "appears_in_cdn_cgi_path": false
+    "appears_in_cdn_cgi_path": false,
     "hash": "9245aad577e846dd9b990b1b32425a3fae4aad8b8a28441a8b80084b6bb75a45",
     "js_integrity_score": 50,
     "fetched_at": "2021-11-21T16:58:07Z",
