@@ -40,7 +40,7 @@ let { readable, writable } = new TransformStream();
 
 The current implementation of `TransformStream` in the Workers platform is not current compliant with the [Streams Standard](https://streams.spec.whatwg.org/#transform-stream) and we will soon be making changes to the implementation to make it conform with the specification. In preparation for doing so, we have introduced the `IdentityTransformStream` class that implements behavior identical to the current `TransformStream` class. This type of stream forwards all chunks of byte data (in the form of `TypedArray`s) written to its writable side to its readable side, without any changes.
 
-The `IdentityTransformStream` readable side supports ["bring your own buffer" (BYOB) reads](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamBYOBReader).
+The `IdentityTransformStream` readable side supports [bring your own buffer (BYOB) reads](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamBYOBReader).
 
 ### Constructor
 
@@ -97,7 +97,7 @@ let { readable, writable } = new FixedLengthStream(1000);
 
 {{</definitions>}}
 
-## See also
+## Related resources
 
 - [Using Streams.](/workers/learning/using-streams/)
 - [Transform Streams in the WHATWG Streams API specification.](https://streams.spec.whatwg.org/#transform-stream)
