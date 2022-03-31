@@ -21,11 +21,33 @@ Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec 
 
 To set up your static routes, refer to [Configure static routes](/magic-wan/how-to/configure-static-routes/).
 
-## Supported IPsec configuration parameters
+## Supported configuration parameters
 
-- Auth is PSK
-- Supported encryption proposal: aes256gcm16-prfsha512-modp2048
-- Remote Port of 500
-- 0s reauth time or no reauth
-- 4h rekey time
-- Disable anti-replay protection
+### Phase 1
+
+- **Encryption**: 
+  - AES-GCM-16 with 128-bit or 256-bit key length
+  - AES-CBC with 256-bit key length
+
+- **Integrity** (sometimes referred to as Authentication):
+  - SHA2-256
+
+- **Diffie-Hellman group**:
+  - DH group 14 (2048-bit MODP group)
+
+- **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting):
+  - SHA2-256
+  - SHA2-384
+  - SHA2-512
+
+### Phase 2
+
+- **Encryption**: 
+  - AES-GCM-16 with 128-bit or 256-bit key length
+  - AES-CBC with 256-bit key length
+
+- **Integrity** (sometimes referred to as Authentication):
+  - SHA2-256
+
+- **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group"):
+  - DH group 14 (2048-bit MODP group)
