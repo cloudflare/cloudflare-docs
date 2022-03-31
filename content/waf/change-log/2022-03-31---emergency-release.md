@@ -25,7 +25,7 @@ meta:
   <tbody>
     <tr>
       <td>Specials</td>
-      <td>N/A</td>
+      <td> ...f2cc4e84</td>
       <td>100524</td>
       <td>Spring - Code Injection</td>
       <td>N/A</td>
