@@ -51,3 +51,11 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 - **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group"):
   - DH group 14 (2048-bit MODP group)
+
+### Additional configuration parameters
+
+- Auth is PSK
+- Remote Port of 500
+- 0s reauth time or no reauth
+- 4h rekey time
+- Disable anti-replay protection
