@@ -16,7 +16,7 @@ By default, Cloudflare honors the cache expiration set in your `Expires` and `Ca
 
 Unless specifically set in a [Page Rule](/cache/how-to/create-page-rules/), Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**. 
 
-Nevertheless, the value you set via Page Rule will be ignored, if `Cache-Control` `max-age` is higher. In other words, you can override to make browsers cache longer than Cloudflare's edge but not less.
+Nevertheless, the value you set via Page Rule will be ignored if `Cache-Control: max-age` is higher. In other words, you can override to make browsers cache longer than Cloudflare's edge but not less.
 
 ## Set Browser Cache TTL
 
