@@ -10,15 +10,18 @@ Transform Rules allow you to adjust the URI path, query string, and HTTP headers
 
 There are several types of Transform Rules:
 
-*   **URL Rewrite Rules**: Rewrite the URL path and query string of an HTTP request.
-*   **HTTP Request Header Modification Rules**: Set the value of an HTTP request header or remove a request header.
-*   **HTTP Response Header Modification Rules**: Set the value of an HTTP response header or remove a response header.
+* **Managed Transforms**: Perform common adjustments to HTTP request and response headers with the click of a button.
+* **URL Rewrite Rules**: Rewrite the URL path and query string of an HTTP request.
+* **HTTP Request Header Modification Rules**: Set the value of an HTTP request header or remove a request header.
+* **HTTP Response Header Modification Rules**: Set the value of an HTTP response header or remove a response header.
 
 To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
 
 ***
 
 ## Transform Rules evaluation
+
+Managed Transforms run before other types of Transform Rules.
 
 Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
 
