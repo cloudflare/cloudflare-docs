@@ -27,7 +27,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
 
-    ![Configure HTTP DDoS Managed Ruleset](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
+    ![Configuring the action and sensitivity of all the rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
 
 1. Click **Save**.
 
@@ -43,7 +43,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Search for the rules you wish to configure using the available filters. You can search for tags.
 
-    ![Configure rules in Managed Ruleset](/ddos-protection/static/ddos/ddos-configure-rules.png)
+    ![Configuring the action and sensitivity of specific rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-rules.png)
 
 1. To configure a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
