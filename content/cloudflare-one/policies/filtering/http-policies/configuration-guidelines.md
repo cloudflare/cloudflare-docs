@@ -41,8 +41,12 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 Block requests to two hosts if either appears in a request header:
 
+{{<table-wrap>}}
+
 | Selector | Operator      | Value                           | Action                   |
 | -------- | ------------- | ------------------------------- | ------------------------ | ----- |
 | Host     | Matches regex | {{<code>}}.\*whispersystems.org | .\*signal.org{{</code>}} | Block |
+
+{{</table-wrap>}}
 
 To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
