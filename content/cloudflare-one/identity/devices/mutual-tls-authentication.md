@@ -72,6 +72,11 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
 
 ![mTLS session duration](/cloudflare-one/static/documentation/identity/devices/mutual-tls-session-duration.png)
 
+{{<Aside type="warning">}}
+
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/content/cloudflare-one/policies/filtering/http-policies/configuration-guidelines/#enabling-mTLS-authentication) for the domain.
+{{</Aside>}}
+
 ## Test using cURL
 
 Test for the site using mTLS by attempting to curl the site without a client certificate.
