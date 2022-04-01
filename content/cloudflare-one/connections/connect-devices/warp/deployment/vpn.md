@@ -33,7 +33,7 @@ We recommend the following workflow when configuring WARP alongside a third-part
 
 {{<Aside type="note" header="Start WARP first">}}
 
-We recommend enabling the WARP client before enabling your third-party VPN. Some third-party VPNs must be the last to touch a network configuration or they will fail.
+We recommend enabling the WARP client before enabling your third-party VPN. Some third-party VPNs must be the last to edit a network's configuration or they will fail.
 
 {{</Aside>}}
 
