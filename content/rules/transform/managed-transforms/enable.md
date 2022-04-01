@@ -8,11 +8,11 @@ weight: 1
 
 ## In the dashboard
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2.  Go to **Rules** > **Transform Rules**.
+2. Go to **Rules** > **Transform Rules**.
 
-3.  Click **Managed Transforms**. A pop-up dialog appears.
+3. Click **Managed Transforms**. A pop-up dialog appears.
 
     IMAGE
 
