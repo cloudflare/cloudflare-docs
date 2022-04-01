@@ -59,6 +59,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   36.7601 22.5427C36.7607 21.9464 36.998 21.3747 37.4199 20.9532C37.8418 20.5317
   38.4137 20.295 39.0101 20.295V20.2927Z" /></svg>
 
+product:
+  title: Partners
+  url: /partners/
+
 meta:
   title: Cloudflare Partners docs
   description: The Cloudflare Partner Network includes Channel Partners who

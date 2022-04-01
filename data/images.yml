@@ -9,6 +9,11 @@ logo: <svg width="48" height="48" version="1.1" viewBox="0 0 48 48"
   18.12 12.653 18.12 11.31 19.463 11.31 21.12 11.31 22.777 12.653 24.12 14.31
   24.12Z"/></svg>
 
+product:
+  title: Cloudflare Image Optimization
+  url: /images/
+  wrap: true
+
 meta:
   title: Cloudflare Image Optimization docs
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two

@@ -7,6 +7,10 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M13
   7h3.134v10.367H53v2.882h-2.295v3.99h-3.333zm0-6.872v-5.984h-.074l-4.468
   5.984h4.542z"/></svg>
 
+product:
+  title: DNS Resolver
+  url: /1.1.1.1/
+
 meta:
   title: Cloudflare 1.1.1.1 docs
   description: A blazing fast DNS resolver built for private browsing.

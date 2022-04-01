@@ -9,6 +9,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   20-1.5-0.772-13.2-7.32-13.2-20v-9.57c4.97-0.795 9.58-3.08 13.2-6.56 3.64 3.48
   8.25 5.77 13.2 6.56z"/></svg>
 
+product:
+  title: DDoS Protection
+  url: /byoip/
+
 meta:
   title: Cloudflare DDoS Protection docs
   description: Cloudflare DDoS protection secures websites, applications, and

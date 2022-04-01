@@ -17,6 +17,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   17.761719 29.480469 L 22 29.480469 Z M 33.75 33.75 L 29.511719 33.75 L
   29.511719 29.480469 L 33.75 29.480469 Z M 33.75 33.75 " /></svg>
 
+product:
+  title: DNS
+  url: /dns/
+
 meta:
   title: Cloudflare DNS docs
   description: Cloudflare DNS provides the fastest, most resilient, and simplest

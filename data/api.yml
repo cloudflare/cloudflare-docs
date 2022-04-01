@@ -16,6 +16,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   24.3105H25.263L25.2593 20.466Z" /><path d="M36 18.474H33.5632V30H36V18.474Z"
   /></svg>
 
+product:
+  title: API
+  url: /api/
+
 meta:
   title: Cloudflare API docs
   description: Cloudflare’s API tokens allow you to make calls to our API to alter

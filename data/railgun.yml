@@ -23,6 +23,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
   stop-color="white" stop-opacity="0"/></linearGradient></defs></svg>
 
+product:
+  title: Railgun
+  url: /railgun/
+
 meta:
   title: Cloudflare Railgun docs
   description: Improve loading times by caching dynamically generated or

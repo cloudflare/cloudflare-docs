@@ -20,6 +20,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   39.675V32.295C31.2415 33.0813 32.793 33.495 34.3721 33.495C35.9512 33.495
   37.5027 33.0813 38.8721 32.295V39.6675L35.4671 36Z" /></svg>
 
+product:
+  title: SSL
+  url: /ssl/
+
 meta:
   title: Cloudflare SSL docs
   description: Cloudflare wants to encrypt as much web traffic as possible to

@@ -34,6 +34,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   17.0048H25.4913V7.68644C27.1047 8.16832 28.7233 9.58919 30.0797 12.006C30.8733
   13.4202 31.5344 15.1116 32.0112 17.0048Z" /></svg>
 
+product:
+  title: HTTP/3
+  url: /http3/
+
 meta:
   title: Cloudflare HTTP/3 docs
   description: HTTP/3 is the newest version of the Hypertext Transfer Protocol

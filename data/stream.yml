@@ -27,6 +27,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   /></g><defs><clipPath id="clip0"><rect width="48" height="48"
   /></clipPath></defs></svg>
 
+product:
+  title: Stream
+  url: /stream/
+
 meta:
   title: Cloudflare Stream docs
   description: Store, encode, deliver, and play videos on your sites and applications.

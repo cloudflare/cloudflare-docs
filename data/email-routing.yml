@@ -7,6 +7,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   26.0025L38.0775 34.4325H10.005L19.5375 26.0025ZM30.7875 24L40.5375
   15.39V32.64L30.7875 24Z"/></svg>
 
+product:
+  title: Email Routing
+  url: /email-routing/
+
 meta:
   title: Cloudflare Email Routing docs
   description: Simplify the way you create and manage email addresses. Create any

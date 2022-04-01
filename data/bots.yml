@@ -17,6 +17,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   23.5515 28.5012 24.669 28.5012 26.0475C28.5012 27.426 29.6164 28.5435 30.992
   28.5435Z" /><path d="M28.742 31.749H19.2582V34.749H28.742V31.749Z" /></svg>
 
+product:
+  title: Bots
+  url: /bots/
+
 meta:
   title: Cloudflare bot solutions docs
   description: Cloudflare’s bot solutions identify and mitigate automated traffic

@@ -16,6 +16,10 @@ logo: <svg width="48" height="49" viewBox="0 0 48
   41.04Z" /><path d="M25.5 11.715H22.5V25.62L30.6 34.0425L32.76 31.965L25.5
   24.4125V11.715Z" /></svg>
 
+product:
+  title: Time Services
+  url: /time-services/
+
 meta:
   title: Cloudflare Time Services docs
   description: 'Cloudflare’s suite of time services: NTP, NTS, and Roughtime.'

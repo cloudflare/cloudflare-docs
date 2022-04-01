@@ -26,6 +26,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   2.51c-1.28 0.886-2.76 1.45-4.31 1.63v-3.5c0.63-0.122 1.24-0.338
   1.8-0.643z"/></svg>
 
+product:
+  title: Security Center
+  url: /security-center/
+
 meta:
   title: Cloudflare Security Center docs
   description: Cloudflare Security Center allows you to manage your IT assets in a

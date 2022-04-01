@@ -151,6 +151,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
   stop-color="white" stop-opacity="0"/></linearGradient></defs></svg>
 
+product:
+  title: Registrar
+  url: /registrar/
+
 meta:
   title: Cloudflare Registrar docs
   description: Welcome to Cloudflare Registrar. The first registrar you can love.

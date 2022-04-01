@@ -21,6 +21,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   13.5C16.5375 11.5109 17.3277 9.60323 18.7342 8.1967C20.1407 6.79018 22.0484 6
   24.0375 6Z" /></svg>
 
+product:
+  title: Tenant
+  url: /tenant/
+
 meta:
   title: Cloudflare Tenant docs
   description: With Cloudflare’s new provisioning APIs, you can provision and

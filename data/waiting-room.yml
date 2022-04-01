@@ -10,6 +10,10 @@ logo: <svg width="48" height="49" viewBox="0 0 48
   7V23.4717H35.3678V7H11.7685ZM35.3678 26.4717H11.7685V29.2403H35.3678V26.4717Z"
   /></svg>
 
+product:
+  title: Waiting Room
+  url: /waiting-room/
+
 meta:
   title: Cloudflare Waiting Room docs
   description: Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms

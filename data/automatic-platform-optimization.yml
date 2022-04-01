@@ -39,6 +39,11 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   16.7093H28.9576L25.9441 21.2295V21.732H28.4281V24.7455H28.9306L31.9441
   20.2253V19.7228H29.4594V16.7093Z" /></svg>
 
+product:
+  title: Automatic Platform Optimization
+  url: /automatic-platform-optimization/
+  wrap: true
+
 meta:
   title: Cloudflare Automatic Platform Optimization docs
   description: With Automatic Platform Optimization, Cloudflare serves your entire

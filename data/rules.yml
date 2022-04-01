@@ -6,6 +6,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   17.3025H13.89V20.3025H34.0275V17.3025Z" /><path d="M34.0275
   23.5725H13.89V26.5725H34.0275V23.5725Z" /></svg>
 
+product:
+  title: Rules
+  url: /rules/
+
 meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming HTTP requests at the edge.

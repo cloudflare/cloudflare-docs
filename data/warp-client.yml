@@ -41,6 +41,10 @@ logo: <svg width="48" height="49" viewBox="0 0 48
   22.0093 39.941 21.8999 39.6633C21.7906 39.3856 21.7395 39.0883 21.75 38.79Z"
   /></svg>
 
+product:
+  title: WARP Client
+  url: /warp-client/
+
 meta:
   title: Cloudflare WARP client docs
   description: The Cloudflare WARP client allows individuals or organizations to

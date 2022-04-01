@@ -12,6 +12,10 @@ logo: <svg width="48" height="48"  xmlns="http://www.w3.org/2000/svg" viewBox="0
   13.938a9.441 9.441 0 01-2.194-1.664C4.735 11.182 3.717 9.59 3.717
   7.476V4.373z"/></svg>
 
+product:
+  title: Magic Transit
+  url: /magic-transit/
+
 meta:
   title: Cloudflare Magic Transit docs
   description: Magic Transit delivers network functions at Cloudflare scale—DDoS

@@ -15,6 +15,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   30.855V40.494L6 41.994H42.006L43.506 40.494V30.855L42.006 29.355H6ZM7.5
   38.994V32.355H40.506V38.994H7.5Z" /></svg>
 
+product:
+  title: Cache
+  url: /cache/
+
 meta:
   title: Cloudflare Cache docs
   description: Cloudflare makes customer websites faster by storing a copy of the

@@ -7,6 +7,10 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g
   2v-2h4.5v2h-4.5zm7.75-5H9v2h4.5V8zm0-1V5h-2.25v2h2.25zm-2.25
   4h2.25v2h-2.25v-2z"/></g></svg>
 
+product:
+  title: Firewall Rules
+  url: /firewall/
+
 meta:
   title: Cloudflare Firewall Rules docs
   description: Create rules that examine incoming HTTP traffic against a set of

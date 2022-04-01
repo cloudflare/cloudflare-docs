@@ -8,6 +8,11 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   40.5H7.5V13.4999ZM40.5 40.5H30.39L36.6675 37.3725L37.5 36V13.4999H40.5V40.5Z"
   /></svg>
 
+product:
+  title: Cloudflare Fundamentals
+  url: /fundamentals/
+  wrap: true
+
 meta:
   title: Cloudflare Fundamentals docs
   description: Cloudflare Fundamentals provides information about features that

@@ -19,6 +19,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   d="M18.1728 16.0556L16.0515 18.1769L20.729 22.8544L22.8503 20.7331L18.1728
   16.0556Z"/></svg>
 
+product:
+  title: Spectrum
+  url: /spectrum/
+
 meta:
   title: Cloudflare Spectrum docs
   description: DDoS protection for everything.

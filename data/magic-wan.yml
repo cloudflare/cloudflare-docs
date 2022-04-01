@@ -12,6 +12,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   31.455H22.5L19.7475 30.315L17.64 28.2075L16.5 25.4475V22.5L17.64 19.74L19.7475
   17.6325L22.5 16.5H25.5L28.2525 17.64L30.36 19.7475L31.5 22.5Z" /></svg>
 
+product:
+  title: Magic WAN
+  url: /magic-wan/
+
 meta:
   title: Cloudflare Magic WAN docs
   description: Magic WAN replaces legacy WAN architectures with Cloudflare’s

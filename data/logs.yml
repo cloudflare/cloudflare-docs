@@ -12,6 +12,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   d="M30.9378 27.78H27.7353L26.0328 32.3775H29.2353L30.9378 27.78Z" /><path
   d="M37.6878 27.78H34.4853L32.7828 32.3775H35.9853L37.6878 27.78Z" /></svg>
 
+product:
+  title: Logs
+  url: /logs/
+
 meta:
   title: Cloudflare Logs docs
   description: Cloudflare Logs contain detailed information on requests and events

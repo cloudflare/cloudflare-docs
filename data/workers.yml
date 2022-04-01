@@ -8,6 +8,10 @@ logo: <svg width="48" height="49" viewBox="0 0 48
   24.5851L25.4173 42.5026H29.1823L42.0898 25.4926V23.6851L29.1748 6.50256Z"
   /></svg>
 
+product:
+  title: Workers
+  url: /workers/
+
 meta:
   title: Cloudflare Workers docs
   description: Documentation for Cloudflare Workers, a serverless execution

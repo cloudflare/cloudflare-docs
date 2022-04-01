@@ -23,6 +23,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   19.8049 11.6189 15 12.3736V15.0002ZM28.5 34.5002V24.7502H7.5V34.5002H28.5ZM7.5
   18.0002V21.7502H28.5V18.0002H7.5Z" /></svg>
 
+product:
+  title: Page Shield
+  url: /page-shield/
+
 meta:
   title: Cloudflare Page Shield docs
   description: Provide client-side protection as part of your domain's firewall

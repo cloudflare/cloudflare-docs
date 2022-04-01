@@ -29,6 +29,11 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   39.0001H16.5Z" /></g><defs><clipPath id="clip0"><rect width="48" height="48"
   /></clipPath></defs></svg>
 
+product:
+  title: Randomness Beacon
+  url: /randomness-beacon/
+  wrap: true
+
 meta:
   title: Cloudflare Randomness Beacon docs
   description: 'Explore drand: a distributed service providing public randomness

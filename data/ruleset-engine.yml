@@ -14,6 +14,10 @@ logo: <svg width="48" height="48" version="1.1" viewBox="0 0 48 48"
   18.1h-9.83v-2.81h9.83zm4.21-5.62h-14v-2.81h14zm-1.4-5.62h-12.6v-2.81h12.6zm-18.3-7.73
   1.4-1.4h21.1v2.81h-19.7v28.1h22.5v2.81h-23.9l-1.4-1.4z"/></svg>
 
+product:
+  title: Ruleset Engine
+  url: /ruleset-engine/
+
 meta:
   title: Cloudflare Ruleset Engine docs
   description: Create and deploy rules and rulesets in different Cloudflare

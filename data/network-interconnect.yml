@@ -74,6 +74,11 @@ logo: <svg width="48" height="48" viewBox="0 0 48
   37.5512 35.9662C37.2039 36.1064 36.8322 36.1765 36.4577 36.1725L36.4877
   36.1875Z" /></svg>
 
+product:
+  title: Network Interconnect
+  url: /network-interconnect/
+  wrap: true
+
 meta:
   title: Cloudflare Network Interconnect docs
   description: For a faster, more reliable, and more secure experience than

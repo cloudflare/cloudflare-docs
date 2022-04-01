@@ -62,6 +62,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48" fill="none"
   gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1"
   stop-color="white" stop-opacity="0"/></linearGradient></defs></svg>
 
+product:
+  title: Apps
+  url: https://www.cloudflare.com/apps/docs
+
 meta:
   title: Cloudflare Apps docs
   description: Simplify the way you create and manage email addresses. With Email

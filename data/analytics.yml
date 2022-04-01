@@ -15,6 +15,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   22.5V7.5675C29.3401 7.92344 32.9349 9.61101 35.6619 12.338C38.3889 15.0651
   40.0765 18.6599 40.4324 22.5H25.4999Z" /></svg>
 
+product:
+  title: Analytics
+  url: /analytics/
+
 meta:
   title: Cloudflare Analytics docs
   description: With the GraphQL Analytics API, all of your performance, security,

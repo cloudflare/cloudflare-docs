@@ -28,6 +28,10 @@ logo: <svg width="48" height="48" viewBox="0 0 48 48"
   27.7034 36.1662 27.3225 37.125 27.3225C38.0838 27.3225 39.0032 27.7034 39.6812
   28.3813C40.3591 29.0593 40.74 29.9788 40.74 30.9375Z" /></svg>
 
+product:
+  title: BYOIP
+  url: /byoip/
+
 meta:
   title: Cloudflare BYOIP docs
   description: With BYOIP, Cloudflare announces your IPs in all our locations. Use
