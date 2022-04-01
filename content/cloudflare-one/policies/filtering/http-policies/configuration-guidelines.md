@@ -28,6 +28,7 @@ The following Windows registry key (or Mac/Linux preference) can be used to disa
 *   **Recommended value:** `Windows: 0x00000000`, `Linux: false`, `Mac: <false />`
 
 ## Enabling mTLS authentication
+
 Applications which enforce mutual TLS are incompatible with TLS decryption. To allow mTLS requests through Gateway, add a [*Do Not Inspect*](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the mTLS-protected domain.
 
 ## Building policies with regular expressions
