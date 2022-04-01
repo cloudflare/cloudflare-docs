@@ -43,9 +43,9 @@ The **Hide Originating IP Address** option in [Tool Settings](/zaraz/get-started
 
 With the **Anonymize Originating IP Address** available in the [Add field](/zaraz/get-started/additional-fields/) option, Cloudflare sends the visitor’s IP address to Google as is, and passes the [`aip` parameter](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip) to GA. This asks GA to anonymize the data.
 
-### I set up Event Reporting (enhanced measurements) for Google Analytics, but it only reports Page View, Session Start and First Visit. All other events, such as scroll, outbound, etc., are missing.
+### I set up Event Reporting (enhanced measurements) for Google Analytics, but it only reports Page View, Session Start, and First Visit. All other events, such as scroll and outbound, are missing.
 
-This is not a bug. Zaraz does not offer all the automatic events the normal GA4 JS snippets offer out of the box. You will need to build [triggers](/zaraz/get-started/create-trigger/) and [actions](/zaraz/get-started/create-actions/) to capture those events. Refer to [Get Started](/zaraz/get-started/) to learn more about how Zaraz works.
+This is not a bug. Zaraz does not offer all the automatic events the normal GA4 JavaScript snippets offer out of the box. You will need to build [triggers](/zaraz/get-started/create-trigger/) and [actions](/zaraz/get-started/create-actions/) to capture those events. Refer to [Get started](/zaraz/get-started/) to learn more about how Zaraz works.
 
 ### Can I set up custom dimensions for Google Analytics with Zaraz?
 
@@ -53,9 +53,9 @@ Yes. Refer to [Additional fields](/zaraz/get-started/additional-fields/) to lear
 
 ### I am trying to set up Facebook Pixel on my Zaraz account, but I do not see any data coming through.
 
-It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [Debug Mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
+It can take between 15 minutes to several hours for data to appear on Facebook’s interface, due the way Facebook Pixel works. You can also use [debug mode](/zaraz/web-api/debug-mode/) to confirm that data is being properly sent from your Zaraz account.
 
-### I cannot find the tool I need on Zaraz
+### I cannot find the tool I need on Zaraz.
 
 The Zaraz engineering team is adding support to new tools all the time. You can also refer to the [community space](https://community.cloudflare.com/c/developers/integrationrequest/68) to ask for new integrations.
 
