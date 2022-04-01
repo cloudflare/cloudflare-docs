@@ -110,59 +110,12 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 To automate processes involving Origin CA certificates, use the following API calls.
 
-<table style="width:100%">
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Method + URL stub</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-list-certificates">List Certificates</a>
-      </td>
-      <td>
-        <code>GET&nbsp;certificates/:zone_id</code>
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-create-certificate">Create Certificate</a>
-      </td>
-      <td>
-        <code>POST&nbsp;certificates/:zone_id</code>
-      </td>
-      <td>
-        See the API documentation for a full list of optional parameters, but some are also
-        described in the <a href="#additional-details">Details</a> section of this page.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-get-certificate">Get Certificate</a>
-      </td>
-      <td>
-        <code>GET&nbsp;certificates/:certificate_id</code>
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-revoke-certificate">Revoke Certificate</a>
-      </td>
-      <td>
-        <code>DELETE&nbsp;certificates/:certificate_id</code>
-      </td>
-      <td>
-        Additional details and warnings in{' '}
-        <a href="#revoke-an-origin-ca-certificate">Revoke an Origin CA certificate</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Operation | Method | Endpoint |
+| --- | --- | --- |
+| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` | 
+| [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST` | `certificates` |
+| [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
+| [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
 
 ## Troubleshooting
 
