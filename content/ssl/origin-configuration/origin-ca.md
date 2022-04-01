@@ -2,16 +2,14 @@
 title: Origin CA certificates
 pcx-content-type: how-to
 weight: 4
-meta:
-  title: Managing Cloudflare Origin CA certificates
 ---
 
-# Managing Cloudflare Origin CA certificates
+# Origin CA certificates
 
 Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/#strict).
 
 {{<Aside type="note">}}
-For more background information on Origin CA certificates, see the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).</a>.
+For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 {{</Aside>}}
 
 ---
@@ -38,7 +36,7 @@ To create an Origin CA certificate in the dashboard:
 10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
 11. Click **OK**.
 
-{{<Aside type="note">}}For details about working with certificates programmatically, see <a href="#api-calls">API calls</a>.{{</Aside>}}
+{{<Aside type="note">}}For details about working with certificates programmatically, refer to [API calls](#api-calls).{{</Aside>}}
 
 ### 2. Install Origin CA certificate on origin server
 
@@ -112,59 +110,12 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 To automate processes involving Origin CA certificates, use the following API calls.
 
-<table style="width:100%">
-  <thead>
-    <tr>
-      <th>Operation</th>
-      <th>Method + URL stub</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-list-certificates">List Certificates</a>
-      </td>
-      <td>
-        <code>GET&nbsp;certificates/:zone_id</code>
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-create-certificate">Create Certificate</a>
-      </td>
-      <td>
-        <code>POST&nbsp;certificates/:zone_id</code>
-      </td>
-      <td>
-        See the API documentation for a full list of optional parameters, but some are also
-        described in the <a href="#additional-details">Details</a> section of this page.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-get-certificate">Get Certificate</a>
-      </td>
-      <td>
-        <code>GET&nbsp;certificates/:certificate_id</code>
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <a href="https://api.cloudflare.com/#origin-ca-revoke-certificate">Revoke Certificate</a>
-      </td>
-      <td>
-        <code>DELETE&nbsp;certificates/:certificate_id</code>
-      </td>
-      <td>
-        Additional details and warnings in{' '}
-        <a href="#revoke-an-origin-ca-certificate">Revoke an Origin CA certificate</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Operation | Method | Endpoint |
+| --- | --- | --- |
+| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` | 
+| [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST` | `certificates` |
+| [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
+| [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
 
 ## Troubleshooting
 

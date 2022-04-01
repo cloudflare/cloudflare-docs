@@ -24,11 +24,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-algolia:
-  index: developers-cloudflare
-  apikey: b23088ab4d346409f9d3ece6606344c3
-  filters: '["project:bots"]'
-
 externals:
   - title: Bot Management home
     url: https://www.cloudflare.com/products/bot-management

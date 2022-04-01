@@ -20,11 +20,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-algolia:
-  index: developers-cloudflare
-  apikey: b23088ab4d346409f9d3ece6606344c3
-  filters: '["project:magic-transit"]'
-
 externals:
   - title: Magic Transit home
     url: https://www.cloudflare.com/magic-transit/

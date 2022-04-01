@@ -58,11 +58,6 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
-algolia:
-  index: developers-cloudflare
-  apikey: b23088ab4d346409f9d3ece6606344c3
-  filters: '["project:terraform"]'
-
 externals:
   - title: GitHub @cloudflare/terraform-provider-cloudflare
     url: https://github.com/cloudflare/terraform-provider-cloudflare

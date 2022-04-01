@@ -15,11 +15,6 @@ meta:
   author: '@cloudflare'
   image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=
 
-algolia:
-  index: developers-cloudflare
-  apikey: ''
-  filters: ''
-
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com
