@@ -18,7 +18,7 @@ Similarly, the L7 firewall will evaluate Do Not Inspect policies before any subs
 
 Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify the destination of the request. Administrators who wish to bypass a site must create a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) policy in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
 
-Bypassing the L7 firewall results in no HTTP traffic inspection and logging is disabled for that HTTP session.
+Bypassing the L7 firewall results in no HTTP traffic inspection, and logging is disabled for that HTTP session.
 
 ## **I see an error when browsing Google-related pages. What is the problem?**
 
