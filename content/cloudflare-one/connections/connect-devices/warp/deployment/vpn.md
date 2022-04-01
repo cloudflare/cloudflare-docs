@@ -31,14 +31,14 @@ We recommend the following workflow when configuring WARP alongside a third-part
 
 4. (Optional) If your company uses fully qualified domain names such as `example.local`, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/)to exclude your local domains from Gateway processing.
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Start WARP first">}}
 
-**Start WARP first.** We recommend enabling the WARP client before enabling your third-party VPN. Some third-party VPNs must be the last to touch a network configuration or they will fail.
+We recommend enabling the WARP client before enabling your third-party VPN. Some third-party VPNs must be the last to edit a network's configuration or they will fail.
 
 {{</Aside>}}
 
-{{<Aside type="note">}}
+{{<Aside type="note" header="Test before updates">}}
 
-**Test before updates.** Once you have a configuration in place and working, we recommend thoroughly testing compatibility before updating your VPN software. Compatibility testing with what are essentially competing software will need to be done with each new version.
+Once you have a configuration in place and working, we recommend thoroughly testing compatibility before updating your VPN software. Compatibility testing with what are essentially competing software will need to be done with each new version.
 
 {{</Aside>}}
