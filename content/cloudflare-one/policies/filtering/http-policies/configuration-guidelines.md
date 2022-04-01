@@ -5,6 +5,7 @@ weight: 5
 ---
 
 # Configuration guidelines
+
 This section provides tips on configuring the Gateway proxy.
 
 ## Enabling access to Google services
